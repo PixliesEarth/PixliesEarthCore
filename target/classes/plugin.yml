@@ -1,0 +1,69 @@
+name: PixliesEarthCore
+version: 1.0
+main: eu.pixliesearth.Main
+api-version: 1.13
+depend:
+  - Vault
+softdepend:
+  - PlaceholderAPI
+author: MickMMars
+description: PixliesEarth core
+commands:
+  modules:
+    description: Modules command
+  chat:
+    description: Chat Command
+  seen:
+    description: Seen Command
+    aliases:
+      - lastseen
+  coins:
+    description: Main command for pixliecoins
+    aliases:
+      - pixliecoins
+  message:
+    description: PM command
+    aliases:
+      - msg
+      - pm
+      - privatemessage
+      - dm
+  profile:
+    description: profile to string
+  link:
+    description: Discord link command
+  nation:
+    description: nation command
+    aliases:
+      - n
+      - nations
+  warp:
+    description: warps
+    aliases:
+      - warps
+  backup:
+    description: backup
+
+permissions:
+  # GENERAL
+  earth.admin:
+    default: op
+  earth.seen:
+    default: op
+  # CHAT
+  earth.chat.colours:
+    default: op
+  earth.chat.bypasscooldown:
+    default: op
+  earth.chat.bypassmute:
+    default: op
+  earth.chat.bypassblacklist:
+    default: op
+  # COINS
+  earth.coins.admin:
+    default: op
+  # PRIVATEMESSAGE
+  earth.pm.bypassblacklist:
+    default: op
+  earth.warps.edit:
+    default: op
