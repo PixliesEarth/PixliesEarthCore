@@ -10,10 +10,11 @@ import org.bukkit.Bukkit;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
+import org.javacord.api.entity.channel.TextChannel;
 
 public class MiniMick {
 
-    private @Getter DiscordApi api;
+    private static @Getter DiscordApi api;
 
     public void start() {
 
@@ -25,6 +26,9 @@ public class MiniMick {
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.LISTENING, "to your heart <3");
+
+        if (api.getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get() != null)
+            Bukkit.getPluginManager().registerEvents(new ChatEvent(), Main.getInstance());
 
         api.addMessageCreateListener(event -> {
            if (event.getMessageContent().startsWith("/link")) {

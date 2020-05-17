@@ -33,6 +33,7 @@ eu\pixliesearth\core\utils\CooldownMap.class
 eu\pixliesearth\core\utils\SkullBuilder.class
 eu\pixliesearth\core\modules\PrivateMessage.class
 eu\pixliesearth\core\utils\PlayerLists.class
+eu\pixliesearth\discord\ChatEvent.class
 eu\pixliesearth\core\modules\ChatSystem.class
 eu\pixliesearth\core\lib\me\joeleoli\frame\impl\ExampleFrameAdapter.class
 eu\pixliesearth\core\objects\Profile.class
