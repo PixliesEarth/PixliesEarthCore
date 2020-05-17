@@ -2,6 +2,8 @@ package eu.pixliesearth.core.modules.economy;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.interfaces.Module;
+import eu.pixliesearth.core.objects.Profile;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -58,6 +60,20 @@ public class EconomySystem implements Module, CommandExecutor {
                 return false;
             }
             //TODO
+        }
+        if (args[0].equalsIgnoreCase("set")) {
+            if (!sender.hasPermission("earth.economy.admin")) {
+                sender.sendMessage("§aECONOMY §8| §cInsuffucient permissions.");
+                return false;
+            }
+            if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+                sender.sendMessage("§aECONOMY §8| §7This player §cdoes not §7exist.");
+                return false;
+            }
+            Profile profile = instance.getProfile(Bukkit.getPlayerUniqueId(args[1]));
+            profile.setBalance(Double.parseDouble(args[2]));
+            profile.backup();
+            sender.sendMessage("§aECONOMY §8| §7Successfully set the players balance.");
         }
         return false;
     }

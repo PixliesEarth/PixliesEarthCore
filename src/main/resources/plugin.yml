@@ -79,3 +79,5 @@ permissions:
   # ECONOMY
   earth.economy.balance.others:
     default: op
+  earth.economy.admin:
+     default: op
