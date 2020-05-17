@@ -2,6 +2,7 @@ package eu.pixliesearth.core.modules.economy;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.interfaces.Module;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,8 +36,8 @@ public class EconomySystem implements Module, CommandExecutor {
             }
             return false;
         }
-        if (args[0].equalsIgnoreCase("balance") || args[0].equalsIgnoreCase("balance")) {
-            if (args[1] == null) {
+        if (args[0].equalsIgnoreCase("balance") || args[0].equalsIgnoreCase("bal")) {
+            if (args.length == 1) {
                 if (sender instanceof Player) {
                     sendBalance((Player) sender);
                     return false;
@@ -45,6 +46,18 @@ public class EconomySystem implements Module, CommandExecutor {
                     return false;
                 }
             }
+        }
+        if (args[0].equalsIgnoreCase("pay")) {
+            Player player = (Player) sender;
+            if (Bukkit.getPlayer(args[1]) == null) {
+                player.sendMessage("§aECONOMY §8| §7Player is not online.");
+                return false;
+            }
+            if (Bukkit.getPlayer(args[1]) == player) {
+                player.sendMessage("§aECONOMY §8| §7Changed the pocket the money was in.");
+                return false;
+            }
+            //TODO
         }
         return false;
     }

@@ -50,13 +50,13 @@ public class Warp {
 
         if (!cfg.getConfiguration().contains("name")) return null;
 
-        String world = cfg.getConfiguration().getString(name + ".world");
-        double x = cfg.getConfiguration().getDouble(name + ".x");
-        double y = cfg.getConfiguration().getDouble(name + ".y");
-        double z = cfg.getConfiguration().getDouble(name + ".z");
-        float pitch = (float) cfg.getConfiguration().get(name + ".pitch");
-        float yaw = (float) cfg.getConfiguration().get(name + ".yaw");
-        Material item = Material.valueOf(cfg.getConfiguration().getString(name + ".item"));
+        String world = cfg.getConfiguration().getString("warps." + name + ".world");
+        double x = cfg.getConfiguration().getDouble("warps." + name + ".x");
+        double y = cfg.getConfiguration().getDouble("warps." + name + ".y");
+        double z = cfg.getConfiguration().getDouble("warps." + name + ".z");
+        float pitch = (float) cfg.getConfiguration().get("warps." + name + ".pitch");
+        float yaw = (float) cfg.getConfiguration().get("warps." + name + ".yaw");
+        Material item = Material.valueOf(cfg.getConfiguration().getString("warps." + name + ".item"));
 
         SimpleLocation loc = new SimpleLocation(world, x, z, y, pitch, yaw);
         return new Warp(name, loc, item);

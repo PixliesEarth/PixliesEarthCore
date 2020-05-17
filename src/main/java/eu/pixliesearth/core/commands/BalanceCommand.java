@@ -13,7 +13,7 @@ public class BalanceCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (args[0] == null) {
+        if (args.length == 1) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 sender.sendMessage("§aECONOMY §8| §7You have §2§l$§a" + Main.getEconomy().getBalance(player) + " §7on your account.");

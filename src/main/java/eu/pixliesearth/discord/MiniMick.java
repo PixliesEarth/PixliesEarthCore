@@ -11,6 +11,7 @@ import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.permission.PermissionType;
 
 public class MiniMick {
 
@@ -60,6 +61,15 @@ public class MiniMick {
                    return;
                }
                event.getMessageAuthor().asUser().get().openPrivateChannel().join().sendMessage("**This is the data we currently have in our database:**\n```json\n" + new GsonBuilder().setPrettyPrinting().create().toJson(profile) + "\n```");
+           } else if (event.getMessageContent().equalsIgnoreCase("/setigchat")) {
+               if (!event.getServer().get().hasPermission(event.getMessageAuthor().asUser().get(), PermissionType.ADMINISTRATOR)) {
+                   event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, Insufficient permissions.");
+                   return;
+               }
+               Main.getInstance().getConfig().set("chatchannel", event.getChannel().getIdAsString());
+               Main.getInstance().saveConfig();
+               Main.getInstance().reloadConfig();
+               event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, successfully set the chat-channel.");
            }
         });
 
