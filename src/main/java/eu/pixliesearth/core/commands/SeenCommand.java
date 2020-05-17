@@ -24,7 +24,7 @@ public class SeenCommand implements CommandExecutor {
             sender.sendMessage("§aEARTH §8| §cInsufficient permissions.");
             return false;
         }
-        if (args[0] == null) {
+        if (args.length == 0) {
             sender.sendMessage("§cWrong syntax! §e/seen <player>");
             return false;
         }

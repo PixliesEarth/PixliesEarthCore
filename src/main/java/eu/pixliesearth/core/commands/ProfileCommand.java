@@ -8,7 +8,7 @@ public class ProfileCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-
+        //TODO Profile command
         return false;
     }
 
