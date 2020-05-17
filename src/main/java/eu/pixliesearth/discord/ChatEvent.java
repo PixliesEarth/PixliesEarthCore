@@ -15,7 +15,7 @@ public class ChatEvent implements Listener {
         if (channel != null)
             channel.sendMessage(new EmbedBuilder()
                                 .setAuthor(event.getPlayer().getName(), "", "https://minotar.net/avatar/" + event.getPlayer().getName())
-                                .setTitle(event.getMessage()));
+                                .setTitle("`" + event.getMessage() + "`"));
     }
 
 }
