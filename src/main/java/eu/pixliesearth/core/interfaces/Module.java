@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.WarpSystem;
+import eu.pixliesearth.core.modules.economy.EconomySystem;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.reflections.Reflections;
 
@@ -24,6 +25,7 @@ public interface Module {
         returnable.add(new WarpSystem());
         returnable.add(new ChatSystem());
         returnable.add(new PrivateMessage());
+        returnable.add(new EconomySystem());
         return returnable;
     }
 

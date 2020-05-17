@@ -1,3 +1,5 @@
+eu\pixliesearth\core\modules\economy\Receipt.class
+eu\pixliesearth\core\modules\economy\EconomySystem.class
 eu\pixliesearth\core\utils\FileManager.class
 eu\pixliesearth\nations\commands\subcommand\SubCommand.class
 eu\pixliesearth\core\commands\SeenCommand.class
@@ -10,6 +12,8 @@ eu\pixliesearth\core\lib\me\joeleoli\frame\FrameAdapter.class
 eu\pixliesearth\core\managers\CoinManager.class
 eu\pixliesearth\core\commands\ChatCommand.class
 eu\pixliesearth\core\listener\LeaveListener.class
+eu\pixliesearth\core\modules\economy\VaultAPI.class
+eu\pixliesearth\core\commands\BalanceCommand.class
 eu\pixliesearth\core\commands\ProfileCommand.class
 eu\pixliesearth\core\lib\me\joeleoli\frame\FrameListener.class
 eu\pixliesearth\core\objects\SimpleLocation.class

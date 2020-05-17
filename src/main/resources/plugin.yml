@@ -43,6 +43,15 @@ commands:
       - warps
   backup:
     description: backup
+  economy:
+    description: Economy command
+    aliases:
+      - eco
+      - money
+  balance:
+    description: bal
+    aliases:
+      - bal
 
 permissions:
   # GENERAL
@@ -66,4 +75,7 @@ permissions:
   earth.pm.bypassblacklist:
     default: op
   earth.warps.edit:
+    default: op
+  # ECONOMY
+  earth.economy.balance.others:
     default: op

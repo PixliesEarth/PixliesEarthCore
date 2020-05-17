@@ -9,15 +9,19 @@ import eu.pixliesearth.core.listener.LeaveListener;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.WarpSystem;
+import eu.pixliesearth.core.modules.economy.EconomySystem;
+import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.nations.commands.NationCommand;
 import lombok.Getter;
+import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -32,6 +36,8 @@ public final class Main extends JavaPlugin {
     private static @Getter MongoCollection<Document> nationCollection;
 
     private static @Getter MongoCollection<Document> chunkCollection;
+
+    private static @Getter Economy economy;
 
     private @Getter FileManager warpsCfg;
 
@@ -61,6 +67,9 @@ public final class Main extends JavaPlugin {
         playerCollection = mongoDatabase.getCollection("users");
         nationCollection = mongoDatabase.getCollection("nations");
         chunkCollection = mongoDatabase.getCollection("chunks");
+
+        getServer().getServicesManager().register(Economy.class, new VaultAPI(), this, ServicePriority.Normal);
+        economy = new VaultAPI();
 
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();
@@ -95,6 +104,8 @@ public final class Main extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpSystem());
         getCommand("nation").setExecutor(new NationCommand());
         getCommand("backup").setExecutor(new BackupCommand());
+        getCommand("economy").setExecutor(new EconomySystem());
+        getCommand("balance").setExecutor(new BalanceCommand());
     }
 
     private void registerEvents(PluginManager manager) {
