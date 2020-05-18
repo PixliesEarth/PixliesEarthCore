@@ -6,11 +6,13 @@ import com.mongodb.client.MongoDatabase;
 import eu.pixliesearth.core.commands.*;
 import eu.pixliesearth.core.listener.JoinListener;
 import eu.pixliesearth.core.listener.LeaveListener;
+import eu.pixliesearth.core.listener.MoveListener;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.WarpSystem;
 import eu.pixliesearth.core.modules.economy.EconomySystem;
 import eu.pixliesearth.core.modules.economy.VaultAPI;
+import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
@@ -20,6 +22,7 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -78,12 +81,24 @@ public final class Main extends JavaPlugin {
         if (!cfg.exists())
             saveDefaultConfig();
 
+        // PROFILE SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Profile profile : playerLists.profiles.values())
+            for (Profile profile : playerLists.profiles.values()) {
+                if (!playerLists.afk.contains(UUID.fromString(profile.getUniqueId())))
+                    profile.setPlayTime(profile.getPlayTime() + 1);
                 profile.backup();
+            }
             Bukkit.getConsoleSender().sendMessage("§aDone.");
-        }, 0L, 20 * 60);
+        }, 20 * 60, 20 * 60);
+
+        // ENERGY SCHEDULER
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                Profile profile = getProfile(player.getUniqueId());
+                Energy.add(profile, 2.0);
+            }
+        }, (20 * 60) * 60, (20 * 60) * 60);
 
         new MiniMick().start();
 
@@ -112,6 +127,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ChatSystem(), this);
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
+        manager.registerEvents(new MoveListener(), this);
     }
 
     public Profile getProfile(UUID uuid) {

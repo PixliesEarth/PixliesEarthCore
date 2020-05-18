@@ -23,4 +23,8 @@ public class Methods {
         return sender.hasPermission(permission);
     }
 
+    public static double calculateDistance(double x1, double x2, double z1, double z2) {
+        return Math.sqrt(Math.pow((x2 - z1), 2) + Math.pow((z2 - x1), 2));
+    }
+
 }

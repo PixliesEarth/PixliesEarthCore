@@ -20,7 +20,6 @@ modules:
   warps:
     enabled: true
     # set to 0.0 to be disabled
-    cooldown: 3.0
     warps: []
   economy:
     enabled: true

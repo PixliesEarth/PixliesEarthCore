@@ -83,19 +83,29 @@ public class Warp {
     public void teleport(Player player) {
         Main instance = Main.getInstance();
         FileConfiguration config = instance.getConfig();
-        player.sendMessage("§aEARTH §8| §7You will be teleported to §b" + name + " §7in §3" + config.getDouble("modules.warps.cooldown") + "§7!");
-        if (config.getDouble("modules.warps.cooldown") != 0.0) {
-            int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
+        double cooldown = Energy.calculateTime(player.getLocation(), location.toLocation());
+        if (cooldown < 1.0)
+            cooldown = 1.0;
+        player.sendMessage("§aEARTH §8| §7You will be teleported to §b" + name + " §7in §3" + cooldown + "§7!");
+        if (cooldown != 0.0) {
+            int taskId = 0;
+            int finalTaskId = taskId;
+            taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
+                if (!instance.getPlayerLists().teleportCooldown.containsKey(player.getUniqueId())) {
+                    Bukkit.getScheduler().cancelTask(finalTaskId);
+                    return;
+                }
                 if (instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1 == 0.0) {
                     Bukkit.getScheduler().cancelTask(instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTaskId());
                     instance.getPlayerLists().teleportCooldown.remove(player.getUniqueId());
                     player.teleport(location.toLocation());
+                    Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location.toLocation()));
                     player.sendMessage("§aEARTH §8| §7You have been teleported to §b" + name + "§7!");
                     return;
                 }
                 instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).setTimeLeft(instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1);
             }, 0L, 2);
-            instance.getPlayerLists().teleportCooldown.put(player.getUniqueId(), new CooldownMap(config.getDouble("modules.warps.cooldown"), taskId));
+            instance.getPlayerLists().teleportCooldown.put(player.getUniqueId(), new CooldownMap(cooldown, taskId));
         }
     }
 

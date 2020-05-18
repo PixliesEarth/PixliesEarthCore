@@ -22,6 +22,8 @@ public class PlayerLists {
 
     public Map<UUID, String> nationDisbander;
 
+    public List<UUID> afk;
+
     public PlayerLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();;
@@ -31,6 +33,7 @@ public class PlayerLists {
         discordcodes = new HashMap<>();
         warpAdder = new HashSet<>();
         nationDisbander = new HashMap<>();
+        afk = new ArrayList<>();
     }
 
 }
