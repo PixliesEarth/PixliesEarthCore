@@ -26,6 +26,7 @@ public class Profile {
     private double energy;
     private String nationId;
     private List<String> invites;
+    private List<String> homes;
     private boolean scoreboard;
     private String nationRank;
     private List<String> knownIps;
@@ -52,6 +53,7 @@ public class Profile {
             profile.append("energy", 10.0);
             profile.append("nationId", "NONE");
             profile.append("invites", new ArrayList<>());
+            profile.append("homes", new ArrayList<>());
             profile.append("scoreboard", true);
             profile.append("nationRank", "NONE");
             profile.append("knownIps", new ArrayList<>());
@@ -65,7 +67,7 @@ public class Profile {
             profile.append("pixliecoins", 0D);
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -85,6 +87,7 @@ public class Profile {
         profile.append("energy", energy);
         profile.append("nationId", nationId);
         profile.append("invites", invites);
+        profile.append("homes", homes);
         profile.append("scoreboard", scoreboard);
         profile.append("nationRank", nationRank);
         profile.append("knownIps", knownIps);
