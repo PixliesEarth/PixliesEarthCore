@@ -18,6 +18,9 @@ public class LeaveListener implements Listener {
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
         profile.backup();
+        Main.getInstance().getPlayerLists().locationMap.remove(player.getUniqueId());
+        if (Main.getInstance().getPlayerLists().afk.contains(player.getUniqueId()))
+            Main.getInstance().getPlayerLists().afk.remove(player.getUniqueId());
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
 
     }

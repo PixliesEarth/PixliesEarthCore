@@ -24,6 +24,8 @@ public class PlayerLists {
 
     public List<UUID> afk;
 
+    public Map<UUID, AfkMap> locationMap;
+
     public PlayerLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();;
@@ -34,6 +36,7 @@ public class PlayerLists {
         warpAdder = new HashSet<>();
         nationDisbander = new HashMap<>();
         afk = new ArrayList<>();
+        locationMap = new HashMap<>();
     }
 
 }

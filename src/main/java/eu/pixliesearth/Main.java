@@ -81,8 +81,19 @@ public final class Main extends JavaPlugin {
         if (!cfg.exists())
             saveDefaultConfig();
 
-        // PROFILE SCHEDULER
+        // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (UUID uuid : playerLists.locationMap.keySet()) {
+                if (playerLists.locationMap.get(uuid).getLocation().toLocation() == Bukkit.getPlayer(uuid).getLocation()) {
+                    playerLists.locationMap.get(uuid).setMinutes(playerLists.locationMap.get(uuid).getMinutes() + 1);
+                } else {
+                    playerLists.locationMap.get(uuid).setMinutes(0);
+                }
+                if (playerLists.locationMap.get(uuid).getMinutes() == getConfig().getInt("afktime", 15)) {
+                    playerLists.afk.add(uuid);
+                    Bukkit.broadcastMessage("§8Player §7" + Bukkit.getPlayer(uuid).getDisplayName() + " §8is now AFK.");
+                }
+            }
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
             for (Profile profile : playerLists.profiles.values()) {
                 if (!playerLists.afk.contains(UUID.fromString(profile.getUniqueId())))
@@ -95,8 +106,10 @@ public final class Main extends JavaPlugin {
         // ENERGY SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                Profile profile = getProfile(player.getUniqueId());
-                Energy.add(profile, 2.0);
+                if (!playerLists.afk.contains(player.getUniqueId())) {
+                    Profile profile = getProfile(player.getUniqueId());
+                    Energy.add(profile, 2.0);
+                }
             }
         }, (20 * 60) * 60, (20 * 60) * 60);
 

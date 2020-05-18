@@ -24,6 +24,7 @@ eu\pixliesearth\nations\commands\subcommand\SubCommand.class
 eu\pixliesearth\core\commands\SeenCommand.class
 eu\pixliesearth\core\lib\me\joeleoli\frame\Frame.class
 eu\pixliesearth\core\managers\CoinManager.class
+eu\pixliesearth\core\utils\AfkMap.class
 eu\pixliesearth\core\commands\ChatCommand.class
 eu\pixliesearth\core\listener\LeaveListener.class
 eu\pixliesearth\core\modules\economy\VaultAPI.class

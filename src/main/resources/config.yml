@@ -1,6 +1,7 @@
 mongodb-connectionstring: "mongodb://root:password@host:27017"
 discordtoken: "TOKEN_HERE"
 chatchannel: "CHANNEL_ID"
+afktime: 15
 modules:
   chatsystem:
     enabled: true

@@ -1,6 +1,7 @@
 mongodb-connectionstring: "mongodb://root:password@host:27017"
 discordtoken: "TOKEN_HERE"
 chatchannel: "CHANNEL_ID"
+afktime: 15
 modules:
   chatsystem:
     enabled: true
@@ -20,7 +21,6 @@ modules:
   warps:
     enabled: true
     # set to 0.0 to be disabled
-    cooldown: 3.0
     warps: []
   economy:
     enabled: true

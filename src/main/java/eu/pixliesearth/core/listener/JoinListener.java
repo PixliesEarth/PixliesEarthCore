@@ -2,6 +2,8 @@ package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.SimpleLocation;
+import eu.pixliesearth.core.utils.AfkMap;
 import eu.pixliesearth.core.utils.Methods;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
@@ -23,6 +25,7 @@ public class JoinListener implements Listener {
             profile.getKnownUsernames().add(player.getName());
         }
         profile.backup();
+        Main.getInstance().getPlayerLists().locationMap.put(player.getUniqueId(), new AfkMap(new SimpleLocation(player.getLocation()), 0));
         event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
 
         player.sendMessage("§aEARTH §8| §7Your profile has been §bloaded§7.");
