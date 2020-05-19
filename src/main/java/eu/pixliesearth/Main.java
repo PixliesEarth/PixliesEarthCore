@@ -4,9 +4,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import eu.pixliesearth.core.commands.*;
-import eu.pixliesearth.core.listener.JoinListener;
-import eu.pixliesearth.core.listener.LeaveListener;
-import eu.pixliesearth.core.listener.MoveListener;
+import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.WarpSystem;
@@ -141,6 +139,8 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new MoveListener(), this);
+        manager.registerEvents(new BlockBreakListener(), this);
+        manager.registerEvents(new ItemInteractListener(), this);
     }
 
     public Profile getProfile(UUID uuid) {

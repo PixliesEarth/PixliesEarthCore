@@ -6,8 +6,10 @@ eu\pixliesearth\nations\commands\NationCommand.class
 eu\pixliesearth\nations\commands\subcommand\nation\createNation.class
 eu\pixliesearth\core\lib\me\joeleoli\frame\FrameAdapter.class
 eu\pixliesearth\core\commands\ProfileCommand.class
+eu\pixliesearth\core\listener\BlockBreakListener.class
 eu\pixliesearth\core\utils\Methods.class
 eu\pixliesearth\nations\entities\nation\Nation.class
+eu\pixliesearth\core\listener\ItemInteractListener.class
 eu\pixliesearth\core\commands\ModulesCommand.class
 eu\pixliesearth\core\interfaces\Module.class
 eu\pixliesearth\core\listener\MoveListener.class
@@ -16,6 +18,7 @@ eu\pixliesearth\discord\ChatEvent.class
 eu\pixliesearth\core\modules\ChatSystem.class
 eu\pixliesearth\core\objects\Profile.class
 eu\pixliesearth\core\lib\me\joeleoli\frame\FrameBoard.class
+eu\pixliesearth\core\objects\Home.class
 eu\pixliesearth\core\utils\OneRowMap.class
 eu\pixliesearth\nations\entities\chunk\NationChunk.class
 eu\pixliesearth\core\modules\economy\Receipt.class
