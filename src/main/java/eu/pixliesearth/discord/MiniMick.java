@@ -28,9 +28,6 @@ public class MiniMick {
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.LISTENING, "to your heart <3");
 
-        if (api.getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get() != null)
-            Bukkit.getPluginManager().registerEvents(new ChatEvent(), Main.getInstance());
-
         api.addMessageCreateListener(event -> {
            if (event.getMessageContent().startsWith("/link")) {
                String[] split = event.getMessageContent().split(" ");

@@ -7,8 +7,9 @@ import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.core.utils.CooldownMap;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.ranktw.DiscordWebHooks.DiscordMessage;
+import net.ranktw.DiscordWebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -86,6 +87,19 @@ public class ChatSystem implements Listener, Module {
                 final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage());
                 event.getRecipients().clear();
                 Bukkit.broadcastMessage(format);
+
+                String json = "{username: \"" + event.getPlayer().getName() + "\", avatar_url: \"" + "https://minotar.net/avatar/" + event.getPlayer().getName() + "\", content: \"" + event.getMessage().replace("@", "") +  "\"}";
+
+                String webhook = config.getString("webhook");
+                DiscordWebhook discord = new DiscordWebhook(webhook); // Create the webhook client
+
+                DiscordMessage dm = new DiscordMessage.Builder()
+                        .withUsername(event.getPlayer().getName())
+                        .withContent(event.getMessage().replace("@", ""))
+                        .withAvatarURL("https://minotar.net/avatar/" + event.getPlayer().getName())
+                        .build();
+
+                discord.sendMessage(dm);
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
                     int taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(instance, () -> {
