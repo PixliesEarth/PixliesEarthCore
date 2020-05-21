@@ -13,6 +13,7 @@ eu\pixliesearth\core\lib\me\joeleoli\frame\FrameAdapter.class
 eu\pixliesearth\core\commands\ProfileCommand.class
 eu\pixliesearth\core\listener\BlockBreakListener.class
 eu\pixliesearth\core\utils\Methods.class
+eu\pixliesearth\core\commands\HealCommand.class
 eu\pixliesearth\nations\entities\nation\Nation.class
 eu\pixliesearth\core\listener\ItemInteractListener.class
 eu\pixliesearth\core\commands\ModulesCommand.class

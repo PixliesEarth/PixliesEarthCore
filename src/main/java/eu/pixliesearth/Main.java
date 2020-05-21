@@ -132,6 +132,7 @@ public final class Main extends JavaPlugin {
         getCommand("backup").setExecutor(new BackupCommand());
         getCommand("economy").setExecutor(new EconomySystem());
         getCommand("balance").setExecutor(new BalanceCommand());
+        getCommand("heal").setExecutor(new HealCommand());
     }
 
     private void registerEvents(PluginManager manager) {

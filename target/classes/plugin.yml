@@ -52,12 +52,17 @@ commands:
     description: bal
     aliases:
       - bal
-
+  heal:
+    description: heal
+    aliases:
+      - hl
 permissions:
   # GENERAL
   earth.admin:
     default: op
   earth.seen:
+    default: op
+  earth.heal:
     default: op
   # CHAT
   earth.chat.colours:

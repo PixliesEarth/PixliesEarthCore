@@ -21,6 +21,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.0.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.0.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okhttp3:okhttp:3.9.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okio:okio:1.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.kevinsawicki:http-request:6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.12" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.tuinity:tuinity:1.15.2-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.5.19" level="project" />

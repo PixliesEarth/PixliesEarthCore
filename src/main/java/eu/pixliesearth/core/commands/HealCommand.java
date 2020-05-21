@@ -1,4 +1,51 @@
 package eu.pixliesearth.core.commands;
 
-public class HealCommand {
+import eu.pixliesearth.core.utils.PlayerLists;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.Objects;
+
+public class HealCommand implements CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
+    if(!(commandSender instanceof Player)){
+        commandSender.sendMessage("§aEARTH §8| §7Only executable by a player.");
+        return false;
+    }
+        Player p = (Player) commandSender;
+        if(!(p.hasPermission("earth.heal"))){
+            p.sendMessage("§aEARTH §8| §cInsufficient permissions");
+            return false;
+        }
+
+        if(args.length == 0){
+            double healed = 20 - p.getHealth();
+            String result = String.format(healed + "","##.##");
+            p.sendMessage("§aEARTH §8| §a You healed §b" + result + " §7§aheart(s)!");
+            p.setHealth(20.0);
+        }
+        if(args.length == 1){
+            if(Bukkit.getPlayer(args[0]) == null){
+                p.sendMessage("§aEARTH §8| §6" + args[0] + " §f§cis not online!");
+                return false;
+            }else{
+                if(Objects.requireNonNull(Bukkit.getPlayer(args[0])).isDead()){
+                    p.sendMessage("§aEARTH §8| §cYou cant resurrect people...");
+                }else{
+                    double healed = 20 - Objects.requireNonNull(Bukkit.getPlayer(args[0])).getHealth();
+                    String result = String.format(healed + "","##.##");
+                    Objects.requireNonNull(Bukkit.getPlayer(args[0])).setHealth(20.0);
+                    p.sendMessage("§aEARTH §8| §aYou healed §6" + Objects.requireNonNull(Bukkit.getPlayer(args[0])).getName() + "§f§a for §f§b" + healed + " §7§aheart(s)!");
+                    Objects.requireNonNull(Bukkit.getPlayer(args[0])).sendMessage("§aEARTH §8| §6" + p.getName() + " §f§a healed §f§b" + result + " §7§aheart(s) for you!");
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
 }
