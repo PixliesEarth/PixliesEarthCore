@@ -1,29 +1,37 @@
-package eu.pixliesearth.core.lib.me.joeleoli.frame;
+package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
 
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-public class FrameBoardEntry {
+import java.util.Set;
 
-	private final FrameBoard board;
-	@Setter
-	private String text;
-	private String identifier;
+public class AssembleBoardEntry {
+
+	private final AssembleBoard board;
+	@Setter private String text, identifier;
 	private Team team;
+	private int position;
 
-	public FrameBoardEntry(FrameBoard board, String text) {
+	public AssembleBoardEntry(AssembleBoard board, String text, int position) {
 		this.board = board;
 		this.text = text;
-		this.identifier = this.board.getUniqueIdentifier(text);
+		this.position = position;
+		this.identifier = this.board.getUniqueIdentifier(position);
 
 		this.setup();
 	}
 
 	public void setup() {
 		final Scoreboard scoreboard = this.board.getScoreboard();
+
+		if (scoreboard == null) {
+			return;
+		}
+
 		String teamName = this.identifier;
 
 		// This shouldn't happen, but just in case
@@ -39,7 +47,7 @@ public class FrameBoardEntry {
 		}
 
 		// Add the entry to the team
-		if (!team.getEntries().contains(this.identifier)) {
+		if (team.getEntries() == null || team.getEntries().isEmpty() || !team.getEntries().contains(this.identifier)) {
 			team.addEntry(this.identifier);
 		}
 

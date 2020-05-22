@@ -1,6 +1,5 @@
 package eu.pixliesearth.core.commands;
 
-import eu.pixliesearth.core.utils.PlayerLists;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,22 +24,22 @@ public class HealCommand implements CommandExecutor {
         if(args.length == 0){
             double healed = 20 - p.getHealth();
             String result = String.format(healed + "","##.##");
-            p.sendMessage("§aEARTH §8| §a You healed §b" + result + " §7§aheart(s)!");
+            p.sendMessage("§aEARTH §8| §7You healed §b" + result + " §7heart(s)!");
             p.setHealth(20.0);
         }
         if(args.length == 1){
             if(Bukkit.getPlayer(args[0]) == null){
-                p.sendMessage("§aEARTH §8| §6" + args[0] + " §f§cis not online!");
+                p.sendMessage("§aEARTH §8| §6" + args[0] + " §f§cis not §7online!");
                 return false;
             }else{
                 if(Objects.requireNonNull(Bukkit.getPlayer(args[0])).isDead()){
-                    p.sendMessage("§aEARTH §8| §cYou cant resurrect people...");
+                    p.sendMessage("§aEARTH §8| §7You §ccant §7resurrect people...");
                 }else{
                     double healed = 20 - Objects.requireNonNull(Bukkit.getPlayer(args[0])).getHealth();
                     String result = String.format(healed + "","##.##");
                     Objects.requireNonNull(Bukkit.getPlayer(args[0])).setHealth(20.0);
-                    p.sendMessage("§aEARTH §8| §aYou healed §6" + Objects.requireNonNull(Bukkit.getPlayer(args[0])).getName() + "§f§a for §f§b" + healed + " §7§aheart(s)!");
-                    Objects.requireNonNull(Bukkit.getPlayer(args[0])).sendMessage("§aEARTH §8| §6" + p.getName() + " §f§a healed §f§b" + result + " §7§aheart(s) for you!");
+                    p.sendMessage("§aEARTH §8| §7You healed §6" + Objects.requireNonNull(Bukkit.getPlayer(args[0])).getName() + "§7 for §f§b" + healed + " §7heart(s)!");
+                    Objects.requireNonNull(Bukkit.getPlayer(args[0])).sendMessage("§aEARTH §8| §6" + p.getName() + " §7healed §b" + result + " §7heart(s) for you!");
                     return false;
                 }
             }

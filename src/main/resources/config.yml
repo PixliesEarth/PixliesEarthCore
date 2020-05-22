@@ -1,6 +1,7 @@
 mongodb-connectionstring: "mongodb://root:password@host:27017"
 discordtoken: "TOKEN_HERE"
 webhook: "WEBHOOK_HERE"
+chatchannel: "ID_HERE"
 afktime: 15
 modules:
   chatsystem:

@@ -1,9 +1,9 @@
-package eu.pixliesearth.core.lib.me.joeleoli.frame;
+package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
 
 import java.util.List;
 import org.bukkit.entity.Player;
 
-public interface FrameAdapter {
+public interface AssembleAdapter {
 
 	String getTitle(Player player);
 

@@ -2,6 +2,7 @@ package eu.pixliesearth.core.objects;
 
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +39,9 @@ public class Profile {
     private int boosts;
     private String lastAt;
     private double pixliecoins;
+    private Map<String, Map<Double, Double>> timers;
+    private String favoriteColour;
+    private String boardType;
     private Map<String, Object> extras;
 
     public static Profile get(UUID uuid) {
@@ -65,9 +69,12 @@ public class Profile {
             profile.append("boosts", 0);
             profile.append("lastAt", "NONE");
             profile.append("pixliecoins", 0D);
+            profile.append("timers", new HashMap<>());
+            profile.append("favoriteColour", "§3");
+            profile.append("boardType", ScoreboardAdapter.scoreboardType.STANDARD.name());
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -99,6 +106,9 @@ public class Profile {
         profile.append("boosts", boosts);
         profile.append("lastAt", lastAt);
         profile.append("pixliecoins", pixliecoins);
+        profile.append("timers", timers);
+        profile.append("favoriteColour", favoriteColour);
+        profile.append("boardType", boardType);
         profile.append("extras", extras);
         Main.getPlayerCollection().deleteOne(found);
         Main.getPlayerCollection().insertOne(profile);
