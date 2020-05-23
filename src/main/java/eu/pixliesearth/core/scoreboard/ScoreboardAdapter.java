@@ -30,8 +30,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add("  §8» §e" + profile.getEnergy() + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
-                    returnable.add(c + "§8Faction");
-                    returnable.add("  §8» §b" + nation);
+                    returnable.add(c + "§8Nation");
+                    returnable.add("  §8» §b" + nation.getName());
                     returnable.add("  §8» §7Online: §a" + nation.getOnlineMembers());
                 }
                 break;
