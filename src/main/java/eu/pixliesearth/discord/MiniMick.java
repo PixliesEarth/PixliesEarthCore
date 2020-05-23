@@ -85,7 +85,7 @@ public class MiniMick {
                event.getChannel().sendMessage(new EmbedBuilder()
                        .setColor(Color.GREEN)
                         .setDescription("**" + Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid).getPlayer()).getName() + "** has $" + balance + " to his name!" )
-                       .setFooter("Minimick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
+                       .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
                        .setTimestampToNow());
 
            }
