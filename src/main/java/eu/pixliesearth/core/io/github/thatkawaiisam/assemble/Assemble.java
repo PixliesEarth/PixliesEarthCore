@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
+import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -56,6 +56,10 @@ commands:
     description: heal
     aliases:
       - hl
+  feed:
+    description: feed
+    aliases:
+      - fd
 permissions:
   # GENERAL
   earth.admin:
@@ -63,6 +67,8 @@ permissions:
   earth.seen:
     default: op
   earth.heal:
+    default: op
+  earth.feed:
     default: op
   # CHAT
   earth.chat.colours:
