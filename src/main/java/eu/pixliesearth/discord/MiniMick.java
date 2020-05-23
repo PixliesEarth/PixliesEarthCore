@@ -3,6 +3,7 @@ package eu.pixliesearth.discord;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Profile;
 import lombok.Getter;
 import org.bson.Document;
@@ -11,7 +12,12 @@ import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionType;
+
+import java.awt.*;
+import java.util.Objects;
+import java.util.UUID;
 
 public class MiniMick {
 
@@ -31,7 +37,7 @@ public class MiniMick {
         api.addMessageCreateListener(event -> {
            if (event.getMessageContent().startsWith("/link")) {
                String[] split = event.getMessageContent().split(" ");
-               if (split[1] == null) {
+               if (split.length == 1) {
                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, you have to give me a code so I can verify your account.");
                    return;
                }
@@ -49,7 +55,7 @@ public class MiniMick {
                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
                    Main.getInstance().getPlayerLists().discordcodes.remove(split[1]);
                } else {
-                   event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is unvalid.");
+                   event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is invalid.");
                }
            } else if (event.getMessageContent().equalsIgnoreCase("/givemydata")) {
                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
@@ -67,6 +73,21 @@ public class MiniMick {
                Main.getInstance().saveConfig();
                Main.getInstance().reloadConfig();
                event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, successfully set the chat-channel.");
+           } else if(event.getMessageContent().equalsIgnoreCase("/bal")){
+               Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
+               if (profile == null) {
+                   event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
+                   return;
+               }
+
+               double balance = profile.getBalance();
+               UUID uuid = UUID.fromString(profile.getUniqueId());
+               event.getChannel().sendMessage(new EmbedBuilder()
+                       .setColor(Color.GREEN)
+                        .setDescription("**" + Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid).getPlayer()).getName() + "** has $" + balance + " to his name!" )
+                       .setFooter("Minimick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
+                       .setTimestampToNow());
+
            }
         });
 
