@@ -4,6 +4,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import eu.pixliesearth.core.commands.*;
+import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.Assemble;
+import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -12,16 +14,19 @@ import eu.pixliesearth.core.modules.economy.EconomySystem;
 import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.nations.commands.NationCommand;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +48,10 @@ public final class Main extends JavaPlugin {
     private @Getter FileManager warpsCfg;
 
     private @Getter PlayerLists playerLists;
+
+    private static @Getter Permission perms = null;
+
+    private static @Getter Assemble assemble = null;
 
     @Override
     public void onEnable() {
@@ -112,6 +121,15 @@ public final class Main extends JavaPlugin {
         }, (20 * 60) * 60, (20 * 60) * 60);
 
         new MiniMick().start();
+
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+
+        assemble = new Assemble(this, new ScoreboardAdapter());
+
+        assemble.setTicks(2);
+
+        assemble.setAssembleStyle(AssembleStyle.VIPER);
 
     }
 

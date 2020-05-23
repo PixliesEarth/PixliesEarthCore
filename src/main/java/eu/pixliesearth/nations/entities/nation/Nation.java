@@ -5,6 +5,7 @@ import eu.pixliesearth.Main;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 
 import java.util.List;
 import java.util.UUID;
@@ -49,6 +50,10 @@ public class Nation {
         }
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
+    }
+
+    public int getOnlineMembers() {
+        return (int) members.stream().filter(string -> Bukkit.getPlayer(UUID.fromString(string)) != null).count();
     }
 
     public static Nation getById(String id) {
