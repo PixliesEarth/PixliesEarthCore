@@ -78,7 +78,10 @@ commands:
     aliases:
       - admin
       - override
-
+  flyspeed:
+    description: flyspeed
+    aliases:
+      - fs
 permissions:
   # GENERAL
   earth.admin:
@@ -88,6 +91,8 @@ permissions:
   earth.heal:
     default: op
   earth.feed:
+    default: op
+  earth.flyspeed:
     default: op
   # CHAT
   earth.chat.colours:
