@@ -79,7 +79,6 @@ public class MiniMick {
                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
                    return;
                }
-
                double balance = profile.getBalance();
                UUID uuid = UUID.fromString(profile.getUniqueId());
                event.getChannel().sendMessage(new EmbedBuilder()
