@@ -62,8 +62,8 @@ public class ChatSystem implements Listener, Module {
                 }
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
-                    if (instance.getPlayerLists().chatCooldown.containsKey(player.getUniqueId()) && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage("§7You have to wait §b" + Methods.getTimeAsString(instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).getRemaining(), true) + " §7to chat again.");
+                    if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
+                        player.sendMessage("§7You have to wait §b" + Methods.getTimeAsString(profile.getTimers().get("chat").getRemaining(), true) + " §7to chat again.");
                         event.setCancelled(true);
                         return;
                     }
@@ -105,9 +105,11 @@ public class ChatSystem implements Listener, Module {
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
                     Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);
-                    instance.getPlayerLists().chatCooldown.put(player.getUniqueId(), timer);
+                    profile.getTimers().put("chat", timer);
+                    profile.save();
                     Bukkit.getScheduler().runTaskLater(instance, () -> {
-                        instance.getPlayerLists().chatCooldown.remove(player.getUniqueId());
+                        profile.getTimers().remove("chat");
+                        profile.save();
                         player.sendActionBar("§aYou may now chat again.");
                     }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);
                 }

@@ -3,6 +3,8 @@ package eu.pixliesearth.core.scoreboard;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
@@ -10,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ScoreboardAdapter implements AssembleAdapter {
 
@@ -44,23 +47,24 @@ public class ScoreboardAdapter implements AssembleAdapter {
             case STANDARD:
                 returnable.add(c + "§lPlayer");
                 returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
-                returnable.add("  §8» §fBalance");
-                returnable.add("    §8╚ §2§l$§a" + profile.getBalance());
-                returnable.add("  §8» §fPixlieCoins");
-                returnable.add("    §8╚ §b" + profile.getPixliecoins() + "§3⛃");
-                returnable.add("  §8» §fEnergy");
-                returnable.add("    §8╚ §e" + profile.getEnergy() + "§6§l⚡");
+                returnable.add("  §8» §2§l$§a" + profile.getBalance());
+                returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
+                returnable.add("  §8» §e" + profile.getEnergy() + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
-                    returnable.add("  §8» §fName");
-                    returnable.add("    §8╚ §b" + nation.getName());
-                    returnable.add("  §8» §fOnline members");
-                    returnable.add("    §8╚ §a" + nation.getOnlineMembers());
+                    returnable.add("  §8» §b" + nation.getName());
+                    returnable.add("  §8»§7Online: §a" + nation.getOnlineMembers());
+                }
+                if (profile.getTimers().size() > 0) {
+                    returnable.add("   ");
+                    for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
+                        returnable.add(c + "§l" + entry.getKey());
+                        returnable.add("  §8» §7" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));
+                    }
                 }
                 break;
             case COMPACT:
-                returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
                 returnable.add("§e" + profile.getEnergy() + "§6§l⚡");
@@ -68,6 +72,13 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♜ §8| §b" + nation.getName());
                     returnable.add(c + "☺ §8| §a" + nation.getOnlineMembers());
+                }
+                if (profile.getTimers().size() > 0) {
+                    returnable.add("   ");
+                    for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
+                        returnable.add(c + "§l" + entry.getKey());
+                        returnable.add("§7" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));
+                    }
                 }
                 break;
         }

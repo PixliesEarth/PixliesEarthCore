@@ -3,6 +3,7 @@ package eu.pixliesearth.core.objects;
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+
 import java.util.*;
 
 @Data
@@ -39,7 +41,7 @@ public class Profile {
     private int boosts;
     private String lastAt;
     private double pixliecoins;
-    private Map<String, Map<Double, Double>> timers;
+    private Map<String, Timer> timers;
     private String favoriteColour;
     private String boardType;
     private Map<String, Object> extras;
@@ -113,6 +115,10 @@ public class Profile {
         Main.getPlayerCollection().deleteOne(found);
         Main.getPlayerCollection().insertOne(profile);
         return;
+    }
+
+    public void save() {
+        instance.getPlayerLists().profiles.put(UUID.fromString(uniqueId), this);
     }
 
     public void addToNation(String id) {

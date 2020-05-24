@@ -10,8 +10,6 @@ public class PlayerLists {
 
     public Map<UUID, Profile> profiles;
 
-    public Map<UUID, Timer> chatCooldown;
-
     public Map<UUID, UUID> tpaRequests;
 
     public Map<UUID, CooldownMap> teleportCooldown;
@@ -28,8 +26,7 @@ public class PlayerLists {
 
     public PlayerLists() {
         staffMode = new HashSet<>();
-        profiles = new HashMap<>();;
-        chatCooldown = new HashMap<>();
+        profiles = new HashMap<>();
         tpaRequests = new HashMap<>();
         teleportCooldown = new HashMap<>();
         discordcodes = new HashMap<>();
