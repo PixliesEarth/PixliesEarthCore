@@ -5,6 +5,8 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.core.utils.CooldownMap;
+import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.ranktw.DiscordWebHooks.DiscordMessage;
@@ -60,8 +62,8 @@ public class ChatSystem implements Listener, Module {
                 }
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
-                    if (instance.getPlayerLists().chatCooldown.containsKey(player) && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage("§7You have to wait §b" + instance.getPlayerLists().chatCooldown.get(player).getTimeLeft() + " second(s) §7to chat again.");
+                    if (instance.getPlayerLists().chatCooldown.containsKey(player.getUniqueId()) && !player.hasPermission("earth.chat.bypasscooldown")) {
+                        player.sendMessage("§7You have to wait §b" + Methods.getTimeAsString(instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).getRemaining(), true) + " §7to chat again.");
                         event.setCancelled(true);
                         return;
                     }
@@ -102,16 +104,12 @@ public class ChatSystem implements Listener, Module {
                 discord.sendMessage(dm);
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
-                    int taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(instance, () -> {
-                        if (instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1 == 0.0) {
-                            Bukkit.getScheduler().cancelTask(instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).getTaskId());
-                            instance.getPlayerLists().chatCooldown.remove(player.getUniqueId());
-                            player.sendActionBar("§aYou can chat again.");
-                            return;
-                        }
-                        instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).setTimeLeft(instance.getPlayerLists().chatCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1);
-                    }, 0L, 2);
-                    instance.getPlayerLists().chatCooldown.put(player.getUniqueId(), new CooldownMap(config.getDouble("modules.chatsystem.cooldown"), taskId));
+                    Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);
+                    instance.getPlayerLists().chatCooldown.put(player.getUniqueId(), timer);
+                    Bukkit.getScheduler().runTaskLater(instance, () -> {
+                        instance.getPlayerLists().chatCooldown.remove(player.getUniqueId());
+                        player.sendActionBar("§aYou may now chat again.");
+                    }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);
                 }
             }
         }

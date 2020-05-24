@@ -20,14 +20,14 @@ public class CoinsCommand implements CommandExecutor {
                 }
                 Player player = (Player) sender;
                 Profile user = Main.getInstance().getProfile(player.getUniqueId());
-                sender.sendMessage("§6PIXLIECOINS §8| §7You have §6" + user.getPixliecoins() + "✪ §7on your account.");
+                sender.sendMessage("§3PIXLIECOINS §8| §7You have §b" + user.getPixliecoins() + "§3⛃ §7on your account.");
                 break;
             case 2:
                 boolean allowed = false;
                 if (!(sender instanceof Player)) allowed = true;
                 if (sender.hasPermission("earth.coins.admin")) allowed = true;
                 if (!allowed) {
-                    sender.sendMessage("§6PIXLIECOINS §8| §cInsufficient permissions.");
+                    sender.sendMessage("§3PIXLIECOINS §8| §cInsufficient permissions.");
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("check")) {

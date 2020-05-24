@@ -47,7 +47,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add("  §8» §fBalance");
                 returnable.add("    §8╚ §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §fPixlieCoins");
-                returnable.add("    §8╚ §b" + profile.getPixliecoins() + "§3§l⛃");
+                returnable.add("    §8╚ §b" + profile.getPixliecoins() + "§3⛃");
                 returnable.add("  §8» §fEnergy");
                 returnable.add("    §8╚ §e" + profile.getEnergy() + "§6§l⚡");
                 if (profile.isInNation()) {

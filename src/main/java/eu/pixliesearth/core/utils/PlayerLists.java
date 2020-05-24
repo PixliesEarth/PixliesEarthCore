@@ -10,7 +10,7 @@ public class PlayerLists {
 
     public Map<UUID, Profile> profiles;
 
-    public Map<UUID, CooldownMap> chatCooldown;
+    public Map<UUID, Timer> chatCooldown;
 
     public Map<UUID, UUID> tpaRequests;
 
