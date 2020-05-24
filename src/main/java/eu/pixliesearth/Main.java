@@ -152,6 +152,9 @@ public final class Main extends JavaPlugin {
         getCommand("balance").setExecutor(new BalanceCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("feed").setExecutor(new FeedCommand());
+        getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
+        getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
+        getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
     }
 
     private void registerEvents(PluginManager manager) {

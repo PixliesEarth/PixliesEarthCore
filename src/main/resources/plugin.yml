@@ -60,6 +60,18 @@ commands:
     description: feed
     aliases:
       - fd
+  gmc:
+    description: gmc
+    aliases:
+      - gm1
+  gms:
+    description: gms
+    aliases:
+      - gm0
+  gmsp:
+    description: gmsp
+    aliases:
+      - gm2
 permissions:
   # GENERAL
   earth.admin:
