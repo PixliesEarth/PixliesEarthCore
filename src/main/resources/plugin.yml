@@ -82,6 +82,8 @@ commands:
     description: flyspeed
     aliases:
       - fs
+  fly:
+    description: fly
 permissions:
   # GENERAL
   earth.admin:
@@ -93,6 +95,8 @@ permissions:
   earth.feed:
     default: op
   earth.flyspeed:
+    default: op
+  earth.fly:
     default: op
   # CHAT
   earth.chat.colours:

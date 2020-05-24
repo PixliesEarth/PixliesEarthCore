@@ -163,6 +163,7 @@ public final class Main extends JavaPlugin {
         getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
         getCommand("staff").setExecutor(new StaffCommand());
         getCommand("flyspeed").setExecutor(new FlySpeedCommand());
+        getCommand("fly").setExecutor(new FlyCommand());
     }
 
     private void registerEvents(PluginManager manager) {
