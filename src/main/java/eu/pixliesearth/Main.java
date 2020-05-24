@@ -156,6 +156,7 @@ public final class Main extends JavaPlugin {
         getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
         getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
         getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
+        getCommand("staff").setExecutor(new StaffCommand());
     }
 
     private void registerEvents(PluginManager manager) {

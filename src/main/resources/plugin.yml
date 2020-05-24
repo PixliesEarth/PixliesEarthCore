@@ -73,6 +73,12 @@ commands:
     description: gmsp
     aliases:
       - gm2
+  staff:
+    description: staff
+    aliases:
+      - admin
+      - override
+
 permissions:
   # GENERAL
   earth.admin:

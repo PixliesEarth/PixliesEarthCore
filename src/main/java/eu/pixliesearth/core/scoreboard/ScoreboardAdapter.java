@@ -45,6 +45,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
+                if (Main.getInstance().getPlayerLists().staffMode.contains(player.getUniqueId())) {
+                    returnable.add(c + "§lStaff");
+                    returnable.add("  §8» §aenabled");
+                }
                 returnable.add(c + "§lPlayer");
                 returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
@@ -54,7 +58,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
                     returnable.add("  §8» §b" + nation.getName());
-                    returnable.add("  §8»§7Online: §a" + nation.getOnlineMembers());
+                    returnable.add("  §8» §a" + nation.getOnlineMembers() + " Online");
                 }
                 if (profile.getTimers().size() > 0) {
                     returnable.add("   ");
@@ -65,6 +69,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 break;
             case COMPACT:
+                if (Main.getInstance().getPlayerLists().staffMode.contains(player.getUniqueId())) {
+                    returnable.add("§7Staff");
+                    returnable.add("§aenabled");
+                }
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
                 returnable.add("§e" + profile.getEnergy() + "§6§l⚡");
@@ -76,8 +84,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 if (profile.getTimers().size() > 0) {
                     returnable.add("   ");
                     for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
-                        returnable.add(c + "§l" + entry.getKey());
-                        returnable.add("§7" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));
+                        returnable.add("§7" + entry.getKey());
+                        returnable.add("§3" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));
                     }
                 }
                 break;

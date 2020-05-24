@@ -44,6 +44,10 @@ public class createNation implements SubCommand {
             player.sendMessage("§bNATION §8| §7There is already a nation with that name.");
             return false;
         }
+        if (name.length() < 3 || name.length() > 10) {
+            player.sendMessage("§bNATION §8| §7The name of your nation can only be min. §b3 §7and max. §b10 §7characters long.");
+            return false;
+        }
         Nation nation = new Nation(Methods.generateId(7), name, "No description :(", Era.START.getName(), 0,0.0, player.getUniqueId().toString(), new ArrayList<>());
         nation.save();
         profile.addToNation(nation.getNationId());
