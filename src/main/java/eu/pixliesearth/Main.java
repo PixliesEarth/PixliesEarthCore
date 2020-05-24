@@ -19,6 +19,8 @@ import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.nations.commands.NationCommand;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -40,8 +42,6 @@ public final class Main extends JavaPlugin {
     private static @Getter MongoCollection<Document> playerCollection;
 
     private static @Getter MongoCollection<Document> nationCollection;
-
-    private static @Getter MongoCollection<Document> chunkCollection;
 
     private static @Getter Economy economy;
 
@@ -76,7 +76,6 @@ public final class Main extends JavaPlugin {
         MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
         playerCollection = mongoDatabase.getCollection("users");
         nationCollection = mongoDatabase.getCollection("nations");
-        chunkCollection = mongoDatabase.getCollection("chunks");
 
         getServer().getServicesManager().register(Economy.class, new VaultAPI(), this, ServicePriority.Normal);
         economy = new VaultAPI();
@@ -108,7 +107,7 @@ public final class Main extends JavaPlugin {
                 profile.backup();
             }
             Bukkit.getConsoleSender().sendMessage("§aDone.");
-        }, 20 * 60, 20 * 60);
+        }, 20 * 60, (20 * 60) * 5);
 
         // ENERGY SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
@@ -120,10 +119,15 @@ public final class Main extends JavaPlugin {
             }
         }, (20 * 60) * 60, (20 * 60) * 60);
 
-        new MiniMick().start();
+        // NATION SCHEDULER
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            getLogger().info("§aSaving all nations in the database...");
+            for (Nation nation : NationManager.nations.values())
+                nation.backup();
+            getLogger().info("§aSaved all nations in the database.");
+        }, (20 * 60) * 15, (20 * 60) * 15);
 
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        perms = rsp.getProvider();
+        new MiniMick().start();
 
         assemble = new Assemble(this, new ScoreboardAdapter());
 

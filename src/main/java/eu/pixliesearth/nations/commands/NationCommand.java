@@ -43,18 +43,23 @@ public class NationCommand implements CommandExecutor, TabExecutor {
          */
         boolean found = false;
         if (strings.length > 0) {
+
+            List<String> list = new ArrayList<>(Arrays.asList(strings));
+            list.remove(strings[0]);
+            String[] args = list.toArray(new String[0]);
+
             for (SubCommand sub : getSubCommands())
                 for (String s : sub.aliases())
                     if (strings[0].equalsIgnoreCase(s)) {
                         found = true;
                         if (sub.staff() && sender instanceof Player) {
                             if (instance.getPlayerLists().staffMode.contains(((Player) sender).getUniqueId())) {
-                                sub.execute(sender, strings);
+                                sub.execute(sender, args);
                             } else {
                                 sender.sendMessage("§aEARTH §8| §cInsufficient permissions.");
                             }
                         } else {
-                            sub.execute(sender, strings);
+                            sub.execute(sender, args);
                         }
                     }
             if (!found)

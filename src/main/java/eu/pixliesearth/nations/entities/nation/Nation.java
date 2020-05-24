@@ -1,14 +1,15 @@
 package eu.pixliesearth.nations.entities.nation;
 
-import com.google.gson.Gson;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.utils.OneRowMap;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
+import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -18,29 +19,42 @@ public class Nation {
     private String name;
     private String description;
     private String era;
+    private String ideology;
+    private String religion;
     private int xpPoints;
     private double money;
     private String leader;
+    private Map<String, OneRowMap> ranks;
     private List<String> members;
+    private List<String> chunks;
 
 
     // ADVANCED METHODS
-    public void save() {
+    public void backup() {
         Document nation = new Document("nationId", nationId);
         Document found = Main.getNationCollection().find(nation).first();
         nation.append("name", name);
         nation.append("description", description);
         nation.append("era", era);
+        nation.append("ideology", ideology);
+        nation.append("religion", religion);
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
         nation.append("leader", leader);
+        nation.append("ranks", ranks);
         nation.append("members", members);
+        nation.append("chunks", chunks);
         if (found == null) {
             Main.getNationCollection().insertOne(nation);
         } else {
             Main.getNationCollection().deleteOne(found);
             Main.getNationCollection().insertOne(nation);
         }
+    }
+
+    public Nation save() {
+        NationManager.nations.put(nationId, this);
+        return this;
     }
 
     public void remove() {
@@ -57,19 +71,27 @@ public class Nation {
     }
 
     public static Nation getById(String id) {
-        Document nation = new Document("nationId", id);
-        Document found = Main.getNationCollection().find(nation).first();
-        if (found != null)
-            return new Gson().fromJson(found.toJson(), Nation.class);
-        return null;
+        return NationManager.nations.get(id);
     }
 
     public static Nation getByName(String name) {
-        Document nation = new Document("name", name);
-        Document found = Main.getNationCollection().find(nation).first();
-        if (found != null)
-            return new Gson().fromJson(found.toJson(), Nation.class);
-        return null;
+        final Nation[] nation = {null};
+        NationManager.nations.entrySet().stream().parallel().forEach(e -> {
+            if (e.getValue().getName().equalsIgnoreCase(name))
+                nation[0] = e.getValue();
+        });
+        return nation[0];
+    }
+
+    public static Map<String, OneRowMap> defaultRanks() {
+        Map<String, OneRowMap> map = new HashMap<>();
+        List<String> adminPerms = new ArrayList<>();
+        for (Permission value : Permission.values()) {
+            adminPerms.add(value.name());
+        }
+        List<String> memberperms = new ArrayList<>();
+
+        return map;
     }
 
 }

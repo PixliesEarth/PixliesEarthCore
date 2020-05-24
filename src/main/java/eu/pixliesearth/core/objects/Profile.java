@@ -44,6 +44,7 @@ public class Profile {
     private Map<String, Timer> timers;
     private String favoriteColour;
     private String boardType;
+    private String lang;
     private Map<String, Object> extras;
 
     public static Profile get(UUID uuid) {
@@ -74,9 +75,10 @@ public class Profile {
             profile.append("timers", new HashMap<>());
             profile.append("favoriteColour", "§3");
             profile.append("boardType", ScoreboardAdapter.scoreboardType.STANDARD.name());
+            profile.append("lang", "ENG");
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0,10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -111,6 +113,7 @@ public class Profile {
         profile.append("timers", timers);
         profile.append("favoriteColour", favoriteColour);
         profile.append("boardType", boardType);
+        profile.append("lang", lang);
         profile.append("extras", extras);
         Main.getPlayerCollection().deleteOne(found);
         Main.getPlayerCollection().insertOne(profile);
