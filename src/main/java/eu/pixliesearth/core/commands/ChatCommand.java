@@ -7,12 +7,19 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatCommand implements CommandExecutor {
 
-    private static Main instance = Main.getInstance();
+    private static final Main instance = Main.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage("§aEARTH §8| §7No arguments given.");
+            return false;
+        }
         boolean allowed = false;
         if (!(sender instanceof Player)) allowed = true;
         if (sender.hasPermission("earth.admin")) allowed = true;
@@ -50,6 +57,36 @@ public class ChatCommand implements CommandExecutor {
                 name = sender.getName();
             }
             Bukkit.broadcastMessage("§dCHAT §8| §7The chat has been unmuted by §b" + name + "§7.");
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
+            if (args.length == 1) {
+                sender.sendMessage("§dCHAT §8| §7You have to enter the word you want to blacklist.");
+                return false;
+            }
+            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chat.blacklist"));
+            if (blacklist.contains(args[1].toLowerCase())) {
+                sender.sendMessage("§dCHAT §8| §7That word is already in the blacklist.");
+                return false;
+            }
+            blacklist.add(args[1].toLowerCase());
+            instance.getConfig().set("modules.chat.blacklist", blacklist);
+            instance.saveConfig();
+            instance.reloadConfig();
+            sender.sendMessage("§dCHAT §8| §aSuccessfully §7added §b" + args[1] + " §7from the blacklist.");
+        } else if (args[0].equalsIgnoreCase("whitelist")) {
+            if (args.length == 1) {
+                sender.sendMessage("§dCHAT §8| §7You have to enter the word you want to whitelist.");
+                return false;
+            }
+            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chat.blacklist"));
+            if (!blacklist.contains(args[1].toLowerCase())) {
+                sender.sendMessage("§dCHAT §8| §7That word is not in the blacklist.");
+                return false;
+            }
+            blacklist.remove(args[1].toLowerCase());
+            instance.getConfig().set("modules.chat.blacklist", blacklist);
+            instance.saveConfig();
+            instance.reloadConfig();
+            sender.sendMessage("§dCHAT §8| §aSuccessfully §7removed §b" + args[1] + " §7from the blacklist.");
         }
 
         return false;

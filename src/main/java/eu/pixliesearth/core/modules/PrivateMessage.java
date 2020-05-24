@@ -16,15 +16,11 @@ public class PrivateMessage implements CommandExecutor, Module {
             sender.sendMessage("§5PM §8| §7The chatsystem is §cdisabled §7at the moment.");
             return false;
         }
-        if (args[0] == null) {
-            sender.sendMessage("§5PM §8| §7You need to state the player you want to send a message to.");
-            return false;
-        }
         if (args.length < 2) {
             sender.sendMessage("§5PM §8| §7Wrong syntax! §e/msg <player> <message>");
             return false;
         }
-        if (!sender.hasPermission("earth.pm.bypassblacklist")) {
+        if (!sender.hasPermission("earth.chat.bypassblacklist")) {
             for (String arg : args)
                 for (String s1 : config.getStringList("modules.privatemessage.blacklist"))
                     if (arg.equalsIgnoreCase(s1)) {

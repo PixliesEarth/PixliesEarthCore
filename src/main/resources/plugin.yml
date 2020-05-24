@@ -28,6 +28,7 @@ commands:
       - pm
       - privatemessage
       - dm
+      - tell
   profile:
     description: profile to string
   link:
