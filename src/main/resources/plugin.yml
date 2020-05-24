@@ -84,6 +84,10 @@ commands:
       - fs
   fly:
     description: fly
+  suicide:
+    description: suicide
+    aliases:
+      - kms
 permissions:
   # GENERAL
   earth.admin:
