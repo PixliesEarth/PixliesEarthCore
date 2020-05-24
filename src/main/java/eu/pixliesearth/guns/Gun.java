@@ -12,6 +12,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,6 +26,7 @@ public class Gun {
        //customeffects create a special arrow, dont make the arrow invis
         // arrow.getCustomEffects().add(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 2));
         //arrow.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 2), false);
+        arrow.setSilent(true);
         player.getWorld().playEffect(arrow.getLocation(), Effect.WITHER_SHOOT, 1);
         //DOESNT WORK ARROW STILL VISIBLE UNEPIC BRUH MOMENT
         for(Player p : Bukkit.getServer().getOnlinePlayers()) {
