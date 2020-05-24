@@ -13,26 +13,25 @@ public class BalanceCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (args.length == 1) {
+        if (args.length == 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 sender.sendMessage("§aECONOMY §8| §7You have §2§l$§a" + Main.getEconomy().getBalance(player) + " §7on your account.");
-                return false;
             } else {
                 sender.sendMessage("§aECONOMY §8| §7Usage: §b/economy balance <player>");
-                return false;
             }
+            return false;
         } else {
             if (!sender.hasPermission("earth.economy.balance.others")) {
                 sender.sendMessage("§aECONOMY §8| §cInsufficient permissions.");
                 return false;
             }
-            if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+            if (Bukkit.getPlayerUniqueId(args[0]) == null) {
                 sender.sendMessage("§aECONOMY §8| §7This player does §cnot §7exist.");
                 return false;
             }
-            UUID uuid = Bukkit.getPlayerUniqueId(args[1]);
-            sender.sendMessage("§aECONOMY §8| §6" + args[1] + " §7balance is §2§l$§a" + Main.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid)));
+            UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
+            sender.sendMessage("§aECONOMY §8| §6" + args[0] + " §7balance is §2§l$§a" + Main.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid)));
         }
         return false;
     }

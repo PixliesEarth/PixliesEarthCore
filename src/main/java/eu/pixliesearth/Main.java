@@ -142,6 +142,7 @@ public final class Main extends JavaPlugin {
         getCommand("modules").setExecutor(new ModulesCommand());
         getCommand("chat").setExecutor(new ChatCommand());
         getCommand("seen").setExecutor(new SeenCommand());
+        getCommand("coins").setExecutor(new CoinsCommand());
         getCommand("message").setExecutor(new PrivateMessage());
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("link").setExecutor(new LinkCommand());
