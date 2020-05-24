@@ -50,9 +50,10 @@ public class createNation implements SubCommand {
             player.sendMessage("§bNATION §8| §7The name of your nation can only be min. §b3 §7and max. §b10 §7characters long.");
             return false;
         }
-        Nation nation = new Nation(Methods.generateId(7), name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(),0,0.0, player.getUniqueId().toString(), new ArrayList<>(), new ArrayList<>());
-        nation.save();
-        profile.addToNation(nation.getNationId());
+        //commented because broken mick = dum dum
+       // Nation nation = new Nation(Methods.generateId(7), name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(),0,0.0, player.getUniqueId().toString(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        //nation.save();
+       // profile.addToNation(nation.getNationId());
         Bukkit.broadcastMessage("§bNATION §8| §7Player §6" + player.getName() + " §7just formed the nation of §b" + name);
         return false;
     }

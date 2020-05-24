@@ -18,6 +18,7 @@ import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.guns.listeners.AkGun;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
@@ -170,6 +171,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new MoveListener(), this);
         manager.registerEvents(new BlockBreakListener(), this);
         manager.registerEvents(new ItemInteractListener(), this);
+        manager.registerEvents(new AkGun(this), this);
     }
 
     public Profile getProfile(UUID uuid) {
