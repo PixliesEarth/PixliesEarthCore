@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,10 +12,12 @@ public class MoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
+        Profile profile = Main.getInstance().getProfile(event.getPlayer().getUniqueId());
         if (event.getFrom().getX() != event.getTo().getX() && event.getFrom().getY() != event.getTo().getY() && event.getFrom().getZ() != event.getTo().getZ()) {
-            if (Main.getInstance().getPlayerLists().teleportCooldown.containsKey(event.getPlayer().getUniqueId())) {
-                Main.getInstance().getPlayerLists().teleportCooldown.remove(event.getPlayer().getUniqueId());
-                event.getPlayer().sendMessage("§cTeleportation cancelled due to your inability to stand still.");
+            if (profile.getTimers().containsKey("teleport")) {
+                profile.getTimers().remove("teleport");
+                profile.save();
+                event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
             }
             if (Main.getInstance().getPlayerLists().afk.contains(event.getPlayer().getUniqueId())) {
                 Main.getInstance().getPlayerLists().afk.remove(event.getPlayer().getUniqueId());

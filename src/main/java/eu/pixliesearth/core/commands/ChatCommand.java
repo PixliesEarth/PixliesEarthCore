@@ -32,7 +32,7 @@ public class ChatCommand implements CommandExecutor {
                 sender.sendMessage("§dCHAT §8| §7The chat is already muted.");
                 return false;
             }
-            instance.getConfig().set("modules.chatystem.muted", true);
+            instance.getConfig().set("modules.chatsystem.muted", true);
             instance.saveConfig();
             instance.reloadConfig();
             String name = "";
@@ -62,13 +62,13 @@ public class ChatCommand implements CommandExecutor {
                 sender.sendMessage("§dCHAT §8| §7You have to enter the word you want to blacklist.");
                 return false;
             }
-            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chat.blacklist"));
+            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chatsystem.blacklist"));
             if (blacklist.contains(args[1].toLowerCase())) {
                 sender.sendMessage("§dCHAT §8| §7That word is already in the blacklist.");
                 return false;
             }
             blacklist.add(args[1].toLowerCase());
-            instance.getConfig().set("modules.chat.blacklist", blacklist);
+            instance.getConfig().set("modules.chatsystem.blacklist", blacklist);
             instance.saveConfig();
             instance.reloadConfig();
             sender.sendMessage("§dCHAT §8| §aSuccessfully §7added §b" + args[1] + " §7from the blacklist.");
@@ -77,13 +77,13 @@ public class ChatCommand implements CommandExecutor {
                 sender.sendMessage("§dCHAT §8| §7You have to enter the word you want to whitelist.");
                 return false;
             }
-            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chat.blacklist"));
+            List<String> blacklist = new ArrayList<>(instance.getConfig().getStringList("modules.chatsystem.blacklist"));
             if (!blacklist.contains(args[1].toLowerCase())) {
                 sender.sendMessage("§dCHAT §8| §7That word is not in the blacklist.");
                 return false;
             }
             blacklist.remove(args[1].toLowerCase());
-            instance.getConfig().set("modules.chat.blacklist", blacklist);
+            instance.getConfig().set("modules.chatsystem.blacklist", blacklist);
             instance.saveConfig();
             instance.reloadConfig();
             sender.sendMessage("§dCHAT §8| §aSuccessfully §7removed §b" + args[1] + " §7from the blacklist.");
