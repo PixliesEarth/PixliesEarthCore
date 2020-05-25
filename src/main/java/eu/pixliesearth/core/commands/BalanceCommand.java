@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.commands;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,22 +17,22 @@ public class BalanceCommand implements CommandExecutor {
         if (args.length == 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                sender.sendMessage("§aECONOMY §8| §7You have §2§l$§a" + Main.getEconomy().getBalance(player) + " §7on your account.");
+                sender.sendMessage(Lang.BALANCE_YOU.get(player).replace("%BALANCE%", Main.getEconomy().getBalance(player) + ""));
             } else {
                 sender.sendMessage("§aECONOMY §8| §7Usage: §b/economy balance <player>");
             }
             return false;
         } else {
             if (!sender.hasPermission("earth.economy.balance.others")) {
-                sender.sendMessage("§aECONOMY §8| §cInsufficient permissions.");
+                sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                 return false;
             }
             if (Bukkit.getPlayerUniqueId(args[0]) == null) {
-                sender.sendMessage("§aECONOMY §8| §7This player does §cnot §7exist.");
+                sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                 return false;
             }
             UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
-            sender.sendMessage("§aECONOMY §8| §6" + args[0] + " §7balance is §2§l$§a" + Main.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid)));
+            sender.sendMessage(Lang.BALANCE_OTHERS.get(sender).replace("%PLAYER%", args[0]).replace("%BALANCE%", Main.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid)) + ""));
         }
         return false;
     }

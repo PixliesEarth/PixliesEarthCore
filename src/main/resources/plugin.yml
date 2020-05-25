@@ -88,6 +88,9 @@ commands:
     description: suicide
     aliases:
       - kms
+  pay:
+    description: pay
+
 permissions:
   # GENERAL
   earth.admin:

@@ -73,7 +73,7 @@ public class MiniMick {
                Main.getInstance().saveConfig();
                Main.getInstance().reloadConfig();
                event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, successfully set the chat-channel.");
-           } else if(event.getMessageContent().equalsIgnoreCase("/bal")){
+           } else if(event.getMessageContent().equalsIgnoreCase("/bal")) {
                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
                if (profile == null) {
                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");

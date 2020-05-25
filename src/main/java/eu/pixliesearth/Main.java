@@ -165,6 +165,7 @@ public final class Main extends JavaPlugin {
         getCommand("flyspeed").setExecutor(new FlySpeedCommand());
         getCommand("fly").setExecutor(new FlyCommand());
         getCommand("suicide").setExecutor(new SuicideCommand());
+        getCommand("pay").setExecutor(new PayCommand());
     }
 
     private void registerEvents(PluginManager manager) {
