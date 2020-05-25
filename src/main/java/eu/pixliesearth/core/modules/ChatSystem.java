@@ -31,7 +31,7 @@ public class ChatSystem implements Listener, Module {
                     player.sendMessage("§aEARTH §8| §7A warp with that name already exists.");
                     return;
                 }
-                new Warp(event.getMessage(), new SimpleLocation(player.getLocation()), Material.GRASS_BLOCK).serialize();
+                new Warp(event.getMessage(), new SimpleLocation(player.getLocation()), Material.GRASS_BLOCK.name()).serialize();
                 player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }

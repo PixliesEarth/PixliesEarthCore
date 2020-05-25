@@ -17,13 +17,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@AllArgsConstructor
 @Data
 public class Warp {
 
     private String name;
     private SimpleLocation location;
     private Material item;
+
+    public Warp(String name, SimpleLocation loc, String item) {
+        this.name = name;
+        this.location = loc;
+        this.item = Material.valueOf(item);
+    }
 
     public void serialize() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
@@ -58,15 +63,15 @@ public class Warp {
     public static Warp get(String name) {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
-        if (!cfg.getConfiguration().contains("name")) return null;
+        if (!cfg.getConfiguration().contains("warps." + name + ".world")) return null;
 
         String world = cfg.getConfiguration().getString("warps." + name + ".world");
         double x = cfg.getConfiguration().getDouble("warps." + name + ".x");
         double y = cfg.getConfiguration().getDouble("warps." + name + ".y");
         double z = cfg.getConfiguration().getDouble("warps." + name + ".z");
-        float pitch = (float) cfg.getConfiguration().get("warps." + name + ".pitch");
-        float yaw = (float) cfg.getConfiguration().get("warps." + name + ".yaw");
-        Material item = Material.valueOf(cfg.getConfiguration().getString("warps." + name + ".item"));
+        float pitch = Float.parseFloat(cfg.getConfiguration().getString("warps." + name + ".pitch"));
+        float yaw = Float.parseFloat(cfg.getConfiguration().getString("warps." + name + ".yaw"));
+        String item = cfg.getConfiguration().getString("warps." + name + ".item");
 
         SimpleLocation loc = new SimpleLocation(world, x, z, y, pitch, yaw);
         return new Warp(name, loc, item);

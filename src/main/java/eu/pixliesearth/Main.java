@@ -84,9 +84,6 @@ public final class Main extends JavaPlugin {
         getServer().getServicesManager().register(Economy.class, new VaultAPI(), this, ServicePriority.Normal);
         economy = new VaultAPI();
 
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        chatApi = rsp.getProvider();
-
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();
 
