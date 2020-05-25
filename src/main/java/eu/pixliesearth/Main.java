@@ -4,8 +4,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import eu.pixliesearth.core.commands.*;
-import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.Assemble;
-import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.AssembleStyle;
+import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -23,6 +23,7 @@ import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.Getter;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
@@ -54,6 +55,8 @@ public final class Main extends JavaPlugin {
 
     private static @Getter Assemble assemble = null;
 
+    private static @Getter Chat chatApi;
+
     @Override
     public void onEnable() {
 
@@ -80,6 +83,9 @@ public final class Main extends JavaPlugin {
 
         getServer().getServicesManager().register(Economy.class, new VaultAPI(), this, ServicePriority.Normal);
         economy = new VaultAPI();
+
+        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        chatApi = rsp.getProvider();
 
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();

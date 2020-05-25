@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

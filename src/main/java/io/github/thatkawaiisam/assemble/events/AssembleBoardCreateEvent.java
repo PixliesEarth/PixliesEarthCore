@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble.events;
+package io.github.thatkawaiisam.assemble.events;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;

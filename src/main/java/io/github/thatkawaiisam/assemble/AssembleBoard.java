@@ -1,11 +1,10 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
-import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
+import io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

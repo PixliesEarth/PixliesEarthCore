@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.scoreboard;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.AssembleAdapter;
+import io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.Timer;

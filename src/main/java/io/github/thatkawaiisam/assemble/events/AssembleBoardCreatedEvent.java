@@ -1,6 +1,6 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble.events;
+package io.github.thatkawaiisam.assemble.events;
 
-import eu.pixliesearth.core.io.github.thatkawaiisam.assemble.AssembleBoard;
+import io.github.thatkawaiisam.assemble.AssembleBoard;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.event.Event;

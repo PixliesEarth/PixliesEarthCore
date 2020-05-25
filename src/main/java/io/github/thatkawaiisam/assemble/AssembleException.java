@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble;
 
 public class AssembleException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.io.github.thatkawaiisam.assemble;
+package io.github.thatkawaiisam.assemble;
 
 import java.util.List;
 import org.bukkit.entity.Player;
