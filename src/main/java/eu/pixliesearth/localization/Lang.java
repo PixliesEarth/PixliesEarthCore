@@ -58,8 +58,19 @@ public enum Lang {
     SMSG_2("", "&7&o\"I see the light...\" ~&6%PLAYER% &7&obefore he took his own life...",
             "&7&o\"Ich sehe das Licht!\" ~&6%PLAYER% &7&obevor er sein eigenes Leben nahm..."),
     SMSG_3("", "&7Everything was just too much for &6%PLAYER%&7, so he killed himself...",
-            "&7Alles war einfach zuviel für &6%PLAYER%&7, deswegen hat er sich selber umgebracht...");
-
+            "&7Alles war einfach zuviel für &6%PLAYER%&7, deswegen hat er sich selber umgebracht..."),
+    //VANISH
+    VANISH_ON(Lang.EARTH, "&aEnabled &7vanish!",
+            "&7Du bist jetzt in &avanish&7!"),
+    VANISH_OFF(Lang.EARTH, "&cDisabled &7vanish!",
+            "&7Du bist nichtmehr in &cvanish&7!"),
+    VANISH_ACTIONBAR("", "&aYou are vanished!",
+    "&aDu bist in vanish!"),
+    VANISH_ON_BY_OTHER(Lang.EARTH, "&6%other% &aenabled &7vanish for you!",
+            "&6%other% &7hat dich &agevanished&7!"
+            ),
+    VANISH_OFF_BY_OTHER(Lang.EARTH, "&6%other% &cdisabled &7vanish for you!",
+            "&6%other% &7hat dich &cunvanished&7!"),;
 
 
     private String PREFIX;

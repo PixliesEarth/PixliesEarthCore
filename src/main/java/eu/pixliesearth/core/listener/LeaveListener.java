@@ -4,10 +4,13 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.UUID;
 
 public class LeaveListener implements Listener {
 
@@ -22,6 +25,22 @@ public class LeaveListener implements Listener {
         if (Main.getInstance().getPlayerLists().afk.contains(player.getUniqueId()))
             Main.getInstance().getPlayerLists().afk.remove(player.getUniqueId());
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
+
+
+        //VANISH
+        if(Main.getInstance().getPlayerLists().vanishList.isEmpty()) return;
+        for(UUID pUUID : Main.getInstance().getPlayerLists().vanishList){
+            Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+            //UNVANISH LEAVING VANISHED PLAYER
+            if(event.getPlayer() == p){
+                Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
+                for(Player players : Bukkit.getOnlinePlayers()){
+                    players.showPlayer(Main.getInstance(), p);
+                }
+            }
+            //UNVANISHES VANISHED PLAYERS FOR LEAVING PLAYERS
+            player.showPlayer(Main.getInstance(), p);
+        }
 
     }
 

@@ -17,7 +17,7 @@ public class BroadcastCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(!(sender.hasPermission("earth.broadcast"))){
+        if(!(sender.hasPermission("earth.chat.broadcast"))){
             sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
             return false;
         }
