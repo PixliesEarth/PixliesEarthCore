@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.commands;
 
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
@@ -14,9 +15,9 @@ import static jdk.nashorn.internal.objects.NativeArray.join;
 
 public class BroadcastCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(!(commandSender.hasPermission("earth.broadcast"))){
-            commandSender.sendMessage("§aEARTH §8| §cInsufficient permissions.");
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if(!(sender.hasPermission("earth.broadcast"))){
+            sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
             return false;
         }
 
