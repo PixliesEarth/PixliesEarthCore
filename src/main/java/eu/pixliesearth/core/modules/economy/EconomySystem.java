@@ -126,7 +126,7 @@ public class EconomySystem implements Module, CommandExecutor {
                 if (!r.transactionSuccess()) {
                     sender.sendMessage(Lang.UNEXPECTED_ECO_ERROR.get(sender));
                 } else {
-                    sender.sendMessage(Lang.TOOK_MONEY_FROM_PLAYER.get(sender));
+                    sender.sendMessage(Lang.TOOK_MONEY_FROM_PLAYER.get(sender).replace("%AMOUNT%", args[2]).replace("%PLAYER%", target.getName()));
                 }
                 break;
         }
