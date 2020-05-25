@@ -12,8 +12,6 @@ public class PlayerLists {
 
     public Map<UUID, UUID> tpaRequests;
 
-    public Map<UUID, CooldownMap> teleportCooldown;
-
     public Map<String, UUID> discordcodes;
 
     public Set<UUID> warpAdder;
@@ -28,7 +26,6 @@ public class PlayerLists {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
         tpaRequests = new HashMap<>();
-        teleportCooldown = new HashMap<>();
         discordcodes = new HashMap<>();
         warpAdder = new HashSet<>();
         nationDisbander = new HashMap<>();

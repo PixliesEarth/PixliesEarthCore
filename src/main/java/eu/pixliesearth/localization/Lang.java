@@ -16,6 +16,12 @@ public enum Lang {
             "§cDieser Befehl kann nur von Spielern ausgeführt werden."),
     UNALLOWED_CHARS_IN_ARGS(Lang.EARTH, "&7Unallowed characters in argument.",
             "&7Die Eingabe beinhaltet verbotene symbole."),
+    YOU_WILL_BE_TPD(Lang.EARTH, "&7You will be teleported to &b%LOCATION% in &3%TIME%&7, don't move.",
+            "&7Du wirst in &3%TIME% &7nach &b%LOCATION% &7teleportiert, bitte bewege dich nicht."),
+    TELEPORTATION_SUCESS(Lang.EARTH, "&7You have been teleported to &b%LOCATION%&7.",
+            "&7Du wurdest nach &b%LOCATION% &7teleportiert."),
+    TELEPORTATION_FAILURE(Lang.EARTH, "&cTeleportation was cancelled due to your inability to stand still.",
+            "&cDie teleportation wurde aufgrund deiner Inkompetenz still zustehen abgebrochen."),
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
             "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."),

@@ -37,7 +37,7 @@ public class claimNation implements SubCommand {
             player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
             return false;
         }
-
+        //TODO
 
         return false;
     }

@@ -4,7 +4,6 @@ import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.objects.Warp;
-import eu.pixliesearth.core.utils.CooldownMap;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -90,8 +89,6 @@ public class ChatSystem implements Listener, Module {
                 event.getRecipients().clear();
                 Bukkit.broadcastMessage(format);
 
-                String json = "{username: \"" + event.getPlayer().getName() + "\", avatar_url: \"" + "https://minotar.net/avatar/" + event.getPlayer().getName() + "\", content: \"" + event.getMessage().replace("@", "") +  "\"}";
-
                 String webhook = config.getString("webhook");
                 DiscordWebhook discord = new DiscordWebhook(webhook); // Create the webhook client
 
@@ -103,7 +100,7 @@ public class ChatSystem implements Listener, Module {
 
                 discord.sendMessage(dm);
 
-                if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
+                if (config.getDouble("modules.chatsystem.cooldown") != 0.0 && !player.hasPermission("earth.chat.bypasscooldown")) {
                     Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);
                     profile.getTimers().put("chat", timer);
                     profile.save();

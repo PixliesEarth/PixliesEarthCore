@@ -11,7 +11,7 @@ public class Energy {
             return false;
         }
         profile.setEnergy(profile.getEnergy() - amount);
-        profile.backup();
+        profile.save();
         if (Bukkit.getPlayer(profile.getUniqueId()) != null)
             Bukkit.getPlayer(profile.getUniqueId()).sendMessage("§eYou lost §a" + amount + " §eenergy.");
         return true;
@@ -19,7 +19,7 @@ public class Energy {
 
     public static void add(Profile profile, double amount) {
         profile.setEnergy(profile.getEnergy() + amount);
-        profile.backup();
+        profile.save();
         if (Bukkit.getPlayer(profile.getUniqueId()) != null)
             Bukkit.getPlayer(profile.getUniqueId()).sendMessage("§eYou lost §a" + amount + " §eenergy.");
     }

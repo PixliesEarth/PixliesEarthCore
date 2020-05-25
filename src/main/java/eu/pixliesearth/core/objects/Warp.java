@@ -1,8 +1,10 @@
 package eu.pixliesearth.core.objects;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.utils.CooldownMap;
 import eu.pixliesearth.core.utils.FileManager;
+import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.core.utils.Timer;
+import eu.pixliesearth.localization.Lang;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -10,7 +12,9 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -32,6 +36,10 @@ public class Warp {
         cfg.getConfiguration().set(name + ".yaw", location.getYaw());
         cfg.getConfiguration().set(name + ".item", item.name());
 
+        List<String> nameList = new ArrayList<>(cfg.getConfiguration().getStringList("warplist"));
+        nameList.add(name);
+        cfg.getConfiguration().set("warplist", nameList);
+
         cfg.save();
         cfg.reload();
         Bukkit.getConsoleSender().sendMessage("§7Warp §b" + name + "§7 created at §b" + location.toString());
@@ -39,7 +47,9 @@ public class Warp {
 
     public void remove() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
-
+        List<String> nameList = new ArrayList<>(cfg.getConfiguration().getStringList("warplist"));
+        nameList.remove(name);
+        cfg.getConfiguration().set("warplist", nameList);
         cfg.getConfiguration().set(name, null);
         cfg.save();
         cfg.reload();
@@ -62,14 +72,12 @@ public class Warp {
         return new Warp(name, loc, item);
     }
 
-    public static Set<Warp> getWarps() {
+    public static List<Warp> getWarps() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
-        Set<Warp> warps = new HashSet<>();
-        if (cfg.getConfiguration().getConfigurationSection("warps") == null) return warps;
-        for (String s : cfg.getConfiguration().getConfigurationSection("warps").getKeys(false)) {
+        List<Warp> warps = new ArrayList<>();
+        for (String s : cfg.getConfiguration().getStringList("warplist"))
             warps.add(get(s));
-        }
         return warps;
     }
 
@@ -83,30 +91,23 @@ public class Warp {
     public void teleport(Player player) {
         Main instance = Main.getInstance();
         FileConfiguration config = instance.getConfig();
-        double cooldown = Energy.calculateTime(player.getLocation(), location.toLocation());
+        Profile profile = instance.getProfile(player.getUniqueId());
+        long cooldown = (long) Energy.calculateTime(player.getLocation(), location.toLocation());
         if (cooldown < 1.0)
-            cooldown = 1.0;
-        player.sendMessage("§aEARTH §8| §7You will be teleported to §b" + name + " §7in §3" + cooldown + "§7!");
-        if (cooldown != 0.0) {
-            int taskId = 0;
-            int finalTaskId = taskId;
-            taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
-                if (!instance.getPlayerLists().teleportCooldown.containsKey(player.getUniqueId())) {
-                    Bukkit.getScheduler().cancelTask(finalTaskId);
-                    return;
-                }
-                if (instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1 == 0.0) {
-                    Bukkit.getScheduler().cancelTask(instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTaskId());
-                    instance.getPlayerLists().teleportCooldown.remove(player.getUniqueId());
-                    player.teleport(location.toLocation());
-                    Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location.toLocation()));
-                    player.sendMessage("§aEARTH §8| §7You have been teleported to §b" + name + "§7!");
-                    return;
-                }
-                instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).setTimeLeft(instance.getPlayerLists().teleportCooldown.get(player.getUniqueId()).getTimeLeft() - 0.1);
-            }, 0L, 2);
-            instance.getPlayerLists().teleportCooldown.put(player.getUniqueId(), new CooldownMap(cooldown, taskId));
-        }
+            cooldown = (long) 1.0;
+        Timer timer = new Timer(cooldown * 1000);
+        profile.getTimers().put("teleport", timer);
+        profile.save();
+        player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", name).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
+        Bukkit.getScheduler().runTaskLater(instance, () -> {
+            if (profile.getTimers().containsKey("teleport")) {
+                profile.getTimers().remove("teleport");
+                profile.save();
+                player.teleport(location.toLocation());
+                Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location.toLocation()));
+                player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", name));
+            }
+        }, cooldown * 20);
     }
 
 }
