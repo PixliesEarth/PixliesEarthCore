@@ -90,7 +90,11 @@ commands:
       - kms
   pay:
     description: pay
-
+  broadcast:
+    description: broadcast
+    aliases:
+      - bc
+      - announce
 permissions:
   # GENERAL
   earth.admin:
