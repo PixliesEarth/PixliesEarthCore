@@ -1,5 +1,6 @@
 package io.github.thatkawaiisam.assemble;
 
+import eu.pixliesearth.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
