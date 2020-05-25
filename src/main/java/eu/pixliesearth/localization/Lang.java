@@ -22,6 +22,8 @@ public enum Lang {
             "&7Du wurdest nach &b%LOCATION% &7teleportiert."),
     TELEPORTATION_FAILURE(Lang.EARTH, "&cTeleportation was cancelled due to your inability to stand still.",
             "&cDie teleportation wurde aufgrund deiner Inkompetenz still zustehen abgebrochen."),
+    WRONG_USAGE(Lang.EARTH, "&c&lWRONG USAGE! &e%USAGE%",
+            "&c&lFALSCHE BENUTZUNG! &e%USAGE%"),
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
             "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."),
