@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.scoreboard;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.utils.Methods;
@@ -10,6 +11,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,11 +51,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "§lStaff");
                     returnable.add("  §8» §aenabled");
                 }
-                returnable.add(c + "§lPlayer");
+                returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
-                returnable.add("  §8» §e" + String.format(profile.getEnergy() + "", "##.##") + "§6§l⚡");
+                returnable.add("  §8» §e" + new DecimalFormat("##.##").format(profile.getEnergy()) + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
@@ -70,12 +72,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 break;
             case COMPACT:
                 if (Main.getInstance().getPlayerLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add("§7Staff");
+                    returnable.add("&3Staff");
                     returnable.add("§aenabled");
                 }
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
-                returnable.add("§e" + String.format(profile.getEnergy() + "", "##.##") + "§6§l⚡");
+                returnable.add("§e" + new DecimalFormat("##.##").format(profile.getEnergy()) + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♜ §8| §b" + nation.getName());

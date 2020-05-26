@@ -10,6 +10,9 @@ import java.util.Map;
 
 public enum Lang {
 
+    // WORDS
+    PLAYER("", "Player",
+            "Spieler"),
     // GENERAL
     NO_PERMISSIONS(Lang.EARTH, "§cInsufficient permissions.",
             "§cNicht genügend Rechte."),

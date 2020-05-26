@@ -72,8 +72,8 @@ public class EconomySystem implements Module, CommandExecutor {
                     player.sendMessage(Lang.PAY_AMT_BELOW_MIN.get(sender).replace("%AMOUNT%", args[2]));
                     return false;
                 }
-                if (!economy.has(player, Double.parseDouble(args[2]))) {
-                    player.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
+                if (!(Main.getInstance().getProfile(player.getUniqueId()).getBalance() - Double.parseDouble(args[2]) >= 0.0)) {
+                    sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
                     return false;
                 }
                 if (args[2].startsWith("-")) {
@@ -118,7 +118,7 @@ public class EconomySystem implements Module, CommandExecutor {
                     return false;
                 }
                 OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
-                if (!economy.has(target, Double.parseDouble(args[2]))) {
+                if (!(Main.getInstance().getProfile(target.getUniqueId()).getBalance() - Double.parseDouble(args[2]) >= 0.0)) {
                     sender.sendMessage(Lang.PLAYER_DOESNT_HAVE_ENOUGH_MONEY.get(sender));
                     return false;
                 }

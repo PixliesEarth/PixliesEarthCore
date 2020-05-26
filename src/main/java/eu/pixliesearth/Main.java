@@ -45,7 +45,7 @@ public final class Main extends JavaPlugin {
 
     private static @Getter MongoCollection<Document> nationCollection;
 
-    private static @Getter Economy economy;
+    private static @Getter VaultAPI economy;
 
     private @Getter FileManager warpsCfg;
 
@@ -81,8 +81,8 @@ public final class Main extends JavaPlugin {
         playerCollection = mongoDatabase.getCollection("users");
         nationCollection = mongoDatabase.getCollection("nations");
 
-        getServer().getServicesManager().register(Economy.class, new VaultAPI(), this, ServicePriority.Normal);
         economy = new VaultAPI();
+        getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);
 
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();
