@@ -66,22 +66,22 @@ public enum Lang {
     // SUICIDE
     SMSG_1("", "&6%PLAYER% &7just stabbed himself!",
             "&6%PLAYER% &7hat sich gerade selbst erstochen!"),
-    SMSG_2("", "&7&o\"I see the light...\" ~&6%PLAYER% &7&obefore he took his own life...",
-            "&7&o\"Ich sehe das Licht!\" ~&6%PLAYER% &7&obevor er sein eigenes Leben nahm..."),
-    SMSG_3("", "&7Everything was just too much for &6%PLAYER%&7, so he killed himself...",
-            "&7Alles war einfach zuviel für &6%PLAYER%&7, deswegen hat er sich selber umgebracht..."),
+    SMSG_2("", "&7&o\"I see the light...\" ~&6&o%PLAYER% &7&obefore he took his own life...",
+            "&7&o\"Ich sehe das Licht!\" ~&6&o%PLAYER% &7&obevor er sein eigenes Leben nahm..."),
+    SMSG_3("", "&7Everything was just too much for &6&o%PLAYER%&7, so he killed himself...",
+            "&7Alles war einfach zuviel für &6&o%PLAYER%&7, deswegen hat er sich selber umgebracht..."),
     //VANISH
     VANISH_ON(Lang.EARTH, "&aEnabled &7vanish!",
-            "&7Du bist jetzt in &avanish&7!"),
+            "&7Du bist jetzt im &avanish modus&7!"),
     VANISH_OFF(Lang.EARTH, "&cDisabled &7vanish!",
-            "&7Du bist nichtmehr in &cvanish&7!"),
-    VANISH_ACTIONBAR("", "&aYou are vanished!",
-    "&aDu bist in vanish!"),
-    VANISH_ON_BY_OTHER(Lang.EARTH, "&6%other% &aenabled &7vanish for you!",
-            "&6%other% &7hat dich &agevanished&7!"
+            "&7Du bist nichtmehr im &cvanish-modus&7!"),
+    VANISH_ACTIONBAR("", "&cOther players can't see you!",
+    "&cAndere Spieler können dich nicht sehen!!"),
+    VANISH_ON_BY_OTHER(Lang.EARTH, "&7You have been set in vanish mode by &6%other%&7.",
+            "&7Du wurdest von &6%other% &7in den Vanish-modus versetzt."
             ),
-    VANISH_OFF_BY_OTHER(Lang.EARTH, "&6%other% &cdisabled &7vanish for you!",
-            "&6%other% &7hat dich &cunvanished&7!"),;
+    VANISH_OFF_BY_OTHER(Lang.EARTH, "&7You have been removed from vanish mode by &6%other%&7.",
+            "&7Du wurdest aus dem Vanish-modus von &6%other% &7entfernt. "),;
 
 
     private String PREFIX;

@@ -53,7 +53,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
-                returnable.add("  §8» §e" + profile.getEnergy() + "§6§l⚡");
+                returnable.add("  §8» §e" + String.format(profile.getEnergy() + "", "##.##") + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
@@ -75,7 +75,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
-                returnable.add("§e" + profile.getEnergy() + "§6§l⚡");
+                returnable.add("§e" + String.format(profile.getEnergy() + "", "##.##") + "§6§l⚡");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♜ §8| §b" + nation.getName());
