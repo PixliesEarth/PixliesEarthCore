@@ -12,6 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PayCommand implements CommandExecutor {
 
     private static final Economy economy = Main.getEconomy();
@@ -25,11 +27,12 @@ public class PayCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        if (Bukkit.getPlayerUniqueId(args[0]) == null) {
+        UUID targetId = Bukkit.getPlayerUniqueId(args[0]);
+        if (targetId == null) {
             sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
             return false;
         }
-        if (Bukkit.getPlayerUniqueId(args[0]) == player.getUniqueId()) {
+        if (targetId == player.getUniqueId()) {
             player.sendMessage(Lang.PAID_HIMSELF.get(sender));
             return false;
         }
@@ -50,7 +53,7 @@ public class PayCommand implements CommandExecutor {
             player.sendMessage(Lang.UNEXPECTED_ECO_ERROR.get(sender));
         } else {
             player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[1]).replace("%TARGET%", args[0]));
-            OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+            OfflinePlayer target = Bukkit.getOfflinePlayer(targetId);
             EconomyResponse r2 = economy.depositPlayer(target, Double.parseDouble(args[1]));
             if (target.getPlayer() != null) {
                 target.getPlayer().sendMessage(Lang.RECEIVED_MONEY_FROM_PLAYER.get(target.getPlayer()).replace("%AMOUNT%", args[1]).replace("%TARGET%", player.getName()));

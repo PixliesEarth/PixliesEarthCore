@@ -95,6 +95,10 @@ commands:
     aliases:
       - bc
       - announce
+  vanish:
+    description: vanish
+    aliases:
+      - v
 permissions:
   # GENERAL
   earth.admin:
@@ -109,6 +113,10 @@ permissions:
     default: op
   earth.fly:
     default: op
+  earth.vanish:
+    default: op
+  earth.seevanished:
+    default: op
   # CHAT
   earth.chat.colours:
     default: op
@@ -117,6 +125,8 @@ permissions:
   earth.chat.bypassmute:
     default: op
   earth.chat.bypassblacklist:
+    default: op
+  earth.chat.broadcast:
     default: op
   # COINS
   earth.coins.admin:

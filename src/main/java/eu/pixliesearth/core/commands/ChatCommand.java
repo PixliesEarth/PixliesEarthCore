@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.commands;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,7 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChatCommand implements CommandExecutor {
 
@@ -41,13 +44,15 @@ public class ChatCommand implements CommandExecutor {
             } else {
                 name = sender.getName();
             }
-            Bukkit.broadcastMessage("§dCHAT §8| §7The chat has been muted by §b" + name + "§7.");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("%PLAYER%", name);
+            Lang.CHAT_MUTED.broadcast(map);
         } else if (args[0].equalsIgnoreCase("unmute")) {
             if (!instance.getConfig().getBoolean("modules.chatsystem.muted")) {
                 sender.sendMessage("§dCHAT §8| §7The chat is not muted.");
                 return false;
             }
-            instance.getConfig().set("modules.chatystem.muted", false);
+            instance.getConfig().set("modules.chatsystem.muted", false);
             instance.saveConfig();
             instance.reloadConfig();
             String name = "";
@@ -56,7 +61,9 @@ public class ChatCommand implements CommandExecutor {
             } else {
                 name = sender.getName();
             }
-            Bukkit.broadcastMessage("§dCHAT §8| §7The chat has been unmuted by §b" + name + "§7.");
+            Map<String, String> map = new HashMap<>();
+            map.put("%PLAYER%", name);
+            Lang.CHAT_UNMUTED.broadcast(map);
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length == 1) {
                 sender.sendMessage("§dCHAT §8| §7You have to enter the word you want to blacklist.");

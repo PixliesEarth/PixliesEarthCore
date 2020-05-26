@@ -2,8 +2,11 @@ package eu.pixliesearth.localization;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
 
 public enum Lang {
 
@@ -24,6 +27,14 @@ public enum Lang {
             "&cDie teleportation wurde aufgrund deiner Inkompetenz still zustehen abgebrochen."),
     WRONG_USAGE(Lang.EARTH, "&c&lWRONG USAGE! &e%USAGE%",
             "&c&lFALSCHE BENUTZUNG! &e%USAGE%"),
+    CHAT_MUTED(Lang.EARTH, "&7The chat has been muted by &6%PLAYER%&7.",
+            "&7Der Chat wurde von &%PLAYER% &7gemuted."),
+    CHAT_UNMUTED(Lang.EARTH, "&7The chat has been unmuted by &6%PLAYER%&7.",
+            "&7Der Chat wurde von &6%PLAYER% &7freigeschaltet."),
+    CHAT_IS_MUTED_ATM(Lang.EARTH, "&7The chat is muted at the moment.",
+            "&7Der Chat ist zurzeit ausgeschaltet."),
+    CHAT_COOLDOWN("", "&7You have to wait &3%COOLDOWN% &7to be able to chat again.",
+            "&7Du musst &3%COOLDOWN% &7warten um wieder chatten zu können."),
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
             "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."),
@@ -58,8 +69,19 @@ public enum Lang {
     SMSG_2("", "&7&o\"I see the light...\" ~&6%PLAYER% &7&obefore he took his own life...",
             "&7&o\"Ich sehe das Licht!\" ~&6%PLAYER% &7&obevor er sein eigenes Leben nahm..."),
     SMSG_3("", "&7Everything was just too much for &6%PLAYER%&7, so he killed himself...",
-            "&7Alles war einfach zuviel für &6%PLAYER%&7, deswegen hat er sich selber umgebracht...");
-
+            "&7Alles war einfach zuviel für &6%PLAYER%&7, deswegen hat er sich selber umgebracht..."),
+    //VANISH
+    VANISH_ON(Lang.EARTH, "&aEnabled &7vanish!",
+            "&7Du bist jetzt in &avanish&7!"),
+    VANISH_OFF(Lang.EARTH, "&cDisabled &7vanish!",
+            "&7Du bist nichtmehr in &cvanish&7!"),
+    VANISH_ACTIONBAR("", "&aYou are vanished!",
+    "&aDu bist in vanish!"),
+    VANISH_ON_BY_OTHER(Lang.EARTH, "&6%other% &aenabled &7vanish for you!",
+            "&6%other% &7hat dich &agevanished&7!"
+            ),
+    VANISH_OFF_BY_OTHER(Lang.EARTH, "&6%other% &cdisabled &7vanish for you!",
+            "&6%other% &7hat dich &cunvanished&7!"),;
 
 
     private String PREFIX;
@@ -90,6 +112,16 @@ public enum Lang {
             }
         }
         return PREFIX + ENG.replace("&", "§");
+    }
+
+    public void broadcast(Map<String, String> placeholders) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            String s = get(player);
+            for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+                s.replace(entry.getKey(), entry.getValue());
+            }
+            player.sendMessage(s);
+        }
     }
 
 }

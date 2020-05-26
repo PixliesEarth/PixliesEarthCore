@@ -6,10 +6,13 @@ import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.utils.AfkMap;
 import eu.pixliesearth.core.utils.Methods;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.UUID;
 
 public class JoinListener implements Listener {
 
@@ -30,6 +33,16 @@ public class JoinListener implements Listener {
 
         player.sendMessage("§aEARTH §8| §7Your profile has been §bloaded§7.");
 
+        //VANISH
+        if(Main.getInstance().getPlayerLists().vanishList.isEmpty()) return;
+        //VANISHES FOR PLAYERS WHO NEWLY JOINED
+        for(UUID pUUID : Main.getInstance().getPlayerLists().vanishList){
+            Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+            if(!(player.hasPermission("earth.seevanished"))){
+                player.hidePlayer(Main.getInstance(), p);
+
+            }
+        }
     }
 
 }

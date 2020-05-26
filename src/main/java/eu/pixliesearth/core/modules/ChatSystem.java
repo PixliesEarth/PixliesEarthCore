@@ -6,6 +6,7 @@ import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.Timer;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.ranktw.DiscordWebHooks.DiscordMessage;
@@ -56,13 +57,13 @@ public class ChatSystem implements Listener, Module {
             if (!event.isCancelled()) {
                 if (muted() && !player.hasPermission("earth.chat.bypassmute")) {
                     event.setCancelled(true);
-                    player.sendMessage("§7The chat is §cmuted §7at the moment.");
+                    player.sendMessage(Lang.CHAT_IS_MUTED_ATM.get(player));
                     return;
                 }
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
                     if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage("§7You have to wait §b" + Methods.getTimeAsString(profile.getTimers().get("chat").getRemaining(), true) + " §7to chat again.");
+                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(profile.getTimers().get("chat").getRemaining(), true)));
                         event.setCancelled(true);
                         return;
                     }
@@ -87,6 +88,7 @@ public class ChatSystem implements Listener, Module {
 
                 final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage());
                 event.getRecipients().clear();
+                //TODO Do relations later
                 Bukkit.broadcastMessage(format);
 
                 String webhook = config.getString("webhook");

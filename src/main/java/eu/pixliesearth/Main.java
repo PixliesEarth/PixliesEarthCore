@@ -170,6 +170,7 @@ public final class Main extends JavaPlugin {
         getCommand("suicide").setExecutor(new SuicideCommand());
         getCommand("pay").setExecutor(new PayCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
+        getCommand("vanish").setExecutor(new VanishCommand());
     }
 
     private void registerEvents(PluginManager manager) {

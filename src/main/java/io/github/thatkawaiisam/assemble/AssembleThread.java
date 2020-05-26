@@ -1,6 +1,7 @@
 package io.github.thatkawaiisam.assemble;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -38,6 +39,9 @@ public class AssembleThread extends Thread {
 
     private void tick() {
         for (Player player : this.assemble.getPlugin().getServer().getOnlinePlayers()) {
+            if (Main.getInstance().getPlayerLists().vanishList.contains(player.getUniqueId())) {
+                player.sendActionBar(Lang.VANISH_ACTIONBAR.get(player));
+            }
             try {
                 AssembleBoard board = this.assemble.getBoards().get(player.getUniqueId());
 
