@@ -8,8 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GamemodeSurvivalCommand implements CommandExecutor {
-    GameMode gamemode = GameMode.SURVIVAL;
+public class GamemodeAdventureCommand implements CommandExecutor {
+
+    GameMode gamemode = GameMode.ADVENTURE;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -39,4 +40,5 @@ public class GamemodeSurvivalCommand implements CommandExecutor {
         }
         return false;
     }
+
 }

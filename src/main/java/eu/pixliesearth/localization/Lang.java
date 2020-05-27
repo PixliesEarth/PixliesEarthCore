@@ -24,12 +24,6 @@ public enum Lang {
             "§cDieser Befehl kann nur von Spielern ausgeführt werden."),
     UNALLOWED_CHARS_IN_ARGS(Lang.EARTH, "&7Unallowed characters in argument.",
             "&7Die Eingabe beinhaltet verbotene symbole."),
-    YOU_WILL_BE_TPD(Lang.EARTH, "&7You will be teleported to &b%LOCATION% in &3%TIME%&7, don't move.",
-            "&7Du wirst in &3%TIME% &7nach &b%LOCATION% &7teleportiert, bitte bewege dich nicht."),
-    TELEPORTATION_SUCESS(Lang.EARTH, "&7You have been teleported to &b%LOCATION%&7.",
-            "&7Du wurdest nach &b%LOCATION% &7teleportiert."),
-    TELEPORTATION_FAILURE(Lang.EARTH, "&cTeleportation was cancelled due to your inability to stand still.",
-            "&cDie teleportation wurde aufgrund deiner Inkompetenz still zustehen abgebrochen."),
     WRONG_USAGE(Lang.EARTH, "&c&lWRONG USAGE! &e%USAGE%",
             "&c&lFALSCHE BENUTZUNG! &e%USAGE%"),
     CHAT_MUTED(Lang.EARTH, "&7The chat has been muted by &6%PLAYER%&7.",
@@ -93,8 +87,30 @@ public enum Lang {
             "&7Du wurdest aus dem Vanish-modus von &6%other% &7entfernt. "),
     // TELEPORTATION
     NOT_ENOUGH_ENERGY(Lang.EARTH, "&7You &cdo not &7have enough energy to teleport to that location.",
-            "&7Du &cbrauchst mehr &7Energie um dich zu dieser Location zu teleportieren.");
-
+            "&7Du &cbrauchst mehr &7Energie um dich zu dieser Location zu teleportieren."),
+    YOU_WILL_BE_TPD(Lang.EARTH, "&7You will be teleported to &b%LOCATION% in &3%TIME%&7, don't move.",
+            "&7Du wirst in &3%TIME% &7nach &b%LOCATION% &7teleportiert, bitte bewege dich nicht."),
+    TELEPORTATION_SUCESS(Lang.EARTH, "&7You have been teleported to &b%LOCATION%&7.",
+            "&7Du wurdest nach &b%LOCATION% &7teleportiert."),
+    TELEPORTATION_FAILURE(Lang.EARTH, "&cTeleportation was cancelled due to your inability to stand still.",
+            "&cDie teleportation wurde aufgrund deiner Inkompetenz still zustehen abgebrochen."),
+    // DISCORD LINKING
+    DC_ALREADY_SYNCED(Lang.DISCORD, "&7Your ingame and discord accounts are already synced.",
+            "&7Deine Ingame und Discord accounts sind schon mit einander verbunden."),
+    DC_ALREADY_HAVE_CODE(Lang.DISCORD, "&7You &calready have &7a code: &e%CODE%",
+            "&7Du &chast bereits &7einen code: &e%CODE%"),
+    DC_VERIFICATION_CODE(Lang.DISCORD, "§7Your verification code is §b%CODE%§7. Type §e/link §b%CODE% §7in our discord bot channel to complete the verification process.",
+            "&7Dein Verifizierungscode ist &b%CODE%&7. Navigiere zu unserem discord und gebe &e/link &b%CODE% &7ein um die Verifizierung abzuschließen."),
+    // PIXLIECOINS
+    PC_BALANCE(Lang.PIXLIECOINS, "§7You have §b%AMOUNT%§3⛃ §7on your account.",
+            "&7Du hast &b%AMOUNT%§3⛃ &7auf deinem Konto."),
+    // GAMEMODE
+    GAMEMODE_CHANGED(Lang.EARTH, "§7You changed your gamemode to §d%GAMEMODE%§7!",
+            "&7Du hast deinen Gamemode zu &d%GAMEMODE% &7geändert!"),
+    GAMEMODE_CHANGED_OTHER(Lang.EARTH, "§7You changed §6%PLAYER% §7gamemode to §d%GAMEMODE%§7!",
+            "&7Du hast &6%PLAYER%&7's Gamemode in &d%GAMEMODE% &7versetzt."),
+    GAMEMODE_CHANGED_BY_OTHER(Lang.EARTH, "§6%PLAYER% §7set your gamemode to §d%GAMEMODE%§7!",
+            "&6%PLAYER% &7hat dich in Gamemode &d%GAMEMODE% &7versetzt.");
 
     private String PREFIX;
     private String ENG;
@@ -103,6 +119,8 @@ public enum Lang {
     private static final String EARTH = "§aEARTH §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
+    private static final String DISCORD = "§3DISCORD §8| ";
+    private static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
 
     Lang(String PREFIX, String ENG, String DE) {
         this.PREFIX = PREFIX;

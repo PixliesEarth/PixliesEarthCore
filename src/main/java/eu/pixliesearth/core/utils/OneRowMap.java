@@ -11,10 +11,10 @@ import lombok.Data;
  */
 public class OneRowMap extends BasicDBObject {
 
+    private static final long serialVersionUID = 2105061907470199595L;
+
     public static final String KEY = "Key";
     public static final String VALUE = "Value";
-
-    private static final long serialVersionUID = 2105061907470199595L;
 
     private Object Key, Value;
 

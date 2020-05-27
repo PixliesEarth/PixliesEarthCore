@@ -3,6 +3,7 @@ package eu.pixliesearth.core.commands;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,16 +24,16 @@ public class LinkCommand implements CommandExecutor {
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.getDiscord().equals("NONE")) {
-            player.sendMessage("§9DISCORD §8| §7Your in-game and discord accounts are already synced.");
+            player.sendMessage(Lang.DC_ALREADY_SYNCED.get(sender));
             return false;
         }
         if (instance.getPlayerLists().discordcodes.containsValue(player.getUniqueId())) {
-            player.sendMessage("§9DISCORD §8| §7You already have a code: §b" + getCode(player.getUniqueId()));
+            player.sendMessage(Lang.DC_ALREADY_HAVE_CODE.get(sender).replace("%CODE%", getCode(player.getUniqueId())));
             return false;
         }
         String code = Methods.generateId(5);
         instance.getPlayerLists().discordcodes.put(code, player.getUniqueId());
-        player.sendMessage("§9DISCORD §8| §7Your verification code is §b" + code + "§7. Type §e/link §b" + code + " §7in our discord bot channel to complete the verification process.");
+        player.sendMessage(Lang.DC_VERIFICATION_CODE.get(sender).replace("%CODE%", code));
         return false;
     }
 

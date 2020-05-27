@@ -131,6 +131,8 @@ public final class Main extends JavaPlugin {
             getLogger().info("§aSaved all nations in the database.");
         }, (20 * 60) * 15, (20 * 60) * 15);
 
+        NationManager.init();
+
         new MiniMick().start();
 
         assemble = new Assemble(this, new ScoreboardAdapter());
@@ -164,6 +166,7 @@ public final class Main extends JavaPlugin {
         getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
         getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
         getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
+        getCommand("gma").setExecutor(new GamemodeAdventureCommand());
         getCommand("staff").setExecutor(new StaffCommand());
         getCommand("flyspeed").setExecutor(new FlySpeedCommand());
         getCommand("fly").setExecutor(new FlyCommand());

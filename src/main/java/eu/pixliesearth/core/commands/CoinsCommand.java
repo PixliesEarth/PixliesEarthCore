@@ -2,6 +2,7 @@ package eu.pixliesearth.core.commands;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,14 +21,14 @@ public class CoinsCommand implements CommandExecutor {
                 }
                 Player player = (Player) sender;
                 Profile user = Main.getInstance().getProfile(player.getUniqueId());
-                sender.sendMessage("§3PIXLIECOINS §8| §7You have §b" + user.getPixliecoins() + "§3⛃ §7on your account.");
+                sender.sendMessage(Lang.PC_BALANCE.get(sender).replace("%AMOUNT%", user.getPixliecoins()+""));
                 break;
             case 2:
                 boolean allowed = false;
                 if (!(sender instanceof Player)) allowed = true;
                 if (sender.hasPermission("earth.coins.admin")) allowed = true;
                 if (!allowed) {
-                    sender.sendMessage("§3PIXLIECOINS §8| §cInsufficient permissions.");
+                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("check")) {

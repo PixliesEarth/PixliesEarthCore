@@ -73,6 +73,10 @@ commands:
     description: gmsp
     aliases:
       - gm2
+  gma:
+    description: gma
+    aliases:
+      - gm3
   staff:
     description: staff
     aliases:

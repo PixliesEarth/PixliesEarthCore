@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.commands;
 
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -8,31 +9,34 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class GamemodeCreativeCommand implements CommandExecutor {
+
+    GameMode gamemode = GameMode.CREATIVE;
+
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(!(commandSender instanceof Player)){
-            commandSender.sendMessage("This comamnd can only be executed as a player!");
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if(!(sender instanceof Player)){
+            sender.sendMessage("This comamnd can only be executed as a player!");
             return false;
         }
-        Player p = (Player) commandSender;
-        if(!(p.hasPermission("earth.creative"))){
-            p.sendMessage("§aEARTH §8| §cInsufficient permissions");
+        Player p = (Player) sender;
+        if(!(p.hasPermission("earth." + gamemode.name().toLowerCase()))){
+            p.sendMessage(Lang.NO_PERMISSIONS.get(sender));
             return false;
         }
         if(args.length == 0){
-            p.setGameMode(GameMode.CREATIVE);
-            p.sendMessage("§aEARTH §8| §7You changed your gamemode to §aCreative§7!");
+            p.setGameMode(gamemode);
+            p.sendMessage(Lang.GAMEMODE_CHANGED.get(sender).replace("%GAMEMODE%", gamemode.name()));
             return false;
         }
         if(args.length == 1){
             if(Bukkit.getPlayer(args[0]) == null) {
-                p.sendMessage("§aEARTH §8| §6" + args[0] + " §f§cis not online!");
+                p.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                 return false;
             }
             Player player = Bukkit.getPlayer(args[0]);
             player.setGameMode(GameMode.CREATIVE);
-            p.sendMessage("§aEARTH §8| §7You changed §6" + player.getName() + " §7gamemode to §aCreative§7!");
-            player.sendMessage("§aEARTH §8| §6" + p.getName() + " §7set your gamemode to §aCreative§7!");
+            p.sendMessage(Lang.GAMEMODE_CHANGED_OTHER.get(sender).replace("%GAMEMODE%", gamemode.name()).replace("%PLAYER%", player.getName()));
+            player.sendMessage(Lang.GAMEMODE_CHANGED_BY_OTHER.get(player).replace("%PLAYER%", p.getName()).replace("%GAMEMODE%", gamemode.name()));
         }
     return false;
     }
