@@ -14,7 +14,7 @@ public enum Lang {
     PLAYER("", "Player",
             "Spieler"),
     COMBAT("", "Combat",
-            "Kampf"),
+            "Im Kampf"),
     // GENERAL
     NO_PERMISSIONS(Lang.EARTH, "§cInsufficient permissions.",
             "§cNicht genügend Rechte."),
@@ -90,7 +90,10 @@ public enum Lang {
             "&7Du wurdest von &6%other% &7in den Vanish-modus versetzt."
             ),
     VANISH_OFF_BY_OTHER(Lang.EARTH, "&7You have been removed from vanish mode by &6%other%&7.",
-            "&7Du wurdest aus dem Vanish-modus von &6%other% &7entfernt. "),;
+            "&7Du wurdest aus dem Vanish-modus von &6%other% &7entfernt. "),
+    // TELEPORTATION
+    NOT_ENOUGH_ENERGY(Lang.EARTH, "&7You &cdo not &7have enough energy to teleport to that location.",
+            "&7Du &cbrauchst mehr &7Energie um dich zu dieser Location zu teleportieren.");
 
 
     private String PREFIX;

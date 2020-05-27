@@ -14,8 +14,8 @@ public class MoveListener implements Listener {
     public void onMove(PlayerMoveEvent event) {
         Profile profile = Main.getInstance().getProfile(event.getPlayer().getUniqueId());
         if (event.getFrom().getX() != event.getTo().getX() && event.getFrom().getY() != event.getTo().getY() && event.getFrom().getZ() != event.getTo().getZ()) {
-            if (profile.getTimers().containsKey("teleport")) {
-                profile.getTimers().remove("teleport");
+            if (profile.getTimers().containsKey("Teleport")) {
+                profile.getTimers().remove("Teleport");
                 profile.save();
                 event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
             }
