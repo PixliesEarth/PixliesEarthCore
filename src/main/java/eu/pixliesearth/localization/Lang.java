@@ -13,6 +13,8 @@ public enum Lang {
     // WORDS
     PLAYER("", "Player",
             "Spieler"),
+    COMBAT("", "Combat",
+            "Kampf"),
     // GENERAL
     NO_PERMISSIONS(Lang.EARTH, "§cInsufficient permissions.",
             "§cNicht genügend Rechte."),
@@ -38,6 +40,10 @@ public enum Lang {
             "&7Der Chat ist zurzeit ausgeschaltet."),
     CHAT_COOLDOWN("", "&7You have to wait &3%COOLDOWN% &7to be able to chat again.",
             "&7Du musst &3%COOLDOWN% &7warten um wieder chatten zu können."),
+    PROFILE_LOADED(Lang.EARTH, "&7Your profile has been &aloaded&7.",
+            "&7Dein Profil wurde &ageladen&7."),
+    LANGUAGE_CHANGED(Lang.EARTH, "&7You changed your language to &bENGLISH&7.",
+            "&7Du hast deine Sprache zu &bDEUTSCH &7geändert."),
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
             "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."),

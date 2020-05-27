@@ -49,7 +49,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean hasAccount(String playerName) {
-        return false;
+        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)) != null;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public double getBalance(String playerName) {
-        return 0;
+        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)).getBalance();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public double getBalance(String playerName, String world) {
-        return 0;
+        return getBalance(playerName);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean has(String playerName, double amount) {
-        return false;
+        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)).getBalance() - amount >= 0;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean has(String playerName, String worldName, double amount) {
-        return false;
+        return has(playerName, amount);
     }
 
     @Override
@@ -109,7 +109,17 @@ public class VaultAPI implements Economy {
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        return null;
+        if (!hasAccount(playerName))
+            return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "The player does not have an account!");
+        if (amount < 0)
+            return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Amount is less than zero");
+        if (!has(playerName, amount))
+            return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Player does not have the money.");
+        Profile profile = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName));
+        profile.setBalance(getBalance(playerName) - amount);
+        profile.getRececipts().add(Receipt.create(amount, true));
+        profile.backup();
+        return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
     @Override
@@ -129,7 +139,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
-        return null;
+        return withdrawPlayer(playerName, amount);
     }
 
     @Override
@@ -149,7 +159,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        return null;
+        return depositPlayer(Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(playerName)), amount);
     }
 
     @Override
@@ -169,7 +179,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-        return null;
+        return depositPlayer(Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(playerName)), amount);
     }
 
     @Override
@@ -271,7 +281,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean createPlayerAccount(String playerName, String worldName) {
-        return false;
+        return createPlayerAccount(playerName);
     }
 
     @Override

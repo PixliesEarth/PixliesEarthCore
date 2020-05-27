@@ -45,7 +45,7 @@ public class WarpSystem implements CommandExecutor, Module {
                 StaticPane toolbar = new StaticPane(0, 3, 9, 1);
                 List<GuiItem> items = new ArrayList<>();
                 for (Warp warp : Warp.getWarps())
-                    items.add(new GuiItem(new ItemBuilder(Material.MAP).setDisplayName(warp.getName()).build(), event -> {
+                    items.add(new GuiItem(new ItemBuilder(warp.getItem()).setDisplayName(warp.getName()).build(), event -> {
                         event.setCancelled(true);
                         player.closeInventory();
                         warp.teleport(player);

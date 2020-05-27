@@ -1,6 +1,9 @@
 package io.github.thatkawaiisam.assemble;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -9,6 +12,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class AssembleThread extends Thread {
 
@@ -41,6 +45,15 @@ public class AssembleThread extends Thread {
         for (Player player : this.assemble.getPlugin().getServer().getOnlinePlayers()) {
             if (Main.getInstance().getPlayerLists().vanishList.contains(player.getUniqueId())) {
                 player.sendActionBar(Lang.VANISH_ACTIONBAR.get(player));
+            }
+            Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+            if (profile.getTimers().size() > 0) {
+                for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
+                    if (entry.getValue().getRemaining() <= 0) {
+                        profile.getTimers().remove(entry.getKey());
+                        profile.save();
+                    }
+                }
             }
             try {
                 AssembleBoard board = this.assemble.getBoards().get(player.getUniqueId());

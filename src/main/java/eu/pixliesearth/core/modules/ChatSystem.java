@@ -28,11 +28,10 @@ public class ChatSystem implements Listener, Module {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (instance.getPlayerLists().warpAdder.contains(player.getUniqueId())) {
                 event.setCancelled(true);
-                if (Warp.exists(event.getMessage())) {
-                    player.sendMessage("§aEARTH §8| §7A warp with that name already exists.");
-                    return;
-                }
-                new Warp(event.getMessage(), new SimpleLocation(player.getLocation()), Material.GRASS_BLOCK.name()).serialize();
+                Material mat = Material.GRASS_BLOCK;
+                if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() != Material.AIR)
+                    mat = player.getInventory().getItemInMainHand().getType();
+                new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
                 player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }
@@ -63,7 +62,7 @@ public class ChatSystem implements Listener, Module {
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
                     if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(profile.getTimers().get("chat").getRemaining(), true)));
+                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(profile.getTimers().get("Chat").getRemaining(), true)));
                         event.setCancelled(true);
                         return;
                     }
@@ -104,10 +103,10 @@ public class ChatSystem implements Listener, Module {
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0 && !player.hasPermission("earth.chat.bypasscooldown")) {
                     Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);
-                    profile.getTimers().put("chat", timer);
+                    profile.getTimers().put("Chat", timer);
                     profile.save();
                     Bukkit.getScheduler().runTaskLater(instance, () -> {
-                        profile.getTimers().remove("chat");
+                        profile.getTimers().remove("Chat");
                         profile.save();
                         player.sendActionBar("§aYou may now chat again.");
                     }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);

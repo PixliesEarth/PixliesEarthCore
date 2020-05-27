@@ -8,6 +8,7 @@ import eu.pixliesearth.localization.Lang;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -21,10 +22,10 @@ import java.util.Set;
 public class Warp {
 
     private String name;
-    private SimpleLocation location;
+    private Location location;
     private Material item;
 
-    public Warp(String name, SimpleLocation loc, String item) {
+    public Warp(String name, Location loc, String item) {
         this.name = name;
         this.location = loc;
         this.item = Material.valueOf(item);
@@ -33,17 +34,8 @@ public class Warp {
     public void serialize() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
-        cfg.getConfiguration().set(name + ".world", location.getWorld());
-        cfg.getConfiguration().set(name + ".x", location.getX());
-        cfg.getConfiguration().set(name + ".y", location.getY());
-        cfg.getConfiguration().set(name + ".z", location.getZ());
-        cfg.getConfiguration().set(name + ".pitch", location.getPitch());
-        cfg.getConfiguration().set(name + ".yaw", location.getYaw());
-        cfg.getConfiguration().set(name + ".item", item.name());
-
-        List<String> nameList = new ArrayList<>(cfg.getConfiguration().getStringList("warplist"));
-        nameList.add(name);
-        cfg.getConfiguration().set("warplist", nameList);
+        cfg.getConfiguration().set("warps." + name + ".location", location);
+        cfg.getConfiguration().set("warps." + name + ".item", item.name());
 
         cfg.save();
         cfg.reload();
@@ -52,9 +44,6 @@ public class Warp {
 
     public void remove() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
-        List<String> nameList = new ArrayList<>(cfg.getConfiguration().getStringList("warplist"));
-        nameList.remove(name);
-        cfg.getConfiguration().set("warplist", nameList);
         cfg.getConfiguration().set(name, null);
         cfg.save();
         cfg.reload();
@@ -63,26 +52,20 @@ public class Warp {
     public static Warp get(String name) {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
-        if (!cfg.getConfiguration().contains("warps." + name + ".world")) return null;
 
-        String world = cfg.getConfiguration().getString("warps." + name + ".world");
-        double x = cfg.getConfiguration().getDouble("warps." + name + ".x");
-        double y = cfg.getConfiguration().getDouble("warps." + name + ".y");
-        double z = cfg.getConfiguration().getDouble("warps." + name + ".z");
-        float pitch = Float.parseFloat(cfg.getConfiguration().getString("warps." + name + ".pitch"));
-        float yaw = Float.parseFloat(cfg.getConfiguration().getString("warps." + name + ".yaw"));
         String item = cfg.getConfiguration().getString("warps." + name + ".item");
+        Location location = cfg.getConfiguration().getLocation("warps." + name + ".location");
 
-        SimpleLocation loc = new SimpleLocation(world, x, z, y, pitch, yaw);
-        return new Warp(name, loc, item);
+        return new Warp(name, location, item);
     }
 
     public static List<Warp> getWarps() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
         List<Warp> warps = new ArrayList<>();
-        for (String s : cfg.getConfiguration().getStringList("warplist"))
-            warps.add(get(s));
+        for (String s : cfg.getConfiguration().getConfigurationSection("warps").getKeys(false))
+            if (get(s) != null)
+                warps.add(get(s));
         return warps;
     }
 
@@ -97,7 +80,7 @@ public class Warp {
         Main instance = Main.getInstance();
         FileConfiguration config = instance.getConfig();
         Profile profile = instance.getProfile(player.getUniqueId());
-        long cooldown = (long) Energy.calculateTime(player.getLocation(), location.toLocation());
+        long cooldown = (long) Energy.calculateTime(player.getLocation(), location);
         if (cooldown < 1.0)
             cooldown = (long) 1.0;
         Timer timer = new Timer(cooldown * 1000);
@@ -108,8 +91,8 @@ public class Warp {
             if (profile.getTimers().containsKey("teleport")) {
                 profile.getTimers().remove("teleport");
                 profile.save();
-                player.teleport(location.toLocation());
-                Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location.toLocation()));
+                player.teleport(location);
+                Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location));
                 player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", name));
             }
         }, cooldown * 20);
