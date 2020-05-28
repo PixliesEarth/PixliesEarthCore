@@ -187,7 +187,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ItemInteractListener(), this);
         manager.registerEvents(new AkGun(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
-       // manager.registerEvents(new PacketListener(), this);
+       manager.registerEvents(new PacketListener(), this);
     }
 
     public Profile getProfile(UUID uuid) {

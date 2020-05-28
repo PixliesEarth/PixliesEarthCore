@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Gun {
 
     public static void shoot(Player player){
-        final Arrow arrow = (Arrow) player.getWorld().spawn(player.getEyeLocation(), Arrow.class);
+        Arrow arrow = (Arrow) player.getWorld().spawn(player.getEyeLocation(), Arrow.class);
         arrow.setShooter(((LivingEntity) player));
         arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));
        //customeffects create a special arrow, dont make the arrow invis
@@ -29,6 +29,7 @@ public class Gun {
         //arrow.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 2), false);
         arrow.setSilent(true);
         arrow.setCustomName("§c7.62mm");
+        //NOT RECOMMENDED NMS WAY
         //((CraftEntity) arrow).getHandle().setInvisible(true);
         player.getWorld().playEffect(arrow.getLocation(), Effect.WITHER_SHOOT, 1);
         //DOESNT WORK ARROW STILL VISIBLE UNEPIC BRUH MOMENT

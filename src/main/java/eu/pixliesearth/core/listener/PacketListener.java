@@ -27,11 +27,12 @@ public class PacketListener  implements Listener{
         if(!(e.getEntity() instanceof Arrow)) return;
         System.out.println("REACHED ENTITY SPAWN EVENT\nREACHED ENTITY SPAWN EVENT");
         System.out.println(e.getEntity().getCustomName());
+        System.out.println(e.getEntity().getShooter());
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(new PacketAdapter(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.SPAWN_ENTITY) {
             @Override
             public void onPacketSending(PacketEvent event) {
-                super.onPacketSending(event);
+                //super.onPacketSending(event);
                 if(event.getPacketType() == PacketType.Play.Server.SPAWN_ENTITY){
                     System.out.println("REACHED\nREACHED\nREACHED\nREACHED");
                     if(e.getEntity().getCustomName() == null) return;
