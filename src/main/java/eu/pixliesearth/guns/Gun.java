@@ -6,10 +6,7 @@ import net.minecraft.server.v1_15_R1.PacketPlayOutEntityDestroy;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -26,6 +23,8 @@ public class Gun {
             arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));
             arrow.setSilent(true);
             arrow.setCustomName("§c7.62mm");
+            arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
+            
             a = arrow;
         });
         // arrow.setShooter(((LivingEntity) player));

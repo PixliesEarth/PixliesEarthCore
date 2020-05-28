@@ -36,7 +36,7 @@ public class PacketListener  implements Listener{
                 if(event.getPacketType() == PacketType.Play.Server.SPAWN_ENTITY){
                     System.out.println("REACHED\nREACHED\nREACHED\nREACHED");
                     if(e.getEntity().getCustomName() == null) return;
-                    if(Objects.equals(e.getEntity().getCustomName(), "§c7.62mm")){
+                    if(e.getEntity().getCustomName().equalsIgnoreCase("§c7.62mm")) {
                         event.setCancelled(true);
                     }
                 }
