@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -27,12 +28,16 @@ public class Gun {
         // arrow.getCustomEffects().add(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 2));
         //arrow.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 2), false);
         arrow.setSilent(true);
+        arrow.setCustomName("§c7.62mm");
+        //((CraftEntity) arrow).getHandle().setInvisible(true);
         player.getWorld().playEffect(arrow.getLocation(), Effect.WITHER_SHOOT, 1);
         //DOESNT WORK ARROW STILL VISIBLE UNEPIC BRUH MOMENT
-        for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-            PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(arrow.getEntityId());
-            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-        }
+
+        //Literally useless and doesnt work
+        //for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+            //PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(arrow.getEntityId());
+            //((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+        //}
         new BukkitRunnable(){
 
             @Override
