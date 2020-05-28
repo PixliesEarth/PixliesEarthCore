@@ -4,8 +4,6 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -14,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class EconomySystem implements Module, CommandExecutor {
-
-    private final Economy economy = Main.getEconomy();
 
     @Override
     public String name() {
@@ -43,7 +39,9 @@ public class EconomySystem implements Module, CommandExecutor {
             }
             return false;
         }
-        EconomyResponse r;
+        boolean transaction;
+        OfflinePlayer target;
+        Profile profile;
         switch (args[0].toLowerCase()) {
             case "balance":
             case "bal":
@@ -52,12 +50,11 @@ public class EconomySystem implements Module, CommandExecutor {
                         sendBalance((Player) sender);
                         return false;
                     } else {
-                        sender.sendMessage("§aECONOMY §8| §7Usage: §b/economy balance <player>");
+                        sender.sendMessage("§aECONOMY §8| §7Usage: §b/balance check <player>");
                         return false;
                     }
                 }
                 break;
-
             case "pay":
                 Player player = (Player) sender;
                 if (Bukkit.getPlayerUniqueId(args[1]) == null) {
@@ -69,28 +66,26 @@ public class EconomySystem implements Module, CommandExecutor {
                     return false;
                 }
                 if (Double.parseDouble(args[2]) < config.getDouble("modules.economy.min-amount")) {
-                    player.sendMessage(Lang.PAY_AMT_BELOW_MIN.get(sender).replace("%AMOUNT%", args[2]));
-                    return false;
-                }
-                if (!(Main.getInstance().getProfile(player.getUniqueId()).getBalance() - Double.parseDouble(args[2]) >= 0.0)) {
-                    sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
+                    player.sendMessage(Lang.PAY_AMT_BELOW_MIN.get(sender).replace("%AMOUNT%", config.getDouble("modules.economy.min-amount")+""));
                     return false;
                 }
                 if (args[2].startsWith("-")) {
                     player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
                     return false;
                 }
-                r = economy.withdrawPlayer(player, Double.parseDouble(args[2]));
-                if (!r.transactionSuccess()) {
-                    player.sendMessage(Lang.UNEXPECTED_ECO_ERROR.get(sender));
-                } else {
-                    player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[2]).replace("%TARGET%", args[1]));
-                    OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
-                    EconomyResponse r2 = economy.depositPlayer(target, Double.parseDouble(args[2]));
-                    if (target.getPlayer() != null) {
-                        target.getPlayer().sendMessage(Lang.RECEIVED_MONEY_FROM_PLAYER.get(target.getPlayer()).replace("%AMOUNT%", args[2]).replace("%TARGET%", player.getName()));
-                    }
+                profile = instance.getProfile(player.getUniqueId());
+                transaction = profile.withdrawMoney(Double.parseDouble(args[2]));
+                if (!transaction) {
+                    sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
+                    return false;
                 }
+
+                player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[2]).replace("%TARGET%", args[1]));
+                target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+                Profile tProfile = instance.getProfile(target.getUniqueId());
+                tProfile.depositMoney(Double.parseDouble(args[2]));
+                if (target.getPlayer() != null)
+                    target.getPlayer().sendMessage(Lang.RECEIVED_MONEY_FROM_PLAYER.get(target.getPlayer()).replace("%AMOUNT%", args[2]).replace("%TARGET%", player.getName()));
                 break;
 
             case "set":
@@ -102,7 +97,7 @@ public class EconomySystem implements Module, CommandExecutor {
                     sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                     return false;
                 }
-                Profile profile = instance.getProfile(Bukkit.getPlayerUniqueId(args[1]));
+                profile = instance.getProfile(Bukkit.getPlayerUniqueId(args[1]));
                 profile.setBalance(Double.parseDouble(args[2]));
                 profile.backup();
                 sender.sendMessage(Lang.SET_PLAYER_BALANCE.get(sender));
@@ -117,17 +112,29 @@ public class EconomySystem implements Module, CommandExecutor {
                     sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                     return false;
                 }
-                OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
-                if (!(Main.getInstance().getProfile(target.getUniqueId()).getBalance() - Double.parseDouble(args[2]) >= 0.0)) {
+                target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+                Profile tProf = instance.getProfile(target.getUniqueId());
+                transaction = tProf.withdrawMoney(Double.parseDouble(args[2]));
+                if (!transaction) {
                     sender.sendMessage(Lang.PLAYER_DOESNT_HAVE_ENOUGH_MONEY.get(sender));
                     return false;
                 }
-                r = economy.withdrawPlayer(target, Double.parseDouble(args[2]));
-                if (!r.transactionSuccess()) {
-                    sender.sendMessage(Lang.UNEXPECTED_ECO_ERROR.get(sender));
-                } else {
-                    sender.sendMessage(Lang.TOOK_MONEY_FROM_PLAYER.get(sender).replace("%AMOUNT%", args[2]).replace("%PLAYER%", target.getName()));
+                sender.sendMessage(Lang.TOOK_MONEY_FROM_PLAYER.get(sender).replace("%AMOUNT%", args[2]).replace("%PLAYER%", target.getName()));
+                break;
+
+            case "give":
+                if (!sender.hasPermission("earth.economy.admin")) {
+                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
+                    return false;
                 }
+                if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+                    sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
+                    return false;
+                }
+                target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+                Profile tProf2 = instance.getProfile(target.getUniqueId());
+                tProf2.depositMoney(Double.parseDouble(args[2]));
+                sender.sendMessage(Lang.GAVE_MONEY_TO_PLAYER.get(sender).replace("%AMOUNT%", args[2]).replace("%PLAYER%", target.getName()));
                 break;
         }
         return false;

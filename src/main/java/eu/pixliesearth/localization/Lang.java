@@ -66,6 +66,8 @@ public enum Lang {
             "&7Dieser Spieler &chat nicht genug Geld &7für diese Aktion."),
     TOOK_MONEY_FROM_PLAYER(Lang.ECONOMY, "&aSuccessfully &7withdrew &2&l$&a%AMOUNT% &7from &6%PLAYER%&7's account.",
             "&aErfolgreich &2&l$&a%AMOUNT% &7von dem Konto des Spielers &6%PLAYER% &7abehoben."),
+    GAVE_MONEY_TO_PLAYER(Lang.ECONOMY, "&aSuccessfully &7deposited &2&l$&a%AMOUNT% &7into &6%PLAYER%&7's account.",
+            "&aErfolgreich &2&l$&a%AMOUNT% &7auf &6%PLAYER%&7's Konto hinterlegt."),
     // SUICIDE
     SMSG_1("", "&6%PLAYER% &7just stabbed himself!",
             "&6%PLAYER% &7hat sich gerade selbst erstochen!"),

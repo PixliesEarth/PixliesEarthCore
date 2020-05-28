@@ -141,6 +141,17 @@ public class Profile {
         backup();
     }
 
+    public boolean withdrawMoney(double amount) {
+        if (balance - amount < 0)
+            return false;
+        this.balance = this.balance - amount;
+        return true;
+    }
+
+    public void depositMoney(double amount) {
+        this.balance = this.balance + amount;
+    }
+
     public static Profile getByDiscord(String discordId) {
         Document found = Main.getPlayerCollection().find(new Document("discord", discordId)).first();
         if (found != null)
