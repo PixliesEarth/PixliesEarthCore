@@ -57,6 +57,10 @@ public class EconomySystem implements Module, CommandExecutor {
                 break;
             case "pay":
                 Player player = (Player) sender;
+                if (args[2].startsWith("-") || args[2].startsWith("+")) {
+                    player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
+                    return false;
+                }
                 if (Bukkit.getPlayerUniqueId(args[1]) == null) {
                     sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                     return false;
@@ -67,10 +71,6 @@ public class EconomySystem implements Module, CommandExecutor {
                 }
                 if (Double.parseDouble(args[2]) < config.getDouble("modules.economy.min-amount")) {
                     player.sendMessage(Lang.PAY_AMT_BELOW_MIN.get(sender).replace("%AMOUNT%", config.getDouble("modules.economy.min-amount")+""));
-                    return false;
-                }
-                if (args[2].startsWith("-")) {
-                    player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
                     return false;
                 }
                 profile = instance.getProfile(player.getUniqueId());

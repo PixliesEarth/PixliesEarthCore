@@ -22,6 +22,10 @@ public class PayCommand implements CommandExecutor {
         boolean transaction;
         OfflinePlayer target;
         Profile profile;
+        if (args[1].startsWith("-") || args[2].startsWith("+")) {
+            player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
+            return false;
+        }
         if (Bukkit.getPlayerUniqueId(args[0]) == null) {
             sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
             return false;
@@ -32,10 +36,6 @@ public class PayCommand implements CommandExecutor {
         }
         if (Double.parseDouble(args[1]) < config.getDouble("modules.economy.min-amount")) {
             player.sendMessage(Lang.PAY_AMT_BELOW_MIN.get(sender).replace("%AMOUNT%", config.getDouble("modules.economy.min-amount")+""));
-            return false;
-        }
-        if (args[1].startsWith("-")) {
-            player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
             return false;
         }
         profile = instance.getProfile(player.getUniqueId());
