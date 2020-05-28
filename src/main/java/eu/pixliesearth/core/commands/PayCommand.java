@@ -22,7 +22,7 @@ public class PayCommand implements CommandExecutor {
         boolean transaction;
         OfflinePlayer target;
         Profile profile;
-        if (args[1].startsWith("-") || args[2].startsWith("+")) {
+        if (args[1].startsWith("-") || args[1].startsWith("+")) {
             player.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
             return false;
         }

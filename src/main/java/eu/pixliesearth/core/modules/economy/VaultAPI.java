@@ -118,7 +118,7 @@ public class VaultAPI implements Economy {
         Profile profile = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName));
         profile.setBalance(getBalance(playerName) - amount);
         profile.getRececipts().add(Receipt.create(amount, true));
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
@@ -133,7 +133,7 @@ public class VaultAPI implements Economy {
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) - amount);
         profile.getRececipts().add(Receipt.create(amount, true));
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
@@ -153,7 +153,7 @@ public class VaultAPI implements Economy {
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) - amount);
         profile.getRececipts().add(Receipt.create(amount, true));
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
@@ -173,7 +173,7 @@ public class VaultAPI implements Economy {
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) + amount);
         profile.getRececipts().add(Receipt.create(amount, false));
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
@@ -193,7 +193,7 @@ public class VaultAPI implements Economy {
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) + amount);
         profile.getRececipts().add(Receipt.create(amount, false));
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 

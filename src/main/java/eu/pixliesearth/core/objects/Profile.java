@@ -2,6 +2,7 @@ package eu.pixliesearth.core.objects;
 
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -145,11 +146,15 @@ public class Profile {
         if (balance - amount < 0)
             return false;
         this.balance = this.balance - amount;
+        rececipts.add(Receipt.create(amount, false));
+        save();
         return true;
     }
 
     public void depositMoney(double amount) {
         this.balance = this.balance + amount;
+        rececipts.add(Receipt.create(amount, false));
+        save();
     }
 
     public static Profile getByDiscord(String discordId) {
