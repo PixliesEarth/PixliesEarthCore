@@ -38,8 +38,8 @@ public class PacketListener  implements Listener{
                         //if(e.getEntity().getCustomName() == null) return;
                         //if(e.getEntity().getCustomName().equalsIgnoreCase("§c7.62mm")) {
                           //  System.out.println(e.getEntity().getCustomName());
-                        if(e.getAmmoName().equals("§c7.62mm")) {
-                            System.out.println("Canceled packet send");
+                        if(e.getAmmoName() != null) {
+                            
                             event.setCancelled(true);
                             protocolManager.removePacketListener(this);
                         }
