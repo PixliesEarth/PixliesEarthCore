@@ -12,14 +12,29 @@ import java.util.*;
 
 public interface Module {
 
+    /**
+     * @return Identifier of the module
+     */
     String name();
 
+    /**
+     * @return Is the module enabled?
+     */
     boolean enabled();
 
+    /**
+     * Plugin instance
+     */
     Main instance = Main.getInstance();
 
+    /**
+     * config of the plugin for checks
+     */
     FileConfiguration config = instance.getConfig();
 
+    /**
+     * @return All modules
+     */
     static Set<Module> getModules() {
         Set<Module> returnable = new HashSet<>();
         returnable.add(new WarpSystem());
@@ -29,6 +44,10 @@ public interface Module {
         return returnable;
     }
 
+    /**
+     * @param name search-keyword
+     * @return a module
+     */
     static Module getByName(String name) {
         for (Module modules : getModules())
             if (modules.name().equalsIgnoreCase(name))

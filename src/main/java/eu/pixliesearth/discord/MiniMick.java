@@ -86,7 +86,6 @@ public class MiniMick {
                         .setDescription("**" + Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid).getPlayer()).getName() + "** has $" + balance + " to his name!" )
                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
                        .setTimestampToNow());
-
            } else {
                if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
                    if (event.getMessage().getReadableContent().length() > 0)
