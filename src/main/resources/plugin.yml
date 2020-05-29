@@ -114,6 +114,17 @@ commands:
     description: tpaccept
     aliases:
       - tpaaccept
+  enderchest:
+    description: Enderchest
+    aliases:
+      - ec
+      - echest
+  craft:
+    description: craft
+    aliases:
+      - crafter
+      - workbench
+
 permissions:
   # GENERAL
   earth.admin:
@@ -131,6 +142,10 @@ permissions:
   earth.vanish:
     default: op
   earth.seevanished:
+    default: op
+  earth.craft:
+    default: op
+  earth.enderchest:
     default: op
   # CHAT
   earth.chat.colours:
