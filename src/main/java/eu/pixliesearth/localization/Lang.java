@@ -118,6 +118,12 @@ public enum Lang {
             "&7TPA-Anfrage von &b%REQUESTER% &aakzeptiert&7."),
     TPA_REQUEST_DENIED(Lang.EARTH, "&cDenied &7TPA-Request by &b%REQUESTER%&7.",
             "&7TPA-Anfrage von &b%REQUESTER% &cabgelehnt&7."),
+    TPA_REQ(Lang.EARTH, "&7You received an teleportation-request from &6%PLAYER%&7. &e/tpaccept",
+            "&7Du hast soeben eine Teleportationsanfrage von &6%PLAYER% &7erhalten. &e/tpaccept"),
+    SENT_TPA_REQ(Lang.EARTH, "&7You sent a tpa request to &6%PLAYER%&7.",
+            "&7Du hast soeben eine tpa-anfrage an &6%PLAYER% &7gesendet."),
+    CANT_SEND_REQ_TO_YOURSELF(Lang.EARTH, "&7You &ccan't &7send a TPA-request to yourself.",
+            "&7Du kannst dir selber &ckeine &7TPA-Anfragen stellen."),
     // DISCORD LINKING
     DC_ALREADY_SYNCED(Lang.DISCORD, "&7Your ingame and discord accounts are already synced.",
             "&7Deine Ingame und Discord accounts sind schon mit einander verbunden."),

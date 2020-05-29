@@ -31,6 +31,8 @@ commands:
       - tell
   profile:
     description: profile to string
+    aliases:
+      - settings
   link:
     description: Discord link command
   nation:

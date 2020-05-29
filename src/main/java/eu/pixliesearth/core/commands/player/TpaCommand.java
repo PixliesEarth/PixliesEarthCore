@@ -43,8 +43,14 @@ public class TpaCommand implements CommandExecutor {
             player.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(player));
             return false;
         }
+        if (Bukkit.getPlayer(args[0]) == player) {
+            player.sendMessage(Lang.CANT_SEND_REQ_TO_YOURSELF.get(player));
+            return false;
+        }
         Player target = Bukkit.getPlayer(args[0]);
         instance.getPlayerLists().tpaRequests.put(target.getUniqueId(), player.getUniqueId());
+        player.sendMessage(Lang.SENT_TPA_REQ.get(player).replace("%PLAYER%", target.getName()));
+        target.sendMessage(Lang.TPA_REQ.get(target).replace("%PLAYER%", player.getName()));
 
         return false;
     }
