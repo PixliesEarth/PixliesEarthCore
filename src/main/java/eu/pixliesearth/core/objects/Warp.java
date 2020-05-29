@@ -44,7 +44,7 @@ public class Warp {
 
     public void remove() {
         FileManager cfg = Main.getInstance().getWarpsCfg();
-        cfg.getConfiguration().set(name, null);
+        cfg.getConfiguration().set("warps." + name, null);
         cfg.save();
         cfg.reload();
     }
