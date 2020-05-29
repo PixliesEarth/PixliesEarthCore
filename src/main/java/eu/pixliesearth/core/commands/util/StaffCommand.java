@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.util;
 
 import eu.pixliesearth.Main;
 import org.bukkit.command.Command;

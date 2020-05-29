@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
@@ -8,8 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GamemodeSurvivalCommand implements CommandExecutor {
-    GameMode gamemode = GameMode.SURVIVAL;
+public class GamemodeCreativeCommand implements CommandExecutor {
+
+    GameMode gamemode = GameMode.CREATIVE;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -37,6 +38,6 @@ public class GamemodeSurvivalCommand implements CommandExecutor {
             p.sendMessage(Lang.GAMEMODE_CHANGED_OTHER.get(sender).replace("%GAMEMODE%", gamemode.name()).replace("%PLAYER%", player.getName()));
             player.sendMessage(Lang.GAMEMODE_CHANGED_BY_OTHER.get(player).replace("%PLAYER%", p.getName()).replace("%GAMEMODE%", gamemode.name()));
         }
-        return false;
+    return false;
     }
 }

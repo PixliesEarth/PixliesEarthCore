@@ -1,7 +1,13 @@
 package eu.pixliesearth.core.utils;
 
+import com.github.stefvanschie.inventoryframework.Gui;
+import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -48,6 +54,39 @@ public class Methods {
         int h = time / 3600 % 24;
 
         return (h > 0 ? h + ":" : "") + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+    }
+
+    public static Material getSBWoolByCC(String chatColor) {
+        switch (chatColor) {
+            case "§b":
+                return Material.LIGHT_BLUE_WOOL;
+            case "§c":
+                return Material.RED_WOOL;
+            case "§e":
+                return Material.YELLOW_WOOL;
+            case "§a":
+                return Material.GREEN_WOOL;
+            case "§3":
+                return Material.CYAN_WOOL;
+        }
+        return Material.CYAN_WOOL;
+    }
+
+    public static ChatColor getNeighbourColor(String color) {
+        ChatColor cc = ChatColor.AQUA;
+        switch (color) {
+            case "§b":
+                return ChatColor.DARK_AQUA;
+            case "§c":
+                return ChatColor.DARK_RED;
+            case "§e":
+                return ChatColor.GOLD;
+            case "§a":
+                return ChatColor.DARK_GREEN;
+            case "§3":
+                return ChatColor.BLUE;
+        }
+        return cc;
     }
 
 }

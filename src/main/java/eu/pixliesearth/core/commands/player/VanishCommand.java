@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.utils.PlayerLists;

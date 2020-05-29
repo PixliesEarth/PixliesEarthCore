@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

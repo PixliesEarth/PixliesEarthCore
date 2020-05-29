@@ -19,25 +19,30 @@ import java.util.Map;
 public class ScoreboardAdapter implements AssembleAdapter {
 
     private static int frame = 0;
-    private static String[] frames = new String[]{
-            "§f§lEARTH",
-            "§f§lEARTH",
-            "§2§lE§f§lARTH",
-            "§a§lE§2§lA§f§lRTH",
-            "§a§lEA§2§lR§f§lTH",
-            "§a§lEAR§2§lT§f§lH",
-            "§2§lE§a§lART§2§lH",
-            "§f§lE§2§lA§a§lRTH",
-            "§f§lEA§2§lR§a§lTH",
-            "§f§lEAR§2§lT§a§lH",
-            "§f§lEART§2§lH"
-    };
+    private static String[] frames(Player player) {
+        String c = Main.getInstance().getProfile(player.getUniqueId()).getFavoriteColour();
+        String nc = Methods.getNeighbourColor(c)+"";
+        String[] f =new String[]{
+                "§f§lEARTH",
+                "§f§lEARTH",
+                nc+"§lE§f§lARTH",
+                c+"§lE"+nc+"§lA§f§lRTH",
+                c+"§lEA"+nc+"§lR§f§lTH",
+                c+"§lEAR"+nc+"§lT§f§lH",
+                nc+"§lE"+c+"§lART"+nc+"§lH",
+                "§f§lE"+nc+"§lA"+c+"§lRTH",
+                "§f§lEA"+nc+"§lR"+c+"§lTH",
+                "§f§lEAR"+nc+"§lT"+c+"§lH",
+                "§f§lEART"+nc+"§lH"
+        };
+        return f;
+    }
 
     @Override
     public String getTitle(Player player) {
-        if (frame == frames.length - 1) frame = 0;
+        if (frame == frames(player).length - 1) frame = 0;
         frame++;
-        return frames[frame];
+        return frames(player)[frame];
     }
 
     @Override

@@ -1,11 +1,13 @@
 package eu.pixliesearth;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import eu.pixliesearth.core.commands.*;
+import eu.pixliesearth.core.commands.economy.BalanceCommand;
+import eu.pixliesearth.core.commands.economy.CoinsCommand;
+import eu.pixliesearth.core.commands.economy.PayCommand;
+import eu.pixliesearth.core.commands.player.*;
+import eu.pixliesearth.core.commands.util.*;
 import io.github.thatkawaiisam.assemble.Assemble;
 import io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.core.listener.*;
@@ -32,7 +34,6 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 

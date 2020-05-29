@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
@@ -8,8 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GamemodeSpectatorCommand implements CommandExecutor {
-    GameMode gamemode = GameMode.SPECTATOR;
+public class GamemodeSurvivalCommand implements CommandExecutor {
+    GameMode gamemode = GameMode.SURVIVAL;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {

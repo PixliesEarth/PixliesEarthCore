@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.util;
 
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;

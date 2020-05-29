@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.commands;
+package eu.pixliesearth.core.commands.economy;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.localization.Lang;
