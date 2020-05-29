@@ -142,18 +142,18 @@ public class Profile {
         save();
     }
 
-    public boolean withdrawMoney(double amount) {
+    public boolean withdrawMoney(double amount, String reason) {
         if (balance - amount < 0)
             return false;
         this.balance = this.balance - amount;
-        rececipts.add(Receipt.create(amount, false));
+        rececipts.add(Receipt.create(amount, true, reason));
         save();
         return true;
     }
 
-    public void depositMoney(double amount) {
+    public void depositMoney(double amount, String reason) {
         this.balance = this.balance + amount;
-        rececipts.add(Receipt.create(amount, false));
+        rececipts.add(Receipt.create(amount, false, reason));
         save();
     }
 

@@ -39,7 +39,7 @@ public class PayCommand implements CommandExecutor {
             return false;
         }
         profile = instance.getProfile(player.getUniqueId());
-        transaction = profile.withdrawMoney(Double.parseDouble(args[1]));
+        transaction = profile.withdrawMoney(Double.parseDouble(args[1]), "Payment to " + args[0]);
         if (!transaction) {
             sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
             return false;
@@ -48,7 +48,7 @@ public class PayCommand implements CommandExecutor {
         player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[1]).replace("%TARGET%", args[0]));
         target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
         Profile tProfile = instance.getProfile(target.getUniqueId());
-        tProfile.depositMoney(Double.parseDouble(args[1]));
+        tProfile.depositMoney(Double.parseDouble(args[1]), "Payment from " + player.getName());
         if (target.getPlayer() != null)
             target.getPlayer().sendMessage(Lang.RECEIVED_MONEY_FROM_PLAYER.get(target.getPlayer()).replace("%AMOUNT%", args[1]).replace("%TARGET%", player.getName()));
         return false;

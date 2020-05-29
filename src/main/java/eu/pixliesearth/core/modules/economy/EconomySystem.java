@@ -74,7 +74,7 @@ public class EconomySystem implements Module, CommandExecutor {
                     return false;
                 }
                 profile = instance.getProfile(player.getUniqueId());
-                transaction = profile.withdrawMoney(Double.parseDouble(args[2]));
+                transaction = profile.withdrawMoney(Double.parseDouble(args[2]), "Payment to " + args[1]);
                 if (!transaction) {
                     sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
                     return false;
@@ -83,7 +83,7 @@ public class EconomySystem implements Module, CommandExecutor {
                 player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[2]).replace("%TARGET%", args[1]));
                 target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
                 Profile tProfile = instance.getProfile(target.getUniqueId());
-                tProfile.depositMoney(Double.parseDouble(args[2]));
+                tProfile.depositMoney(Double.parseDouble(args[2]), "Payment from " + player.getName());
                 if (target.getPlayer() != null)
                     target.getPlayer().sendMessage(Lang.RECEIVED_MONEY_FROM_PLAYER.get(target.getPlayer()).replace("%AMOUNT%", args[2]).replace("%TARGET%", player.getName()));
                 break;
@@ -114,7 +114,7 @@ public class EconomySystem implements Module, CommandExecutor {
                 }
                 target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
                 Profile tProf = instance.getProfile(target.getUniqueId());
-                transaction = tProf.withdrawMoney(Double.parseDouble(args[2]));
+                transaction = tProf.withdrawMoney(Double.parseDouble(args[2]), "Balance withdrawal from " + sender.getName());
                 if (!transaction) {
                     sender.sendMessage(Lang.PLAYER_DOESNT_HAVE_ENOUGH_MONEY.get(sender));
                     return false;
@@ -133,7 +133,7 @@ public class EconomySystem implements Module, CommandExecutor {
                 }
                 target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
                 Profile tProf2 = instance.getProfile(target.getUniqueId());
-                tProf2.depositMoney(Double.parseDouble(args[2]));
+                tProf2.depositMoney(Double.parseDouble(args[2]), "Balance deposit from " + sender.getName());
                 sender.sendMessage(Lang.GAVE_MONEY_TO_PLAYER.get(sender).replace("%AMOUNT%", args[2]).replace("%PLAYER%", target.getName()));
                 break;
         }
