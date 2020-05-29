@@ -180,6 +180,8 @@ public final class Main extends JavaPlugin {
         getCommand("pay").setExecutor(new PayCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
+        getCommand("tpa").setExecutor(new TpaCommand());
+        getCommand("tpaccept").setExecutor(new TpacceptCommand());
     }
 
     private void registerEvents(PluginManager manager) {

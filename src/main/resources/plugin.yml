@@ -103,6 +103,15 @@ commands:
     description: vanish
     aliases:
       - v
+  tpa:
+    description: tpa
+    aliases:
+      - tprq
+      - tpr
+  tpaccept:
+    description: tpaccept
+    aliases:
+      - tpaaccept
 permissions:
   # GENERAL
   earth.admin:
