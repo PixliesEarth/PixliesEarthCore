@@ -1,6 +1,7 @@
 package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.events.ShootEvent;
 import net.minecraft.server.v1_15_R1.Material;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityDestroy;
 import org.bukkit.*;
@@ -18,6 +19,7 @@ public class Gun {
     public static Arrow a;
 
     public static void shoot(Player player){
+        Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
         player.getWorld().spawn(player.getEyeLocation(), Arrow.class, arrow -> {
             arrow.setShooter(((LivingEntity) player));
             arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));

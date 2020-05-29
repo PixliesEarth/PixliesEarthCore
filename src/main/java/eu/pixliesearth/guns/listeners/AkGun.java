@@ -22,6 +22,7 @@ public class AkGun implements Listener {
             if(p.getInventory().getItemInMainHand() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals("§cAK47")){
+                System.out.println("Shoot event triggered");
                 Gun.shoot(p);
             }
         }
