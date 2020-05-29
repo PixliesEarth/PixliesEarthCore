@@ -146,7 +146,7 @@ public enum Lang {
     private String ENG;
     private String DE;
 
-    private static final String EARTH = "§aEARTH §8| ";
+    private static final String EARTH = "§b§lPixlies§fEarth§b§l! §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";

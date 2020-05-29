@@ -28,25 +28,23 @@ public class PacketListener  implements Listener{
         //if(!(e.getEntity() instanceof Arrow)) return;
 
 
-        protocolManager = ProtocolLibrary.getProtocolManager();
-        protocolManager.addPacketListener(new PacketAdapter(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.SPAWN_ENTITY) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                //DONT ADD THIS BACK IT DO CRING NAE NAE
-                //super.onPacketSending(event);
-                if(event.getPacketType() == PacketType.Play.Server.SPAWN_ENTITY){
-                    //if(e.getEntity().getCustomName() == null) return;
-                    //if(e.getEntity().getCustomName().equalsIgnoreCase("§c7.62mm")) {
-                      //  System.out.println(e.getEntity().getCustomName());
-                    if(e.getAmmoName().equals("§c7.62mm")) {
-                        System.out.println("Canceled packet send");
-                        event.setCancelled(true);
-                        protocolManager.removePacketListener(this);
+            protocolManager = ProtocolLibrary.getProtocolManager();
+            protocolManager.addPacketListener(new PacketAdapter(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.SPAWN_ENTITY) {
+                @Override
+                public void onPacketSending(PacketEvent event) {
+                    //DONT ADD THIS BACK IT DO CRING NAE NAE
+                    //super.onPacketSending(event);
+                    if(event.getPacketType() == PacketType.Play.Server.SPAWN_ENTITY){
+                        //if(e.getEntity().getCustomName() == null) return;
+                        //if(e.getEntity().getCustomName().equalsIgnoreCase("§c7.62mm")) {
+                          //  System.out.println(e.getEntity().getCustomName());
+                        if(e.getAmmoName().equals("§c7.62mm")) {
+                            System.out.println("Canceled packet send");
+                            event.setCancelled(true);
+                            protocolManager.removePacketListener(this);
                         }
                     }
                 }
-            //}
-        //});
-    });
-}
+            });
+    }
 }

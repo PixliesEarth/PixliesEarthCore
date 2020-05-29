@@ -60,14 +60,14 @@ public class ProfileCommand implements CommandExecutor {
             e.setCancelled(true);
             profile.setLang("DE");
             profile.save();
-            player.closeInventory();
+            langgui.update();
             player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
         }), 0, 0);
         langpane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"United States of America\\\"},SkullOwner:{Id:\\\"3c30484a-76d3-4cfe-88e5-e7599bc9ac4d\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19").setDisplayname("§eEnglish").build(), e -> {
             e.setCancelled(true);
             profile.setLang("ENG");
             profile.save();
-            player.closeInventory();
+            langgui.update();
             player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
         }), 1, 0);
         langgui.addPane(langpane);
@@ -83,13 +83,13 @@ public class ProfileCommand implements CommandExecutor {
                 case STANDARD:
                     profile.setBoardType(ScoreboardAdapter.scoreboardType.COMPACT.name());
                     profile.save();
-                    player.closeInventory();
+                    scoregui.update();
                     player.sendMessage(Lang.CHANGED_SCOREBOARDTYPE.get(player).replace("%TYPE%", ScoreboardAdapter.scoreboardType.COMPACT.name()));
                     break;
                 case COMPACT:
                     profile.setBoardType(ScoreboardAdapter.scoreboardType.STANDARD.name());
                     profile.save();
-                    player.closeInventory();
+                    scoregui.update();
                     player.sendMessage(Lang.CHANGED_SCOREBOARDTYPE.get(player).replace("%TYPE%", ScoreboardAdapter.scoreboardType.STANDARD.name()));
                     break;
             }
@@ -102,40 +102,48 @@ public class ProfileCommand implements CommandExecutor {
                 e.setCancelled(true);
                 profile.setFavoriteColour("§b");
                 profile.save();
-                player.closeInventory();
+                menu.update();
                 player.sendMessage(Lang.CHANGED_FAV_COL.get(player).replace("%COL%", "§bAQUA"));
             }), 0, 0);
             pane2.addItem(new GuiItem(new ItemBuilder(Material.RED_WOOL).setDisplayName("§cRed").build(), e -> {
                 e.setCancelled(true);
                 profile.setFavoriteColour("§c");
                 profile.save();
-                player.closeInventory();
+                menu.update();
                 player.sendMessage(Lang.CHANGED_FAV_COL.get(player).replace("%COL%", "§cRED"));
             }), 1, 0);
             pane2.addItem(new GuiItem(new ItemBuilder(Material.YELLOW_WOOL).setDisplayName("§eYellow").build(), e -> {
                 e.setCancelled(true);
                 profile.setFavoriteColour("§e");
                 profile.save();
-                player.closeInventory();
+                menu.update();
                 player.sendMessage(Lang.CHANGED_FAV_COL.get(player).replace("%COL%", "§eYELLOW"));
             }), 2, 0);
             pane2.addItem(new GuiItem(new ItemBuilder(Material.GREEN_WOOL).setDisplayName("§aGreen").build(), e -> {
                 e.setCancelled(true);
                 profile.setFavoriteColour("§a");
                 profile.save();
-                player.closeInventory();
+                menu.update();
                 player.sendMessage(Lang.CHANGED_FAV_COL.get(player).replace("%COL%", "§aGREEN"));
             }), 3, 0);
             pane2.addItem(new GuiItem(new ItemBuilder(Material.CYAN_WOOL).setDisplayName("§3Blue").build(), e -> {
                 e.setCancelled(true);
                 profile.setFavoriteColour("§3");
                 profile.save();
-                player.closeInventory();
+                menu.update();
                 player.sendMessage(Lang.CHANGED_FAV_COL.get(player).replace("%COL%", "§3BLUE"));
             }), 4, 0);
             menu.addPane(pane2);
             menu.show(player);
         }), 3, 1);
+        ChatColor sbo = profile.isScoreboard() ? ChatColor.GREEN : ChatColor.RED;
+        pane.addItem(new GuiItem(new ItemBuilder(Methods.getSBWoolByCC("§" + sbo.getChar())).setDisplayName("§7Scoreboard: " + sbo + profile.isScoreboard()).build(), event -> {
+            event.setCancelled(true);
+            profile.setScoreboard(!profile.isScoreboard());
+            profile.save();
+            scoregui.update();
+            scoregui.show(player);
+        }), 5, 1);
         scoregui.addPane(pane);
         return scoregui;
     }

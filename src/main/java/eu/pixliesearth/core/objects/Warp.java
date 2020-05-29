@@ -63,12 +63,13 @@ public class Warp {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
         List<Warp> warps = new ArrayList<>();
-        for (String s : cfg.getConfiguration().getConfigurationSection("warps").getKeys(false))
-            if (get(s) != null)
-                warps.add(get(s));
+        for (String s : cfg.getConfiguration().getConfigurationSection("warps").getKeys(false)) {
+            warps.add(get(s));
+        }
         return warps;
     }
 
+    @Deprecated
     public static boolean exists(String name) {
         for (Warp warp : getWarps())
             if (warp.getName().equalsIgnoreCase(name))
@@ -78,7 +79,6 @@ public class Warp {
 
     public void teleport(Player player) {
         Main instance = Main.getInstance();
-        FileConfiguration config = instance.getConfig();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (Energy.calculateNeeded(player.getLocation(), location) > profile.getEnergy()) {
             player.sendMessage(Lang.NOT_ENOUGH_ENERGY.get(player));
