@@ -25,7 +25,7 @@ public class Energy {
     }
 
     public static double calculateNeeded(Location a, Location b) {
-        return Methods.calculateDistance(a.getX(), b.getX(), a.getZ(), b.getZ()) / 2500;
+        return Methods.calculateDistance(a.getX(), b.getX(), a.getZ(), b.getZ()) / 1300;
     }
 
     public static double calculateTime(Location a, Location b) {

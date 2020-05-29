@@ -63,7 +63,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add("  §8» §a" + nation.getOnlineMembers() + " Online");
                 }
                 if (profile.getTimers().size() > 0) {
-                    returnable.add("   ");
                     for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
                         returnable.add(c + "§l" + entry.getKey());
                         returnable.add("  §8» §7" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));
@@ -84,7 +83,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "☺ §8| §a" + nation.getOnlineMembers());
                 }
                 if (profile.getTimers().size() > 0) {
-                    returnable.add("   ");
                     for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
                         returnable.add("§7" + entry.getKey());
                         returnable.add("§3" + Methods.getTimeAsString(entry.getValue().getRemaining(), true));

@@ -132,14 +132,14 @@ public class Profile {
         Nation nation = Nation.getById(id);
         nation.getMembers().add(uniqueId);
         nation.save();
-        backup();
+        save();
     }
 
     public void removeFromNation() {
         if (!isInNation()) return;
         this.inNation = false;
         this.nationId = "NONE";
-        backup();
+        save();
     }
 
     public boolean withdrawMoney(double amount) {

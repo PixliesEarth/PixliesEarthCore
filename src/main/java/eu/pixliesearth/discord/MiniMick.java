@@ -87,6 +87,11 @@ public class MiniMick {
                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
                        .setTimestampToNow());
 
+           } else {
+               if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
+                   if (event.getMessage().getReadableContent().length() > 0)
+                       Bukkit.broadcastMessage("§9D §8| §b" + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
+               }
            }
         });
 
