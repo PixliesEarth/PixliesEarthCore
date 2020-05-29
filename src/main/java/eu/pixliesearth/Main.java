@@ -36,8 +36,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
+import java.awt.*;
 import java.io.File;
 import java.util.UUID;
 
@@ -149,10 +153,12 @@ public final class Main extends JavaPlugin {
 
         assemble.setAssembleStyle(AssembleStyle.VIPER);
 
+        discordEnable();
     }
 
     @Override
     public void onDisable() {
+        discordDisable();
         for (Player player : Bukkit.getOnlinePlayers())
             getProfile(player.getUniqueId()).backup();
         for (Nation nation : NationManager.nations.values())
@@ -208,6 +214,29 @@ public final class Main extends JavaPlugin {
         } else {
             return playerLists.profiles.get(uuid);
         }
+    }
+
+    public void discordEnable(){
+        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
+                .setColor(Color.green)
+                .setDescription("<:online:716052437848424558> Server is online!")
+        );
+        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, ()->{
+            if(!(MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().getTopic().equals("<:online:716052437848424558> Earth is online!"))){
+                MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
+            }
+        }, (20*60)*10);
+
+    }
+
+    public void discordDisable(){
+        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
+                .setColor(Color.RED)
+                .setDescription("<:offline:716052437688909825> Server is offline!")
+        );
+        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
     }
 
 }
