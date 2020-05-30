@@ -4,6 +4,8 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.ChunkBank;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,7 +39,13 @@ public class claimNation implements SubCommand {
             player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
             return false;
         }
-        //TODO
+        //TODO PERMISSION SYSTEM
+        if (args[0].equalsIgnoreCase("one")) {
+            NationChunk nc = new NationChunk(profile.getNationId(), c.getX(), c.getZ());
+            nc.claim();
+            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
+                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX()+"").replace("%Z%", c.getZ()+""));
+        }
 
         return false;
     }

@@ -157,6 +157,12 @@ public class Profile {
         save();
     }
 
+    public Nation getCurrentNation() {
+        if (!inNation)
+            return null;
+        return Nation.getById(nationId);
+    }
+
     public static Profile getByDiscord(String discordId) {
         Document found = Main.getPlayerCollection().find(new Document("discord", discordId)).first();
         if (found != null)

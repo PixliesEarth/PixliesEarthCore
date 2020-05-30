@@ -23,6 +23,7 @@ public enum Lang {
             "Wähle deine Sprache aus"),
     CHOOSE_COLOUR("", "Choose a color",
             "Wähle eine Farbe aus"),
+
     // GENERAL
     NO_PERMISSIONS(Lang.EARTH, "§cInsufficient permissions.",
             "§cNicht genügend Rechte."),
@@ -50,11 +51,27 @@ public enum Lang {
             "&7Du hast den Typ deines Scoreboards zu &b%TYPE% &7geändert."),
     CHANGED_FAV_COL(Lang.EARTH, "&7You changed your favorite color to %COL%&7.",
             "&7Du hast deine Lieblingsfarbe zu %COL% &7geändert."),
+
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
             "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."),
     ALREADY_CLAIMED(Lang.NATION, "§7This chunk is §calready §7claimed.",
             "§7Dieser Chunk §cwurde schon §7geclaimed."),
+    WRONG_USAGE_NATIONS(Lang.NATION, "&cWrong usage! &e%USAGE%",
+            "&cFalsche Nutzung! &e%USAGE%"),
+    NATION_WITH_NAME_ALREADY_EXISTS(Lang.NATION, "&7A nation with that name &calready &7exists.",
+            "&7Eine Nation mit diesem Namen &cexistiert schon&7."),
+    NATION_NAME_UNVALID(Lang.NATION, "§7The name of your nation can only be alphanumeric, min. §b3 §7and max. §b10 §7characters long.",
+            "&7Der Name deiner Nation darf nur Alphanumerisch, minimum §b3 §7und maximum §10 §7Buchstaben lang sein."),
+    PLAYER_FORMED_NATION(Lang.NATION, "§6%PLAYER% §7just formed the nation of §b%NAME&7.%",
+            "&6%PLAYER% &7hat gerade die Nation von &b%NAME% &7geformt."),
+    ALREADY_IN_NATION(Lang.NATION, "&7You are &calready &7in a nation.",
+            "&7Du &cbist schon &7in einer Nation."),
+    NATION_DELEATION_CONIIRMATION(Lang.NATION, "§7Are you sure that you want to disband your nation? Type §aconfirm §7to disband, if your decision changed, type §ccancel§7.",
+            "&7Willst du wirklich deine Nation auflösen? Schreibe &aconfirm &7um es aufzulösen, falls du dich umentschieden hast, schreibe &ccancel&7."),
+    PLAYER_CLAIMED(Lang.NATION, "&6%PLAYER% &7claimed a chunk for your nation at &b%X%&8, &b%Z%",
+            "&6%PLAYER% &7hat soeben einen Chunk für deine Nation an &b%X%&8, &b%Z% &7in beansprucht."),
+
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, "§7You have §2§l$§a%BALANCE% §7on your account.",
             "§7Du hast §2§l$§a%BALANCE% §7auf deinem Konto."),
@@ -80,6 +97,7 @@ public enum Lang {
             "&aErfolgreich &2&l$&a%AMOUNT% &7von dem Konto des Spielers &6%PLAYER% &7abehoben."),
     GAVE_MONEY_TO_PLAYER(Lang.ECONOMY, "&aSuccessfully &7deposited &2&l$&a%AMOUNT% &7into &6%PLAYER%&7's account.",
             "&aErfolgreich &2&l$&a%AMOUNT% &7auf &6%PLAYER%&7's Konto hinterlegt."),
+
     // SUICIDE
     SMSG_1("", "&6%PLAYER% &7just stabbed himself!",
             "&6%PLAYER% &7hat sich gerade selbst erstochen!"),
@@ -87,6 +105,7 @@ public enum Lang {
             "&7&o\"Ich sehe das Licht!\" ~&6&o%PLAYER% &7&obevor er sein eigenes Leben nahm..."),
     SMSG_3("", "&7Everything was just too much for &6&o%PLAYER%&7, so he killed himself...",
             "&7Alles war einfach zuviel für &6&o%PLAYER%&7, deswegen hat er sich selber umgebracht..."),
+
     //VANISH
     VANISH_ON(Lang.EARTH, "&aEnabled &7vanish!",
             "&7Du bist jetzt im &avanish modus&7!"),
@@ -99,6 +118,7 @@ public enum Lang {
             ),
     VANISH_OFF_BY_OTHER(Lang.EARTH, "&7You have been removed from vanish mode by &6%other%&7.",
             "&7Du wurdest aus dem Vanish-modus von &6%other% &7entfernt. "),
+
     // TELEPORTATION
     NOT_ENOUGH_ENERGY(Lang.EARTH, "&7You &cdo not &7have enough energy to teleport to that location.",
             "&7Du &cbrauchst mehr &7Energie um dich zu dieser Location zu teleportieren."),
@@ -128,6 +148,7 @@ public enum Lang {
             "&7Du darfst der selben Person &cnicht &7zweimal hintereinander eine TPA-Anfrage senden."),
     RECEIVER_DENIED_TPA_REQ(Lang.EARTH, "&6%PLAYER% &cdenied &7your TPA-request.",
             "&6%PLAYER% &7hat soeben deine TPA-Anfrage &cabgelehnt&7."),
+
     // DISCORD LINKING
     DC_ALREADY_SYNCED(Lang.DISCORD, "&7Your ingame and discord accounts are already synced.",
             "&7Deine Ingame und Discord accounts sind schon mit einander verbunden."),
@@ -135,9 +156,11 @@ public enum Lang {
             "&7Du &chast bereits &7einen code: &e%CODE%"),
     DC_VERIFICATION_CODE(Lang.DISCORD, "§7Your verification code is §b%CODE%§7. Type §e/link §b%CODE% §7in our discord bot channel to complete the verification process.",
             "&7Dein Verifizierungscode ist &b%CODE%&7. Navigiere zu unserem discord und gebe &e/link &b%CODE% &7ein um die Verifizierung abzuschließen."),
+
     // PIXLIECOINS
     PC_BALANCE(Lang.PIXLIECOINS, "§7You have §b%AMOUNT%§3⛃ §7on your account.",
             "&7Du hast &b%AMOUNT%§3⛃ &7auf deinem Konto."),
+
     // GAMEMODE
     GAMEMODE_CHANGED(Lang.EARTH, "§7You changed your gamemode to §d%GAMEMODE%§7!",
             "&7Du hast deinen Gamemode zu &d%GAMEMODE% &7geändert!"),
@@ -145,6 +168,7 @@ public enum Lang {
             "&7Du hast &6%PLAYER%&7's Gamemode in &d%GAMEMODE% &7versetzt."),
     GAMEMODE_CHANGED_BY_OTHER(Lang.EARTH, "§6%PLAYER% §7set your gamemode to §d%GAMEMODE%§7!",
             "&6%PLAYER% &7hat dich in Gamemode &d%GAMEMODE% &7versetzt."),
+
     // SKULL
     SKULL_GIVEN_OWN(Lang.EARTH, "&7You gave yourself your own skull!",
             "&7Du hast dir dein eigenen Kopf gegeben!"),

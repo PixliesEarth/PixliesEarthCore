@@ -1,5 +1,7 @@
 package eu.pixliesearth.nations.entities.chunk;
 
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,11 +16,21 @@ public class NationChunk {
     public void claim() {
         if (ChunkBank.table.get(x, z) == null)
             ChunkBank.table.put(x, z, nationId);
+        Nation nation = Nation.getById(nationId);
+        if (!nation.getChunks().contains(serialize())) {
+            nation.getChunks().add(serialize());
+            nation.save();
+        }
     }
 
     public void unclaim() {
         if (ChunkBank.table.get(x, z) != null)
             ChunkBank.table.remove(x, z);
+        Nation nation = Nation.getById(nationId);
+        if (nation.getChunks().contains(serialize())) {
+            nation.getChunks().remove(serialize());
+            nation.save();
+        }
     }
 
     public String serialize() {

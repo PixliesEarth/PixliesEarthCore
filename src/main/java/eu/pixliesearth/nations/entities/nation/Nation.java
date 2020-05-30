@@ -2,12 +2,14 @@ package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.utils.OneRowMap;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -68,6 +70,14 @@ public class Nation {
 
     public int getOnlineMembers() {
         return (int) members.stream().filter(string -> Bukkit.getPlayer(UUID.fromString(string)) != null).count();
+    }
+
+    public Set<Player> getOnlineMemberSet() {
+        Set<Player> oplayers = new HashSet<>();
+        for (String s : getMembers())
+            if (Bukkit.getPlayer(UUID.fromString(s)) != null)
+                oplayers.add(Bukkit.getPlayer(UUID.fromString(s)));
+        return oplayers;
     }
 
     public static Nation getById(String id) {
