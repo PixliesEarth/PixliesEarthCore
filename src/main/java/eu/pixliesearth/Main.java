@@ -1,4 +1,5 @@
 package eu.pixliesearth;
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -8,9 +9,6 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
-import eu.pixliesearth.nations.entities.chunk.ChunkBank;
-import io.github.thatkawaiisam.assemble.Assemble;
-import io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -25,8 +23,11 @@ import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.guns.listeners.AkGun;
 import eu.pixliesearth.nations.commands.NationCommand;
+import eu.pixliesearth.nations.entities.chunk.ChunkBank;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
+import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.AssembleStyle;
 import lombok.Getter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -37,8 +38,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
@@ -48,25 +47,28 @@ import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
-    private static @Getter Main instance;
+    private static @Getter
+    Main instance;
 
-    private static @Getter MongoCollection<Document> playerCollection;
+    private static @Getter
+    MongoCollection<Document> playerCollection;
 
-    private static @Getter MongoCollection<Document> nationCollection;
+    private static @Getter
+    MongoCollection<Document> nationCollection;
 
-    private static @Getter VaultAPI economy;
-
-    private @Getter FileManager warpsCfg;
-
-    private @Getter PlayerLists playerLists;
-
-    private static @Getter Permission perms = null;
-
-    private static @Getter Assemble assemble = null;
-
-    private static @Getter Chat chatApi;
-
-    private static @Getter Scoreboard emptyScoreboard;
+    private static @Getter
+    VaultAPI economy;
+    private static @Getter
+    final
+    Permission perms = null;
+    private static @Getter
+    Assemble assemble = null;
+    private static @Getter
+    Scoreboard emptyScoreboard;
+    private @Getter
+    FileManager warpsCfg;
+    private @Getter
+    PlayerLists playerLists;
 
     @Override
     public void onEnable() {
@@ -221,22 +223,22 @@ public final class Main extends JavaPlugin {
         }
     }
 
-    public void discordEnable(){
+    public void discordEnable() {
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
                 .setColor(Color.green)
                 .setDescription("<:online:716052437848424558> Server is online!")
         );
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, ()->{
-            if(!(MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().getTopic().equals("<:online:716052437848424558> Earth is online!"))){
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+            if (!(MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().getTopic().equals("<:online:716052437848424558> Earth is online!"))) {
                 MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
             }
-        }, (20*60)*10);
+        }, (20 * 60) * 10);
 
     }
 
-    public void discordDisable(){
+    public void discordDisable() {
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
                 .setColor(Color.RED)
                 .setDescription("<:offline:716052437688909825> Server is offline!")
