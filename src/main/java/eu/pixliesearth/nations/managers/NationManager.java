@@ -15,9 +15,10 @@ public class NationManager {
     public static void init() {
         nations = new HashMap<>();
         Gson gson = new Gson();
-        for (Document d : Main.getNationCollection().listIndexes()) {
+        for (Document d : Main.getNationCollection().find()) {
             Nation nation = gson.fromJson(d.toJson(), Nation.class);
-            nations.put(nation.getNationId(), nation);
+            if (nation.getNationId() != null)
+                nations.put(nation.getNationId(), nation);
         }
     }
 

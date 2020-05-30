@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.commands.subcommand.nation.claimNation;
 import eu.pixliesearth.nations.commands.subcommand.nation.createNation;
 import eu.pixliesearth.nations.commands.subcommand.nation.disbandNation;
 import org.bukkit.command.Command;
@@ -20,6 +21,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         Set<SubCommand> subCommands = new HashSet<>();
         subCommands.add(new createNation());
         subCommands.add(new disbandNation());
+        subCommands.add(new claimNation());
         return subCommands;
     }
 

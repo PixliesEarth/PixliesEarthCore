@@ -8,6 +8,7 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
+import eu.pixliesearth.nations.entities.chunk.ChunkBank;
 import io.github.thatkawaiisam.assemble.Assemble;
 import io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.core.listener.*;
@@ -152,6 +153,8 @@ public final class Main extends JavaPlugin {
         assemble.setTicks(2);
 
         assemble.setAssembleStyle(AssembleStyle.VIPER);
+
+        ChunkBank.init();
 
         discordEnable();
     }

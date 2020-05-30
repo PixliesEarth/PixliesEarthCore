@@ -46,12 +46,10 @@ public class Nation {
         nation.append("ranks", ranks);
         nation.append("members", members);
         nation.append("chunks", chunks);
-        if (found == null) {
-            Main.getNationCollection().insertOne(nation);
-        } else {
+        if (found != null) {
             Main.getNationCollection().deleteOne(found);
-            Main.getNationCollection().insertOne(nation);
         }
+        Main.getNationCollection().insertOne(nation);
     }
 
     public Nation save() {
