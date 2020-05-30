@@ -194,6 +194,7 @@ public final class Main extends JavaPlugin {
         getCommand("tpa").setExecutor(new TpaCommand());
         getCommand("tpaccept").setExecutor(new TpacceptCommand());
         getCommand("skull").setExecutor(new SkullCommand());
+        getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
     }
 
     private void registerEvents(PluginManager manager) {
