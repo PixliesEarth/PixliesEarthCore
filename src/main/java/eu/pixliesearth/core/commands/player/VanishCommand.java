@@ -18,7 +18,7 @@ public class VanishCommand implements CommandExecutor {
 
 
         if(!(sender instanceof Player)){
-            sender.sendMessage("This command is only executable by a player.");
+            sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
             return false;
         }
         Player p = (Player) sender;

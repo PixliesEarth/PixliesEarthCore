@@ -126,6 +126,8 @@ commands:
       - workbench
   skull:
     description: skull
+  walkspeed:
+    description: walkspeed
 permissions:
   # GENERAL
   earth.admin:
@@ -149,6 +151,8 @@ permissions:
   earth.enderchest:
     default: op
   earth.skull:
+    default: op
+  earth.walkspeed:
     default: op
   # CHAT
   earth.chat.colours:
