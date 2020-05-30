@@ -33,6 +33,9 @@ public class TpaCommand implements CommandExecutor {
         if (args[0].equalsIgnoreCase("deny")) {
             if (instance.getPlayerLists().tpaRequests.containsKey(player.getUniqueId())) {
                 player.sendMessage(Lang.TPA_REQUEST_DENIED.get(player).replace("%REQUESTER%", Bukkit.getPlayer(instance.getPlayerLists().tpaRequests.get(player.getUniqueId())).getName()));
+                Player target = Bukkit.getPlayer(instance.getPlayerLists().tpaRequests.get(player.getUniqueId()));
+                if (target != null)
+                    target.sendMessage(Lang.RECEIVER_DENIED_TPA_REQ.get(target).replace("%PLAYER%", player.getDisplayName()));
                 instance.getPlayerLists().tpaRequests.remove(player.getUniqueId());
             } else {
                 player.sendMessage(Lang.NO_OPEN_TPA_REQUEST.get(player));
@@ -48,6 +51,10 @@ public class TpaCommand implements CommandExecutor {
             return false;
         }
         Player target = Bukkit.getPlayer(args[0]);
+        if (instance.getPlayerLists().tpaRequests.get(target.getUniqueId()) == player.getUniqueId()) {
+            player.sendMessage(Lang.CANT_SEND_REQ_AGAIN.get(player));
+            return false;
+        }
         instance.getPlayerLists().tpaRequests.put(target.getUniqueId(), player.getUniqueId());
         player.sendMessage(Lang.SENT_TPA_REQ.get(player).replace("%PLAYER%", target.getName()));
         target.sendMessage(Lang.TPA_REQ.get(target).replace("%PLAYER%", player.getName()));
