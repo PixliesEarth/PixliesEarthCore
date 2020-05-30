@@ -193,6 +193,7 @@ public final class Main extends JavaPlugin {
         getCommand("vanish").setExecutor(new VanishCommand());
         getCommand("tpa").setExecutor(new TpaCommand());
         getCommand("tpaccept").setExecutor(new TpacceptCommand());
+        getCommand("skull").setExecutor(new SkullCommand());
     }
 
     private void registerEvents(PluginManager manager) {

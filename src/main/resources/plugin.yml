@@ -124,7 +124,8 @@ commands:
     aliases:
       - crafter
       - workbench
-
+  skull:
+    description: skull
 permissions:
   # GENERAL
   earth.admin:
@@ -146,6 +147,8 @@ permissions:
   earth.craft:
     default: op
   earth.enderchest:
+    default: op
+  earth.skull:
     default: op
   # CHAT
   earth.chat.colours:

@@ -140,7 +140,12 @@ public enum Lang {
     GAMEMODE_CHANGED_OTHER(Lang.EARTH, "§7You changed §6%PLAYER% §7gamemode to §d%GAMEMODE%§7!",
             "&7Du hast &6%PLAYER%&7's Gamemode in &d%GAMEMODE% &7versetzt."),
     GAMEMODE_CHANGED_BY_OTHER(Lang.EARTH, "§6%PLAYER% §7set your gamemode to §d%GAMEMODE%§7!",
-            "&6%PLAYER% &7hat dich in Gamemode &d%GAMEMODE% &7versetzt.");
+            "&6%PLAYER% &7hat dich in Gamemode &d%GAMEMODE% &7versetzt."),
+    // SKULL
+    SKULL_GIVEN_OWN(Lang.EARTH, "&7You gave yourself your own skull!",
+            "&7Du hast dir dein eigenen Kopf gegeben!"),
+    SKULL_GIVEN(Lang.EARTH, "&7You gave yourself the skull of &6%player%&7!",
+            "&7Du hast dir dein Kopf von &6%player% &7gegeben!"),;
 
     private String PREFIX;
     private String ENG;
