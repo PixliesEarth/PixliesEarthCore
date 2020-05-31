@@ -10,6 +10,7 @@ import eu.pixliesearth.core.utils.AfkMap;
 import eu.pixliesearth.core.utils.ItemBuilder;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.SkullBuilder;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.ChunkBank;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -62,12 +63,13 @@ public class JoinListener implements Listener {
         player.sendMessage(Lang.PROFILE_LOADED.get(player));
 
         //VANISH
-        if(Main.getInstance().getPlayerLists().vanishList.isEmpty()) return;
-        //VANISHES FOR PLAYERS WHO NEWLY JOINED
-        for(UUID pUUID : Main.getInstance().getPlayerLists().vanishList){
-            Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
-            if(!(player.hasPermission("earth.seevanished"))){
-                player.hidePlayer(Main.getInstance(), p);
+        if(!(Main.getInstance().getPlayerLists().vanishList.isEmpty())) {
+            //VANISHES FOR PLAYERS WHO NEWLY JOINED
+            for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
+                Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+                if (!(player.hasPermission("earth.seevanished"))) {
+                    player.hidePlayer(Main.getInstance(), p);
+                }
             }
         }
 
@@ -80,6 +82,9 @@ public class JoinListener implements Listener {
         } else {
             player.sendTitle(tbelongs.getName(), tbelongs.getDescription(), 20, 20 * 3, 20);
         }
+
+        //Discord Joins
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!");
     }
 
 }

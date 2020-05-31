@@ -3,6 +3,7 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
+import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,20 +29,22 @@ public class LeaveListener implements Listener {
 
 
         //VANISH
-        if(Main.getInstance().getPlayerLists().vanishList.isEmpty()) return;
-        for(UUID pUUID : Main.getInstance().getPlayerLists().vanishList){
-            Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
-            //UNVANISH LEAVING VANISHED PLAYER
-            if(event.getPlayer() == p){
-                Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
-                for(Player players : Bukkit.getOnlinePlayers()){
-                    players.showPlayer(Main.getInstance(), p);
+        if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())){
+            for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
+                Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+                //UNVANISH LEAVING VANISHED PLAYER
+                if (event.getPlayer() == p) {
+                    Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
+                    for (Player players : Bukkit.getOnlinePlayers()) {
+                        players.showPlayer(Main.getInstance(), p);
+                    }
                 }
+                //UNVANISHES VANISHED PLAYERS FOR LEAVING PLAYERS
+                player.showPlayer(Main.getInstance(), p);
             }
-            //UNVANISHES VANISHED PLAYERS FOR LEAVING PLAYERS
-            player.showPlayer(Main.getInstance(), p);
-        }
-
+    }
+        //Discord Leaves
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!");
     }
 
 }
