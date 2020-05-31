@@ -171,15 +171,19 @@ public enum Lang {
 
     // SKULL
     SKULL_GIVEN_OWN(Lang.EARTH, "&7You gave yourself your own skull!",
-            "&7Du hast dir dein eigenen Kopf gegeben!"),
+            "&7Du hast dir deinen eigenen Schädel gegeben!"),
     SKULL_GIVEN(Lang.EARTH, "&7You gave yourself the skull of &6%player%&7!",
-            "&7Du hast dir dein Kopf von &6%player% &7gegeben!"),;
+            "&7Du hast dir den Schädel von &6%player% &7gegeben!"),
+
+    // SHOP
+    PURCHASED_ITEMS(Lang.EARTH, "&7You just purchased &b%AMOUNT%x %ITEM%&7.",
+            "&7Du hast soeben &b%AMOUNT%x %ITEM%&7.");
 
     private String PREFIX;
     private String ENG;
     private String DE;
 
-    private static final String EARTH = "§b§lPixlies§fEarth§b§l! §8| ";
+    private static final String EARTH = "§bEARTH §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";
