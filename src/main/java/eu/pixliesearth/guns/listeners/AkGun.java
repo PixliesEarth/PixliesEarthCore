@@ -8,6 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class AkGun implements Listener {
     private Main plugin;
 
@@ -22,7 +25,12 @@ public class AkGun implements Listener {
             if(p.getInventory().getItemInMainHand() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals("§cAK47")){
-                System.out.println("Shoot event triggered");
+                if(p.getInventory().getItemInMainHand().getItemMeta().getLore() == null) return;
+                ArrayList<String> lore = new ArrayList<String>();
+                lore.add("§7Ammo: §f30/30");
+                lore.add("§7Damage: §f3.0");
+                lore.add("§7Type: §f7.62mm");
+                if(p.getInventory().getItemInMainHand().getItemMeta().getLore().equals(lore))
                 Gun.shoot(p);
             }
         }

@@ -9,8 +9,10 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.destroystokyo.paper.event.entity.EntityAddToWorldEvent;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.events.ShootEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -39,8 +41,9 @@ public class PacketListener  implements Listener{
                         //if(e.getEntity().getCustomName().equalsIgnoreCase("§c7.62mm")) {
                           //  System.out.println(e.getEntity().getCustomName());
                         if(e.getAmmoName() != null) {
-                            
-                            event.setCancelled(true);
+                            for(Player players : Bukkit.getOnlinePlayers()) {
+                                event.setCancelled(true);
+                            }
                             protocolManager.removePacketListener(this);
                         }
                     }

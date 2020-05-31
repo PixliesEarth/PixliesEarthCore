@@ -183,7 +183,15 @@ public enum Lang {
 
     // SHOP
     PURCHASED_ITEMS(Lang.EARTH, "&7You just purchased &b%AMOUNT%x %ITEM%&7.",
-            "&7Du hast soeben &b%AMOUNT%x %ITEM%&7.");
+            "&7Du hast soeben &b%AMOUNT%x %ITEM%&7."),
+
+    //GUNS
+    GUN_GIVEN(Lang.GUNS, "§7You gave yourself the §a%gun%§7!",
+            "§7Du hast dir die §a%gun% §7gegeben!"),
+    GUN_GIVEN_OTHER(Lang.GUNS, "§7You gave §6%player% §7the §a%gun%§7!",
+            "§7Du hast §6%player% §7die §a%gun% &7gegeben!"),
+    GUN_RECIEVED(Lang.GUNS, "&7You recieved the &a%gun%&7!",
+            "&7Du hast die &a%gun% bekommen!"),;
 
     private String PREFIX;
     private String ENG;
@@ -194,6 +202,7 @@ public enum Lang {
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";
     private static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
+    private static final String GUNS = "§aGUNS §8| ";
 
     Lang(String PREFIX, String ENG, String DE) {
         this.PREFIX = PREFIX;
