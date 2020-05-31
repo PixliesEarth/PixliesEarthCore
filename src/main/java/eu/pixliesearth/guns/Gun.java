@@ -14,7 +14,7 @@ public class Gun {
         Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
         player.getWorld().spawn(player.getEyeLocation(), Snowball.class, snowball -> {
             snowball.setShooter(player);
-            snowball.setVelocity(player.getEyeLocation().getDirection());
+            snowball.setVelocity(player.getEyeLocation().getDirection().multiply(2.0));
             snowball.setSilent(true);
             snowball.setCustomName("§c7.62mm");
             snowball.setBounce(false);
