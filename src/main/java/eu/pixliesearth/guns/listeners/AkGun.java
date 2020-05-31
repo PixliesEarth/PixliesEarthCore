@@ -18,7 +18,7 @@ public class AkGun implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e){
         Player p = e.getPlayer();
-        if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)){
+        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
             if(p.getInventory().getItemInMainHand() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals("§cAK47")){
