@@ -23,6 +23,12 @@ public class MoveListener implements Listener {
                 Main.getInstance().getPlayerLists().afk.remove(event.getPlayer().getUniqueId());
                 Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
             }
+
+            // CHUNK TITLES FOR NATIONS
+            if (profile.isInNation()) {
+
+            }
+
         }
     }
 

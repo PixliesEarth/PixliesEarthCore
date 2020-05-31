@@ -8,3 +8,5 @@ https://github.com/ThatKawaiiSam/Assemble
 
 > Discord-Webhooks-API - A Java library for discord webhooks
 https://github.com/RANKTW/Discord-Webhooks-API
+
+> EasyConfig - A CustomConfig framework for Bukkit plugins https://github.com/PixliesEarth/EasyConfig

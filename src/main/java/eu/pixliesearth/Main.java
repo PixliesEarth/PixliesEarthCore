@@ -68,6 +68,8 @@ public final class Main extends JavaPlugin {
     private @Getter
     FileManager warpsCfg;
     private @Getter
+    FileManager shopCfg;
+    private @Getter
     PlayerLists playerLists;
 
     @Override
@@ -101,6 +103,9 @@ public final class Main extends JavaPlugin {
 
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();
+
+        shopCfg = new FileManager(this, "shop", getDataFolder().getAbsolutePath());
+        shopCfg.save();
 
         File cfg = new File(getDataFolder().getAbsolutePath() + "/config.yml");
         if (!cfg.exists())
