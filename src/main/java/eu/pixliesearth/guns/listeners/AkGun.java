@@ -2,6 +2,9 @@ package eu.pixliesearth.guns.listeners;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.Gun;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -41,12 +44,14 @@ public class AkGun implements Listener {
 
     @EventHandler
     public void onProjectileHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Snowball) {
+        if (event.getDamager() instanceof Snowball && event.getEntity() instanceof LivingEntity) {
             if (plugin.getPlayerLists().ammos.contains(event.getDamager())) {
                 System.out.println("triggered");
                 Main.getInstance().getPlayerLists().ammos.remove(event.getDamager());
-                Player player = (Player) event.getEntity();
-                player.damage(3);
+                LivingEntity entity = (LivingEntity) event.getEntity();
+                entity.damage(6);
+                Player player = (Player) event.getDamager();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.NEUTRAL, 2, 1);
             }
         }
     }
