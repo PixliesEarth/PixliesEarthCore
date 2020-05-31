@@ -11,6 +11,8 @@ import eu.pixliesearth.core.utils.ItemBuilder;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.chunk.ChunkBank;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -67,6 +69,16 @@ public class JoinListener implements Listener {
             if(!(player.hasPermission("earth.seevanished"))){
                 player.hidePlayer(Main.getInstance(), p);
             }
+        }
+
+        //TODO WITH NATIONS
+        Nation tbelongs = Nation.getById(ChunkBank.table.get(player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ()));
+        if (tbelongs == null) {
+            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
+        } else if (tbelongs.getNationId().equals("safezone")) {
+            player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
+        } else {
+            player.sendTitle(tbelongs.getName(), tbelongs.getDescription(), 20, 20 * 3, 20);
         }
     }
 

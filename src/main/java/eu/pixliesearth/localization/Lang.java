@@ -23,8 +23,14 @@ public enum Lang {
             "Wähle deine Sprache aus"),
     CHOOSE_COLOUR("", "Choose a color",
             "Wähle eine Farbe aus"),
+    WILDERNESS("", "Wilderness",
+            "Wildniss"),
 
     // GENERAL
+    WILDERNESS_SUBTITLE("", "&7It's dangerous to travel alone!",
+            "&7Es ist gefährlich alleine zu Reisen!"),
+    SAFEZONE_SUBTITLE("", "&7You are safe here.",
+            "&7Hier bist du in Sicherheit."),
     NO_PERMISSIONS(Lang.EARTH, "§cInsufficient permissions.",
             "§cNicht genügend Rechte."),
     PLAYER_DOES_NOT_EXIST(Lang.EARTH, "&7This player &cdoes not &7exist.",

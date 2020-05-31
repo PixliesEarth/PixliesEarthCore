@@ -34,6 +34,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.block.EnderChest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -42,25 +43,20 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
-import java.io.File;
 import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
+    private static @Getter final
+    Permission perms = null;
     private static @Getter
     Main instance;
-
     private static @Getter
     MongoCollection<Document> playerCollection;
-
     private static @Getter
     MongoCollection<Document> nationCollection;
-
     private static @Getter
     VaultAPI economy;
-    private static @Getter
-    final
-    Permission perms = null;
     private static @Getter
     Assemble assemble = null;
     private static @Getter
@@ -203,6 +199,8 @@ public final class Main extends JavaPlugin {
         getCommand("tpaccept").setExecutor(new TpacceptCommand());
         getCommand("skull").setExecutor(new SkullCommand());
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
+        getCommand("craft").setExecutor(new CraftCommand());
+        getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("gungive").setExecutor(new GunGive());
     }
 
