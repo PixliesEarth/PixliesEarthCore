@@ -5,6 +5,7 @@ import eu.pixliesearth.events.ShootEvent;
 import net.minecraft.server.v1_15_R1.Material;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityDestroy;
 import org.bukkit.*;
+import org.bukkit.block.data.type.Snow;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
@@ -25,6 +26,9 @@ public class Gun {
             arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));
             arrow.setSilent(true);
             arrow.setCustomName("§c7.62mm");
+            arrow.setBounce(false);
+            arrow.setGravity(false);
+            arrow.setDamage(3);
             arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
             
             a = arrow;

@@ -21,6 +21,7 @@ import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.guns.commands.GunGive;
 import eu.pixliesearth.guns.listeners.AkGun;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.chunk.ChunkBank;
@@ -202,6 +203,7 @@ public final class Main extends JavaPlugin {
         getCommand("tpaccept").setExecutor(new TpacceptCommand());
         getCommand("skull").setExecutor(new SkullCommand());
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
+        getCommand("gungive").setExecutor(new GunGive());
     }
 
     private void registerEvents(PluginManager manager) {

@@ -128,6 +128,10 @@ commands:
     description: skull
   walkspeed:
     description: walkspeed
+  gungive:
+    description: gungive
+    aliases:
+      - givegun
 permissions:
   # GENERAL
   earth.admin:
@@ -177,4 +181,7 @@ permissions:
   earth.economy.balance.others:
     default: op
   earth.economy.admin:
+     default: op
+  # GUNS
+  earth.gun.give:
      default: op
