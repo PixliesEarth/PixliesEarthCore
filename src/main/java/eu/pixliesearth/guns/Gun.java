@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Gun {
 
     public static void shoot(Player player){
-        AtomicReference<Snowball> sb = null;
+        AtomicReference<Snowball> sb = new AtomicReference<>();
         Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
         player.getWorld().spawn(player.getEyeLocation(), Snowball.class, snowball -> {
             snowball.setShooter(player);
