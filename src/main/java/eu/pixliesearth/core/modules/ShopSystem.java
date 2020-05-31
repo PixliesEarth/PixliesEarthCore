@@ -47,7 +47,7 @@ public class ShopSystem implements Module, CommandExecutor {
                 if (items.getPages() - 1 >= 0)
                     panel.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Black Arrow Left\\\"},SkullOwner:{Id:\\\"5fecc571-bcbb-4aaa-b53c-b5d8715dbe37\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzdhZWU5YTc1YmYwZGY3ODk3MTgzMDE1Y2NhMGIyYTdkNzU1YzYzMzg4ZmYwMTc1MmQ1ZjQ0MTlmYzY0NSJ9fX0=\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzdhZWU5YTc1YmYwZGY3ODk3MTgzMDE1Y2NhMGIyYTdkNzU1YzYzMzg4ZmYwMTc1MmQ1ZjQ0MTlmYzY0NSJ9fX0=").setDisplayname("&aPrevious page").build(), event -> {
                         items.setPage(items.getPage() - 1);
-                    }), 0, 0);g
+                    }), 0, 0);
 
                 gui.show(player);
                 break;
