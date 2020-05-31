@@ -106,9 +106,7 @@ public final class Main extends JavaPlugin {
         shopCfg = new FileManager(this, "shop", getDataFolder().getAbsolutePath());
         shopCfg.save();
 
-        File cfg = new File(getDataFolder().getAbsolutePath() + "/config.yml");
-        if (!cfg.exists())
-            saveDefaultConfig();
+        saveDefaultConfig();
 
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
