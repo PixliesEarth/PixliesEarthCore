@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.utils;
 
 import eu.pixliesearth.core.objects.Profile;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Snowball;
 
 import java.util.*;
 
@@ -24,6 +26,8 @@ public class PlayerLists {
 
     public List<UUID> vanishList;
 
+    public Set<Entity> ammos;
+
     public PlayerLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -34,6 +38,7 @@ public class PlayerLists {
         afk = new ArrayList<>();
         locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
+        ammos = new HashSet<>();
     }
 
 }

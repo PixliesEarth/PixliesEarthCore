@@ -17,11 +17,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Gun {
 
-    public static Arrow a;
+    public static Snowball a;
 
     public static void shoot(Player player){
         Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
-        player.getWorld().spawn(player.getEyeLocation(), Arrow.class, arrow -> {
+/*        player.getWorld().spawn(player.getEyeLocation(), Arrow.class, arrow -> {
             arrow.setShooter(((LivingEntity) player));
             arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));
             arrow.setSilent(true);
@@ -32,7 +32,7 @@ public class Gun {
             arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
             
             a = arrow;
-        });
+        });*/
         // arrow.setShooter(((LivingEntity) player));
         // arrow.setVelocity(player.getEyeLocation().getDirection().multiply(2));
        //customeffects create a special arrow, dont make the arrow invis
@@ -42,6 +42,16 @@ public class Gun {
         // arrow.setCustomName("§c7.62mm");
         //NOT RECOMMENDED NMS WAY
         //((CraftEntity) arrow).getHandle().setInvisible(true);
+        player.getWorld().spawn(player.getEyeLocation(), Snowball.class, snowball -> {
+            snowball.setShooter(player);
+            snowball.setVelocity(player.getEyeLocation().getDirection());
+            snowball.setSilent(true);
+            snowball.setCustomName("§c7.62mm");
+            snowball.setBounce(false);
+            snowball.setGravity(false);
+            a = snowball;
+            Main.getInstance().getPlayerLists().ammos.add(snowball);
+        });
         player.getWorld().playEffect(a.getLocation(), Effect.WITHER_SHOOT, 1);
         //DOESNT WORK ARROW STILL VISIBLE UNEPIC BRUH MOMENT
 
@@ -50,7 +60,7 @@ public class Gun {
             //PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(arrow.getEntityId());
             //((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         //}
-        new BukkitRunnable(){
+/*        new BukkitRunnable(){
 
             @Override
             public void run(){
@@ -65,6 +75,6 @@ public class Gun {
                 }
             }
 
-        }.runTaskTimer(Main.getInstance(), 0L, 1L);
+        }.runTaskTimer(Main.getInstance(), 0L, 1L);*/
     }
 }

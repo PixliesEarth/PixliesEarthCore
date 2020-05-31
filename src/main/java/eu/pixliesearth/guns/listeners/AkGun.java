@@ -3,9 +3,12 @@ package eu.pixliesearth.guns.listeners;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.Gun;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
@@ -35,4 +38,17 @@ public class AkGun implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onProjectileHit(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Snowball) {
+            if (plugin.getPlayerLists().ammos.contains(event.getDamager())) {
+                System.out.println("triggered");
+                Main.getInstance().getPlayerLists().ammos.remove(event.getDamager());
+                Player player = (Player) event.getEntity();
+                player.damage(3);
+            }
+        }
+    }
+
 }
