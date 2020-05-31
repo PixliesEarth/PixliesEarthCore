@@ -56,6 +56,7 @@ public class Gun {
                 }
                 else if(a.isOnGround() || !a.isValid() || a.isDead() || a.isInBlock()){
                     a.remove();
+                    a.getWorld().getEntities().remove(a);
                     this.cancel();
                 }
             }
