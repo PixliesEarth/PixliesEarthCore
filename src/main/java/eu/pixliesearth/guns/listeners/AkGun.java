@@ -50,7 +50,7 @@ public class AkGun implements Listener {
                 LivingEntity entity = (LivingEntity) event.getEntity();
                 entity.damage(6);
                 Player player = (Player) ((Snowball) event.getDamager()).getShooter();
-                entity.setVelocity(player.getLocation().getDirection().setY(0).normalize().multiply(2));
+                entity.setVelocity(player.getLocation().getDirection().setY(0).normalize());
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.NEUTRAL, 2, 1);
             }
         }
