@@ -33,6 +33,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.block.EnderChest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -197,6 +198,8 @@ public final class Main extends JavaPlugin {
         getCommand("tpaccept").setExecutor(new TpacceptCommand());
         getCommand("skull").setExecutor(new SkullCommand());
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
+        getCommand("craft").setExecutor(new CraftCommand());
+        getCommand("enderchest").setExecutor(new EnderchestCommand());
     }
 
     private void registerEvents(PluginManager manager) {
