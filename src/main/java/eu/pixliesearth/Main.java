@@ -41,25 +41,20 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
-import java.io.File;
 import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
+    private static @Getter final
+    Permission perms = null;
     private static @Getter
     Main instance;
-
     private static @Getter
     MongoCollection<Document> playerCollection;
-
     private static @Getter
     MongoCollection<Document> nationCollection;
-
     private static @Getter
     VaultAPI economy;
-    private static @Getter
-    final
-    Permission perms = null;
     private static @Getter
     Assemble assemble = null;
     private static @Getter

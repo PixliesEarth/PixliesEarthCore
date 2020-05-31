@@ -1,7 +1,6 @@
 package eu.pixliesearth.nations.entities.chunk;
 
 import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
