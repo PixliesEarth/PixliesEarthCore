@@ -25,6 +25,8 @@ public class Gun {
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.NEUTRAL, 10, 1);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
+            if (Main.getInstance().getPlayerLists().ammos.contains(sb.get()))
+                Main.getInstance().getPlayerLists().ammos.remove(sb.get());
         }, 20 * 60);
     }
 }
