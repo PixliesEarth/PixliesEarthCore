@@ -46,7 +46,6 @@ public class AkGun implements Listener {
     public void onProjectileHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Snowball && event.getEntity() instanceof LivingEntity) {
             if (plugin.getPlayerLists().ammos.contains(event.getDamager())) {
-                System.out.println("triggered");
                 Main.getInstance().getPlayerLists().ammos.remove(event.getDamager());
                 LivingEntity entity = (LivingEntity) event.getEntity();
                 entity.damage(6);
