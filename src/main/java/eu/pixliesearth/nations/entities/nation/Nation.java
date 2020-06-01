@@ -64,6 +64,7 @@ public class Nation {
         }
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
+        //TODO REMOVE CHUNKS TOO
     }
 
     public int getOnlineMembers() {
