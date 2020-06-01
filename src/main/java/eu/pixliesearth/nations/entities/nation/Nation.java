@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.entities.nation;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.utils.OneRowMap;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
@@ -59,12 +60,12 @@ public class Nation {
 
     public void remove() {
         Document found = Main.getNationCollection().find(new Document("nationId", nationId)).first();
-        if (found != null) {
+        if (found != null)
             Main.getNationCollection().deleteOne(found);
-        }
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
-        //TODO REMOVE CHUNKS TOO
+        for (String s : getChunks())
+            NationChunk.fromString(s).unclaim();
     }
 
     public int getOnlineMembers() {

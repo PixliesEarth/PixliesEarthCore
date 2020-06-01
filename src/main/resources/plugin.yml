@@ -132,6 +132,8 @@ commands:
     description: gungive
     aliases:
       - givegun
+  shop:
+    description: shopsystem
 permissions:
   # GENERAL
   earth.admin:

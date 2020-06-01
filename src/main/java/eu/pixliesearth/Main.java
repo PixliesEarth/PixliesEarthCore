@@ -12,6 +12,7 @@ import eu.pixliesearth.core.commands.util.*;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
+import eu.pixliesearth.core.modules.ShopSystem;
 import eu.pixliesearth.core.modules.WarpSystem;
 import eu.pixliesearth.core.modules.economy.EconomySystem;
 import eu.pixliesearth.core.modules.economy.VaultAPI;
@@ -34,7 +35,6 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.block.EnderChest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -47,36 +47,21 @@ import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
-    private static @Getter final
-    Permission perms = null;
-    private static @Getter
-    Main instance;
-    private static @Getter
-    MongoCollection<Document> playerCollection;
-    private static @Getter
-    MongoCollection<Document> nationCollection;
-    private static @Getter
-    VaultAPI economy;
-    private static @Getter
-    Assemble assemble = null;
-    private static @Getter
-    Scoreboard emptyScoreboard;
-    private @Getter
-    FileManager warpsCfg;
-    private @Getter
-    FileManager shopCfg;
-    private @Getter
-    PlayerLists playerLists;
+    private static @Getter final Permission perms = null;
+    private static @Getter Main instance;
+    private static @Getter MongoCollection<Document> playerCollection;
+    private static @Getter MongoCollection<Document> nationCollection;
+    private static @Getter VaultAPI economy;
+    private static @Getter Assemble assemble = null;
+    private static @Getter Scoreboard emptyScoreboard;
+    private @Getter FileManager warpsCfg;
+    private @Getter FileManager shopCfg;
+    private @Getter PlayerLists playerLists;
 
     @Override
     public void onEnable() {
-
         instance = this;
-
         init();
-
-        emptyScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-
     }
 
     private void init() {
@@ -157,6 +142,8 @@ public final class Main extends JavaPlugin {
 
         ChunkBank.init();
 
+        emptyScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+
         discordEnable();
     }
 
@@ -202,6 +189,7 @@ public final class Main extends JavaPlugin {
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("gungive").setExecutor(new GunGive());
+        getCommand("shop").setExecutor(new ShopSystem());
     }
 
     private void registerEvents(PluginManager manager) {

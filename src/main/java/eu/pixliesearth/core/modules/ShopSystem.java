@@ -5,7 +5,6 @@ import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.interfaces.Module;
-import eu.pixliesearth.core.utils.ItemBuilder;
 import eu.pixliesearth.core.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
