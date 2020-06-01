@@ -204,6 +204,10 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new PacketListener(), this);
     }
 
+    /**
+     * @param uuid Uuid of the player
+     * @return A profile object of the given playerUUID
+     */
     public Profile getProfile(UUID uuid) {
         if (playerLists.profiles.get(uuid) == null) {
             playerLists.profiles.put(uuid, Profile.get(uuid));

@@ -166,6 +166,10 @@ public enum Lang {
     // PIXLIECOINS
     PC_BALANCE(Lang.PIXLIECOINS, "§7You have §b%AMOUNT%§3⛃ §7on your account.",
             "&7Du hast &b%AMOUNT%§3⛃ &7auf deinem Konto."),
+    PC_BALANCE_OTHERS(Lang.PIXLIECOINS, "&6%PLAYER% &7has &b%AMOUNT%&3⛃ &7on his account.",
+            "&6%PLAYER% &7hat &b%AMOUNT%&3⛃ &7auf seinem Konto."),
+    PC_ADDED_BALANCE(Lang.PIXLIECOINS, "&7You just added &b%AMOUNT%&3⛃ &7to &6%PLAYER%&7's amount.",
+            "&7Du hast soeben &b%AMOUNT%&3⛃ &7auf &6%PLAYER%&7's Konto."),
 
     // GAMEMODE
     GAMEMODE_CHANGED(Lang.EARTH, "§7You changed your gamemode to §d%GAMEMODE%§7!",
