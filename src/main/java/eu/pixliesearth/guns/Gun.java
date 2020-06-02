@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.events.ShootEvent;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -23,6 +24,15 @@ public class Gun {
             sb.set(snowball);
         });
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.NEUTRAL, 10, 1);
+        new BukkitRunnable() {
+            public void run() {
+                if (!Main.getInstance().getPlayerLists().ammos.contains(sb.get())) {
+                    this.cancel();
+                    return;
+                }
+                sb.get().getWorld().spawnParticle(Particle.SMOKE_NORMAL, sb.get().getLocation(), 1);
+            }
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
             if (Main.getInstance().getPlayerLists().ammos.contains(sb.get()))
