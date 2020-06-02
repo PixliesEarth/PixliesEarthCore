@@ -132,6 +132,9 @@ public final class Main extends JavaPlugin {
 
         NationManager.init();
 
+        //BungeeCord
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         new MiniMick().start();
 
         assemble = new Assemble(this, new ScoreboardAdapter());
@@ -190,6 +193,7 @@ public final class Main extends JavaPlugin {
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("gungive").setExecutor(new GunGive());
         getCommand("shop").setExecutor(new ShopSystem());
+        getCommand("lobby").setExecutor(new LobbyCommand());
     }
 
     private void registerEvents(PluginManager manager) {

@@ -134,6 +134,10 @@ commands:
       - givegun
   shop:
     description: shopsystem
+  lobby:
+    description: send to lobby
+    aliases:
+      - hub
 permissions:
   # GENERAL
   earth.admin:
