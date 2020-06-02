@@ -6,7 +6,7 @@ depend:
   - Vault
 softdepend:
   - PlaceholderAPI
-author: MickMMars
+authors: [MickMMars, Boom_Tod]
 description: PixliesEarth core
 commands:
   modules:
