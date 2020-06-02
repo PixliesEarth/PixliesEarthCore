@@ -33,19 +33,17 @@ public class MoveListener implements Listener {
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
                 Chunk fc = event.getFrom().getChunk();
                 Chunk tc = event.getTo().getChunk();
-                Nation fbelongs = Nation.getById(NationChunk.get(fc).getNationId());
-                Nation tbelongs = Nation.getById(NationChunk.get(tc).getNationId());
-                if (fbelongs != tbelongs) {
-                    //TODO In nation
-                    // if (!profile.isInNation()) {
-                        if (tbelongs == null) {
-                            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
-                        } else if (tbelongs.getNationId().equals("safezone")) {
-                            player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
-                        } else {
-                            player.sendTitle(tbelongs.getName(), tbelongs.getDescription(), 20, 20 * 3, 20);
-                        }
-                    // }
+                NationChunk fchunk = NationChunk.get(fc);
+                NationChunk tchunk = NationChunk.get(tc);
+                if (fchunk != tchunk) {
+                    if (tchunk == null) {
+                        player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
+                    } else if (tchunk.getNationId().equals("safezone")) {
+                        player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
+                    } else {
+                        Nation n = Nation.getById(tchunk.getNationId());
+                        player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
+                    }
                 }
             }
 

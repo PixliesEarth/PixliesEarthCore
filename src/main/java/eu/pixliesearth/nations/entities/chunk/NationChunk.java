@@ -6,7 +6,9 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,10 +70,11 @@ public class NationChunk {
     //ONLY RUN ONCE ONENABLE
     public static void init() {
         table = new HashMap<>();
+        for (World world : Bukkit.getWorlds())
+            table.put(world.getName(), TreeBasedTable.create());
         NationManager.nations.values().stream().parallel().forEach(nation -> {
             for (String s : nation.getChunks()) {
                 NationChunk c = NationChunk.fromString(s);
-                table.computeIfAbsent(c.getWorld(), k -> TreeBasedTable.create());
                 RowSortedTable<Integer, Integer, NationChunk> rst = table.get(c.getWorld());
                 rst.put(c.getX(), c.getZ(), c);
                 table.put(c.getWorld(), rst);

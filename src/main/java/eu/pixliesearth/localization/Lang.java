@@ -49,14 +49,16 @@ public enum Lang {
             "&7Der Chat ist zurzeit ausgeschaltet."),
     CHAT_COOLDOWN("", "&7You have to wait &3%COOLDOWN% &7to be able to chat again.",
             "&7Du musst &3%COOLDOWN% &7warten um wieder chatten zu können."),
-    PROFILE_LOADED(Lang.EARTH, "&7Your profile has been &aloaded&7.",
-            "&7Dein Profil wurde &ageladen&7."),
+    PROFILE_LOADED(Lang.EARTH, "&7Your profile has been &aloaded&7. &8(&7%TIME%&8)",
+            "&7Dein Profil wurde &ageladen&7. &8(&7%TIME%&8)"),
     LANGUAGE_CHANGED(Lang.EARTH, "&7You changed your language to &bENGLISH&7.",
             "&7Du hast deine Sprache zu &bDEUTSCH &7geändert."),
     CHANGED_SCOREBOARDTYPE(Lang.EARTH, "&7You changed your scoreboard-type to &b%TYPE%&7.",
             "&7Du hast den Typ deines Scoreboards zu &b%TYPE% &7geändert."),
     CHANGED_FAV_COL(Lang.EARTH, "&7You changed your favorite color to %COL%&7.",
             "&7Du hast deine Lieblingsfarbe zu %COL% &7geändert."),
+    PLAYER_JOINED_FIRST_TIME(Lang.EARTH, "&6%PLAYER% &7joined &b&lPixlies&fEarth &7for the first time! &8(&7#%COUNT%&8)",
+            "&6%PLAYER% &7ist zum ersten mal auf &b&lPixlies&fEarth&7! &8(&7#%COUNT%&8)"),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
@@ -201,7 +203,7 @@ public enum Lang {
     private String ENG;
     private String DE;
 
-    private static final String EARTH = "§bEARTH §8| ";
+    private static final String EARTH = "§2EARTH §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";

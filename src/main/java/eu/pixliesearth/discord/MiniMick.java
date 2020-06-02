@@ -88,7 +88,7 @@ public class MiniMick {
                        .setTimestampToNow());
            } else {
                if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
-                   if (event.getMessage().getReadableContent().length() > 0)
+                   if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/"))
                        Bukkit.broadcastMessage("§9D §8| §b" + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
                }
            }

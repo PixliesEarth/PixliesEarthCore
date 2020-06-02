@@ -12,7 +12,9 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.ranktw.DiscordWebHooks.DiscordMessage;
 import net.ranktw.DiscordWebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -79,6 +81,20 @@ public class ChatSystem implements Listener, Module {
                             }
                 }
 
+                // "@" MENTIONING SYSTEM
+                if (event.getMessage().contains("@")) {
+                    for (String string : event.getMessage().split(" ")) {
+                        if (string.startsWith("@")) {
+                            Bukkit.getOnlinePlayers().forEach(oplayer -> {
+                                if (string.equalsIgnoreCase("@" + oplayer.getName())) {
+                                    oplayer.playSound(oplayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                                    event.setMessage(event.getMessage().replace(string, "§b@§b" + oplayer.getName() + "§r"));
+                                }
+                            });
+                        }
+                    }
+                }
+
                 if (player.hasPermission("earth.chat.colours")) {
                     event.setMessage(event.getMessage().replace("&", "§").replace("%", "%%"));
                 } else {
@@ -95,7 +111,7 @@ public class ChatSystem implements Listener, Module {
 
                 DiscordMessage dm = new DiscordMessage.Builder()
                         .withUsername(event.getPlayer().getName())
-                        .withContent(event.getMessage().replace("@", ""))
+                        .withContent(ChatColor.stripColor(event.getMessage().replace("@", "")))
                         .withAvatarURL("https://minotar.net/avatar/" + event.getPlayer().getName())
                         .build();
 

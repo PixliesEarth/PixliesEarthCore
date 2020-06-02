@@ -3,6 +3,7 @@ discordtoken: "TOKEN_HERE"
 webhook: "WEBHOOK_HERE"
 chatchannel: "ID_HERE"
 afktime: 15
+joined-so-far: 0
 modules:
   chatsystem:
     enabled: true

@@ -25,7 +25,7 @@ public class Profile {
     private String discord;
     private boolean inNation;
     private double balance;
-    private List<String> rececipts;
+    private List<String> receipts;
     private int playTime;
     private double energy;
     private String nationId;
@@ -94,7 +94,7 @@ public class Profile {
         profile.append("discord", discord);
         profile.append("inNation", inNation);
         profile.append("balance", balance);
-        profile.append("receipts", rececipts);
+        profile.append("receipts", receipts);
         profile.append("playTime", playTime);
         profile.append("energy", energy);
         profile.append("nationId", nationId);
@@ -146,14 +146,20 @@ public class Profile {
         if (balance - amount < 0)
             return false;
         this.balance = this.balance - amount;
-        rececipts.add(Receipt.create(amount, true, reason));
+        String receipt = Receipt.create(amount, true, reason);
+        if (this.receipts == null)
+            this.receipts = new ArrayList<>();
+        this.receipts.add(receipt);
         save();
         return true;
     }
 
     public void depositMoney(double amount, String reason) {
         this.balance = this.balance + amount;
-        rececipts.add(Receipt.create(amount, false, reason));
+        String receipt = Receipt.create(amount, false, reason);
+        if (this.receipts == null)
+            this.receipts = new ArrayList<>();
+        receipts.add(receipt);
         save();
     }
 

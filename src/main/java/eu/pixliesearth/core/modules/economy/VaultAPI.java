@@ -117,7 +117,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Player does not have the money.");
         Profile profile = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName));
         profile.setBalance(getBalance(playerName) - amount);
-        profile.getRececipts().add(Receipt.create(amount, true, "other"));
+        profile.getReceipts().add(Receipt.create(amount, true, "other"));
         profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
@@ -132,7 +132,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Player does not have the money.");
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) - amount);
-        profile.getRececipts().add(Receipt.create(amount, true, "other"));
+        profile.getReceipts().add(Receipt.create(amount, true, "other"));
         profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
@@ -152,7 +152,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Player does not have the money.");
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) - amount);
-        profile.getRececipts().add(Receipt.create(amount, true, "other"));
+        profile.getReceipts().add(Receipt.create(amount, true, "other"));
         profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
@@ -172,7 +172,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Amount is less than the min. deposit amount.");
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) + amount);
-        profile.getRececipts().add(Receipt.create(amount, false, "other"));
+        profile.getReceipts().add(Receipt.create(amount, false, "other"));
         profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
@@ -192,7 +192,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Amount is less than the min. deposit amount.");
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(getBalance(player) + amount);
-        profile.getRececipts().add(Receipt.create(amount, false, "other"));
+        profile.getReceipts().add(Receipt.create(amount, false, "other"));
         profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
