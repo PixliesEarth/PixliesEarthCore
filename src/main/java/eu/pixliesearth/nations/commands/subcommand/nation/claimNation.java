@@ -21,6 +21,9 @@ public class claimNation implements SubCommand {
     }
 
     @Override
+    public String[] autocompletion() { return new String[]{"one", "auto"}; }
+
+    @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
@@ -44,6 +47,14 @@ public class claimNation implements SubCommand {
             for (Player members : profile.getCurrentNation().getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX()+"").replace("%Z%", c.getZ()+""));
             System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
+        } else if (args[0].equalsIgnoreCase("auto")) {
+            if (instance.getPlayerLists().claimAuto.contains(player.getUniqueId())) {
+                instance.getPlayerLists().claimAuto.add(player.getUniqueId());
+                player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
+            } else {
+                instance.getPlayerLists().claimAuto.remove(player.getUniqueId());
+                player.sendMessage(Lang.AUTOCLAIM_DISABLED.get(player));
+            }
         }
 
         return false;

@@ -9,6 +9,8 @@ public interface SubCommand {
 
     String[] aliases();
 
+    String[] autocompletion();
+
     boolean staff();
 
     boolean execute(CommandSender sender, String[] args);

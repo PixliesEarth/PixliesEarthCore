@@ -79,6 +79,10 @@ public enum Lang {
             "&7Willst du wirklich deine Nation auflösen? Schreibe &aconfirm &7um es aufzulösen, falls du dich umentschieden hast, schreibe &ccancel&7."),
     PLAYER_CLAIMED(Lang.NATION, "&6%PLAYER% &7claimed a chunk for your nation at &b%X%&8, &b%Z%",
             "&6%PLAYER% &7hat soeben einen Chunk für deine Nation an &b%X%&8, &b%Z% &7in beansprucht."),
+    AUTOCLAIM_ENABLED(Lang.EARTH, "&7You just &aenabled &7the auto-claim mode.",
+            "&7Du hast soeben den Auto-claim Modus &aaktiviert&7."),
+    AUTOCLAIM_DISABLED(Lang.EARTH, "&7You just &cdisabled &7the auto-unclaim mode.",
+            "&7Du hast soeben den Auto-unclaim Modus &cdeaktiviert&7."),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, "§7You have §2§l$§a%BALANCE% §7on your account.",

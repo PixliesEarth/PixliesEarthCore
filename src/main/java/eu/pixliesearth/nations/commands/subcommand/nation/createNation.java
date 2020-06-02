@@ -24,6 +24,9 @@ public class createNation implements SubCommand {
     }
 
     @Override
+    public String[] autocompletion() { return new String[]{"§cname"}; }
+
+    @Override
     public boolean staff() {
         return false;
     }

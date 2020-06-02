@@ -15,6 +15,9 @@ public class disbandNation implements SubCommand {
     }
 
     @Override
+    public String[] autocompletion() { return new String[]{}; }
+
+    @Override
     public boolean staff() {
         return false;
     }

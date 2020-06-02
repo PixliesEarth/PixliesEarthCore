@@ -1,5 +1,9 @@
 package eu.pixliesearth;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -31,10 +35,13 @@ import eu.pixliesearth.nations.managers.NationManager;
 import io.github.thatkawaiisam.assemble.Assemble;
 import io.github.thatkawaiisam.assemble.AssembleStyle;
 import lombok.Getter;
+import me.lucko.commodore.Commodore;
+import me.lucko.commodore.CommodoreProvider;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -146,6 +153,17 @@ public final class Main extends JavaPlugin {
         NationChunk.init();
 
         emptyScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+
+/*        // check if brigadier is supported
+        if (CommodoreProvider.isSupported()) {
+
+            // get a commodore instance
+            Commodore commodore = CommodoreProvider.getCommodore(this);
+
+            // register your completions.
+            registerCompletions(commodore, command);
+        }*/
+
 
         discordEnable();
     }

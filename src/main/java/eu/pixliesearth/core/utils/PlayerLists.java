@@ -28,6 +28,10 @@ public class PlayerLists {
 
     public Set<Entity> ammos;
 
+    public Set<UUID> claimAuto;
+
+    public Set<UUID> unclaimAuto;
+
     public PlayerLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();

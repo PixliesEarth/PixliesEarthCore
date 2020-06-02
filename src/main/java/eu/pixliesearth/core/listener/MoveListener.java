@@ -31,6 +31,11 @@ public class MoveListener implements Listener {
 
             // CHUNK TITLES FOR NATIONS
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
+                if (Main.getInstance().getPlayerLists().claimAuto.contains(player.getUniqueId())) {
+                    player.performCommand("/n claim one");
+                } else if (Main.getInstance().getPlayerLists().unclaimAuto.contains(player.getUniqueId())) {
+                    // player.performCommand("/n unclaim one");
+                }
                 Chunk fc = event.getFrom().getChunk();
                 Chunk tc = event.getTo().getChunk();
                 NationChunk fchunk = NationChunk.get(fc);
