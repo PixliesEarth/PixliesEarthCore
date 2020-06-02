@@ -15,6 +15,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -85,7 +86,7 @@ public class JoinListener implements Listener {
         }
 
         //Discord Joins
-        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!");
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!"));
 
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));

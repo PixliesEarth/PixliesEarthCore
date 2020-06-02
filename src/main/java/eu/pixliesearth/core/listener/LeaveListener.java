@@ -6,6 +6,7 @@ import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,7 +45,7 @@ public class LeaveListener implements Listener {
             }
     }
         //Discord Leaves
-        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!");
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));
     }
 
 }
