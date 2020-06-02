@@ -25,7 +25,7 @@ import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.guns.commands.GunGive;
 import eu.pixliesearth.guns.listeners.AkGun;
 import eu.pixliesearth.nations.commands.NationCommand;
-import eu.pixliesearth.nations.entities.chunk.ChunkBank;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import io.github.thatkawaiisam.assemble.Assemble;
@@ -140,7 +140,7 @@ public final class Main extends JavaPlugin {
 
         assemble.setAssembleStyle(AssembleStyle.VIPER);
 
-        ChunkBank.init();
+        NationChunk.init();
 
         emptyScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 

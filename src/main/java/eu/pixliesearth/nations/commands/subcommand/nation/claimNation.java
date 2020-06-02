@@ -3,9 +3,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.chunk.ChunkBank;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
-import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,16 +33,17 @@ public class claimNation implements SubCommand {
             return false;
         }
         Chunk c = player.getLocation().getChunk();
-        if (ChunkBank.table.get(c.getX(), c.getZ()) != null) {
+        if (NationChunk.get(c) != null) {
             player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
             return false;
         }
         //TODO PERMISSION SYSTEM
         if (args[0].equalsIgnoreCase("one")) {
-            NationChunk nc = new NationChunk(profile.getNationId(), c.getX(), c.getZ());
+            NationChunk nc = new NationChunk(profile.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
             nc.claim();
             for (Player members : profile.getCurrentNation().getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX()+"").replace("%Z%", c.getZ()+""));
+            System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
         }
 
         return false;

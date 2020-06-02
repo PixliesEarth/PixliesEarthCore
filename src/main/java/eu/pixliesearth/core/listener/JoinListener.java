@@ -7,16 +7,14 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.utils.AfkMap;
-import eu.pixliesearth.core.utils.ItemBuilder;
 import eu.pixliesearth.core.utils.Methods;
 import eu.pixliesearth.core.utils.SkullBuilder;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.entities.chunk.ChunkBank;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,7 +72,7 @@ public class JoinListener implements Listener {
         }
 
         //TODO WITH NATIONS
-        Nation tbelongs = Nation.getById(ChunkBank.table.get(player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ()));
+        Nation tbelongs = Nation.getById(NationChunk.get(player.getLocation().getChunk()).getNationId());
         if (tbelongs == null) {
             player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
         } else if (tbelongs.getNationId().equals("safezone")) {

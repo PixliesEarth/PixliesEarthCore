@@ -3,7 +3,7 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.entities.chunk.ChunkBank;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -33,9 +33,10 @@ public class MoveListener implements Listener {
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
                 Chunk fc = event.getFrom().getChunk();
                 Chunk tc = event.getTo().getChunk();
-                Nation fbelongs = Nation.getById(ChunkBank.table.get(fc.getX(), fc.getZ()));
-                Nation tbelongs = Nation.getById(ChunkBank.table.get(tc.getX(), tc.getZ()));
+                Nation fbelongs = Nation.getById(NationChunk.get(fc).getNationId());
+                Nation tbelongs = Nation.getById(NationChunk.get(tc).getNationId());
                 if (fbelongs != tbelongs) {
+                    //TODO In nation
                     // if (!profile.isInNation()) {
                         if (tbelongs == null) {
                             player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
