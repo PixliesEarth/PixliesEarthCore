@@ -21,8 +21,6 @@ public class AchievmentListener implements Listener {
     public void onAchievment(PlayerAdvancementDoneEvent e){
         Player p = e.getPlayer();
         Advancement a = e.getAdvancement();
-        System.out.println(a.getKey().getKey());
-        System.out.println(a.getKey().getNamespace());
         String rawAdvancementName = a.getKey().getKey();
         String advancementName = Arrays.stream(rawAdvancementName.substring(rawAdvancementName.lastIndexOf("/") + 1).toLowerCase().split("_"))
                 .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1))
