@@ -42,20 +42,20 @@
                         </goals>
                         <configuration>
                             <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
-                            <artifactSet>
+<!--                            <artifactSet>
                                 <includes>
                                     <include>me.lucko:commodore</include>
                                 </includes>
-                            </artifactSet>
+                            </artifactSet>-->
                             <relocations>
                                 <relocation>
                                     <pattern>com.github.stefvanschie.inventoryframework</pattern>
                                     <shadedPattern>eu.pixliesearth.core.lib.inventoryframework</shadedPattern>
                                 </relocation>
-                                <relocation>
+<!--                                <relocation>
                                     <pattern>me.lucko.commodore</pattern>
                                     <shadedPattern>eu.pixliesearth.core.lib.commodore</shadedPattern>
-                                </relocation>
+                                </relocation>-->
                             </relocations>
                         </configuration>
                     </execution>
@@ -160,11 +160,11 @@
             <version>4.5.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>me.lucko</groupId>
             <artifactId>commodore</artifactId>
             <version>1.5</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>
