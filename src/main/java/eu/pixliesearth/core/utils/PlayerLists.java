@@ -43,6 +43,8 @@ public class PlayerLists {
         locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
         ammos = new HashSet<>();
+        claimAuto = new HashSet<>();
+        unclaimAuto = new HashSet<>();
     }
 
 }
