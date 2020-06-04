@@ -1,19 +1,14 @@
 package eu.pixliesearth.guns.commands;
 
-import eu.pixliesearth.guns.gunObjects.GunObject;
+import eu.pixliesearth.guns.gunObjects.AK;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 public class GunGive implements CommandExecutor {
     @Override
@@ -30,7 +25,7 @@ public class GunGive implements CommandExecutor {
             }
             if(args.length == 1){
                 if(args[0].equalsIgnoreCase("ak47") || args[0].equalsIgnoreCase("ak")){
-                    ItemStack ak = new GunObject().AK();
+                    ItemStack ak = new AK().getRecipe();
                     p.getInventory().addItem(ak);
                     p.sendMessage(Lang.GUN_GIVEN.get(sender).replace("%gun%", "AK47"));
                 }
@@ -43,7 +38,7 @@ public class GunGive implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("ak47") || args[0].equalsIgnoreCase("ak")) {
 
 
-                    ItemStack ak = new GunObject().AK();
+                    ItemStack ak = new AK().getRecipe();
                     assert player != null;
                     player.getInventory().addItem(ak);
                     player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", "AK47"));
@@ -61,7 +56,7 @@ public class GunGive implements CommandExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[1]);
-            ItemStack ak = new GunObject().AK();
+            ItemStack ak = new AK().getRecipe();
             assert player != null;
             player.getInventory().addItem(ak);
             player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", "AK47"));
