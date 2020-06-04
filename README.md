@@ -10,3 +10,5 @@ https://github.com/ThatKawaiiSam/Assemble
 https://github.com/RANKTW/Discord-Webhooks-API
 
 > EasyConfig - A CustomConfig framework for Bukkit plugins https://github.com/PixliesEarth/EasyConfig
+
+> Commodore by Lucko - BrigaderAPI for Bukkit https://github.com/lucko/commodore
