@@ -54,6 +54,10 @@ public class NationChunk {
         return nationId + ";" + world + ";" + x + ";" + z;
     }
 
+    public Nation getCurrentNation() {
+        return Nation.getById(nationId);
+    }
+
     public static NationChunk fromString(String s) {
         String[] split = s.split(";");
         return new NationChunk(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]));
