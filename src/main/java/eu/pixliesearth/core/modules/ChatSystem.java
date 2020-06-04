@@ -34,6 +34,7 @@ public class ChatSystem implements Listener, Module {
                 if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() != Material.AIR)
                     mat = player.getInventory().getItemInMainHand().getType();
                 new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
+                instance.getPlayerLists().warpAdder.remove(player.getUniqueId());
                 player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }
