@@ -7,7 +7,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class AK {
+public class AK implements GunInterface {
+
+    @Override
     public ItemStack getRecipe() {
         Material type;
         ItemStack ak = new ItemStack(Material.WOODEN_AXE);
@@ -25,4 +27,5 @@ public class AK {
         ak.setItemMeta(meta);
         return ak;
     }
+
 }

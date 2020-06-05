@@ -209,7 +209,9 @@ public enum Lang {
     GUN_GIVEN_OTHER(Lang.GUNS, "§7You gave §6%player% §7the §a%gun%§7!",
             "§7Du hast §6%player% §7die §a%gun% &7gegeben!"),
     GUN_RECIEVED(Lang.GUNS, "&7You recieved the &a%gun%&7!",
-            "&7Du hast die &a%gun% bekommen!"),;
+            "&7Du hast die &a%gun% bekommen!"),
+    GUN_DOESNT_EXIST(Lang.GUNS, "&7This gun &cdoes not &7exist.",
+            "&7Diese Waffe &cexistiert nicht&7.");
 
     private String PREFIX;
     private String ENG;
