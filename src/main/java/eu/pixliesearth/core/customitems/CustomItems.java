@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.customitems;
 
 import eu.pixliesearth.core.customitems.ci.ItemSlingshot;
-import eu.pixliesearth.core.guns.Guns;
 
 public enum CustomItems {
 

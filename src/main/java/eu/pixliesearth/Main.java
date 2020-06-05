@@ -211,6 +211,7 @@ public final class Main extends JavaPlugin {
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
         getCommand("cigive").setExecutor(new CiGiveCommand());
+        getCommand("cigive").setTabCompleter(new CiGiveCommand());
     }
 
     private void registerEvents(PluginManager manager) {
