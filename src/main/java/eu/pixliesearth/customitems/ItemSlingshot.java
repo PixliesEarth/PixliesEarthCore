@@ -10,11 +10,13 @@ import java.util.List;
 public class ItemSlingshot {
     public ItemStack getRecipe(){
         Material type;
-        ItemStack slingshot = new ItemStack(Material.BOW);
+        ItemStack slingshot = new ItemStack(Material.STICK);
         ItemMeta meta = slingshot.getItemMeta();
         meta.setDisplayName("§6Slingshot");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§7Era: 1, Requires stone like objects to shoot");
+        lore.add("§7Era: 1");
+        lore.add("§7Requires stone like objects to shoot");
+        lore.add("§7Durability: 15");
         meta.setLore(lore);
         meta.setCustomModelData(1);
         slingshot.setItemMeta(meta);
@@ -27,7 +29,25 @@ public class ItemSlingshot {
 
     public List<String> getLore(){
         List<String> lore = new ArrayList<>();
-        lore.add("§7Era: 1, Requires stone like objects to shoot");
+        lore.add("§7Era: 1");
+        lore.add("§7Requires stone like objects to shoot");
+        lore.add("§7Durability: 15");
         return lore;
+    }
+
+    public ItemStack getStatic(int durabilty){
+        ItemStack slingshot = new ItemStack(Material.STICK);
+        ItemMeta meta = slingshot.getItemMeta();
+        meta.setDisplayName("§6Slingshot");
+        ArrayList<String> lore = new ArrayList<String>();
+        lore.add("§7Era: 1");
+        lore.add("§7Requires stone like objects to shoot");
+        lore.add("§7Durability: " + durabilty);
+        meta.setLore(lore);
+        meta.setCustomModelData(1);
+        slingshot.setItemMeta(meta);
+        return slingshot;
+
+
     }
 }

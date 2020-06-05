@@ -32,6 +32,8 @@ public class PlayerLists {
 
     public Set<UUID> unclaimAuto;
 
+    public List<UUID> reloading;
+
     public PlayerLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -45,6 +47,7 @@ public class PlayerLists {
         ammos = new HashMap<>();
         claimAuto = new HashSet<>();
         unclaimAuto = new HashSet<>();
+        reloading = new ArrayList<>();
     }
 
 }

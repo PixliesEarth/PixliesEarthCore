@@ -27,6 +27,7 @@ import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.customitems.listeners.ItemsInteractEvent;
+import eu.pixliesearth.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.guns.commands.GunGive;
 import eu.pixliesearth.guns.listeners.AkGun;
@@ -230,6 +231,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new AchievementListener(), this);
         //THIS IS NOT ITEMINTERACTLISTENER DONT DELETE
         manager.registerEvents(new ItemsInteractEvent(), this);
+        manager.registerEvents(new SlingshotListener(), this);
     }
 
     /**

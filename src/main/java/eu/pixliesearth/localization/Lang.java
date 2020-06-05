@@ -219,7 +219,9 @@ public enum Lang {
     CUSTOM_GIVE_SELF(Lang.CUSTOMITEMS, "&7You gave yourself a &a%item%&7!",
             "&7Du hast dir selbst ein(e) &a%item% &7gegeben!"),
     CUSTOM_GIVE_OTHER(Lang.CUSTOMITEMS, "&7You gave &6%player% &7a &a%item%&7!",
-            "&7Du hast &6%player% &7ein(e) &a%item% &7gegeben!");
+            "&7Du hast &6%player% &7ein(e) &a%item% &7gegeben!"),
+    CUSTOM_SLINGSHOT_RELOADING_ACTIONBAR("", "&6Loading the stone...",
+            "&6Lade gerade den Stein..."),;
 
     private String PREFIX;
     private String ENG;

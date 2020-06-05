@@ -9,14 +9,20 @@ public class SlingShotEvent extends Event implements Cancellable {
     public static HandlerList handlers = new HandlerList();
     Player shooter;
     boolean isCancelled = false;
+    String name;
 
 
-    public SlingShotEvent(Player player) {
+    public SlingShotEvent(Player player, String AmmoName) {
         this.shooter = player;
+        this.name = AmmoName;
     }
 
     public Player getPlayer(){
         return shooter;
+    }
+
+    public String getAmmoName(){
+        return name;
     }
 
     @Override

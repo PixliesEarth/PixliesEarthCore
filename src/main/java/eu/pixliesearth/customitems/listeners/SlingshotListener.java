@@ -1,14 +1,22 @@
 package eu.pixliesearth.customitems.listeners;
 
+import com.destroystokyo.paper.event.player.PlayerReadyArrowEvent;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.events.ShootEvent;
 import eu.pixliesearth.events.SlingShotEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SlingshotListener implements Listener {
@@ -18,18 +26,55 @@ public class SlingshotListener implements Listener {
         Player p = e.getPlayer();
         if(e.isCancelled()) return;
         AtomicReference<Snowball> sb = new AtomicReference<>();
-        Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
         p.getWorld().spawn(p.getEyeLocation(), Snowball.class, snowball -> {
-            snowball.setShooter(player);
-            snowball.setVelocity(player.getEyeLocation().getDirection().multiply(2.0));
+            snowball.setShooter(p);
+            snowball.setVelocity(p.getEyeLocation().getDirection().multiply(1.0));
             snowball.setSilent(true);
-            snowball.setCustomName("§c7.62mm");
+            snowball.setCustomName("Slingshot");
             snowball.setBounce(false);
-            snowball.setGravity(false);
-            Main.getInstance().getPlayerLists().ammos.add(snowball);
+            snowball.setGravity(true);
+            ItemMeta meta = snowball.getItem().getItemMeta();
+            meta.setCustomModelData(2);
+            snowball.getItem().setItemMeta(meta);
+            Main.getInstance().getPlayerLists().ammos.put(snowball, 3.0);
             sb.set(snowball);
         });
+        if(e.getPlayer().getInventory().contains(Material.COBBLESTONE)){
+            removeOne(Material.COBBLESTONE, p);
+        }else if(e.getPlayer().getInventory().contains(Material.GRAVEL)){
+            removeOne(Material.GRAVEL, p);
+        }else if(e.getPlayer().getInventory().contains(Material.STONE)){
+           removeOne(Material.STONE, p);
+
+        }
+        UUID uuid = p.getUniqueId();
+        if(!(Main.getInstance().getPlayerLists().reloading.contains(uuid))) {
+            Main.getInstance().getPlayerLists().reloading.add(uuid);
+        }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+                        Main.getInstance().getPlayerLists().reloading.remove(uuid);
+                    }
+        },30);
+        //2 Seconds
 
 
+    }
+
+    public void removeOne(Material m, Player p){
+        HashMap<Integer, ? extends ItemStack> map = p.getInventory().all(m);
+        if(map.isEmpty()){
+            return;
+        }
+        for(Map.Entry<Integer, ? extends ItemStack> entry : map.entrySet())
+            if(entry.getValue().getAmount() != 0) {
+                if (entry.getValue().getAmount() == 1) p.getPlayer().getInventory().setItem(entry.getKey(), null);
+                else {
+                    entry.getValue().setAmount(entry.getValue().getAmount() - 1);
+                    p.getPlayer().getInventory().setItem(entry.getKey(), entry.getValue());
+                }
+                break;
+            }
     }
 }
