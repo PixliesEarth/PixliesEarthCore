@@ -97,7 +97,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
         if (args.length == 1) {
             StringUtil.copyPartialMatches(args[0], getGunNames(), completions);
         } else if (args.length == 2) {
-            StringUtil.copyPartialMatches(args[0], onlineplayerNames(), completions);
+            StringUtil.copyPartialMatches(args[1], onlineplayerNames(), completions);
         }
 
         Collections.sort(completions);
