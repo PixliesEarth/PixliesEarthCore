@@ -7,8 +7,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class GunObject {
-    public ItemStack AK() {
+public class AK {
+    public ItemStack getRecipe() {
         Material type;
         ItemStack ak = new ItemStack(Material.WOODEN_AXE);
         ItemMeta meta = ak.getItemMeta();
