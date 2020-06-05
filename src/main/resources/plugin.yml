@@ -143,6 +143,10 @@ commands:
     aliases:
       - boosts
       - serverboost
+  cigive:
+    description: cigive
+    aliases:
+      - giveci
 
 permissions:
   # GENERAL
@@ -198,4 +202,7 @@ permissions:
      default: op
   # GUNS
   earth.gun.give:
+     default: op
+   #CUSTOM ITEMS
+  earth.ci.give:
      default: op

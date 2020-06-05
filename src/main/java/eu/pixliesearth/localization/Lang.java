@@ -211,7 +211,15 @@ public enum Lang {
     GUN_RECIEVED(Lang.GUNS, "&7You recieved the &a%gun%&7!",
             "&7Du hast die &a%gun% bekommen!"),
     GUN_DOESNT_EXIST(Lang.GUNS, "&7This gun &cdoes not &7exist.",
-            "&7Diese Waffe &cexistiert nicht&7.");
+            "&7Diese Waffe &cexistiert nicht&7."),
+
+    //CUSTOM ITEMS
+    CUSTOM_DOESNT_EXIST(Lang.CUSTOMITEMS, "&7This item &cdoes not &7exist!",
+            "&7Diese Waffe &cexistiert nicht &7!"),
+    CUSTOM_GIVE_SELF(Lang.CUSTOMITEMS, "&7You gave yourself a &a%item%&7!",
+            "&7Du hast dir selbst ein(e) &a%item% &7gegeben!"),
+    CUSTOM_GIVE_OTHER(Lang.CUSTOMITEMS, "&7You gave &6%player% &7a &a%item%&7!",
+            "&7Du hast &6%player% &7ein(e) &a%item% &7gegeben!");
 
     private String PREFIX;
     private String ENG;
@@ -223,6 +231,7 @@ public enum Lang {
     private static final String DISCORD = "§3DISCORD §8| ";
     private static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
     private static final String GUNS = "§aGUNS §8| ";
+    private static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";
 
     Lang(String PREFIX, String ENG, String DE) {
         this.PREFIX = PREFIX;

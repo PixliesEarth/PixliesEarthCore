@@ -25,6 +25,8 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.utils.FileManager;
 import eu.pixliesearth.core.utils.PlayerLists;
+import eu.pixliesearth.customitems.commands.CiGiveCommand;
+import eu.pixliesearth.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.guns.commands.GunGive;
 import eu.pixliesearth.guns.listeners.AkGun;
@@ -212,6 +214,7 @@ public final class Main extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
+        getCommand("cigive").setExecutor(new CiGiveCommand());
     }
 
     private void registerEvents(PluginManager manager) {
@@ -225,6 +228,8 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new PlayerCombatListener(), this);
         manager.registerEvents(new PacketListener(), this);
         manager.registerEvents(new AchievementListener(), this);
+        //THIS IS NOT ITEMINTERACTLISTENER DONT DELETE
+        manager.registerEvents(new ItemsInteractEvent(), this);
     }
 
     /**
