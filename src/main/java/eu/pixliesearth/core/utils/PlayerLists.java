@@ -26,7 +26,7 @@ public class PlayerLists {
 
     public List<UUID> vanishList;
 
-    public Set<Entity> ammos;
+    public Map<Entity, Double> ammos;
 
     public Set<UUID> claimAuto;
 
@@ -42,7 +42,7 @@ public class PlayerLists {
         afk = new ArrayList<>();
         locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
-        ammos = new HashSet<>();
+        ammos = new HashMap<>();
         claimAuto = new HashSet<>();
         unclaimAuto = new HashSet<>();
     }
