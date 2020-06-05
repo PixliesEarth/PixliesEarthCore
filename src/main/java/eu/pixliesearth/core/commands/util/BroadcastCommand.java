@@ -3,6 +3,7 @@ package eu.pixliesearth.core.commands.util;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,7 +38,7 @@ public class BroadcastCommand implements CommandExecutor {
         }
         MiniMick.getApi().getServerTextChannelById("712819947579113512").get().sendMessage(new EmbedBuilder()
         .setTitle("BROADCAST")
-        .setDescription(message)
+        .setDescription(ChatColor.stripColor(message))
         .setFooter("MiniMick powered by PixliesEarth", "https://minotar.net/avatar/" + sender.getName())
         .setColor(Color.YELLOW)
         .setTimestampToNow()

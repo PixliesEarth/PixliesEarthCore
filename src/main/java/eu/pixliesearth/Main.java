@@ -210,6 +210,7 @@ public final class Main extends JavaPlugin {
         getCommand("gungive").setExecutor(new GunGive());
         getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
+        getCommand("boost").setExecutor(new BoostCommand());
     }
 
     private void registerEvents(PluginManager manager) {

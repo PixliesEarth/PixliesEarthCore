@@ -138,6 +138,12 @@ commands:
     description: send to lobby
     aliases:
       - hub
+  boost:
+    description: boosts
+    aliases:
+      - boosts
+      - serverboost
+
 permissions:
   # GENERAL
   earth.admin:
