@@ -6,9 +6,9 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
-import eu.pixliesearth.core.utils.ItemBuilder;
-import eu.pixliesearth.core.utils.Methods;
-import eu.pixliesearth.core.utils.SkullBuilder;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,10 +16,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 
 public class ProfileCommand implements CommandExecutor {
 

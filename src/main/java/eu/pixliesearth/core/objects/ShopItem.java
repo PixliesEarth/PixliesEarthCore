@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.objects;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.utils.FileManager;
+import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.localization.Lang;
 import lombok.AllArgsConstructor;
 import lombok.Data;

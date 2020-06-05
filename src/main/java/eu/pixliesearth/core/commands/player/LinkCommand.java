@@ -2,7 +2,7 @@ package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.utils.PlayerLists;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

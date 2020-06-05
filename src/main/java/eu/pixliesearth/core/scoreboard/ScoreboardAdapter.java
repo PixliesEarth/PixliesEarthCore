@@ -2,10 +2,10 @@ package eu.pixliesearth.core.scoreboard;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.localization.Lang;
-import io.github.thatkawaiisam.assemble.AssembleAdapter;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.utils.Methods;
-import eu.pixliesearth.core.utils.Timer;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;

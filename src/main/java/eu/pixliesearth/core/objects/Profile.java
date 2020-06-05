@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
-import eu.pixliesearth.core.utils.Timer;
+import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
