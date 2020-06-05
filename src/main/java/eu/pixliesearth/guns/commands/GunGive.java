@@ -4,14 +4,17 @@ import eu.pixliesearth.guns.Guns;
 import eu.pixliesearth.guns.gunObjects.AK;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.StringUtil;
 
-public class GunGive implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class GunGive implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(sender instanceof Player) {
@@ -71,4 +74,35 @@ public class GunGive implements CommandExecutor {
         }
         return false;
     }
+
+    private List<String> getGunNames() {
+        List<String> returner = new ArrayList<>();
+        for (Guns g : Guns.values())
+            returner.add(g.name());
+        return returner;
+    }
+
+    private List<String> onlineplayerNames() {
+        List<String> returner = new ArrayList<>();
+        for (Player p : Bukkit.getOnlinePlayers())
+            returner.add(p.getName());
+        return returner;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        final List<String> completions = new ArrayList<>();
+
+        if (args.length == 1) {
+            StringUtil.copyPartialMatches(args[0], getGunNames(), completions);
+        } else if (args.length == 2) {
+            StringUtil.copyPartialMatches(args[0], onlineplayerNames(), completions);
+        }
+
+        Collections.sort(completions);
+
+        return completions;
+    }
+
 }

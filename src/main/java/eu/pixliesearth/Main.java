@@ -208,6 +208,7 @@ public final class Main extends JavaPlugin {
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("gungive").setExecutor(new GunGive());
+        getCommand("gungive").setTabCompleter(new GunGive());
         getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
