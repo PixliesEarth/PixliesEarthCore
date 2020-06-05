@@ -28,7 +28,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                 return false;
             }
             if(args.length == 1){
-                if (Guns.valueOf(args[0].toUpperCase()) == null) {
+                if (Guns.contains(args[0].toUpperCase())) {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
@@ -42,7 +42,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                     return false;
                 }
                 Player player = Bukkit.getPlayer(args[1]);
-                if (Guns.valueOf(args[0].toUpperCase()) == null) {
+                if (Guns.contains(args[0].toUpperCase())) {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
@@ -61,7 +61,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                 sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                 return false;
             }
-            if (Guns.valueOf(args[0].toUpperCase()) == null) {
+            if (Guns.contains(args[0].toUpperCase())) {
                 sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                 return false;
             }

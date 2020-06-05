@@ -14,4 +14,15 @@ public enum Guns {
         this.clazz = clazz;
     }
 
+    public static boolean contains(String test) {
+
+        for (Guns c : values()) {
+            if (c.name().equals(test)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
