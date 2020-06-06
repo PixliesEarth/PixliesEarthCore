@@ -37,7 +37,7 @@ public class VanishCommand implements CommandExecutor {
                 Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
-                    if(!(p.hasPermission("earth.seevanished"))) {
+                    if(!(players.hasPermission("earth.seevanished"))) {
                         players.hidePlayer(Main.getInstance(), p);
                     }
 
@@ -59,7 +59,9 @@ public class VanishCommand implements CommandExecutor {
                 Main.getInstance().getPlayerLists().vanishList.remove(player.getUniqueId());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
-                    players.hidePlayer(Main.getInstance(), player);
+                    if(!players.hasPermission("earth.seevanished")) {
+                        players.hidePlayer(Main.getInstance(), player);
+                    }
                 }
                 player.sendMessage(Lang.VANISH_ON_BY_OTHER.get(sender).replace("%other%", p.getName()));
                 Main.getInstance().getPlayerLists().vanishList.add(player.getUniqueId());
