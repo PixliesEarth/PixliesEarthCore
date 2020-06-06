@@ -1,7 +1,6 @@
 package eu.pixliesearth.lib.net.ranktw.DiscordWebHooks;
 
 import com.google.gson.annotations.SerializedName;
-import eu.pixliesearth.lib.DiscordWebHooks.embed.*;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.embed.*;
 
 import java.awt.*;

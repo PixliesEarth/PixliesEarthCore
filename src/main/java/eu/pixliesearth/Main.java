@@ -228,7 +228,11 @@ public final class Main extends JavaPlugin {
         //THIS IS NOT ITEMINTERACTLISTENER DONT DELETE
         manager.registerEvents(new ItemsInteractEvent(), this);
         manager.registerEvents(new SlingshotListener(), this);
+<<<<<<< HEAD
         manager.registerEvents(new MobSpawnListener(), this);
+=======
+        manager.registerEvents(new DeathListener(), this);
+>>>>>>> c6943eb68f224dca8beec9fe0e3f1ef4a720dcc4
     }
 
     /**

@@ -34,7 +34,7 @@ public class GamemodeAdventureCommand implements CommandExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[0]);
-            player.setGameMode(GameMode.CREATIVE);
+            player.setGameMode(GameMode.ADVENTURE);
             p.sendMessage(Lang.GAMEMODE_CHANGED_OTHER.get(sender).replace("%GAMEMODE%", gamemode.name()).replace("%PLAYER%", player.getName()));
             player.sendMessage(Lang.GAMEMODE_CHANGED_BY_OTHER.get(player).replace("%PLAYER%", p.getName()).replace("%GAMEMODE%", gamemode.name()));
         }
