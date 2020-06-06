@@ -8,6 +8,7 @@ import eu.pixliesearth.core.objects.Profile;
 import lombok.Getter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
@@ -16,7 +17,9 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionType;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 public class MiniMick {
@@ -81,9 +84,16 @@ public class MiniMick {
                }
                double balance = profile.getBalance();
                UUID uuid = UUID.fromString(profile.getUniqueId());
+               String name = Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid)).getName();
+               ArrayList<String> messages = new ArrayList<>();
+               messages.add(name + " has " + balance + " in their pockets.");
+               messages.add(name + "'s current balance: " + balance);
+               messages.add(name + " currently has " + balance + ", what a snob!");
+               messages.add("Only " + balance + "??? Get a load of " + name);
+               int random = (int) (4 * Math.random());
                event.getChannel().sendMessage(new EmbedBuilder()
                        .setColor(Color.GREEN)
-                        .setDescription("**" + Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid).getPlayer()).getName() + "** has $" + balance + " to his name!" )
+                       .setDescription("**" + messages.get(random) + "**")
                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
                        .setTimestampToNow());
            } else {
