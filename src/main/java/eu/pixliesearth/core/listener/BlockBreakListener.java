@@ -1,6 +1,6 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.core.utils.ItemBuilder;
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

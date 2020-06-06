@@ -1,22 +1,18 @@
 package eu.pixliesearth.core.objects;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.utils.FileManager;
-import eu.pixliesearth.core.utils.Methods;
-import eu.pixliesearth.core.utils.Timer;
+import eu.pixliesearth.utils.FileManager;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.localization.Lang;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class Warp {

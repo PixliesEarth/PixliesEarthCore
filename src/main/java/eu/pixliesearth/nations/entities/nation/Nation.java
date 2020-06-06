@@ -1,8 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.utils.OneRowMap;
-import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.OneRowMap;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;

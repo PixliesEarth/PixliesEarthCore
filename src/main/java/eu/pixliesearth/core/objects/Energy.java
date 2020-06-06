@@ -1,6 +1,6 @@
 package eu.pixliesearth.core.objects;
 
-import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 

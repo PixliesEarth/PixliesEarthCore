@@ -1,7 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.utils.Methods;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Era;

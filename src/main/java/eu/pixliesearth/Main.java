@@ -1,9 +1,5 @@
 package eu.pixliesearth;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -23,26 +19,25 @@ import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
-import eu.pixliesearth.core.utils.FileManager;
-import eu.pixliesearth.core.utils.PlayerLists;
-import eu.pixliesearth.customitems.commands.CiGiveCommand;
-import eu.pixliesearth.customitems.listeners.ItemsInteractEvent;
-import eu.pixliesearth.customitems.listeners.SlingshotListener;
+import eu.pixliesearth.utils.FileManager;
+import eu.pixliesearth.utils.PlayerLists;
+import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
+import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
+import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.guns.commands.GunGive;
-import eu.pixliesearth.guns.listeners.AkGun;
+import eu.pixliesearth.core.guns.commands.GunGive;
+import eu.pixliesearth.core.guns.listeners.AkGun;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
-import io.github.thatkawaiisam.assemble.Assemble;
-import io.github.thatkawaiisam.assemble.AssembleStyle;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -216,6 +211,7 @@ public final class Main extends JavaPlugin {
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
         getCommand("cigive").setExecutor(new CiGiveCommand());
+        getCommand("cigive").setTabCompleter(new CiGiveCommand());
     }
 
     private void registerEvents(PluginManager manager) {
