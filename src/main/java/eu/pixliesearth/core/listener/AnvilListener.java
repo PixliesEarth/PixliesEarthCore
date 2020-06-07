@@ -28,14 +28,22 @@ public class AnvilListener implements Listener {
                 }
             }
         }
-    //Disallows hoppers from moving cis
+    //Disallows hoppers from moving cis into craft inventories
      @EventHandler
-     public void onItemMove(InventoryMoveItemEvent e){
-       if(e.getItem().hasItemMeta()){
-           if(e.getItem().getItemMeta().getLore() != null){
-               e.setCancelled(true);
-           }
-       }
+     public void onItemMove(InventoryMoveItemEvent e) {
+         if (!e.getDestination().getType().equals(InventoryType.CHEST)
+                 && !e.getDestination().getType().equals(InventoryType.BARREL)
+                 && !e.getDestination().getType().equals(InventoryType.DISPENSER)
+                 && !e.getDestination().getType().equals(InventoryType.DROPPER)
+                 && !e.getDestination().getType().equals(InventoryType.HOPPER)
+                 && !e.getDestination().getType().equals(InventoryType.SHULKER_BOX)
+         ){
+             if (e.getItem().hasItemMeta()) {
+                 if (e.getItem().getItemMeta().getLore() != null) {
+                     e.setCancelled(true);
+                 }
+             }
+         }
      }
 
     //Disallow in every other craft
@@ -44,7 +52,7 @@ public class AnvilListener implements Listener {
         if(!e.getSlotType().equals(InventoryType.SlotType.CONTAINER) && !e.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) return;
         InventoryType clickedInv = e.getInventory().getType();
 
-        if (!clickedInv.equals(InventoryType.ENCHANTING) && !clickedInv.equals(InventoryType.ANVIL) && !clickedInv.equals(InventoryType.BEACON) && !clickedInv.equals(InventoryType.CARTOGRAPHY)  && !clickedInv.equals(InventoryType.BREWING) && !clickedInv.equals(InventoryType.FURNACE) && !clickedInv.equals(InventoryType.GRINDSTONE) && !clickedInv.equals(InventoryType.HOPPER) && !clickedInv.equals(InventoryType.LOOM) && !clickedInv.equals(InventoryType.MERCHANT) && !clickedInv.equals(InventoryType.BLAST_FURNACE) && !clickedInv.equals(InventoryType.SMOKER) && !clickedInv.equals(InventoryType.STONECUTTER) && !clickedInv.equals(InventoryType.WORKBENCH)) return;
+        if (!clickedInv.equals(InventoryType.ENCHANTING) && !clickedInv.equals(InventoryType.ANVIL) && !clickedInv.equals(InventoryType.BEACON) && !clickedInv.equals(InventoryType.CARTOGRAPHY)  && !clickedInv.equals(InventoryType.BREWING) && !clickedInv.equals(InventoryType.FURNACE) && !clickedInv.equals(InventoryType.GRINDSTONE) && !clickedInv.equals(InventoryType.LOOM) && !clickedInv.equals(InventoryType.MERCHANT) && !clickedInv.equals(InventoryType.BLAST_FURNACE) && !clickedInv.equals(InventoryType.SMOKER) && !clickedInv.equals(InventoryType.STONECUTTER) && !clickedInv.equals(InventoryType.WORKBENCH)) return;
 
         Player player = (Player) e.getWhoClicked();
         if(e.getCurrentItem() == null) return;
