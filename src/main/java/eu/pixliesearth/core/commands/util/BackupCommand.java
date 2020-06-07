@@ -16,7 +16,7 @@ public class BackupCommand implements CommandExecutor {
         }
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             sender.sendMessage("§7Backing up all profiles in the database...");
-            for (Profile profile : Main.getInstance().getPlayerLists().profiles.values())
+            for (Profile profile : Main.getInstance().getUtilLists().profiles.values())
                 profile.backup();
             sender.sendMessage("§aDone.");
             Bukkit.getConsoleSender().sendMessage("§bAll profiles backed up in database.");

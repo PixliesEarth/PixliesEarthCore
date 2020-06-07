@@ -60,7 +60,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                     if (strings[0].equalsIgnoreCase(s) ) {
                         found = true;
                         if (sub.staff() && sender instanceof Player) {
-                            if (instance.getPlayerLists().staffMode.contains(((Player) sender).getUniqueId())) {
+                            if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
                                 sub.execute(sender, args);
                             } else {
                                 sender.sendMessage("§aEARTH §8| §cInsufficient permissions.");

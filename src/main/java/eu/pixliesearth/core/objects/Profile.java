@@ -122,7 +122,7 @@ public class Profile {
     }
 
     public void save() {
-        instance.getPlayerLists().profiles.put(UUID.fromString(uniqueId), this);
+        instance.getUtilLists().profiles.put(UUID.fromString(uniqueId), this);
     }
 
     public void addToNation(String id) {

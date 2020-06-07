@@ -3,7 +3,6 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -37,7 +36,7 @@ public class disbandNation implements SubCommand {
                     return false;
                 }
                 //TODO permission check
-                instance.getPlayerLists().nationDisbander.put(player.getUniqueId(), user.getNationId());
+                instance.getUtilLists().nationDisbander.put(player.getUniqueId(), user.getNationId());
                 player.sendMessage(Lang.NATION_DELEATION_CONIIRMATION.get(player));
                 break;
         }

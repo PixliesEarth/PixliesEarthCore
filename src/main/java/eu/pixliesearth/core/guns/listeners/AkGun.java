@@ -43,12 +43,12 @@ public class AkGun implements Listener {
     @EventHandler
     public void onProjectileHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Snowball && event.getEntity() instanceof LivingEntity) {
-            if (plugin.getPlayerLists().ammos.containsKey(event.getDamager())) {
+            if (plugin.getUtilLists().ammos.containsKey(event.getDamager())) {
                 LivingEntity entity = (LivingEntity) event.getEntity();
-                entity.damage(plugin.getPlayerLists().ammos.get(event.getDamager()));
+                entity.damage(plugin.getUtilLists().ammos.get(event.getDamager()));
                 Player player = (Player) ((Snowball) event.getDamager()).getShooter();
                 entity.setVelocity(player.getLocation().getDirection().setY(0).normalize());
-                Main.getInstance().getPlayerLists().ammos.remove(event.getDamager());
+                Main.getInstance().getUtilLists().ammos.remove(event.getDamager());
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.NEUTRAL, 2, 1);
             }
         }

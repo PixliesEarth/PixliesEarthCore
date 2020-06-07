@@ -7,10 +7,15 @@ import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -22,20 +27,19 @@ public class LeaveListener implements Listener {
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
-        profile.backup();
-        Main.getInstance().getPlayerLists().locationMap.remove(player.getUniqueId());
-        if (Main.getInstance().getPlayerLists().afk.contains(player.getUniqueId()))
-            Main.getInstance().getPlayerLists().afk.remove(player.getUniqueId());
+        Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());
+        if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))
+            Main.getInstance().getUtilLists().afk.remove(player.getUniqueId());
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
 
 
         //VANISH
-        if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())){
-            for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
+        if (!(Main.getInstance().getUtilLists().vanishList.isEmpty())) {
+            for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getPlayer(pUUID);
                 //UNVANISH LEAVING VANISHED PLAYER
                 if (event.getPlayer() == p) {
-                    Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
+                    Main.getInstance().getUtilLists().vanishList.remove(p.getUniqueId());
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.showPlayer(Main.getInstance(), p);
                     }
@@ -43,7 +47,24 @@ public class LeaveListener implements Listener {
                 //UNVANISHES VANISHED PLAYERS FOR LEAVING PLAYERS
                 player.showPlayer(Main.getInstance(), p);
             }
-    }
+        }
+
+        if (profile.getTimers().containsKey("§c§lCombat")) {
+            Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+            chestLoc.getBlock().setType(Material.CHEST);
+            Chest chest = (Chest) chestLoc.getBlock().getState();
+            Inventory inv = chest.getInventory();
+            for (ItemStack item : player.getInventory().getContents())
+                inv.addItem(item);
+            for (ItemStack item : player.getInventory().getArmorContents())
+                inv.addItem(item);
+            Main.getInstance().getUtilLists().deathChests.add(chest);
+        }
+
+        profile.getTimers().clear();
+
+        profile.backup();
+
         //Discord Leaves
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));
     }

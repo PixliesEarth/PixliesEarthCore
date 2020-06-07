@@ -21,11 +21,11 @@ public class StaffCommand implements CommandExecutor {
             player.sendMessage("§aEARTH §8| §cInsufficient permissions.");
             return false;
         }
-        if (instance.getPlayerLists().staffMode.contains(player.getUniqueId())) {
-            instance.getPlayerLists().staffMode.remove(player.getUniqueId());
+        if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+            instance.getUtilLists().staffMode.remove(player.getUniqueId());
             player.sendMessage("§aEARTH §8| §cDisabled §7staffmode.");
         } else {
-            instance.getPlayerLists().staffMode.add(player.getUniqueId());
+            instance.getUtilLists().staffMode.add(player.getUniqueId());
             player.sendMessage("§aEARTH §8| §aenabled §7staffmode.");
         }
         return false;

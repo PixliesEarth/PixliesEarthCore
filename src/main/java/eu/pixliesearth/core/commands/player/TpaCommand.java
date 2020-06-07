@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
@@ -31,12 +30,12 @@ public class TpaCommand implements CommandExecutor {
             return false;
         }
         if (args[0].equalsIgnoreCase("deny")) {
-            if (instance.getPlayerLists().tpaRequests.containsKey(player.getUniqueId())) {
-                player.sendMessage(Lang.TPA_REQUEST_DENIED.get(player).replace("%REQUESTER%", Bukkit.getPlayer(instance.getPlayerLists().tpaRequests.get(player.getUniqueId())).getName()));
-                Player target = Bukkit.getPlayer(instance.getPlayerLists().tpaRequests.get(player.getUniqueId()));
+            if (instance.getUtilLists().tpaRequests.containsKey(player.getUniqueId())) {
+                player.sendMessage(Lang.TPA_REQUEST_DENIED.get(player).replace("%REQUESTER%", Bukkit.getPlayer(instance.getUtilLists().tpaRequests.get(player.getUniqueId())).getName()));
+                Player target = Bukkit.getPlayer(instance.getUtilLists().tpaRequests.get(player.getUniqueId()));
                 if (target != null)
                     target.sendMessage(Lang.RECEIVER_DENIED_TPA_REQ.get(target).replace("%PLAYER%", player.getDisplayName()));
-                instance.getPlayerLists().tpaRequests.remove(player.getUniqueId());
+                instance.getUtilLists().tpaRequests.remove(player.getUniqueId());
             } else {
                 player.sendMessage(Lang.NO_OPEN_TPA_REQUEST.get(player));
             }
@@ -51,11 +50,11 @@ public class TpaCommand implements CommandExecutor {
             return false;
         }
         Player target = Bukkit.getPlayer(args[0]);
-        if (instance.getPlayerLists().tpaRequests.get(target.getUniqueId()) == player.getUniqueId()) {
+        if (instance.getUtilLists().tpaRequests.get(target.getUniqueId()) == player.getUniqueId()) {
             player.sendMessage(Lang.CANT_SEND_REQ_AGAIN.get(player));
             return false;
         }
-        instance.getPlayerLists().tpaRequests.put(target.getUniqueId(), player.getUniqueId());
+        instance.getUtilLists().tpaRequests.put(target.getUniqueId(), player.getUniqueId());
         player.sendMessage(Lang.SENT_TPA_REQ.get(player).replace("%PLAYER%", target.getName()));
         target.sendMessage(Lang.TPA_REQ.get(target).replace("%PLAYER%", player.getName()));
 

@@ -33,7 +33,7 @@ public class unclaimNation implements SubCommand {
         }
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
-        if (!profile.isInNation() && !instance.getPlayerLists().staffMode.contains(player.getUniqueId())) {
+        if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
             return false;
         }
@@ -43,7 +43,7 @@ public class unclaimNation implements SubCommand {
             player.sendMessage(Lang.NOT_CLAIMED.get(player));
             return false;
         }
-        if (!nationChunk.getNationId().equals(profile.getNationId()) && !instance.getPlayerLists().staffMode.contains(player.getUniqueId())) {
+        if (!nationChunk.getNationId().equals(profile.getNationId()) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             player.sendMessage();
             return false;
         }
@@ -55,11 +55,11 @@ public class unclaimNation implements SubCommand {
                 members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX()+"").replace("%Z%", c.getZ()+""));
             System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
         } else if (args[0].equalsIgnoreCase("auto")) {
-            if (instance.getPlayerLists().unclaimAuto.contains(player.getUniqueId())) {
-                instance.getPlayerLists().unclaimAuto.add(player.getUniqueId());
+            if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
+                instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
                 player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
             } else {
-                instance.getPlayerLists().unclaimAuto.remove(player.getUniqueId());
+                instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                 player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
             }
         }

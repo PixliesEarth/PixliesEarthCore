@@ -20,13 +20,13 @@ public class Gun {
             snowball.setCustomName("§c7.62mm");
             snowball.setBounce(false);
             snowball.setGravity(false);
-            Main.getInstance().getPlayerLists().ammos.put(snowball, 6D);
+            Main.getInstance().getUtilLists().ammos.put(snowball, 6D);
             sb.set(snowball);
         });
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.NEUTRAL, 10, 1);
         new BukkitRunnable() {
             public void run() {
-                if (!Main.getInstance().getPlayerLists().ammos.containsKey(sb.get())) {
+                if (!Main.getInstance().getUtilLists().ammos.containsKey(sb.get())) {
                     this.cancel();
                     return;
                 }
@@ -35,8 +35,8 @@ public class Gun {
         }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
-            if (Main.getInstance().getPlayerLists().ammos.containsKey(sb.get()))
-                Main.getInstance().getPlayerLists().ammos.remove(sb.get());
+            if (Main.getInstance().getUtilLists().ammos.containsKey(sb.get()))
+                Main.getInstance().getUtilLists().ammos.remove(sb.get());
         }, 20 * 60);
     }
 }
