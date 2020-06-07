@@ -22,6 +22,7 @@ public class LeaveListener implements Listener {
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
+        profile.getTimers().clear();
         profile.backup();
         Main.getInstance().getPlayerLists().locationMap.remove(player.getUniqueId());
         if (Main.getInstance().getPlayerLists().afk.contains(player.getUniqueId()))
