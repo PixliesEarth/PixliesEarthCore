@@ -6,10 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +28,15 @@ public class AnvilListener implements Listener {
                 }
             }
         }
+    //Disallows hoppers from moving cis
+     @EventHandler
+     public void onItemMove(InventoryMoveItemEvent e){
+       if(e.getItem().hasItemMeta()){
+           if(e.getItem().getItemMeta().getLore() != null){
+               e.setCancelled(true);
+           }
+       }
+     }
 
     //Disallow in every other craft
     @EventHandler
