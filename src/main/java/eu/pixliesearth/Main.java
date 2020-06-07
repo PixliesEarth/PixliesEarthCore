@@ -230,6 +230,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new SlingshotListener(), this);
         manager.registerEvents(new MobSpawnListener(), this);
         manager.registerEvents(new DeathListener(), this);
+        manager.registerEvents(new AnvilListener(), this);
     }
 
     /**

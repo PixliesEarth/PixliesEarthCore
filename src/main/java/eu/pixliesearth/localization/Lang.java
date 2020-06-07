@@ -223,7 +223,10 @@ public enum Lang {
     CUSTOM_SLINGSHOT_RELOADING_ACTIONBAR("", "&6Loading the stone...",
             "&6Lade gerade den Stein..."),
     CUSTOM_GIVEN_BY_OTHER(Lang.CUSTOMITEMS, "&6%player% &7gave you a &a%item%&7!",
-            "&6%player% &7hat dir ein(e) &a%item% &7gegeben!");
+            "&6%player% &7hat dir ein(e) &a%item% &7gegeben!"),
+    //CRAFT/ANVIL/ENCHANT/BEACON PROTECT
+    CANT_PUT_IN_INV(Lang.EARTH, "&7You &care not allowed &7to put this item here!",
+            "&7Du darfst das nicht hier lassen!"),;
 
     private String PREFIX;
     private String ENG;
