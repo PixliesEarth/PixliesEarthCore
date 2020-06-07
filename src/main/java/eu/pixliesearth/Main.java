@@ -20,7 +20,7 @@ import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.PlayerLists;
+import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
@@ -59,7 +59,8 @@ public final class Main extends JavaPlugin {
     private static @Getter Scoreboard emptyScoreboard;
     private @Getter FileManager warpsCfg;
     private @Getter FileManager shopCfg;
-    private @Getter PlayerLists playerLists;
+    private @Getter
+    UtilLists utilLists;
 
     @Override
     public void onEnable() {
@@ -69,7 +70,7 @@ public final class Main extends JavaPlugin {
 
     private void init() {
 
-        playerLists = new PlayerLists();
+        utilLists = new UtilLists();
 
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
@@ -95,20 +96,20 @@ public final class Main extends JavaPlugin {
 
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (UUID uuid : playerLists.locationMap.keySet()) {
-                if (playerLists.locationMap.get(uuid).getLocation().toLocation() == Bukkit.getPlayer(uuid).getLocation()) {
-                    playerLists.locationMap.get(uuid).setMinutes(playerLists.locationMap.get(uuid).getMinutes() + 1);
+            for (UUID uuid : utilLists.locationMap.keySet()) {
+                if (utilLists.locationMap.get(uuid).getLocation().toLocation() == Bukkit.getPlayer(uuid).getLocation()) {
+                    utilLists.locationMap.get(uuid).setMinutes(utilLists.locationMap.get(uuid).getMinutes() + 1);
                 } else {
-                    playerLists.locationMap.get(uuid).setMinutes(0);
+                    utilLists.locationMap.get(uuid).setMinutes(0);
                 }
-                if (playerLists.locationMap.get(uuid).getMinutes() == getConfig().getInt("afktime", 15)) {
-                    playerLists.afk.add(uuid);
+                if (utilLists.locationMap.get(uuid).getMinutes() == getConfig().getInt("afktime", 15)) {
+                    utilLists.afk.add(uuid);
                     Bukkit.broadcastMessage("§8Player §7" + Bukkit.getPlayer(uuid).getDisplayName() + " §8is now AFK.");
                 }
             }
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Profile profile : playerLists.profiles.values()) {
-                if (!playerLists.afk.contains(UUID.fromString(profile.getUniqueId())))
+            for (Profile profile : utilLists.profiles.values()) {
+                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
                     profile.setPlayTime(profile.getPlayTime() + 1);
                 profile.backup();
             }
@@ -118,7 +119,7 @@ public final class Main extends JavaPlugin {
         // ENERGY SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (!playerLists.afk.contains(player.getUniqueId())) {
+                if (!utilLists.afk.contains(player.getUniqueId())) {
                     Profile profile = getProfile(player.getUniqueId());
                     Energy.add(profile, 2.0);
                 }
@@ -237,11 +238,11 @@ public final class Main extends JavaPlugin {
      * @return A profile object of the given playerUUID
      */
     public Profile getProfile(UUID uuid) {
-        if (playerLists.profiles.get(uuid) == null) {
-            playerLists.profiles.put(uuid, Profile.get(uuid));
-            return playerLists.profiles.get(uuid);
+        if (utilLists.profiles.get(uuid) == null) {
+            utilLists.profiles.put(uuid, Profile.get(uuid));
+            return utilLists.profiles.get(uuid);
         } else {
-            return playerLists.profiles.get(uuid);
+            return utilLists.profiles.get(uuid);
         }
     }
 

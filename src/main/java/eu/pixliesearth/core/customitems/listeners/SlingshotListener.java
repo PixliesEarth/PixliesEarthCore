@@ -33,7 +33,7 @@ public class SlingshotListener implements Listener {
             ItemMeta meta = snowball.getItem().getItemMeta();
             meta.setCustomModelData(2);
             snowball.getItem().setItemMeta(meta);
-            Main.getInstance().getPlayerLists().ammos.put(snowball, 3.0);
+            Main.getInstance().getUtilLists().ammos.put(snowball, 3.0);
             sb.set(snowball);
         });
         if(e.getPlayer().getInventory().contains(Material.COBBLESTONE)){
@@ -45,13 +45,13 @@ public class SlingshotListener implements Listener {
 
         }
         UUID uuid = p.getUniqueId();
-        if(!(Main.getInstance().getPlayerLists().reloading.contains(uuid))) {
-            Main.getInstance().getPlayerLists().reloading.add(uuid);
+        if(!(Main.getInstance().getUtilLists().reloading.contains(uuid))) {
+            Main.getInstance().getUtilLists().reloading.add(uuid);
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-                        Main.getInstance().getPlayerLists().reloading.remove(uuid);
+                        Main.getInstance().getUtilLists().reloading.remove(uuid);
                     }
         },30);
         //2 Seconds

@@ -68,7 +68,7 @@ public class WarpSystem implements CommandExecutor, Module {
                         player1.sendMessage("§aEARTH §8| §cInsufficent permissions.");
                         return false;
                     }
-                    instance.getPlayerLists().warpAdder.add(player1.getUniqueId());
+                    instance.getUtilLists().warpAdder.add(player1.getUniqueId());
                     player1.sendMessage("§aEARTH §8| §7Enter the name of the warp you want to add in chat.");
                 }
                 break;

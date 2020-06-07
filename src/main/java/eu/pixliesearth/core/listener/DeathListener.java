@@ -6,11 +6,18 @@ import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class DeathListener implements Listener {
 
@@ -33,6 +40,14 @@ public class DeathListener implements Listener {
             killer.getTimers().remove("§c§lCombat");
             killer.save();
         }
+
+        Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+        chestLoc.getBlock().setType(Material.CHEST);
+        Chest chest = (Chest) chestLoc.getBlock().getState();
+        Inventory inv = chest.getInventory();
+        for (ItemStack item : e.getDrops())
+            inv.addItem(item);
+        Main.getInstance().getUtilLists().deathChests.add(chest);
     }
 
 }

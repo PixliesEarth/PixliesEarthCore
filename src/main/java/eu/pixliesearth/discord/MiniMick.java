@@ -46,13 +46,13 @@ public class MiniMick {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, this discord account is already linked to an in-game account.");
                     return;
                 }
-                if (Main.getInstance().getPlayerLists().discordcodes.containsKey(split[1])) {
-                    Profile profile = Main.getInstance().getProfile(Main.getInstance().getPlayerLists().discordcodes.get(split[1]));
+                if (Main.getInstance().getUtilLists().discordcodes.containsKey(split[1])) {
+                    Profile profile = Main.getInstance().getProfile(Main.getInstance().getUtilLists().discordcodes.get(split[1]));
                     profile.setDiscord(event.getMessageAuthor().getIdAsString());
                     profile.backup();
                     event.getServer().get().addRoleToUser(event.getMessageAuthor().asUser().get(), event.getServer().get().getRoleById("709463355529887854").get());
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
-                    Main.getInstance().getPlayerLists().discordcodes.remove(split[1]);
+                    Main.getInstance().getUtilLists().discordcodes.remove(split[1]);
                 } else {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is invalid.");
                 }

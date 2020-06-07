@@ -24,19 +24,19 @@ public class LeaveListener implements Listener {
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
         profile.getTimers().clear();
         profile.backup();
-        Main.getInstance().getPlayerLists().locationMap.remove(player.getUniqueId());
-        if (Main.getInstance().getPlayerLists().afk.contains(player.getUniqueId()))
-            Main.getInstance().getPlayerLists().afk.remove(player.getUniqueId());
+        Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());
+        if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))
+            Main.getInstance().getUtilLists().afk.remove(player.getUniqueId());
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
 
 
         //VANISH
-        if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())){
-            for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
+        if (!(Main.getInstance().getUtilLists().vanishList.isEmpty())){
+            for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getPlayer(pUUID);
                 //UNVANISH LEAVING VANISHED PLAYER
                 if (event.getPlayer() == p) {
-                    Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
+                    Main.getInstance().getUtilLists().vanishList.remove(p.getUniqueId());
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.showPlayer(Main.getInstance(), p);
                     }

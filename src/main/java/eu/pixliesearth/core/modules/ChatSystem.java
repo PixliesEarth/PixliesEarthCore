@@ -27,29 +27,29 @@ public class ChatSystem implements Listener, Module {
         if (config.getBoolean("modules.chatsystem.enabled")) {
             Player player = event.getPlayer();
             Profile profile = instance.getProfile(player.getUniqueId());
-            if (instance.getPlayerLists().warpAdder.contains(player.getUniqueId())) {
+            if (instance.getUtilLists().warpAdder.contains(player.getUniqueId())) {
                 event.setCancelled(true);
                 Material mat = Material.GRASS_BLOCK;
                 if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() != Material.AIR)
                     mat = player.getInventory().getItemInMainHand().getType();
                 new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
-                instance.getPlayerLists().warpAdder.remove(player.getUniqueId());
+                instance.getUtilLists().warpAdder.remove(player.getUniqueId());
                 player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }
 
-            if (instance.getPlayerLists().nationDisbander.containsKey(player.getUniqueId())) {
+            if (instance.getUtilLists().nationDisbander.containsKey(player.getUniqueId())) {
                 if (event.getMessage().equalsIgnoreCase("cancel")) {
                     player.sendMessage("§bNATION §8| §7Nation disband process §ccancelled§7.");
-                    instance.getPlayerLists().nationDisbander.remove(player.getUniqueId());
+                    instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
                     event.setCancelled(true);
                     return;
                 } else if (event.getMessage().equalsIgnoreCase("confirm")) {
-                    Nation nation = Nation.getById(instance.getPlayerLists().nationDisbander.get(player.getUniqueId()));
+                    Nation nation = Nation.getById(instance.getUtilLists().nationDisbander.get(player.getUniqueId()));
                     nation.remove();
                     player.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
                     Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
-                    instance.getPlayerLists().nationDisbander.remove(player.getUniqueId());
+                    instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
                     event.setCancelled(true);
                 }
             }

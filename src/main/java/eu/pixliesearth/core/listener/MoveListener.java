@@ -24,20 +24,20 @@ public class MoveListener implements Listener {
                 profile.save();
                 event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
             }
-            if (Main.getInstance().getPlayerLists().afk.contains(event.getPlayer().getUniqueId())) {
-                Main.getInstance().getPlayerLists().afk.remove(event.getPlayer().getUniqueId());
+            if (Main.getInstance().getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
+                Main.getInstance().getUtilLists().afk.remove(event.getPlayer().getUniqueId());
                 Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
             }
 
             // CHUNK TITLES FOR NATIONS
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
-                if (Main.getInstance().getPlayerLists().claimAuto.contains(player.getUniqueId())) {
+                if (Main.getInstance().getUtilLists().claimAuto.contains(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
-                        Main.getInstance().getPlayerLists().claimAuto.remove(player.getUniqueId());
+                        Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
                     player.performCommand("/n claim one");
-                } else if (Main.getInstance().getPlayerLists().unclaimAuto.contains(player.getUniqueId())) {
+                } else if (Main.getInstance().getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
-                        Main.getInstance().getPlayerLists().unclaimAuto.remove(player.getUniqueId());
+                        Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     player.performCommand("/n unclaim one");
                 }
                 Chunk fc = event.getFrom().getChunk();

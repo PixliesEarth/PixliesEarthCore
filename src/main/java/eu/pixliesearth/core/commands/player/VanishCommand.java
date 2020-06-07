@@ -27,13 +27,13 @@ public class VanishCommand implements CommandExecutor {
         }
         if(args.length == 0) {
 
-            if (instace.getPlayerLists().vanishList.contains(p.getUniqueId())) {
+            if (instace.getUtilLists().vanishList.contains(p.getUniqueId())) {
                 for(Player players : Bukkit.getOnlinePlayers()) {
                     players.showPlayer(Main.getInstance(), p);
 
                 }
                 p.sendMessage(Lang.VANISH_OFF.get(sender));
-                Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
+                Main.getInstance().getUtilLists().vanishList.remove(p.getUniqueId());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
                     if(!(players.hasPermission("earth.seevanished"))) {
@@ -42,7 +42,7 @@ public class VanishCommand implements CommandExecutor {
 
                 }
                 p.sendMessage(Lang.VANISH_ON.get(sender));
-                Main.getInstance().getPlayerLists().vanishList.add(p.getUniqueId());
+                Main.getInstance().getUtilLists().vanishList.add(p.getUniqueId());
             }
         }else if(args.length == 1){
             if(Bukkit.getPlayer(args[0]) == null){
@@ -50,12 +50,12 @@ public class VanishCommand implements CommandExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[0]);
-            if (instace.getPlayerLists().vanishList.contains(player.getUniqueId())) {
+            if (instace.getUtilLists().vanishList.contains(player.getUniqueId())) {
                 for(Player players : Bukkit.getOnlinePlayers()){
                     players.showPlayer(Main.getInstance(), player);
                 }
                 player.sendMessage(Lang.VANISH_OFF_BY_OTHER.get(sender).replace("%other%", p.getName()));
-                Main.getInstance().getPlayerLists().vanishList.remove(player.getUniqueId());
+                Main.getInstance().getUtilLists().vanishList.remove(player.getUniqueId());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
                     if(!players.hasPermission("earth.seevanished")) {
@@ -63,7 +63,7 @@ public class VanishCommand implements CommandExecutor {
                     }
                 }
                 player.sendMessage(Lang.VANISH_ON_BY_OTHER.get(sender).replace("%other%", p.getName()));
-                Main.getInstance().getPlayerLists().vanishList.add(player.getUniqueId());
+                Main.getInstance().getUtilLists().vanishList.add(player.getUniqueId());
             }
 
         }

@@ -42,7 +42,7 @@ public class AssembleThread extends Thread {
 
     private void tick() {
         for (Player player : this.assemble.getPlugin().getServer().getOnlinePlayers()) {
-            if (Main.getInstance().getPlayerLists().vanishList.contains(player.getUniqueId())) {
+            if (Main.getInstance().getUtilLists().vanishList.contains(player.getUniqueId())) {
                 player.sendActionBar(Lang.VANISH_ACTIONBAR.get(player));
             }
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());

@@ -38,7 +38,7 @@ public class JoinListener implements Listener {
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }
-        Main.getInstance().getPlayerLists().locationMap.put(player.getUniqueId(), new AfkMap(new SimpleLocation(player.getLocation()), 0));
+        Main.getInstance().getUtilLists().locationMap.put(player.getUniqueId(), new AfkMap(new SimpleLocation(player.getLocation()), 0));
         event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
 
         if (!player.hasPlayedBefore()) {
@@ -61,9 +61,9 @@ public class JoinListener implements Listener {
         }
 
         //VANISH
-        if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())) {
+        if (!(Main.getInstance().getUtilLists().vanishList.isEmpty())) {
             //VANISHES FOR PLAYERS WHO NEWLY JOINED
-            for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
+            for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
                 if (!(player.hasPermission("earth.seevanished"))) {
                     player.hidePlayer(Main.getInstance(), p);

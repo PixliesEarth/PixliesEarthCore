@@ -41,8 +41,8 @@ public class ItemsInteractEvent implements Listener {
                         arrow.setItemMeta(meta);
                         ((CraftPlayer) event.getPlayer()).getHandle().playerConnection.sendPacket(new PacketPlayOutSetSlot(0, 9, CraftItemStack.asNMSCopy(arrow)));
                         */
-                            if (!(Main.getInstance().getPlayerLists().reloading.isEmpty())) {
-                                if (Main.getInstance().getPlayerLists().reloading.contains(event.getPlayer().getUniqueId())) {
+                            if (!(Main.getInstance().getUtilLists().reloading.isEmpty())) {
+                                if (Main.getInstance().getUtilLists().reloading.contains(event.getPlayer().getUniqueId())) {
                                     event.getPlayer().sendActionBar(Lang.CUSTOM_SLINGSHOT_RELOADING_ACTIONBAR.get(event.getPlayer()));
                                     return;
                                 }

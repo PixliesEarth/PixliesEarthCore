@@ -1,11 +1,12 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.core.objects.Profile;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 
 import java.util.*;
 
-public class PlayerLists {
+public class UtilLists {
 
     public Set<UUID> staffMode;
 
@@ -33,7 +34,9 @@ public class PlayerLists {
 
     public List<UUID> reloading;
 
-    public PlayerLists() {
+    public Set<Chest> deathChests;
+
+    public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
         tpaRequests = new HashMap<>();

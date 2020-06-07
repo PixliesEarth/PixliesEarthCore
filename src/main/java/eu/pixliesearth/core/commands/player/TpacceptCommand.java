@@ -23,14 +23,14 @@ public class TpacceptCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        if (!instance.getPlayerLists().tpaRequests.containsKey(player.getUniqueId())) {
+        if (!instance.getUtilLists().tpaRequests.containsKey(player.getUniqueId())) {
             player.sendMessage(Lang.NO_OPEN_TPA_REQUEST.get(player));
             return false;
         }
-        Player requester = Bukkit.getPlayer(instance.getPlayerLists().tpaRequests.get(player.getUniqueId()));
+        Player requester = Bukkit.getPlayer(instance.getUtilLists().tpaRequests.get(player.getUniqueId()));
         if (requester == null) {
             player.sendMessage(Lang.TPA_REQUESTER_WENT_OFF.get(player));
-            instance.getPlayerLists().tpaRequests.remove(player.getUniqueId());
+            instance.getUtilLists().tpaRequests.remove(player.getUniqueId());
             return false;
         }
         player.sendMessage(Lang.TPA_REQUEST_ACCEPTED.get(player).replace("%REQUESTER%", requester.getName()));
@@ -39,7 +39,7 @@ public class TpacceptCommand implements CommandExecutor {
             requester.sendMessage(Lang.NOT_ENOUGH_ENERGY.get(requester));
             return false;
         }
-        instance.getPlayerLists().tpaRequests.remove(player.getUniqueId());
+        instance.getUtilLists().tpaRequests.remove(player.getUniqueId());
         long cooldown = (long) Energy.calculateTime(player.getLocation(), requester.getLocation());
         if (cooldown < 1.0)
             cooldown = (long) 1.0;

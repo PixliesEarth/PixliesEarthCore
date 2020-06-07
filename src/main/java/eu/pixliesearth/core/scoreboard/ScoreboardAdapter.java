@@ -52,7 +52,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
-                if (Main.getInstance().getPlayerLists().staffMode.contains(player.getUniqueId())) {
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add(c + "§lStaff");
                     returnable.add("  §8» §aenabled");
                 }
@@ -75,7 +75,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 break;
             case COMPACT:
-                if (Main.getInstance().getPlayerLists().staffMode.contains(player.getUniqueId())) {
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add("&3Staff");
                     returnable.add("§aenabled");
                 }

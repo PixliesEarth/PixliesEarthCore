@@ -27,18 +27,18 @@ public class LinkCommand implements CommandExecutor {
             player.sendMessage(Lang.DC_ALREADY_SYNCED.get(sender));
             return false;
         }
-        if (instance.getPlayerLists().discordcodes.containsValue(player.getUniqueId())) {
+        if (instance.getUtilLists().discordcodes.containsValue(player.getUniqueId())) {
             player.sendMessage(Lang.DC_ALREADY_HAVE_CODE.get(sender).replace("%CODE%", getCode(player.getUniqueId())));
             return false;
         }
         String code = Methods.generateId(5);
-        instance.getPlayerLists().discordcodes.put(code, player.getUniqueId());
+        instance.getUtilLists().discordcodes.put(code, player.getUniqueId());
         player.sendMessage(Lang.DC_VERIFICATION_CODE.get(sender).replace("%CODE%", code));
         return false;
     }
 
     public String getCode(UUID uuid) {
-        for (Map.Entry<String, UUID> entry : Main.getInstance().getPlayerLists().discordcodes.entrySet())
+        for (Map.Entry<String, UUID> entry : Main.getInstance().getUtilLists().discordcodes.entrySet())
             if (entry.getValue() == uuid)
                 return entry.getKey();
         return null;
