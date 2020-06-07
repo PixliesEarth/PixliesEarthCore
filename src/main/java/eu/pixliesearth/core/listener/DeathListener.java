@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListener implements Listener {
+
     @EventHandler
     public void onDeath(PlayerDeathEvent e){
         if (e.getEntityType() != EntityType.PLAYER) return;
@@ -19,10 +21,18 @@ public class DeathListener implements Listener {
         String deathMessage = e.getDeathMessage();
 
         String finalDeathMessage = StringUtils.isNotBlank(deathMessage) ? deathMessage : "";
-        String displayName = StringUtils.isNotBlank(player.getDisplayName()) ? player.getDisplayName() : "";
         String endDeathMessage = finalDeathMessage.replace(player.getName(), ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName())));
 
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("**" + endDeathMessage + "**");
 
+        Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        profile.getTimers().remove("§c§lCombat");
+        profile.save();
+        if (player.getKiller() != null) {
+            Profile killer = Main.getInstance().getProfile(player.getKiller().getUniqueId());
+            killer.getTimers().remove("§c§lCombat");
+            killer.save();
+        }
     }
+
 }

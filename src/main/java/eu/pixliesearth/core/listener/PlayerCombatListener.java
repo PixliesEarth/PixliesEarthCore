@@ -25,8 +25,8 @@ public class PlayerCombatListener implements Listener {
         Profile dProfile = instance.getProfile(damager.getUniqueId());
         Profile tProfile = instance.getProfile(target.getUniqueId());
 
-        dProfile.getTimers().put("§c§l" + Lang.COMBAT.get(damager), timer);
-        tProfile.getTimers().put("§c§l" + Lang.COMBAT.get(target), timer);
+        dProfile.getTimers().put("§c§lCombat", timer);
+        tProfile.getTimers().put("§c§lCombat", timer);
         dProfile.save();
         tProfile.save();
 

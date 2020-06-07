@@ -6,13 +6,13 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
-import eu.pixliesearth.utils.AfkMap;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.utils.AfkMap;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullBuilder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,24 +38,21 @@ public class JoinListener implements Listener {
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }
-        profile.backup();
         Main.getInstance().getPlayerLists().locationMap.put(player.getUniqueId(), new AfkMap(new SimpleLocation(player.getLocation()), 0));
         event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
 
         if (!player.hasPlayedBefore()) {
             for (Player op : Bukkit.getOnlinePlayers())
-                op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments()+""));
+                op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your language");
             StaticPane pane = new StaticPane(0, 0, 9, 3);
             pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Germany\\\"},SkullOwner:{Id:\\\"be211c23-d8aa-4119-bd0d-7f50fd115d9f\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==").setDisplayname("§eGerman").build(), e -> {
                 profile.setLang("DE");
-                profile.save();
                 player.closeInventory();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 0, 0);
             pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"United States of America\\\"},SkullOwner:{Id:\\\"3c30484a-76d3-4cfe-88e5-e7599bc9ac4d\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19").setDisplayname("§eEnglish").build(), e -> {
                 profile.setLang("ENG");
-                profile.save();
                 player.closeInventory();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 1, 0);
@@ -64,7 +61,7 @@ public class JoinListener implements Listener {
         }
 
         //VANISH
-        if(!(Main.getInstance().getPlayerLists().vanishList.isEmpty())) {
+        if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())) {
             //VANISHES FOR PLAYERS WHO NEWLY JOINED
             for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
                 Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
@@ -88,6 +85,8 @@ public class JoinListener implements Listener {
         //Discord Joins
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!"));
 
+        profile.getTimers().clear();
+        profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));
     }
