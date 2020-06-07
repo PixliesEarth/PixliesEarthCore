@@ -38,6 +38,8 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -172,6 +174,8 @@ public final class Main extends JavaPlugin {
             getProfile(player.getUniqueId()).backup();
         for (Nation nation : NationManager.nations.values())
             nation.backup();
+        for (Chest chest : utilLists.deathChests)
+            chest.getBlock().setType(Material.AIR);
     }
 
     private void registerCommands() {
@@ -231,6 +235,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new SlingshotListener(), this);
         manager.registerEvents(new MobSpawnListener(), this);
         manager.registerEvents(new DeathListener(), this);
+        manager.registerEvents(new PlayerInteractListener(), this);
     }
 
     /**

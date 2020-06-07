@@ -40,14 +40,6 @@ public class DeathListener implements Listener {
             killer.getTimers().remove("§c§lCombat");
             killer.save();
         }
-
-        Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
-        chestLoc.getBlock().setType(Material.CHEST);
-        Chest chest = (Chest) chestLoc.getBlock().getState();
-        Inventory inv = chest.getInventory();
-        for (ItemStack item : e.getDrops())
-            inv.addItem(item);
-        Main.getInstance().getUtilLists().deathChests.add(chest);
     }
 
 }
