@@ -53,7 +53,7 @@ public class ItemsInteractEvent implements Listener {
 
                             int newDurability = durability - 1;
                             if(newDurability == 0){
-                                removeOne(new ItemSlingshot().getStatic(durability), event.getPlayer());
+                                removeOne(event.getPlayer().getInventory().getItemInMainHand(), event.getPlayer());
                             }else {
                                 ArrayList<String> lore = new ArrayList<String>();
                                 lore.add(new ItemSlingshot().getLore().get(0));

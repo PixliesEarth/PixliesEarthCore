@@ -32,7 +32,7 @@ public class LeaveListener implements Listener {
         //VANISH
         if (!(Main.getInstance().getPlayerLists().vanishList.isEmpty())){
             for (UUID pUUID : Main.getInstance().getPlayerLists().vanishList) {
-                Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+                Player p = Bukkit.getPlayer(pUUID);
                 //UNVANISH LEAVING VANISHED PLAYER
                 if (event.getPlayer() == p) {
                     Main.getInstance().getPlayerLists().vanishList.remove(p.getUniqueId());
