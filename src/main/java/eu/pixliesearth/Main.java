@@ -217,6 +217,7 @@ public final class Main extends JavaPlugin {
         getCommand("boost").setExecutor(new BoostCommand());
         getCommand("cigive").setExecutor(new CiGiveCommand());
         getCommand("cigive").setTabCompleter(new CiGiveCommand());
+        getCommand("marry").setExecutor(new MarryCommand());
     }
 
     private void registerEvents(PluginManager manager) {

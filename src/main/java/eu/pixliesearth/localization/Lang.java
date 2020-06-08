@@ -59,6 +59,18 @@ public enum Lang {
             "&7Du hast deine Lieblingsfarbe zu %COL% &7geändert."),
     PLAYER_JOINED_FIRST_TIME(Lang.EARTH, "&6%PLAYER% &7joined &b&lPixlies&fEarth &7for the first time! &8(&7#%COUNT%&8)",
             "&6%PLAYER% &7ist zum ersten mal auf &b&lPixlies&fEarth&7! &8(&7#%COUNT%&8)"),
+    YOU_ARE_ALREADY_MARRIED(Lang.EARTH, "&7You can't have more than one wifes in this country.",
+            "&7In diesem Land kannst du nichtmehr als eine Frau haben."),
+    PARTNER_IS_ALREADY_MARRIED(Lang.EARTH, "&6%PLAYER% &7is &calready &7married.",
+            "&6%PLAYER% &cist schon &7verheiratet."),
+    ALREADY_SENT_MARRIAGE_REQUEST(Lang.EARTH, "&7You already proposed to &6%PLAYER%&7.",
+            "&7Du hast schon um &6%PLAYER%&7s Hand angehalten."),
+    YOU_ARE_NOW_MARRIED(Lang.EARTH, "&bCongrats! &7You are now married with &6%PLAYER%&7.",
+            "&bGlückwunsch! &7Du bist jetzt mit &6%PLAYER% &7verheiratet."),
+    SENT_MARRIAGE_REQUEST(Lang.EARTH, "&7You proposed to &6%PLAYER%&7.",
+            "&7Du hast um &6%PLAYER%&7s Hand angehalten."),
+    RECEIVED_MARRIAGE_REQ(Lang.EARTH, "&6%PLAYER% &7just proposed to you. &e/marry %PLAYER%",
+            "&6%PLAYER% &7hat soeben um deine Hand angehalten. &e/marry %PLAYER%"),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
