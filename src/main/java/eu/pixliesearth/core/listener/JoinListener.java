@@ -38,7 +38,7 @@ public class JoinListener implements Listener {
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }
-        Main.getInstance().getUtilLists().locationMap.put(player.getUniqueId(), new AfkMap(new SimpleLocation(player.getLocation()), 0));
+        Main.getInstance().getUtilLists().locationMap.put(player.getUniqueId(), new AfkMap(player.getLocation(), 0));
         event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
 
         if (!player.hasPlayedBefore()) {

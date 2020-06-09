@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.utils.AfkMap;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -69,6 +70,8 @@ public class LeaveListener implements Listener {
         }
 
         profile.backup();
+
+        Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());
 
         //Discord Leaves
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));
