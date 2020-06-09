@@ -71,6 +71,10 @@ public enum Lang {
             "&7Du hast um &6%PLAYER%&7s Hand angehalten."),
     RECEIVED_MARRIAGE_REQ(Lang.EARTH, "&6%PLAYER% &7just proposed to you. &e/marry %PLAYER%",
             "&6%PLAYER% &7hat soeben um deine Hand angehalten. &e/marry %PLAYER%"),
+    YOU_ARE_NOT_MARRIED(Lang.EARTH, "&7Can't get divorced if you're not married!",
+            "&7Du kannst dich nicht scheiden wenn du nicht verheiratet bist."),
+    YOU_GOT_DIVORCED(Lang.EARTH, "&7Well I guess not all marriages workout well... You just got divorced...",
+            "&7Wie es aussieht funktionieren nicht alle Ehen... Du hast dich gerade geschieden..."),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
@@ -244,7 +248,7 @@ public enum Lang {
     private String ENG;
     private String DE;
 
-    private static final String EARTH = "§2EARTH §8| ";
+    private static final String EARTH = "§aEARTH §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";

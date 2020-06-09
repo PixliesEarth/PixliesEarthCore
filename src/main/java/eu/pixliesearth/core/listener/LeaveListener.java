@@ -52,16 +52,21 @@ public class LeaveListener implements Listener {
         if (profile.getTimers().containsKey("§c§lCombat")) {
             Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
             chestLoc.getBlock().setType(Material.CHEST);
-            Chest chest = (Chest) chestLoc.getBlock().getState();
-            Inventory inv = chest.getInventory();
-            for (ItemStack item : player.getInventory().getContents())
-                inv.addItem(item);
-            for (ItemStack item : player.getInventory().getArmorContents())
-                inv.addItem(item);
-            Main.getInstance().getUtilLists().deathChests.add(chest);
+            Main.getInstance().getUtilLists().deathChests.put(chestLoc.getBlock(), player.getInventory().getContents());
+            player.getInventory().clear();
+            player.setHealth(0.0);
+            if (player.getLastDamageCause().getEntity() != null)
+                if (player.getLastDamageCause().getEntity() instanceof Player)
+                    player.setKiller((Player) player.getLastDamageCause().getEntity());
         }
 
         profile.getTimers().clear();
+
+        if (player.getKiller() != null) {
+            Profile killer = Main.getInstance().getProfile(player.getKiller().getUniqueId());
+            killer.getTimers().remove("§c§lCombat");
+            killer.save();
+        }
 
         profile.backup();
 

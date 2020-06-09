@@ -1,8 +1,10 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.core.objects.Profile;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -34,7 +36,7 @@ public class UtilLists {
 
     public List<UUID> reloading;
 
-    public Set<Chest> deathChests;
+    public Map<Block, ItemStack[]> deathChests;
 
     public UtilLists() {
         staffMode = new HashSet<>();
@@ -50,6 +52,7 @@ public class UtilLists {
         claimAuto = new HashSet<>();
         unclaimAuto = new HashSet<>();
         reloading = new ArrayList<>();
+        deathChests = new HashMap<>();
     }
 
 }

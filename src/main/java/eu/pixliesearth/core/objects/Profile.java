@@ -175,7 +175,7 @@ public class Profile {
     }
 
     public boolean isMarried() {
-        return marriagePartner.equals("NONE");
+        return !marriagePartner.equals("NONE");
     }
 
     public static Profile getByDiscord(String discordId) {

@@ -55,7 +55,7 @@ public class MarryCommand implements CommandExecutor {
         }
         partner.getMarriageRequests().add(profile.getUniqueId());
         partner.save();
-        player.sendMessage(Lang.SENT_MARRIAGE_REQUEST.get(player));
+        player.sendMessage(Lang.SENT_MARRIAGE_REQUEST.get(player).replace("%PLAYER%", target.getName()));
         if (target.isOnline())
             target.getPlayer().sendMessage(Lang.RECEIVED_MARRIAGE_REQ.get(target.getPlayer()).replace("%PLAYER%", player.getName()));
         return false;

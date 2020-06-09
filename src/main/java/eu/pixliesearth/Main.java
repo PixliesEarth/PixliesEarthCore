@@ -39,6 +39,7 @@ import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -174,8 +175,8 @@ public final class Main extends JavaPlugin {
             getProfile(player.getUniqueId()).backup();
         for (Nation nation : NationManager.nations.values())
             nation.backup();
-        for (Chest chest : utilLists.deathChests)
-            chest.getBlock().setType(Material.AIR);
+        for (Block chest : utilLists.deathChests.keySet())
+            chest.setType(Material.AIR);
     }
 
     private void registerCommands() {
@@ -218,6 +219,7 @@ public final class Main extends JavaPlugin {
         getCommand("cigive").setExecutor(new CiGiveCommand());
         getCommand("cigive").setTabCompleter(new CiGiveCommand());
         getCommand("marry").setExecutor(new MarryCommand());
+        getCommand("divorce").setExecutor(new DivorceCommand());
     }
 
     private void registerEvents(PluginManager manager) {
@@ -225,7 +227,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new MoveListener(), this);
-        manager.registerEvents(new BlockBreakListener(), this);
         manager.registerEvents(new ItemInteractListener(), this);
         manager.registerEvents(new AkGun(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
