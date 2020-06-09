@@ -19,6 +19,7 @@ import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
@@ -100,8 +101,10 @@ public final class Main extends JavaPlugin {
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (UUID uuid : utilLists.locationMap.keySet()) {
-                if (utilLists.locationMap.get(uuid).getLocation().toLocation() == Bukkit.getPlayer(uuid).getLocation()) {
-                    utilLists.locationMap.get(uuid).setMinutes(utilLists.locationMap.get(uuid).getMinutes() + 1);
+                if (utilLists.locationMap.get(uuid).getLocation() == Bukkit.getPlayer(uuid).getLocation()) {
+                    AfkMap map = utilLists.locationMap.get(uuid);
+                    map.setMinutes(map.getMinutes() + 1);
+                    utilLists.locationMap.put(uuid, map);
                 } else {
                     utilLists.locationMap.get(uuid).setMinutes(0);
                 }
