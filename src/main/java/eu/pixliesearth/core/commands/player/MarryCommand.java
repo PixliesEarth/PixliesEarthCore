@@ -2,6 +2,7 @@ package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -47,6 +48,7 @@ public class MarryCommand implements CommandExecutor {
             player.sendMessage(Lang.YOU_ARE_NOW_MARRIED.get(player).replace("%PLAYER%", target.getName()));
             profile.save();
             partner.save();
+            MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("\uD83D\uDC8D **Congrats! " + player.getName() + "** & **" + target.getName() + "** just got married!");
             return false;
         }
         if (partner.getMarriageRequests().contains(player.getUniqueId().toString())) {

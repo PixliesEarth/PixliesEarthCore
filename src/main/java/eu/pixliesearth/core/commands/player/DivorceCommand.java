@@ -2,6 +2,7 @@ package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -35,6 +36,8 @@ public class DivorceCommand implements CommandExecutor {
         OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId()));
         if (target.isOnline())
             target.getPlayer().sendMessage(Lang.YOU_GOT_DIVORCED.get(target.getPlayer()));
+
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("\uD83D\uDC94 **Sad! " + player.getName() + "** & **" + target.getName() + "** just got divorced :(");
         return false;
     }
 
