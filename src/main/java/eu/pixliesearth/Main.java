@@ -122,16 +122,6 @@ public final class Main extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("§aDone.");
         }, 20 * 60, (20 * 60) * 5);
 
-        // ENERGY SCHEDULER
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (!utilLists.afk.contains(player.getUniqueId())) {
-                    Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 1.0);
-                }
-            }
-        }, (20 * 60) * 60, (20 * 60) * 60);
-
         // NATION SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             getLogger().info("§aSaving all nations in the database...");
@@ -139,6 +129,15 @@ public final class Main extends JavaPlugin {
                 nation.backup();
             getLogger().info("§aSaved all nations in the database.");
         }, (20 * 60) * 15, (20 * 60) * 15);
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!utilLists.afk.contains(player.getUniqueId())) {
+                    Profile profile = getProfile(player.getUniqueId());
+                    Energy.add(profile, 0.01);
+                }
+            }
+        }, 20 * 60, 20 * 60);
 
         NationManager.init();
 
