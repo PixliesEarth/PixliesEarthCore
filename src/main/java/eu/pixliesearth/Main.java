@@ -242,6 +242,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new PlayerInteractListener(), this);
         manager.registerEvents(new AnvilListener(), this);
+        manager.registerEvents(new BlockBreakListener(), this);
     }
 
     /**

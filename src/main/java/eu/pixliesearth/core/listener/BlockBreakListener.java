@@ -1,8 +1,10 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.core.customitems.ci.ItemExplosivePick;
+import eu.pixliesearth.core.customitems.ci.ItemExplosiveShovel;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -10,6 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.meta.Damageable;
 
 import java.util.ArrayList;
 
@@ -20,9 +23,12 @@ public class BlockBreakListener implements Listener {
         //Explosive Pick
         if (!event.isCancelled()) {
             if (event.getPlayer().getInventory().getItemInMainHand() != null) {
-                if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE) {
+                if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE || event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_SHOVEL) {
+                    System.out.println("Right material");
                     if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
-                        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() == new ItemExplosivePick().getLore()) {
+                        System.out.println("Has meta");
+                        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() == new ItemExplosivePick().getLore() || event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() == new ItemExplosiveShovel().getLore()) {
+                            System.out.println("Has correct meta");
                             Block b = event.getBlock();
                             if (b.getType() != Material.TORCH
                                     && b.getType() != Material.REDSTONE_TORCH
@@ -90,6 +96,7 @@ public class BlockBreakListener implements Listener {
 
                                 event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.2F, 1F);
                                 event.getPlayer().getWorld().createExplosion(event.getBlock().getLocation(), 0.0F);
+                                int counter = 0;
                                 for (Block block : blocks) {
                                     if (block.getType() != Material.BEDROCK
                                             && block.getType() != Material.COMMAND_BLOCK
@@ -98,10 +105,16 @@ public class BlockBreakListener implements Listener {
                                             && block.getType() != Material.WATER
                                             && block.getType() != Material.LAVA
                                             && block.getType() != Material.BARRIER
-                                            && block.getType() != Material.ARMOR_STAND) {
+                                            && block.getType() != Material.ARMOR_STAND
+                                            && block.getType() != Material.AIR)  {
                                         block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
                                         block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+                                        counter++;
                                     }
+                                }
+                                if(event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                                    Damageable meta = (Damageable) event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
+                                    meta.setDamage(meta.getDamage() + counter);
                                 }
                             } else {
                                 event.setCancelled(true);
