@@ -226,7 +226,10 @@ public enum Lang {
             "&6%player% &7hat dir ein(e) &a%item% &7gegeben!"),
     //CRAFT/ANVIL/ENCHANT/BEACON PROTECT
     CANT_PUT_IN_INV(Lang.EARTH, "&7You &care not allowed &7to put this item here!",
-            "&7Du darfst das nicht hier lassen!"),;
+            "&7Du darfst das nicht hier lassen!"),
+    //Explosive Pickaxe
+    VERY_SMART(Lang.EARTH, "§7Haha very smart!",
+            "§7Bist ja hier ein ganz schlauer!");
 
     private String PREFIX;
     private String ENG;
