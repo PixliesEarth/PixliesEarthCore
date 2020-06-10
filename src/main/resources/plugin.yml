@@ -155,7 +155,8 @@ commands:
     description: divorce command
     aliases:
       - breakup
-
+  sudo:
+    description: sudo command
 permissions:
   # GENERAL
   earth.admin:
@@ -181,6 +182,8 @@ permissions:
   earth.skull:
     default: op
   earth.walkspeed:
+    default: op
+  earth.sudo:
     default: op
   # CHAT
   earth.chat.colours:
