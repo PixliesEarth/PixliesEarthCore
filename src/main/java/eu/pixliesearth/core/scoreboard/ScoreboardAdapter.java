@@ -25,14 +25,25 @@ public class ScoreboardAdapter implements AssembleAdapter {
         String[] f =new String[]{
                 "§f§lEARTH",
                 "§f§lEARTH",
+                "§f§lEARTH",
+                "§f§lEARTH",
+                nc+"§lE§f§lARTH",
                 nc+"§lE§f§lARTH",
                 c+"§lE"+nc+"§lA§f§lRTH",
+                c+"§lE"+nc+"§lA§f§lRTH",
+                c+"§lEA"+nc+"§lR§f§lTH",
                 c+"§lEA"+nc+"§lR§f§lTH",
                 c+"§lEAR"+nc+"§lT§f§lH",
+                c+"§lEAR"+nc+"§lT§f§lH",
+                nc+"§lE"+c+"§lART"+nc+"§lH",
                 nc+"§lE"+c+"§lART"+nc+"§lH",
                 "§f§lE"+nc+"§lA"+c+"§lRTH",
+                "§f§lE"+nc+"§lA"+c+"§lRTH",
+                "§f§lEA"+nc+"§lR"+c+"§lTH",
                 "§f§lEA"+nc+"§lR"+c+"§lTH",
                 "§f§lEAR"+nc+"§lT"+c+"§lH",
+                "§f§lEAR"+nc+"§lT"+c+"§lH",
+                "§f§lEART"+nc+"§lH"
                 "§f§lEART"+nc+"§lH"
         };
         return f;
