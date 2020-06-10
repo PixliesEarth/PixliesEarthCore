@@ -115,6 +115,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setCustomModelData(int data) {
+        meta.setCustomModelData(data);
+        return this;
+    }
+
     public ItemBuilder addEnchantment(Enchantment ench, int lvl) {
         meta.addEnchant(ench, lvl, true);
         return this;
