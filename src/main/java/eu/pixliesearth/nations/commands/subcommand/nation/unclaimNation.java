@@ -56,11 +56,11 @@ public class unclaimNation implements SubCommand {
             System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
         } else if (args[0].equalsIgnoreCase("auto")) {
             if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
-                instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
-                player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
-            } else {
                 instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                 player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
+            } else {
+                instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
+                player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
             }
         }
         return false;

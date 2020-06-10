@@ -147,6 +147,14 @@ commands:
     description: cigive
     aliases:
       - giveci
+  marry:
+    description: marriage command
+    aliases:
+      - propose
+  divorce:
+    description: divorce command
+    aliases:
+      - breakup
 
 permissions:
   # GENERAL

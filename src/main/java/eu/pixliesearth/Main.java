@@ -19,6 +19,7 @@ import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
@@ -39,6 +40,7 @@ import net.milkbowl.vault.permission.Permission;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -99,8 +101,10 @@ public final class Main extends JavaPlugin {
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (UUID uuid : utilLists.locationMap.keySet()) {
-                if (utilLists.locationMap.get(uuid).getLocation().toLocation() == Bukkit.getPlayer(uuid).getLocation()) {
-                    utilLists.locationMap.get(uuid).setMinutes(utilLists.locationMap.get(uuid).getMinutes() + 1);
+                if (utilLists.locationMap.get(uuid).getLocation() == Bukkit.getPlayer(uuid).getLocation()) {
+                    AfkMap map = utilLists.locationMap.get(uuid);
+                    map.setMinutes(map.getMinutes() + 1);
+                    utilLists.locationMap.put(uuid, map);
                 } else {
                     utilLists.locationMap.get(uuid).setMinutes(0);
                 }
@@ -118,16 +122,6 @@ public final class Main extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("§aDone.");
         }, 20 * 60, (20 * 60) * 5);
 
-        // ENERGY SCHEDULER
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (!utilLists.afk.contains(player.getUniqueId())) {
-                    Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 2.0);
-                }
-            }
-        }, (20 * 60) * 60, (20 * 60) * 60);
-
         // NATION SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             getLogger().info("§aSaving all nations in the database...");
@@ -135,6 +129,16 @@ public final class Main extends JavaPlugin {
                 nation.backup();
             getLogger().info("§aSaved all nations in the database.");
         }, (20 * 60) * 15, (20 * 60) * 15);
+
+        // ENERGY SCHEDULER
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!utilLists.afk.contains(player.getUniqueId())) {
+                    Profile profile = getProfile(player.getUniqueId());
+                    Energy.add(profile, 0.01);
+                }
+            }
+        }, (20 * 60) * 60, (20 * 60) * 60);
 
         NationManager.init();
 
@@ -174,8 +178,8 @@ public final class Main extends JavaPlugin {
             getProfile(player.getUniqueId()).backup();
         for (Nation nation : NationManager.nations.values())
             nation.backup();
-        for (Chest chest : utilLists.deathChests)
-            chest.getBlock().setType(Material.AIR);
+        for (Block chest : utilLists.deathChests.keySet())
+            chest.setType(Material.AIR);
     }
 
     private void registerCommands() {
@@ -217,6 +221,8 @@ public final class Main extends JavaPlugin {
         getCommand("boost").setExecutor(new BoostCommand());
         getCommand("cigive").setExecutor(new CiGiveCommand());
         getCommand("cigive").setTabCompleter(new CiGiveCommand());
+        getCommand("marry").setExecutor(new MarryCommand());
+        getCommand("divorce").setExecutor(new DivorceCommand());
     }
 
     private void registerEvents(PluginManager manager) {
@@ -224,7 +230,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new JoinListener(), this);
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new MoveListener(), this);
-        manager.registerEvents(new BlockBreakListener(), this);
         manager.registerEvents(new ItemInteractListener(), this);
         manager.registerEvents(new AkGun(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);

@@ -59,6 +59,22 @@ public enum Lang {
             "&7Du hast deine Lieblingsfarbe zu %COL% &7geändert."),
     PLAYER_JOINED_FIRST_TIME(Lang.EARTH, "&6%PLAYER% &7joined &b&lPixlies&fEarth &7for the first time! &8(&7#%COUNT%&8)",
             "&6%PLAYER% &7ist zum ersten mal auf &b&lPixlies&fEarth&7! &8(&7#%COUNT%&8)"),
+    YOU_ARE_ALREADY_MARRIED(Lang.EARTH, "&7You can't have more than one wifes in this country.",
+            "&7In diesem Land kannst du nichtmehr als eine Frau haben."),
+    PARTNER_IS_ALREADY_MARRIED(Lang.EARTH, "&6%PLAYER% &7is &calready &7married.",
+            "&6%PLAYER% &cist schon &7verheiratet."),
+    ALREADY_SENT_MARRIAGE_REQUEST(Lang.EARTH, "&7You already proposed to &6%PLAYER%&7.",
+            "&7Du hast schon um &6%PLAYER%&7s Hand angehalten."),
+    YOU_ARE_NOW_MARRIED(Lang.EARTH, "&bCongrats! &7You are now married with &6%PLAYER%&7.",
+            "&bGlückwunsch! &7Du bist jetzt mit &6%PLAYER% &7verheiratet."),
+    SENT_MARRIAGE_REQUEST(Lang.EARTH, "&7You proposed to &6%PLAYER%&7.",
+            "&7Du hast um &6%PLAYER%&7s Hand angehalten."),
+    RECEIVED_MARRIAGE_REQ(Lang.EARTH, "&6%PLAYER% &7just proposed to you. &e/marry %PLAYER%",
+            "&6%PLAYER% &7hat soeben um deine Hand angehalten. &e/marry %PLAYER%"),
+    YOU_ARE_NOT_MARRIED(Lang.EARTH, "&7Can't get divorced if you're not married!",
+            "&7Du kannst dich nicht scheiden wenn du nicht verheiratet bist."),
+    YOU_GOT_DIVORCED(Lang.EARTH, "&7Well I guess not all marriages workout well... You just got divorced...",
+            "&7Wie es aussieht funktionieren nicht alle Ehen... Du hast dich gerade geschieden..."),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
@@ -73,7 +89,7 @@ public enum Lang {
             "&7Eine Nation mit diesem Namen &cexistiert schon&7."),
     NATION_NAME_UNVALID(Lang.NATION, "§7The name of your nation can only be alphanumeric, min. §b3 §7and max. §b10 §7characters long.",
             "&7Der Name deiner Nation darf nur Alphanumerisch, minimum §b3 §7und maximum §10 §7Buchstaben lang sein."),
-    PLAYER_FORMED_NATION(Lang.NATION, "§6%PLAYER% §7just formed the nation of §b%NAME&7.%",
+    PLAYER_FORMED_NATION(Lang.NATION, "§6%PLAYER% §7just formed the nation of §b%NAME%&7.",
             "&6%PLAYER% &7hat gerade die Nation von &b%NAME% &7geformt."),
     ALREADY_IN_NATION(Lang.NATION, "&7You are &calready &7in a nation.",
             "&7Du &cbist schon &7in einer Nation."),
@@ -91,6 +107,8 @@ public enum Lang {
             "&7Du hast soeben den Auto-unclaim Modus &aaktiviert&7."),
     AUTOUNCLAIM_DISABLED(Lang.NATION, "&7You just &cdisabled &7the auto-unclaim mode.",
             "&7Du hast soeben den Auto-unclaim Modus &cdeaktiviert&7."),
+    NATION_DOESNT_EXIST(Lang.NATION, "&7This nation &cdoes not &7exist!",
+            "&7Diese Nation &cexistiert nicht&7!"),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, "§7You have §2§l$§a%BALANCE% §7on your account.",
@@ -235,7 +253,7 @@ public enum Lang {
     private String ENG;
     private String DE;
 
-    private static final String EARTH = "§2EARTH §8| ";
+    private static final String EARTH = "§aEARTH §8| ";
     private static final String ECONOMY = "§aECONOMY §8| ";
     private static final String NATION = "§bNATION §8| ";
     private static final String DISCORD = "§3DISCORD §8| ";
