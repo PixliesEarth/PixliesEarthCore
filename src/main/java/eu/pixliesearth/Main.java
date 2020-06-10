@@ -9,6 +9,11 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
+import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
+import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
+import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
+import eu.pixliesearth.core.guns.commands.GunGive;
+import eu.pixliesearth.core.guns.listeners.AkGun;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -19,21 +24,16 @@ import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
-import eu.pixliesearth.utils.AfkMap;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
-import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
-import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.core.guns.commands.GunGive;
-import eu.pixliesearth.core.guns.listeners.AkGun;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
+import eu.pixliesearth.utils.AfkMap;
+import eu.pixliesearth.utils.FileManager;
+import eu.pixliesearth.utils.UtilLists;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -41,7 +41,6 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -63,8 +62,7 @@ public final class Main extends JavaPlugin {
     private static @Getter Scoreboard emptyScoreboard;
     private @Getter FileManager warpsCfg;
     private @Getter FileManager shopCfg;
-    private @Getter
-    UtilLists utilLists;
+    private @Getter UtilLists utilLists;
 
     @Override
     public void onEnable() {
