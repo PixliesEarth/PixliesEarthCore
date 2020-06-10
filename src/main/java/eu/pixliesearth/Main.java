@@ -127,7 +127,7 @@ public final class Main extends JavaPlugin {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (!utilLists.afk.contains(player.getUniqueId())) {
                     Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 2.0);
+                    Energy.add(profile, 1.0);
                 }
             }
         }, (20 * 60) * 60, (20 * 60) * 60);

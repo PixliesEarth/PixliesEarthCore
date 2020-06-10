@@ -85,6 +85,9 @@ public class JoinListener implements Listener {
         //Discord Joins
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!"));
 
+        if (profile.getEnergy() > 5)
+            profile.setEnergy(5);
+
         profile.getTimers().clear();
         profile.save();
         long needed = System.currentTimeMillis() - started;

@@ -50,6 +50,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
         List<String> returnable = new ArrayList<>();
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
+        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
@@ -60,7 +61,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
-                returnable.add("  §8» §e" + new DecimalFormat("##.##").format(profile.getEnergy()) + "§6§l⚡");
+                returnable.add("  §8» §e" + energy);
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
@@ -81,7 +82,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
-                returnable.add("§e" + new DecimalFormat("##.##").format(profile.getEnergy()) + "§6§l⚡");
+                returnable.add("§e" + energy);
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♜ §8| §b" + nation.getName());

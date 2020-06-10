@@ -107,6 +107,8 @@ public enum Lang {
             "&7Du hast soeben den Auto-unclaim Modus &aaktiviert&7."),
     AUTOUNCLAIM_DISABLED(Lang.NATION, "&7You just &cdisabled &7the auto-unclaim mode.",
             "&7Du hast soeben den Auto-unclaim Modus &cdeaktiviert&7."),
+    NATION_DOESNT_EXIST(Lang.NATION, "&7This nation &cdoes not &7exist!",
+            "&7Diese Nation &cexistiert nicht&7!"),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, "§7You have §2§l$§a%BALANCE% §7on your account.",
