@@ -89,7 +89,7 @@ public enum Lang {
             "&7Eine Nation mit diesem Namen &cexistiert schon&7."),
     NATION_NAME_UNVALID(Lang.NATION, "§7The name of your nation can only be alphanumeric, min. §b3 §7and max. §b10 §7characters long.",
             "&7Der Name deiner Nation darf nur Alphanumerisch, minimum §b3 §7und maximum §10 §7Buchstaben lang sein."),
-    PLAYER_FORMED_NATION(Lang.NATION, "§6%PLAYER% §7just formed the nation of §b%NAME&7.%",
+    PLAYER_FORMED_NATION(Lang.NATION, "§6%PLAYER% §7just formed the nation of §b%NAME%&7.",
             "&6%PLAYER% &7hat gerade die Nation von &b%NAME% &7geformt."),
     ALREADY_IN_NATION(Lang.NATION, "&7You are &calready &7in a nation.",
             "&7Du &cbist schon &7in einer Nation."),

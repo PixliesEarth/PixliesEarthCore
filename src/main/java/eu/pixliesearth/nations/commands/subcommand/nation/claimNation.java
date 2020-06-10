@@ -49,11 +49,11 @@ public class claimNation implements SubCommand {
             System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
         } else if (args[0].equalsIgnoreCase("auto")) {
             if (instance.getUtilLists().claimAuto.contains(player.getUniqueId())) {
-                instance.getUtilLists().claimAuto.add(player.getUniqueId());
-                player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
-            } else {
                 instance.getUtilLists().claimAuto.remove(player.getUniqueId());
                 player.sendMessage(Lang.AUTOCLAIM_DISABLED.get(player));
+            } else {
+                instance.getUtilLists().claimAuto.add(player.getUniqueId());
+                player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
             }
         }
 
