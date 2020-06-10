@@ -130,6 +130,7 @@ public final class Main extends JavaPlugin {
             getLogger().info("§aSaved all nations in the database.");
         }, (20 * 60) * 15, (20 * 60) * 15);
 
+        // ENERGY SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (!utilLists.afk.contains(player.getUniqueId())) {
@@ -137,7 +138,7 @@ public final class Main extends JavaPlugin {
                     Energy.add(profile, 0.01);
                 }
             }
-        }, 20 * 60, 20 * 60);
+        }, (20 * 60) * 60, (20 * 60) * 60);
 
         NationManager.init();
 
