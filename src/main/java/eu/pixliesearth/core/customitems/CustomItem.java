@@ -14,4 +14,6 @@ public interface CustomItem {
 
     public ItemStack getStatic(int durabilty);
 
+    public boolean enchantable();
+
 }

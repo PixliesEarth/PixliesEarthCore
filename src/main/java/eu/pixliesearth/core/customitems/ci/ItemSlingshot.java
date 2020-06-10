@@ -72,4 +72,9 @@ public class ItemSlingshot implements CustomItem {
         return slingshot;
     }
 
+    @Override
+    public boolean enchantable() {
+        return false;
+    }
+
 }

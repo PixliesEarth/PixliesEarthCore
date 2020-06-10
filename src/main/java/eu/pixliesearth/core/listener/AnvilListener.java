@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.listener;
 
+import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.core.guns.gunObjects.AK;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Material;
@@ -61,9 +62,17 @@ public class AnvilListener implements Listener {
 
         if(e.getCurrentItem().getItemMeta().getLore() == null) return;
 
-        if(e.getCurrentItem().getItemMeta().getLore() != null){
-            e.setCancelled(true);
-            player.sendMessage(Lang.CANT_PUT_IN_INV.get(player));
+        for (CustomItems itemz : CustomItems.values()) {
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(itemz.clazz.getName()) && e.getCurrentItem().getItemMeta().getLore().containsAll(itemz.clazz.getLore())) {
+                if (clickedInv.equals(InventoryType.ANVIL) || clickedInv.equals(InventoryType.ENCHANTING)) {
+                    if (!itemz.clazz.enchantable()) {
+                        e.setCancelled(true);
+                        player.sendMessage(Lang.CANT_PUT_IN_INV.get(player));
+                    }
+                    return;
+                }
+                e.setCancelled(true);
+            }
         }
 
     }

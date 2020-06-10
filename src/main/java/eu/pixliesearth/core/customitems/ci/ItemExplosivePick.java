@@ -43,4 +43,10 @@ public class ItemExplosivePick implements CustomItem {
     public ItemStack getStatic(int i) {
         return getRecipe();
     }
+
+    @Override
+    public boolean enchantable() {
+        return true;
+    }
+
 }

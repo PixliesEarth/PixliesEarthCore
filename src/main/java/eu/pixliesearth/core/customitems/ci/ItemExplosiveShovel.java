@@ -35,4 +35,9 @@ public class ItemExplosiveShovel implements CustomItem {
         return getRecipe();
     }
 
+    @Override
+    public boolean enchantable() {
+        return true;
+    }
+
 }
