@@ -75,6 +75,8 @@ public enum Lang {
             "&7Du kannst dich nicht scheiden wenn du nicht verheiratet bist."),
     YOU_GOT_DIVORCED(Lang.EARTH, "&7Well I guess not all marriages workout well... You just got divorced...",
             "&7Wie es aussieht funktionieren nicht alle Ehen... Du hast dich gerade geschieden..."),
+    SUDO(Lang.EARTH, "§7You forced §6%PLAYER% §7to execute §a%COMMAND%§7!",
+            "§7Du hast §6%PLAYER% §7gezwungen §a%COMMAND% §7auszuführen!"),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, "§cYou need to be in a nation to perform this command.",
