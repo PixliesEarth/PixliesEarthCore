@@ -222,6 +222,7 @@ public final class Main extends JavaPlugin {
         getCommand("marry").setExecutor(new MarryCommand());
         getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
+        getCommand("tphere").setExecutor(new TpHereCommand());
     }
 
     private void registerEvents(PluginManager manager) {

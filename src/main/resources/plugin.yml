@@ -157,6 +157,8 @@ commands:
       - breakup
   sudo:
     description: sudo command
+  tphere:
+    description: tphere command
 permissions:
   # GENERAL
   earth.admin:
@@ -184,6 +186,8 @@ permissions:
   earth.walkspeed:
     default: op
   earth.sudo:
+    default: op
+  earth.tphere:
     default: op
   # CHAT
   earth.chat.colours:
