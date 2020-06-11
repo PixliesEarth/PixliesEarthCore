@@ -81,4 +81,18 @@ public class Methods {
         return cc;
     }
 
+    public String getProgressBar(double current_progress, double required_progress, ChatColor finished, ChatColor left) {
+        double progress_percentage = current_progress / required_progress;
+        StringBuilder sb = new StringBuilder();
+        int bar_length = 20;
+        for (int i = 0; i < bar_length; i++) {
+            if (i < bar_length * progress_percentage) {
+                sb.append(finished).append("▇");
+            } else {
+                sb.append(left).append(".");
+            }
+        }
+       return sb.toString();
+    }
+
 }
