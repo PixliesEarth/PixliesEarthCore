@@ -65,6 +65,18 @@ public class CoinsCommand implements CommandExecutor {
                     }
                     CoinManager.add(targetProf, Double.parseDouble(args[2]));
                     sender.sendMessage(Lang.PC_ADDED_BALANCE.get(sender).replace("%PLAYER%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", args[2]));
+                } else if (args[0].equalsIgnoreCase("take")) {
+                    if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+                        sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
+                        return false;
+                    }
+                    Profile targetProf = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(args[1]));
+                    if (!StringUtils.isNumeric(args[2])) {
+                        sender.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
+                        return false;
+                    }
+                    CoinManager.take(targetProf, Double.parseDouble(args[2]));
+                    sender.sendMessage(Lang.PC_TOOK_BALANCE.get(sender).replace("%PLAYER%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", args[2]));
                 }
                 break;
 

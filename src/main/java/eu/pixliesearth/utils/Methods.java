@@ -89,7 +89,7 @@ public class Methods {
             if (i < bar_length * progress_percentage) {
                 sb.append(finished).append("▇");
             } else {
-                sb.append(left).append(".");
+                sb.append(left).append("▇");
             }
         }
        return sb.toString();
