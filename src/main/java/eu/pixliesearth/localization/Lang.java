@@ -188,6 +188,8 @@ public enum Lang {
             "&7Du darfst der selben Person &cnicht &7zweimal hintereinander eine TPA-Anfrage senden."),
     RECEIVER_DENIED_TPA_REQ(Lang.EARTH, "&6%PLAYER% &cdenied &7your TPA-request.",
             "&6%PLAYER% &7hat soeben deine TPA-Anfrage &cabgelehnt&7."),
+    TP_HERE(Lang.EARTH, "&7You teleported &6%PLAYER% &7to you!",
+            "&7Du hast %PLAYER% &7zu dir teleportiert!"),
 
     // DISCORD LINKING
     DC_ALREADY_SYNCED(Lang.DISCORD, "&7Your ingame and discord accounts are already synced.",
