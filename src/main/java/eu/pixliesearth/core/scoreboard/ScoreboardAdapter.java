@@ -43,7 +43,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 "§f§lEA"+nc+"§lR"+c+"§lTH",
                 "§f§lEAR"+nc+"§lT"+c+"§lH",
                 "§f§lEAR"+nc+"§lT"+c+"§lH",
-                "§f§lEART"+nc+"§lH"
+                "§f§lEART"+nc+"§lH",
                 "§f§lEART"+nc+"§lH"
         };
         return f;
