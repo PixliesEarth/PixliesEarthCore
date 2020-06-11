@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,73 @@ public class BlockBreakListener implements Listener {
                                     && b.getType() != Material.REDSTONE_WALL_TORCH
                                     && b.getType() != Material.WALL_TORCH
                                     && b.getType() != Material.END_ROD
-                                    && b.getType() != Material.TRIPWIRE_HOOK) {
+                                    && b.getType() != Material.TRIPWIRE_HOOK
+                                    && b.getType() != Material.STRING
+                                    && b.getType() != Material.REDSTONE
+                                    && b.getType() != Material.REDSTONE_WIRE
+                                    && b.getType() != Material.RAIL
+                                    && b.getType() != Material.ACTIVATOR_RAIL
+                                    && b.getType() != Material.DETECTOR_RAIL
+                                    && b.getType() != Material.POWERED_RAIL
+                                    && b.getType() != Material.OAK_SAPLING
+                                    && b.getType() != Material.SPRUCE_SAPLING
+                                    && b.getType() != Material.BIRCH_SAPLING
+                                    && b.getType() != Material.JUNGLE_SAPLING
+                                    && b.getType() != Material.ACACIA_SAPLING
+                                    && b.getType() != Material.DARK_OAK_SAPLING
+                                    && b.getType() != Material.GRASS
+                                    && b.getType() != Material.FERN
+                                    && b.getType() != Material.DEAD_BUSH
+                                    && b.getType() != Material.SEA_PICKLE
+                                    && b.getType() != Material.DANDELION
+                                    && b.getType() != Material.POPPY
+                                    && b.getType() != Material.BLUE_ORCHID
+                                    && b.getType() != Material.ALLIUM
+                                    && b.getType() != Material.AZURE_BLUET
+                                    && b.getType() != Material.ORANGE_TULIP
+                                    && b.getType() != Material.WHITE_TULIP
+                                    && b.getType() != Material.PINK_TULIP
+                                    && b.getType() != Material.OXEYE_DAISY
+                                    && b.getType() != Material.CORNFLOWER
+                                    && b.getType() != Material.LILY_OF_THE_VALLEY
+                                    && b.getType() != Material.WITHER_ROSE
+                                    && b.getType() != Material.BROWN_MUSHROOM
+                                    && b.getType() != Material.RED_MUSHROOM
+                                    && b.getType() != Material.SUNFLOWER
+                                    && b.getType() != Material.LILAC
+                                    && b.getType() != Material.ROSE_BUSH
+                                    && b.getType() != Material.PEONY
+                                    && b.getType() != Material.TALL_GRASS
+                                    && b.getType() != Material.LARGE_FERN
+                                    && b.getType() != Material.TUBE_CORAL
+                                    && b.getType() != Material.BRAIN_CORAL
+                                    && b.getType() != Material.BUBBLE_CORAL
+                                    && b.getType() != Material.FIRE_CORAL
+                                    && b.getType() != Material.HORN_CORAL
+                                    && b.getType() != Material.DEAD_BRAIN_CORAL
+                                    && b.getType() != Material.DEAD_BUBBLE_CORAL
+                                    && b.getType() != Material.DEAD_FIRE_CORAL
+                                    && b.getType() != Material.DEAD_HORN_CORAL
+                                    && b.getType() != Material.DEAD_TUBE_CORAL
+                                    && b.getType() != Material.TUBE_CORAL_FAN
+                                    && b.getType() != Material.BRAIN_CORAL_FAN
+                                    && b.getType() != Material.BUBBLE_CORAL_FAN
+                                    && b.getType() != Material.FIRE_CORAL_FAN
+                                    && b.getType() != Material.HORN_CORAL_FAN
+                                    && b.getType() != Material.DEAD_TUBE_CORAL_FAN
+                                    && b.getType() != Material.DEAD_BRAIN_CORAL_FAN
+                                    && b.getType() != Material.DEAD_BUBBLE_CORAL_FAN
+                                    && b.getType() != Material.DEAD_FIRE_CORAL_FAN
+                                    && b.getType() != Material.DEAD_HORN_CORAL_FAN
+                                    && b.getType() != Material.SCAFFOLDING
+                                    && b.getType() != Material.REPEATER
+                                    && b.getType() != Material.COMPARATOR
+                                    && b.getType() != Material.PAINTING
+                                    && b.getType() != Material.SUGAR_CANE
+                                    && b.getType() != Material.KELP_PLANT
+                                    && b.getType() != Material.SWEET_BERRY_BUSH
+
+                                    ) {
                                 ArrayList<Block> blocks = new ArrayList<>();
 
 
@@ -103,15 +170,18 @@ public class BlockBreakListener implements Listener {
                                             && block.getType() != Material.LAVA
                                             && block.getType() != Material.BARRIER
                                             && block.getType() != Material.ARMOR_STAND
-                                            && block.getType() != Material.AIR)  {
+                                            && block.getType() != Material.AIR
+                                            && block.getType() != Material.OBSIDIAN)  {
                                         block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
                                         block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
                                         counter++;
                                     }
                                 }
                                 if(event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+
                                     Damageable meta = (Damageable) event.getPlayer().getInventory().getItemInMainHand().getItemMeta();
                                     meta.setDamage(meta.getDamage() + counter);
+                                    event.getPlayer().getInventory().getItemInMainHand().setItemMeta((ItemMeta) meta);
                                 }
                             } else {
                                 event.setCancelled(true);
