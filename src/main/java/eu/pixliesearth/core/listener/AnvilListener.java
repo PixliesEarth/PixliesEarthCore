@@ -1,17 +1,12 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.core.customitems.CustomItems;
-import eu.pixliesearth.core.guns.gunObjects.AK;
 import eu.pixliesearth.localization.Lang;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Set;
 
 public class AnvilListener implements Listener {
     @EventHandler

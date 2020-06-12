@@ -5,7 +5,6 @@ import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
@@ -82,8 +81,10 @@ public class JoinListener implements Listener {
             player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
         }
 
+/*
         //Discord Joins
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowright:627916581237686291> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** joined the server!"));
+*/
 
         if (profile.getEnergy() > 5)
             profile.setEnergy(5);

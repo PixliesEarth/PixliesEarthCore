@@ -31,10 +31,10 @@ public class ProfileCommand implements CommandExecutor {
         player = (Player) sender;
         profile = Main.getInstance().getProfile(player.getUniqueId());
 
-        Gui menu = new Gui(Main.getInstance(), 3, "§e§l"+Lang.YOUR_PROFILE.get(player));
+        Gui menu = new Gui(Main.getInstance(), 3, "§e§l"+ Lang.YOUR_PROFILE.get(player));
         StaticPane pane = new StaticPane(0, 0, 9, 3);
         // LANGUAGE
-        pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Globe\\\"},SkullOwner:{Id:\\\"bd287f02-7b3b-ffd9-c56c-99cb0fafab3b\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThkYWExZTNlZDk0ZmYzZTMzZTFkNGM2ZTQzZjAyNGM0N2Q3OGE1N2JhNGQzOGU3NWU3YzkyNjQxMDYifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThkYWExZTNlZDk0ZmYzZTMzZTFkNGM2ZTQzZjAyNGM0N2Q3OGE1N2JhNGQzOGU3NWU3YzkyNjQxMDYifX19").setDisplayname("§b§o"+Lang.LANGUAGE.get(player)).build(), event ->{
+        pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Globe\\\"},SkullOwner:{Id:\\\"bd287f02-7b3b-ffd9-c56c-99cb0fafab3b\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThkYWExZTNlZDk0ZmYzZTMzZTFkNGM2ZTQzZjAyNGM0N2Q3OGE1N2JhNGQzOGU3NWU3YzkyNjQxMDYifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOThkYWExZTNlZDk0ZmYzZTMzZTFkNGM2ZTQzZjAyNGM0N2Q3OGE1N2JhNGQzOGU3NWU3YzkyNjQxMDYifX19").setDisplayname("§b§o"+ Lang.LANGUAGE.get(player)).build(), event ->{
             event.setCancelled(true);
             getLangGui().show(player);
         }), 1, 1);
@@ -50,7 +50,7 @@ public class ProfileCommand implements CommandExecutor {
     }
 
     private Gui getLangGui() {
-        Gui langgui = new Gui(Main.getInstance(), 3, "§b"+Lang.CHOOSE_LANG.get(player));
+        Gui langgui = new Gui(Main.getInstance(), 3, "§b"+ Lang.CHOOSE_LANG.get(player));
         StaticPane langpane = new StaticPane(0, 0, 9, 3);
         langpane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Germany\\\"},SkullOwner:{Id:\\\"be211c23-d8aa-4119-bd0d-7f50fd115d9f\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==").setDisplayname("§eGerman").build(), e -> {
             e.setCancelled(true);

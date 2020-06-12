@@ -27,6 +27,7 @@ import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -47,9 +48,12 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
+import java.io.File;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 public final class Main extends JavaPlugin {
 
@@ -165,6 +169,11 @@ public final class Main extends JavaPlugin {
             registerCompletions(commodore, command);
         }*/
 
+        //LANGUAGE STUFF
+        saveResource("languages/LANG_DE.yml", false);
+        saveResource("languages/LANG_ENG.yml", false);
+
+        Lang.init();
 
         discordEnable();
     }
@@ -259,6 +268,16 @@ public final class Main extends JavaPlugin {
     }
 
     public void discordEnable() {
+        for (Server server : MiniMick.getApi().getServers())
+            if (!server.getIdAsString().equals("589958750866112512")) {
+                try {
+                    server.leave().get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
                 .setColor(Color.green)
                 .setDescription("<:online:716052437848424558> Server is online!")
