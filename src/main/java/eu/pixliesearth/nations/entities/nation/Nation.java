@@ -79,6 +79,12 @@ public class Nation {
         return oplayers;
     }
 
+    public int broadcastMembers(String message) {
+        for (Player player : getOnlineMemberSet())
+            player.sendMessage(message);
+        return getOnlineMembers();
+    }
+
     public static Nation getById(String id) {
         return NationManager.nations.get(id);
     }

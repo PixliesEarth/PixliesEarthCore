@@ -5,6 +5,7 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.claimNation;
 import eu.pixliesearth.nations.commands.subcommand.nation.createNation;
 import eu.pixliesearth.nations.commands.subcommand.nation.disbandNation;
+import eu.pixliesearth.nations.commands.subcommand.nation.renameNation;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -19,6 +20,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new createNation());
         subCommands.add(new disbandNation());
         subCommands.add(new claimNation());
+        subCommands.add(new renameNation());
         return subCommands;
     }
 
@@ -84,9 +86,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 1)
             StringUtil.copyPartialMatches(args[0], getSubCommandAliases(), completions);
-        if (args.length == 2 && subMap().get(args[0]) != null) {
+
+        if (args.length == 2 && subMap().get(args[0]) != null)
             StringUtil.copyPartialMatches(args[1], Arrays.asList(subMap().get(args[0]).autocompletion()), completions);
-        }
 
         Collections.sort(completions);
 

@@ -111,6 +111,8 @@ public enum Lang {
             "&7Du hast soeben den Auto-unclaim Modus &cdeaktiviert&7."),
     NATION_DOESNT_EXIST(Lang.NATION, "&7This nation &cdoes not &7exist!",
             "&7Diese Nation &cexistiert nicht&7!"),
+    PLAYER_NAMED_NATION_NAME(Lang.NATION, "&6%PLAYER% &7renamed &b%OLD% &7to &b%NEW%&7.",
+            "&6%PLAYER% &7hat die Nation &b%OLD% &7zu &b%NEW% &7umbenannt."),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, "§7You have §2§l$§a%BALANCE% §7on your account.",
@@ -293,7 +295,7 @@ public enum Lang {
         for (Player player : Bukkit.getOnlinePlayers()) {
             String s = get(player);
             for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-                s.replace(entry.getKey(), entry.getValue());
+                s = s.replace(entry.getKey(), entry.getValue());
             }
             player.sendMessage(s);
         }
