@@ -16,19 +16,12 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     public Set<SubCommand> getSubCommands() {
         // ADD ALL SUBCOMMANDS INTO THIS HASHSET<>();
         Set<SubCommand> subCommands = new HashSet<>();
-        Reflections reflections = new Reflections("eu.pixliesearth.nations");
-        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(RegisterSub.class);
-
-        for (Class<?> sub : annotated) {
-            RegisterSub rSub = sub.getAnnotation(RegisterSub.class);
-            if (rSub.command().equals("nations")) {
-                try {
-                    subCommands.add((SubCommand) sub.newInstance());
-                } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        subCommands.add(new createNation());
+        subCommands.add(new claimNation());
+        subCommands.add(new disbandNation());
+        subCommands.add(new inviteNation());
+        subCommands.add(new renameNation());
+        subCommands.add(new unclaimNation());
         return subCommands;
     }
 
@@ -96,11 +89,15 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
         argCompletions.put(0, getSubCommandAliases());
 
-        for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
-            if (args.length == entry.getValue() + 1) {
-                argCompletions.computeIfAbsent(entry.getValue(), k -> new ArrayList<>());
-                argCompletions.get(entry.getValue()).add(entry.getKey());
-            }
+        if (args.length > 1) {
+            if (subMap().get(args[0]) == null)
+                return completions;
+            for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
+                if (args.length == entry.getValue() + 1) {
+                    argCompletions.computeIfAbsent(entry.getValue(), k -> new ArrayList<>());
+                    argCompletions.get(entry.getValue()).add(entry.getKey());
+                }
+        }
 
         for (Map.Entry<Integer, List<String>> entry : argCompletions.entrySet())
             if (args.length == entry.getKey() + 1)

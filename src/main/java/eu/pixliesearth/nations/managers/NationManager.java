@@ -19,11 +19,11 @@ public class NationManager {
         Gson gson = new Gson();
         for (Document d : Main.getNationCollection().find()) {
             Nation nation = gson.fromJson(d.toJson(), Nation.class);
-            if (nation.getNationId() != null)
+            if (nation.getNationId() != null) {
                 nations.put(nation.getNationId(), nation);
+                names.put(nation.getName(), nation.getNationId());
+            }
         }
-        for (Nation n : nations.values())
-            names.put(n.getName(), n.getNationId());
     }
 
 }

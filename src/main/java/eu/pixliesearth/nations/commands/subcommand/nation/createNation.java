@@ -66,7 +66,8 @@ public class createNation implements SubCommand {
             player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
             return false;
         }
-        Nation nation = new Nation(Methods.generateId(7), name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(),0,0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>());
+        final String id = Methods.generateId(7);
+        Nation nation = new Nation(id, name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(),0,0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>());
         nation.save();
         profile.addToNation(nation.getNationId());
         for (Player op : Bukkit.getOnlinePlayers())
