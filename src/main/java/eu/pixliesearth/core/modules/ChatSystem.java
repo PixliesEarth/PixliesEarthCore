@@ -106,16 +106,7 @@ public class ChatSystem implements Listener, Module {
                 //TODO Do relations later
                 Bukkit.broadcastMessage(format);
 
-                String webhook = config.getString("webhook");
-                DiscordWebhook discord = new DiscordWebhook(webhook); // Create the webhook client
-
-                DiscordMessage dm = new DiscordMessage.Builder()
-                        .withUsername(event.getPlayer().getName())
-                        .withContent(ChatColor.stripColor(event.getMessage().replace("@", "")))
-                        .withAvatarURL("https://minotar.net/avatar/" + event.getPlayer().getName())
-                        .build();
-
-                discord.sendMessage(dm);
+                instance.getUtilLists().chatQueue.put(player.getUniqueId(), event.getMessage());
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0 && !player.hasPermission("earth.chat.bypasscooldown")) {
                     Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);

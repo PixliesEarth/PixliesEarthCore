@@ -35,6 +35,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.UtilLists;
+import eu.pixliesearth.utils.UtilThread;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -176,6 +177,8 @@ public final class Main extends JavaPlugin {
         Lang.init();
 
         discordEnable();
+
+        new UtilThread().start();
     }
 
     @Override

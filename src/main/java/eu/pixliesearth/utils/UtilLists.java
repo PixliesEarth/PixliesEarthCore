@@ -1,11 +1,14 @@
 package eu.pixliesearth.utils;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
+import java.rmi.server.UID;
 import java.util.*;
 
 public class UtilLists {
@@ -38,6 +41,10 @@ public class UtilLists {
 
     public Map<Block, ItemStack[]> deathChests;
 
+    public Map<UUID, String> chatQueue;
+
+    public DiscordWebhook webhook;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -53,6 +60,8 @@ public class UtilLists {
         unclaimAuto = new HashSet<>();
         reloading = new ArrayList<>();
         deathChests = new HashMap<>();
+        chatQueue = new HashMap<>();
+        webhook = new DiscordWebhook(Main.getInstance().getConfig().getString("webhook"));
     }
 
 }
