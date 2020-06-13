@@ -36,6 +36,7 @@ public class UtilThread extends Thread {
                     .withAvatarURL("https://minotar.net/avatar/" + Bukkit.getOfflinePlayer(entry.getKey()).getName())
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
+            Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
         }
     }
 
