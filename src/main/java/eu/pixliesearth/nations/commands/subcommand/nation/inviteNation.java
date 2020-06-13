@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.command.CommandSender;
@@ -7,6 +8,9 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.Map;
 
+@RegisterSub(
+        command = "nations"
+)
 public class inviteNation implements SubCommand {
 
     @Override

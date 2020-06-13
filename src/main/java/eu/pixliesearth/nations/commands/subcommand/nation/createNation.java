@@ -1,6 +1,8 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
+import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
@@ -15,7 +17,11 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+@RegisterSub(
+        command = "nations"
+)
 public class createNation implements SubCommand {
 
     @Override
@@ -24,7 +30,11 @@ public class createNation implements SubCommand {
     }
 
     @Override
-    public String[] autocompletion() { return new String[]{"§cname"}; }
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        returner.put("§bNAME", 1);
+        return returner;
+    }
 
     @Override
     public boolean staff() {

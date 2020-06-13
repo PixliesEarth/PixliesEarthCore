@@ -1,14 +1,13 @@
 package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.commands.subcommand.nation.claimNation;
-import eu.pixliesearth.nations.commands.subcommand.nation.createNation;
-import eu.pixliesearth.nations.commands.subcommand.nation.disbandNation;
-import eu.pixliesearth.nations.commands.subcommand.nation.renameNation;
+import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.reflections.Reflections;
 
 import java.util.*;
 
@@ -17,10 +16,19 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     public Set<SubCommand> getSubCommands() {
         // ADD ALL SUBCOMMANDS INTO THIS HASHSET<>();
         Set<SubCommand> subCommands = new HashSet<>();
-        subCommands.add(new createNation());
-        subCommands.add(new disbandNation());
-        subCommands.add(new claimNation());
-        subCommands.add(new renameNation());
+        Reflections reflections = new Reflections("eu.pixliesearth.nations");
+        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(RegisterSub.class);
+
+        for (Class<?> sub : annotated) {
+            RegisterSub rSub = sub.getAnnotation(RegisterSub.class);
+            if (rSub.command().equals("nations")) {
+                try {
+                    subCommands.add((SubCommand) sub.newInstance());
+                } catch (InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return subCommands;
     }
 
