@@ -16,7 +16,7 @@ public class MoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if (event.getFrom().getX() != event.getTo().getX() && event.getFrom().getY() != event.getTo().getY() && event.getFrom().getZ() != event.getTo().getZ()) {
+        if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
             Player player = event.getPlayer();
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
             if (profile.getTimers().containsKey("Teleport")) {
