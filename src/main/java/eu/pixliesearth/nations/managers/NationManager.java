@@ -11,15 +11,19 @@ import java.util.Map;
 public class NationManager {
 
     public static Map<String, Nation> nations;
+    public static Map<String, String> names;
 
     public static void init() {
         nations = new HashMap<>();
+        names = new HashMap<>();
         Gson gson = new Gson();
         for (Document d : Main.getNationCollection().find()) {
             Nation nation = gson.fromJson(d.toJson(), Nation.class);
             if (nation.getNationId() != null)
                 nations.put(nation.getNationId(), nation);
         }
+        for (Nation n : nations.values())
+            names.put(n.getName(), n.getNationId());
     }
 
 }

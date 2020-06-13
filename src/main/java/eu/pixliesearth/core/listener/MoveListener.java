@@ -31,11 +31,12 @@ public class MoveListener implements Listener {
 
             // CHUNK TITLES FOR NATIONS
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
-                if (Main.getInstance().getUtilLists().claimAuto.contains(player.getUniqueId())) {
+                //TODO DO it properly
+                if (Main.getInstance().getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
                     player.performCommand("/n claim one");
-                } else if (Main.getInstance().getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
+                } else if (Main.getInstance().getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     player.performCommand("/n unclaim one");

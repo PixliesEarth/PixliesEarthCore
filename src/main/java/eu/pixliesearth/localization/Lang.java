@@ -61,6 +61,7 @@ public enum Lang {
     NATION_DELEATION_CONIIRMATION(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMED(Lang.NATION, new HashMap<>()),
     PLAYER_UNCLAIMED(Lang.NATION, new HashMap<>()),
+    CHUNK_NOT_YOURS(Lang.NATION, new HashMap<>()),
     AUTOCLAIM_ENABLED(Lang.NATION, new HashMap<>()),
     AUTOCLAIM_DISABLED(Lang.NATION, new HashMap<>()),
     AUTOUNCLAIM_ENABLED(Lang.NATION, new HashMap<>()),

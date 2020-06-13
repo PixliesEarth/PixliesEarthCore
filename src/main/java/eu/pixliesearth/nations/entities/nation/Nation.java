@@ -61,10 +61,22 @@ public class Nation {
         Document found = Main.getNationCollection().find(new Document("nationId", nationId)).first();
         if (found != null)
             Main.getNationCollection().deleteOne(found);
+        NationManager.nations.remove(nationId);
+        NationManager.names.remove(name);
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
         for (String s : getChunks())
             NationChunk.fromString(s).unclaim();
+    }
+
+    public boolean rename(String newName) {
+        if (getByName(newName) != null)
+            return false;
+        NationManager.names.remove(name);
+        NationManager.names.put(newName, nationId);
+        setName(newName);
+        save();
+        return true;
     }
 
     public int getOnlineMembers() {
@@ -90,12 +102,7 @@ public class Nation {
     }
 
     public static Nation getByName(String name) {
-        final Nation[] nation = {null};
-        NationManager.nations.entrySet().stream().parallel().forEach(e -> {
-            if (e.getValue().getName().equalsIgnoreCase(name))
-                nation[0] = e.getValue();
-        });
-        return nation[0];
+        return getById(NationManager.names.get(name));
     }
 
     public static Map<String, OneRowMap> defaultRanks() {

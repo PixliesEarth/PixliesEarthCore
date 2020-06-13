@@ -33,9 +33,9 @@ public class UtilLists {
 
     public Map<Entity, Double> ammos;
 
-    public Set<UUID> claimAuto;
+    public Map<UUID, String> claimAuto;
 
-    public Set<UUID> unclaimAuto;
+    public Map<UUID, String> unclaimAuto;
 
     public List<UUID> reloading;
 
@@ -56,8 +56,8 @@ public class UtilLists {
         locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
         ammos = new HashMap<>();
-        claimAuto = new HashSet<>();
-        unclaimAuto = new HashSet<>();
+        claimAuto = new HashMap<>();
+        unclaimAuto = new HashMap<>();
         reloading = new ArrayList<>();
         deathChests = new HashMap<>();
         chatQueue = new HashMap<>();

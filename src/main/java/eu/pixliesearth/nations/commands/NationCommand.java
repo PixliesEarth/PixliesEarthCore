@@ -32,9 +32,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         return map;
     }
 
-    public Set<String> getSubCommandAliases() {
+    public List<String> getSubCommandAliases() {
         // ADD ALL SUBCOMMAND ALIASES INTO THIS HASHSET
-        Set<String> subCommandAliases = new HashSet<>();
+        List<String> subCommandAliases = new ArrayList<>();
         for (SubCommand sub : getSubCommands())
             subCommandAliases.addAll(Arrays.asList(sub.aliases()));
         return subCommandAliases;
@@ -84,11 +84,19 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
         final List<String> completions = new ArrayList<>();
 
-        if (args.length == 1)
-            StringUtil.copyPartialMatches(args[0], getSubCommandAliases(), completions);
+        Map<Integer, List<String>> argCompletions = new HashMap<>();
 
-        if (args.length == 2 && subMap().get(args[0]) != null)
-            StringUtil.copyPartialMatches(args[1], Arrays.asList(subMap().get(args[0]).autocompletion()), completions);
+        argCompletions.put(0, getSubCommandAliases());
+
+        for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
+            if (args.length == entry.getValue() + 1) {
+                argCompletions.computeIfAbsent(entry.getValue(), k -> new ArrayList<>());
+                argCompletions.get(entry.getValue()).add(entry.getKey());
+            }
+
+        for (Map.Entry<Integer, List<String>> entry : argCompletions.entrySet())
+            if (args.length == entry.getKey() + 1)
+                StringUtil.copyPartialMatches(args[entry.getKey()], entry.getValue(), completions);
 
         Collections.sort(completions);
 

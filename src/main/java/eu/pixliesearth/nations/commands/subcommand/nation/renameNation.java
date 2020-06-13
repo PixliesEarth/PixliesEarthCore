@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,8 +19,11 @@ public class renameNation implements SubCommand {
     }
 
     @Override
-    public String[] autocompletion() {
-        return new String[]{};
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        for (Map.Entry<String, String> entry : NationManager.names.entrySet())
+            returner.put(entry.getKey(), 2);
+        return returner;
     }
 
     @Override
@@ -33,6 +37,7 @@ public class renameNation implements SubCommand {
             Player player = (Player) sender;
             Nation nation;
             Map<String, String> placeholders;
+            boolean success;
             switch (args.length) {
                 case 1:
                     Profile profile = instance.getProfile(player.getUniqueId());
@@ -43,8 +48,11 @@ public class renameNation implements SubCommand {
                     //TODO permissionsystem
                     nation = profile.getCurrentNation();
                     final String oldName = nation.getName();
-                    nation.setName(args[0]);
-                    nation.save();
+                    success = nation.rename(args[0]);
+                    if (!success) {
+                        Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
+                        return false;
+                    }
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());
                     placeholders.put("%OLD%", oldName);
@@ -62,8 +70,11 @@ public class renameNation implements SubCommand {
                         return false;
                     }
                     final String oldName1 = nation.getName();
-                    nation.setName(args[0]);
-                    nation.save();
+                    success = nation.rename(args[0]);
+                    if (!success) {
+                        Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
+                        return false;
+                    }
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());
                     placeholders.put("%OLD%", oldName1);
@@ -78,8 +89,11 @@ public class renameNation implements SubCommand {
                 return false;
             }
             final String oldName1 = nation.getName();
-            nation.setName(args[0]);
-            nation.save();
+            boolean success = nation.rename(args[0]);
+            if (!success) {
+                Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
+                return false;
+            }
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("%PLAYER%", sender.getName());
             placeholders.put("%OLD%", oldName1);

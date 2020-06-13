@@ -4,9 +4,13 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class disbandNation implements SubCommand {
 
@@ -16,7 +20,12 @@ public class disbandNation implements SubCommand {
     }
 
     @Override
-    public String[] autocompletion() { return new String[]{}; }
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        for (Map.Entry<String, String> entry : NationManager.names.entrySet())
+            returner.put(entry.getKey(), 1);
+        return returner;
+    }
 
     @Override
     public boolean staff() {
