@@ -40,13 +40,13 @@ public class NationChunk {
     public void unclaim() {
         if (table.get(world).get(x, z) != null) {
             RowSortedTable<Integer, Integer, NationChunk> rst = table.get(world);
-            rst.remove(x, z);
-            table.put(world, rst);
             Nation nation = Nation.getById(nationId);
             if (nation.getChunks().contains(serialize())) {
                 nation.getChunks().remove(serialize());
                 nation.save();
             }
+            rst.remove(x, z);
+            table.put(world, rst);
         }
     }
 

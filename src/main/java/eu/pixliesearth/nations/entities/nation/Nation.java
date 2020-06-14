@@ -58,15 +58,15 @@ public class Nation {
     }
 
     public void remove() {
+        for (String member : members)
+            Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
+        for (String s : getChunks())
+            NationChunk.fromString(s).unclaim();
         Document found = Main.getNationCollection().find(new Document("nationId", nationId)).first();
         if (found != null)
             Main.getNationCollection().deleteOne(found);
         NationManager.nations.remove(nationId);
         NationManager.names.remove(name);
-        for (String member : members)
-            Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
-        for (String s : getChunks())
-            NationChunk.fromString(s).unclaim();
     }
 
     public boolean rename(String newName) {

@@ -79,11 +79,15 @@ public class MoveListener implements Listener {
                 if (fchunk != tchunk) {
                     if (tchunk == null) {
                         player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
-                    } else if (tchunk.getNationId().equals("safezone")) {
-                        player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
                     } else {
-                        Nation n = Nation.getById(tchunk.getNationId());
-                        player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
+                        if (!fchunk.getNationId().equals(tchunk.getNationId())) {
+                            if (tchunk.getNationId().equals("safezone")) {
+                                player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
+                            } else {
+                                Nation n = Nation.getById(tchunk.getNationId());
+                                player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
+                            }
+                        }
                     }
                 }
             }
