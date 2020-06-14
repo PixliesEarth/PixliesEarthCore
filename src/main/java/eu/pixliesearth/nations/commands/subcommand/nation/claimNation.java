@@ -14,7 +14,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @RegisterSub(
         command = "nations"
@@ -83,15 +85,15 @@ public class claimNation implements SubCommand {
                 break;
             case 2:
                 Nation nation = Nation.getByName(args[1]);
-                if (nation == null) {
-                    Lang.NATION_DOESNT_EXIST.send(player);
-                    return false;
-                }
-                if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    Lang.NO_PERMISSIONS.send(player);
-                    return false;
-                }
                 if (args[0].equalsIgnoreCase("one")) {
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
                     NationChunk nc = new NationChunk(nation.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
                     TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_OTHER);
                     Bukkit.getPluginManager().callEvent(event);
@@ -103,12 +105,38 @@ public class claimNation implements SubCommand {
                         System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
                     }
                 } else if (args[0].equalsIgnoreCase("auto")) {
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
                         player.sendMessage(Lang.AUTOCLAIM_DISABLED.get(player));
                     } else {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), nation.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
+                    }
+                } else if (args[0].equalsIgnoreCase("square")) {
+                    final NationChunk chunk = NationChunk.get(c);
+                    final Set<NationChunk> chunks = new HashSet<>();
+
+                    chunks.add(chunk);
+
+                    int radiusZero = Integer.parseInt(args[1]) - 1;
+
+                    for (int dx = -radiusZero; dx <= radiusZero; dx++)
+                    {
+                        for (int dz = -radiusZero; dz <= radiusZero; dz++)
+                        {
+                            int x = chunk.getX() + dx;
+                            int z = chunk.getZ() + dz;
+
+                            chunks.add(chunk.withChunkX(x).withChunkZ(z));
+                        }
                     }
                 }
 

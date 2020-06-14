@@ -64,12 +64,19 @@ public class NationChunk {
     }
 
     public static NationChunk get(String world, int x, int z) {
+        if (!table.get(world).contains(x, z))
+            return null;
         return table.get(world).get(x, z);
     }
 
     public static NationChunk get(Chunk chunk) {
+        if (!table.get(chunk.getWorld().getName()).contains(chunk.getX(), chunk.getZ()))
+            return null;
         return table.get(chunk.getWorld().getName()).get(chunk.getX(), chunk.getZ());
     }
+
+    public NationChunk withChunkX(Integer chunkX) { return get(this.getWorld(), chunkX, this.getZ()); }
+    public NationChunk withChunkZ(Integer chunkZ) { return get(this.getWorld(), this.getX(), chunkZ); }
 
     //ONLY RUN ONCE ONENABLE
     public static void init() {
