@@ -50,10 +50,6 @@ public class claimNation implements SubCommand {
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
-        if (NationChunk.get(c) != null) {
-            player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
-            return false;
-        }
         switch (args.length) {
             case 1:
                 if (!profile.isInNation()) {
@@ -62,6 +58,10 @@ public class claimNation implements SubCommand {
                 }
                 //TODO PERMISSION SYSTEM
                 if (args[0].equalsIgnoreCase("one")) {
+                    if (NationChunk.get(c) != null) {
+                        player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
+                        return false;
+                    }
                     NationChunk nc = new NationChunk(profile.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
                     TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF);
                     Bukkit.getPluginManager().callEvent(event);
