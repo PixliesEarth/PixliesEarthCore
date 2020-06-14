@@ -2,6 +2,7 @@ package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -12,11 +13,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import javax.imageio.stream.ImageInputStream;
+
 public class MoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
+            Main instance = Main.getInstance();
             Player player = event.getPlayer();
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
             if (profile.getTimers().containsKey("Teleport")) {
@@ -31,15 +35,42 @@ public class MoveListener implements Listener {
 
             // CHUNK TITLES FOR NATIONS
             if (event.getFrom().getChunk() != event.getTo().getChunk()) {
-                //TODO DO it properly
+                Chunk c = event.getTo().getChunk();
                 if (Main.getInstance().getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
-                    player.performCommand("/n claim one");
+                    if (NationChunk.get(event.getTo().getChunk()) != null) {
+                        player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
+                    } else {
+                        NationChunk nc = new NationChunk(instance.getUtilLists().claimAuto.get(player.getUniqueId()), event.getTo().getChunk().getWorld().getName(), event.getTo().getChunk().getX(), event.getTo().getChunk().getZ());
+                        TerritoryChangeEvent territoryEvent = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF);
+                        Bukkit.getPluginManager().callEvent(territoryEvent);
+                        if (!event.isCancelled()) {
+                            nc.claim();
+                            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
+                                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", event.getTo().getChunk().getX() + "").replace("%Z%", event.getTo().getChunk().getZ() + ""));
+                            System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
+                        }
+                    }
                 } else if (Main.getInstance().getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
-                    player.performCommand("/n unclaim one");
+                    NationChunk nc = NationChunk.get(c);
+                    boolean allowed = false;
+                    if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
+                    if (profile.getNationId().equals(nc.getNationId())) allowed = true;
+                    if (!allowed) {
+                        Lang.CHUNK_NOT_YOURS.send(player);
+                    } else {
+                        TerritoryChangeEvent territoryEvent = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF);
+                        Bukkit.getPluginManager().callEvent(territoryEvent);
+                        if (!event.isCancelled()) {
+                            nc.unclaim();
+                            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
+                                members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
+                            System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
+                        }
+                    }
                 }
                 Chunk fc = event.getFrom().getChunk();
                 Chunk tc = event.getTo().getChunk();

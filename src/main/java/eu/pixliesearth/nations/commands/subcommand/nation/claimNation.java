@@ -69,7 +69,7 @@ public class claimNation implements SubCommand {
                         nc.claim();
                         for (Player members : profile.getCurrentNation().getOnlineMemberSet())
                             members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                        System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
+                        System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
                     }
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
