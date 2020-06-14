@@ -78,6 +78,20 @@ public class NationChunk {
     public NationChunk withChunkX(Integer chunkX) { return get(this.getWorld(), chunkX, this.getZ()); }
     public NationChunk withChunkZ(Integer chunkZ) { return get(this.getWorld(), this.getX(), chunkZ); }
 
+    public static Nation getNationData(Chunk chunk) {
+        NationChunk c = get(chunk);
+        if (c == null)
+            return null;
+        return Nation.getById(c.getNationId());
+    }
+
+    public static Nation getNationData(String world, int x, int z) {
+        NationChunk c = get(world, x, z);
+        if (c == null)
+            return null;
+        return Nation.getById(c.getNationId());
+    }
+
     //ONLY RUN ONCE ONENABLE
     public static void init() {
         table = new HashMap<>();

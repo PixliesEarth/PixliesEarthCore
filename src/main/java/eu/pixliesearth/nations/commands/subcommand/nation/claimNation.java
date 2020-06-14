@@ -120,7 +120,10 @@ public class claimNation implements SubCommand {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), nation.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
-                } else if (args[0].equalsIgnoreCase("square")) {
+
+                }
+                // WHY THE FUCK WOULD WE NEED CLAIM SQUARE WITH THAT LITTLE CLAIMING POWER
+                /* else if (args[0].equalsIgnoreCase("square")) {
                     final NationChunk chunk = NationChunk.get(c);
                     final Set<NationChunk> chunks = new HashSet<>();
 
@@ -138,8 +141,7 @@ public class claimNation implements SubCommand {
                             chunks.add(chunk.withChunkX(x).withChunkZ(z));
                         }
                     }
-                }
-
+                }*/
                 break;
         }
 

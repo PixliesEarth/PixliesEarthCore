@@ -97,6 +97,11 @@ public class Nation {
         return getOnlineMembers();
     }
 
+    public boolean isAlliedWith(String nationId) {
+        //TODO
+        return false;
+    }
+
     public static Nation getById(String id) {
         return NationManager.nations.get(id);
     }

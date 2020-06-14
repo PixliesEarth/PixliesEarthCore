@@ -25,6 +25,7 @@ public enum Lang {
     // GENERAL
     WILDERNESS_SUBTITLE("", new HashMap<>()),
     SAFEZONE_SUBTITLE("", new HashMap<>()),
+    WARZONE_SUBTITLE("", new HashMap<>()),
     NO_PERMISSIONS(Lang.EARTH, new HashMap<>()),
     PLAYER_DOES_NOT_EXIST(Lang.EARTH, new HashMap<>()),
     ONLY_PLAYERS_EXEC(Lang.EARTH, new HashMap<>()),

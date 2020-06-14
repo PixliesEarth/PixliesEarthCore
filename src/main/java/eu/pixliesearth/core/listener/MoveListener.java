@@ -31,29 +31,31 @@ public class MoveListener implements Listener {
                 Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
             }
 
-            // CHUNK TITLES FOR NATIONS
-            if (event.getFrom().getChunk() != event.getTo().getChunk()) {
-                Chunk c = event.getTo().getChunk();
+            // CHUNK TO CHUNK MOVEMENTS
+            Chunk fc = event.getFrom().getChunk();
+            Chunk tc = event.getTo().getChunk();
+            if (event.getFrom().getChunk() != tc) {
+                // CLAIM/UNCLAIM AUTOS
                 if (Main.getInstance().getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
-                    if (NationChunk.get(event.getTo().getChunk()) != null) {
+                    if (NationChunk.get(tc) != null) {
                         player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
                     } else {
-                        NationChunk nc = new NationChunk(instance.getUtilLists().claimAuto.get(player.getUniqueId()), event.getTo().getChunk().getWorld().getName(), event.getTo().getChunk().getX(), event.getTo().getChunk().getZ());
+                        NationChunk nc = new NationChunk(instance.getUtilLists().claimAuto.get(player.getUniqueId()), tc.getWorld().getName(), tc.getX(), tc.getZ());
                         TerritoryChangeEvent territoryEvent = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF);
                         Bukkit.getPluginManager().callEvent(territoryEvent);
                         if (!event.isCancelled()) {
                             nc.claim();
                             for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", event.getTo().getChunk().getX() + "").replace("%Z%", event.getTo().getChunk().getZ() + ""));
+                                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", tc.getX() + "").replace("%Z%", tc.getZ() + ""));
                             System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
                         }
                     }
                 } else if (Main.getInstance().getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
                         Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
-                    NationChunk nc = NationChunk.get(c);
+                    NationChunk nc = NationChunk.get(tc);
                     boolean allowed = false;
                     if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
                     if (profile.getNationId().equals(nc.getNationId())) allowed = true;
@@ -65,26 +67,28 @@ public class MoveListener implements Listener {
                         if (!event.isCancelled()) {
                             nc.unclaim();
                             for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                                members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
+                                members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", tc.getX() + "").replace("%Z%", tc.getZ() + ""));
                             System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
                         }
                     }
                 }
-                Chunk fc = event.getFrom().getChunk();
-                Chunk tc = event.getTo().getChunk();
-                NationChunk fchunk = NationChunk.get(fc);
-                NationChunk tchunk = NationChunk.get(tc);
-                if (fchunk != tchunk) {
-                    if (tchunk == null) {
-                        player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
+                // CHUNKTITLES
+                Nation fn = NationChunk.getNationData(fc);
+                Nation tn = NationChunk.getNationData(tc);
+                if (fn != tn) {
+                    if (tn == null) {  // WILDERNESS
+                        player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
                     } else {
-                        if (!fchunk.getNationId().equals(tchunk.getNationId())) {
-                            if (tchunk.getNationId().equals("safezone")) {
-                                player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
-                            } else {
-                                Nation n = Nation.getById(tchunk.getNationId());
-                                player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
-                            }
+                        if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
+                            player.sendTitle("§b" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                        } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
+                            player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                        } else if (tn.getNationId().equals("warzone")) { // WARZONE
+                            player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                        } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
+                            player.sendTitle("§d" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                        } else { // ANY OTHER NATION
+                            player.sendTitle(tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
                         }
                     }
                 }
