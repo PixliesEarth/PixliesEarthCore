@@ -159,6 +159,9 @@ commands:
     description: sudo command
   tphere:
     description: tphere command
+  family:
+    description: show family info
+
 permissions:
   # GENERAL
   earth.admin:

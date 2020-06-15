@@ -28,6 +28,7 @@ YOU_ARE_NOW_MARRIED: "&bGlückwunsch! &7Du bist jetzt mit &6%PLAYER% &7verheirat
 SENT_MARRIAGE_REQUEST: "&7Du hast um &6%PLAYER%&7s Hand angehalten."
 RECEIVED_MARRIAGE_REQ: "&6%PLAYER% &7hat soeben um deine Hand angehalten. &e/marry %PLAYER%"
 YOU_ARE_NOT_MARRIED: "&7Du kannst dich nicht scheiden wenn du nicht verheiratet bist."
+YOU_CANT_MARRY_YOURSELF: "&7Du kannst dich selber nicht heiraten."
 YOU_GOT_DIVORCED: "&7Wie es aussieht funktionieren nicht alle Ehen... Du hast dich gerade geschieden..."
 SUDO: "§7Du hast §6%PLAYER% §7gezwungen §a%COMMAND% §7auszuführen!"
 NOT_IN_A_NATION: "§cUm diesen Befehl ausführen zu können, musst du in eine Nation sein."

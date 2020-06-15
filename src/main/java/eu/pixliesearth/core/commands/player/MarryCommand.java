@@ -33,6 +33,10 @@ public class MarryCommand implements CommandExecutor {
             player.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(player));
             return false;
         }
+        if (args[0].equals(player.getName())) {
+            player.sendMessage(Lang.YOU_CANT_MARRY_YOURSELF.get(player));
+            return false;
+        }
         OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
         Profile partner = Main.getInstance().getProfile(target.getUniqueId());
         if (partner.isMarried()) {

@@ -234,6 +234,7 @@ public final class Main extends JavaPlugin {
         getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
         getCommand("tphere").setExecutor(new TpHereCommand());
+        getCommand("family").setExecutor(new FamilyCommand());
     }
 
     private void registerEvents(PluginManager manager) {

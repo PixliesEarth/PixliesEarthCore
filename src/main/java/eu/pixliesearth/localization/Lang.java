@@ -1,5 +1,6 @@
 package eu.pixliesearth.localization;
 
+import com.mysql.fabric.HashShardMapping;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import org.bukkit.Bukkit;
@@ -47,6 +48,7 @@ public enum Lang {
     SENT_MARRIAGE_REQUEST(Lang.EARTH, new HashMap<>()),
     RECEIVED_MARRIAGE_REQ(Lang.EARTH, new HashMap<>()),
     YOU_ARE_NOT_MARRIED(Lang.EARTH, new HashMap<>()),
+    YOU_CANT_MARRY_YOURSELF(Lang.EARTH, new HashMap<>()),
     YOU_GOT_DIVORCED(Lang.EARTH, new HashMap<>()),
     SUDO(Lang.EARTH, new HashMap<>()),
 
