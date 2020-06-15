@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.events.NationCreationEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Era;
@@ -13,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,10 +66,14 @@ public class createNation implements SubCommand {
         }
         final String id = Methods.generateId(7);
         Nation nation = new Nation(id, name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(), 0, 0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new HashMap<>());
-        nation.save();
-        profile.addToNation(nation.getNationId());
-        for (Player op : Bukkit.getOnlinePlayers())
-            op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
+        NationCreationEvent event = new NationCreationEvent(player, nation);
+        Bukkit.getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            nation.save();
+            profile.addToNation(nation.getNationId());
+            for (Player op : Bukkit.getOnlinePlayers())
+                op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
+        }
         return false;
     }
 

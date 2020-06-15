@@ -42,7 +42,7 @@ public class CoinsCommand implements CommandExecutor {
                         return false;
                     }
                     Profile targetProf = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(args[1]));
-                    sender.sendMessage(Lang.PC_BALANCE_OTHERS.get(sender).replace("%PLAYERT%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", targetProf.getPixliecoins()+""));
+                    sender.sendMessage(Lang.PC_BALANCE_OTHERS.get(sender).replace("%PLAYER%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", targetProf.getPixliecoins()+""));
                 }
                 break;
             case 3:
@@ -53,11 +53,11 @@ public class CoinsCommand implements CommandExecutor {
                     sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                     return false;
                 }
+                if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+                    sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("add")) {
-                    if (Bukkit.getPlayerUniqueId(args[1]) == null) {
-                        sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
-                        return false;
-                    }
                     Profile targetProf = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(args[1]));
                     if (!StringUtils.isNumeric(args[2])) {
                         sender.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
@@ -66,10 +66,6 @@ public class CoinsCommand implements CommandExecutor {
                     CoinManager.add(targetProf, Double.parseDouble(args[2]));
                     sender.sendMessage(Lang.PC_ADDED_BALANCE.get(sender).replace("%PLAYER%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", args[2]));
                 } else if (args[0].equalsIgnoreCase("take")) {
-                    if (Bukkit.getPlayerUniqueId(args[1]) == null) {
-                        sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
-                        return false;
-                    }
                     Profile targetProf = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(args[1]));
                     if (!StringUtils.isNumeric(args[2])) {
                         sender.sendMessage(Lang.UNALLOWED_CHARS_IN_ARGS.get(sender));
