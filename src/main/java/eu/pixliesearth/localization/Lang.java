@@ -69,6 +69,7 @@ public enum Lang {
     AUTOUNCLAIM_DISABLED(Lang.NATION, new HashMap<>()),
     NATION_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
     PLAYER_NAMED_NATION_NAME(Lang.NATION, new HashMap<>()),
+    PLAYER_CHANGED_DESCRIPTION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
