@@ -1,27 +1,23 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
-import eu.pixliesearth.nations.managers.NationManager;
-import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.Religion;
+import eu.pixliesearth.utils.Methods;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@RegisterSub(
-        command = "nations"
-)
 public class createNation implements SubCommand {
 
     @Override
@@ -67,7 +63,7 @@ public class createNation implements SubCommand {
             return false;
         }
         final String id = Methods.generateId(7);
-        Nation nation = new Nation(id, name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(),0,0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(), 0, 0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new HashMap<>());
         nation.save();
         profile.addToNation(nation.getNationId());
         for (Player op : Bukkit.getOnlinePlayers())

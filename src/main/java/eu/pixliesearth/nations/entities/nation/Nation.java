@@ -29,6 +29,10 @@ public class Nation {
     private Map<String, OneRowMap> ranks;
     private List<String> members;
     private List<String> chunks;
+    private List<String> allyRequests;
+    private List<String> allies;
+    private List<String> pacts;
+    private Map<String, Object> extras;
 
 
     // ADVANCED METHODS
@@ -46,6 +50,10 @@ public class Nation {
         nation.append("ranks", ranks);
         nation.append("members", members);
         nation.append("chunks", chunks);
+        nation.append("allyRequests", allyRequests);
+        nation.append("allies", allies);
+        nation.append("pacts", pacts);
+        nation.append("extras", extras);
         if (found != null) {
             Main.getNationCollection().deleteOne(found);
         }
@@ -98,8 +106,13 @@ public class Nation {
     }
 
     public boolean isAlliedWith(String nationId) {
-        //TODO
-        return false;
+        return allies.contains(nationId);
+    }
+
+    public static NationRelation getRelation(String n1, String n2) {
+        if (getById(n1).isAlliedWith(n2))
+            return NationRelation.ALLY;
+        return NationRelation.NEUTRAL;
     }
 
     public static Nation getById(String id) {
@@ -119,6 +132,20 @@ public class Nation {
         List<String> memberperms = new ArrayList<>();
 
         return map;
+    }
+
+    public enum NationRelation {
+
+        ALLY('d'),
+        NEUTRAL('f'),
+        PACT('3');
+
+        public char colChar;
+
+        NationRelation(char colChar) {
+            this.colChar = colChar;
+        }
+
     }
 
 }

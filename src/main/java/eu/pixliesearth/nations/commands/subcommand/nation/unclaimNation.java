@@ -3,7 +3,6 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import org.bukkit.Bukkit;
@@ -14,9 +13,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-@RegisterSub(
-        command = "nations"
-)
 public class unclaimNation implements SubCommand {
 
     @Override

@@ -1,13 +1,11 @@
 package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-import org.reflections.Reflections;
 
 import java.util.*;
 

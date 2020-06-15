@@ -52,7 +52,6 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
-import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -250,7 +249,7 @@ public final class Main extends JavaPlugin {
         //THIS IS NOT ITEMINTERACTLISTENER DONT DELETE
         manager.registerEvents(new ItemsInteractEvent(), this);
         manager.registerEvents(new SlingshotListener(), this);
-        manager.registerEvents(new MobSpawnListener(), this);
+        manager.registerEvents(new Restrictions(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new PlayerInteractListener(), this);
         manager.registerEvents(new AnvilListener(), this);

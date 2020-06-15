@@ -2,7 +2,6 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.commands.subcommand.RegisterSub;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
@@ -13,9 +12,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-@RegisterSub(
-        command = "nations"
-)
 public class disbandNation implements SubCommand {
 
     @Override
