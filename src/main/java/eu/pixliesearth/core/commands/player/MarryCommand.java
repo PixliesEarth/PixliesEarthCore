@@ -11,6 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class MarryCommand implements CommandExecutor {
 
     @Override
@@ -39,6 +41,10 @@ public class MarryCommand implements CommandExecutor {
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
         Profile partner = Main.getInstance().getProfile(target.getUniqueId());
+        if (profile.areRelated(UUID.fromString(partner.getUniqueId()))) {
+            player.sendMessage(Lang.CANT_MARRY_RELATED.get(player));
+            return false;
+        }
         if (partner.isMarried()) {
             player.sendMessage(Lang.PARTNER_IS_ALREADY_MARRIED.get(player).replace("%PLAYER%", target.getName()));
             return false;

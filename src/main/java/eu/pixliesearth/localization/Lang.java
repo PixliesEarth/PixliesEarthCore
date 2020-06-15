@@ -50,6 +50,9 @@ public enum Lang {
     YOU_ARE_NOT_MARRIED(Lang.EARTH, new HashMap<>()),
     YOU_CANT_MARRY_YOURSELF(Lang.EARTH, new HashMap<>()),
     YOU_GOT_DIVORCED(Lang.EARTH, new HashMap<>()),
+    YOU_ARE_MARRIED_WITH("", new HashMap<>()),
+    CANT_MARRY_RELATED(Lang.EARTH, new HashMap<>()),
+    PLAYERS_HAD_SEX(Lang.EARTH, new HashMap<>()),
     SUDO(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
