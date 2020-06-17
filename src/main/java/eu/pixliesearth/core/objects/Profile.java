@@ -140,6 +140,7 @@ public class Profile {
         if (inNation) return;
         this.nationId = id;
         this.inNation = true;
+        this.nationRank = "LEADER";
         Nation nation = Nation.getById(id);
         nation.getMembers().add(uniqueId);
         nation.save();

@@ -122,17 +122,17 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         switch (page) {
             case 1:
                 sender.sendMessage("§8████████████ §b§lNATIONS §8████████████");
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §ecreate §c<NAME>"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §edisband §c[NAME]"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §edescription §c<DESCRIPTION...>"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §einvite §c<PLAYER> [add/remove] §b[NATION]"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §ejoin §c<NATION> [PLAYER]"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §eleave"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §eclaim §c<ONE/AUTO/FILL> [NATION]"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §eunclaim §c<ONE/AUTO/FILL> [NATION]"));
-                sender.sendMessage(Methods.getCenteredMessage("§7/n §erename §c<NAME> [NATION]"));
+                sender.sendMessage("§b* §7/n §ecreate §c<NAME>");
+                sender.sendMessage("§b* §7/n §edisband §c[NAME]");
+                sender.sendMessage("§b* §7/n §edescription §c<DESCRIPTION...>");
+                sender.sendMessage("§b* §7/n §einvite §c<PLAYER> [add/remove] §b[NATION]");
+                sender.sendMessage("§b* §7/n §ejoin §c<NATION> [PLAYER]");
+                sender.sendMessage("§b* §7/n §eleave");
+                sender.sendMessage("§b* §7/n §eclaim §c<ONE/AUTO/FILL> [NATION]");
+                sender.sendMessage("§b* §7/n §eunclaim §c<ONE/AUTO/FILL> [NATION]");
+                sender.sendMessage("§b* §7/n §erename §c<NAME> [NATION]");
                 sender.sendMessage("§8███████████ §c<> = required §8███████████");
-                sender.sendMessage("§8███████████ §c[] = optional §8███████████");
+                sender.sendMessage("§8███████████ §c[] = optional   §8███████████");
                 break;
         }
     }
