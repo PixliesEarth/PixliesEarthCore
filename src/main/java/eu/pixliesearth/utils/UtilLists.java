@@ -1,6 +1,7 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import org.bukkit.block.Block;
@@ -45,6 +46,8 @@ public class UtilLists {
 
     public DiscordWebhook webhook;
 
+    public Map<UUID, Boost> boosts;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -62,6 +65,7 @@ public class UtilLists {
         deathChests = new HashMap<>();
         chatQueue = new HashMap<>();
         webhook = new DiscordWebhook(Main.getInstance().getConfig().getString("webhook"));
+        boosts = new HashMap<>();
     }
 
 }

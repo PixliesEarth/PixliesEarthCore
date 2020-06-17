@@ -22,6 +22,8 @@ public enum Lang {
     CHOOSE_LANG("", new HashMap<>()),
     CHOOSE_COLOUR("", new HashMap<>()),
     WILDERNESS("", new HashMap<>()),
+    ACCEPT("", new HashMap<>()),
+    DENY("", new HashMap<>()),
 
     // GENERAL
     WILDERNESS_SUBTITLE("", new HashMap<>()),
@@ -75,6 +77,13 @@ public enum Lang {
     NATION_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
     PLAYER_NAMED_NATION_NAME(Lang.NATION, new HashMap<>()),
     PLAYER_CHANGED_DESCRIPTION(Lang.NATION, new HashMap<>()),
+    INVITE_PLAYER_ALREADY_IN_NATION(Lang.NATION, new HashMap<>()),
+    SUCCESSFULLY_INVITED(Lang.NATION, new HashMap<>()),
+    YOU_HAVE_BEEN_INVITED(Lang.NATION, new HashMap<>()),
+    YOU_HAVE_X_INVITES_OPEN(Lang.NATION, new HashMap<>()),
+    REMOVED_INVITE(Lang.NATION, new HashMap<>()),
+    PLAYER_NEVER_INVITED(Lang.NATION, new HashMap<>()),
+    PLAYER_ALREADY_INVITED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

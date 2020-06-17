@@ -42,8 +42,7 @@ public class descriptionNation implements SubCommand {
         }
         //TODO PERMISSIONS
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < args.length; i++)
-            stringBuilder.append(args[i]).append(" ");
+        for (String arg : args) stringBuilder.append(arg).append(" ");
         Nation nation = profile.getCurrentNation();
         nation.setDescription(stringBuilder.toString());
         nation.save();

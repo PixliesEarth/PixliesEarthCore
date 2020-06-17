@@ -177,6 +177,10 @@ public class Profile {
         return Nation.getById(nationId);
     }
 
+    public boolean isOnline() {
+        return Bukkit.getPlayer(UUID.fromString(uniqueId)) == null;
+    }
+
     public boolean isMarried() {
         return !marriagePartner.equals("NONE");
     }
