@@ -84,6 +84,9 @@ public enum Lang {
     REMOVED_INVITE(Lang.NATION, new HashMap<>()),
     PLAYER_NEVER_INVITED(Lang.NATION, new HashMap<>()),
     PLAYER_ALREADY_INVITED(Lang.NATION, new HashMap<>()),
+    YOU_ARE_ALREADY_IN_NATION(Lang.NATION, new HashMap<>()),
+    PLAYER_JOINED_NATION(Lang.NATION, new HashMap<>()),
+    YOU_DONT_HAVE_OPEN_INV(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

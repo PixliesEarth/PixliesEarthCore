@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
@@ -102,6 +103,10 @@ public class inviteNation implements SubCommand {
                 }
                 break;
             case 3:
+                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender))) {
+                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
+                    return false;
+                }
                 Nation nation = Nation.getByName(args[2]);
                 if (nation == null) {
                     sender.sendMessage(Lang.NATION_DOESNT_EXIST.get(sender));

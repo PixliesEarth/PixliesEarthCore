@@ -21,6 +21,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new renameNation());
         subCommands.add(new unclaimNation());
         subCommands.add(new descriptionNation());
+        subCommands.add(new joinNation());
         return subCommands;
     }
 
