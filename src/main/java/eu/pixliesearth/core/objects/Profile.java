@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -141,6 +144,24 @@ public class Profile {
         nation.getMembers().add(uniqueId);
         nation.save();
         save();
+    }
+
+    public boolean leaveNation() {
+        if (!inNation)
+            return false;
+        Nation nation = getCurrentNation();
+        nation.getMembers().remove(uniqueId);
+        nation.save();
+        this.nationId = "NONE";
+        this.inNation = false;
+        save();
+        for (Player p : nation.getOnlineMemberSet())
+            p.sendMessage(Lang.PLAYER_LEFT_NATION.get(p).replace("%PLAYER%", getAsOfflinePlayer().getName()));
+        return true;
+    }
+
+    public OfflinePlayer getAsOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(UUID.fromString(uniqueId));
     }
 
     public void removeFromNation() {

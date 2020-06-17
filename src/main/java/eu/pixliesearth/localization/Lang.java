@@ -87,6 +87,9 @@ public enum Lang {
     YOU_ARE_ALREADY_IN_NATION(Lang.NATION, new HashMap<>()),
     PLAYER_JOINED_NATION(Lang.NATION, new HashMap<>()),
     YOU_DONT_HAVE_OPEN_INV(Lang.NATION, new HashMap<>()),
+    LEADER_CANT_LEAVE_NATION(Lang.NATION, new HashMap<>()),
+    PLAYER_LEFT_NATION(Lang.NATION, new HashMap<>()),
+    YOU_LEFT_NATION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
