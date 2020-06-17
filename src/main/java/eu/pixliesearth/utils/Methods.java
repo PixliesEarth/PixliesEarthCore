@@ -131,7 +131,7 @@ public class Methods {
             sb.append(" ");
             compensated += spaceLength;
         }
-        return sb.toString() + message;
+        return ChatColor.translateAlternateColorCodes('&', sb.toString() + message);
     }
 
 }

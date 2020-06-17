@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -74,9 +75,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                         }
                     }
             if (!found)
-                sendHelp(sender);
+                sendHelp(sender, 1);
         } else {
-            sendHelp(sender);
+            sendHelp(sender, 1);
         }
         return false;
     }
@@ -117,8 +118,23 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         );
     }*/
 
-    public void sendHelp(CommandSender sender) {
-        sender.sendMessage("Coming soon");
+    public void sendHelp(CommandSender sender, int page) {
+        switch (page) {
+            case 1:
+                sender.sendMessage("§8████████████ §b§lNATIONS §8████████████");
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §ecreate §c<NAME>"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §edisband §c[NAME]"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §edescription §c<DESCRIPTION...>"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §einvite §c<PLAYER> [add/remove] §b[NATION]"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §ejoin §c<NATION> [PLAYER]"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §eleave"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §eclaim §c<ONE/AUTO/FILL> [NATION]"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §eunclaim §c<ONE/AUTO/FILL> [NATION]"));
+                sender.sendMessage(Methods.getCenteredMessage("§7/n §erename §c<NAME> [NATION]"));
+                sender.sendMessage("§8███████████ §c<> = required §8███████████");
+                sender.sendMessage("§8███████████ §c[] = optional §8███████████");
+                break;
+        }
     }
 
 }
