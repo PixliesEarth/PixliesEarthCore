@@ -59,7 +59,7 @@ public class joinNation implements SubCommand {
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", player.getName()));
                 break;
             case 2:
-                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender))) {
+                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
                     sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                     return false;
                 }
