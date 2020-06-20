@@ -134,6 +134,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§8███████████ §c<> = required §8███████████");
                 sender.sendMessage("§8███████████ §c[] = optional   §8███████████");
                 break;
+            case 2:
+                //TODO 2nd help page
+                break;
         }
     }
 

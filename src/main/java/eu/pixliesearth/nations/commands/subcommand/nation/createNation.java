@@ -8,6 +8,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.Religion;
+import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.Methods;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class createNation implements SubCommand {
@@ -69,8 +71,28 @@ public class createNation implements SubCommand {
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
+            Map<String, Object> admin = new HashMap<>();
+            admin.put("name", "admin");
+            admin.put("prefix", "§c***");
+            admin.put("permissions", new ArrayList<>());
+            Map<String, Object> member = new HashMap<>();
+            member.put("name", "member");
+            member.put("prefix", "§b**");
+            member.put("permissions", new ArrayList<>());
+            Map<String, Object> newbie = new HashMap<>();
+            newbie.put("name", "newbie");
+            newbie.put("prefix", "§a*");
+            newbie.put("permissions", new ArrayList<>());
+            Map<String, Object> leader = new HashMap<>();
+            leader.put("name", "leader");
+            leader.put("prefix", "§c+");
+            leader.put("permissions", new ArrayList<>());
+            nation.getRanks().put("admin", admin);
+            nation.getRanks().put("member", member);
+            nation.getRanks().put("newbie", newbie);
+            nation.getRanks().put("leader", leader);
             nation.save();
-            profile.addToNation(nation.getNationId());
+            profile.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("leader")));
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
         }

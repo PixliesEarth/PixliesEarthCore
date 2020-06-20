@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -54,7 +55,7 @@ public class joinNation implements SubCommand {
                     return false;
                 }
                 profile.getInvites().remove(nation.getNationId());
-                profile.addToNation(nation.getNationId());
+                profile.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", player.getName()));
                 break;
@@ -66,9 +67,25 @@ public class joinNation implements SubCommand {
                 UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target = instance.getProfile(targetUUID);
                 target.getInvites().remove(nation.getNationId());
-                target.addToNation(nation.getNationId());
+                target.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID).getName()));
+                break;
+            case 3:
+                if (nation.getRanks().get(args[2]) == null) {
+                    Lang.RANK_DOESNT_EXIST.send(sender);
+                    return false;
+                }
+                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
+                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
+                    return false;
+                }
+                UUID targetUUID2 = Bukkit.getPlayerUniqueId(args[1]);
+                Profile target2 = instance.getProfile(targetUUID2);
+                target2.getInvites().remove(nation.getNationId());
+                target2.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
+                for (Player np : nation.getOnlineMemberSet())
+                    np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID2).getName()));
                 break;
         }
         return false;

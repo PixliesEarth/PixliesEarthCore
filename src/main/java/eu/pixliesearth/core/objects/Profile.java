@@ -5,6 +5,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
@@ -136,11 +137,11 @@ public class Profile {
         instance.getUtilLists().profiles.put(UUID.fromString(uniqueId), this);
     }
 
-    public void addToNation(String id) {
+    public void addToNation(String id, Rank rank) {
         if (inNation) return;
         this.nationId = id;
         this.inNation = true;
-        this.nationRank = "LEADER";
+        this.nationRank = rank.getName();
         Nation nation = Nation.getById(id);
         nation.getMembers().add(uniqueId);
         nation.save();

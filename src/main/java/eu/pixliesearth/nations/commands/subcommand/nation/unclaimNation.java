@@ -5,6 +5,7 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
@@ -51,7 +52,10 @@ public class unclaimNation implements SubCommand {
                 player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                 return false;
             }
-            //TODO PERMISSION SYSTEM
+            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM)) {
+                Lang.NO_PERMISSIONS.send(sender);
+                return false;
+            }
             if (args[0].equalsIgnoreCase("one")) {
                 NationChunk nc = NationChunk.get(c);
                 boolean allowed = false;

@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -40,7 +41,10 @@ public class descriptionNation implements SubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
-        //TODO PERMISSIONS
+        if (!profile.getNationRank().equals("leader")) {
+            Lang.NO_PERMISSIONS.send(sender);
+            return false;
+        }
         StringBuilder stringBuilder = new StringBuilder();
         for (String arg : args) stringBuilder.append(arg).append(" ");
         Nation nation = profile.getCurrentNation();

@@ -90,6 +90,7 @@ public enum Lang {
     LEADER_CANT_LEAVE_NATION(Lang.NATION, new HashMap<>()),
     PLAYER_LEFT_NATION(Lang.NATION, new HashMap<>()),
     YOU_LEFT_NATION(Lang.NATION, new HashMap<>()),
+    RANK_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

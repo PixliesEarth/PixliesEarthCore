@@ -46,7 +46,10 @@ public class disbandNation implements SubCommand {
                     player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
                     return false;
                 }
-                //TODO permission check
+                if (!user.getNationRank().equals("leader")) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
                 instance.getUtilLists().nationDisbander.put(player.getUniqueId(), user.getNationId());
                 player.sendMessage(Lang.NATION_DELEATION_CONIIRMATION.get(player));
                 break;

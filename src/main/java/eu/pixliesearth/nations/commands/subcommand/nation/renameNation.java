@@ -45,7 +45,10 @@ public class renameNation implements SubCommand {
                         player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
                         return false;
                     }
-                    //TODO permissionsystem
+                    if (!profile.getNationRank().equals("leader")) {
+                        Lang.NO_PERMISSIONS.send(sender);
+                        return false;
+                    }
                     nation = profile.getCurrentNation();
                     final String oldName = nation.getName();
                     success = nation.rename(args[0]);

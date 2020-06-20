@@ -6,6 +6,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -52,7 +53,10 @@ public class claimNation implements SubCommand {
                     player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                     return false;
                 }
-                //TODO PERMISSION SYSTEM
+                if (!Permission.hasNationPermission(profile, Permission.CLAIM)) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("one")) {
                     if (NationChunk.get(c) != null) {
                         player.sendMessage(Lang.ALREADY_CLAIMED.get(player));

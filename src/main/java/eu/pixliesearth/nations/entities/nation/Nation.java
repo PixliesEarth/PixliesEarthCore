@@ -1,9 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.utils.OneRowMap;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
-import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +24,7 @@ public class Nation {
     private int xpPoints;
     private double money;
     private String leader;
-    private Map<String, OneRowMap> ranks;
+    private Map<String, Map<String, Object>> ranks;
     private List<String> members;
     private List<String> chunks;
     private List<String> allyRequests;
@@ -100,9 +98,10 @@ public class Nation {
     }
 
     public int broadcastMembers(String message) {
+        int i = 0;
         for (Player player : getOnlineMemberSet())
-            player.sendMessage(message);
-        return getOnlineMembers();
+            player.sendMessage(message); i++;
+        return i;
     }
 
     public boolean isAlliedWith(String nationId) {
@@ -121,17 +120,6 @@ public class Nation {
 
     public static Nation getByName(String name) {
         return getById(NationManager.names.get(name));
-    }
-
-    public static Map<String, OneRowMap> defaultRanks() {
-        Map<String, OneRowMap> map = new HashMap<>();
-        List<String> adminPerms = new ArrayList<>();
-        for (Permission value : Permission.values()) {
-            adminPerms.add(value.name());
-        }
-        List<String> memberperms = new ArrayList<>();
-
-        return map;
     }
 
     public enum NationRelation {
