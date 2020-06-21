@@ -78,6 +78,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "§lNation");
                     returnable.add("  §8» §b" + nation.getName());
                     returnable.add("  §8» §a" + nation.getOnlineMembers() + " Online");
+                    returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {
                     for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
@@ -98,6 +99,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♜ §8| §b" + nation.getName());
                     returnable.add(c + "☺ §8| §a" + nation.getOnlineMembers());
+                    returnable.add(c + "☗ §8| §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {
                     for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
