@@ -211,7 +211,9 @@ public class Profile {
     public boolean areRelated(UUID uuid) {
         if (marriagePartner.equals(uuid.toString()))
             return true;
-        return relations.containsKey(uuid.toString());
+        if (relations.get(uuid.toString()) == null)
+            return false;
+        return relations.get(uuid.toString()) == null || !relations.get(uuid.toString()).startsWith("REQ=");
     }
 
     public static Profile getByDiscord(String discordId) {

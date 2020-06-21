@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class FamilyCommand implements CommandExecutor {
@@ -35,6 +36,9 @@ public class FamilyCommand implements CommandExecutor {
         } else {
             sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName()));
         }
+        sender.sendMessage(Methods.getCenteredMessage("&7Other relations:"));
+        for (Map.Entry<String, String> entry : profile.getRelations().entrySet())
+            sender.sendMessage("&6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "&7: &b" + entry.getValue());
         sender.sendMessage("§8██████████████████████████████████");
         return false;
     }

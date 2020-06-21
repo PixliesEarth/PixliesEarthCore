@@ -55,6 +55,13 @@ public enum Lang {
     YOU_ARE_MARRIED_WITH("", new HashMap<>()),
     CANT_MARRY_RELATED(Lang.EARTH, new HashMap<>()),
     PLAYERS_HAD_SEX(Lang.EARTH, new HashMap<>()),
+    ALREADY_RELATED(Lang.EARTH, new HashMap<>()),
+    ALREADY_REQUESTED_ADOPTION(Lang.EARTH, new HashMap<>()),
+    REQUESTED_ADOPTION(Lang.EARTH, new HashMap<>()),
+    PLAYER_SENT_ADOPTION_REQ(Lang.EARTH, new HashMap<>()),
+    NO_OPEN_X_REQUEST(Lang.EARTH, new HashMap<>()),
+    PLAYER_X_ADOPTED_Y(Lang.EARTH, new HashMap<>()),
+    DENIED_X_REQUEST(Lang.EARTH, new HashMap<>()),
     SUDO(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
@@ -224,8 +231,30 @@ public enum Lang {
         }
     }
 
+    public void broadcast(String... placeholders) {
+        for (Player player : Bukkit.getOnlinePlayers())
+            send(player, placeholders);
+    }
+
     public void setLanguage(Map<String, String> languages) {
         this.languages = languages;
+    }
+
+    /**
+     * SEND MESSAGE TO PLAYER WITH PLACEHOLDERS
+     * @param sender the command sender to send to
+     * @param placeholders get declared by writing TOREPLACE;REPLACED
+     * @return if the action was successful
+     */
+    public boolean send(CommandSender sender, String... placeholders) {
+        if (sender == null) return false;
+        String send = get(sender);
+        for (String s : placeholders) {
+            String[] pSplit = s.split(";");
+            send = send.replace(pSplit[0], pSplit[1]);
+        }
+        sender.sendMessage(send);
+        return true;
     }
 
     public static void init() {

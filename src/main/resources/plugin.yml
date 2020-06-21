@@ -163,6 +163,8 @@ commands:
     description: show family info
   sex:
     description: Have sex
+  adopt:
+    description: Adopt command
 
 permissions:
   # GENERAL

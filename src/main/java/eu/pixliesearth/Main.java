@@ -170,8 +170,8 @@ public final class Main extends JavaPlugin {
         }*/
 
         //LANGUAGE STUFF
-        saveResource("languages/LANG_DE.yml", false);
-        saveResource("languages/LANG_ENG.yml", false);
+        saveResource("languages/LANG_DE.yml", true);
+        saveResource("languages/LANG_ENG.yml", true);
 
         Lang.init();
 
@@ -236,6 +236,7 @@ public final class Main extends JavaPlugin {
         getCommand("tphere").setExecutor(new TpHereCommand());
         getCommand("family").setExecutor(new FamilyCommand());
         getCommand("sex").setExecutor(new SexCommand());
+        getCommand("adopt").setExecutor(new AdoptCommand());
     }
 
     private void registerEvents(PluginManager manager) {
