@@ -237,6 +237,7 @@ public final class Main extends JavaPlugin {
         getCommand("family").setExecutor(new FamilyCommand());
         getCommand("sex").setExecutor(new SexCommand());
         getCommand("adopt").setExecutor(new AdoptCommand());
+        getCommand("block").setExecutor(new BlockCommand());
     }
 
     private void registerEvents(PluginManager manager) {

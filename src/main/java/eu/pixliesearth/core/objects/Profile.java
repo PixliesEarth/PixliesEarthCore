@@ -53,6 +53,7 @@ public class Profile {
     private String favoriteColour;
     private String boardType;
     private String lang;
+    private List<String> blocked = new ArrayList<>();
     private Map<String, Object> extras;
 
     public static Profile get(UUID uuid) {
@@ -87,9 +88,10 @@ public class Profile {
             profile.append("favoriteColour", "§3");
             profile.append("boardType", ScoreboardAdapter.scoreboardType.STANDARD.name());
             profile.append("lang", "ENG");
+            profile.append("blocked", new ArrayList<>());
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0, "NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0, "NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -128,6 +130,7 @@ public class Profile {
         profile.append("favoriteColour", favoriteColour);
         profile.append("boardType", boardType);
         profile.append("lang", lang);
+        profile.append("blocked", blocked);
         profile.append("extras", extras);
         Main.getPlayerCollection().deleteOne(found);
         Main.getPlayerCollection().insertOne(profile);
@@ -221,6 +224,17 @@ public class Profile {
         if (found != null)
             return new Gson().fromJson(found.toJson(), Profile.class);
         return null;
+    }
+
+    public static Map<UUID, Profile> onlineProfiles() {
+        Map<UUID, Profile> returner = new HashMap<>();
+        for (Player player : Bukkit.getOnlinePlayers())
+            returner.put(player.getUniqueId(), instance.getProfile(player.getUniqueId()));
+        return returner;
+    }
+
+    public Rank getCurrentNationRank() {
+        return Rank.getFromMap(getCurrentNation().getRanks().get(nationRank));
     }
 
 }

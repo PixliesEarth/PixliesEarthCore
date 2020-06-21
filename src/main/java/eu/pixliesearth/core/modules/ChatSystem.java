@@ -16,6 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ChatSystem implements Listener, Module {
 
     @EventHandler
@@ -98,10 +101,23 @@ public class ChatSystem implements Listener, Module {
                     event.setMessage(event.getMessage().replace("&", "").replace("%", "%%"));
                 }
 
-                final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage());
+                final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage()).replace("%nations_rank%", profile.getCurrentNationRank().getPrefix());
                 event.getRecipients().clear();
-                //TODO Do relations later
-                Bukkit.broadcastMessage(format);
+
+                for (Profile oProfile : Profile.onlineProfiles().values()) {
+                    if (!oProfile.getBlocked().contains(profile.getUniqueId())) {
+                        if (profile.isInNation()) {
+                            if (oProfile.isInNation()) {
+                                Nation.NationRelation rel = Nation.getRelation(oProfile.getNationId(), profile.getNationId());
+                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_nation", "§" + rel.colChar + profile.getCurrentNation().getName()));
+                            } else {
+                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_nation", "§f" + profile.getCurrentNation().getName()));
+                            }
+                        } else {
+                            oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%&f%nations_nation% &8| ", ""));
+                        }
+                    }
+                }
 
                 instance.getUtilLists().chatQueue.put(player.getUniqueId(), event.getMessage());
 

@@ -70,15 +70,22 @@ public class JoinListener implements Listener {
             }
         }
 
-        //TODO WITH NATIONS
         NationChunk nchunk = NationChunk.get(player.getLocation().getChunk());
-        if (nchunk == null) {
-            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 3, 20);
-        } else if (nchunk.getNationId().equals("safezone")) {
-            player.sendTitle("§6SafeZone", Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 3, 20);
+        Nation tn = nchunk.getCurrentNation();
+        if (tn == null) {  // WILDERNESS
+            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
-            Nation n = Nation.getById(nchunk.getNationId());
-            player.sendTitle(n.getName(), n.getDescription(), 20, 20 * 3, 20);
+            if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
+                player.sendTitle("§b" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+            } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
+                player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+            } else if (tn.getNationId().equals("warzone")) { // WARZONE
+                player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+            } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
+                player.sendTitle("§d" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+            } else { // ANY OTHER NATION
+                player.sendTitle(tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+            }
         }
 
 /*

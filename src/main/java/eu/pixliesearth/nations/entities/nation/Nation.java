@@ -109,6 +109,8 @@ public class Nation {
     }
 
     public static NationRelation getRelation(String n1, String n2) {
+        if (n1.equals(n2))
+            return NationRelation.SAME;
         if (getById(n1).isAlliedWith(n2))
             return NationRelation.ALLY;
         return NationRelation.NEUTRAL;
@@ -126,6 +128,7 @@ public class Nation {
 
         ALLY('d'),
         NEUTRAL('f'),
+        SAME('b'),
         PACT('3');
 
         public char colChar;

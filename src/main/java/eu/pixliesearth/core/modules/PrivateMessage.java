@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.modules;
 
 import eu.pixliesearth.core.interfaces.Module;
+import eu.pixliesearth.localization.Lang;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -32,6 +33,10 @@ public class PrivateMessage implements CommandExecutor, Module {
         Player receiver = Bukkit.getPlayer(args[0]);
         if (receiver == null) {
             sender.sendMessage("§5PM §8| §7This player is not online!");
+            return false;
+        }
+        if (sender instanceof Player && instance.getProfile(receiver.getUniqueId()).getBlocked().contains(((Player) sender).getUniqueId())) {
+            Lang.PLAYER_BLOCKED_YOU.send(sender);
             return false;
         }
         StringBuilder messageBuilder = new StringBuilder();
