@@ -38,7 +38,8 @@ public class FamilyCommand implements CommandExecutor {
         }
         sender.sendMessage(Methods.getCenteredMessage("&7Other relations:"));
         for (Map.Entry<String, String> entry : profile.getRelations().entrySet())
-            sender.sendMessage("&6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "&7: &b" + entry.getValue());
+            if (!entry.getValue().startsWith("REQ="))
+                sender.sendMessage("&6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "&7: &b" + entry.getValue());
         sender.sendMessage("§8██████████████████████████████████");
         return false;
     }
