@@ -36,7 +36,8 @@ public class AdoptCommand implements CommandExecutor {
             return false;
         }
         if (args[0].equalsIgnoreCase(player.getName())) {
-            Lang.
+            Lang.CANT_ADOPT_YOURSELF.send(player);
+            return false;
         }
         Profile target = instance.getProfile(targetUUID);
         switch (args.length) {
