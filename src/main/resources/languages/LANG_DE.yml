@@ -135,3 +135,4 @@ PLAYER_SENT_ADOPTION_REQ: "&6%PLAYER% &7hat dir eine Adoptions-anfrage geschickt
 NO_OPEN_X_REQUEST: "&7Du hast keine Offene &b%X% &7Anfrage von diesem Spieler."
 PLAYER_X_ADOPTED_Y: "&6%X% &7hat soeben den Spieler &6%Y% &7adoptiert."
 DENIED_X_REQUEST: "&7Du hast soeben eine &b%X% &7Anfrage abgelehnt."
+CANT_ADOPT_YOURSELF: "&7Du kannst dich selber nicht Adoptieren."

@@ -35,6 +35,9 @@ public class AdoptCommand implements CommandExecutor {
             Lang.ALREADY_RELATED.send(player);
             return false;
         }
+        if (args[0].equalsIgnoreCase(player.getName())) {
+            Lang.
+        }
         Profile target = instance.getProfile(targetUUID);
         switch (args.length) {
             case 1:

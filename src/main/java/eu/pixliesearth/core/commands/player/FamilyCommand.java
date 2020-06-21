@@ -30,7 +30,7 @@ public class FamilyCommand implements CommandExecutor {
         }
         Profile partner = Main.getInstance().getProfile(UUID.fromString(profile.getMarriagePartner()));
         sender.sendMessage("§8██████████████████████████████████");
-        sender.sendMessage(Methods.getCenteredMessage(Lang.YOU_ARE_MARRIED_WITH.get(player)));
+        sender.sendMessage("&7" + Methods.getCenteredMessage(Lang.YOU_ARE_MARRIED_WITH.get(player)));
         if (partner.isInNation()) {
             sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName() + " §8(§b" + Nation.getById(partner.getNationId()).getName() + "§8)"));
         } else {

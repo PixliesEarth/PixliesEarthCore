@@ -62,6 +62,7 @@ public enum Lang {
     NO_OPEN_X_REQUEST(Lang.EARTH, new HashMap<>()),
     PLAYER_X_ADOPTED_Y(Lang.EARTH, new HashMap<>()),
     DENIED_X_REQUEST(Lang.EARTH, new HashMap<>()),
+    CANT_ADOPT_YOURSELF(Lang.EARTH, new HashMap<>()),
     SUDO(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
