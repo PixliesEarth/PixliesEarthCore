@@ -26,6 +26,10 @@ public class BlockCommand implements CommandExecutor {
             Lang.PLAYER_DOES_NOT_EXIST.send(player);
             return false;
         }
+        if (args[0].equalsIgnoreCase(player.getName())) {
+            Lang.YOU_CANT_BLOCK_YOURSELF.send(player);
+            return false;
+        }
         if (profile.getBlocked().contains(targetUUID.toString())) {
             Lang.PLAYER_ALREADY_BLOCKED.send(player);
             return false;
