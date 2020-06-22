@@ -45,16 +45,34 @@ public class JoinListener implements Listener {
                 op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your language");
             StaticPane pane = new StaticPane(0, 0, 9, 3);
-            pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Germany\\\"},SkullOwner:{Id:\\\"be211c23-d8aa-4119-bd0d-7f50fd115d9f\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==").setDisplayname("§eGerman").build(), e -> {
+            pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Germany\\\"},SkullOwner:{Id:\\\"be211c23-d8aa-4119-bd0d-7f50fd115d9f\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==").setDisplayname("§eDeutsch").build(), e -> {
+                e.setCancelled(true);
                 profile.setLang("DE");
-                player.closeInventory();
+                profile.save();
+                gui.update();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 0, 0);
             pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"United States of America\\\"},SkullOwner:{Id:\\\"3c30484a-76d3-4cfe-88e5-e7599bc9ac4d\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19").setDisplayname("§eEnglish").build(), e -> {
+                e.setCancelled(true);
                 profile.setLang("ENG");
-                player.closeInventory();
+                profile.save();
+                gui.update();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 1, 0);
+            pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"France\\\"},SkullOwner:{Id:\\\"395a599f-9588-4fe2-ada9-07cd81262996\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyNjlhMDY3ZWUzN2U2MzYzNWNhMWU3MjNiNjc2ZjEzOWRjMmRiZGRmZjk2YmJmZWY5OWQ4YjM1Yzk5NmJjIn19fQ==\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyNjlhMDY3ZWUzN2U2MzYzNWNhMWU3MjNiNjc2ZjEzOWRjMmRiZGRmZjk2YmJmZWY5OWQ4YjM1Yzk5NmJjIn19fQ==").setDisplayname("§efrançais").build(), e -> {
+                e.setCancelled(true);
+                profile.setLang("FR");
+                profile.save();
+                gui.update();
+                player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+            }), 2, 0);
+            pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Spain\\\"},SkullOwner:{Id:\\\"884a57c8-27ad-4b50-b42b-bee01239f4a8\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJiZDQ1MjE5ODMzMDllMGFkNzZjMWVlMjk4NzQyODc5NTdlYzNkOTZmOGQ4ODkzMjRkYThjODg3ZTQ4NWVhOCJ9fX0=\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJiZDQ1MjE5ODMzMDllMGFkNzZjMWVlMjk4NzQyODc5NTdlYzNkOTZmOGQ4ODkzMjRkYThjODg3ZTQ4NWVhOCJ9fX0=").setDisplayname("§eEspañol").build(), e -> {
+                e.setCancelled(true);
+                profile.setLang("ES");
+                profile.save();
+                gui.update();
+                player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+            }), 3, 0);
             gui.addPane(pane);
             gui.show(player);
         }
@@ -70,21 +88,20 @@ public class JoinListener implements Listener {
             }
         }
 
-        NationChunk nchunk = NationChunk.get(player.getLocation().getChunk());
-        Nation tn = nchunk.getCurrentNation();
+        NationChunk tn = NationChunk.get(player.getLocation().getChunk());
         if (tn == null) {  // WILDERNESS
             player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
             if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
-                player.sendTitle("§b" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§b" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
                 player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("warzone")) { // WARZONE
                 player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
-            } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
-                player.sendTitle("§d" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+            } else if (tn.getCurrentNation().isAlliedWith(profile.getNationId())) { // ALLIES
+                player.sendTitle("§d" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else { // ANY OTHER NATION
-                player.sendTitle(tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                player.sendTitle(tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             }
         }
 

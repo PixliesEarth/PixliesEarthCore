@@ -101,7 +101,7 @@ public class ChatSystem implements Listener, Module {
                     event.setMessage(event.getMessage().replace("&", "").replace("%", "%%"));
                 }
 
-                final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage()).replace("%nations_rank%", profile.getCurrentNationRank().getPrefix());
+                final String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor())).replace("%message%", event.getMessage());
                 event.getRecipients().clear();
 
                 for (Profile oProfile : Profile.onlineProfiles().values()) {
@@ -109,12 +109,12 @@ public class ChatSystem implements Listener, Module {
                         if (profile.isInNation()) {
                             if (oProfile.isInNation()) {
                                 Nation.NationRelation rel = Nation.getRelation(oProfile.getNationId(), profile.getNationId());
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_nation", "§" + rel.colChar + profile.getCurrentNation().getName()));
+                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§" + rel.colChar + profile.getCurrentNation().getName()));
                             } else {
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_nation", "§f" + profile.getCurrentNation().getName()));
+                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
                             }
                         } else {
-                            oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%&f%nations_nation% &8| ", ""));
+                            oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation%", "").replace("§8| ", ""));
                         }
                     }
                 }

@@ -52,6 +52,7 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
+import java.io.InputStream;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -172,6 +173,8 @@ public final class Main extends JavaPlugin {
         //LANGUAGE STUFF
         saveResource("languages/LANG_DE.yml", true);
         saveResource("languages/LANG_ENG.yml", true);
+        saveResource("languages/LANG_fr.yml", true);
+        saveResource("languages/LANG_es.yml", true);
 
         Lang.init();
 

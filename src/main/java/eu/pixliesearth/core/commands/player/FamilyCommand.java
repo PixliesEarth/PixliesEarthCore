@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 public class FamilyCommand implements CommandExecutor {
@@ -24,23 +25,32 @@ public class FamilyCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-        if (!profile.isMarried()) {
-            Lang.YOU_ARE_NOT_MARRIED.send(player);
-            return false;
-        }
-        Profile partner = Main.getInstance().getProfile(UUID.fromString(profile.getMarriagePartner()));
-        sender.sendMessage("§8██████████████████████████████████");
-        sender.sendMessage("&7" + Methods.getCenteredMessage(Lang.YOU_ARE_MARRIED_WITH.get(player)));
-        if (partner.isInNation()) {
-            sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName() + " §8(§b" + Nation.getById(partner.getNationId()).getName() + "§8)"));
+        if (profile.isMarried()) {
+            Profile partner = Main.getInstance().getProfile(UUID.fromString(profile.getMarriagePartner()));
+            sender.sendMessage("§8██████████████████████████████████");
+            sender.sendMessage("§7" + Methods.getCenteredMessage(Lang.YOU_ARE_MARRIED_WITH.get(player)));
+            if (partner.isInNation()) {
+                sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName() + " §8(§b" + Nation.getById(partner.getNationId()).getName() + "§8)"));
+            } else {
+                sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName()));
+            }
+            sender.sendMessage(Methods.getCenteredMessage("&7Other relations:"));
+            StringJoiner relJoiner = new StringJoiner("§8, ");
+            for (Map.Entry<String, String> entry : profile.getRelations().entrySet())
+                if (!entry.getValue().startsWith("REQ="))
+                    relJoiner.add("§6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "§7: §b" + entry.getValue());
+            player.sendMessage(relJoiner.toString());
+            sender.sendMessage("§8██████████████████████████████████");
         } else {
-            sender.sendMessage(Methods.getCenteredMessage("§c♥" + Bukkit.getOfflinePlayer(UUID.fromString(partner.getUniqueId())).getName()));
+            sender.sendMessage("§8██████████████████████████████████");
+            sender.sendMessage(Methods.getCenteredMessage("&7Other relations:"));
+            StringJoiner relJoiner = new StringJoiner("§8, ");
+            for (Map.Entry<String, String> entry : profile.getRelations().entrySet())
+                if (!entry.getValue().startsWith("REQ="))
+                    relJoiner.add("§6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "§7: §b" + entry.getValue());
+            player.sendMessage(relJoiner.toString());
+            sender.sendMessage("§8██████████████████████████████████");
         }
-        sender.sendMessage(Methods.getCenteredMessage("&7Other relations:"));
-        for (Map.Entry<String, String> entry : profile.getRelations().entrySet())
-            if (!entry.getValue().startsWith("REQ="))
-                sender.sendMessage("&6" + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + "&7: &b" + entry.getValue());
-        sender.sendMessage("§8██████████████████████████████████");
         return false;
     }
 

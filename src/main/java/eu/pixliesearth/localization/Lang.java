@@ -4,6 +4,7 @@ import com.mysql.fabric.HashShardMapping;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -207,14 +208,21 @@ public enum Lang {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-            switch (profile.getLang()) {
+/*            switch (profile.getLang()) {
                 case "DE":
                     return PREFIX + languages.get("DE").replace("&", "§");
                 case "ENG":
                     return PREFIX + languages.get("ENG").replace("&", "§");
+                case "FR":
+                    return PREFIX + languages.get("FR").replace("&", "§");
+                case "ES":
+                    return PREFIX + languages.get("ES").replace("&", "§");
                 case "GBENG":
                     return PREFIX + languages.get("ENG").replace("&", "§").replace("t", " ");
-            }
+            }*/
+            if (languages.containsKey(profile.getLang()))
+                return PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang()));
+            return PREFIX + languages.get("ENG").replace("&", "§");
         }
         return PREFIX + languages.get("ENG").replace("&", "§");
     }
@@ -268,7 +276,7 @@ public enum Lang {
             if (!file.getName().endsWith(".yml"))
                 continue;
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-            String langName = file.getName().replace("LANG_", "").replace(".yml", "");
+            String langName = file.getName().replace("LANG_", "").replace(".yml", "").toUpperCase();
             for (String s : cfg.getConfigurationSection("").getKeys(true)) {
                 Map<String, String> map = new HashMap<>(Lang.valueOf(s).languages);
                 map.put(langName, cfg.getString(s));

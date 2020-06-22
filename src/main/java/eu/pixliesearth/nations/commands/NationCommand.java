@@ -122,18 +122,18 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     public void sendHelp(CommandSender sender, int page) {
         switch (page) {
             case 1:
-                sender.sendMessage("§8████████████ §b§lNATIONS §8████████████");
-                sender.sendMessage("§b* §7/n §ecreate §c<NAME>");
-                sender.sendMessage("§b* §7/n §edisband §c[NAME]");
-                sender.sendMessage("§b* §7/n §edescription §c<DESCRIPTION...>");
-                sender.sendMessage("§b* §7/n §einvite §c<PLAYER> [add/remove] §b[NATION]");
-                sender.sendMessage("§b* §7/n §ejoin §c<NATION> [PLAYER]");
-                sender.sendMessage("§b* §7/n §eleave");
-                sender.sendMessage("§b* §7/n §eclaim §c<ONE/AUTO/FILL> [NATION]");
-                sender.sendMessage("§b* §7/n §eunclaim §c<ONE/AUTO/FILL> [NATION]");
-                sender.sendMessage("§b* §7/n §erename §c<NAME> [NATION]");
-                sender.sendMessage("§8███████████ §c<> = required §8███████████");
-                sender.sendMessage("§8███████████ §c[] = optional   §8███████████");
+                sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
+                sender.sendMessage("§b* §7/n create §c<NAME>");
+                sender.sendMessage("§b* §7/n disband §c[NAME]");
+                sender.sendMessage("§b* §7/n description §c<DESCRIPTION...>");
+                sender.sendMessage("§b* §7/n invite §c<PLAYER> [add/remove] §e[NATION]");
+                sender.sendMessage("§b* §7/n join §c<NATION> [PLAYER]");
+                sender.sendMessage("§b* §7/n leave");
+                sender.sendMessage("§b* §7/n claim §c<ONE/AUTO/FILL> [NATION]");
+                sender.sendMessage("§b* §7/n unclaim §c<ONE/AUTO/FILL> [NATION]");
+                sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
+                sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
+                sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b2 &7=-"));
                 break;
             case 2:
                 //TODO 2nd help page

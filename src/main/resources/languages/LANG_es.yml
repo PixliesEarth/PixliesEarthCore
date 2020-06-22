@@ -1,10 +1,9 @@
----
-PLAYER: Jugador
-YOUR_PROFILE: Tu perfil
-LANGUAGE: Idioma
-CHOOSE_LANG: Seleccione su idioma
-CHOOSE_COLOUR: Escoja un color
-WILDERNESS: Tierra de nadie
+PLAYER: "Jugador"
+YOUR_PROFILE: "Tu perfil"
+LANGUAGE: "Idioma"
+CHOOSE_LANG: "Seleccione su idioma"
+CHOOSE_COLOUR: "Escoja un color"
+WILDERNESS: "Tierra de nadie"
 WILDERNESS_SUBTITLE: "&7¡Es peligroso viajar solo!"
 SAFEZONE_SUBTITLE: "&7Aquí estás a salvo."
 NO_PERMISSIONS: "§cPermisos insuficientes."
@@ -17,7 +16,7 @@ CHAT_UNMUTED: "&7El chat ha sido habilitado por &6%PLAYER%&7."
 CHAT_IS_MUTED_ATM: "&7El chat está silenciado en este instante."
 CHAT_COOLDOWN: "&7Tienes que esperar &3%COOLDOWN% &7para poder hablar de nuevo."
 PROFILE_LOADED: "&7Tu perfil ha sido &acargado&7. &8(&7%TIME%&8)"
-LANGUAGE_CHANGED: "&7Has cambiado tu idioma a &bENGLISH&7."
+LANGUAGE_CHANGED: "&7Has cambiado tu idioma a &bEspañol&7."
 CHANGED_SCOREBOARDTYPE: "&7Has cambiado el modo de tu marcador a &b%TYPE%&7."
 CHANGED_FAV_COL: "&7Has cambiado tu color favorito a %COL%&7."
 PLAYER_JOINED_FIRST_TIME: "¡&6%PLAYER% &7se ha conectado a &b&lPixlies&fEarth &7por
@@ -131,8 +130,8 @@ CANT_MARRY_RELATED: "&7No puedes casarte con alguien de tu familia... Eso seria.
   INCESTO!"
 PLAYERS_HAD_SEX: "&6&o%PLAYER1% &7&oy&6&o%PLAYER2% &7&oacaban de tener sexo..."
 INVITE_PLAYER_ALREADY_IN_NATION: "&7Este jugador &cya esta &7en una nación."
-ACCEPT: aceptar
-DENY: negar
+ACCEPT: "aceptar"
+DENY: "negar"
 SUCCESSFULLY_INVITED: "&6%INVITER% &7invito &6%TARGET% &7a tu nación."
 YOU_HAVE_BEEN_INVITED: "&7Has sido invitado a la nación de &b%NATION%&7."
 YOU_HAVE_X_INVITES_OPEN: "&7Tienes &a%X% &7invitaciones abiertas. /n invites"

@@ -53,7 +53,7 @@ public class Profile {
     private String favoriteColour;
     private String boardType;
     private String lang;
-    private List<String> blocked = new ArrayList<>();
+    private List<String> blocked;
     private Map<String, Object> extras;
 
     public static Profile get(UUID uuid) {

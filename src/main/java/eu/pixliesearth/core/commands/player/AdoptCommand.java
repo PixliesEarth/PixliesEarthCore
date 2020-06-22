@@ -23,6 +23,10 @@ public class AdoptCommand implements CommandExecutor {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
+        if (args.length == 0) {
+            Lang.WRONG_USAGE.send(sender, "%USAGE%;/adopt <" + Lang.PLAYER.get(sender) + ">");
+            return false;
+        }
         Main instance = Main.getInstance();
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -42,7 +46,7 @@ public class AdoptCommand implements CommandExecutor {
         Profile target = instance.getProfile(targetUUID);
         switch (args.length) {
             case 1:
-                if (target.getRelations().get(profile.getUniqueId()).equals("REQ=ADOPT")) {
+                if (target.getRelations().containsKey(profile.getUniqueId()) && target.getRelations().get(profile.getUniqueId()).equals("REQ=ADOPT")) {
                     Lang.ALREADY_REQUESTED_ADOPTION.send(player);
                     return false;
                 }
@@ -58,7 +62,6 @@ public class AdoptCommand implements CommandExecutor {
                     deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/adopt " + player.getName() + " deny"));
                     accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§aClick me to accept").create()));
                     deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cClick me to deny").create()));
-                    assert targetPlayer != null;
                     targetPlayer.spigot().sendMessage(accept);
                     targetPlayer.spigot().sendMessage(deny);
                 }
