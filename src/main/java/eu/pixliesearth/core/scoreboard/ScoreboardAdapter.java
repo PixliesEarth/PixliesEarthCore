@@ -88,16 +88,14 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 break;
             case COMPACT:
-                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add("&3Staff");
-                    returnable.add("§aenabled");
-                }
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
+                    returnable.add("&3Staff: §aenabled");
                 returnable.add("§2§l$§a" + profile.getBalance());
                 returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
                 returnable.add("§e" + energy);
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
-                    returnable.add(c + "♜ §8| §b" + nation.getName());
+                    returnable.add(c + "♚ §8| §b" + nation.getName());
                     returnable.add(c + "☺ §8| §a" + nation.getOnlineMembers());
                     returnable.add(c + "☗ §8| §b" + nation.getEra());
                 }

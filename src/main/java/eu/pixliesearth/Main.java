@@ -173,8 +173,8 @@ public final class Main extends JavaPlugin {
         //LANGUAGE STUFF
         saveResource("languages/LANG_DE.yml", true);
         saveResource("languages/LANG_ENG.yml", true);
-        saveResource("languages/LANG_fr.yml", true);
-        saveResource("languages/LANG_es.yml", true);
+        saveResource("languages/LANG_FR.yml", true);
+        saveResource("languages/LANG_ES.yml", true);
 
         Lang.init();
 
@@ -241,6 +241,7 @@ public final class Main extends JavaPlugin {
         getCommand("sex").setExecutor(new SexCommand());
         getCommand("adopt").setExecutor(new AdoptCommand());
         getCommand("block").setExecutor(new BlockCommand());
+        getCommand("nick").setExecutor(new NickCommand());
     }
 
     private void registerEvents(PluginManager manager) {

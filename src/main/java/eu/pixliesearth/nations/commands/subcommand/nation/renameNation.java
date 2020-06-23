@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -51,7 +52,11 @@ public class renameNation implements SubCommand {
                     }
                     nation = profile.getCurrentNation();
                     final String oldName = nation.getName();
-                    success = nation.rename(args[0]);
+                    if (args[0].length() < 3 || args[0].length() > 10 || !StringUtils.isAlphanumeric(args[0])) {
+                        player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
+                        return false;
+                    }
+                    success = nation.rename(args[0].replace("&", ""));
                     if (!success) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;

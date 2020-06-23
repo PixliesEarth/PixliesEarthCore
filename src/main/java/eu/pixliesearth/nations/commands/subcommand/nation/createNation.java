@@ -12,6 +12,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.Methods;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -57,7 +58,7 @@ public class createNation implements SubCommand {
             player.sendMessage(Lang.WRONG_USAGE_NATIONS.get(player).replace("%USAGE%", "/n create <name>"));
             return false;
         }
-        String name = args[0];
+        String name = args[0].replace("&", "");
         if (Nation.getByName(name) != null) {
             player.sendMessage(Lang.NATION_WITH_NAME_ALREADY_EXISTS.get(player));
             return false;

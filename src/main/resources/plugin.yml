@@ -169,6 +169,11 @@ commands:
     description: Block player
     aliases:
       - ignore
+  nick:
+    description: nick
+    aliases:
+      - nickname
+      - disguise
 
 permissions:
   # GENERAL
@@ -200,6 +205,11 @@ permissions:
     default: op
   earth.tphere:
     default: op
+  earth.nick:
+    default: op
+  earth.nick.colours:
+    default: op
+
   # CHAT
   earth.chat.colours:
     default: op
