@@ -10,6 +10,7 @@ import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
+import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
@@ -52,8 +53,6 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
-import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -174,8 +173,8 @@ public final class Main extends JavaPlugin {
         //LANGUAGE STUFF
         saveResource("languages/LANG_DE.yml", true);
         saveResource("languages/LANG_ENG.yml", true);
-        saveResource("languages/LANG_FR.yml", true);
-        saveResource("languages/LANG_ES.yml", true);
+        saveResource("languages/LANG_fr.yml", true);
+        saveResource("languages/LANG_es.yml", true);
 
         Lang.init();
 
@@ -263,6 +262,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new PlayerInteractListener(), this);
         manager.registerEvents(new AnvilListener(), this);
         manager.registerEvents(new BlockBreakListener(), this);
+        manager.registerEvents(new CIEntityDamageByEntityListener(), this);
     }
 
     /**
