@@ -53,6 +53,7 @@ import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 

@@ -120,9 +120,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     }*/
 
     public void sendHelp(CommandSender sender, int page) {
+        sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
             case 1:
-                sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
                 sender.sendMessage("§b* §7/n create §c<NAME>");
                 sender.sendMessage("§b* §7/n disband §c[NAME]");
                 sender.sendMessage("§b* §7/n description §c<DESCRIPTION...>");
@@ -132,13 +132,13 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n claim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n unclaim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
-                sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
-                sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b2 &7=-"));
                 break;
             case 2:
-                //TODO 2nd help page
+                sender.sendMessage("§b* §7/n rank §c");
                 break;
         }
+        sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
+        sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b2 &7=-"));
     }
 
 }

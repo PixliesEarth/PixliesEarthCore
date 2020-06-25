@@ -209,6 +209,8 @@ permissions:
     default: op
   earth.nick.colours:
     default: op
+  earth.nick.others:
+    default: op
 
   # CHAT
   earth.chat.colours:
