@@ -65,7 +65,7 @@ public class mapNation implements SubCommand {
     }
 
     public void renderChatMap(Player player) {
-        player.sendMessage(Methods.getCenteredMessage("§8-= §bClaim-map §8=-"));
+        final long start = System.currentTimeMillis();
         Profile profile = instance.getProfile(player.getUniqueId());
         List<TextComponent> rows = new ArrayList<>();
         final int height = 6;
@@ -136,7 +136,8 @@ public class mapNation implements SubCommand {
         }
         for (TextComponent r : rows)
             player.spigot().sendMessage(r);
-        player.sendMessage(Methods.getCenteredMessage("§7Legend: §b█Yours§ 8| §d█Ally §8| §a█Wilderness"));
+        player.sendMessage("§7Legend: §b█Yours §8| §d█Ally §8| §a█Wilderness");
+        player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
 
 }
