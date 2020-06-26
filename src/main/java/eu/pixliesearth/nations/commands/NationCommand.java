@@ -112,14 +112,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         return completions;
     }
 
-    //TODO IMPLEMENT BRIGADER/COMMODORE
-/*    private static void registerCompletions(Commodore commodore, PluginCommand command) {
-        commodore.register(command, LiteralArgumentBuilder.literal("nations")
-                .then(RequiredArgumentBuilder.argument("some-argument", StringArgumentType.string()))
-                .then(RequiredArgumentBuilder.argument("some-other-argument", BoolArgumentType.bool()))
-        );
-    }*/
-
     public void sendHelp(CommandSender sender, int page) {
         sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
