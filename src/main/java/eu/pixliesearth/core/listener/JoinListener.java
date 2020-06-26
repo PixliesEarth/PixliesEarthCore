@@ -114,6 +114,8 @@ public class JoinListener implements Listener {
             profile.setEnergy(5);
 
         profile.getTimers().clear();
+        if (profile.getNickname().length() > 0)
+            player.setDisplayName(profile.getNickname());
         profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));

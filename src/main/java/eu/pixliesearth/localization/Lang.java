@@ -73,6 +73,7 @@ public enum Lang {
     CANT_NICK_LIKE_A_PLAYER(Lang.EARTH, new HashMap<>()),
     INVALID_INPUT(Lang.EARTH, new HashMap<>()),
     CHANGED_NICKNAME(Lang.EARTH, new HashMap<>()),
+    CHANGED_PLAYER_NICKNAME(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),

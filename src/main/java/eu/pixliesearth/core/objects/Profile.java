@@ -204,7 +204,7 @@ public class Profile {
     }
 
     public boolean isOnline() {
-        return Bukkit.getPlayer(UUID.fromString(uniqueId)) == null;
+        return Bukkit.getPlayer(UUID.fromString(uniqueId)) != null;
     }
 
     public boolean isMarried() {
