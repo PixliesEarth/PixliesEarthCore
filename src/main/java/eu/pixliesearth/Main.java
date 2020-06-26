@@ -263,6 +263,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new AnvilListener(), this);
         manager.registerEvents(new BlockBreakListener(), this);
         manager.registerEvents(new CIEntityDamageByEntityListener(), this);
+        manager.registerEvents(new EntitySpawnListener(), this);
     }
 
     /**
