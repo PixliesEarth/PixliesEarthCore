@@ -2,6 +2,10 @@ package eu.pixliesearth.nations.entities.chunk;
 
 import com.google.common.collect.RowSortedTable;
 import com.google.common.collect.TreeBasedTable;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.events.TerritoryChangeEvent;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
@@ -9,6 +13,7 @@ import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,6 +95,46 @@ public class NationChunk {
         if (c == null)
             return null;
         return Nation.getById(c.getNationId());
+    }
+
+    public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId) {
+        if (get(world, x, z) != null) {
+            player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
+            return false;
+        }
+        //TODO POWER
+        Nation nation = Nation.getById(nationId);
+        NationChunk nc = new NationChunk(nationId, world, x, z);
+        TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
+        Bukkit.getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            nc.claim();
+            for (Player members : nation.getOnlineMemberSet())
+                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
+            System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
+        }
+        return true;
+    }
+
+    public static boolean unclaim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType) {
+        NationChunk nc = get(world, x, z);
+        boolean allowed = false;
+        if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
+        Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF) && profile.getNationId().equals(nc.getNationId())) allowed = true;
+        if (!allowed) {
+            Lang.CHUNK_NOT_YOURS.send(player);
+            return false;
+        }
+        TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
+        Bukkit.getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            nc.unclaim();
+            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
+                members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
+            System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
+        }
+        return true;
     }
 
     //ONLY RUN ONCE ONENABLE

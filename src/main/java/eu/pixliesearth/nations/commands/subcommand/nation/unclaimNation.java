@@ -57,22 +57,7 @@ public class unclaimNation implements SubCommand {
                 return false;
             }
             if (args[0].equalsIgnoreCase("one")) {
-                NationChunk nc = NationChunk.get(c);
-                boolean allowed = false;
-                if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
-                if (profile.getNationId().equals(nc.getNationId())) allowed = true;
-                if (!allowed) {
-                    Lang.CHUNK_NOT_YOURS.send(player);
-                    return false;
-                }
-                TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    nc.unclaim();
-                    for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                        members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                    System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
-                }
+                NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
             } else if (args[0].equalsIgnoreCase("auto")) {
                 if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
@@ -85,5 +70,6 @@ public class unclaimNation implements SubCommand {
         }
         return false;
     }
+    //TODO OTHERS
 
 }

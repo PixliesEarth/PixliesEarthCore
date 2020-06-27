@@ -58,19 +58,7 @@ public class claimNation implements SubCommand {
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("one")) {
-                    if (NationChunk.get(c) != null) {
-                        player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
-                        return false;
-                    }
-                    NationChunk nc = new NationChunk(profile.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
-                    TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (!event.isCancelled()) {
-                        nc.claim();
-                        for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                            members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                        System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
-                    }
+                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getX(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
@@ -92,16 +80,7 @@ public class claimNation implements SubCommand {
                         Lang.NATION_DOESNT_EXIST.send(player);
                         return false;
                     }
-                    NationChunk nc = new NationChunk(nation.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
-                    TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_OTHER);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (!event.isCancelled()) {
-                        nc.claim();
-                        for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                            members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                        player.sendMessage(Lang.PLAYER_CLAIMED.get(player).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                        System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
-                    }
+                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_OTHER, nation.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                         Lang.NO_PERMISSIONS.send(player);
@@ -120,26 +99,6 @@ public class claimNation implements SubCommand {
                     }
 
                 }
-                // WHY THE FUCK WOULD WE NEED CLAIM SQUARE WITH THAT LITTLE CLAIMING POWER
-                /* else if (args[0].equalsIgnoreCase("square")) {
-                    final NationChunk chunk = NationChunk.get(c);
-                    final Set<NationChunk> chunks = new HashSet<>();
-
-                    chunks.add(chunk);
-
-                    int radiusZero = Integer.parseInt(args[1]) - 1;
-
-                    for (int dx = -radiusZero; dx <= radiusZero; dx++)
-                    {
-                        for (int dz = -radiusZero; dz <= radiusZero; dz++)
-                        {
-                            int x = chunk.getX() + dx;
-                            int z = chunk.getZ() + dz;
-
-                            chunks.add(chunk.withChunkX(x).withChunkZ(z));
-                        }
-                    }
-                }*/
                 break;
         }
 
