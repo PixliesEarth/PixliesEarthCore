@@ -109,6 +109,8 @@ public enum Lang {
     PLAYER_LEFT_NATION(Lang.NATION, new HashMap<>()),
     YOU_LEFT_NATION(Lang.NATION, new HashMap<>()),
     RANK_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    SCOREBOARDMAP_ENABLED(Lang.NATION, new HashMap<>()),
+    SCOREBOARDMAP_DISABLED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

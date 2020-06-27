@@ -7,7 +7,6 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullBuilder;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -32,6 +31,7 @@ public class mapNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("chat", 1);
         returner.put("gui", 1);
+        returner.put("scoreboard", 1);
         return returner;
     }
 
@@ -40,6 +40,7 @@ public class mapNation implements SubCommand {
         return false;
     }
 
+    //TODO SCOREBOARD MAP
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
@@ -58,6 +59,15 @@ public class mapNation implements SubCommand {
             case "gui":
                 renderGuiMap(player);
                 break;
+            case "scoreboard":
+                if (instance.getUtilLists().scoreboardMaps.contains(player.getUniqueId())) {
+                    instance.getUtilLists().scoreboardMaps.remove(player.getUniqueId());
+                    Lang.SCOREBOARDMAP_DISABLED.send(player);
+                } else {
+                    instance.getUtilLists().scoreboardMaps.add(player.getUniqueId());
+                    Lang.SCOREBOARDMAP_ENABLED.send(player);
+                }
+                break;
             default:
                 Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n map <chat/gui>");
                 break;
@@ -65,6 +75,7 @@ public class mapNation implements SubCommand {
         return false;
     }
 
+    //TODO CLICKLISTENER
     public void renderGuiMap(Player player) {
         final long start = System.currentTimeMillis();
         Inventory inv = Bukkit.createInventory(null, 6 * 9, "§bClaim-map");

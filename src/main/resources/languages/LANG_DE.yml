@@ -145,3 +145,5 @@ CANT_NICK_LIKE_A_PLAYER: "&7Du kannst dich nicht wie einen anderen Spieler umben
 INVALID_INPUT: "&7Deine Eingabe beinhaltet illegale Symbole, ist zu lang oder zu kurz."
 CHANGED_NICKNAME: "&7Du hast deinen Nicknamen zu &b%NICK% &7geändert."
 CHANGED_PLAYER_NICKNAME: "&7Du hast &6%PLAYER%&7s Nicknamen zu &b%NICK%&7 geändert."
+SCOREBOARDMAP_ENABLED: "&7Scoreboard-map &aaktiviert&7."
+SCOREBOARDMAP_DISABLED: "&7Scoreboard-map &cde-aktiviert&7."
