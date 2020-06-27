@@ -73,6 +73,13 @@ public class JoinListener implements Listener {
                 gui.update();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 3, 0);
+            pane.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Netherlands\\\"},SkullOwner:{Id:\\\"5ddfbff0-7173-48ec-82e6-73343e7fce0f\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzIzY2YyMTBlZGVhMzk2ZjJmNWRmYmNlZDY5ODQ4NDM0ZjkzNDA0ZWVmZWFiZjU0YjIzYzA3M2IwOTBhZGYifX19\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzIzY2YyMTBlZGVhMzk2ZjJmNWRmYmNlZDY5ODQ4NDM0ZjkzNDA0ZWVmZWFiZjU0YjIzYzA3M2IwOTBhZGYifX19").setDisplayname("§eNederlands").build(), e -> {
+                e.setCancelled(true);
+                profile.setLang("NL");
+                profile.save();
+                gui.update();
+                player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+            }), 4, 0);
             gui.addPane(pane);
             gui.show(player);
         }

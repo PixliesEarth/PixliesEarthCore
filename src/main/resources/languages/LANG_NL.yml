@@ -1,10 +1,9 @@
----
-PLAYER: Speler
-YOUR_PROFILE: Jouw profiel
-LANGUAGE: Taal
-CHOOSE_LANG: Kies een taal
-CHOOSE_COLOUR: Kies een kleur
-WILDERNESS: Wildernis
+PLAYER: "Speler"
+YOUR_PROFILE: "Jouw profiel"
+LANGUAGE: "Taal"
+CHOOSE_LANG: "Kies een taal"
+CHOOSE_COLOUR: "Kies een kleur"
+WILDERNESS: "Wildernis"
 WILDERNESS_SUBTITLE: "&7Het is gevaarlijk om alleen te reizen!"
 SAFEZONE_SUBTITLE: "&7YJe bent hier veilig."
 NO_PERMISSIONS: "§cOnvoldoende permissies."
@@ -62,7 +61,7 @@ NOT_ENOUGH_MONEY: "&7Je hebt &cniet&7 genoeg geld voor deze actie."
 UNEXPECTED_ECO_ERROR: "&cEr was een onverwachte economiefout. Meld dit aan het PixliesEarth
   personeelsteam als u denkt dat dit server-zijdig was."
 PAID_PLAYER_MONEY: "&7Je hebt &6%TARGET%&7 met succes &2&l$&a%AMOUNT%&7 betaald."
-RECEIVED_MONEY_FROM_PLAYER: Je hebt &2&l$&a%AMOUNT% &7van &6%TARGET%&7 gekregen.
+RECEIVED_MONEY_FROM_PLAYER: "Je hebt &2&l$&a%AMOUNT% &7van &6%TARGET%&7 gekregen."
 PLAYER_DOESNT_HAVE_ENOUGH_MONEY: "&7De speler heeft  &cniet&7 genoeg geld voor deze
   actie."
 TOOK_MONEY_FROM_PLAYER: "&aSuccesvol &7teruggetrokken &2&l$&a%AMOUNT% &7van &6%PLAYER%&7's
