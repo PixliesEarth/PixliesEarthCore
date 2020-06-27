@@ -5,6 +5,7 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -43,16 +44,17 @@ public class unclaimNation implements SubCommand {
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
-        if (NationChunk.get(c) == null) {
+        NationChunk nc = NationChunk.get(c);
+        if (nc == null) {
             player.sendMessage(Lang.NOT_CLAIMED.get(player));
             return false;
         }
         if (args.length == 1) {
-            if (!profile.isInNation()) {
+            if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                 player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                 return false;
             }
-            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM)) {
+            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                 Lang.NO_PERMISSIONS.send(sender);
                 return false;
             }
@@ -63,7 +65,7 @@ public class unclaimNation implements SubCommand {
                     instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
                 } else {
-                    instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), profile.getNationId());
+                    instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
                     player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
                 }
             }
