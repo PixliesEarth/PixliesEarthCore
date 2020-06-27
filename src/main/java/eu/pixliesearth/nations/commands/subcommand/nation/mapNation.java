@@ -83,7 +83,7 @@ public class mapNation implements SubCommand {
                 if (chunkX == playerCX && chunkZ == playerCZ) {
                     if (profile.isInNation()) {
                         if (nc == null) {
-                            TextComponent cComp = new TextComponent("§a☻");
+                            TextComponent cComp = new TextComponent("§2☻");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness\n§7You may claim here.").create()));
                             comp.addExtra(cComp);
                         } else {
@@ -95,7 +95,7 @@ public class mapNation implements SubCommand {
                         }
                     } else {
                         if (nc == null) {
-                            TextComponent cComp = new TextComponent("§a☻");
+                            TextComponent cComp = new TextComponent("§2☻");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness").create()));
                             comp.addExtra(cComp);
                         } else {
@@ -108,7 +108,7 @@ public class mapNation implements SubCommand {
                 } else {
                     if (profile.isInNation()) {
                         if (nc == null) {
-                            TextComponent cComp = new TextComponent("§a█");
+                            TextComponent cComp = new TextComponent("§2█");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness\n§7You may claim here.").create()));
                             comp.addExtra(cComp);
                         } else {
@@ -120,7 +120,7 @@ public class mapNation implements SubCommand {
                         }
                     } else {
                         if (nc == null) {
-                            TextComponent cComp = new TextComponent("§a█");
+                            TextComponent cComp = new TextComponent("§2█");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness").create()));
                             comp.addExtra(cComp);
                         } else {
@@ -136,7 +136,7 @@ public class mapNation implements SubCommand {
         }
         for (TextComponent r : rows)
             player.spigot().sendMessage(r);
-        player.sendMessage("§7Legend: §b█Yours §8| §d█Ally §8| §a█Wilderness");
+        player.sendMessage("§7Legend: §b█Yours §8| §d█Ally §8| §2█Wilderness");
         player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
 

@@ -77,7 +77,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
                     returnable.add("  §8» §b" + nation.getName());
-                    returnable.add("  §8» §a" + nation.getOnlineMembers() + " Online");
+                    returnable.add("  §8» §7Online: §a" + nation.getOnlineMembers());
                     returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {
