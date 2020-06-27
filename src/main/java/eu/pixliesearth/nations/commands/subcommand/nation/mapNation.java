@@ -5,13 +5,18 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullBuilder;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.*;
 
@@ -61,7 +66,61 @@ public class mapNation implements SubCommand {
     }
 
     public void renderGuiMap(Player player) {
-        //TODO
+        final long start = System.currentTimeMillis();
+        Inventory inv = Bukkit.createInventory(null, 6 * 9, "§bClaim-map");
+        Profile profile = instance.getProfile(player.getUniqueId());
+        final int height = 2;
+        final int width = 4;
+
+        final int playerCX = player.getChunk().getX();
+        final int playerCZ = player.getChunk().getZ();
+        final World world = player.getWorld();
+        for (int row = height; row >= -height; row--) {
+            for (int x = width; x >= -width; x--) {
+                final int chunkX = playerCX - x,
+                        chunkZ = playerCZ - row;
+                NationChunk nc = NationChunk.get(world.getName(), chunkX, chunkZ);
+                if (chunkX == playerCX && chunkZ == playerCZ) {
+                    if (profile.isInNation()) {
+                        if (nc == null) {
+                            inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(player.getName()).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§cWilderness").build());
+                        } else {
+                            char colChar = Nation.getRelation(nc.getNationId(), profile.getNationId()).colChar;
+                            Nation nation = nc.getCurrentNation();
+                            inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(player.getName()).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§" + colChar + nation.getName()).addLoreLine("§7§o" + nation.getDescription()).build());
+                        }
+                    } else {
+                        if (nc == null) {
+                            inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(player.getName()).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§cWilderness").build());
+                        } else {
+                            Nation nation = nc.getCurrentNation();
+                            inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(player.getName()).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§f" + nation.getName()).addLoreLine("§7§o" + nation.getDescription()).build());
+                        }
+                    }
+                } else {
+                    if (profile.isInNation()) {
+                        if (nc == null) {
+                            inv.addItem(new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§cWilderness").build());
+                        } else {
+                            char colChar = Nation.getRelation(nc.getNationId(), profile.getNationId()).colChar;
+                            Nation nation = nc.getCurrentNation();
+                            inv.addItem(new ItemBuilder(Methods.getStainedGlassPaneByColChar(colChar)).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§" + colChar + nation.getName()).addLoreLine("§7§o" + nation.getDescription()).build());
+                        }
+                    } else {
+                        if (nc == null) {
+                            inv.addItem(new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§cWilderness").build());
+                        } else {
+                            Nation nation = nc.getCurrentNation();
+                            inv.addItem(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setDisplayName("§b" + chunkX + "§8, §b" + chunkZ).addLoreLine("§f" + nation.getName()).addLoreLine("§7§o" + nation.getDescription()).build());
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++)
+            inv.setItem(i + 45, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
+        player.openInventory(inv);
+        player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
 
     public void renderChatMap(Player player) {
@@ -81,30 +140,16 @@ public class mapNation implements SubCommand {
                         chunkZ = playerCZ - row;
                 NationChunk nc = NationChunk.get(world.getName(), chunkX, chunkZ);
                 if (chunkX == playerCX && chunkZ == playerCZ) {
-                    if (profile.isInNation()) {
                         if (nc == null) {
-                            TextComponent cComp = new TextComponent("§2☻");
+                            TextComponent cComp = new TextComponent("§e█");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness\n§7You may claim here.").create()));
                             comp.addExtra(cComp);
                         } else {
-                            char colChar = Nation.getRelation(nc.getNationId(), profile.getNationId()).colChar;
                             Nation nation = nc.getCurrentNation();
-                            TextComponent cComp = new TextComponent("§" + colChar + "☻");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§" + colChar + nation.getName() + "\n" + "§7" + nation.getDescription()).create()));
-                            comp.addExtra(cComp);
-                        }
-                    } else {
-                        if (nc == null) {
-                            TextComponent cComp = new TextComponent("§2☻");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness").create()));
-                            comp.addExtra(cComp);
-                        } else {
-                            Nation nation = nc.getCurrentNation();
-                            TextComponent cComp = new TextComponent("§f☻");
+                            TextComponent cComp = new TextComponent("§e█");
                             cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§f" + nation.getName() + "\n" + "§7" + nation.getDescription()).create()));
                             comp.addExtra(cComp);
                         }
-                    }
                 } else {
                     if (profile.isInNation()) {
                         if (nc == null) {
@@ -136,7 +181,7 @@ public class mapNation implements SubCommand {
         }
         for (TextComponent r : rows)
             player.spigot().sendMessage(r);
-        player.sendMessage("§7Legend: §b█Yours §8| §d█Ally §8| §2█Wilderness");
+        player.sendMessage("§7Legend: §e█You §8| §b█Yours §8| §d█Ally §8| §2█Wilderness");
         player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
 

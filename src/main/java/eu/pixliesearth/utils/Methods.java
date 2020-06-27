@@ -171,4 +171,18 @@ public class Methods {
         return ChatColor.translateAlternateColorCodes('&', sb.toString());
     }
 
+    public static Material getStainedGlassPaneByColChar(char colChar) {
+        switch (colChar) {
+            case 'b':
+                return Material.LIGHT_BLUE_STAINED_GLASS_PANE;
+            case 'c':
+                return Material.RED_STAINED_GLASS_PANE;
+            case 'f':
+                return Material.WHITE_STAINED_GLASS_PANE;
+            case 'd':
+                return Material.MAGENTA_STAINED_GLASS_PANE;
+        }
+        return Material.WHITE_STAINED_GLASS_PANE;
+    }
+
 }

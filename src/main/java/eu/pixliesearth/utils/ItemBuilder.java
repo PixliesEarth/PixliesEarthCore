@@ -3,6 +3,7 @@ package eu.pixliesearth.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Skull;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -96,7 +97,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setSkullOwner(String owner) {
-        ((SkullMeta) meta).setOwningPlayer(Bukkit.getPlayer(owner));
+        ((SkullMeta) meta).setOwningPlayer(Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(owner)));
         return this;
     }
 
