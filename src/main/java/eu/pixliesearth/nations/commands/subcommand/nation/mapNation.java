@@ -50,7 +50,7 @@ public class mapNation implements SubCommand {
         }
         Player player = (Player) sender;
         if (args.length == 0) {
-            Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n map <chat/gui>");
+            Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n map <chat/gui/scoreboard>");
             return false;
         }
         switch (args[0].toLowerCase()) {
@@ -70,7 +70,7 @@ public class mapNation implements SubCommand {
                 }
                 break;
             default:
-                Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n map <chat/gui>");
+                Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n map <chat/gui/scoreboard>");
                 break;
         }
         return false;

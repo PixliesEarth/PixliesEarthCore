@@ -57,6 +57,10 @@ public class kickNation implements SubCommand {
                 Lang.PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU.send(player);
                 return false;
             }
+            if (target.getNationRank().equalsIgnoreCase("leader")) {
+                Lang.CANT_KICK_LEADER.send(player);
+                return false;
+            }
             final String targetnation = target.getNationId();
             for (Player member : Nation.getById(targetnation).getOnlineMemberSet())
                 if (member.getUniqueId() != player.getUniqueId())

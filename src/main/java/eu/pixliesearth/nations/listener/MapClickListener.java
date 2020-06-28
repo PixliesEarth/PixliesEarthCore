@@ -16,7 +16,10 @@ public class MapClickListener implements Listener {
         if (item.getType().equals(Material.AIR)) return;
         if (item.getItemMeta().getDisplayName().equals("")) return;
         if (!event.getView().getTitle().equals("§bClaim-map")) return;
-        if (item.getType().equals(Material.BLACK_STAINED_GLASS_PANE)) return;
+        if (item.getType().equals(Material.BLACK_STAINED_GLASS_PANE)) {
+            event.setCancelled(true);
+            return;
+        }
 
         Player player = (Player) event.getWhoClicked();
 
