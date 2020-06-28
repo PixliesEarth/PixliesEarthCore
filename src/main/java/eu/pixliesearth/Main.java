@@ -32,6 +32,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
@@ -265,6 +266,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new BlockBreakListener(), this);
         manager.registerEvents(new CIEntityDamageByEntityListener(), this);
         manager.registerEvents(new EntitySpawnListener(), this);
+        manager.registerEvents(new MapClickListener(), this);
     }
 
     /**

@@ -58,7 +58,7 @@ public class claimNation implements SubCommand {
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("one")) {
-                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getX(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
+                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
@@ -67,6 +67,11 @@ public class claimNation implements SubCommand {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), profile.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
+                } else if (args[0].contains(";")) {
+                    int x = Integer.parseInt(args[0].split(";")[0]);
+                    int z = Integer.parseInt(args[0].split(";")[1]);
+                    String world = player.getWorld().getName();
+                    NationChunk.claim(player, world, x, z, TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
                 }
                 break;
             case 2:
@@ -97,7 +102,6 @@ public class claimNation implements SubCommand {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), nation.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
-
                 }
                 break;
         }

@@ -128,7 +128,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
                 break;
             case 2:
-                sender.sendMessage("§b* §7/n rank §c");
+                sender.sendMessage("§b* §7/n rank §c"); //TODO
+                sender.sendMessage("§b* §7/n kick §c<player>");
+                sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
                 break;
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
