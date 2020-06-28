@@ -36,6 +36,10 @@ public class NickCommand implements CommandExecutor {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
                     return false;
                 }
+                if (Profile.getByNickname(args[0]) != null) {
+                    Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
+                    return false;
+                }
                 if (!player.hasPermission("earth.nick") && !player.hasPermission("earth.nick.colours")) {
                     Lang.NO_PERMISSIONS.send(player);
                     return false;
@@ -72,6 +76,10 @@ public class NickCommand implements CommandExecutor {
                     return false;
                 }
                 if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                    Lang.CANT_NICK_LIKE_A_PLAYER.send(sender);
+                    return false;
+                }
+                if (Profile.getByNickname(args[0]) != null) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(sender);
                     return false;
                 }

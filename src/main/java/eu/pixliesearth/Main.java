@@ -244,6 +244,7 @@ public final class Main extends JavaPlugin {
         getCommand("adopt").setExecutor(new AdoptCommand());
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
+        getCommand("realname").setExecutor(new RealNameCommand());
     }
 
     private void registerEvents(PluginManager manager) {

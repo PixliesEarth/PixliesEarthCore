@@ -27,6 +27,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new rankNation());
         subCommands.add(new mapNation());
         subCommands.add(new kickNation());
+        subCommands.add(new infoNation());
         return subCommands;
     }
 
@@ -131,6 +132,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n rank §c"); //TODO
                 sender.sendMessage("§b* §7/n kick §c<player>");
                 sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
+                sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
                 break;
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
