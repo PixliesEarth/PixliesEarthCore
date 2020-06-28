@@ -55,7 +55,7 @@ public class infoNation implements SubCommand {
                 sendNationInfo(profile.getCurrentNation(), sender);
                 break;
             case 1:
-                nation = Nation.getById(args[0]);
+                nation = Nation.getByName(args[0]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(sender);
                     return false;
