@@ -28,6 +28,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new mapNation());
         subCommands.add(new kickNation());
         subCommands.add(new infoNation());
+        subCommands.add(new helpNation());
         return subCommands;
     }
 
@@ -114,10 +115,16 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         return completions;
     }
 
-    public void sendHelp(CommandSender sender, int page) {
+    public static void sendHelp(CommandSender sender, int page) {
         sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
-            case 1:
+            case 2:
+                sender.sendMessage("§b* §7/n rank §c"); //TODO
+                sender.sendMessage("§b* §7/n kick §c<player>");
+                sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
+                sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
+                break;
+            default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
                 sender.sendMessage("§b* §7/n disband §c[NAME]");
                 sender.sendMessage("§b* §7/n description §c<DESCRIPTION...>");
@@ -127,12 +134,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n claim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n unclaim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
-                break;
-            case 2:
-                sender.sendMessage("§b* §7/n rank §c"); //TODO
-                sender.sendMessage("§b* §7/n kick §c<player>");
-                sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
-                sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
                 break;
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
