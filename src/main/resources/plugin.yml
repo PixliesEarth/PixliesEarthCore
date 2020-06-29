@@ -215,6 +215,8 @@ permissions:
     default: op
   earth.realname:
     default: op
+  earth.chat.hex:
+    default: op
 
   # CHAT
   earth.chat.colours:

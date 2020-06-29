@@ -96,8 +96,10 @@ public class ChatSystem implements Listener, Module {
                     }
                 }
 
-                if (player.hasPermission("earth.chat.colours")) {
+                if (player.hasPermission("earth.chat.hex")) {
                     event.setMessage(Methods.translateToHex(event.getMessage().replace("%", "%%")).replace("&", "§"));
+                } else if (player.hasPermission("earth.chat.colours")) {
+                    event.setMessage(event.getMessage().replace("%", "%%").replace("&", "§"));
                 } else {
                     event.setMessage(event.getMessage().replace("&", "").replace("%", "%%"));
                 }
