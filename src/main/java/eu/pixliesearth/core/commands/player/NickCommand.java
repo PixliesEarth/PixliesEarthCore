@@ -53,6 +53,7 @@ public class NickCommand implements CommandExecutor {
                 ChatColor.translateAlternateColorCodes('&', nick);
                 profile.setNickname(nick);
                 profile.save();
+                profile.backup();
                 player.setDisplayName(nick);
                 Lang.CHANGED_NICKNAME.send(player, "%NICK%;" + nick);
                 break;
@@ -87,6 +88,7 @@ public class NickCommand implements CommandExecutor {
                 ChatColor.translateAlternateColorCodes('&', nick2);
                 target.setNickname(nick2);
                 target.save();
+                target.backup();
                 if (target.isOnline())
                     target.getAsOfflinePlayer().getPlayer().setDisplayName(nick2);
                 Lang.CHANGED_PLAYER_NICKNAME.send(sender, "%NICK%;" + nick2, "%PLAYER%;" + target.getAsOfflinePlayer().getName());

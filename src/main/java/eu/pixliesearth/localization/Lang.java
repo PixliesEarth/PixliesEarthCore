@@ -115,6 +115,8 @@ public enum Lang {
     PLAYER_KICKED_FROM_NATION(Lang.NATION, new HashMap<>()),
     PLAYER_NOT_IN_NATION(Lang.NATION, new HashMap<>()),
     CANT_KICK_LEADER(Lang.NATION, new HashMap<>()),
+    YOU_HAVE_TO_BE_LEADER(Lang.NATION, new HashMap<>()),
+    PLAYER_TRANSFERED_LEADERSHIP(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

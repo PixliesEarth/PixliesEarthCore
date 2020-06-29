@@ -151,3 +151,5 @@ PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU: "&7This player is not in the same nation as
 PLAYER_KICKED_FROM_NATION: "&7Player &6%PLAYER% &7was kicked from the nation."
 PLAYER_NOT_IN_NATION: "&7This player is not in a nation."
 CANT_KICK_LEADER: "&7The leader of the nation can't be kicked."
+YOU_HAVE_TO_BE_LEADER: "&7To perform this command, you have to be the leader of a nation."
+PLAYER_TRANSFERED_LEADERSHIP: "&6%PLAYER% &7just transfered the leadership of &b%NATION% &7to &6%TARGET%&7."
