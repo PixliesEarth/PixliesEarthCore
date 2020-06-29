@@ -77,6 +77,11 @@ public class Nation {
         NationManager.names.remove(name);
     }
 
+    public int getPower() {
+        //TODO
+        return 9999;
+    }
+
     public boolean rename(String newName) {
         if (getByName(newName) != null)
             return false;

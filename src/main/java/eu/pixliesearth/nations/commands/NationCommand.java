@@ -30,6 +30,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new infoNation());
         subCommands.add(new helpNation());
         subCommands.add(new handoverCommand());
+        subCommands.add(new listNation());
         return subCommands;
     }
 
