@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -36,6 +37,9 @@ public class handoverCommand implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
+        UUID targetUUID;
+        Profile target;
+        Nation nation;
         switch (args.length) {
             case 1:
                 if (!(sender instanceof Player)) {
@@ -52,12 +56,12 @@ public class handoverCommand implements SubCommand {
                     Lang.YOU_HAVE_TO_BE_LEADER.send(player);
                     return false;
                 }
-                UUID targetUUID = Bukkit.getPlayerUniqueId(args[0]);
+                targetUUID = Bukkit.getPlayerUniqueId(args[0]);
                 if (targetUUID == null) {
                     Lang.PLAYER_DOES_NOT_EXIST.send(player);
                     return false;
                 }
-                Profile target = instance.getProfile(targetUUID);
+                target = instance.getProfile(targetUUID);
                 if (!profile.getNationId().equals(target.getNationId()))  {
                     Lang.PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU.send(player);
                     return false;
@@ -66,9 +70,56 @@ public class handoverCommand implements SubCommand {
                 profile.setNationRank("admin");
                 target.save();
                 profile.save();
-                Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + player.getName(), "%NATION%;" + profile.getCurrentNation().getName(), "%TARGET%;" + target.getAsOfflinePlayer().getName());
+                nation = profile.getCurrentNation();
+                nation.setLeader(target.getUniqueId());
+                nation.save();
+                Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + player.getName(), "%NATION%;" + nation.getName(), "%TARGET%;" + target.getAsOfflinePlayer().getName());
                 break;
             case 2:
+                boolean allowed = false;
+                if (!(sender instanceof Player)) allowed = true;
+                if (sender instanceof Player && instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) allowed = true;
+                if (!allowed) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
+                targetUUID = Bukkit.getPlayerUniqueId(args[0]);
+                if (targetUUID == null) {
+                    Lang.PLAYER_DOES_NOT_EXIST.send(sender);
+                    return false;
+                }
+                target = instance.getProfile(targetUUID);
+                nation = Nation.getByName(args[1]);
+                if (nation == null) {
+                    Lang.NATION_DOESNT_EXIST.send(sender);
+                    return false;
+                }
+                if (target.isInNation()) {
+                    for (String member : target.getCurrentNation().getMembers()) {
+                        Profile memberProf = instance.getProfile(UUID.fromString(member));
+                        if (memberProf.getNationRank().equalsIgnoreCase("admin")) {
+                            memberProf.setNationRank("leader");
+                            Nation n = memberProf.getCurrentNation();
+                            n.setLeader(memberProf.getUniqueId());
+                            memberProf.save();
+                            n.save();
+                            Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + target.getAsOfflinePlayer().getName(), "%NATION%;" + n.getName(), "%TARGET%;" + memberProf.getAsOfflinePlayer().getName());
+                            break;
+                        }
+                    }
+                }
+                target.setNationId(nation.getNationId());
+                target.setInNation(true);
+                target.setNationRank("leader");
+                if (!nation.getLeader().equalsIgnoreCase("NONE")) {
+                    Profile oldLeader = instance.getProfile(UUID.fromString(nation.getLeader()));
+                    oldLeader.setNationRank("admin");
+                    oldLeader.save();
+                }
+                nation.setLeader(target.getUniqueId());
+                nation.save();
+                target.save();
+                Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + sender.getName(), "%NATION%;" + nation.getName(), "%TARGET%;" + target.getAsOfflinePlayer().getName());
                 break;
         }
         return false;
