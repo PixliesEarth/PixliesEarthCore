@@ -1,6 +1,7 @@
 package eu.pixliesearth.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -183,6 +184,24 @@ public class Methods {
                 return Material.MAGENTA_STAINED_GLASS_PANE;
         }
         return Material.WHITE_STAINED_GLASS_PANE;
+    }
+
+    public static String translateToHex(String s) {
+        String returner = s;
+        String[] hexes = StringUtils.substringsBetween(s, "#{", "}");
+        if (hexes != null) {
+            for (String s1 : hexes) {
+                StringBuilder builder = new StringBuilder();
+                for (char c : s1.toCharArray()) {
+                    if (c != '&') {
+                        builder.append('&');
+                        builder.append(c);
+                    }
+                }
+                returner = returner.replace("#{" + s1 + "}", "&x" + builder.toString());
+            }
+        }
+        return returner;
     }
 
 }

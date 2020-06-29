@@ -9,6 +9,7 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -96,7 +97,7 @@ public class ChatSystem implements Listener, Module {
                 }
 
                 if (player.hasPermission("earth.chat.colours")) {
-                    event.setMessage(event.getMessage().replace("&", "§").replace("%", "%%"));
+                    event.setMessage(Methods.translateToHex(event.getMessage().replace("%", "%%")).replace("&", "§"));
                 } else {
                     event.setMessage(event.getMessage().replace("&", "").replace("%", "%%"));
                 }
