@@ -72,6 +72,5 @@ public class unclaimNation implements SubCommand {
         }
         return false;
     }
-    //TODO OTHERS
 
 }

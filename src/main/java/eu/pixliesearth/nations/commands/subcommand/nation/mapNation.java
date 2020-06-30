@@ -41,7 +41,6 @@ public class mapNation implements SubCommand {
         return false;
     }
 
-    //TODO SCOREBOARD MAP
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
@@ -76,7 +75,6 @@ public class mapNation implements SubCommand {
         return false;
     }
 
-    //TODO CLICKLISTENER
     public void renderGuiMap(Player player) {
         final long start = System.currentTimeMillis();
         Inventory inv = Bukkit.createInventory(null, 6 * 9, "§bClaim-map");

@@ -126,6 +126,8 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n kick §c<player>");
                 sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
                 sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
+                sender.sendMessage("§b* §7/n settlements"); //TODO
+                sender.sendMessage("§b* §7/n list");
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
