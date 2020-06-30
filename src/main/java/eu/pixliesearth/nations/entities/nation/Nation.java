@@ -30,7 +30,7 @@ public class Nation {
     private List<String> allyRequests;
     private List<String> allies;
     private List<String> pacts;
-    private List<Object> settlements;
+    private Map<String, String> settlements;
     private Map<String, Object> extras;
 
 

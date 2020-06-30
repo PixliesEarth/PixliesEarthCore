@@ -30,6 +30,7 @@ import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
+import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.listener.MapClickListener;
@@ -268,6 +269,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new CIEntityDamageByEntityListener(), this);
         manager.registerEvents(new EntitySpawnListener(), this);
         manager.registerEvents(new MapClickListener(), this);
+        manager.registerEvents(new settlementsCommand(), this);
     }
 
     /**
