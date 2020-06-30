@@ -25,9 +25,9 @@ public class ItemsInteractEvent implements Listener {
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
             if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.STICK) {
 
-                if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null) {
+                if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
 
-                    if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() != null) {
+                    if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
 
                         if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(1).equals(new ItemSlingshot().getLore().get(1))) {
 
