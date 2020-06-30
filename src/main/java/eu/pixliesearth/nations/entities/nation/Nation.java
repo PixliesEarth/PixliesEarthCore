@@ -30,6 +30,7 @@ public class Nation {
     private List<String> allyRequests;
     private List<String> allies;
     private List<String> pacts;
+    private Map<String, String> settlements;
     private Map<String, Object> extras;
 
 
@@ -51,6 +52,7 @@ public class Nation {
         nation.append("allyRequests", allyRequests);
         nation.append("allies", allies);
         nation.append("pacts", pacts);
+        nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
             Main.getNationCollection().deleteOne(found);
@@ -73,6 +75,11 @@ public class Nation {
             Main.getNationCollection().deleteOne(found);
         NationManager.nations.remove(nationId);
         NationManager.names.remove(name);
+    }
+
+    public int getPower() {
+        //TODO
+        return 9999;
     }
 
     public boolean rename(String newName) {

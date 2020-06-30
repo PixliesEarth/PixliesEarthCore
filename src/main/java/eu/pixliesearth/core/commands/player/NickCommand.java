@@ -29,9 +29,14 @@ public class NickCommand implements CommandExecutor {
                     Lang.NICKNAME_TURNED_OFF.send(player);
                     profile.setNickname("");
                     profile.save();
+                    player.setDisplayName(player.getName());
                     return false;
                 }
-                if (Bukkit.getPlayerUniqueId(args[0]) != null) {
+                if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                    Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
+                    return false;
+                }
+                if (Profile.getByNickname(args[0]) != null) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
                     return false;
                 }
@@ -41,13 +46,15 @@ public class NickCommand implements CommandExecutor {
                 }
                 String nick = args[0];
                 if (args[0].contains("&") && !player.hasPermission("earth.nick.colours")) nick = nick.replace("&", "");
-                if (nick.length() > 15 || nick.length() < 3 || !StringUtils.isAlphanumeric(nick)) {
+                if (nick.length() > 15 || nick.length() < 3) {
                     Lang.INVALID_INPUT.send(player);
                     return false;
                 }
                 ChatColor.translateAlternateColorCodes('&', nick);
                 profile.setNickname(nick);
                 profile.save();
+                profile.backup();
+                player.setDisplayName(nick);
                 Lang.CHANGED_NICKNAME.send(player, "%NICK%;" + nick);
                 break;
             case 2:
@@ -65,21 +72,26 @@ public class NickCommand implements CommandExecutor {
                     Lang.NICKNAME_TURNED_OFF.send(sender);
                     target.setNickname("");
                     target.save();
+                    if (target.isOnline())
+                        target.getAsOfflinePlayer().getPlayer().setDisplayName(target.getAsOfflinePlayer().getName());
                     return false;
                 }
-                if (Bukkit.getPlayerUniqueId(args[0]) != null) {
+                if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                    Lang.CANT_NICK_LIKE_A_PLAYER.send(sender);
+                    return false;
+                }
+                if (Profile.getByNickname(args[0]) != null) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(sender);
                     return false;
                 }
                 String nick2 = args[0];
-                if (nick2.length() > 15 || nick2.length() < 3 || !StringUtils.isAlphanumeric(nick2)) {
-                    Lang.INVALID_INPUT.send(sender);
-                    return false;
-                }
                 ChatColor.translateAlternateColorCodes('&', nick2);
                 target.setNickname(nick2);
                 target.save();
-                Lang.CHANGED_NICKNAME.send(sender, "%NICK%;" + nick2);
+                target.backup();
+                if (target.isOnline())
+                    target.getAsOfflinePlayer().getPlayer().setDisplayName(nick2);
+                Lang.CHANGED_PLAYER_NICKNAME.send(sender, "%NICK%;" + nick2, "%PLAYER%;" + target.getAsOfflinePlayer().getName());
                 break;
         }
         return false;

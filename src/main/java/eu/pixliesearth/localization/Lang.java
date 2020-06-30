@@ -73,6 +73,7 @@ public enum Lang {
     CANT_NICK_LIKE_A_PLAYER(Lang.EARTH, new HashMap<>()),
     INVALID_INPUT(Lang.EARTH, new HashMap<>()),
     CHANGED_NICKNAME(Lang.EARTH, new HashMap<>()),
+    CHANGED_PLAYER_NICKNAME(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
@@ -108,6 +109,14 @@ public enum Lang {
     PLAYER_LEFT_NATION(Lang.NATION, new HashMap<>()),
     YOU_LEFT_NATION(Lang.NATION, new HashMap<>()),
     RANK_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    SCOREBOARDMAP_ENABLED(Lang.NATION, new HashMap<>()),
+    SCOREBOARDMAP_DISABLED(Lang.NATION, new HashMap<>()),
+    PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU(Lang.NATION, new HashMap<>()),
+    PLAYER_KICKED_FROM_NATION(Lang.NATION, new HashMap<>()),
+    PLAYER_NOT_IN_NATION(Lang.NATION, new HashMap<>()),
+    CANT_KICK_LEADER(Lang.NATION, new HashMap<>()),
+    YOU_HAVE_TO_BE_LEADER(Lang.NATION, new HashMap<>()),
+    PLAYER_TRANSFERED_LEADERSHIP(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

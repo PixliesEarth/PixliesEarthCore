@@ -10,6 +10,7 @@ import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
+import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
@@ -29,8 +30,10 @@ import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
+import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
@@ -52,8 +55,6 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
-import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -176,6 +177,7 @@ public final class Main extends JavaPlugin {
         saveResource("languages/LANG_ENG.yml", true);
         saveResource("languages/LANG_FR.yml", true);
         saveResource("languages/LANG_ES.yml", true);
+        saveResource("languages/LANG_NL.yml", true);
 
         Lang.init();
 
@@ -243,6 +245,7 @@ public final class Main extends JavaPlugin {
         getCommand("adopt").setExecutor(new AdoptCommand());
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
+        getCommand("realname").setExecutor(new RealNameCommand());
     }
 
     private void registerEvents(PluginManager manager) {
@@ -263,6 +266,10 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new PlayerInteractListener(), this);
         manager.registerEvents(new AnvilListener(), this);
         manager.registerEvents(new BlockBreakListener(), this);
+        manager.registerEvents(new CIEntityDamageByEntityListener(), this);
+        manager.registerEvents(new EntitySpawnListener(), this);
+        manager.registerEvents(new MapClickListener(), this);
+        manager.registerEvents(new settlementsCommand(), this);
     }
 
     /**

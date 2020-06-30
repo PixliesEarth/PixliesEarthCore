@@ -5,6 +5,7 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -43,42 +44,28 @@ public class unclaimNation implements SubCommand {
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
-        if (NationChunk.get(c) == null) {
+        NationChunk nc = NationChunk.get(c);
+        if (nc == null) {
             player.sendMessage(Lang.NOT_CLAIMED.get(player));
             return false;
         }
         if (args.length == 1) {
-            if (!profile.isInNation()) {
+            if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                 player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                 return false;
             }
-            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM)) {
+            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                 Lang.NO_PERMISSIONS.send(sender);
                 return false;
             }
             if (args[0].equalsIgnoreCase("one")) {
-                NationChunk nc = NationChunk.get(c);
-                boolean allowed = false;
-                if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
-                if (profile.getNationId().equals(nc.getNationId())) allowed = true;
-                if (!allowed) {
-                    Lang.CHUNK_NOT_YOURS.send(player);
-                    return false;
-                }
-                TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    nc.unclaim();
-                    for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                        members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", c.getX() + "").replace("%Z%", c.getZ() + ""));
-                    System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
-                }
+                NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
             } else if (args[0].equalsIgnoreCase("auto")) {
                 if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
                 } else {
-                    instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), profile.getNationId());
+                    instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
                     player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
                 }
             }

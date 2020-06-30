@@ -4,11 +4,14 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -61,6 +64,43 @@ public class ScoreboardAdapter implements AssembleAdapter {
         List<String> returnable = new ArrayList<>();
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
+        if (Main.getInstance().getUtilLists().scoreboardMaps.contains(player.getUniqueId())) {
+            returnable.add("§bClaim-map");
+            final int height = 3;
+            final int width = 3;
+
+            final int playerCX = player.getChunk().getX();
+            final int playerCZ = player.getChunk().getZ();
+            final World world = player.getWorld();
+            for (int row = height; row >= -height; row--) {
+                StringBuilder builder = new StringBuilder();
+                for (int x = width; x >= -width; x--) {
+                    final int chunkX = playerCX - x,
+                            chunkZ = playerCZ - row;
+                    NationChunk nc = NationChunk.get(world.getName(), chunkX, chunkZ);
+                    if (chunkX == playerCX && chunkZ == playerCZ) {
+                        builder.append("§e█");
+                        continue;
+                    }
+                    if (profile.isInNation()) {
+                        if (nc == null) {
+                            builder.append("§2█");
+                        } else  {
+                            Nation.NationRelation rel = Nation.getRelation(profile.getNationId(), nc.getNationId());
+                            builder.append("§" + rel.colChar + "█");
+                        }
+                    } else {
+                        if (nc == null) {
+                            builder.append("§2█");
+                        } else  {
+                            builder.append("█");
+                        }
+                    }
+                }
+                returnable.add(builder.toString());
+            }
+            return returnable;
+        }
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
@@ -77,7 +117,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
                     returnable.add("  §8» §b" + nation.getName());
-                    returnable.add("  §8» §a" + nation.getOnlineMembers() + " Online");
+                    returnable.add("  §8» §7Online: §a" + nation.getOnlineMembers());
                     returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {

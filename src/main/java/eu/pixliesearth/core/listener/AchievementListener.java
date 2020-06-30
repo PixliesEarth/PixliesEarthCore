@@ -3,14 +3,11 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.minecraft.server.v1_15_R1.AdvancementFrameType;
-import net.minecraft.server.v1_15_R1.Advancements;
 import org.bukkit.ChatColor;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
 import java.util.Arrays;

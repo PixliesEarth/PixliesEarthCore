@@ -25,6 +25,13 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new joinNation());
         subCommands.add(new leaveNation());
         subCommands.add(new rankNation());
+        subCommands.add(new mapNation());
+        subCommands.add(new kickNation());
+        subCommands.add(new infoNation());
+        subCommands.add(new helpNation());
+        subCommands.add(new handoverCommand());
+        subCommands.add(new listNation());
+        subCommands.add(new settlementsCommand());
         return subCommands;
     }
 
@@ -111,18 +118,18 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         return completions;
     }
 
-    //TODO IMPLEMENT BRIGADER/COMMODORE
-/*    private static void registerCompletions(Commodore commodore, PluginCommand command) {
-        commodore.register(command, LiteralArgumentBuilder.literal("nations")
-                .then(RequiredArgumentBuilder.argument("some-argument", StringArgumentType.string()))
-                .then(RequiredArgumentBuilder.argument("some-other-argument", BoolArgumentType.bool()))
-        );
-    }*/
-
-    public void sendHelp(CommandSender sender, int page) {
+    public static void sendHelp(CommandSender sender, int page) {
         sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
-            case 1:
+            case 2:
+                sender.sendMessage("§b* §7/n rank §c"); //TODO
+                sender.sendMessage("§b* §7/n kick §c<player>");
+                sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
+                sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
+                sender.sendMessage("§b* §7/n settlements"); //TODO
+                sender.sendMessage("§b* §7/n list");
+                break;
+            default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
                 sender.sendMessage("§b* §7/n disband §c[NAME]");
                 sender.sendMessage("§b* §7/n description §c<DESCRIPTION...>");
@@ -132,9 +139,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n claim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n unclaim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
-                break;
-            case 2:
-                sender.sendMessage("§b* §7/n rank §c");
                 break;
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));

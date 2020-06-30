@@ -15,12 +15,7 @@ public class ItemInteractListener implements Listener {
         if (event.getClickedBlock() == null) return;
         if (event.getItem() == null) return;
         if (event.getMaterial() == Material.AIR) return;
-        if (event.getItem().getItemMeta().getDisplayName() != null && event.getItem().getItemMeta().getDisplayName().equals("§e§lENERGY BOTTLE §8(§f§l2§8)")) {
-            if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                event.getPlayer().getInventory().remove(event.getItem());
-                Energy.add(Main.getInstance().getProfile(event.getPlayer().getUniqueId()), 2.0);
-            }
-        }
+
     }
 
 }

@@ -27,7 +27,7 @@ public class SkullBuilder {
         this.skullMeta = (SkullMeta) this.skull.getItemMeta();
 
         try {
-            this.skullMetaClass = Class.forName("org.bukkit.craftbukkit.v1_15_R1.inventory.CraftMetaSkull");
+            this.skullMetaClass = Class.forName("org.bukkit.craftbukkit.v1_16_R1.inventory.CraftMetaSkull");
         } catch (ClassNotFoundException var4) {
             var4.printStackTrace();
         }

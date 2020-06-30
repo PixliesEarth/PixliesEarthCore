@@ -15,19 +15,21 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MoveListener implements Listener {
 
+    
+    
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
             Main instance = Main.getInstance();
             Player player = event.getPlayer();
-            Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+            Profile profile = instance.getProfile(player.getUniqueId());
             if (profile.getTimers().containsKey("Teleport")) {
                 profile.getTimers().remove("Teleport");
                 profile.save();
                 event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
             }
-            if (Main.getInstance().getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
-                Main.getInstance().getUtilLists().afk.remove(event.getPlayer().getUniqueId());
+            if (instance.getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
+                instance.getUtilLists().afk.remove(event.getPlayer().getUniqueId());
                 Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
             }
 
@@ -36,25 +38,18 @@ public class MoveListener implements Listener {
             Chunk tc = event.getTo().getChunk();
             if (event.getFrom().getChunk() != tc) {
                 // CLAIM/UNCLAIM AUTOS
-                if (Main.getInstance().getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
-                    if (profile.getCurrentNation() == null)
-                        Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
+                if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
+                    if (Nation.getById(instance.getUtilLists().claimAuto.get(player.getUniqueId())) == null)
+                        instance.getUtilLists().claimAuto.remove(player.getUniqueId());
                     if (NationChunk.get(tc) != null) {
                         player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
                     } else {
-                        NationChunk nc = new NationChunk(instance.getUtilLists().claimAuto.get(player.getUniqueId()), tc.getWorld().getName(), tc.getX(), tc.getZ());
-                        TerritoryChangeEvent territoryEvent = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF);
-                        Bukkit.getPluginManager().callEvent(territoryEvent);
-                        if (!event.isCancelled()) {
-                            nc.claim();
-                            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                                members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", tc.getX() + "").replace("%Z%", tc.getZ() + ""));
-                            System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
-                        }
+                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().claimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.CLAIM_AUTO_OTHER;
+                        NationChunk.claim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType, instance.getUtilLists().claimAuto.get(player.getUniqueId()));
                     }
-                } else if (Main.getInstance().getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
+                } else if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
                     if (profile.getCurrentNation() == null)
-                        Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
+                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     NationChunk nc = NationChunk.get(tc);
                     boolean allowed = false;
                     if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
@@ -62,14 +57,8 @@ public class MoveListener implements Listener {
                     if (!allowed) {
                         Lang.CHUNK_NOT_YOURS.send(player);
                     } else {
-                        TerritoryChangeEvent territoryEvent = new TerritoryChangeEvent(player, nc, TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF);
-                        Bukkit.getPluginManager().callEvent(territoryEvent);
-                        if (!event.isCancelled()) {
-                            nc.unclaim();
-                            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
-                                members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", tc.getX() + "").replace("%Z%", tc.getZ() + ""));
-                            System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
-                        }
+                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
+                        NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
                     }
                 }
                 // CHUNKTITLES

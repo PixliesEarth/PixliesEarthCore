@@ -1,6 +1,7 @@
 package eu.pixliesearth.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -132,6 +133,75 @@ public class Methods {
             compensated += spaceLength;
         }
         return ChatColor.translateAlternateColorCodes('&', sb.toString() + message);
+    }
+
+    public static String getCenterSpaces(String message){
+        if(message == null || message.equals("")) return "";
+        message = ChatColor.translateAlternateColorCodes('&', message);
+
+        int messagePxSize = 0;
+        boolean previousCode = false;
+        boolean isBold = false;
+
+        for(char c : message.toCharArray()){
+            if(c == '§'){
+                previousCode = true;
+                continue;
+            }else if(previousCode == true){
+                previousCode = false;
+                if(c == 'l' || c == 'L'){
+                    isBold = true;
+                    continue;
+                }else isBold = false;
+            }else{
+                DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
+                messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+                messagePxSize++;
+            }
+        }
+
+        int halvedMessageSize = messagePxSize / 2;
+        int toCompensate = CENTER_PX - halvedMessageSize;
+        int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
+        int compensated = 0;
+        StringBuilder sb = new StringBuilder();
+        while(compensated < toCompensate){
+            sb.append(" ");
+            compensated += spaceLength;
+        }
+        return ChatColor.translateAlternateColorCodes('&', sb.toString());
+    }
+
+    public static Material getStainedGlassPaneByColChar(char colChar) {
+        switch (colChar) {
+            case 'b':
+                return Material.LIGHT_BLUE_STAINED_GLASS_PANE;
+            case 'c':
+                return Material.RED_STAINED_GLASS_PANE;
+            case 'f':
+                return Material.WHITE_STAINED_GLASS_PANE;
+            case 'd':
+                return Material.MAGENTA_STAINED_GLASS_PANE;
+        }
+        return Material.WHITE_STAINED_GLASS_PANE;
+    }
+
+    public static String translateToHex(String s) {
+        String returner = s;
+        String[] hexes = StringUtils.substringsBetween(s, "#{", "}");
+        if (hexes != null) {
+            for (String s1 : hexes) {
+                StringBuilder builder = new StringBuilder();
+                for (char c : s1.toCharArray()) {
+                    if (c != '&') {
+                        builder.append('&');
+                        builder.append(c);
+                    }
+                }
+                returner = returner.replace("#{" + s1 + "}", "&x" + builder.toString());
+            }
+        }
+        return returner;
     }
 
 }
