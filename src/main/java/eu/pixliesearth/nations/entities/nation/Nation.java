@@ -82,6 +82,11 @@ public class Nation {
         return 9999;
     }
 
+    public int getMaxClaimingPower() {
+        //TODO
+        return 9999;
+    }
+
     public boolean rename(String newName) {
         if (getByName(newName) != null)
             return false;

@@ -151,14 +151,16 @@ public class claimNation implements SubCommand {
     }
 
     private void claimFill(Player claimer, Nation nation, Table<Integer, Integer, NationChunk> toClaim) {
-        int claimed = 0;
-        for (NationChunk chunk : toClaim.values()) {
-            chunk.claim();
-            claimed++;
+        if (toClaim.size() > 0) {
+            int claimed = 0;
+            for (NationChunk chunk : toClaim.values()) {
+                chunk.claim();
+                claimed++;
+            }
+            for (Player member : nation.getOnlineMemberSet())
+                Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
+            Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
         }
-        for (Player member : nation.getOnlineMemberSet())
-            Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
-        Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
     }
 
 }
