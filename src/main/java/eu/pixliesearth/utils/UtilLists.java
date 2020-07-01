@@ -50,6 +50,8 @@ public class UtilLists {
 
     public List<UUID> scoreboardMaps;
 
+    public List<UUID> claimFill;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -69,6 +71,7 @@ public class UtilLists {
         webhook = new DiscordWebhook(Main.getInstance().getConfig().getString("webhook"));
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();
+        claimFill = new ArrayList<>();
     }
 
 }

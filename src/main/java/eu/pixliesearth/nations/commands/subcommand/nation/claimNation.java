@@ -1,5 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import com.google.common.collect.RowSortedTable;
+import com.google.common.collect.Table;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
@@ -8,7 +10,6 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -107,6 +108,39 @@ public class claimNation implements SubCommand {
         }
 
         return false;
+    }
+
+    private final int claimFillLimit = 500; //TODO
+
+    private void floodSearch(Player player, Nation nation, int x, int z, String world, Table<Integer, Integer, NationChunk> toClaim) {
+
+        if (!instance.getUtilLists().claimFill.contains(player.getUniqueId())) return;
+
+        if (toClaim.contains(x, z)) return;
+
+        if (NationChunk.get(world, x, z) != null) return;
+
+        if ((toClaim.size() > nation.getClaimingPower() || toClaim.size() > claimFillLimit) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+            instance.getUtilLists().claimFill.remove(player.getUniqueId());
+            toClaim.clear();
+            Lang.CLAIMFILL_LIMIT_REACHED.send(player);
+            return;
+        }
+
+        toClaim.put(x, z, new NationChunk(nation.getNationId(), world, x, z));
+
+        floodSearch(player, nation, x + 1, z, world, toClaim);
+        floodSearch(player, nation, x - 1, z, world, toClaim);
+        floodSearch(player, nation, x, z + 1, world, toClaim);
+        floodSearch(player, nation, x, z - 1, world, toClaim);
+    }
+
+    private void claimFill(Player claimer, Nation nation, Table<Integer, Integer, NationChunk> toClaim) {
+        int claimed = 0;
+        for (NationChunk chunk : toClaim.values()) {
+            chunk.claim();
+            claimed++;
+        }
     }
 
 }

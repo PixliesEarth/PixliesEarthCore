@@ -77,7 +77,7 @@ public class Nation {
         NationManager.names.remove(name);
     }
 
-    public int getPower() {
+    public int getClaimingPower() {
         //TODO
         return 9999;
     }

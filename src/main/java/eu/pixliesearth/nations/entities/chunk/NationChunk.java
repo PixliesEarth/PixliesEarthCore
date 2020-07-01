@@ -39,6 +39,7 @@ public class NationChunk {
                 nation.getChunks().add(serialize());
                 nation.save();
             }
+            System.out.println("§bChunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
         }
     }
 
@@ -111,7 +112,6 @@ public class NationChunk {
             nc.claim();
             for (Player members : nation.getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
-            System.out.println("§bChunk claimed at §e" + nc.getX() + "§8, §e" + nc.getZ() + " §bfor §e" + nc.getCurrentNation().getName());
         }
         return true;
     }
