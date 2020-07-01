@@ -118,6 +118,7 @@ public enum Lang {
     YOU_HAVE_TO_BE_LEADER(Lang.NATION, new HashMap<>()),
     PLAYER_TRANSFERED_LEADERSHIP(Lang.NATION, new HashMap<>()),
     CLAIMFILL_LIMIT_REACHED(Lang.NATION, new HashMap<>()),
+    PLAYER_CLAIMFILLED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

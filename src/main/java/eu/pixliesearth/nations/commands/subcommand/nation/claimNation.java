@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import com.google.common.collect.RowSortedTable;
 import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
@@ -10,6 +11,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,6 +36,7 @@ public class claimNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);
+        returner.put("fill", 1);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 2);
         return returner;
@@ -68,6 +71,13 @@ public class claimNation implements SubCommand {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), profile.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
+                } else if (args[0].equalsIgnoreCase("fill")) {
+                    long start = System.currentTimeMillis();
+                    instance.getUtilLists().claimFill.add(player.getUniqueId());
+                    Table<Integer, Integer, NationChunk> toClaim = TreeBasedTable.create();
+                    floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
+                    claimFill(player, profile.getCurrentNation(), toClaim);
+                    player.sendMessage(System.currentTimeMillis() - start + "ms");
                 } else if (args[0].contains(";")) {
                     int x = Integer.parseInt(args[0].split(";")[0]);
                     int z = Integer.parseInt(args[0].split(";")[1]);
@@ -103,14 +113,17 @@ public class claimNation implements SubCommand {
                         instance.getUtilLists().claimAuto.put(player.getUniqueId(), nation.getNationId());
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
+                } else if (args[0].equalsIgnoreCase("fill")) {
+                    instance.getUtilLists().claimFill.add(player.getUniqueId());
+                    Table<Integer, Integer, NationChunk> toClaim = TreeBasedTable.create();
+                    floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
+                    claimFill(player, nation, toClaim);
                 }
                 break;
         }
 
         return false;
     }
-
-    private final int claimFillLimit = 500; //TODO
 
     private void floodSearch(Player player, Nation nation, int x, int z, String world, Table<Integer, Integer, NationChunk> toClaim) {
 
@@ -120,6 +133,8 @@ public class claimNation implements SubCommand {
 
         if (NationChunk.get(world, x, z) != null) return;
 
+        //TODO
+        int claimFillLimit = 500;
         if ((toClaim.size() > nation.getClaimingPower() || toClaim.size() > claimFillLimit) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             instance.getUtilLists().claimFill.remove(player.getUniqueId());
             toClaim.clear();
@@ -141,6 +156,9 @@ public class claimNation implements SubCommand {
             chunk.claim();
             claimed++;
         }
+        for (Player member : nation.getOnlineMemberSet())
+            Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
+        Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
     }
 
 }

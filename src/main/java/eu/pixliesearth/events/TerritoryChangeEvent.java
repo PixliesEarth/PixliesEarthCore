@@ -45,16 +45,12 @@ public class TerritoryChangeEvent extends Event implements Cancellable {
 
         CLAIM_AUTO_SELF,
         CLAIM_ONE_SELF,
-        CLAIM_FILL_SELF,
         CLAIM_AUTO_OTHER,
         CLAIM_ONE_OTHER,
-        CLAIM_FILL_OTHER,
         UNCLAIM_AUTO_SELF,
         UNCLAIM_ONE_SELF,
-        UNCLAIM_FILL_SELF,
         UNCLAIM_AUTO_OTHER,
         UNCLAIM_ONE_OTHER,
-        UNCLAIM_FILL_OTHER
 
     }
 
