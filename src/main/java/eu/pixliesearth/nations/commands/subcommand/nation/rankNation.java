@@ -31,7 +31,7 @@ public class rankNation implements SubCommand {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         switch (args.length) {
-
+            
         }
         return false;
     }

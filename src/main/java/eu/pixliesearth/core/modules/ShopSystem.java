@@ -33,7 +33,7 @@ public class ShopSystem implements Module, CommandExecutor {
         Player player = (Player) sender;
         switch (args.length) {
             case 0:
-                Gui gui = new Gui(instance, 6, "&bShop");
+/*                Gui gui = new Gui(instance, 6, "&bShop");
                 PaginatedPane items = new PaginatedPane(0, 1, 9, 4);
                 StaticPane categories = new StaticPane(0, 0, 9, 1);
                 StaticPane panel = new StaticPane(0, 4, 9, 1);
@@ -48,7 +48,7 @@ public class ShopSystem implements Module, CommandExecutor {
                         items.setPage(items.getPage() - 1);
                     }), 0, 0);
 
-                gui.show(player);
+                gui.show(player);*/
                 break;
         }
         return false;

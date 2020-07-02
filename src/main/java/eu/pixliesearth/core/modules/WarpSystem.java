@@ -9,6 +9,7 @@ import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullBuilder;
+import eu.pixliesearth.utils.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,7 +54,7 @@ public class WarpSystem implements CommandExecutor, Module {
                 warps.populateWithGuiItems(items);
                 toolbar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
                 if (player.hasPermission("earth.warps.edit"))
-                    toolbar.addItem(new GuiItem(new SkullBuilder("{display:{Name:\\\"Black Plus\\\"},SkullOwner:{Id:\\\"4721d0df-0210-403f-a281-e0467b104fb6\\\",Properties:{textures:[{Value:\\\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWEyZDg5MWM2YWU5ZjZiYWEwNDBkNzM2YWI4NGQ0ODM0NGJiNmI3MGQ3ZjFhMjgwZGQxMmNiYWM0ZDc3NyJ9fX0=\\\"}]}}}", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWEyZDg5MWM2YWU5ZjZiYWEwNDBkNzM2YWI4NGQ0ODM0NGJiNmI3MGQ3ZjFhMjgwZGQxMmNiYWM0ZDc3NyJ9fX0=").setDisplayname("§aAdd").build(), event -> {
+                    toolbar.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/b056bc1244fcff99344f12aba42ac23fee6ef6e3351d27d273c1572531f")).setDisplayName("§aAdd").build(), event -> {
                         event.setCancelled(true);
                         player.performCommand("warp add");
                     }), 4, 0);
