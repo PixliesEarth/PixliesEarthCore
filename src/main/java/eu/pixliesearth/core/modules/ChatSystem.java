@@ -8,6 +8,10 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -112,12 +117,21 @@ public class ChatSystem implements Listener, Module {
                         if (profile.isInNation()) {
                             if (oProfile.isInNation()) {
                                 Nation.NationRelation rel = Nation.getRelation(oProfile.getNationId(), profile.getNationId());
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§" + rel.colChar + profile.getCurrentNation().getName()));
+                                net.md_5.bungee.api.chat.TextComponent component = new TextComponent(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§" + rel.colChar + profile.getCurrentNation().getName()));
+                                component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/pm " + player.getName()));
+                                component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + Lang.CLICK_TO_PM.get(oProfile.getAsOfflinePlayer().getPlayer()).replace("%PLAYER%", player.getName())).create()));
+                                oProfile.getAsOfflinePlayer().getPlayer().spigot().sendMessage(component);
                             } else {
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
+                                TextComponent component = new TextComponent(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
+                                component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/pm " + player.getName()));
+                                component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + Lang.CLICK_TO_PM.get(oProfile.getAsOfflinePlayer().getPlayer()).replace("%PLAYER%", player.getName())).create()));
+                                oProfile.getAsOfflinePlayer().getPlayer().spigot().sendMessage(component);
                             }
                         } else {
-                            oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation%", "").replace("§8| ", ""));
+                            TextComponent component = new TextComponent(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
+                            component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/pm " + player.getName()));
+                            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + Lang.CLICK_TO_PM.get(oProfile.getAsOfflinePlayer().getPlayer()).replace("%PLAYER%", player.getName())).create()));
+                            oProfile.getAsOfflinePlayer().getPlayer().spigot().sendMessage(component);
                         }
                     }
                 }

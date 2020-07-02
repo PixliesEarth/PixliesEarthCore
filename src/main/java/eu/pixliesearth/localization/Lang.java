@@ -74,6 +74,7 @@ public enum Lang {
     INVALID_INPUT(Lang.EARTH, new HashMap<>()),
     CHANGED_NICKNAME(Lang.EARTH, new HashMap<>()),
     CHANGED_PLAYER_NICKNAME(Lang.EARTH, new HashMap<>()),
+    CLICK_TO_PM(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
