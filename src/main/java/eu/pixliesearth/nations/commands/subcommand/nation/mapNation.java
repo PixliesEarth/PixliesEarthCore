@@ -75,6 +75,7 @@ public class mapNation implements SubCommand {
         return false;
     }
 
+    //<editor-fold desc="Rendering methods">
     public void renderGuiMap(Player player) {
         final long start = System.currentTimeMillis();
         Inventory inv = Bukkit.createInventory(null, 6 * 9, "§bClaim-map");
@@ -196,5 +197,5 @@ public class mapNation implements SubCommand {
         player.sendMessage("§7Legend: §e█You §8| §b█Yours §8| §d█Ally §8| §2█Wilderness");
         player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
-
+    //</editor-fold>
 }

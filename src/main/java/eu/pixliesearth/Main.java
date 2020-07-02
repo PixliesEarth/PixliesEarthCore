@@ -270,6 +270,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new EntitySpawnListener(), this);
         manager.registerEvents(new MapClickListener(), this);
         manager.registerEvents(new settlementsCommand(), this);
+        manager.registerEvents(new PlayerLoginListener(), this);
     }
 
     /**

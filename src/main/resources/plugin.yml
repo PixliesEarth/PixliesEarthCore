@@ -217,6 +217,10 @@ permissions:
     default: op
   earth.chat.hex:
     default: op
+  earth.bypass.fullkick:
+    default: op
+  earth.bypass.whitelist:
+    default: op
 
   # CHAT
   earth.chat.colours:
