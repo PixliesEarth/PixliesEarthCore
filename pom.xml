@@ -97,8 +97,8 @@
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <systemPath>${basedir}/lib/paper.jar</systemPath>
+            <scope>system</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
