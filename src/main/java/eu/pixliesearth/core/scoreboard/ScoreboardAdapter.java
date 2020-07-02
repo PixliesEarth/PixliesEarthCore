@@ -69,8 +69,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
             final int height = 3;
             final int width = 3;
 
-            final int playerCX = player.getChunk().getX();
-            final int playerCZ = player.getChunk().getZ();
+            final int playerCX = player.getLocation().getChunk().getX();
+            final int playerCZ = player.getLocation().getChunk().getZ();
             final World world = player.getWorld();
             for (int row = height; row >= -height; row--) {
                 StringBuilder builder = new StringBuilder();

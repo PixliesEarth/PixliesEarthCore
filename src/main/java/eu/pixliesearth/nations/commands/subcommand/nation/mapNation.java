@@ -82,8 +82,8 @@ public class mapNation implements SubCommand {
         final int height = 2;
         final int width = 4;
 
-        final int playerCX = player.getChunk().getX();
-        final int playerCZ = player.getChunk().getZ();
+        final int playerCX = player.getLocation().getChunk().getX();
+        final int playerCZ = player.getLocation().getChunk().getZ();
         final World world = player.getWorld();
         for (int row = height; row >= -height; row--) {
             for (int x = width; x >= -width; x--) {
@@ -140,8 +140,8 @@ public class mapNation implements SubCommand {
         final int height = 6;
         final int width = (height * 2);
 
-        final int playerCX = player.getChunk().getX();
-        final int playerCZ = player.getChunk().getZ();
+        final int playerCX = player.getLocation().getChunk().getX();
+        final int playerCZ = player.getLocation().getChunk().getZ();
         final World world = player.getWorld();
         for (int row = height; row >= -height; row--) {
             TextComponent comp = new TextComponent();

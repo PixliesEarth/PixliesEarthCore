@@ -62,7 +62,7 @@ public class claimNation implements SubCommand {
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("one")) {
-                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
+                    NationChunk.claim(player, player.getWorld().getName(), player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
@@ -96,7 +96,7 @@ public class claimNation implements SubCommand {
                         Lang.NATION_DOESNT_EXIST.send(player);
                         return false;
                     }
-                    NationChunk.claim(player, player.getWorld().getName(), player.getChunk().getX(), player.getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_OTHER, nation.getNationId());
+                    NationChunk.claim(player, player.getWorld().getName(), player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_OTHER, nation.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                         Lang.NO_PERMISSIONS.send(player);
