@@ -87,7 +87,7 @@ public class infoNation implements SubCommand {
         sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
         sender.sendMessage("§7Era: §b" + nation.getEra());
         sender.sendMessage("§7Leader: §6" + Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName());
-        sender.sendMessage("§7Territory: §b" + nation.getChunks() + "§8/§b" + nation.getMaxClaimingPower());
+        sender.sendMessage("§7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower());
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {
             UUID uuid = UUID.fromString(s);

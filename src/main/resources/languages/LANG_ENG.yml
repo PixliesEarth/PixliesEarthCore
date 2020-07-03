@@ -155,4 +155,4 @@ YOU_HAVE_TO_BE_LEADER: "&7To perform this command, you have to be the leader of 
 PLAYER_TRANSFERED_LEADERSHIP: "&6%PLAYER% &7just transfered the leadership of &b%NATION% &7to &6%TARGET%&7."
 CLAIMFILL_LIMIT_REACHED: "&7You have exceeded the claim-fill limit."
 PLAYER_CLAIMFILLED: "&6%PLAYER% &7claimed &b%CHUNKS%x &7chunks using claim-fill."
-CLICK_TO_PM: "Click me to write &d%PLAYER% &7a private message."
+CLICK_TO_PM: "Click me to send &d%PLAYER% &7a private message."
