@@ -62,14 +62,20 @@ public class Nation {
 
     public Nation save() {
         NationManager.nations.put(nationId, this);
+        NationManager.names.put(name, nationId);
         return this;
     }
 
     public void remove() {
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
-        for (String s : getChunks())
-            NationChunk.fromString(s).unclaim();
+        Iterator<String> iter = chunks.iterator();
+        while(iter.hasNext()) {
+            String it = iter.next();
+            NationChunk nc = NationChunk.fromString(it);
+            iter.remove();
+            nc.unclaim();
+        }
         Document found = Main.getNationCollection().find(new Document("nationId", nationId)).first();
         if (found != null)
             Main.getNationCollection().deleteOne(found);

@@ -46,17 +46,17 @@ public class ChatSystem implements Listener, Module {
 
             if (instance.getUtilLists().nationDisbander.containsKey(player.getUniqueId())) {
                 if (event.getMessage().equalsIgnoreCase("cancel")) {
+                    event.setCancelled(true);
                     player.sendMessage("§bNATION §8| §7Nation disband process §ccancelled§7.");
                     instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
-                    event.setCancelled(true);
                     return;
                 } else if (event.getMessage().equalsIgnoreCase("confirm")) {
+                    event.setCancelled(true);
                     Nation nation = Nation.getById(instance.getUtilLists().nationDisbander.get(player.getUniqueId()));
                     nation.remove();
                     player.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
                     Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
                     instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
-                    event.setCancelled(true);
                 }
             }
 

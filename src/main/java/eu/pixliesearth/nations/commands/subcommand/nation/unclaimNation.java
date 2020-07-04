@@ -68,6 +68,8 @@ public class unclaimNation implements SubCommand {
                     instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
                     player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
                 }
+            } else if (args[0].equalsIgnoreCase("fill")) {
+
             }
         }
         return false;
