@@ -7,26 +7,35 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class NationCreationEvent extends Event implements Cancellable {
+public class GulagStartEvent extends Event implements Cancellable {
 
     public static HandlerList handlers = new HandlerList();
-    private @Getter Player player;
-    private @Getter Nation nation;
+    private Player player;
+    private Player enemy;
     private boolean isCancelled = false;
 
 
-    public NationCreationEvent(Player player, Nation nation) {
+    public GulagStartEvent(Player player, Player enemy) {
         this.player = player;
-        this.nation = nation;
+        this.enemy = enemy;
+    }
+
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public Player getEnemy(){
+        return enemy;
     }
 
     @Override
     public HandlerList getHandlers(){
-        return NationCreationEvent.handlers;
+        return GulagStartEvent.handlers;
     }
 
     public static HandlerList getHandlerList(){
-        return NationCreationEvent.handlers;
+        return GulagStartEvent.handlers;
     }
 
     @Override

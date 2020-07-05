@@ -18,14 +18,24 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class LeaveListener implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
 
+        Player player = event.getPlayer();
+        if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId()) || Main.getInstance().getUtilLists().awaitingGulag2.contains(player.getUniqueId())){
+            Date date = new Date(System.currentTimeMillis()+60*60*1000*24);
+            player.banPlayer("Trying to avoid gulag", date, "The gulag");
+            if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId())){
+                Main.getInstance().getUtilLists().awaitingGulag1.remove(player.getUniqueId());
+            }else{
+                Main.getInstance().getUtilLists().awaitingGulag2.remove(player.getUniqueId());
+            }
+        }
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
         Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());

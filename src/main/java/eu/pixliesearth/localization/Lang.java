@@ -203,7 +203,13 @@ public enum Lang {
     //CRAFT/ANVIL/ENCHANT/BEACON PROTECT
     CANT_PUT_IN_INV(Lang.EARTH, new HashMap<>()),
     //Explosive Pickaxe
-    VERY_SMART(Lang.EARTH, new HashMap<>());
+    VERY_SMART(Lang.EARTH, new HashMap<>()),
+
+    //Warsystem
+    GULAGED(Lang.WAR, new HashMap<>()),
+    WON_GULAG(Lang.WAR, new HashMap<>()),
+    GULAG_CAP(Lang.WAR, new HashMap<>()),
+    GULAG_COMMAND(Lang.WAR, new HashMap<>());
 
     private String PREFIX;
     private Map<String, String> languages;
@@ -215,6 +221,7 @@ public enum Lang {
     private static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
     private static final String GUNS = "§aGUNS §8| ";
     private static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";
+    private static final String WAR = "§4WAR §8| ";
 
     Lang(String PREFIX, Map<String, String> languages) {
         this.PREFIX = PREFIX;

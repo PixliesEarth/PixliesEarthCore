@@ -52,6 +52,14 @@ public class UtilLists {
 
     public List<UUID> claimFill;
 
+    public List<UUID> awaitingGulag1;
+
+    public List<UUID> awaitingGulag2;
+
+    public Map<UUID, UUID> fightingGulag;
+
+    public List<UUID> wasGulag;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -72,6 +80,10 @@ public class UtilLists {
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();
         claimFill = new ArrayList<>();
+        awaitingGulag1 = new ArrayList<>();
+        awaitingGulag2 = new ArrayList<>();
+        fightingGulag = new HashMap<>();
+        wasGulag = new ArrayList<>();
     }
 
 }

@@ -39,6 +39,9 @@ import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.utils.UtilThread;
+import eu.pixliesearth.warsystem.CommandListener;
+import eu.pixliesearth.warsystem.GulagDeathListener;
+import eu.pixliesearth.warsystem.GulagStartListener;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -271,6 +274,9 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new MapClickListener(), this);
         manager.registerEvents(new settlementsCommand(), this);
         manager.registerEvents(new PlayerLoginListener(), this);
+        manager.registerEvents(new CommandListener(), this);
+        manager.registerEvents(new GulagDeathListener(), this);
+        manager.registerEvents(new GulagStartListener(), this);
     }
 
     /**
