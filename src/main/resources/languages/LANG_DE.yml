@@ -156,3 +156,4 @@ PLAYER_TRANSFERED_LEADERSHIP: "&6%PLAYER% &7hat soeben die Leitung der Nation &b
 CLAIMFILL_LIMIT_REACHED: "&7Du hast die Claim-fill Grenze überschritten."
 PLAYER_CLAIMFILLED: "&6%PLAYER% &7hat soeben &b%CHUNKS%x &7chunks geclaimet mithilfe von Claim-fill."
 CLICK_TO_PM: "Klick mich an um &d%PLAYER% &7eine Privatnachricht zu schreiben."
+PLAYER_CLAIMLINED: "&6%PLAYER% &7hat soeben &b%CHUNKS%x &7chunks geclaimet mithilfe von Claim-line."

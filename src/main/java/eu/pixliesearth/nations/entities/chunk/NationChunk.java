@@ -83,6 +83,8 @@ public class NationChunk {
 
     public NationChunk withChunkX(Integer chunkX) { return get(this.getWorld(), chunkX, this.getZ()); }
     public NationChunk withChunkZ(Integer chunkZ) { return get(this.getWorld(), this.getX(), chunkZ); }
+    public NationChunk withChunkXNew(Integer chunkX) { return new NationChunk(nationId, world, chunkX, z); }
+    public NationChunk withChunkZNew(Integer chunkZ) { return new NationChunk(nationId, world, x, chunkZ); }
 
     public static Nation getNationData(Chunk chunk) {
         NationChunk c = get(chunk);
