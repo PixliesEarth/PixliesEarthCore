@@ -28,7 +28,8 @@ public class BlockBreakListener implements Listener {
                     if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
                         if (event.getPlayer().getInventory().getItemInMainHand().getLore() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().containsAll(new ItemExplosivePick().getLore()) || event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().containsAll(new ItemExplosiveShovel().getLore())) {
                             Block b = event.getBlock();
-                            if (b.getType() != Material.TORCH
+                           if(b.getType().getHardness() > 0.05){
+                            /*if (b.getType() != Material.TORCH
                                     && b.getType() != Material.REDSTONE_TORCH
                                     && b.getType() != Material.REDSTONE_WALL_TORCH
                                     && b.getType() != Material.WALL_TORCH
@@ -99,7 +100,7 @@ public class BlockBreakListener implements Listener {
                                     && b.getType() != Material.KELP_PLANT
                                     && b.getType() != Material.SWEET_BERRY_BUSH
 
-                                    ) {
+                                    ) {*/
                                 ArrayList<Block> blocks = new ArrayList<>();
 
 
