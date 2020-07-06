@@ -163,14 +163,14 @@ public class GulagStartListener implements Listener {
                 p.getInventory().setChestplate(chestplate);
                 p.getInventory().setLeggings(pant);
                 p.getInventory().setBoots(boot);
-                p.getInventory().addItem(steak);
-                p.getInventory().addItem(sword);
+                p.getInventory().setItem(0, sword);
+                p.getInventory().setItem(1,steak);
                 player.getInventory().setHelmet(helmet);
                 player.getInventory().setChestplate(chestplate);
                 player.getInventory().setLeggings(pant);
                 player.getInventory().setBoots(boot);
-                player.getInventory().addItem(sword);
-                player.getInventory().addItem(steak);
+                player.getInventory().setItem(0,sword);
+                player.getInventory().setItem(1,steak);
                 break;
             case 1:
                 ItemStack helmet1 = new ItemStack(Material.LEATHER_HELMET);
