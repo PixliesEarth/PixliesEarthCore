@@ -120,9 +120,9 @@ public class GulagStartListener implements Listener {
           } else {
               Main.getInstance().getUtilLists().fightingGulag.remove(winner.getUniqueId(), loser.getUniqueId());
           }
+          if(loser.isDead()) loser.spigot().respawn();
           loser.getInventory().clear();
           loser.teleport(Bukkit.getWorld("world").getSpawnLocation());
-          loser.banPlayer("Died in gulag. You will be unbanned after the war.");
           winner.sendMessage(Lang.WON_GULAG.get(winner));
           winner.playSound(winner.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
       }
@@ -136,6 +136,9 @@ public class GulagStartListener implements Listener {
                 winner.setHealth(20);
                 winner.setFoodLevel(20);
                 winner.getInventory().clear();
+                if(loser != null) {
+                    loser.banPlayer("Died in gulag. You will be unbanned after the war.");
+                }
             }
         }, 20*5);
         Main.getInstance().gulagActive = false;
@@ -201,8 +204,9 @@ public class GulagStartListener implements Listener {
         Player player = Bukkit.getPlayer(Main.getInstance().getUtilLists().awaitingGulag1.get(0));
         Player player2 = Bukkit.getPlayer(Main.getInstance().getUtilLists().awaitingGulag2.get(0));
         Main.getInstance().getUtilLists().fightingGulag.put(player.getUniqueId(), player2.getUniqueId());
-        Bukkit.getPluginManager().callEvent(new GulagStartEvent(player, player2));
         Main.getInstance().getUtilLists().awaitingGulag1.remove(player.getUniqueId());
         Main.getInstance().getUtilLists().awaitingGulag2.remove(player2.getUniqueId());
+        Bukkit.getPluginManager().callEvent(new GulagStartEvent(player, player2));
+
     }
 }

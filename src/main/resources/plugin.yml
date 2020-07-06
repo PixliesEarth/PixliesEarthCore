@@ -176,7 +176,10 @@ commands:
       - disguise
   realname:
     description: realname
-
+  skipgulag:
+    description: skipgulag
+    aliases:
+      - gulagskip
 permissions:
   # GENERAL
   earth.admin:
@@ -253,4 +256,9 @@ permissions:
      default: op
    #CUSTOM ITEMS
   earth.ci.give:
+     default: op
+   #GULAG
+  gulag.command.skip:
+     default: op
+  gulag.commandblock.bypass:
      default: op

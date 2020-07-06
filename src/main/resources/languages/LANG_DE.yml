@@ -163,3 +163,5 @@ GULAG_CAP: "§61 Minute ist vorbei! Wer in 10 Sekunden näher zur Mitte ist gewi
 GULAG_COMMAND: "§7Du darfst §ckeine §7Befehle im Gulag ausführen!"
 GULAG_COUNTDOWN: "§7Nur noch §b%COUNTER% Sekunden bis zum Kampf!"
 GULAG_TIMED_OUT: "§7Du hattest Glück... Keiner ist gekommen um mit dir zu kämpfen. Vielleicht hatten sie Angst..."
+GULAG_SKIP_NOT_AWAITING: "§7Du wartest grade §cnicht §7im Gulag!"
+GULAG_SKIPPED: "§7Du hast den Gulag §aübersprungen§7!"

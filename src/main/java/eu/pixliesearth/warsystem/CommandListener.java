@@ -19,7 +19,10 @@ public class CommandListener implements Listener {
         || Main.getInstance().getUtilLists().awaitingGulag2.contains(p.getUniqueId())
         || Main.getInstance().getUtilLists().fightingGulag.containsKey(p.getUniqueId())
         || Main.getInstance().getUtilLists().fightingGulag.containsValue(p.getUniqueId())){
-            if(!command.equalsIgnoreCase("/msg")){
+            if(!command.equalsIgnoreCase("/msg")
+                && !command.equalsIgnoreCase("/skipgulag")
+                && !command.equalsIgnoreCase("/gulagskip")
+                && !p.hasPermission("gulag.commandblock.bypass")){
                 e.setCancelled(true);
                 p.sendMessage(Lang.GULAG_COMMAND.get(p));
             }

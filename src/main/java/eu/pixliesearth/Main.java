@@ -38,6 +38,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.CommandListener;
 import eu.pixliesearth.warsystem.GulagDeathListener;
+import eu.pixliesearth.warsystem.GulagSkipCommand;
 import eu.pixliesearth.warsystem.GulagStartListener;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
@@ -192,6 +193,8 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         discordDisable();
+        getUtilLists().awaitingGulag1.clear();
+        getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())
             getProfile(player.getUniqueId()).backup();
         for (Nation nation : NationManager.nations.values())
@@ -249,6 +252,7 @@ public final class Main extends JavaPlugin {
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
         getCommand("realname").setExecutor(new RealNameCommand());
+        getCommand("skipgulag").setExecutor(new GulagSkipCommand());
     }
 
     private void registerEvents(PluginManager manager) {
