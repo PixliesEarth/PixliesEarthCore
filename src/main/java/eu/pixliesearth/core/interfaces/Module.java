@@ -21,7 +21,7 @@ public interface Module {
     /**
      * @return Is the module enabled?
      */
-    boolean enabled();
+    boolean isEnabled();
 
     /**
      * Plugin instance

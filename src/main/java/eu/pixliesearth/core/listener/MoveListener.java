@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class MoveListener implements Listener {
 
@@ -83,6 +84,15 @@ public class MoveListener implements Listener {
                 }
             }
 
+        }
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
+            Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
+            Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
         }
     }
 

@@ -20,7 +20,7 @@ public class ShopSystem implements Module, CommandExecutor {
     }
 
     @Override
-    public boolean enabled() {
+    public boolean isEnabled() {
         return config.getBoolean("shopsystem.enabled");
     }
 

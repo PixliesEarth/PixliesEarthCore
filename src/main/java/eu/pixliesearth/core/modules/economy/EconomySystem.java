@@ -19,7 +19,7 @@ public class EconomySystem implements Module, CommandExecutor {
     }
 
     @Override
-    public boolean enabled() {
+    public boolean isEnabled() {
         return config.getBoolean("modules.economy.enabled");
     }
 

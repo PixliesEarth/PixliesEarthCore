@@ -33,7 +33,7 @@ public class ModulesCommand implements CommandExecutor {
             return false;
         }
         if (args[1].equalsIgnoreCase("disable")) {
-            if (!module.enabled()) {
+            if (!module.isEnabled()) {
                 sender.sendMessage("§aEARTH §8| §b" + module.name() + " §7is already disabled.");
                 return false;
             }
@@ -42,7 +42,7 @@ public class ModulesCommand implements CommandExecutor {
             instance.reloadConfig();
             sender.sendMessage("§aEARTH §8| §aSuccessfully §7enabled §b" + module.name() + "§7!");
         } else if (args[1].equalsIgnoreCase("enable")) {
-            if (module.enabled()) {
+            if (module.isEnabled()) {
                 sender.sendMessage("§aEARTH §8| §b" + module.name() + " §7is already enabled.");
                 return false;
             }

@@ -21,6 +21,8 @@ import java.util.Arrays;
 
 public class DeathListener implements Listener {
 
+    Main instance = Main.getInstance();
+
     @EventHandler
     public void onDeath(PlayerDeathEvent e){
         if (e.getEntityType() != EntityType.PLAYER) return;
@@ -40,6 +42,8 @@ public class DeathListener implements Listener {
             killer.getTimers().remove("§c§lCombat");
             killer.save();
         }
+        instance.getUtilLists().claimAuto.remove(player.getUniqueId());
+        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
     }
 
 }

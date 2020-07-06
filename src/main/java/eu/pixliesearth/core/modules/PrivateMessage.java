@@ -13,7 +13,7 @@ public class PrivateMessage implements CommandExecutor, Module {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (!enabled()) {
+        if (!isEnabled()) {
             sender.sendMessage("§5PM §8| §7The chatsystem is §cdisabled §7at the moment.");
             return false;
         }
@@ -69,7 +69,7 @@ public class PrivateMessage implements CommandExecutor, Module {
     }
 
     @Override
-    public boolean enabled() {
+    public boolean isEnabled() {
         return config.getBoolean("modules.privatemessage.enabled");
     }
 

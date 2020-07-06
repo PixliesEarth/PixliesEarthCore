@@ -27,7 +27,7 @@ public class WarpSystem implements CommandExecutor, Module {
     }
 
     @Override
-    public boolean enabled() {
+    public boolean isEnabled() {
         return config.getBoolean("modules.warps.enabled");
     }
 

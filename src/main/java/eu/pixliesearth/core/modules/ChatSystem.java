@@ -21,10 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
-
 public class ChatSystem implements Listener, Module {
 
     @EventHandler
@@ -62,7 +58,7 @@ public class ChatSystem implements Listener, Module {
 
             // ACTUAL CHAT
             if (!event.isCancelled()) {
-                if (muted() && !player.hasPermission("earth.chat.bypassmute")) {
+                if (isMuted() && !player.hasPermission("earth.chat.bypassmute")) {
                     event.setCancelled(true);
                     player.sendMessage(Lang.CHAT_IS_MUTED_ATM.get(player));
                     return;
@@ -158,11 +154,11 @@ public class ChatSystem implements Listener, Module {
     }
 
     @Override
-    public boolean enabled() {
+    public boolean isEnabled() {
         return config.getBoolean("modules.chatsystem.enabled");
     }
 
-    public boolean muted() {
+    public boolean isMuted() {
         return config.getBoolean("modules.chatsystem.muted");
     }
 
