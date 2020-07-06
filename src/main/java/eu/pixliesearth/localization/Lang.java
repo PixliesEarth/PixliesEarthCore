@@ -209,7 +209,9 @@ public enum Lang {
     GULAGED(Lang.WAR, new HashMap<>()),
     WON_GULAG(Lang.WAR, new HashMap<>()),
     GULAG_CAP(Lang.WAR, new HashMap<>()),
-    GULAG_COMMAND(Lang.WAR, new HashMap<>());
+    GULAG_COMMAND(Lang.WAR, new HashMap<>()),
+    GULAG_COUNTDOWN(Lang.WAR, new HashMap<>()),
+    GULAG_TIMED_OUT(Lang.WAR, new HashMap<>());
 
     private String PREFIX;
     private Map<String, String> languages;

@@ -35,10 +35,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
-import eu.pixliesearth.utils.AfkMap;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.utils.UtilThread;
+import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.CommandListener;
 import eu.pixliesearth.warsystem.GulagDeathListener;
 import eu.pixliesearth.warsystem.GulagStartListener;
@@ -73,6 +70,7 @@ public final class Main extends JavaPlugin {
     private @Getter FileManager warpsCfg;
     private @Getter FileManager shopCfg;
     private @Getter UtilLists utilLists;
+    public boolean gulagActive = false;
 
     @Override
     public void onEnable() {
@@ -187,6 +185,8 @@ public final class Main extends JavaPlugin {
         discordEnable();
 
         new UtilThread().start();
+        new GulagThread().start();
+
     }
 
     @Override
@@ -323,6 +323,9 @@ public final class Main extends JavaPlugin {
                 .setDescription("<:offline:716052437688909825> Server is offline!")
         );
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
+    }
+    public boolean isGulagActive(){
+        return gulagActive;
     }
 
 }

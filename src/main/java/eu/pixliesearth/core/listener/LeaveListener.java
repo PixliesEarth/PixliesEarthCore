@@ -5,6 +5,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.utils.AfkMap;
+import eu.pixliesearth.warsystem.GulagStartListener;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +20,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class LeaveListener implements Listener {
@@ -34,6 +37,13 @@ public class LeaveListener implements Listener {
                 Main.getInstance().getUtilLists().awaitingGulag1.remove(player.getUniqueId());
             }else{
                 Main.getInstance().getUtilLists().awaitingGulag2.remove(player.getUniqueId());
+            }
+        }
+        if(Main.getInstance().getUtilLists().fightingGulag.containsKey(player.getUniqueId()) || Main.getInstance().getUtilLists().fightingGulag.containsValue(player.getUniqueId())){
+            if(Main.getInstance().getUtilLists().fightingGulag.containsKey(player.getUniqueId())){
+                GulagStartListener.fightOver(player, Bukkit.getPlayer(Main.getInstance().getUtilLists().fightingGulag.get(player.getUniqueId())));
+            }else{
+                GulagStartListener.fightOver(player, Bukkit.getPlayer(getKeyByValue(Main.getInstance().getUtilLists().fightingGulag, player.getUniqueId())));
             }
         }
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
@@ -85,6 +95,14 @@ public class LeaveListener implements Listener {
 /*
         //Discord Leaves
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));*/
+    }
+    public static UUID getKeyByValue(Map<UUID, UUID> map, UUID value) {
+        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
 }
