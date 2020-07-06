@@ -166,3 +166,4 @@ GULAG_TIMED_OUT: "§7Du hattest Glück... Keiner ist gekommen um mit dir zu käm
 GULAG_SKIP_NOT_AWAITING: "§7Du wartest grade §cnicht §7im Gulag!"
 GULAG_SKIPPED: "§7Du hast den Gulag §aübersprungen§7!"
 GULAG_BYPASS_BAN: "§7Du wurdest vom Gulagsystem nicht gebannt da du ein Team-Mitglied bist. Falls du aber an einem Krieg teilnimmst, dann logge dich bitte aus."
+STRIKED_PLAYER: "§7Du hast einen Blitz auf §6%PLAYER% §7beschworen!"

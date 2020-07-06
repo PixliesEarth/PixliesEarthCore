@@ -253,6 +253,7 @@ public final class Main extends JavaPlugin {
         getCommand("nick").setExecutor(new NickCommand());
         getCommand("realname").setExecutor(new RealNameCommand());
         getCommand("skipgulag").setExecutor(new GulagSkipCommand());
+        getCommand("smite").setExecutor(new SmiteCommand());
     }
 
     private void registerEvents(PluginManager manager) {
