@@ -32,7 +32,7 @@ public class UtilThread extends Thread {
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
                     .withUsername(Bukkit.getOfflinePlayer(entry.getKey()).getName())
-                    .withContent(ChatColor.stripColor(entry.getValue().replace("@", "")))
+                    .withContent(ChatColor.stripColor(entry.getValue().replace("@", "").replace("discord.gg", "").replace("discord.com", "")))
                     .withAvatarURL("https://minotar.net/avatar/" + Bukkit.getOfflinePlayer(entry.getKey()).getName())
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
