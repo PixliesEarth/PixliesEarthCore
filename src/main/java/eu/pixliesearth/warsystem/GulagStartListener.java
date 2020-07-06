@@ -137,7 +137,12 @@ public class GulagStartListener implements Listener {
                 winner.setFoodLevel(20);
                 winner.getInventory().clear();
                 if(loser != null) {
-                    loser.banPlayer("Died in gulag. You will be unbanned after the war.");
+                    if(loser.hasPermission("gulag.bypass.ban")){
+                        loser.sendMessage(Lang.GULAG_BYPASS_BAN.get(loser));
+                    }else {
+                        loser.banPlayer("Died in gulag. You will be unbanned after the war.");
+                    }
+
                 }
             }
         }, 20*5);

@@ -262,3 +262,5 @@ permissions:
      default: op
   gulag.commandblock.bypass:
      default: op
+  gulag.bypass.ban:
+     default: op

@@ -24,13 +24,19 @@ public class GulagDeathListener implements Listener {
             //TODO: funi message
             Date date = new Date(System.currentTimeMillis() + 60 * 60 * 1000 * 24);
             if(!p.isBanned()) {
-                p.banPlayer("Trying to avoid gulag", date, "The gulag");
+                if(!p.hasPermission("gulag.bypass.ban")) {
+                    p.banPlayer("Trying to avoid gulag", date, "The gulag");
+                }
             }
             return;
         }
         if (Main.getInstance().getUtilLists().wasGulag.contains(p.getUniqueId())) {
             //TODO: funi message
-            p.banPlayer("Died after being in gulag. No second chances. You will be unbanned after the war.");
+            if(p.hasPermission("gulag.bypass.ban")){
+                p.sendMessage(Lang.GULAG_BYPASS_BAN.get(p));
+            }else {
+                p.banPlayer("Died after being in gulag. No second chances. You will be unbanned after the war.");
+            }
             Main.getInstance().getUtilLists().wasGulag.remove(p.getUniqueId());
             return;
         }
