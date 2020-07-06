@@ -128,7 +128,7 @@ public class ChatSystem implements Listener, Module {
                                 oProfile.getAsOfflinePlayer().getPlayer().spigot().sendMessage(component);
                             }
                         } else {
-                            TextComponent component = new TextComponent(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
+                            TextComponent component = new TextComponent(format.replace("%nations_rank%", "").replace("%nations_nation% " + ChatColor.DARK_GRAY + "| ", ""));
                             component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/pm " + player.getName()));
                             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + Lang.CLICK_TO_PM.get(oProfile.getAsOfflinePlayer().getPlayer()).replace("%PLAYER%", player.getName())).create()));
                             oProfile.getAsOfflinePlayer().getPlayer().spigot().sendMessage(component);
