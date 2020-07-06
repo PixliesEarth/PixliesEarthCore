@@ -13,8 +13,6 @@ public class CommandListener implements Listener {
         Player p = e.getPlayer();
         String cmd = e.getMessage();
         String command =  cmd.contains(" ") ? cmd.split(" ")[0] : cmd;
-        System.out.println(cmd);
-        System.out.println(command);
         if(Main.getInstance().getUtilLists().awaitingGulag1.contains(p.getUniqueId())
         || Main.getInstance().getUtilLists().awaitingGulag2.contains(p.getUniqueId())
         || Main.getInstance().getUtilLists().fightingGulag.containsKey(p.getUniqueId())
