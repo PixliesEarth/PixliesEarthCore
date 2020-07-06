@@ -24,6 +24,7 @@ public class AchievementListener implements Listener {
             String advancementName = Arrays.stream(rawAdvancementName.substring(rawAdvancementName.lastIndexOf("/") + 1).toLowerCase().split("_"))
                     .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1))
                     .collect(Collectors.joining(" "));
+            if(advancementName.equalsIgnoreCase("root")) return;
             MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("\uD83C\uDF8A **" + PlaceholderAPI.setPlaceholders(p, "%vault_prefix%" + p.getDisplayName()) + " has made the advancement " + advancementName + "!**"));
         }
     }
