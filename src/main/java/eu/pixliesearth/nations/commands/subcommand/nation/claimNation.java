@@ -37,6 +37,7 @@ public class claimNation implements SubCommand {
         returner.put("auto", 1);
         returner.put("one", 1);
         returner.put("fill", 1);
+        returner.put("line", 1);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 2);
         return returner;
@@ -121,29 +122,42 @@ public class claimNation implements SubCommand {
                     floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
                     claimFill(player, nation, toClaim);
                 } else if (args[0].equalsIgnoreCase("line")) {
+                    long start = System.currentTimeMillis();
+                    if (!profile.isInNation()) {
+                        Lang.NOT_IN_A_NATION.send(player);
+                        return false;
+                    }
                     int max = Integer.parseInt(args[1]);
                     int claimed = 0;
+                    final String world = c.getWorld().getName();
+                    final String nationId = profile.getNationId();
+                    final int x = c.getX();
+                    final int z = c.getZ();
                     NationChunk nc = NationChunk.get(c);
                     if (nc != null) {
                         Lang.ALREADY_CLAIMED.send(player);
                         return false;
                     }
-                    nc = new NationChunk(profile.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
+                    nc = new NationChunk(nationId, world, x, z);
                     for (int i = 0; i < max; i++) {
-                        if (NationChunk.get(c.getWorld().getName(), c.getX(), c.getZ() + i) != null) continue;
-                        NationChunk ncn = nc.withChunkXNew(nc.getX() + i);
-                        if (ncn == null) {
-                            ncn.claim();
-                            claimed++;
-                        }
+                        if (NationChunk.get(world, x, z + i) != null) continue;
+                        NationChunk ncn = nc.withChunkZNew(nc.getZ() - i);
+                        ncn.claim();
+                        claimed++;
                     }
                     for (Player member : profile.getCurrentNation().getOnlineMemberSet())
-                        Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
-                    Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                        Lang.PLAYER_CLAIMLINED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                    Lang.PLAYER_CLAIMLINED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                    player.sendMessage(System.currentTimeMillis() - start + "ms");
                 }
                 break;
             case 3:
                 if (args[0].equalsIgnoreCase("line")) {
+                    long start = System.currentTimeMillis();
+                    if (!profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
                     Nation nation = Nation.getByName(args[2]);
                     if (nation == null) {
                         Lang.NATION_DOESNT_EXIST.send(player);
@@ -151,23 +165,26 @@ public class claimNation implements SubCommand {
                     }
                     int max = Integer.parseInt(args[1]);
                     int claimed = 0;
+                    final String world = c.getWorld().getName();
+                    final String nationId = nation.getNationId();
+                    final int x = c.getX();
+                    final int z = c.getZ();
                     NationChunk nc = NationChunk.get(c);
                     if (nc != null) {
                         Lang.ALREADY_CLAIMED.send(player);
                         return false;
                     }
-                    nc = new NationChunk(nation.getNationId(), c.getWorld().getName(), c.getX(), c.getZ());
+                    nc = new NationChunk(nationId, world, x, z);
                     for (int i = 0; i < max; i++) {
-                        if (NationChunk.get(c.getWorld().getName(), c.getX(), c.getZ() + i) != null) continue;
-                        NationChunk ncn = nc.withChunkXNew(nc.getX() + i);
-                        if (ncn == null) {
-                            ncn.claim();
-                            claimed++;
-                        }
+                        if (NationChunk.get(world, x, z + i) != null) continue;
+                        NationChunk ncn = nc.withChunkZNew(nc.getZ() - i);
+                        ncn.claim();
+                        claimed++;
                     }
                     for (Player member : nation.getOnlineMemberSet())
-                        Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
-                    Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                        Lang.PLAYER_CLAIMLINED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                    Lang.PLAYER_CLAIMLINED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
+                    player.sendMessage(System.currentTimeMillis() - start + "ms");
                 }
                 break;
         }

@@ -222,6 +222,10 @@ public class Profile {
         return relations.get(uuid.toString()) == null || !relations.get(uuid.toString()).startsWith("REQ=");
     }
 
+    public boolean isStaff() {
+        return instance.getUtilLists().staffMode.contains(UUID.fromString(uniqueId));
+    }
+
     public static Profile getByDiscord(String discordId) {
         Document found = Main.getPlayerCollection().find(new Document("discord", discordId)).first();
         if (found != null)

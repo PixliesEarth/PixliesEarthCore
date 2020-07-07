@@ -94,7 +94,7 @@ public class handoverCommand implements SubCommand {
                     Lang.NATION_DOESNT_EXIST.send(sender);
                     return false;
                 }
-                if (target.isInNation()) {
+                if (target.isInNation() && !target.getNationId().equals(nation.getNationId())) {
                     for (String member : target.getCurrentNation().getMembers()) {
                         Profile memberProf = instance.getProfile(UUID.fromString(member));
                         if (memberProf.getNationRank().equalsIgnoreCase("admin")) {
