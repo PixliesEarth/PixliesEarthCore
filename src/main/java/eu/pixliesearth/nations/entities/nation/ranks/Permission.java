@@ -10,7 +10,8 @@ public enum Permission {
     CLAIM,
     UNCLAIM,
     BUILD,
-    INTERACT;
+    INTERACT,
+    MANAGE_SETTLEMENTS;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
         if (!profile.isInNation()) return false;

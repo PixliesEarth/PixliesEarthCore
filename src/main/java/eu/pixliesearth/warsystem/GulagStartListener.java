@@ -50,8 +50,8 @@ public class GulagStartListener implements Listener {
             @Override
             public void run(){
                 if (countdown[0] != 0) {
-                    p.sendMessage(Lang.GULAG_COUNTDOWN.get(p).replace("%COUNTER%", String.valueOf(countdown[0])));
-                    enemy.sendMessage(Lang.GULAG_COUNTDOWN.get(enemy).replace("%COUNTER%", String.valueOf(countdown[0])));
+                    p.sendTitle("", Lang.GULAG_COUNTDOWN.get(p).replace("%COUNTER%", String.valueOf(countdown[0])), 20, 20 * 3, 20);
+                    enemy.sendTitle("", Lang.GULAG_COUNTDOWN.get(enemy).replace("%COUNTER%", String.valueOf(countdown[0])), 20, 20 * 3, 20);
                     countdown[0]--;
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                     enemy.playSound(enemy.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);

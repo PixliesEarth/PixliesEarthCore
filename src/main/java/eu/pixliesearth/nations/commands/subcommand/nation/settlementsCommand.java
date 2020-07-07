@@ -67,6 +67,11 @@ public class settlementsCommand implements SubCommand, Listener {
                 }
                 player.openInventory(inventory);
                 break;
+            case 2:
+                if (args[0].equalsIgnoreCase("add")) {
+
+                }
+                break;
         }
         return false;
     }
