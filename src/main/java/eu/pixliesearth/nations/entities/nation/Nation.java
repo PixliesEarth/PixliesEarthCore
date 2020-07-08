@@ -83,6 +83,16 @@ public class Nation {
         NationManager.names.remove(name);
     }
 
+    public void unclaimAll() {
+        Iterator<String> iter = chunks.iterator();
+        while(iter.hasNext()) {
+            String it = iter.next();
+            NationChunk nc = NationChunk.fromString(it);
+            iter.remove();
+            nc.unclaim();
+        }
+    }
+
     public int getClaimingPower() {
         //TODO
         return 9999;

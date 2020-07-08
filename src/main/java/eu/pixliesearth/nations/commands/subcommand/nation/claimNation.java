@@ -17,6 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class claimNation implements SubCommand {
@@ -185,6 +186,28 @@ public class claimNation implements SubCommand {
                         Lang.PLAYER_CLAIMLINED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     Lang.PLAYER_CLAIMLINED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     player.sendMessage(System.currentTimeMillis() - start + "ms");
+                } else if (args[0].equalsIgnoreCase("all")) {
+                    if (!profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    Nation nation1 = Nation.getByName(args[1]);
+                    Nation nation2 = Nation.getByName(args[2]);
+                    if (nation1 == null) {
+                        Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (nation2 == null) {
+                        Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    final List<String> chunks1 = nation1.getChunks();
+                    nation1.unclaimAll();
+                    for (String s : chunks1) {
+                        NationChunk nc = NationChunk.fromString(s);
+                        nc.setNationId(nation2.getNationId());
+                        nc.claim();
+                    }
                 }
                 break;
         }
