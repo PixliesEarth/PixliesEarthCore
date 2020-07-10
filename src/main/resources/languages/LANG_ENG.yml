@@ -169,3 +169,5 @@ GULAG_BYPASS_BAN: "§7You were not banned by the gulag system because you are a 
 STRIKED_PLAYER: "§7You striked §6%PLAYER%§7!"
 PLAYER_UNCLAIMFILLED: "&6%PLAYER% &7unclaimed &b%CHUNKS%x &7chunks using unclaim-fill."
 UNCLAIMFILL_LIMIT_REACHED: "&7You have exceeded the unclaim-fill limit."
+RANK_ALREADY_EXISTS: "&7This rank already exists."
+RANK_CREATED: "&7You just created the rank &b%RANK%&7."

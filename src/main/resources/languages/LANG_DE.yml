@@ -169,3 +169,5 @@ GULAG_BYPASS_BAN: "§7Du wurdest vom Gulagsystem nicht gebannt da du ein Team-Mi
 STRIKED_PLAYER: "§7Du hast einen Blitz auf §6%PLAYER% §7beschworen!"
 UNCLAIMFILL_LIMIT_REACHED: "&7Du hast die Unclaim-fill Grenze überschritten."
 PLAYER_UNCLAIMFILLED: "&6%PLAYER% &7hat soeben &b%CHUNKS%x &7chunks unclaimed mithilfe von Unclaim-fill."
+RANK_ALREADY_EXISTS: "&7Dieser Rang existiert schon."
+RANK_CREATED: "&7Du hast soeben den Rang &b%RANK% &7erstellt."

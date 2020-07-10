@@ -10,19 +10,14 @@ import java.util.Set;
 
 public enum Permission {
 
-    INVITE(1),
-    MODERATE(2),
-    CLAIM(4),
-    UNCLAIM(8),
-    BUILD(16),
-    INTERACT(32),
-    MANAGE_SETTLEMENTS(64);
-
-    int number;
-
-    Permission(int number) {
-        this.number = number;
-    }
+    INVITE,
+    MODERATE,
+    CLAIM,
+    UNCLAIM,
+    BUILD,
+    INTERACT,
+    MANAGE_SETTLEMENTS,
+    EDIT_RANKS;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
         if (!profile.isInNation()) return false;
