@@ -248,7 +248,7 @@ public class Profile {
     }
 
     public Rank getCurrentNationRank() {
-        return Rank.getFromMap(getCurrentNation().getRanks().get(nationRank));
+        return (Rank) getCurrentNation().getRanks().get(nationRank);
     }
 
 }

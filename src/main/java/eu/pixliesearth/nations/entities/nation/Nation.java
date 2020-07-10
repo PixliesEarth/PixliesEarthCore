@@ -24,7 +24,7 @@ public class Nation {
     private int xpPoints;
     private double money;
     private String leader;
-    private Map<String, Map<String, Object>> ranks;
+    private Map<String, Object> ranks;
     private List<String> members;
     private List<String> chunks;
     private List<String> allyRequests;

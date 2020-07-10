@@ -72,28 +72,12 @@ public class createNation implements SubCommand {
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            Map<String, Object> admin = new HashMap<>();
-            admin.put("name", "admin");
-            admin.put("prefix", "§c***");
-            admin.put("permissions", new ArrayList<>());
-            Map<String, Object> member = new HashMap<>();
-            member.put("name", "member");
-            member.put("prefix", "§b**");
-            member.put("permissions", new ArrayList<>());
-            Map<String, Object> newbie = new HashMap<>();
-            newbie.put("name", "newbie");
-            newbie.put("prefix", "§a*");
-            newbie.put("permissions", new ArrayList<>());
-            Map<String, Object> leader = new HashMap<>();
-            leader.put("name", "leader");
-            leader.put("prefix", "§c+");
-            leader.put("permissions", new ArrayList<>());
-            nation.getRanks().put("admin", admin);
-            nation.getRanks().put("member", member);
-            nation.getRanks().put("newbie", newbie);
-            nation.getRanks().put("leader", leader);
+            nation.getRanks().put("admin", Rank.ADMIN());
+            nation.getRanks().put("member", Rank.MEMBER());
+            nation.getRanks().put("newbie", new Rank("newbie", "§a*", new ArrayList<>()));
+            nation.getRanks().put("leader", new Rank("leader", "§c+", new ArrayList<>()));
             nation.save();
-            profile.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("leader")));
+            profile.addToNation(nation.getNationId(), (Rank) nation.getRanks().get("leader"));
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
         }
