@@ -122,6 +122,8 @@ public enum Lang {
     CLAIMFILL_LIMIT_REACHED(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMFILLED(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMLINED(Lang.NATION, new HashMap<>()),
+    UNCLAIMFILL_LIMIT_REACHED(Lang.NATION, new HashMap<>()),
+    PLAYER_UNCLAIMFILLED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

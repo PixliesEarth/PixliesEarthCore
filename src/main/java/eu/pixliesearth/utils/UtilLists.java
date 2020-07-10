@@ -52,6 +52,8 @@ public class UtilLists {
 
     public List<UUID> claimFill;
 
+    public List<UUID> unclaimFill;
+
     public List<UUID> awaitingGulag1;
 
     public List<UUID> awaitingGulag2;
@@ -80,6 +82,7 @@ public class UtilLists {
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();
         claimFill = new ArrayList<>();
+        unclaimFill = new ArrayList<>();
         awaitingGulag1 = new ArrayList<>();
         awaitingGulag2 = new ArrayList<>();
         fightingGulag = new HashMap<>();

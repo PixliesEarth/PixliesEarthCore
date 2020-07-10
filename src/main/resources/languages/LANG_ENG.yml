@@ -167,3 +167,5 @@ GULAG_SKIP_NOT_AWAITING: "§7You are currently §cnot §7awaiting a gulag fight!
 GULAG_SKIPPED: "§7You §askipped §7the gulag!"
 GULAG_BYPASS_BAN: "§7You were not banned by the gulag system because you are a staff member. If you are actively participating in a war, please log out."
 STRIKED_PLAYER: "§7You striked §6%PLAYER%§7!"
+PLAYER_UNCLAIMFILLED: "&6%PLAYER% &7unclaimed &b%CHUNKS%x &7chunks using unclaim-fill."
+UNCLAIMFILL_LIMIT_REACHED: "&7You have exceeded the unclaim-fill limit."
