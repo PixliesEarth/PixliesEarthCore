@@ -50,7 +50,7 @@ public class joinNation implements SubCommand {
                     player.sendMessage(Lang.YOU_ARE_ALREADY_IN_NATION.get(player));
                     return false;
                 }
-                if (!profile.getInvites().contains(nation.getNationId())) {
+                if (!profile.getInvites().contains(nation.getNationId()) && !profile.isStaff()) {
                     player.sendMessage(Lang.YOU_DONT_HAVE_OPEN_INV.get(player));
                     return false;
                 }
@@ -66,6 +66,11 @@ public class joinNation implements SubCommand {
                 }
                 UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target = instance.getProfile(targetUUID);
+                if (target.isInNation()) {
+                    Nation oldNation = target.getCurrentNation();
+                    oldNation.getMembers().remove(target.getUniqueId());
+                    oldNation.save();
+                }
                 target.getInvites().remove(nation.getNationId());
                 target.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
@@ -83,7 +88,7 @@ public class joinNation implements SubCommand {
                 UUID targetUUID2 = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target2 = instance.getProfile(targetUUID2);
                 target2.getInvites().remove(nation.getNationId());
-                target2.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
+                target2.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get(args[2])));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID2).getName()));
                 break;
