@@ -29,6 +29,7 @@ public class unclaimNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);
+        returner.put("fill", 1);
         return returner;
     }
 

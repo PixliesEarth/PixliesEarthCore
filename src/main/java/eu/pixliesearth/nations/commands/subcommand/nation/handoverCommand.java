@@ -66,10 +66,10 @@ public class handoverCommand implements SubCommand {
                     Lang.PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU.send(player);
                     return false;
                 }
-                target.setNationRank("leader");
                 profile.setNationRank("admin");
-                target.save();
+                target.setNationRank("leader");
                 profile.save();
+                target.save();
                 nation = profile.getCurrentNation();
                 nation.setLeader(target.getUniqueId());
                 nation.save();
@@ -94,7 +94,7 @@ public class handoverCommand implements SubCommand {
                     Lang.NATION_DOESNT_EXIST.send(sender);
                     return false;
                 }
-                if (target.isInNation() && !target.getNationId().equals(nation.getNationId()) && target.getCurrentNation().getMembers().size() > 1) {
+/*                if (target.isInNation() && !target.getNationId().equals(nation.getNationId()) && target.getCurrentNation().getMembers().size() > 1) {
                     for (String member : target.getCurrentNation().getMembers()) {
                         Profile memberProf = instance.getProfile(UUID.fromString(member));
                         if (memberProf.getNationRank().equalsIgnoreCase("admin")) {
@@ -107,15 +107,21 @@ public class handoverCommand implements SubCommand {
                             break;
                         }
                     }
+                }*/
+                if (target.isInNation() && !target.getNationId().equals(nation.getNationId())) {
+                    Nation oldNation = target.getCurrentNation();
+                    oldNation.setLeader("NONE");
+                    oldNation.getMembers().remove(target.getUniqueId());
+                    oldNation.save();
                 }
-                target.setNationId(nation.getNationId());
-                target.setInNation(true);
-                target.setNationRank("leader");
                 if (!nation.getLeader().equalsIgnoreCase("NONE")) {
                     Profile oldLeader = instance.getProfile(UUID.fromString(nation.getLeader()));
                     oldLeader.setNationRank("admin");
                     oldLeader.save();
                 }
+                target.setNationId(nation.getNationId());
+                target.setInNation(true);
+                target.setNationRank("leader");
                 nation.setLeader(target.getUniqueId());
                 nation.save();
                 target.save();
