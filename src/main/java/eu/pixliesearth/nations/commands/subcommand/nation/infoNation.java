@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -82,7 +83,7 @@ public class infoNation implements SubCommand {
     }
 
     public void sendNationInfo(Nation nation, CommandSender sender) {
-        sender.sendMessage("§b§n" + nation.getName());
+        sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
         sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
         sender.sendMessage("§7Era: §b" + nation.getEra());
