@@ -66,7 +66,7 @@ public class ChatSystem implements Listener, Module {
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
                     if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(profile.getTimers().get("Chat").getRemaining(), true)));
+                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(new Timer(profile.getTimers().get("Chat")).getRemaining(), true)));
                         event.setCancelled(true);
                         return;
                     }
@@ -136,7 +136,7 @@ public class ChatSystem implements Listener, Module {
 
                 if (config.getDouble("modules.chatsystem.cooldown") != 0.0 && !player.hasPermission("earth.chat.bypasscooldown")) {
                     Timer timer = new Timer(config.getLong("modules.chatsystem.cooldown") * 1000);
-                    profile.getTimers().put("Chat", timer);
+                    profile.getTimers().put("Chat", timer.toMap());
                     profile.save();
                     Bukkit.getScheduler().runTaskLater(instance, () -> {
                         profile.getTimers().remove("Chat");

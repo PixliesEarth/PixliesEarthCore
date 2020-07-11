@@ -23,7 +23,7 @@ public enum Permission {
         if (!profile.isInNation()) return false;
         if (profile.getNationRank().equals("leader")) return true;
         Nation nation = profile.getCurrentNation();
-        Rank rank = (Rank) nation.getRanks().get(profile.getNationRank());
+        Rank rank = Rank.get(nation.getRanks().get(profile.getNationRank()));
         return rank.getPermissions().contains(permission.name());
     }
 

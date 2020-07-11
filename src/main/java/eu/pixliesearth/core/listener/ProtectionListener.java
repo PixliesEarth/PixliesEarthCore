@@ -69,6 +69,7 @@ public class ProtectionListener implements Listener {
     @EventHandler(priority = HIGH)
     public void onInteract(PlayerInteractEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
+        if (event.getClickedBlock() == null) return;
         Chunk c = event.getClickedBlock().getChunk();
         if (!event.getClickedBlock().getType().isInteractable()) return;
         NationChunk nc = NationChunk.get(c);
@@ -89,7 +90,7 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = HIGH)
     public void onEnityInteract(PlayerInteractEntityEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getRightClicked().getChunk();
@@ -111,10 +112,10 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = HIGH)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
-            if (instance.getUtilLists().staffMode.contains(((Player) event.getDamager()).getUniqueId())) return;
+            if (instance.getUtilLists().staffMode.contains(event.getDamager().getUniqueId())) return;
             Chunk c = event.getEntity().getChunk();
             NationChunk nc = NationChunk.get(c);
             Player player = (Player) event.getDamager();

@@ -1,9 +1,11 @@
 package eu.pixliesearth.nations.entities.nation.ranks;
 
+import com.mongodb.BasicDBObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,18 @@ public class Rank {
     private String name;
     private String prefix;
     private List<String> permissions;
+
+    public static Rank get(Map<String, Object> map) {
+        return new Rank((String) map.get("name"), (String) map.get("prefix"), (List<String>) map.get("permissions"));
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> returner = new HashMap<>();
+        returner.put("name", name);
+        returner.put("prefix", prefix);
+        returner.put("permissions", permissions);
+        return returner;
+    }
 
     public static Rank MEMBER() {
         List<String> perms = new ArrayList<>();

@@ -44,7 +44,7 @@ public class TpacceptCommand implements CommandExecutor {
         if (cooldown < 1.0)
             cooldown = (long) 1.0;
         Timer timer = new Timer(cooldown * 1000);
-        rqProf.getTimers().put("Teleport", timer);
+        rqProf.getTimers().put("Teleport", timer.toMap());
         rqProf.save();
         requester.sendMessage(Lang.YOU_WILL_BE_TPD.get(requester).replace("%LOCATION%", player.getName()).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
         Bukkit.getScheduler().runTaskLater(instance, () -> {

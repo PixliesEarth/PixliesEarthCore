@@ -49,7 +49,7 @@ public class Profile {
     private int boosts;
     private String lastAt;
     private double pixliecoins;
-    private Map<String, Timer> timers;
+    private Map<String, Map<String, Object>> timers;
     private String favoriteColour;
     private String boardType;
     private String lang;
@@ -248,7 +248,7 @@ public class Profile {
     }
 
     public Rank getCurrentNationRank() {
-        return (Rank) getCurrentNation().getRanks().get(nationRank);
+        return Rank.get(getCurrentNation().getRanks().get(nationRank));
     }
 
 }

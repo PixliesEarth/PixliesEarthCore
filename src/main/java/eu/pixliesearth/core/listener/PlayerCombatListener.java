@@ -27,8 +27,8 @@ public class PlayerCombatListener implements Listener {
         if (dProfile.isInNation() && tProfile.isInNation() && (dProfile.getNationId().equals(tProfile.getNationId()) || Nation.getRelation(dProfile.getNationId(), tProfile.getNationId()) == Nation.NationRelation.ALLY)) return;
 
         Timer timer = new Timer(60 * 1000);
-        dProfile.getTimers().put("§c§lCombat", timer);
-        tProfile.getTimers().put("§c§lCombat", timer);
+        dProfile.getTimers().put("§c§lCombat", timer.toMap());
+        tProfile.getTimers().put("§c§lCombat", timer.toMap());
         dProfile.save();
         tProfile.save();
 

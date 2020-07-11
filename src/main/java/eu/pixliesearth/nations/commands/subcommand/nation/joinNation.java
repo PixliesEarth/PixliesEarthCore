@@ -55,7 +55,7 @@ public class joinNation implements SubCommand {
                     return false;
                 }
                 profile.getInvites().remove(nation.getNationId());
-                profile.addToNation(nation.getNationId(), (Rank) nation.getRanks().get("newbie"));
+                profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", player.getName()));
                 break;
@@ -72,7 +72,7 @@ public class joinNation implements SubCommand {
                     oldNation.save();
                 }
                 target.getInvites().remove(nation.getNationId());
-                target.addToNation(nation.getNationId(), (Rank) nation.getRanks().get("newbie"));
+                target.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID).getName()));
                 break;
@@ -88,7 +88,7 @@ public class joinNation implements SubCommand {
                 UUID targetUUID2 = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target2 = instance.getProfile(targetUUID2);
                 target2.getInvites().remove(nation.getNationId());
-                target2.addToNation(nation.getNationId(), (Rank) nation.getRanks().get(args[2]));
+                target2.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get(args[2])));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID2).getName()));
                 break;

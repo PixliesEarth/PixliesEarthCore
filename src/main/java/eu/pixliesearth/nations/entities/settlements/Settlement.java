@@ -32,7 +32,7 @@ public class Settlement {
         if (cooldown < 1.0)
             cooldown = (long) 1.0;
         Timer timer = new Timer(cooldown * 1000);
-        profile.getTimers().put("Teleport", timer);
+        profile.getTimers().put("Teleport", timer.toMap());
         profile.save();
         player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", name).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
         Bukkit.getScheduler().runTaskLater(instance, () -> {

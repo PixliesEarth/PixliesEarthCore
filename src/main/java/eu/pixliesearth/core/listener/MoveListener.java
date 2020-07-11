@@ -69,7 +69,7 @@ public class MoveListener implements Listener {
                     if (tn == null) {  // WILDERNESS
                         player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
                     } else {
-                        if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
+                        if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
                             player.sendTitle("§b" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
                         } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
                             player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);

@@ -7,8 +7,10 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +60,7 @@ public class rankNation implements SubCommand {
                         Lang.RANK_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), new ArrayList<>()));
+                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), new ArrayList<>()).toMap());
                     n.save();
                     Lang.RANK_CREATED.send(player, "%RANK%;" + args[1]);
                 } else if (args[0].equalsIgnoreCase("set")) {
