@@ -80,7 +80,7 @@ public class rankNation implements SubCommand {
                         Lang.RANK_DOESNT_EXIST.send(player);
                         return false;
                     }
-                    
+
                 }
                 break;
         }
