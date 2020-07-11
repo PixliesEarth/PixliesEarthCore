@@ -6,12 +6,14 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class rankNation implements SubCommand {
 
@@ -56,11 +58,29 @@ public class rankNation implements SubCommand {
                         Lang.RANK_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    n.getRanks().put(args[0], new Rank(args[0], args[1].replace("&", "§"), new ArrayList<>()));
+                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), new ArrayList<>()));
                     n.save();
-                    Lang.RANK_CREATED.send(player, "%RANK%;" + args[0]);
+                    Lang.RANK_CREATED.send(player, "%RANK%;" + args[1]);
                 } else if (args[0].equalsIgnoreCase("set")) {
-
+                    if (args[2].equalsIgnoreCase("leader")) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
+                    if (targetUUID == null) {
+                        Lang.PLAYER_DOES_NOT_EXIST.send(player);
+                        return false;
+                    }
+                    Profile target = instance.getProfile(targetUUID);
+                    if (!target.isInNation() || !target.getNationId().equals(profile.getNationId())) {
+                        Lang.PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU.send(player);
+                        return false;
+                    }
+                    if (n.getRanks().get(args[2]) == null) {
+                        Lang.RANK_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    
                 }
                 break;
         }
