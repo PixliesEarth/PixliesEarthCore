@@ -7,7 +7,6 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Chunk;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +24,7 @@ public class ProtectionListener implements Listener {
 
     @EventHandler(priority = HIGH)
     public void onBreak(BlockBreakEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getBlock().getChunk();
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
@@ -46,6 +46,7 @@ public class ProtectionListener implements Listener {
 
     @EventHandler(priority = HIGH)
     public void onPlace(BlockPlaceEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getBlock().getChunk();
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
@@ -67,7 +68,7 @@ public class ProtectionListener implements Listener {
 
     @EventHandler(priority = HIGH)
     public void onInteract(PlayerInteractEvent event) {
-
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getClickedBlock().getChunk();
         if (!event.getClickedBlock().getType().isInteractable()) return;
         NationChunk nc = NationChunk.get(c);
@@ -90,6 +91,7 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void onEnityInteract(PlayerInteractEntityEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getRightClicked().getChunk();
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
@@ -112,6 +114,7 @@ public class ProtectionListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
+            if (instance.getUtilLists().staffMode.contains(((Player) event.getDamager()).getUniqueId())) return;
             Chunk c = event.getEntity().getChunk();
             NationChunk nc = NationChunk.get(c);
             Player player = (Player) event.getDamager();
