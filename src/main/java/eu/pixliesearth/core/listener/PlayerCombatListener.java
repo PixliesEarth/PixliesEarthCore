@@ -2,6 +2,7 @@ package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,10 +21,12 @@ public class PlayerCombatListener implements Listener {
         Player damager = (Player) event.getDamager();
         Player target = (Player) event.getEntity();
 
-        Timer timer = new Timer(60 * 1000);
         Profile dProfile = instance.getProfile(damager.getUniqueId());
         Profile tProfile = instance.getProfile(target.getUniqueId());
 
+        if (dProfile.isInNation() && tProfile.isInNation() && (dProfile.getNationId().equals(tProfile.getNationId()) || Nation.getRelation(dProfile.getNationId(), tProfile.getNationId()) == Nation.NationRelation.ALLY)) return;
+
+        Timer timer = new Timer(60 * 1000);
         dProfile.getTimers().put("§c§lCombat", timer);
         tProfile.getTimers().put("§c§lCombat", timer);
         dProfile.save();
