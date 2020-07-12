@@ -6,6 +6,7 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -54,16 +55,27 @@ public class rankNation implements SubCommand {
         }
         Nation n = profile.getCurrentNation();
         switch (args.length) {
-            case 3:
+            case 4:
                 if (args[0].equalsIgnoreCase("create")) {
-                    if (n.getRanks().get(args[1]) != null) {
+                    if (!StringUtils.isNumeric(args[3])) {
+                        Lang.INVALID_INPUT.send(player);
+                        return false;
+                    }
+                    if (Integer.parseInt(args[3]) >= 666) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (n.getRanks().get(args[1]) != null || n.getRankByPriority(Integer.parseInt(args[3])) != null) {
                         Lang.RANK_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), new ArrayList<>()).toMap());
+                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), Integer.parseInt(args[3]), new ArrayList<>()).toMap());
                     n.save();
                     Lang.RANK_CREATED.send(player, "%RANK%;" + args[1]);
-                } else if (args[0].equalsIgnoreCase("set")) {
+                }
+                break;
+            case 3:
+                if (args[0].equalsIgnoreCase("set")) {
                     if (args[2].equalsIgnoreCase("leader")) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
@@ -82,7 +94,38 @@ public class rankNation implements SubCommand {
                         Lang.RANK_DOESNT_EXIST.send(player);
                         return false;
                     }
-
+                    if (target.getNationRank().equalsIgnoreCase("leader")) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    Rank rank = Rank.get(n.getRanks().get(args[2]));
+                    if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
+                        Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                        return false;
+                    }
+                    target.setNationRank(rank.getName());
+                    target.save();
+                    Lang.CHANGED_PLAYERS_NATION_RANK.send(player, "%RANK%;" + rank.getName(), "%PLAYER%;" + target.getAsOfflinePlayer().getName());
+                }
+                break;
+            case 2:
+                if (args[0].equalsIgnoreCase("remove")) {
+                    if (n.getRanks().get(args[1]) == null) {
+                        Lang.RANK_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    Rank rank = Rank.get(n.getRanks().get(args[1]));
+                    if (rank.getPriority() >= profile.getCurrentNationRank().getPriority() || rank.getName().equalsIgnoreCase("newbie") || rank.getName().equalsIgnoreCase("member") || rank.getName().equalsIgnoreCase("admin")) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    for (Profile p : n.getProfilesByRank(rank)) {
+                        p.setNationRank("admin");
+                        p.save();
+                    }
+                    n.getRanks().remove(args[1]);
+                    n.save();
+                    Lang.YOU_DELETED_NATION_RANK.send(player, "%RANK%;" + rank.getName());
                 }
                 break;
         }

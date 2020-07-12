@@ -74,8 +74,8 @@ public class createNation implements SubCommand {
         if (!event.isCancelled()) {
             nation.getRanks().put("admin", Rank.ADMIN().toMap());
             nation.getRanks().put("member", Rank.MEMBER().toMap());
-            nation.getRanks().put("newbie", new Rank("newbie", "§a*", new ArrayList<>()).toMap());
-            nation.getRanks().put("leader", new Rank("leader", "§c+", new ArrayList<>()).toMap());
+            nation.getRanks().put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
+            nation.getRanks().put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
             nation.save();
             profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("leader")));
             for (Player op : Bukkit.getOnlinePlayers())

@@ -127,6 +127,9 @@ public enum Lang {
     RANK_ALREADY_EXISTS(Lang.NATION, new HashMap<>()),
     RANK_CREATED(Lang.NATION, new HashMap<>()),
     CANT_INTERACT_TERRITORY(Lang.NATION, new HashMap<>()),
+    CHANGED_PLAYERS_NATION_RANK(Lang.NATION, new HashMap<>()),
+    CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY(Lang.NATION, new HashMap<>()),
+    YOU_DELETED_NATION_RANK(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

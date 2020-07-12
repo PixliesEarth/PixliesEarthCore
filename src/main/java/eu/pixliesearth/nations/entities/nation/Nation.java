@@ -1,7 +1,9 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -123,6 +125,25 @@ public class Nation {
             if (Bukkit.getPlayer(UUID.fromString(s)) != null)
                 oplayers.add(Bukkit.getPlayer(UUID.fromString(s)));
         return oplayers;
+    }
+
+    public Rank getRankByPriority(int priority) {
+        for (Map.Entry<String, Map<String, Object>> entry : ranks.entrySet()) {
+            Rank r = Rank.get(entry.getValue());
+            if (r.getPriority() == priority)
+                return r;
+        }
+        return null;
+    }
+
+    public List<Profile> getProfilesByRank(Rank rank) {
+        List<Profile> profiles = new ArrayList<>();
+        for (String s : members) {
+            Profile profile = Main.getInstance().getProfile(UUID.fromString(s));
+            if (profile.getNationRank().equalsIgnoreCase(rank.getName()))
+                profiles.add(profile);
+        }
+        return profiles;
     }
 
     public int broadcastMembers(String message) {

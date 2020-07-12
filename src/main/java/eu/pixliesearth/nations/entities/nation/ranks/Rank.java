@@ -1,6 +1,5 @@
 package eu.pixliesearth.nations.entities.nation.ranks;
 
-import com.mongodb.BasicDBObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,16 +14,18 @@ public class Rank {
 
     private String name;
     private String prefix;
+    private int priority;
     private List<String> permissions;
 
     public static Rank get(Map<String, Object> map) {
-        return new Rank((String) map.get("name"), (String) map.get("prefix"), (List<String>) map.get("permissions"));
+        return new Rank((String) map.get("name"), (String) map.get("prefix"), (int) map.get("priority"),(List<String>) map.get("permissions"));
     }
 
     public Map<String, Object> toMap() {
         Map<String, Object> returner = new HashMap<>();
         returner.put("name", name);
         returner.put("prefix", prefix);
+        returner.put("priority", priority);
         returner.put("permissions", permissions);
         return returner;
     }
@@ -34,7 +35,7 @@ public class Rank {
         perms.add(Permission.BUILD.name());
         perms.add(Permission.INTERACT.name());
         perms.add(Permission.CLAIM.name());
-        return new Rank("member", "§b**", perms);
+        return new Rank("member", "§b**", 222, perms);
     }
 
     public static Rank ADMIN() {
@@ -44,7 +45,7 @@ public class Rank {
         perms.add(Permission.MANAGE_SETTLEMENTS.name());
         perms.add(Permission.UNCLAIM.name());
         perms.add(Permission.EDIT_RANKS.name());
-        return new Rank("admin", "§c***", perms);
+        return new Rank("admin", "§c***", 333, perms);
     }
 
 }
