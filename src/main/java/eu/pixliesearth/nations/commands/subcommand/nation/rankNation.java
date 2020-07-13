@@ -33,6 +33,9 @@ public class rankNation implements SubCommand {
         returner.put("addpermission", 1);
         returner.put("removepermission", 1);
         returner.put("set", 1);
+        returner.put("menu", 1);
+        for (Permission permission : Permission.values())
+            returner.put(permission.name(), 3);
         return returner;
     }
 
