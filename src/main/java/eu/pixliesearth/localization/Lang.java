@@ -130,6 +130,9 @@ public enum Lang {
     CHANGED_PLAYERS_NATION_RANK(Lang.NATION, new HashMap<>()),
     CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY(Lang.NATION, new HashMap<>()),
     YOU_DELETED_NATION_RANK(Lang.NATION, new HashMap<>()),
+    PERMISSION_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    RANK_ALREADY_HAS_PERMISSION(Lang.NATION, new HashMap<>()),
+    ADDED_PERMISSION_TO_RANK(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

@@ -106,6 +106,28 @@ public class rankNation implements SubCommand {
                     target.setNationRank(rank.getName());
                     target.save();
                     Lang.CHANGED_PLAYERS_NATION_RANK.send(player, "%RANK%;" + rank.getName(), "%PLAYER%;" + target.getAsOfflinePlayer().getName());
+                } else if (args[0].equalsIgnoreCase("addpermission")) {
+                    if (args[1].equalsIgnoreCase("leader")) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    Rank rank = Rank.get(n.getRanks().get(args[1]));
+                    if (!Permission.exists(args[2])) {
+                        Lang.PERMISSION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
+                        Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                        return false;
+                    }
+                    if (rank.getPermissions().contains(args[2].toUpperCase())) {
+                        Lang.RANK_ALREADY_HAS_PERMISSION.send(player);
+                        return false;
+                    }
+                    rank.getPermissions().add(args[2].toUpperCase());
+                    n.getRanks().put(rank.getName(), rank.toMap());
+                    n.save();
+                    Lang.ADDED_PERMISSION_TO_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
                 }
                 break;
             case 2:
@@ -128,6 +150,7 @@ public class rankNation implements SubCommand {
                     Lang.YOU_DELETED_NATION_RANK.send(player, "%RANK%;" + rank.getName());
                 }
                 break;
+
         }
         return false;
     }

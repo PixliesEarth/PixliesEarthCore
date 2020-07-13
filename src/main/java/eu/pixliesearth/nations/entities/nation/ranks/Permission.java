@@ -51,4 +51,12 @@ public enum Permission {
         return null;
     }*/
 
+    public static boolean exists(String name) {
+        for (Permission p : values()) {
+            if (p.name().equalsIgnoreCase(name))
+                return true;
+        }
+        return false;
+    }
+
 }
