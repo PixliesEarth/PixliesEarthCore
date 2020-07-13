@@ -56,6 +56,16 @@ public class MiniMick {
                 } else {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is invalid.");
                 }
+            } else if (event.getMessageContent().equalsIgnoreCase("/unlink")) {
+                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
+                if (profile == null) {
+                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your discord and ingame accounts are not linked!");
+                    return;
+                }
+                profile.setDiscord("NONE");
+                profile.save();
+                profile.backup();
+                event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, you just unlinked your discord & ingame accounts.");
             } else if (event.getMessageContent().equalsIgnoreCase("/givemydata")) {
                 Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
                 if (profile == null) {
