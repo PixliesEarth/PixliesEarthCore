@@ -129,6 +129,10 @@ public class claimNation implements SubCommand {
                         return false;
                     }
                     int max = Integer.parseInt(args[1]);
+                    if (max > 10) {
+                        Lang.CLAIMFILL_LIMIT_REACHED.send(player, "Claim-fill;Claim-line");
+                        return false;
+                    }
                     int claimed = 0;
                     final String world = c.getWorld().getName();
                     final String nationId = profile.getNationId();
@@ -165,6 +169,10 @@ public class claimNation implements SubCommand {
                         return false;
                     }
                     int max = Integer.parseInt(args[1]);
+                    if (max > 10) {
+                        Lang.CLAIMFILL_LIMIT_REACHED.send(player, "Claim-fill;Claim-line");
+                        return false;
+                    }
                     int claimed = 0;
                     final String world = c.getWorld().getName();
                     final String nationId = nation.getNationId();
