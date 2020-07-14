@@ -3,6 +3,7 @@ package eu.pixliesearth.core.modules;
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.Warp;
+import eu.pixliesearth.events.NationDisbandEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
@@ -48,11 +49,17 @@ public class ChatSystem implements Listener, Module {
                     return;
                 } else if (event.getMessage().equalsIgnoreCase("confirm")) {
                     event.setCancelled(true);
-                    Nation nation = Nation.getById(instance.getUtilLists().nationDisbander.get(player.getUniqueId()));
-                    nation.remove();
-                    player.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
-                    Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
-                    instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
+                    Bukkit.getScheduler().runTask(instance, () -> {
+                        final Nation nation = Nation.getById(instance.getUtilLists().nationDisbander.get(player.getUniqueId()));
+                        NationDisbandEvent disbandEvent = new NationDisbandEvent(player, nation);
+                        Bukkit.getPluginManager().callEvent(disbandEvent);
+                        if (!disbandEvent.isCancelled()) {
+                            nation.remove();
+                            player.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
+                            Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
+                            instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
+                        }
+                    });
                 }
             }
 

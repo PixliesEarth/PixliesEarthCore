@@ -482,9 +482,11 @@ public class DynmapEngine {
         displayWarps = cfg.getBoolean("display-warp", true);
 
         /* Get style information */
-        defstyle = new AreaStyle(markerAPI, cfg, "regionstyle", defstyle.getFillcolor(), defstyle.getStrokecolor());
+        defstyle = new AreaStyle(markerAPI, cfg, "regionstyle", "#34ebc3", "#33968b");
         cusstyle = new HashMap<>();
-        for (Nation nation : NationManager.nations.values()) cusstyle.put(nation.getNationId(), new AreaStyle(markerAPI, cfg, "custstyle." + nation.getNationId(), defstyle, nation.getDynmapFill(), nation.getDynmapBorder()));
+        for (Nation nation : NationManager.nations.values()) {
+            cusstyle.put(nation.getNationId(), new AreaStyle(markerAPI, cfg, "custstyle." + nation.getNationId(), defstyle, nation.getDynmapFill(), nation.getDynmapBorder()));
+        }
         List<String> vis = cfg.getStringList("visibleregions");
         if (vis != null) {
             visible = new HashSet<>(vis);

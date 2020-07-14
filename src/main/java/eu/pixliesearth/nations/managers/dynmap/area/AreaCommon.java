@@ -76,7 +76,7 @@ public class AreaCommon {
             res.append(Bukkit.getOfflinePlayer(UUID.fromString(mPlayer)).getName());
         }
 
-        formattedWindow = formattedWindow.replace("%playermembers%", res.toString());
+        formattedWindow = formattedWindow.replace("%members%", res.toString());
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
 
 /*        // Build flags

@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.managers.dynmap;
 
 import eu.pixliesearth.events.NationCreationEvent;
+import eu.pixliesearth.events.NationDisbandEvent;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,7 +41,18 @@ public class OurServerListener implements Listener {
     }*/
 
     @EventHandler(priority=EventPriority.MONITOR)
-    public void onFactionCreate(NationCreationEvent event) {
+    public void onNationCreation(NationCreationEvent event) {
+        if(event.isCancelled()) {
+            return;
+        }
+        if(kernel.isPlayersets()) {
+            kernel.requestUpdatePlayerSet(event.getNation().getNationId());
+        }
+        kernel.requestUpdateFactions();
+    }
+
+    @EventHandler(priority=EventPriority.MONITOR)
+    public void onNationRemoval(NationDisbandEvent event) {
         if(event.isCancelled()) {
             return;
         }
@@ -92,4 +104,5 @@ public class OurServerListener implements Listener {
         }
         kernel.requestUpdateFactions();
     }
+
 }

@@ -2,6 +2,7 @@ package eu.pixliesearth.core.commands.util;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.localization.Lang;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -93,6 +94,11 @@ public class ChatCommand implements CommandExecutor {
             instance.saveConfig();
             instance.reloadConfig();
             sender.sendMessage("§dCHAT §8| §aSuccessfully §7removed §b" + args[1] + " §7from the blacklist.");
+        } else if (args[0].equalsIgnoreCase("clear")) {
+            for (int i = 0; i < 50; i++)
+                for (Player player : Bukkit.getOnlinePlayers())
+                    player.sendMessage(" ");
+            Bukkit.broadcastMessage("§7Chat cleared by §6" + sender.getName() + "§7.");
         }
 
         return false;

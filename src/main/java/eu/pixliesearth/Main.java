@@ -111,9 +111,6 @@ public final class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        dynmapKernel = new DynmapEngine();
-        dynmapKernel.onEnable();
-
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             for (UUID uuid : utilLists.locationMap.keySet()) {
@@ -197,6 +194,8 @@ public final class Main extends JavaPlugin {
         new UtilThread().start();
         new GulagThread().start();
 
+        dynmapKernel = new DynmapEngine();
+        dynmapKernel.onEnable();
     }
 
     @Override

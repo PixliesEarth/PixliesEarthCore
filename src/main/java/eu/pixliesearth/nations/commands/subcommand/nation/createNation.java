@@ -63,8 +63,8 @@ public class createNation implements SubCommand {
             player.sendMessage(Lang.NATION_WITH_NAME_ALREADY_EXISTS.get(player));
             return false;
         }
-        if (name.length() < 3 || name.length() > 10 || !StringUtils.isAlphanumeric(name)) {
-            player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
+        if (name.length() < 3 || name.length() > 15 || !StringUtils.isAlphanumeric(name)) {
+            player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
             return false;
         }
         final String id = Methods.generateId(7);

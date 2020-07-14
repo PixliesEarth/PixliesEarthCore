@@ -52,8 +52,8 @@ public class renameNation implements SubCommand {
                     }
                     nation = profile.getCurrentNation();
                     final String oldName = nation.getName();
-                    if (args[0].length() < 3 || args[0].length() > 10 || !StringUtils.isAlphanumeric(args[0])) {
-                        player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
+                    if (args[0].length() < 3 || args[0].length() > 15 || !StringUtils.isAlphanumeric(args[0])) {
+                        player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
                         return false;
                     }
                     success = nation.rename(args[0].replace("&", ""));

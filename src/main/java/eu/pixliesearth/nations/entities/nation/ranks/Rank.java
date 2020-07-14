@@ -14,11 +14,11 @@ public class Rank {
 
     private String name;
     private String prefix;
-    private int priority;
+    private double priority;
     private List<String> permissions;
 
     public static Rank get(Map<String, Object> map) {
-        return new Rank((String) map.get("name"), (String) map.get("prefix"), (int) map.get("priority"),(List<String>) map.get("permissions"));
+        return new Rank((String) map.get("name"), (String) map.get("prefix"), (double) map.get("priority"),(List<String>) map.get("permissions"));
     }
 
     public Map<String, Object> toMap() {
