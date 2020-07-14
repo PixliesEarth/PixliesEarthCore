@@ -90,7 +90,7 @@ public class ChatSystem implements Listener, Module {
                             Bukkit.getOnlinePlayers().forEach(oplayer -> {
                                 if (string.equalsIgnoreCase("@" + oplayer.getName())) {
                                     oplayer.playSound(oplayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                                    event.setMessage(event.getMessage().replace(string, "§b@§b" + oplayer.getName() + "§r"));
+                                    event.setMessage(event.getMessage().replace(string, "§b@" + oplayer.getName() + "§r"));
                                 }
                             });
                         }

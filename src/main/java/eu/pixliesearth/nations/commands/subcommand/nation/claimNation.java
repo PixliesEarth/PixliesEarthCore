@@ -39,6 +39,7 @@ public class claimNation implements SubCommand {
         returner.put("one", 1);
         returner.put("fill", 1);
         returner.put("line", 1);
+        returner.put("all", 1);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 2);
         return returner;
@@ -216,6 +217,7 @@ public class claimNation implements SubCommand {
                         nc.setNationId(nation2.getNationId());
                         nc.claim();
                     }
+                    Lang.PLAYER_CLAIM_ALLED.broadcast("%PLAYER%;" + player.getName(), "%NATION1%;" + nation1.getName(), "%NATION2%;" + nation2.getName());
                 }
                 break;
         }

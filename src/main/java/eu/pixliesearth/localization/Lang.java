@@ -135,6 +135,7 @@ public enum Lang {
     ADDED_PERMISSION_TO_RANK(Lang.NATION, new HashMap<>()),
     RANK_DOES_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
     REMOVED_PERMISSION_FROM_RANK(Lang.NATION, new HashMap<>()),
+    PLAYER_CLAIM_ALLED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
