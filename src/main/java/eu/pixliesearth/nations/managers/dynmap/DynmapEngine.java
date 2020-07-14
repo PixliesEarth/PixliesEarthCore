@@ -7,6 +7,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.nations.managers.NationManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -101,10 +102,9 @@ public class DynmapEngine {
     public void onEnable() {
         log = Main.getInstance().getLogger();
         info("initializing");
-        final PluginManager pm = factionAPI.getServer().getPluginManager();
 
         // Get Dynmap plugin
-        dynmap = pm.getPlugin("dynmap");
+        dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
         if (dynmap == null) {
             severe("Cannot find dynmap!");
             return;
@@ -482,17 +482,9 @@ public class DynmapEngine {
         displayWarps = cfg.getBoolean("display-warp", true);
 
         /* Get style information */
-        defstyle = new AreaStyle(markerAPI, cfg, "regionstyle");
+        defstyle = new AreaStyle(markerAPI, cfg, "regionstyle", defstyle.getFillcolor(), defstyle.getStrokecolor());
         cusstyle = new HashMap<>();
-
-        final ConfigurationSection sect = cfg.getConfigurationSection("custstyle");
-        if (sect != null) {
-            Set<String> ids = sect.getKeys(false);
-
-            for (final String id : ids) {
-                cusstyle.put(id, new AreaStyle(markerAPI, cfg, "custstyle." + id, defstyle));
-            }
-        }
+        for (Nation nation : NationManager.nations.values()) cusstyle.put(nation.getNationId(), new AreaStyle(markerAPI, cfg, "custstyle." + nation.getNationId(), defstyle, nation.getDynmapFill(), nation.getDynmapBorder()));
         List<String> vis = cfg.getStringList("visibleregions");
         if (vis != null) {
             visible = new HashSet<>(vis);

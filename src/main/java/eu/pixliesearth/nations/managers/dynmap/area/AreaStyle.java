@@ -50,11 +50,11 @@ public class AreaStyle {
         return homeicon;
     }
 
-    public AreaStyle(final MarkerAPI markerapi, final FileConfiguration cfg, final String path, final AreaStyle def) {
-        strokecolor     = cfg.getString(path + ".strokeColor",      def != null? def.strokecolor    : "#FF0000");
+    public AreaStyle(final MarkerAPI markerapi, final FileConfiguration cfg, final String path, final AreaStyle def, final String fill, final String stroke) {
+        strokecolor     = stroke;
         strokeopacity   = cfg.getDouble(path + ".strokeOpacity",    def != null? def.strokeopacity  : 0.8);
         strokeweight    = cfg.getInt(path + ".strokeWeight",        def != null? def.strokeweight   : 3);
-        fillcolor       = cfg.getString(path + ".fillColor",        def != null? def.fillcolor      : "#FF0000");
+        fillcolor       = fill;
         fillopacity     = cfg.getDouble(path + ".fillOpacity",      def != null? def.fillopacity    : 0.35);
         homemarker      = cfg.getString(path + ".homeicon",         def != null? def.homemarker     : null);
 
@@ -69,7 +69,7 @@ public class AreaStyle {
         boost = cfg.getBoolean(path + ".boost",  def != null? def.boost : false);
     }
 
-    public AreaStyle(final MarkerAPI markerapi, final FileConfiguration cfg, final String path) {
-        this(markerapi, cfg, path, null);
+    public AreaStyle(final MarkerAPI markerapi, final FileConfiguration cfg, final String path, final String fill, final String stroke) {
+        this(markerapi, cfg, path, null, fill, stroke);
     }
 }
