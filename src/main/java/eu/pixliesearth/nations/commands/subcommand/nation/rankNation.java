@@ -131,6 +131,28 @@ public class rankNation implements SubCommand {
                     n.getRanks().put(rank.getName(), rank.toMap());
                     n.save();
                     Lang.ADDED_PERMISSION_TO_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
+                } else if (args[0].equalsIgnoreCase("removepermission")) {
+                    if (args[1].equalsIgnoreCase("leader")) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    Rank rank = Rank.get(n.getRanks().get(args[1]));
+                    if (!Permission.exists(args[2])) {
+                        Lang.PERMISSION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
+                        Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                        return false;
+                    }
+                    if (!rank.getPermissions().contains(args[2].toUpperCase())) {
+                        Lang.RANK_DOES_NOT_HAVE_PERMISSION.send(player);
+                        return false;
+                    }
+                    rank.getPermissions().remove(args[2].toUpperCase());
+                    n.getRanks().put(rank.getName(), rank.toMap());
+                    n.save();
+                    Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
                 }
                 break;
             case 2:

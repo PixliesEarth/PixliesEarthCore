@@ -133,6 +133,8 @@ public enum Lang {
     PERMISSION_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
     RANK_ALREADY_HAS_PERMISSION(Lang.NATION, new HashMap<>()),
     ADDED_PERMISSION_TO_RANK(Lang.NATION, new HashMap<>()),
+    RANK_DOES_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
+    REMOVED_PERMISSION_FROM_RANK(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

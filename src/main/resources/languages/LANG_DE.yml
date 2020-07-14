@@ -178,3 +178,5 @@ YOU_DELETED_NATION_RANK: "&7Du hast den Rang mit den Namen &b%RANK% &7gelöscht.
 PERMISSION_DOESNT_EXIST: "&7Diese Permission existiert nicht."
 RANK_ALREADY_HAS_PERMISSION: "&7Dieser Rang diese Permission schon."
 ADDED_PERMISSION_TO_RANK: "&7Du hast dem Rang &b%RANK% &7die Permission &b%PERMISSION% &7gegeben."
+RANK_DOES_NOT_HAVE_PERMISSION: "&7Dieser Rang hat diese Permission nicht."
+REMOVED_PERMISSION_FROM_RANK: "&7Du hast dem Rang &b%RANK% &7die Permission &b%PERMISSION% &7weggenommen."
