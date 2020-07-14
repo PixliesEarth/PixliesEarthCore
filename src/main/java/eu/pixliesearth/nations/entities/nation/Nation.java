@@ -26,6 +26,8 @@ public class Nation {
     private int xpPoints;
     private double money;
     private String leader;
+    private String dynmapFill;
+    private String dynmapBorder;
     private Map<String, Map<String, Object>> ranks;
     private List<String> members;
     private List<String> chunks;
@@ -48,6 +50,8 @@ public class Nation {
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
         nation.append("leader", leader);
+        nation.append("dynmapFill", dynmapFill);
+        nation.append("dynmapBorder", dynmapBorder);
         nation.append("ranks", ranks);
         nation.append("members", members);
         nation.append("chunks", chunks);

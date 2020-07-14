@@ -35,6 +35,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.CommandListener;
 import eu.pixliesearth.warsystem.GulagDeathListener;
@@ -70,7 +71,9 @@ public final class Main extends JavaPlugin {
     private static @Getter Scoreboard emptyScoreboard;
     private @Getter FileManager warpsCfg;
     private @Getter FileManager shopCfg;
+    private @Getter FileManager dynmapCfg;
     private @Getter UtilLists utilLists;
+    private @Getter DynmapEngine dynmapKernel;
     public boolean gulagActive = false;
 
     @Override
@@ -103,7 +106,13 @@ public final class Main extends JavaPlugin {
         shopCfg = new FileManager(this, "shop", getDataFolder().getAbsolutePath());
         shopCfg.save();
 
+        dynmapCfg = new FileManager(this, "dynmap", getDataFolder().getAbsolutePath());
+        dynmapCfg.save();
+
         saveDefaultConfig();
+
+        dynmapKernel = new DynmapEngine();
+        dynmapKernel.onEnable();
 
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
@@ -193,6 +202,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         discordDisable();
+        dynmapKernel.onDisable();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())

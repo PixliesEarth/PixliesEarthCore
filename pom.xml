@@ -91,6 +91,10 @@
             <id>minecraft-repo</id>
             <url>https://libraries.minecraft.net/</url>
         </repository>
+        <repository>
+            <id>dynmap</id>
+            <url>http://repo.mikeprimm.com/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -159,6 +163,42 @@
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dynmap</groupId>
+            <artifactId>dynmap</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>Permissions</artifactId>
+                    <groupId>com.nijikokun.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>bPermissions</artifactId>
+                    <groupId>de.bananaco</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>EssentialsGroupManager</artifactId>
+                    <groupId>org.anjocaido</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spoutpluginapi</artifactId>
+                    <groupId>org.getspout</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>PermissionsBukkit</artifactId>
+                    <groupId>com.platymuus.bukkit.permissions</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>PermissionsEx</artifactId>
+                    <groupId>ru.tehkode</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--        <dependency>
                     <groupId>me.lucko</groupId>
