@@ -112,7 +112,6 @@ public class unclaimNation implements SubCommand {
 
         if (!nc.getNationId().equals(nation.getNationId())) return;
 
-        //TODO
         int claimFillLimit = 500;
         if ((toUnclaim.size() > nation.getClaimingPower() || toUnclaim.size() > claimFillLimit) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             instance.getUtilLists().claimFill.remove(player.getUniqueId());

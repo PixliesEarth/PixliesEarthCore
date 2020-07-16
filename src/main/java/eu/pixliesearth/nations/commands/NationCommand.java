@@ -122,12 +122,13 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
             case 2:
-                sender.sendMessage("§b* §7/n rank §c"); //TODO
+                sender.sendMessage("§b* §7/n rank §c<create/addpermission/remove/removepermission> <RANKNAME> §e[PREFIX/PERMISSIONNAME] §b[RANKPRIORITY]");
                 sender.sendMessage("§b* §7/n kick §c<player>");
                 sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
                 sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
                 sender.sendMessage("§b* §7/n settlements"); //TODO
                 sender.sendMessage("§b* §7/n list");
+                sender.sendMessage("§b* §7/n menu"); //TODO
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");

@@ -107,6 +107,10 @@ public class NationChunk {
         }
         //TODO POWER
         Nation nation = Nation.getById(nationId);
+        if (nation.getClaimingPower() <= 0) {
+            Lang.NOT_ENOUGH_POWER_TO_CLAIM.send(player);
+            return false;
+        }
         NationChunk nc = new NationChunk(nationId, world, x, z);
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
         Bukkit.getPluginManager().callEvent(event);
