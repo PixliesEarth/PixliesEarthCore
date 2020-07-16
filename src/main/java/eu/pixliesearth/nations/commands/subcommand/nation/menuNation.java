@@ -57,13 +57,15 @@ public class menuNation implements SubCommand {
     void open(Gui gui, Player player, MenuPage page) {
         gui.setTitle(defaultTitle + page.title);
         StaticPane hotbar = new StaticPane(0, 0, 9, 1);
-        for (int i = 0; i < MenuPage.values().length; i++) {
-            MenuPage p = MenuPage.values()[i];
-            ItemStack item = new ItemBuilder(p.icon).setDisplayName(defaultTitle + p.title).build();
-            if (p.equals(page)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
+        int j = 0;
+        for (MenuPage p : MenuPage.values()) {
+            ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
+            if (p.title.equals(page.title)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
             hotbar.addItem(new GuiItem(item, event -> {
-                if (!p.equals(page)) open(gui, player, MenuPage.getByDisplayName(defaultTitle + p.title));
-            }), i, 0);
+                event.setCancelled(true);
+                if (!p.equals(page)) open(gui, player, MenuPage.getByDisplayName(p.title));
+            }), j, 0);
+            j++;
         }
         gui.addPane(hotbar);
         StaticPane menu = new StaticPane(0, 1, 9, 5);
@@ -86,10 +88,8 @@ public class menuNation implements SubCommand {
                     }
                     ChatColor cc = op.isOnline() ? ChatColor.GREEN : ChatColor.RED;
                     menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(op.getUniqueId()).setDisplayName(member.getCurrentNationRank().getPrefix() + cc + op.getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
-                        if (!Permission.hasNationPermission(profile, Permission.MODERATE)) {
-                            event.setCancelled(true);
-                            return;
-                        }
+                        event.setCancelled(true);
+                        if (!Permission.hasNationPermission(profile, Permission.MODERATE)) return;
                         menu.clear();
 
                     }), x, y);
@@ -105,7 +105,7 @@ public class menuNation implements SubCommand {
 
     enum MenuPage {
 
-        MAIN("§eMain", Material.NETHER_STAR),
+        MAIN("§eMain", Material.CYAN_BANNER),
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK);
 
@@ -119,7 +119,7 @@ public class menuNation implements SubCommand {
 
         static MenuPage getByDisplayName(String name) {
             for (MenuPage page : values())
-                if (page.title.equals(menuNation.defaultTitle + name))
+                if (page.title.equalsIgnoreCase(name))
                     return page;
             return null;
         }
