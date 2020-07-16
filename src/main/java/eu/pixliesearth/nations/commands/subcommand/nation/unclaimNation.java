@@ -80,8 +80,11 @@ public class unclaimNation implements SubCommand {
                     unclaimFill(player, profile.getCurrentNation(), toClaim);
                     player.sendMessage(System.currentTimeMillis() - start + "ms");
                 } else if (args[0].equalsIgnoreCase("all")) {
-                    profile.getCurrentNation().unclaimAll();
-                    //TODO MESSAGES
+                    Nation nation = profile.getCurrentNation();
+                    final int chunks = nation.getChunks().size();
+                    nation.unclaimAll();
+                    for (Player p : nation.getOnlineMemberSet())
+                        p.sendMessage(Lang.PLAYER_UNCLAIMFILLED.get(p).replace("%CHUNKS%", chunks + "").replace("Claim-fill", "Claim-all"));
                 }
                 break;
             case 2:

@@ -233,7 +233,6 @@ public class claimNation implements SubCommand {
 
         if (NationChunk.get(world, x, z) != null) return;
 
-        //TODO
         int claimFillLimit = 500;
         if ((toClaim.size() > nation.getClaimingPower() || toClaim.size() > claimFillLimit) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             instance.getUtilLists().claimFill.remove(player.getUniqueId());
