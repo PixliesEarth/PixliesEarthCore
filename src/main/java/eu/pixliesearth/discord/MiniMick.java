@@ -3,9 +3,11 @@ package eu.pixliesearth.discord;
 import com.google.gson.GsonBuilder;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
@@ -104,8 +106,14 @@ public class MiniMick {
                         .setTimestampToNow());
             } else {
                 if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
-                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/"))
-                        Bukkit.broadcastMessage("§9D §8| §b" + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
+                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
+                        String roleColour = "#{#00ffff}";
+                        if (event.getMessageAuthor().getRoleColor().isPresent()) {
+                            Color col = event.getMessageAuthor().getRoleColor().get();
+                            roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getBlue(), col.getGreen());
+                        }
+                        Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
+                    }
                 }
             }
         });

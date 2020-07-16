@@ -90,7 +90,8 @@ public class menuNation implements SubCommand {
                             event.setCancelled(true);
                             return;
                         }
-                        //TODO MEMBER SETTINGS
+                        menu.clear();
+
                     }), x, y);
                 }
                 break;
