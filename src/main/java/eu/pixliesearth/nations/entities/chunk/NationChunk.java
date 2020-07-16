@@ -105,7 +105,6 @@ public class NationChunk {
             player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
             return false;
         }
-        //TODO POWER
         Nation nation = Nation.getById(nationId);
         if (nation.getClaimingPower() <= 0) {
             Lang.NOT_ENOUGH_POWER_TO_CLAIM.send(player);
