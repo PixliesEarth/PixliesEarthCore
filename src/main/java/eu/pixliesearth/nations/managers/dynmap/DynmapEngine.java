@@ -325,7 +325,7 @@ public class DynmapEngine {
 
                     /* Set the Nation name */
                     if (displayFactionName) {
-                        /* TODO: SHOW THE Nation NAME */
+                        
                     }
 
                     /* Add to map */

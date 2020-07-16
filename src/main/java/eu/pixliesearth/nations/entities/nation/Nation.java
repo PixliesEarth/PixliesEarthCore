@@ -34,6 +34,7 @@ public class Nation {
     private List<String> allyRequests;
     private List<String> allies;
     private List<String> pacts;
+    private Map<String, Object> flag;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -58,6 +59,7 @@ public class Nation {
         nation.append("allyRequests", allyRequests);
         nation.append("allies", allies);
         nation.append("pacts", pacts);
+        nation.append("flag", flag);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
@@ -100,13 +102,11 @@ public class Nation {
     }
 
     public int getClaimingPower() {
-        //TODO
-        return 9999;
+        return getMaxClaimingPower() - chunks.size();
     }
 
     public int getMaxClaimingPower() {
-        //TODO
-        return 9999;
+        return Era.getByName(era).getChunksPerPlayer() * members.size();
     }
 
     public boolean rename(String newName) {

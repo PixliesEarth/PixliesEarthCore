@@ -3,10 +3,17 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import java.awt.*;
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 public class menuNation implements SubCommand {
 
@@ -49,19 +57,48 @@ public class menuNation implements SubCommand {
     void open(Gui gui, Player player, MenuPage page) {
         gui.setTitle(defaultTitle + page.title);
         StaticPane hotbar = new StaticPane(0, 0, 9, 1);
-        int i = 0;
-        for (MenuPage p : MenuPage.values()) {
-            hotbar.addItem(new GuiItem(new ItemBuilder(p.icon).setDisplayName(defaultTitle + p.title).build(), event -> {
-                open(gui, player, MenuPage.getByDisplayName(defaultTitle + p.title));
+        for (int i = 0; i < MenuPage.values().length; i++) {
+            MenuPage p = MenuPage.values()[i];
+            ItemStack item = new ItemBuilder(p.icon).setDisplayName(defaultTitle + p.title).build();
+            if (p.equals(page)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
+            hotbar.addItem(new GuiItem(item, event -> {
+                if (!p.equals(page)) open(gui, player, MenuPage.getByDisplayName(defaultTitle + p.title));
             }), i, 0);
-            i++;
         }
+        gui.addPane(hotbar);
         StaticPane menu = new StaticPane(0, 1, 9, 5);
+        menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
+        Profile profile = instance.getProfile(player.getUniqueId());
+        Nation nation = profile.getCurrentNation();
         switch (page) {
             case MAIN:
-                
+                menu.addItem(new GuiItem(new ItemBuilder(ItemStack.deserialize(nation.getFlag())).setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
+                break;
+            case MEMBERS:
+                int x = 0;
+                int y = 0;
+                for (String s : nation.getMembers()) {
+                    OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(s));
+                    Profile member = instance.getProfile(op.getUniqueId());
+                    if (x + 1 > 8) {
+                        y++;
+                        x = 0;
+                    }
+                    ChatColor cc = op.isOnline() ? ChatColor.GREEN : ChatColor.RED;
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(op.getUniqueId()).setDisplayName(member.getCurrentNationRank().getPrefix() + cc + op.getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
+                        if (!Permission.hasNationPermission(profile, Permission.MODERATE)) {
+                            event.setCancelled(true);
+                            return;
+                        }
+                        //TODO MEMBER SETTINGS
+                    }), x, y);
+                }
+                break;
+            case PERMISSIONS:
+                //TODO PERMISSIONS GUI
                 break;
         }
+        gui.addPane(menu);
         gui.show(player);
     }
 
@@ -69,7 +106,7 @@ public class menuNation implements SubCommand {
 
         MAIN("§eMain", Material.NETHER_STAR),
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
-        ;
+        PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK);
 
         String title;
         Material icon;
