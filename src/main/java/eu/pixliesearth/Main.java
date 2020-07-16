@@ -62,7 +62,6 @@ import java.util.concurrent.ExecutionException;
 
 public final class Main extends JavaPlugin {
 
-    private static @Getter final Permission perms = null;
     private static @Getter Main instance;
     private static @Getter MongoCollection<Document> playerCollection;
     private static @Getter MongoCollection<Document> nationCollection;

@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.managers.dynmap.area;
 
+import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -76,8 +77,11 @@ public class AreaCommon {
             res.append(Bukkit.getOfflinePlayer(UUID.fromString(mPlayer)).getName());
         }
 
+        formattedWindow = formattedWindow.replace("%money%", "$" + nation.getMoney());
+
         formattedWindow = formattedWindow.replace("%members%", res.toString());
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
+        formattedWindow = formattedWindow.replace("%era%", Era.getByName(nation.getEra()).getName());
 
 /*        // Build flags
         final StringBuilder flgs = new StringBuilder();
