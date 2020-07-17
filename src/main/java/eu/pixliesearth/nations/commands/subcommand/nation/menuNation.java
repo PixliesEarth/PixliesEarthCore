@@ -104,13 +104,14 @@ public class menuNation implements SubCommand {
                 y = 0;
                 for (Map.Entry<String, Map<String, Object>> ranks : nation.getRanks().entrySet()) {
                     Rank rank = Rank.get(ranks.getValue());
+                    if (rank.getName().equalsIgnoreCase("leader")) continue;
                     if (x + 1 > 8) {
                         y++;
                         x = 0;
                     }
                     menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName()).addLoreLine("§7§oClick to edit").build(), event -> {
                         event.setCancelled(true);
-                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) generateRankMenu(menu, player, rank, nation);
+                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) generateRankMenu(gui, menu, player, rank, nation);
                     }), x, y);
                     x++;
                 }
@@ -122,8 +123,9 @@ public class menuNation implements SubCommand {
         gui.show(player);
     }
 
-    void generateRankMenu(StaticPane menuPane, Player player, Rank rank, Nation nation) {
+    void generateRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank, Nation nation) {
         menuPane.clear();
+        menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         int x = 0;
         int y = 0;
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -142,7 +144,7 @@ public class menuNation implements SubCommand {
                             nation.getRanks().put(rank.getName(), rank.toMap());
                             nation.save();
                             Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + permission.name());
-                            generateRankMenu(menuPane, player, rank, nation);
+                            generateRankMenu(gui, menuPane, player, rank, nation);
                         }
                         break;
                     case RED_WOOL:
@@ -151,13 +153,15 @@ public class menuNation implements SubCommand {
                             nation.getRanks().put(rank.getName(), rank.toMap());
                             nation.save();
                             Lang.ADDED_PERMISSION_TO_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + permission.name());
-                            generateRankMenu(menuPane, player, rank, nation);
+                            generateRankMenu(gui, menuPane, player, rank, nation);
                         }
                         break;
                 }
             }), x, y);
             x++;
         }
+        gui.addPane(menuPane);
+        gui.show(player);
     }
 
     enum MenuPage {
