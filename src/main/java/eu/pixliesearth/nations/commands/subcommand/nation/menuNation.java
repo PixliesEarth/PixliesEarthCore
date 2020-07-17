@@ -19,7 +19,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.awt.*;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -93,8 +92,7 @@ public class menuNation implements SubCommand {
                     menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(op.getUniqueId()).setDisplayName(member.getCurrentNationRank().getPrefix() + cc + op.getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
                         event.setCancelled(true);
                         if (!Permission.hasNationPermission(profile, Permission.MODERATE)) return;
-                        menu.clear();
-
+                        showMemberMenu(gui, menu, player, member);
                     }), x, y);
                     x++;
                 }
@@ -105,13 +103,14 @@ public class menuNation implements SubCommand {
                 for (Map.Entry<String, Map<String, Object>> ranks : nation.getRanks().entrySet()) {
                     Rank rank = Rank.get(ranks.getValue());
                     if (rank.getName().equalsIgnoreCase("leader")) continue;
+                    if (rank.getPriority() >= profile.getCurrentNationRank().getPriority()) continue;
                     if (x + 1 > 8) {
                         y++;
                         x = 0;
                     }
                     menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName()).addLoreLine("§7§oClick to edit").build(), event -> {
                         event.setCancelled(true);
-                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) generateRankMenu(gui, menu, player, rank, nation);
+                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) showRankMenu(gui, menu, player, rank);
                     }), x, y);
                     x++;
                 }
@@ -123,12 +122,11 @@ public class menuNation implements SubCommand {
         gui.show(player);
     }
 
-    void generateRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank, Nation nation) {
+    void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         int x = 0;
         int y = 0;
-        Profile profile = instance.getProfile(player.getUniqueId());
         for (Permission permission : Permission.values()) {
             ItemStack item = rank.getPermissions().contains(permission.name()) ? new ItemBuilder(Material.GREEN_WOOL).setDisplayName("§a" + permission.name() + " §8[§a✔§8]").addLoreLine("§7§oClick to toggle").build() : new ItemBuilder(Material.RED_WOOL).setDisplayName("§c" + permission.name() + " §8[§c✖§8]").addLoreLine("§7§oClick to toggle").build();
             if (x + 1 > 8) {
@@ -139,22 +137,12 @@ public class menuNation implements SubCommand {
                 event.setCancelled(true);
                 switch (item.getType()) {
                     case GREEN_WOOL:
-                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) {
-                            rank.getPermissions().remove(permission.name());
-                            nation.getRanks().put(rank.getName(), rank.toMap());
-                            nation.save();
-                            Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + permission.name());
-                            generateRankMenu(gui, menuPane, player, rank, nation);
-                        }
+                        player.performCommand("n rank removepermission " + rank.getName() + " " + permission.name());
+                        showRankMenu(gui, menuPane, player, rank);
                         break;
                     case RED_WOOL:
-                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) {
-                            rank.getPermissions().add(permission.name());
-                            nation.getRanks().put(rank.getName(), rank.toMap());
-                            nation.save();
-                            Lang.ADDED_PERMISSION_TO_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + permission.name());
-                            generateRankMenu(gui, menuPane, player, rank, nation);
-                        }
+                        player.performCommand("n rank addpermission " + rank.getName() + " " + permission.name());
+                        showRankMenu(gui, menuPane, player, rank);
                         break;
                 }
             }), x, y);
@@ -162,6 +150,47 @@ public class menuNation implements SubCommand {
         }
         gui.addPane(menuPane);
         gui.show(player);
+    }
+
+    void showMemberMenu(Gui gui, StaticPane menu, Player requester, Profile target) {
+        menu.clear();
+        menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
+        Profile profile = instance.getProfile(requester.getUniqueId());
+        GuiItem kick = new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§cKick from nation").build(), event -> {
+            event.setCancelled(true);
+            requester.performCommand("n kick " + target.getAsOfflinePlayer().getName());
+            open(gui, requester, MenuPage.MEMBERS);
+        });
+        GuiItem changeRank = new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§bChange rank").build(), event -> {
+            event.setCancelled(true);
+            int x = 0;
+            int y = 0;
+            menu.clear();
+            menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event.setCancelled(true));
+            for (Map.Entry<String, Map<String, Object>> ranks : target.getCurrentNation().getRanks().entrySet()) {
+                Rank rank = Rank.get(ranks.getValue());
+                if (rank.getName().equalsIgnoreCase("leader")) continue;
+                if (rank.getPriority() >= profile.getCurrentNationRank().getPriority()) continue;
+                if (x + 1 > 8) {
+                    y++;
+                    x = 0;
+                }
+                menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName()).addLoreLine("§7§oClick to assign").build(), event1 -> {
+                    event1.setCancelled(true);
+                    if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) {
+                        requester.performCommand("n rank set " + target.getAsOfflinePlayer().getName() + " " + rank.getName());
+                        open(gui, requester, MenuPage.MEMBERS);
+                    }
+                }), x, y);
+                x++;
+                gui.addPane(menu);
+                gui.show(requester);
+            }
+        });
+        menu.addItem(kick, 0, 0);
+        menu.addItem(changeRank, 1, 0);
+        gui.addPane(menu);
+        gui.show(requester);
     }
 
     enum MenuPage {

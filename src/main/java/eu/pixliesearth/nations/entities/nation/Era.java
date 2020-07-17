@@ -22,6 +22,7 @@ public enum Era {
 
     Era(String name, int chunksPerPlayer, int cost) {
         this.name = name;
+        this.chunksPerPlayer = chunksPerPlayer;
         this.cost = cost;
     }
 
