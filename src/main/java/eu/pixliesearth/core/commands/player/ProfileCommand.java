@@ -11,12 +11,15 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.SkullCreator;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class ProfileCommand implements CommandExecutor {
 
@@ -25,28 +28,48 @@ public class ProfileCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
-            return false;
+        if (args.length == 0) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
+                return false;
+            }
+            player = (Player) sender;
+            profile = Main.getInstance().getProfile(player.getUniqueId());
+
+            Gui menu = new Gui(Main.getInstance(), 3, "§e§l" + Lang.YOUR_PROFILE.get(player));
+            StaticPane pane = new StaticPane(0, 0, 9, 3);
+            // LANGUAGE
+            pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4d48e75ff55cb57533c7b904be887a374925f93832f7ae16b7923987e970")).setDisplayName("§b§o" + Lang.LANGUAGE.get(player)).build(), event -> {
+                event.setCancelled(true);
+                getLangGui().show(player);
+            }), 1, 1);
+
+            // SCOREBOARD
+            pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/6ff6a4af8fd64a87448e82879a12ff55194c874d14e472c26d8de86d1208274e")).setDisplayName("§b§oScoreboard").build(), event -> {
+                event.setCancelled(true);
+                getScoreboardGui().show(player);
+            }), 3, 1);
+            menu.addPane(pane);
+            menu.show(player);
+        } else {
+            if (args[0].equalsIgnoreCase("adddynmapmarkers")) {
+                int toAdd = Integer.parseInt(args[1]);
+                UUID targetUUID = Bukkit.getPlayerUniqueId(args[2]);
+                if (targetUUID == null || !Bukkit.getOfflinePlayer(targetUUID).hasPlayedBefore()) {
+                    Lang.PLAYER_DOES_NOT_EXIST.send(sender);
+                    return false;
+                }
+                if (!sender.hasPermission("earth.admin")) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
+                Profile targetProfile = Main.getInstance().getProfile(targetUUID);
+                targetProfile.getExtras().putIfAbsent("dynmapMarkers", 0);
+                targetProfile.getExtras().put("dynmapMarkers", (int) targetProfile.getExtras().get("dynmapMarkers") + toAdd);
+                targetProfile.save();
+                sender.sendMessage("§aDone.");
+            }
         }
-        player = (Player) sender;
-        profile = Main.getInstance().getProfile(player.getUniqueId());
-
-        Gui menu = new Gui(Main.getInstance(), 3, "§e§l"+ Lang.YOUR_PROFILE.get(player));
-        StaticPane pane = new StaticPane(0, 0, 9, 3);
-        // LANGUAGE
-        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4d48e75ff55cb57533c7b904be887a374925f93832f7ae16b7923987e970")).setDisplayName("§b§o"+ Lang.LANGUAGE.get(player)).build(), event ->{
-            event.setCancelled(true);
-            getLangGui().show(player);
-        }), 1, 1);
-
-        // SCOREBOARD
-        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/6ff6a4af8fd64a87448e82879a12ff55194c874d14e472c26d8de86d1208274e")).setDisplayName("§b§oScoreboard").build(), event -> {
-            event.setCancelled(true);
-            getScoreboardGui().show(player);
-        }), 3, 1);
-        menu.addPane(pane);
-        menu.show(player);
         return false;
     }
 

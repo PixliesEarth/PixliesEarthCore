@@ -62,6 +62,10 @@ public class UtilLists {
 
     public List<UUID> wasGulag;
 
+    public List<UUID> dynmapSetters;
+
+    public List<UUID> royalGifters;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -87,6 +91,8 @@ public class UtilLists {
         awaitingGulag2 = new ArrayList<>();
         fightingGulag = new HashMap<>();
         wasGulag = new ArrayList<>();
+        dynmapSetters = new ArrayList<>();
+        royalGifters = new ArrayList<>();
     }
 
 }

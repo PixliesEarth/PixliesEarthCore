@@ -22,6 +22,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.UUID;
+
 public class ChatSystem implements Listener, Module {
 
     @EventHandler
@@ -60,6 +62,46 @@ public class ChatSystem implements Listener, Module {
                             instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
                         }
                     });
+                }
+            }
+
+            if (instance.getUtilLists().dynmapSetters.contains(player.getUniqueId())) {
+                event.setCancelled(true);
+                if (event.getMessage().equalsIgnoreCase("cancel")) {
+                    instance.getUtilLists().dynmapSetters.remove(player.getUniqueId());
+                    player.sendMessage("§cCancelled.");
+                } else {
+                    String name = event.getMessage().split(" ")[0];
+                    Bukkit.getScheduler().runTask(instance, () -> {
+                       player.setOp(true);
+                       player.performCommand("dmarker add " + name + " icon:building");
+                       player.setOp(false);
+                    });
+                    player.sendMessage("§aDynmap marker added.");
+                    instance.getUtilLists().dynmapSetters.remove(player.getUniqueId());
+                    profile.getExtras().put("dynmapMarkers", (int) profile.getExtras().get("dynmapMarkers") - 1);
+                    profile.save();
+                }
+            }
+
+            if (instance.getUtilLists().royalGifters.contains(player.getUniqueId())) {
+                event.setCancelled(true);
+                if (event.getMessage().equalsIgnoreCase("cancel")) {
+                    instance.getUtilLists().royalGifters.remove(player.getUniqueId());
+                    player.sendMessage("§cCancelled");
+                } else {
+                    UUID uuid = Bukkit.getPlayerUniqueId(event.getMessage().split(" ")[0]);
+                    if (uuid == null || !Bukkit.getOfflinePlayer(uuid).isOnline()) {
+                        Lang.PLAYER_DOES_NOT_EXIST.send(player);
+                        return;
+                    }
+                    Bukkit.getScheduler().runTask(instance, () -> {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + event.getMessage().split(" ")[0] + " parent addtemp royal 6d");
+                    });
+                    profile.getExtras().put("giftedRoyal", true);
+                    profile.save();
+                    instance.getUtilLists().royalGifters.remove(player.getUniqueId());
+                    player.sendMessage("§7You have successfully gifted your royal.");
                 }
             }
 

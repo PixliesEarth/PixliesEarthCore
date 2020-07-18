@@ -182,6 +182,11 @@ commands:
       - gulagskip
   smite:
     description: smite
+  premium:
+    description: Premium command
+    aliases:
+      - snow
+      - ultimate
 permissions:
   # GENERAL
   earth.admin:
@@ -228,6 +233,13 @@ permissions:
     default: op
   earth.smite:
     default: op
+  earth.premium:
+    default: op
+    children:
+      ultimate:
+        default: op
+      snow:
+        default: op
 
   # CHAT
   earth.chat.colours:
