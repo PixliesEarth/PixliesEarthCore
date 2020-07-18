@@ -33,6 +33,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new listNation());
         subCommands.add(new settlementsCommand());
         subCommands.add(new menuNation());
+        subCommands.add(new allyNation());
         return subCommands;
     }
 
@@ -129,6 +130,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
                 sender.sendMessage("§b* §7/n settlements"); //TODO
                 sender.sendMessage("§b* §7/n list");
+                sender.sendMessage("§b* §7/n ally §c<NATION>");
                 sender.sendMessage("§b* §7/n menu"); //TODO
                 break;
             default:

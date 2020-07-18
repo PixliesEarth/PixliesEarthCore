@@ -137,6 +137,10 @@ public enum Lang {
     REMOVED_PERMISSION_FROM_RANK(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIM_ALLED(Lang.NATION, new HashMap<>()),
     NOT_ENOUGH_POWER_TO_CLAIM(Lang.NATION, new HashMap<>()),
+    ALREADY_ALLIED(Lang.NATION, new HashMap<>()),
+    SENT_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
+    RECEIVED_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
+    YOU_ARE_NOW_ALLIED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
