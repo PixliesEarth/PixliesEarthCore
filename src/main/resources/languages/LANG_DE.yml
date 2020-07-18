@@ -188,3 +188,5 @@ RECEIVED_ALLY_REQUEST: "&7Deine Nation hat eine Verbündungsanfrage von &d%NATIO
 YOU_ARE_NOW_ALLIED: "&7Deine Nation ist nun mit &d%NATION% &7alliiert."
 NOT_ALLIED: "&7Du bist mit dieser Nation nicht alliiert."
 NEUTRALED_NATION: "&7Deine Nation hat nun eine Neutrale Beziehung zu &d%NATION%&7."
+TWO_NATIONS_ARE_THE_SAME: "&7Diese zwei Nationen haben die selbe Id."
+CHANGED_CHATTYPE: "&7Du hast deinen Chat-typ zu %TYPE% &7gewächselt."

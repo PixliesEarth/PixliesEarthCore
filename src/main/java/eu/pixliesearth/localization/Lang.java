@@ -143,6 +143,8 @@ public enum Lang {
     YOU_ARE_NOW_ALLIED(Lang.NATION, new HashMap<>()),
     NOT_ALLIED(Lang.NATION, new HashMap<>()),
     NEUTRALED_NATION(Lang.NATION, new HashMap<>()),
+    TWO_NATIONS_ARE_THE_SAME(Lang.NATION, new HashMap<>()),
+    CHANGED_CHATTYPE(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

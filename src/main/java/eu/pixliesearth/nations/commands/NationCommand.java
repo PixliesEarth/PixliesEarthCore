@@ -35,6 +35,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new menuNation());
         subCommands.add(new allyNation());
         subCommands.add(new neutralNation());
+        subCommands.add(new chatNation());
         return subCommands;
     }
 
@@ -134,6 +135,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n ally §c<NATION>");
                 sender.sendMessage("§b* §7/n neutral §c<NATION>");
                 sender.sendMessage("§b* §7/n menu");
+                sender.sendMessage("§b* §7/n chat §c<public/ally/nation>");
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");

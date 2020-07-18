@@ -105,6 +105,31 @@ public class ChatSystem implements Listener, Module {
                 }
             }
 
+            if (instance.getUtilLists().chatTypes.containsKey(player.getUniqueId())) {
+                if (!profile.isInNation()) {
+                    instance.getUtilLists().chatTypes.remove(player.getUniqueId());
+                } else {
+                    event.setCancelled(true);
+                    switch (instance.getUtilLists().chatTypes.get(player.getUniqueId())) {
+                        case NATION:
+                            profile.getCurrentNation().broadcastMembers("§bNATION-CHAT §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            break;
+                        case ALLY:
+                            profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            for (String s : profile.getCurrentNation().getAllies()) {
+                                Nation ally = Nation.getById(s);
+                                if (ally == null) continue;
+                                ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            }
+                            for (UUID uuid : instance.getUtilLists().staffMode) {
+                                if (Bukkit.getPlayer(uuid) == null) continue;
+                                Bukkit.getPlayer(uuid).sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            }
+                            break;
+                    }
+                }
+            }
+
             // ACTUAL CHAT
             if (!event.isCancelled()) {
                 if (isMuted() && !player.hasPermission("earth.chat.bypassmute")) {

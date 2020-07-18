@@ -55,6 +55,10 @@ public class allyNation implements SubCommand {
             Lang.NATION_DOESNT_EXIST.send(player);
             return false;
         }
+        if (nation.getNationId().equals(target.getNationId())) {
+            Lang.TWO_NATIONS_ARE_THE_SAME.send(player);
+            return false;
+        }
         if (Nation.getRelation(nation.getNationId(), target.getNationId()) == Nation.NationRelation.ALLY) {
             Lang.ALREADY_ALLIED.send(player);
             return false;
