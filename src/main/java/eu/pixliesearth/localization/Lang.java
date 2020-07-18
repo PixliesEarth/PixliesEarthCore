@@ -141,6 +141,8 @@ public enum Lang {
     SENT_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
     RECEIVED_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
     YOU_ARE_NOW_ALLIED(Lang.NATION, new HashMap<>()),
+    NOT_ALLIED(Lang.NATION, new HashMap<>()),
+    NEUTRALED_NATION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
