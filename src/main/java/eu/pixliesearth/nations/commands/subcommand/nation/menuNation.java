@@ -115,7 +115,28 @@ public class menuNation implements SubCommand {
                     x++;
                 }
                 break;
-            case RESEARCH:
+            case RELATIONS:
+                x = 0;
+                y = 0;
+                for (String s : nation.getAllies()) {
+                    Nation ally = Nation.getById(s);
+                    if (ally == null) {
+                        nation.getAllies().remove(s);
+                        nation.save();
+                        continue;
+                    }
+                    if (x + 1 > 8) {
+                        y++;
+                        x = 0;
+                    }
+                    ItemStack item = new ItemBuilder(ItemStack.deserialize(ally.getFlag())).setDisplayName("§d" + ally.getName()).addLoreLine("§7§o" + ally.getDescription()).addLoreLine("§7Money: §2§l$§a" + ally.getMoney()).addLoreLine("§c§oClick to neutralize").build();
+                    menu.addItem(new GuiItem(item, event -> {
+                        event.setCancelled(true);
+                        player.performCommand("n neutral " + ally.getName());
+                        player.closeInventory();
+                    }), x, y);
+                    x++;
+                }
                 break;
         }
         gui.addPane(menu);
@@ -198,7 +219,7 @@ public class menuNation implements SubCommand {
         MAIN("§eMain", Material.CYAN_BANNER),
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK),
-        RESEARCH("§9Research", Material.ENCHANTING_TABLE),;
+        RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),;
 
         String title;
         Material icon;

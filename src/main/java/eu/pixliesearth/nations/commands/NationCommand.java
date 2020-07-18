@@ -131,7 +131,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n settlements"); //TODO
                 sender.sendMessage("§b* §7/n list");
                 sender.sendMessage("§b* §7/n ally §c<NATION>");
-                sender.sendMessage("§b* §7/n menu"); //TODO
+                sender.sendMessage("§b* §7/n menu");
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
