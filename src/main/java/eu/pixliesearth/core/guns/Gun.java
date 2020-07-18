@@ -35,8 +35,7 @@ public class Gun {
         }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
-            if (Main.getInstance().getUtilLists().ammos.containsKey(sb.get()))
-                Main.getInstance().getUtilLists().ammos.remove(sb.get());
+            Main.getInstance().getUtilLists().ammos.remove(sb.get());
         }, 20 * 60);
     }
 }
