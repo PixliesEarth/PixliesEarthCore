@@ -9,6 +9,7 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
+import eu.pixliesearth.core.craftingsystem.CraftingManager;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
@@ -292,6 +293,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagDeathListener(), this);
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
+        manager.registerEvents(new CraftingManager(), this);
     }
 
     /**
