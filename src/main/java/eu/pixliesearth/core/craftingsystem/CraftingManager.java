@@ -10,12 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftItem;
 import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_16_R1.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
@@ -26,38 +26,10 @@ import java.util.*;
 public class CraftingManager implements Listener {
 
     static final List<Integer> craftingSlots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
-    static final List<Integer> bottomBarSlots = Arrays.asList(45, 46, 47, 48, 49, 50, 51, 52, 53);
+    static final List<Integer> bottomBarSlots = Arrays.asList(45, 46, 47, 48, 50, 51, 52, 53);
 
     static private ContainerWorkbench containerWorkbench;
     static private InventoryCrafting ic;
-
-/*    public static ItemStack craft(List<ItemStack> ingredients) {
-*//*        Iterator<Recipe> recipeIterator = Bukkit.recipeIterator();
-        while(recipeIterator.hasNext()) {
-            Recipe recipe = recipeIterator.next();
-            if(recipe instanceof ShapelessRecipe) {
-                ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
-                if (ingredients.equals(shapelessRecipe.getIngredientList()))
-                    return shapelessRecipe.getResult();
-            } else if(recipe instanceof ShapedRecipe) {
-                ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-                boolean match = true;
-                StringBuilder recipeWholeBuilder = new StringBuilder();
-                String recipeWhole = recipeWholeBuilder.toString();
-                for (String s : shapedRecipe.getShape()) recipeWholeBuilder.append(s);
-                for (int i = 0; i < recipeWhole.length(); i++) {
-                    char ch = recipeWhole.charAt(i);
-                    if (!shapedRecipe.getIngredientMap().get(ch).equals(ingredients.get(i))) {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match) {
-                    return shapedRecipe.getResult();
-                }
-            }
-        }*//*
-    }*/
 
     private static ItemStack craft(List<ItemStack> ingredients) {
 
@@ -86,55 +58,79 @@ public class CraftingManager implements Listener {
         Inventory inv = Bukkit.createInventory(null, 9 * 6, "§e§lCrafting");
         for (int i = 0; i < inv.getSize(); i++) {
             if (craftingSlots.contains(i) || bottomBarSlots.contains(i)) continue;
+            if (i == 24) continue;
             inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
         }
+        inv.setItem(49, new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§bRecipes").build());
         for (int i : bottomBarSlots)
             inv.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
         player.openInventory(inv);
     }
 
-    @EventHandler
+    @EventHandler(priority =  EventPriority.HIGHEST)
+    public void onOpen(InventoryOpenEvent event) {
+        InventoryView view = event.getView();
+        if (!view.getTitle().equals("§e§lCrafting")) return;
+        Main.getInstance().getUtilLists().craftingTables.put(event.getPlayer().getUniqueId(), Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
+            Player player = (Player) event.getPlayer();
+            if (player.getOpenInventory().getTitle().equals("§e§lCrafting")) {
+                update(player.getOpenInventory());
+            } else {
+                Bukkit.getScheduler().cancelTask(Main.getInstance().getUtilLists().craftingTables.get(player.getUniqueId()));
+            }
+        }, 2L, 2L));
+    }
+
+    @EventHandler(priority =  EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         if (!view.getTitle().equals("§e§lCrafting")) return;
         ItemStack item = event.getCurrentItem();
-        update(view, event.getSlot());
-        if (item != null && (item.getType().equals(Material.BARRIER) || (item.getType().equals(Material.BLACK_STAINED_GLASS_PANE) || item.getType().equals(Material.RED_STAINED_GLASS_PANE) || item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) && event.getCurrentItem().getItemMeta().getDisplayName().equals(" "))) {
+        if (event.getSlot() == 24 && view.getItem(24) != null) {
+            for (int i : craftingSlots)
+                view.setItem(i, null);
+            for (int i : bottomBarSlots)
+                view.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
+        }
+        if (item != null && (item.getItemMeta().getDisplayName().equals("§bRecipes") || (item.getType().equals(Material.BLACK_STAINED_GLASS_PANE) || item.getType().equals(Material.RED_STAINED_GLASS_PANE) || item.getType().equals(Material.LIME_STAINED_GLASS_PANE)) && event.getCurrentItem().getItemMeta().getDisplayName().equals(" "))) {
             event.setCancelled(true);
         }
     }
 
-    private void update(InventoryView view, int slot) {
+    @EventHandler(priority =  EventPriority.HIGHEST)
+    public void onDrag(InventoryDragEvent event) {
+        InventoryView view = event.getView();
+        if (!view.getTitle().equals("§e§lCrafting")) return;
+        update(view);
+    }
+
+    private ItemStack update(InventoryView view) {
         final List<ItemStack> ingredients = new ArrayList<>();
         for (int i : craftingSlots)
             ingredients.add(view.getItem(i));
         ItemStack result = craft(ingredients);
         view.setItem(24, result);
-        Material mat = result == null ? Material.RED_STAINED_GLASS_PANE : Material.GREEN_STAINED_GLASS_PANE;
+        Material mat = result == null ? Material.RED_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE;
         for (int i : bottomBarSlots)
             view.setItem(i, new ItemBuilder(mat).setNoName().build());
-        if (result != null) {
-            if (slot == 24) {
-                for (int i : craftingSlots)
-                    view.setItem(i, null);
-                for (int i : bottomBarSlots)
-                    view.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
-            }
-        }
+        return result;
     }
 
-    @EventHandler
+    @EventHandler(priority =  EventPriority.HIGHEST)
     public void onClose(InventoryCloseEvent event) {
         if (!event.getView().getTitle().equals("§e§lCrafting")) return;
         for (int i : craftingSlots) {
-            if (event.getView().getItem(i) == null) continue;
-            event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), event.getView().getItem(i));
+            ItemStack item = event.getView().getItem(i);
+            if (item == null) continue;
+            event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), item);
+            Main.getInstance().getUtilLists().craftingTables.remove(event.getPlayer().getUniqueId());
         }
     }
 
-    @EventHandler
+    @EventHandler(priority =  EventPriority.HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
+        if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         Block block = event.getClickedBlock();
         if (block.getType().equals(Material.CRAFTING_TABLE)) {
             event.setCancelled(true);

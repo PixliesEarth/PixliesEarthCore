@@ -67,6 +67,8 @@ public class UtilLists {
 
     public Map<UUID, chatNation.ChatType> chatTypes;
 
+    public Map<UUID, Integer> craftingTables;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -95,6 +97,7 @@ public class UtilLists {
         dynmapSetters = new ArrayList<>();
         royalGifters = new ArrayList<>();
         chatTypes = new HashMap<>();
+        craftingTables = new HashMap<>();
     }
 
 }

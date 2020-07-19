@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.commands.player;
 
+import eu.pixliesearth.core.craftingsystem.CraftingManager;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +20,7 @@ public class CraftCommand implements CommandExecutor {
             player.sendMessage(Lang.NO_PERMISSIONS.get(player));
             return false;
         }
-        player.openWorkbench(null, true);
+        CraftingManager.openCraftingInventory(player);
         return false;
     }
 

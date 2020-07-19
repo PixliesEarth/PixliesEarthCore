@@ -106,7 +106,7 @@ public class NationChunk {
             return false;
         }
         Nation nation = Nation.getById(nationId);
-        if (nation.getClaimingPower() <= 0) {
+        if (nation.getClaimingPower() <= 0 && !Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
             Lang.NOT_ENOUGH_POWER_TO_CLAIM.send(player);
             return false;
         }
