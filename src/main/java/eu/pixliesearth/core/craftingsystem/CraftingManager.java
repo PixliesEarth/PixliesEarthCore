@@ -90,7 +90,6 @@ public class CraftingManager implements Listener {
         }
         for (int i : bottomBarSlots)
             inv.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
-        inv.setItem(24, new ItemBuilder(Material.BARRIER).setDisplayName("§c§oWRONG RECIPE").build());
         player.openInventory(inv);
     }
 
@@ -99,29 +98,29 @@ public class CraftingManager implements Listener {
         InventoryView view = event.getView();
         if (!view.getTitle().equals("§e§lCrafting")) return;
         ItemStack item = event.getCurrentItem();
+        update(view, event.getSlot());
         if (item != null && (item.getType().equals(Material.BARRIER) || (item.getType().equals(Material.BLACK_STAINED_GLASS_PANE) || item.getType().equals(Material.RED_STAINED_GLASS_PANE) || item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) && event.getCurrentItem().getItemMeta().getDisplayName().equals(" "))) {
             event.setCancelled(true);
         }
-        if (event.getSlot() == 24) {
-            for (int i : craftingSlots)
-                view.setItem(i, null);
-            for (int i : bottomBarSlots)
-                view.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
-        }
-        List<ItemStack> ingredients = new ArrayList<>();
+    }
+
+    private void update(InventoryView view, int slot) {
+        final List<ItemStack> ingredients = new ArrayList<>();
         for (int i : craftingSlots)
-            ingredients.add(view.getTopInventory().getItem(i));
+            ingredients.add(view.getItem(i));
         ItemStack result = craft(ingredients);
-        if (result == null) result = new ItemBuilder(Material.BARRIER).setDisplayName("§c§oWRONG RECIPE").build();
-        view.getTopInventory().setItem(24, result);
-        if (!result.getType().equals(Material.BARRIER)) {
-            for (int i : bottomBarSlots)
-                view.setItem(i, new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setNoName().build());
-        } else {
-            for (int i : bottomBarSlots)
-                view.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
+        view.setItem(24, result);
+        Material mat = result == null ? Material.RED_STAINED_GLASS_PANE : Material.GREEN_STAINED_GLASS_PANE;
+        for (int i : bottomBarSlots)
+            view.setItem(i, new ItemBuilder(mat).setNoName().build());
+        if (result != null) {
+            if (slot == 24) {
+                for (int i : craftingSlots)
+                    view.setItem(i, null);
+                for (int i : bottomBarSlots)
+                    view.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
+            }
         }
-        event.getWhoClicked().sendMessage("triggered");
     }
 
     @EventHandler
