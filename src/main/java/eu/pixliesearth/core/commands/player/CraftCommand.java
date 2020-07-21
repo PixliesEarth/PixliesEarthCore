@@ -19,7 +19,7 @@ public class CraftCommand implements CommandExecutor {
             player.sendMessage(Lang.NO_PERMISSIONS.get(player));
             return false;
         }
-        CraftingManager.openCraftingInventory(player);
+        player.openWorkbench(null, true);
         return false;
     }
 

@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.customitems;
 
 import eu.pixliesearth.core.customcrafting.CustomRecipe;
-import eu.pixliesearth.core.customcrafting.CustomRecipeBuilder;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
@@ -12,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 public enum CustomItems {
 
     SLINGSHOT(new ItemSlingshot(), null),
-    EXPLOSIVE_PICKAXE(new ItemExplosivePick(), new CustomRecipeBuilder().setFirstSlot(new ItemStack(Material.TNT)).setSecondSlot(new ItemStack(Material.TNT)).setThirdSlot(new ItemStack(Material.TNT)).setFifthSlot(new ItemStack(Material.STICK)).setEighthSlot(new ItemStack(Material.STICK)).setResult(new ItemExplosivePick().getItem()).build()),
-    EXPLOSIVE_SHOVEL(new ItemExplosiveShovel(), new CustomRecipeBuilder().setSecondSlot(new ItemStack(Material.TNT)).setFifthSlot(new ItemStack(Material.STICK)).setEighthSlot(new ItemStack(Material.STICK)).setResult(new ItemExplosiveShovel().getItem()).build()),
+    EXPLOSIVE_PICKAXE(new ItemExplosivePick(), new CustomRecipe(new ItemStack(Material.TNT), new ItemStack(Material.TNT), new ItemStack(Material.TNT), null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosivePick().getItem())),
+    EXPLOSIVE_SHOVEL(new ItemExplosiveShovel(), new CustomRecipe(null, new ItemStack(Material.TNT), null, null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosiveShovel().getItem())),
     STONE_HATCHET(new ItemStoneHatchet(), null);
 
     public CustomItem clazz;
