@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.customitems.ci;
+package eu.pixliesearth.core.customitems.ci.weapons.melee;
 
 import eu.pixliesearth.core.customitems.DamagerCI;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ItemStoneHatchet implements DamagerCI {
 
     @Override
-    public ItemStack getRecipe() {
+    public ItemStack getItem() {
         return new ItemBuilder(Material.STONE_AXE)
                 .setDisplayName("§7§lStone Hatchet")
                 .setDurability((short) 100)
@@ -21,7 +21,7 @@ public class ItemStoneHatchet implements DamagerCI {
 
     @Override
     public String getName() {
-        return getRecipe().getItemMeta().getDisplayName();
+        return getItem().getItemMeta().getDisplayName();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ItemStoneHatchet implements DamagerCI {
     }
 
     @Override
-    public ItemStack getStatic(int durabilty) {
+    public ItemStack getStatic(int durability) {
         return new ItemBuilder(Material.STONE_AXE)
                 .setDisplayName("§7§lStone Hatchet")
                 .setDurability((short) 100)

@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.customitems.ci;
+package eu.pixliesearth.core.customitems.ci.tools;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ItemExplosiveShovel implements CustomItem {
 
     @Override
-    public ItemStack getRecipe() {
+    public ItemStack getItem() {
         return new ItemBuilder(Material.DIAMOND_SHOVEL)
         .setDisplayName("§6Explosive Shovel")
         .addLoreLine("§7Era: tbd")
@@ -22,17 +22,17 @@ public class ItemExplosiveShovel implements CustomItem {
 
     @Override
     public String getName() {
-        return getRecipe().getItemMeta().getDisplayName();
+        return getItem().getItemMeta().getDisplayName();
     }
 
     @Override
     public List<String> getLore() {
-        return getRecipe().getItemMeta().getLore();
+        return getItem().getItemMeta().getLore();
     }
 
     @Override
-    public ItemStack getStatic(int durabilty) {
-        return getRecipe();
+    public ItemStack getStatic(int durability) {
+        return getItem();
     }
 
     @Override

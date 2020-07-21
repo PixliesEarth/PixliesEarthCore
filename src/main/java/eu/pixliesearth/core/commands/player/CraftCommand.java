@@ -1,6 +1,5 @@
 package eu.pixliesearth.core.commands.player;
 
-import eu.pixliesearth.core.craftingsystem.CraftingManager;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

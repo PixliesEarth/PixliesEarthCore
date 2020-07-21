@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.customitems.ci;
+package eu.pixliesearth.core.customitems.ci.weapons.reach;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.CustomItem;
@@ -16,7 +16,7 @@ import java.util.Random;
 public class ItemSlingshot implements CustomItem {
 
     @Override
-    public ItemStack getRecipe() {
+    public ItemStack getItem() {
 
         Material type;
         ItemStack slingshot = new ItemStack(Material.STICK);
@@ -45,7 +45,7 @@ public class ItemSlingshot implements CustomItem {
 
     @Override
     public String getName() {
-        return getRecipe().getItemMeta().getDisplayName();
+        return getItem().getItemMeta().getDisplayName();
     }
 
     @Override
@@ -58,14 +58,14 @@ public class ItemSlingshot implements CustomItem {
     }
 
     @Override
-    public ItemStack getStatic(int durabilty) {
+    public ItemStack getStatic(int durability) {
         ItemStack slingshot = new ItemStack(Material.STICK);
         ItemMeta meta = slingshot.getItemMeta();
         meta.setDisplayName("§6Slingshot");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("§7Era: 1");
         lore.add("§7Requires stone like objects to shoot");
-        lore.add("§7Durability: " + durabilty);
+        lore.add("§7Durability: " + durability);
         meta.setLore(lore);
         meta.setCustomModelData(1);
         slingshot.setItemMeta(meta);

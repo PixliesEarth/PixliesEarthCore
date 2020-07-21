@@ -15,9 +15,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-import static org.bukkit.Bukkit.getScheduler;
-import static org.bukkit.Bukkit.getServer;
-
 public class GulagStartListener implements Listener {
 
 
@@ -183,8 +180,8 @@ public class GulagStartListener implements Listener {
                 p.getInventory().setLeggings(pant1);
                 p.getInventory().setBoots(boot1);
                 p.getInventory().addItem(rock);
-                p.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getRecipe());
-                player.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getRecipe());
+                p.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
+                player.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
                 player.getInventory().setHelmet(helmet1);
                 player.getInventory().setChestplate(chestplate1);
                 player.getInventory().setLeggings(pant1);

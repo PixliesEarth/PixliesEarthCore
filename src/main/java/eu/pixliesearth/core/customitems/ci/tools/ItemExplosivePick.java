@@ -1,21 +1,15 @@
-package eu.pixliesearth.core.customitems.ci;
+package eu.pixliesearth.core.customitems.ci.tools;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ItemExplosivePick implements CustomItem {
     @Override
-    public ItemStack getRecipe() {
+    public ItemStack getItem() {
 /*        ItemStack explo = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta meta = explo.getItemMeta();
         meta.setDisplayName("§6Explosive Pickaxe");
@@ -34,18 +28,18 @@ public class ItemExplosivePick implements CustomItem {
 
     @Override
     public String getName() {
-        return getRecipe().getItemMeta().getDisplayName();
+        return getItem().getItemMeta().getDisplayName();
     }
 
     @Override
     public List<String> getLore() {
-        List<String> lore = getRecipe().getItemMeta().getLore();
+        List<String> lore = getItem().getItemMeta().getLore();
         return lore;
     }
 
     @Override
-    public ItemStack getStatic(int i) {
-        return getRecipe();
+    public ItemStack getStatic(int durability) {
+        return getItem();
     }
 
     @Override

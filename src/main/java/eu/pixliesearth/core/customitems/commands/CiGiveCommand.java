@@ -37,7 +37,7 @@ public class CiGiveCommand implements CommandExecutor, TabExecutor {
                         p.sendMessage(Lang.CUSTOM_DOESNT_EXIST.get(p));
                         return false;
                     }
-                    p.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getRecipe());
+                    p.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getItem());
                     p.sendMessage(Lang.CUSTOM_GIVE_SELF.get(p).replace("%item%", CustomItems.valueOf(args[0].toUpperCase()).clazz.getName()));
                     break;
                 case 2:
@@ -50,7 +50,7 @@ public class CiGiveCommand implements CommandExecutor, TabExecutor {
                         return false;
                     }
                     Player player = Bukkit.getPlayer(args[1]);
-                    player.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getRecipe());
+                    player.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getItem());
                     p.sendMessage(Lang.CUSTOM_GIVE_OTHER.get(p).replace("%item%", CustomItems.valueOf(args[0].toUpperCase()).clazz.getName()).replace("%player%", player.getName()));
                     player.sendMessage(Lang.CUSTOM_GIVEN_BY_OTHER.get(player).replace("%item%", CustomItems.valueOf(args[0].toUpperCase()).clazz.getName()).replace("%player%", p.getName()));
                     break;
@@ -69,7 +69,7 @@ public class CiGiveCommand implements CommandExecutor, TabExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[1]);
-            player.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getRecipe());
+            player.getInventory().addItem(CustomItems.valueOf(args[0].toUpperCase()).clazz.getItem());
             sender.sendMessage(Lang.CUSTOM_GIVE_OTHER.get(sender).replace("%item%", CustomItems.valueOf(args[0].toUpperCase()).clazz.getName()).replace("%player%", player.getName()));
         }
         return false;

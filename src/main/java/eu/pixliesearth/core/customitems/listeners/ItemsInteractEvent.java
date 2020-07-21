@@ -2,7 +2,7 @@ package eu.pixliesearth.core.customitems.listeners;
 
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.customitems.ci.ItemSlingshot;
+import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 import eu.pixliesearth.events.SlingShotEvent;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;

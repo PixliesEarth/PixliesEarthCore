@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.core.customitems.ci.ItemExplosivePick;
-import eu.pixliesearth.core.customitems.ci.ItemExplosiveShovel;
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
