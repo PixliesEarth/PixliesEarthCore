@@ -3,6 +3,7 @@ package eu.pixliesearth.core.customcrafting;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.utils.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -23,12 +25,13 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
 
 public class CustomCrafting implements Listener {
 
     static final List<Integer> craftingSlots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
     static final List<Integer> bottomBarSlots = Arrays.asList(45, 46, 47, 48, 50, 51, 52, 53);
+
+    private final Main instance = Main.getInstance();
 
     public void open(Player player) {
         Inventory inv = Bukkit.createInventory(null, 9 * 6, "§e§lCrafting");
@@ -48,42 +51,99 @@ public class CustomCrafting implements Listener {
         Inventory inventory = event.getClickedInventory();
         ItemStack item = event.getCurrentItem();
         boolean took = false;
-        if (event.getSlot() == 24 && item != null) {
-            took = true;
+        if (inventory != null && event.getSlot() == 24 && item != null) {
+            if (inventory.equals(view.getTopInventory())) {
+                took = true;
+            }
         }
-        if (inventory != null && inventory.equals(view.getTopInventory())) {
+        if (inventory != null) {
             if (bottomBarSlots.contains(event.getSlot()) || (item != null && (item.getType().equals(Material.RED_STAINED_GLASS_PANE) || item.getType().equals(Material.LIME_STAINED_GLASS_PANE) || item.getType().equals(Material.BLACK_STAINED_GLASS_PANE)) && item.getItemMeta().getDisplayName().equals(" ")))
                 event.setCancelled(true);
             if (event.getSlot() == 49)
                 event.setCancelled(true);
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                ItemStack result = getResult(inventory);
-                if (result != null) {
-                    for (int i : bottomBarSlots)
-                        inventory.setItem(i, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§a§lRIGHT RECIPE").build());
-                    inventory.setItem(24, result);
-                }
-            }, 10);
         }
         if (took) {
-            for (int i : craftingSlots)
-                event.getInventory().clear(i);
-            for (int i : bottomBarSlots)
-                event.getInventory().setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§lWRONG RECIPE").build());
-            event.getWhoClicked().getWorld().playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            @NonNull CustomRecipe recipe = getRecipe(inventory);
+            for (int i : craftingSlots) {
+                ItemStack slot = inventory.getItem(i);
+                if (slot == null) continue;
+                switch (i) {
+                    case 10:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS1().getAmount()).build();
+                        break;
+                    case 11:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS2().getAmount()).build();
+                        break;
+                    case 12:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS3().getAmount()).build();
+                        break;
+                    case 19:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS4().getAmount()).build();
+                        break;
+                    case 20:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS5().getAmount()).build();
+                        break;
+                    case 21:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS6().getAmount()).build();
+                        break;
+                    case 28:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS7().getAmount()).build();
+                        break;
+                    case 29:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS8().getAmount()).build();
+                        break;
+                    case 30:
+                        slot = new ItemBuilder(slot).setAmount(slot.getAmount() - recipe.getS9().getAmount()).build();
+                        break;
+                }
+                inventory.setItem(i, slot);
+            }
+            event.getWhoClicked().getWorld().playSound(event.getWhoClicked().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+            event.getWhoClicked().closeInventory();
+            event.getWhoClicked().getWorld().dropItemNaturally(event.getWhoClicked().getLocation(), item);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onOpen(InventoryOpenEvent event) {
+        InventoryView view = event.getView();
+        if (!view.getTitle().equals("§e§lCrafting")) return;
+        Player player = (Player) event.getPlayer();
+        instance.getUtilLists().craftingTables.put(event.getPlayer().getUniqueId(), Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
+            if (!player.isOnline()) {
+                Bukkit.getScheduler().cancelTask(instance.getUtilLists().craftingTables.get(player.getUniqueId()));
+                return;
+            }
+            final InventoryView inventory = player.getOpenInventory();
+            if (!inventory.getTitle().equals("§e§lCrafting")) {
+                Bukkit.getScheduler().cancelTask(instance.getUtilLists().craftingTables.get(player.getUniqueId()));
+                return;
+            }
+            CustomRecipe recipe = getRecipe(inventory.getTopInventory());
+            if (recipe != null) {
+                for (int i : bottomBarSlots)
+                    inventory.getTopInventory().setItem(i, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§a§lRIGHT RECIPE").build());
+            } else {
+                for (int i : bottomBarSlots)
+                    inventory.getTopInventory().setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§lWRONG RECIPE").build());
+            }
+            ItemStack result = recipe == null ? null : recipe.getResult();
+            inventory.getTopInventory().setItem(24, result);
+        }, 5, 5));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
         if (!view.getTitle().equals("§e§lCrafting")) return;
-        for (int i : craftingSlots)
-            if (event.getInventory().getItem(i) != null)
-                event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), event.getInventory().getItem(i));
-        if (event.getInventory().getItem(24) != null)
-            event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), event.getInventory().getItem(24));
+        for (int i : craftingSlots) {
+            ItemStack item = event.getInventory().getItem(i);
+            if (item != null)
+                event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), item);
+        }
         event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+        Bukkit.getScheduler().cancelTask(instance.getUtilLists().craftingTables.get(event.getPlayer().getUniqueId()));
+        instance.getUtilLists().craftingTables.remove(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -99,7 +159,7 @@ public class CustomCrafting implements Listener {
         }
     }
 
-    private ItemStack getResult(final Inventory inventory) {
+    private CustomRecipe getRecipe(final Inventory inventory) {
         for (CustomItems customItems : CustomItems.values()) {
             if (customItems.recipe == null) continue;
             CustomRecipe recipe = customItems.recipe;
@@ -112,7 +172,7 @@ public class CustomCrafting implements Listener {
             if (!Objects.equals(inventory.getItem(28), recipe.getS7())) continue;
             if (!Objects.equals(inventory.getItem(29), recipe.getS8())) continue;
             if (!Objects.equals(inventory.getItem(30), recipe.getS9())) continue;
-            return recipe.getResult();
+            return recipe;
         }
         return null;
     }
