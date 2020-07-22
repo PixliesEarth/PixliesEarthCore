@@ -92,7 +92,18 @@ public class settlementsCommand implements SubCommand, Listener {
                     for (Player member : nation.getOnlineMemberSet())
                         Lang.PLAYER_SET_SETTLEMENT.send(member, "%PLAYER%;" + player.getName(), "%SETTLEMENT%;" + args[1]);
                 } else if (args[0].equalsIgnoreCase("remove")) {
-                    
+                    if (!Permission.hasNationPermission(profile, Permission.MANAGE_SETTLEMENTS)) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (!nation.getSettlements().containsKey(args[1])) {
+                        Lang.SETTLEMENT_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    nation.getSettlements().remove(args[1]);
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet())
+                        Lang.PLAYER_REMOVED_SETTLEMENT.send(member, "%PLAYER%;" + player.getName(), "%SETTLEMENT%;" + args[1]);
                 }
                 break;
         }

@@ -148,6 +148,8 @@ public enum Lang {
     SETTLEMENT_ALREADY_EXISTS(Lang.NATION, new HashMap<>()),
     SETTLEMENT_HAS_TO_BE_IN_TERRITORY(Lang.NATION, new HashMap<>()),
     PLAYER_SET_SETTLEMENT(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    PLAYER_REMOVED_SETTLEMENT(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
