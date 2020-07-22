@@ -3,7 +3,9 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -50,7 +52,44 @@ public class bankNation implements SubCommand {
                         Lang.NOT_IN_A_NATION.send(player);
                         return false;
                     }
-                    Lang.NATION_BALANCE.send(player, "%NATION%;" + profile.getCurrentNation().getName(), "%AMOUNT%;" + profile.getCurrentNation().getMoney());
+                    Nation nation = profile.getCurrentNation();
+                    Lang.NATION_BALANCE.send(player, "%NATION%;" + nation.getName(), "%AMOUNT%;" + nation.getMoney());
+                }
+                break;
+            case 2:
+                if (args[0].equalsIgnoreCase("balance")) {
+                    Nation nation = Nation.getByName(args[1]);
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(sender);
+                        return false;
+                    }
+                    Lang.NATION_BALANCE.send(sender, "%NATION%;" + nation.getName(), "%AMOUNT%;" + nation.getMoney());
+                } else if (args[0].equalsIgnoreCase("deposit")) {
+                    if (!(sender instanceof Player)) {
+                        Lang.ONLY_PLAYERS_EXEC.send(sender);
+                        return false;
+                    }
+                    Player player = (Player) sender;
+                    Profile profile = instance.getProfile(player.getUniqueId());
+                    if (!profile.isInNation()) {
+                        Lang.NOT_IN_A_NATION.send(player);
+                        return false;
+                    }
+                    Nation nation = profile.getCurrentNation();
+                    if (!StringUtils.isNumeric(args[1]) || args[1].startsWith("-")) {
+                        Lang.INVALID_INPUT.send(player);
+                        return false;
+                    }
+                    int amount = Integer.parseInt(args[1]);
+                    boolean withdrawPlayer = profile.withdrawMoney(amount, "Nation-bank deposit");
+                    if (!withdrawPlayer) {
+                        Lang.NOT_ENOUGH_MONEY.send(player);
+                        return false;
+                    }
+                    nation.deposit(amount);
+                    profile.save();
+                    nation.save();
+                    Lang.DEPOSIT_MONEY_INTO_NATION.send(player);
                 }
                 break;
         }

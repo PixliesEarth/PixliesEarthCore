@@ -161,6 +161,17 @@ public class Nation {
         return allies.contains(nationId);
     }
 
+    public void deposit(double amount) {
+        money = money + amount;
+        save();
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > money) return false;
+        money = money + amount;
+        return true;
+    }
+
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
             return NationRelation.SAME;

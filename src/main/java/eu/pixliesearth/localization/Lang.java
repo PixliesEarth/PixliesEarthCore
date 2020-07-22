@@ -165,6 +165,7 @@ public enum Lang {
     PLAYER_DOESNT_HAVE_ENOUGH_MONEY(Lang.ECONOMY, new HashMap<>()),
     TOOK_MONEY_FROM_PLAYER(Lang.ECONOMY, new HashMap<>()),
     GAVE_MONEY_TO_PLAYER(Lang.ECONOMY, new HashMap<>()),
+    DEPOSIT_MONEY_INTO_NATION(Lang.NATION, new HashMap<>()),
 
     // SUICIDE
     SMSG_1("", new HashMap<>()),

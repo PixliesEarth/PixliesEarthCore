@@ -196,3 +196,4 @@ PLAYER_SET_SETTLEMENT: "&6%PLAYER% &7hat soeben eine Siedlung mit dem Namen &b%S
 SETTLEMENT_DOESNT_EXIST: "&7Eine Siedlung mit diesem Namen existiert nicht."
 PLAYER_REMOVED_SETTLEMENT: "&6%PLAYER% &7hat soeben die Siedlung mit dem Namen &b%SETTLEMENT% &7entfernt."
 NATION_BALANCE: "&b%NATION% &7hat &2&l$&a%AMOUNT% &7in ihrer Nation-Bank."
+DEPOSIT_MONEY_INTO_NATION: "&7Du hast soeben &2&l$&a%AMOUNT% &7in die Bank von &b%NATION% &7überwiesen."

@@ -196,3 +196,4 @@ PLAYER_SET_SETTLEMENT: "&6%PLAYER% &7just created a settlement with the name &b%
 SETTLEMENT_DOESNT_EXIST: "&7A settlement with this name does not exist."
 PLAYER_REMOVED_SETTLEMENT: "&6%PLAYER% &7just removed the settlement named &b%SETTLEMENT%&7."
 NATION_BALANCE: "&b%NATION% &7has &2&l$&a%AMOUNT% &7in their nation-bank."
+DEPOSIT_MONEY_INTO_NATION: "&7You just deposited &2&l$&a%AMOUNT% &7into the bank of &b%NATION%&7."
