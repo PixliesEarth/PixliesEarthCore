@@ -195,3 +195,4 @@ SETTLEMENT_HAS_TO_BE_IN_TERRITORY: "&7Siedlungen können nur in der Nation Terri
 PLAYER_SET_SETTLEMENT: "&6%PLAYER% &7hat soeben eine Siedlung mit dem Namen &b%SETTLEMENT% &7gesetzt."
 SETTLEMENT_DOESNT_EXIST: "&7Eine Siedlung mit diesem Namen existiert nicht."
 PLAYER_REMOVED_SETTLEMENT: "&6%PLAYER% &7hat soeben die Siedlung mit dem Namen &b%SETTLEMENT% &7entfernt."
+NATION_BALANCE: "&b%NATION% &7hat &2&l$&a%AMOUNT% &7in ihrer Nation-Bank."

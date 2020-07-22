@@ -36,6 +36,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new allyNation());
         subCommands.add(new neutralNation());
         subCommands.add(new chatNation());
+        subCommands.add(new bankNation());
         return subCommands;
     }
 
@@ -135,7 +136,10 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n ally §c<NATION>");
                 sender.sendMessage("§b* §7/n neutral §c<NATION>");
                 sender.sendMessage("§b* §7/n menu");
+                break;
+            case 3:
                 sender.sendMessage("§b* §7/n chat §c<public/ally/nation>");
+                sender.sendMessage("§b* §7/n bank §c<deposit/withdraw/balance> [AMOUNT/NATION] §e[NATION]");
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
@@ -150,7 +154,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 break;
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
-        sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b2 &7=-"));
+        sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b3 &7=-"));
     }
 
 }
