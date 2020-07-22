@@ -15,7 +15,7 @@ import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
-import eu.pixliesearth.core.guns.listeners.AkGun;
+import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -271,7 +271,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new MoveListener(), this);
         manager.registerEvents(new ItemInteractListener(), this);
-        manager.registerEvents(new AkGun(this), this);
+        manager.registerEvents(new GunListener(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
         manager.registerEvents(new PacketListener(), this);
         manager.registerEvents(new AchievementListener(), this);

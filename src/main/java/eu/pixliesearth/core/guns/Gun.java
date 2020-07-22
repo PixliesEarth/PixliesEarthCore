@@ -4,23 +4,33 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.events.ShootEvent;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Gun {
 
-    public static void shoot(Player player){
+    public int damage;
+
+    public int maxAmmo;
+
+    public boolean automatic;
+
+    public ItemStack getItem(int ammo) { return null; };
+
+    public void shoot(Player player) {
         AtomicReference<Snowball> sb = new AtomicReference<>();
-        Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§c7.62"));
+        Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§cGun Bullet"));
         player.getWorld().spawn(player.getEyeLocation(), Snowball.class, snowball -> {
             snowball.setShooter(player);
             snowball.setVelocity(player.getEyeLocation().getDirection().multiply(2.0));
             snowball.setSilent(true);
-            snowball.setCustomName("§c7.62mm");
+            snowball.setCustomName("§cGun Bullet");
             snowball.setBounce(false);
             snowball.setGravity(false);
-            Main.getInstance().getUtilLists().ammos.put(snowball, 6D);
+            Main.getInstance().getUtilLists().ammos.put(snowball, damage * 2D);
             sb.set(snowball);
         });
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.NEUTRAL, 10, 1);
@@ -38,4 +48,13 @@ public class Gun {
             Main.getInstance().getUtilLists().ammos.remove(sb.get());
         }, 20 * 60);
     }
+
+    public static Gun getByItem(@Nonnull ItemStack item) {
+        for (Guns guns : Guns.values()) {
+            if (guns.getClazz().getItem(guns.getClazz().maxAmmo).getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && guns.getClazz().getItem(guns.getClazz().maxAmmo).getType().equals(item.getType()))
+                return guns.getClazz();
+        }
+        return null;
+    }
+
 }

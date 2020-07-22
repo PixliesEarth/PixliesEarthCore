@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.guns;
 
-import eu.pixliesearth.core.guns.gunObjects.AK;
-import eu.pixliesearth.core.guns.gunObjects.GunInterface;
+import eu.pixliesearth.core.guns.gunObjects.AK47;
 import lombok.Getter;
 
 public enum Guns {
 
-    AK(new AK());
+    AK(new AK47());
 
-    private @Getter GunInterface clazz;
+    private @Getter Gun clazz;
 
-    Guns(GunInterface clazz) {
+    Guns(Gun clazz) {
         this.clazz = clazz;
     }
 

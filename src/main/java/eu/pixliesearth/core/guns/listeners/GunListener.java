@@ -15,10 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
 
-public class AkGun implements Listener {
-    private Main plugin;
+public class GunListener implements Listener {
+    private final Main plugin;
 
-    public AkGun(Main plugin){
+    public GunListener(Main plugin){
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -26,16 +26,10 @@ public class AkGun implements Listener {
     public void onInteract(PlayerInteractEvent e){
         Player p = e.getPlayer();
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-            if(p.getInventory().getItemInMainHand() == null) return;
             if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
-            if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals("§cAK47")){
-                if(p.getInventory().getItemInMainHand().getItemMeta().getLore() == null) return;
-                ArrayList<String> lore = new ArrayList<String>();
-                lore.add("§7Ammo: §f30/30");
-                lore.add("§7Damage: §f3.0");
-                lore.add("§7Type: §f7.62mm");
-                if(p.getInventory().getItemInMainHand().getItemMeta().getLore().equals(lore))
-                Gun.shoot(p);
+            Gun gun = Gun.getByItem(p.getInventory().getItemInMainHand());
+            if(gun != null){
+                gun.shoot(p);
             }
         }
     }
