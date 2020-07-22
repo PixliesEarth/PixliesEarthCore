@@ -151,6 +151,8 @@ public enum Lang {
     SETTLEMENT_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
     PLAYER_REMOVED_SETTLEMENT(Lang.NATION, new HashMap<>()),
     NATION_BALANCE(Lang.NATION, new HashMap<>()),
+    NOT_ENOUGH_MONEY_IN_NATION(Lang.NATION, new HashMap<>()),
+    WITHDREW_MONEY_FROM_NATION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

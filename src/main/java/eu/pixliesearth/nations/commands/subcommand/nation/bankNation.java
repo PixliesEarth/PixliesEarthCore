@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -89,7 +90,35 @@ public class bankNation implements SubCommand {
                     nation.deposit(amount);
                     profile.save();
                     nation.save();
-                    Lang.DEPOSIT_MONEY_INTO_NATION.send(player);
+                    Lang.DEPOSIT_MONEY_INTO_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                } else if (args[0].equalsIgnoreCase("withdraw")) {
+                    if (!(sender instanceof Player)) {
+                        Lang.ONLY_PLAYERS_EXEC.send(sender);
+                        return false;
+                    }
+                    Player player = (Player) sender;
+                    Profile profile = instance.getProfile(player.getUniqueId());
+                    if (!profile.isInNation()) {
+                        Lang.NOT_IN_A_NATION.send(player);
+                        return false;
+                    }
+                    Nation nation = profile.getCurrentNation();
+                    if (!StringUtils.isNumeric(args[1]) || args[1].startsWith("-")) {
+                        Lang.INVALID_INPUT.send(player);
+                        return false;
+                    }
+                    int amount = Integer.parseInt(args[1]);
+                    if (!Permission.hasNationPermission(profile, Permission.BANK) && !profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    boolean nationWithdraw = nation.withdraw(amount);
+                    if (!nationWithdraw) {
+                        Lang.NOT_ENOUGH_MONEY_IN_NATION.send(player);
+                        return false;
+                    }
+                    profile.depositMoney(amount, "Nation-bank withdraw");
+                    Lang.WITHDREW_MONEY_FROM_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
                 }
                 break;
         }

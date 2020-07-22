@@ -18,7 +18,8 @@ public enum Permission {
     INTERACT,
     MANAGE_SETTLEMENTS,
     EDIT_RANKS,
-    MANAGE_RELATIONS;
+    MANAGE_RELATIONS,
+    BANK;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
         if (!profile.isInNation()) return false;
