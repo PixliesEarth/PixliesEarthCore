@@ -145,6 +145,9 @@ public enum Lang {
     NEUTRALED_NATION(Lang.NATION, new HashMap<>()),
     TWO_NATIONS_ARE_THE_SAME(Lang.NATION, new HashMap<>()),
     CHANGED_CHATTYPE(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_ALREADY_EXISTS(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_HAS_TO_BE_IN_TERRITORY(Lang.NATION, new HashMap<>()),
+    PLAYER_SET_SETTLEMENT(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
