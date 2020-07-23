@@ -8,34 +8,33 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class AK47 extends Gun {
+public class Musket extends Gun {
 
     @Override
-    public double damage() { return 3D; };
+    public double damage() { return 2D; };
 
     @Override
-    public int maxAmmo() { return 30; };
+    public int maxAmmo() { return 5; };
 
     @Override
-    public boolean automatic() { return true; };
+    public boolean automatic() { return false; };
 
     @Override
     public ItemStack getItem(int ammo) {
-        ItemStack ak = new ItemStack(Material.WOODEN_AXE);
-        ItemMeta meta = ak.getItemMeta();
-        String type = automatic() ? "&a&lAUTOMATIC" : "&a&lSINGLE-FIRE";
-        meta.setDisplayName("§cAK47");
+        ItemStack musket = new ItemStack(Material.WOODEN_AXE);
+        ItemMeta meta = musket.getItemMeta();
+        meta.setDisplayName("§cMusket");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add(type);
         lore.add("§7Ammo: §f" + ammo + "/" + maxAmmo());
         lore.add("§7Damage: §f" + damage() + "§c§l♥");
-        lore.add("§7Type: §f7.62mm");
+        lore.add("§7Type: §fMusketball");
         meta.setLore(lore);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-        meta.setCustomModelData(6);
-        ak.setItemMeta(meta);
-        return ak;
+        meta.setCustomModelData(7);
+        musket.setItemMeta(meta);
+        return musket;
     }
+
 
 }

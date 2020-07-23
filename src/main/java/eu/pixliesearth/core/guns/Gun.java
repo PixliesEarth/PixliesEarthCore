@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Gun {
 
-    public int damage;
+    public double damage() { return 3D; };
 
-    public int maxAmmo;
+    public int maxAmmo() { return 30; };
 
-    public boolean automatic;
+    public boolean automatic() { return true; };
 
     public ItemStack getItem(int ammo) { return null; };
 
@@ -30,11 +30,11 @@ public class Gun {
             snowball.setCustomName("§cGun Bullet");
             snowball.setBounce(false);
             snowball.setGravity(false);
-            Main.getInstance().getUtilLists().ammos.put(snowball, damage * 2D);
+            Main.getInstance().getUtilLists().ammos.put(snowball, damage() * 2D);
             sb.set(snowball);
         });
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.NEUTRAL, 10, 1);
-        new BukkitRunnable() {
+        player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, SoundCategory.NEUTRAL, 10, 10);
+/*        new BukkitRunnable() {
             public void run() {
                 if (!Main.getInstance().getUtilLists().ammos.containsKey(sb.get())) {
                     this.cancel();
@@ -42,16 +42,16 @@ public class Gun {
                 }
                 sb.get().getWorld().spawnParticle(Particle.SMOKE_NORMAL, sb.get().getLocation(), 1);
             }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);*/
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
             Main.getInstance().getUtilLists().ammos.remove(sb.get());
-        }, 20 * 60);
+        }, 20 * 30);
     }
 
     public static Gun getByItem(@Nonnull ItemStack item) {
         for (Guns guns : Guns.values()) {
-            if (guns.getClazz().getItem(guns.getClazz().maxAmmo).getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && guns.getClazz().getItem(guns.getClazz().maxAmmo).getType().equals(item.getType()))
+            if (guns.getClazz().getItem(guns.getClazz().maxAmmo()).getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && guns.getClazz().getItem(guns.getClazz().maxAmmo()).getType().equals(item.getType()))
                 return guns.getClazz();
         }
         return null;

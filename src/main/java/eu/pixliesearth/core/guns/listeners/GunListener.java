@@ -25,10 +25,15 @@ public class GunListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e){
         Player p = e.getPlayer();
-        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-            if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
-            Gun gun = Gun.getByItem(p.getInventory().getItemInMainHand());
-            if(gun != null){
+        if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
+        Gun gun = Gun.getByItem(p.getInventory().getItemInMainHand());
+        if (gun == null) return;
+        if (gun.automatic()) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                gun.shoot(p);
+            }
+        } else {
+            if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
                 gun.shoot(p);
             }
         }
