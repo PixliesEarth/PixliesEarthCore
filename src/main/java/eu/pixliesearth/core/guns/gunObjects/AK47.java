@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.guns.gunObjects;
 
 import eu.pixliesearth.core.guns.Gun;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -10,25 +11,20 @@ import java.util.ArrayList;
 
 public class AK47 extends Gun {
 
-    @Override
-    public double damage() { return 3D; };
-
-    @Override
-    public int maxAmmo() { return 30; };
-
-    @Override
-    public boolean automatic() { return true; };
+    public AK47() {
+        super(3D, 30, true);
+    }
 
     @Override
     public ItemStack getItem(int ammo) {
         ItemStack ak = new ItemStack(Material.WOODEN_AXE);
         ItemMeta meta = ak.getItemMeta();
-        String type = automatic() ? "&a&lAUTOMATIC" : "&a&lSINGLE-FIRE";
+        String type = automatic ? "§a§lAUTOMATIC" : "§a§lSINGLE-FIRE";
         meta.setDisplayName("§cAK47");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add(type);
-        lore.add("§7Ammo: §f" + ammo + "/" + maxAmmo());
-        lore.add("§7Damage: §f" + damage() + "§c§l♥");
+        lore.add("§7Ammo: §f" + ammo + "/" + maxAmmo);
+        lore.add("§7Damage: §f" + damage + "§c§l♥");
         lore.add("§7Type: §f7.62mm");
         meta.setLore(lore);
         meta.setUnbreakable(true);

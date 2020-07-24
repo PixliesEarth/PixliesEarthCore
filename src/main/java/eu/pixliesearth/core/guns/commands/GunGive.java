@@ -31,7 +31,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
-                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo());
+                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo);
                 p.getInventory().addItem(is);
                 p.sendMessage(Lang.GUN_GIVEN.get(sender).replace("%gun%", args[0].toUpperCase()));
 
@@ -45,7 +45,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
-                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo());
+                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo);
                 player.getInventory().addItem(is);
                 player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", args[0].toUpperCase()));
                 p.sendMessage(Lang.GUN_GIVEN_OTHER.get(p).replace("%gun%", args[0].toUpperCase()).replace("%player%", player.getName()));
@@ -65,7 +65,7 @@ public class GunGive implements CommandExecutor, TabExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[1]);
-            ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo());
+            ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem(Guns.valueOf(args[0].toUpperCase()).getClazz().maxAmmo);
             assert player != null;
             player.getInventory().addItem(is);
             player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", args[0].toUpperCase()));

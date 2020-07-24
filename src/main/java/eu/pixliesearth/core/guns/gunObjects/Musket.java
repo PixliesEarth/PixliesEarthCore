@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.guns.gunObjects;
 
 import eu.pixliesearth.core.guns.Gun;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -10,14 +11,9 @@ import java.util.ArrayList;
 
 public class Musket extends Gun {
 
-    @Override
-    public double damage() { return 2D; };
-
-    @Override
-    public int maxAmmo() { return 5; };
-
-    @Override
-    public boolean automatic() { return false; };
+    public Musket() {
+        super(2D, 5, false);
+    }
 
     @Override
     public ItemStack getItem(int ammo) {
@@ -25,8 +21,8 @@ public class Musket extends Gun {
         ItemMeta meta = musket.getItemMeta();
         meta.setDisplayName("§cMusket");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add("§7Ammo: §f" + ammo + "/" + maxAmmo());
-        lore.add("§7Damage: §f" + damage() + "§c§l♥");
+        lore.add("§7Ammo: §f" + ammo + "/" + maxAmmo);
+        lore.add("§7Damage: §f" + damage + "§c§l♥");
         lore.add("§7Type: §fMusketball");
         meta.setLore(lore);
         meta.setUnbreakable(true);
