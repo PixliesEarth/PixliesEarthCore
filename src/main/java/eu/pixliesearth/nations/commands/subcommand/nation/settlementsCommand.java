@@ -82,7 +82,7 @@ public class settlementsCommand implements SubCommand, Listener {
                     }
                     //TODO HOW MANY CAN BE SET
                     NationChunk nc = NationChunk.get(player.getChunk());
-                    if (nc == null || nc.getNationId().equals(nation.getNationId())) {
+                    if (nc == null || !nc.getNationId().equals(nation.getNationId())) {
                         Lang.SETTLEMENT_HAS_TO_BE_IN_TERRITORY.send(player);
                         return false;
                     }
@@ -123,7 +123,7 @@ public class settlementsCommand implements SubCommand, Listener {
             if (!profile.isInNation()) player.closeInventory();
             Nation nation = profile.getCurrentNation();
             if (item.getType().equals(Material.CAMPFIRE)) {
-                Settlement settlement = new Gson().fromJson(nation.getSettlements().get("§b" + item.getItemMeta().getDisplayName()), Settlement.class);
+                Settlement settlement = new Gson().fromJson(nation.getSettlements().get(item.getItemMeta().getDisplayName().replace("§b", "")), Settlement.class);
                 settlement.teleport(player);
             }
         }

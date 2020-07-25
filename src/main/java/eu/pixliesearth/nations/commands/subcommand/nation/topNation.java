@@ -36,7 +36,7 @@ public class topNation implements SubCommand {
         Object[] array = instance.getNationsTop().getTopMap().toArray();
         sender.sendMessage(Methods.getCenteredMessage("§8--== §bN-TOP §7(§b" + page + "§8/§b" + (array.length <= 10 ? 1 : ((array.length + 5) / 10))  + "§7) §8==--"));
         List<Object> currentPage = Arrays.asList(Arrays.copyOfRange(array, (page * 10) - 10, Math.min(array.length, (page * 10))));
-        for(int i = 0; i < 10; i++) {
+        for(int i = 1; i < 11; i++) {
             if (i >= currentPage.size()) {
                 continue;
             }
