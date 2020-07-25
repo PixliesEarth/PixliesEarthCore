@@ -6,9 +6,8 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Nation;
 
 import java.util.UUID;
-
-import static spark.Spark.*;
 import static eu.pixliesearth.Main.*;
+import static spark.Spark.*;
 
 public class REST {
 
