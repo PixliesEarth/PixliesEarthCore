@@ -28,7 +28,7 @@ public class Nation {
     private String leader;
     private String dynmapFill;
     private String dynmapBorder;
-    private long created;
+    private String created;
     private Map<String, Map<String, Object>> ranks;
     private List<String> members;
     private List<String> chunks;

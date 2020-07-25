@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
 import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
@@ -76,6 +77,7 @@ public final class Main extends JavaPlugin {
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
+    private @Getter REST rest;
     public boolean gulagActive = false;
 
     @Override
@@ -200,6 +202,8 @@ public final class Main extends JavaPlugin {
         dynmapKernel.onEnable();
 
         nationsTop = new NTop();
+        rest = new REST();
+
     }
 
     @Override
