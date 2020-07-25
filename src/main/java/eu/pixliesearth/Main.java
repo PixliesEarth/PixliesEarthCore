@@ -33,6 +33,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.NTop;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
@@ -74,6 +75,7 @@ public final class Main extends JavaPlugin {
     private @Getter FileManager dynmapCfg;
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
+    private @Getter NTop nationsTop;
     public boolean gulagActive = false;
 
     @Override
@@ -196,6 +198,8 @@ public final class Main extends JavaPlugin {
 
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
+
+        nationsTop = new NTop();
     }
 
     @Override

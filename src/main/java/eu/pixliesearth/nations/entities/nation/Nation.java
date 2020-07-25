@@ -176,6 +176,11 @@ public class Nation {
         return true;
     }
 
+    //TODO OTHER FORMULA?
+    public int getPoints() {
+        return (int) (members.size() * money);
+    }
+
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
             return NationRelation.SAME;

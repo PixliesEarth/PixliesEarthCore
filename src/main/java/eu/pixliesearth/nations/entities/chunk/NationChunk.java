@@ -144,7 +144,7 @@ public class NationChunk {
         return true;
     }
 
-    //ONLY RUN ONCE ONENABLE
+    //ONLY RUN ONCE
     public static void init() {
         table = new HashMap<>();
         for (World world : Bukkit.getWorlds())

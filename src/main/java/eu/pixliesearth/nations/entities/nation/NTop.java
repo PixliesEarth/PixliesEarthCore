@@ -10,19 +10,19 @@ import java.util.*;
 @Getter
 public class NTop extends BukkitRunnable {
 
-    private final Map<Integer, String> topMap;
+    private final List<String> topMap;
 
     public NTop() {
-        this.topMap = new HashMap<>();
+        this.topMap = new ArrayList<>();
         this.runTaskTimerAsynchronously(Main.getInstance(), 0, (20 * 60) * 5);
     }
 
     @Override
     public void run() {
-        topMap.clear();
-        for (Nation nation : NationManager.nations.values()) {
-            
-        }
+        List<Nation> nations = new ArrayList<>(NationManager.nations.values());
+        nations.sort((o1, o2) -> o2.getPoints() - o1.getPoints());
+        for (Nation nation : nations)
+            topMap.add(nation.getNationId());
     }
 
 }
