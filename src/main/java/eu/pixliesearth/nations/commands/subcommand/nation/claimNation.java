@@ -1,8 +1,9 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.RowSortedTable;
 import com.google.common.collect.Table;
-import com.google.common.collect.TreeBasedTable;
+import com.google.common.collect.HashBasedTable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
@@ -77,7 +78,7 @@ public class claimNation implements SubCommand {
                 } else if (args[0].equalsIgnoreCase("fill")) {
                     long start = System.currentTimeMillis();
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
-                    Table<Integer, Integer, NationChunk> toClaim = TreeBasedTable.create();
+                    Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
                     claimFill(player, profile.getCurrentNation(), toClaim);
                     player.sendMessage(System.currentTimeMillis() - start + "ms");
@@ -120,7 +121,7 @@ public class claimNation implements SubCommand {
                 } else if (args[0].equalsIgnoreCase("fill")) {
                     Nation nation = Nation.getByName(args[1]);
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
-                    Table<Integer, Integer, NationChunk> toClaim = TreeBasedTable.create();
+                    Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
                     claimFill(player, nation, toClaim);
                 } else if (args[0].equalsIgnoreCase("line")) {

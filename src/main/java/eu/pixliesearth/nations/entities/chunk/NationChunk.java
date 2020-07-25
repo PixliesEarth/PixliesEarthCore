@@ -1,7 +1,9 @@
 package eu.pixliesearth.nations.entities.chunk;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.RowSortedTable;
-import com.google.common.collect.TreeBasedTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.HashBasedTable;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
@@ -22,7 +24,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class NationChunk {
 
-    public static Map<String, RowSortedTable<Integer, Integer, NationChunk>> table;
+    public static Map<String, Table<Integer, Integer, NationChunk>> table;
 
     private String nationId;
     private String world;
@@ -31,7 +33,7 @@ public class NationChunk {
 
     public void claim() {
         if (table.get(world).get(x, z) == null) {
-            RowSortedTable<Integer, Integer, NationChunk> rst = table.get(world);
+            Table<Integer, Integer, NationChunk> rst = table.get(world);
             rst.put(x, z, this);
             table.put(world, rst);
             Nation nation = Nation.getById(nationId);
@@ -45,7 +47,7 @@ public class NationChunk {
 
     public void unclaim() {
         if (table.get(world).get(x, z) != null) {
-            RowSortedTable<Integer, Integer, NationChunk> rst = table.get(world);
+            Table<Integer, Integer, NationChunk> rst = table.get(world);
             Nation nation = Nation.getById(nationId);
             if (nation.getChunks().contains(serialize())) {
                 nation.getChunks().remove(serialize());
@@ -146,11 +148,11 @@ public class NationChunk {
     public static void init() {
         table = new HashMap<>();
         for (World world : Bukkit.getWorlds())
-            table.put(world.getName(), TreeBasedTable.create());
+            table.put(world.getName(), HashBasedTable.create());
         NationManager.nations.values().stream().parallel().forEach(nation -> {
             for (String s : nation.getChunks()) {
                 NationChunk c = NationChunk.fromString(s);
-                RowSortedTable<Integer, Integer, NationChunk> rst = table.get(c.getWorld());
+                Table<Integer, Integer, NationChunk> rst = table.get(c.getWorld());
                 rst.put(c.getX(), c.getZ(), c);
                 table.put(c.getWorld(), rst);
             }

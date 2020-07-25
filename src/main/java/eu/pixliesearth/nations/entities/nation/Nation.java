@@ -28,6 +28,7 @@ public class Nation {
     private String leader;
     private String dynmapFill;
     private String dynmapBorder;
+    private long created;
     private Map<String, Map<String, Object>> ranks;
     private List<String> members;
     private List<String> chunks;
@@ -35,6 +36,7 @@ public class Nation {
     private List<String> allies;
     private List<String> pacts;
     private Map<String, Object> flag;
+    private List<String> upgrades;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -53,6 +55,7 @@ public class Nation {
         nation.append("leader", leader);
         nation.append("dynmapFill", dynmapFill);
         nation.append("dynmapBorder", dynmapBorder);
+        nation.append("created", created);
         nation.append("ranks", ranks);
         nation.append("members", members);
         nation.append("chunks", chunks);
@@ -60,6 +63,7 @@ public class Nation {
         nation.append("allies", allies);
         nation.append("pacts", pacts);
         nation.append("flag", flag);
+        nation.append("upgrades", upgrades);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
