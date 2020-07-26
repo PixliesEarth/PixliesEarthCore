@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.NTop;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.ChatColor;
@@ -42,13 +43,14 @@ public class topNation implements SubCommand {
             }
 
             Object object = currentPage.get(i);
-            if (!(object instanceof String)) {
+            if (!(object instanceof NTop.NTopProfile)) {
                 continue;
             }
-            Nation nation = Nation.getById((String) object);
+            NTop.NTopProfile prof = (NTop.NTopProfile) object;
             ChatColor rankColor = i < 4 ? ChatColor.GREEN : ChatColor.AQUA;
-            sender.sendMessage(rankColor + "" + i + " §8. §b" + nation.getName() + " §7- §a" + nation.getPoints() + "P");
+            sender.sendMessage(rankColor + "" + i + " §8. §b" + prof.getName() + " §7- §a" + prof.getPoints() + "P");
         }
+        sender.sendMessage("§c(§4§l!§c) This list get's updated every 5 minutes §c(§4§l!§c)");
         return false;
     }
 
