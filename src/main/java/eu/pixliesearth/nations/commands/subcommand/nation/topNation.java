@@ -37,18 +37,16 @@ public class topNation implements SubCommand {
         Object[] array = instance.getNationsTop().getTopMap().toArray();
         sender.sendMessage(Methods.getCenteredMessage("§8--== §bN-TOP §7(§b" + page + "§8/§b" + (array.length <= 10 ? 1 : ((array.length + 5) / 10))  + "§7) §8==--"));
         List<Object> currentPage = Arrays.asList(Arrays.copyOfRange(array, (page * 10) - 10, Math.min(array.length, (page * 10))));
-        for(int i = 1; i < 11; i++) {
+        for(int i = 0; i < 10; i++) {
             if (i >= currentPage.size()) {
                 continue;
             }
 
             Object object = currentPage.get(i);
-            if (!(object instanceof NTop.NTopProfile)) {
-                continue;
-            }
             NTop.NTopProfile prof = (NTop.NTopProfile) object;
-            ChatColor rankColor = i < 4 ? ChatColor.GREEN : ChatColor.AQUA;
-            sender.sendMessage(rankColor + "" + i + " §8. §b" + prof.getName() + " §7- §a" + prof.getPoints() + "P");
+            int rank = i + 1;
+            ChatColor rankColor = rank < 4 ? ChatColor.GREEN : ChatColor.AQUA;
+            sender.sendMessage(rankColor + "" + rank + " §8. §b" + prof.getName() + " §7- §a" + prof.getPoints() + "P");
         }
         sender.sendMessage("§c(§4§l!§c) This list get's updated every 5 minutes §c(§4§l!§c)");
         return false;

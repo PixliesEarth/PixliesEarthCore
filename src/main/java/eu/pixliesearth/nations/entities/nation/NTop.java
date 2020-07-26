@@ -26,6 +26,7 @@ public class NTop extends BukkitRunnable {
         nations.sort((o1, o2) -> o2.getPoints() - o1.getPoints());
         for (Nation nation : nations)
             topMap.add(new NTopProfile(nation.getName(), nation.getPoints()));
+        System.out.println("§aNation-Top updated.");
     }
 
     @Data
