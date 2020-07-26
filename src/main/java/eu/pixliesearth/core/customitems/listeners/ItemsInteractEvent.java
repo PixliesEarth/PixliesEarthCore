@@ -73,7 +73,7 @@ public class ItemsInteractEvent implements Listener {
         }
     }
 
-    public void removeOne(ItemStack i, Player p) {
+    public static void removeOne(ItemStack i, Player p) {
         HashMap<Integer, ? extends ItemStack> map = p.getInventory().all(i);
         if (map.isEmpty()) {
             return;

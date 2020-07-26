@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.guns.gunObjects;
 
 import eu.pixliesearth.core.guns.Gun;
+import eu.pixliesearth.core.guns.ammoObjects.Musketball;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class Musket extends Gun {
 
     public Musket() {
-        super(2D, 5, false);
+        super(2D, 5, false, new Musketball());
     }
 
     @Override

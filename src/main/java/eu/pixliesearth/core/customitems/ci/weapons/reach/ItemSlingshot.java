@@ -17,8 +17,6 @@ public class ItemSlingshot implements CustomItem {
 
     @Override
     public ItemStack getItem() {
-
-        Material type;
         ItemStack slingshot = new ItemStack(Material.STICK);
         ItemMeta meta = slingshot.getItemMeta();
         meta.setDisplayName("§6Slingshot");

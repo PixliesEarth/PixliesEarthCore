@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.guns;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.events.ShootEvent;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
@@ -22,6 +23,8 @@ public class Gun {
 
     public boolean automatic;
 
+    public Ammo ammoType;
+
     public ItemStack getItem(int ammo) { return null; };
 
     public static int ammoLeft(ItemStack item) {
@@ -36,6 +39,13 @@ public class Gun {
 
     public void shoot(Player player) {
         if (ammoLeft(player.getInventory().getItemInMainHand()) == 0) {
+            if (player.getInventory().contains(ammoType.getItem(), 1)) {
+                ItemsInteractEvent.removeOne(ammoType.getItem(), player);
+                player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+                player.sendActionBar("§aReloaded.");
+                player.getInventory().setItemInMainHand(getItem(maxAmmo));
+                return;
+            }
             player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
             player.sendActionBar("§cYou need to reload your gun!");
             return;
@@ -44,7 +54,7 @@ public class Gun {
         System.out.println(ammoLeft - 1);
         player.getInventory().setItemInMainHand(getItem(ammoLeft - 1));
         AtomicReference<Snowball> sb = new AtomicReference<>();
-        Bukkit.getPluginManager().callEvent(new ShootEvent(player, "§cGun Bullet"));
+        Bukkit.getPluginManager().callEvent(new ShootEvent(player, ammoType.getName()));
         player.getWorld().spawn(player.getEyeLocation(), Snowball.class, snowball -> {
             snowball.setShooter(player);
             snowball.setVelocity(player.getEyeLocation().getDirection().multiply(2.0));
