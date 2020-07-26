@@ -27,7 +27,7 @@ public class REST {
             response.type("application/json");
             return gson.toJsonTree(nation);
         });
-
+        
         post("/nation", (request, response) -> {
             Nation nation = gson.fromJson(request.body(), Nation.class);
             nation.save();

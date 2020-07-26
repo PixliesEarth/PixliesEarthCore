@@ -35,11 +35,11 @@ public class PremiumCommand implements CommandExecutor {
         } else if (player.hasPermission("earth.premium.ultimate") && !profile.getExtras().containsKey("dynmapMarkers")) {
             profile.getExtras().put("dynmapMarkers", 3);
         }
-        int dynmapMarker = (int) profile.getExtras().getOrDefault("dynmapMarkers", 0);
+        int dynmapMarker = (int) Math.round((Double) profile.getExtras().getOrDefault("dynmapMarkers", 0));
         boolean alreadyGifted = (boolean) profile.getExtras().getOrDefault("giftedRoyal", false);
         Gui gui = new Gui(instance, 3, "§6Premium-GUI");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
-        pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).build(), event -> event.setCancelled(true));
+        pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         ItemStack markerItem = dynmapMarker > 0 ? new ItemBuilder(Material.SOUL_CAMPFIRE).setDisplayName("§aSet a dynmapmarker").addLoreLine("§a" + dynmapMarker + " §7left").build() : new ItemBuilder(Material.BARRIER).setDisplayName("§cAlready used").build();
         ItemStack giftItem = !alreadyGifted ? new ItemBuilder(Material.CAKE).setDisplayName("§6Gift someone 6 days of royal").addLoreLine("§7Be generous!").build() : new ItemBuilder(Material.BARRIER).setDisplayName("§cAlready used").build();
         pane.addItem(new GuiItem(markerItem, event -> {
