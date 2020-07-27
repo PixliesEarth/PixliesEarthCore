@@ -200,3 +200,4 @@ DEPOSIT_MONEY_INTO_NATION: "&7Du hast soeben &2&l$&a%AMOUNT% &7in die Bank von &
 NOT_ENOUGH_MONEY_IN_NATION: "&7Diese Nation hat nicht genug Geld für diese Aktion."
 WITHDREW_MONEY_FROM_NATION: "&7Du hast soeben &2&l$§a%AMOUNT% &7von der Bank von &b%NATION% &7abgehoben."
 PLAYER_BOOSTED: "&6%PLAYER% &7hat soeben den Server mit &d%BOOST% &7geboostet."
+NOT_ENOUGH_BOOSTS: "&7Du hast nicht genug Boosts um den Server zu boosten. Kaufe dir boosts unter &6&lhttps://store.pixlies.net&c."
