@@ -108,14 +108,14 @@ public class ScoreboardAdapter implements AssembleAdapter {
             case STANDARD:
                 if (instance.getUtilLists().boosts.size() > 0)
                     for (Boost boost : instance.getUtilLists().boosts.values())
-                        returnable.add("§d" + boost.getName() + ": §7" + boost.getTimer().getRemainingAsString());
+                        returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add("  §8» §6" + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
-                    returnable.add(c + "Staff: §aenabled");
+                    returnable.add(c + "§lStaff: §aenabled");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
@@ -125,7 +125,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet())
-                        returnable.add(c + entry.getKey() + ": §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                        returnable.add(c + "§l" + entry.getKey() + "§7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)

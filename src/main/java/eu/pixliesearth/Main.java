@@ -350,6 +350,7 @@ public final class Main extends JavaPlugin {
                 .setDescription("<:offline:716052437688909825> Server is offline!")
         );
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
+        MiniMick.getApi().disconnect();
     }
     public boolean isGulagActive(){
         return gulagActive;

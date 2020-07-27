@@ -1,7 +1,9 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -37,6 +39,12 @@ public class UtilThread extends Thread {
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
+        }
+        for (Map.Entry<Boost.BoostType, Boost> entry : Main.getInstance().getUtilLists().boosts.entrySet()) {
+            if (entry.getValue().getTimer().getRemaining() < 0) {
+                Main.getInstance().getUtilLists().boosts.remove(entry.getKey());
+                Lang.BOOST_EXPIRED.broadcast("%BOOST%;" + entry.getValue().getName());
+            }
         }
     }
 

@@ -26,9 +26,9 @@ public class BlockBreakListener implements Listener {
             if (event.getPlayer().getInventory().getItemInMainHand() != null) {
                 if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE || event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_SHOVEL) {
                     if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
-                        if (event.getPlayer().getInventory().getItemInMainHand().getLore() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().containsAll(new ItemExplosivePick().getLore()) || event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().containsAll(new ItemExplosiveShovel().getLore())) {
+                        if (event.getPlayer().getInventory().getItemInMainHand().getLore() != null && (event.getPlayer().getInventory().getItemInMainHand().getLore().containsAll(new ItemExplosivePick().getLore()) || event.getPlayer().getInventory().getItemInMainHand().getLore().containsAll(new ItemExplosiveShovel().getLore()))) {
                             Block b = event.getBlock();
-                           if(b.getType().getHardness() > 0.05){
+                            if(b.getType().getHardness() > 0.05){
                             /*if (b.getType() != Material.TORCH
                                     && b.getType() != Material.REDSTONE_TORCH
                                     && b.getType() != Material.REDSTONE_WALL_TORCH
