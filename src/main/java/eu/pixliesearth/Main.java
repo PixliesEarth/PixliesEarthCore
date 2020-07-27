@@ -26,6 +26,7 @@ import eu.pixliesearth.core.modules.economy.EconomySystem;
 import eu.pixliesearth.core.modules.economy.VaultAPI;
 import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
@@ -302,6 +303,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new CustomCrafting(), this);
+        manager.registerEvents(new DoubleExpBoost(), this);
     }
 
     /**

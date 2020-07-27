@@ -45,7 +45,7 @@ public class UtilLists {
 
     public DiscordWebhook webhook;
 
-    public Map<UUID, Boost> boosts;
+    public Map<Boost.BoostType, Boost> boosts;
 
     public List<UUID> scoreboardMaps;
 

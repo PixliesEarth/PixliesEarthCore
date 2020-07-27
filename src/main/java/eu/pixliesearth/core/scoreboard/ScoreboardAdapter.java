@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.scoreboard;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 public class ScoreboardAdapter implements AssembleAdapter {
 
+    private static final Main instance = Main.getInstance();
     private static int frame = 0;
     private static String[] frames(Player player) {
         String c = Main.getInstance().getProfile(player.getUniqueId()).getFavoriteColour();
@@ -104,15 +106,16 @@ public class ScoreboardAdapter implements AssembleAdapter {
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
-                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add(c + "§lStaff");
-                    returnable.add("  §8» §aenabled");
-                }
+                if (instance.getUtilLists().boosts.size() > 0)
+                    for (Boost boost : instance.getUtilLists().boosts.values())
+                        returnable.add("§d" + boost.getName() + ": §7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                returnable.add(PlaceholderAPI.setPlaceholders(player, "  §8» %vault_prefix%" + player.getDisplayName()));
+                returnable.add("  §8» §6" + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
                 returnable.add("  §8» §e" + energy);
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
+                    returnable.add(c + "Staff: §aenabled");
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
@@ -120,14 +123,14 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add("  §8» §7Online: §a" + nation.getOnlineMembers());
                     returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
-                if (profile.getTimers().size() > 0) {
-                    for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet()) {
-                        returnable.add(c + "§l" + entry.getKey());
-                        returnable.add("  §8» §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
-                    }
-                }
+                if (profile.getTimers().size() > 0)
+                    for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet())
+                        returnable.add(c + entry.getKey() + ": §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
+                if (instance.getUtilLists().boosts.size() > 0)
+                    for (Boost boost : instance.getUtilLists().boosts.values())
+                        returnable.add("§d" + boost.getName() + ": §7" + boost.getTimer().getRemainingAsString());
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
                     returnable.add("&3Staff: §aenabled");
                 returnable.add("§2§l$§a" + profile.getBalance());

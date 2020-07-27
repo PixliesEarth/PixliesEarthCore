@@ -31,4 +31,8 @@ public class Timer {
         return expiry - System.currentTimeMillis();
     }
 
+    public String getRemainingAsString() {
+        return Methods.getTimeAsString(expiry - System.currentTimeMillis(), false);
+    }
+
 }

@@ -76,6 +76,7 @@ public enum Lang {
     CHANGED_PLAYER_NICKNAME(Lang.EARTH, new HashMap<>()),
     CLICK_TO_PM("", new HashMap<>()),
     STRIKED_PLAYER(Lang.EARTH, new HashMap<>()),
+    PLAYER_BOOSTED(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
