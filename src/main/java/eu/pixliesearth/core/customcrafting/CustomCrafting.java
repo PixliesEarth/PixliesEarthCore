@@ -132,7 +132,7 @@ public class CustomCrafting implements Listener {
         }, 5, 5));
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
         if (!view.getTitle().equals("§e§lCrafting")) return;
@@ -144,9 +144,9 @@ public class CustomCrafting implements Listener {
         event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
         Bukkit.getScheduler().cancelTask(instance.getUtilLists().craftingTables.get(event.getPlayer().getUniqueId()));
         instance.getUtilLists().craftingTables.remove(event.getPlayer().getUniqueId());
-    }
+    }*/
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInteraction(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         if (block == null) return;
@@ -157,7 +157,7 @@ public class CustomCrafting implements Listener {
             event.setCancelled(true);
             open(event.getPlayer());
         }
-    }
+    }*/
 
     private CustomRecipe getRecipe(final Inventory inventory) {
         for (CustomItems customItems : CustomItems.values()) {

@@ -1,10 +1,12 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
@@ -69,6 +71,8 @@ public class UtilLists {
 
     public Map<UUID, Integer> craftingTables;
 
+    public Map<Location, Machine> machines;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -98,6 +102,7 @@ public class UtilLists {
         royalGifters = new ArrayList<>();
         chatTypes = new HashMap<>();
         craftingTables = new HashMap<>();
+        machines = new HashMap<>();
     }
 
 }
