@@ -3,6 +3,7 @@ package eu.pixliesearth.core.machines;
 import eu.pixliesearth.utils.ItemBuilder;
 import lombok.Data;
 import lombok.NonNull;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -10,15 +11,16 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-@Data
-public abstract class MachineCraftable {
+public enum MachineCraftable {
+
+    CUT_WOOD(Type.CARPENTRY, new ItemBuilder(Material.OAK_LOG).setAmount(64).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-logs > §a4x64 §7oak-planks").build(), Arrays.asList(new ItemBuilder(Material.OAK_LOG).setAmount(32).build()), Arrays.asList(new ItemStack(Material.OAK_LOG, 64), new ItemStack(Material.OAK_LOG, 64), new ItemStack(Material.OAK_LOG, 64), new ItemStack(Material.OAK_LOG, 64)));
 
     protected Type type;
     protected ItemStack menuItem;
     protected List<ItemStack> result;
     protected List<ItemStack> ingredients;
 
-    public MachineCraftable(Type type, ItemStack menuItem, List<ItemStack> result, List<ItemStack> ingredients) {
+    MachineCraftable(Type type, ItemStack menuItem, List<ItemStack> result, List<ItemStack> ingredients) {
         this.type = type;
         this.menuItem = menuItem;
         this.result = result;
@@ -29,12 +31,6 @@ public abstract class MachineCraftable {
 
         CARPENTRY
 
-    }
-
-    public static final List<MachineCraftable> instances() {
-        return Arrays.asList(
-
-        );
     }
 
 }

@@ -19,12 +19,6 @@ public class Machine extends Thread implements Listener {
 
     protected static final Main instance = Main.getInstance();
 
-    public static List<Machine> machines() {
-        List<Machine> list = new ArrayList<>();
-        list.add(new CarpentryMill());
-        return list;
-    }
-
     public void register(Machine machine) {
         Bukkit.getPluginManager().registerEvents(machine, Main.getInstance());
     }
@@ -48,7 +42,7 @@ public class Machine extends Thread implements Listener {
     }
 
     public void tick() {
-        for (Machine machine : machines())
+        for (Machine machine : instance.getUtilLists().machines.values())
             machine.tick();
     }
 
