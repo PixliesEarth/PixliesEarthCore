@@ -5,7 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Machine extends Thread implements Listener {
 
-    private String name;
+    private String machineName;
     private Location location;
+
+    public Machine() {
+        start();
+    }
 
     protected static final Main instance = Main.getInstance();
 

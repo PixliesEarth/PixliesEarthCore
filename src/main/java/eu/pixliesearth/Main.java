@@ -18,6 +18,8 @@ import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
 import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
+import eu.pixliesearth.core.machines.CarpentryMill;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.ShopSystem;
@@ -80,6 +82,7 @@ public final class Main extends JavaPlugin {
     private @Getter NTop nationsTop;
     private @Getter REST rest;
     public boolean gulagActive = false;
+    private @Getter Machine machine;
 
     @Override
     public void onEnable() {
@@ -204,6 +207,7 @@ public final class Main extends JavaPlugin {
 
         nationsTop = new NTop();
         rest = new REST();
+        machine = new Machine();
 
     }
 
@@ -304,6 +308,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new CustomCrafting(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
+        manager.registerEvents(new CarpentryMill(null), this);
     }
 
     /**
