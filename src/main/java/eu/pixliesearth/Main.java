@@ -10,7 +10,7 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
-import eu.pixliesearth.core.customcrafting.CustomCrafting;
+import eu.pixliesearth.core.customcrafting.CraftingRecipe;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
@@ -48,7 +48,6 @@ import eu.pixliesearth.warsystem.GulagDeathListener;
 import eu.pixliesearth.warsystem.GulagSkipCommand;
 import eu.pixliesearth.warsystem.GulagStartListener;
 import lombok.Getter;
-import lombok.NonNull;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -83,6 +82,7 @@ public final class Main extends JavaPlugin {
     private @Getter REST rest;
     public boolean gulagActive = false;
     private @Getter Machine machine;
+    private @Getter CraftingRecipe craftingAPI;
 
     @Override
     public void onEnable() {
@@ -209,6 +209,8 @@ public final class Main extends JavaPlugin {
         rest = new REST();
         machine = new Machine();
 
+        // craftingAPI = new CraftingRecipe(this);
+
     }
 
     @Override
@@ -306,7 +308,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagDeathListener(), this);
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
-        manager.registerEvents(new CustomCrafting(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new CarpentryMill(null), this);
     }

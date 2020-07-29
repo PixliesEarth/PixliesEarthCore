@@ -122,7 +122,7 @@ public class CarpentryMill extends Machine {
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         Block center = event.getClickedBlock();
         if (center == null) return;
@@ -140,7 +140,7 @@ public class CarpentryMill extends Machine {
             event.setCancelled(true);
             openItem(MachineCraftable.CUT_WOOD, event.getPlayer());
         }
-    }
+    }*/
 
     @Override
     public void tick() {
