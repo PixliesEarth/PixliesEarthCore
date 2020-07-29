@@ -209,7 +209,7 @@ public final class Main extends JavaPlugin {
         rest = new REST();
         machine = new Machine();
 
-        // craftingAPI = new CraftingRecipe(this);
+        craftingAPI = new CraftingRecipe(this);
 
     }
 

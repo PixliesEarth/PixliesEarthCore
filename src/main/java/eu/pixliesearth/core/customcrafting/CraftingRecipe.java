@@ -66,7 +66,7 @@ class GearManagement {
     private Set<Gear> gear = new HashSet<Gear>();
 
     public GearManagement() {
-        //this.gear.add(new Stone());
+        this.gear.add(new Stone());
     }
 
     public Set<Gear> getGear() {
@@ -169,9 +169,8 @@ class CraftingListeners implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         Inventory inv = e.getInventory();
-        InventoryView view = e.getView();
 
-        if (!view.getTitle().equals(Const.CRAFTING_NAME)) return;
+        if (!e.getView().getTitle().equals(Const.CRAFTING_NAME)) return;
 
         for (int i : Const.SLOTS) {
             if (inv.getItem(i) == null) continue;
@@ -196,7 +195,7 @@ class CraftingListeners implements Listener {
 
     @EventHandler
     public void onDrag(InventoryDragEvent e) {
-        if (e.getView() == null) return;
+        if (e.getInventory() == null) return;
         if (!e.getView().getTitle().equals(Const.CRAFTING_NAME)) return;
 
         Inventory inv = e.getInventory();
@@ -217,7 +216,7 @@ class CraftingListeners implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onCraft(InventoryClickEvent e) {
-        if (!e.getView().getTitle().equals(Const.CRAFTING_NAME) && !Objects.equals(e.getClickedInventory(), e.getView().getTopInventory())) return;
+        if (!e.getView().getTitle().equals(Const.CRAFTING_NAME)) return;
         Inventory inv = e.getInventory();
         Player p = (Player) e.getWhoClicked();
 
@@ -225,14 +224,14 @@ class CraftingListeners implements Listener {
 
         if (e.getClickedInventory() == null) return;
 
-        if (inv.getItem(24) != null) {
+        if (inv.getItem(24) != null && e.getCurrentItem() != null) {
             if (!Objects.equals(inv.getItem(24), e.getCurrentItem()) && e.getCurrentItem().isSimilar(inv.getItem(24)) && e.isShiftClick()) {
                 e.setCancelled(true);
                 return;
             }
         }
 
-        if (e.getView().getTitle().equals(Const.CRAFTING_NAME)) {
+        if (e.getView().getTitle().equals(Const.CRAFTING_NAME) && Objects.equals(e.getClickedInventory(), e.getView().getTopInventory())) {
             boolean c = false;
             List<String> recipe = new ArrayList<String>();
 
@@ -285,7 +284,9 @@ class CraftingListeners implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                map.remove(p);
+                if (map.containsKey(p)) {
+                    map.remove(p);
+                }
                 map.put(p, main.getCraftingAPI().getResult(e.getInventory(), getGrid(inv, Const.SLOTS)));
             }
         }.runTaskLater(main, 1L);
@@ -293,12 +294,16 @@ class CraftingListeners implements Listener {
 
     @EventHandler
     public void onCloseMap(InventoryCloseEvent e) {
-        map.remove(e.getPlayer());
+        if (map.keySet().contains(e.getPlayer())) {
+            map.remove(e.getPlayer());
+        }
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        map.remove(e.getPlayer());
+        if (map.keySet().contains(e.getPlayer())) {
+            map.remove(e.getPlayer());
+        }
     }
     private String getGrid(Inventory inv, int[] slots) {
         StringBuilder recipe = new StringBuilder();
