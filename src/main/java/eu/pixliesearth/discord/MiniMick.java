@@ -71,7 +71,7 @@ public class MiniMick {
             } else if (event.getMessageContent().equalsIgnoreCase("/givemydata")) {
                 Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
                 if (profile == null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
+                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored about you in our database.");
                     return;
                 }
                 event.getMessageAuthor().asUser().get().openPrivateChannel().join().sendMessage("**This is the data we currently have in our database:**\n```json\n" + new GsonBuilder().setPrettyPrinting().create().toJson(profile) + "\n```");
