@@ -43,10 +43,7 @@ import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
-import eu.pixliesearth.warsystem.CommandListener;
-import eu.pixliesearth.warsystem.GulagDeathListener;
-import eu.pixliesearth.warsystem.GulagSkipCommand;
-import eu.pixliesearth.warsystem.GulagStartListener;
+import eu.pixliesearth.warsystem.*;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
@@ -279,6 +276,8 @@ public final class Main extends JavaPlugin {
         getCommand("skipgulag").setExecutor(new GulagSkipCommand());
         getCommand("smite").setExecutor(new SmiteCommand());
         getCommand("premium").setExecutor(new PremiumCommand());
+        getCommand("gulagsetspawn").setExecutor(new GulagSetSpawn());
+        getCommand("gulagsetspawn").setTabCompleter(new GulagSetSpawnTab());
     }
 
     private void registerEvents(PluginManager manager) {

@@ -5,6 +5,8 @@ import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.events.GulagStartEvent;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -13,10 +15,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.List;
 
 public class GulagStartListener implements Listener {
-
+    File file = new File("plugins/PixliesEarthCore", "gulag.yml");
+    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
     @EventHandler
     public void onFightStart(GulagStartEvent e){
@@ -63,10 +67,30 @@ public class GulagStartListener implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             @Override
             public void run() {
-                //TODO: DONT HARDCODE LOCATIONS
-                Location spawn1 = new Location(world, 7, 75, -3);
-                Location spawn2 = new Location(world, 1, 75, 7);
+                String world = cfg.getString("fighter1" + ".world");
+                double x = cfg.getDouble("fighter1" + ".x");
+                double y = cfg.getDouble("fighter1" + ".y");
+                double z = cfg.getDouble("fighter1" + ".z");
+                double yaw = cfg.getDouble("fighter1" + ".yaw");
+                double pitch = cfg.getDouble("fighter1" + ".pitch");
+
+                Location spawn1 = new Location(Bukkit.getWorld(world), x, y, z);
+                System.out.println(yaw + "attempting to tp");
+                spawn1.setPitch((float) pitch);
+                spawn1.setYaw((float)yaw);
                 p.teleport(spawn1);
+
+                String world2 = cfg.getString("fighter2" + ".world");
+                double x2 = cfg.getDouble("fighter2" + ".x");
+                double y2 = cfg.getDouble("fighter2" + ".y");
+                double z2 = cfg.getDouble("fighter2" + ".z");
+                double yaw2 = cfg.getDouble("fighter2" + ".yaw");
+                double pitch2 = cfg.getDouble("fighter2" + ".pitch");
+
+                Location spawn2 = new Location(Bukkit.getWorld(world2), x2, y2, z2);
+                spawn2.setPitch((float) pitch2);
+                spawn2.setYaw((float) yaw2);
+
                 enemy.teleport(spawn2);
                 setKit(p, enemy);
 
@@ -80,10 +104,12 @@ public class GulagStartListener implements Listener {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                         @Override//distance calc
                         public void run() {
-                            //TODO: Dont hardcode locations
-                            World world;
                             if (Main.getInstance().getUtilLists().fightingGulag.containsKey(p.getUniqueId()) && Main.getInstance().getUtilLists().fightingGulag.containsValue(enemy.getUniqueId())){
-                                Location middle = new Location(Bukkit.getWorld("gulag"), 4, 73, 2);
+                                String world3 = cfg.getString("cap" + ".world");
+                                double x3 = cfg.getDouble("cap" + ".x");
+                                double y3 = cfg.getDouble("cap" + ".y");
+                                double z3 = cfg.getDouble("cap" + ".z");
+                                Location middle = new Location(Bukkit.getWorld(world3), x3, y3, z3);
                             if (p.getLocation().distance(middle) > enemy.getLocation().distance(middle)) {
                                 fightOver(p, enemy);
                                 }else if(p.getLocation().distance(middle) < enemy.getLocation().distance(middle)){

@@ -66,7 +66,7 @@ class GearManagement {
     private Set<Gear> gear = new HashSet<Gear>();
 
     public GearManagement() {
-        this.gear.add(new Stone());
+       // this.gear.add(new Stone());
     }
 
     public Set<Gear> getGear() {

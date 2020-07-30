@@ -202,3 +202,7 @@ WITHDREW_MONEY_FROM_NATION: "&7Du hast soeben &2&l$§a%AMOUNT% &7von der Bank vo
 PLAYER_BOOSTED: "&6%PLAYER% &7hat soeben den Server mit &d%BOOST% &7geboostet."
 NOT_ENOUGH_BOOSTS: "&7Du hast nicht genug Boosts um den Server zu boosten. Kaufe dir boosts unter &6&lhttps://store.pixlies.net&c."
 BOOST_EXPIRED: "&7Der &d%BOOST%&7-boost ist abgelaufen."
+GULAG_SET_SPECTATOR_SPAWN: "&7Du hast &aerfolgreich &7den Gulag-Zuschauer Spawn gesetzt!"
+GULAG_SET_FIGHTER_SPAWN1: "&7Du hast &aerfolgreich &7den Spawn für den ersten Gulag-Kämpfer gesetzt!"
+GULAG_SET_FIGHTER_SPAWN2: "&7Du hast &aerfolgreich &7den Spawn für den zweiten Gulag-Kämpfer gesetzt!"
+GULAG_SET_CAP: "&7Du hast &aerfolgreich &7den Gulag-Cap gesetzt!"

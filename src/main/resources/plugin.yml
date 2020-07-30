@@ -187,6 +187,8 @@ commands:
     aliases:
       - snow
       - ultimate
+  gulagsetspawn:
+    description: Set gulag spawn
 permissions:
   # GENERAL
   earth.admin:
@@ -279,4 +281,6 @@ permissions:
   gulag.commandblock.bypass:
      default: op
   gulag.bypass.ban:
+     default: op
+  gulag.command.setspawn:
      default: op
