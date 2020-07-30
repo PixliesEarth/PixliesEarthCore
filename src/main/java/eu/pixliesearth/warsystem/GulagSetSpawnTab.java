@@ -11,7 +11,6 @@ public class GulagSetSpawnTab implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
         final List<String> completions = new ArrayList<>();
-        //TODO: fix im retarded
         if(args.length == 1){
 
             if(args[0].toLowerCase().startsWith("s")){
