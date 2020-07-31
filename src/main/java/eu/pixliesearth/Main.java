@@ -10,7 +10,6 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
-import eu.pixliesearth.core.customcrafting.CraftingRecipe;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
@@ -18,8 +17,7 @@ import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
 import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
-import eu.pixliesearth.core.machines.CarpentryMill;
-import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.MachineTask;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.ShopSystem;
@@ -78,8 +76,8 @@ public final class Main extends JavaPlugin {
     private @Getter NTop nationsTop;
     private @Getter REST rest;
     public boolean gulagActive = false;
-    private @Getter Machine machine;
-    private @Getter CraftingRecipe craftingAPI;
+    private @Getter
+    MachineTask machineTask;
 
     @Override
     public void onEnable() {
@@ -204,9 +202,7 @@ public final class Main extends JavaPlugin {
 
         nationsTop = new NTop();
         rest = new REST();
-        machine = new Machine();
-
-        craftingAPI = new CraftingRecipe(this);
+        machineTask = new MachineTask();
 
     }
 
@@ -308,7 +304,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
-        manager.registerEvents(new CarpentryMill(null), this);
     }
 
     /**

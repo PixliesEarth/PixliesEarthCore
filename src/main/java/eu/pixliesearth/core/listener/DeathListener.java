@@ -44,6 +44,7 @@ public class DeathListener implements Listener {
         }
         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
+        e.setDeathMessage("§c☠§7" + e.getDeathMessage());
     }
 
 }

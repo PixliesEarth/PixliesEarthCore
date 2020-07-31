@@ -138,6 +138,13 @@ public class menuNation implements SubCommand {
                     x++;
                 }
                 break;
+            case RESEARCH:
+                menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
+                //TODO ACTUALLY MAKE THEM WORK
+                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> event.setCancelled(true)), 2, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> event.setCancelled(true)), 4, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> event.setCancelled(true)), 6, 2);
+                break;
         }
         gui.addPane(menu);
         gui.show(player);
@@ -219,7 +226,8 @@ public class menuNation implements SubCommand {
         MAIN("§eMain", Material.CYAN_BANNER),
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK),
-        RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),;
+        RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),
+        RESEARCH("§6Research", Material.LECTERN);
 
         String title;
         Material icon;

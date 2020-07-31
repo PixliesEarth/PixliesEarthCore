@@ -27,7 +27,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
     private static String[] frames(Player player) {
         String c = Main.getInstance().getProfile(player.getUniqueId()).getFavoriteColour();
         String nc = Methods.getNeighbourColor(c)+"";
-        String[] f =new String[]{
+        return new String[]{
                 "§f§lEARTH",
                 "§f§lEARTH",
                 "§f§lEARTH",
@@ -51,7 +51,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 "§f§lEART"+nc+"§lH",
                 "§f§lEART"+nc+"§lH"
         };
-        return f;
     }
 
     @Override
@@ -112,7 +111,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add("  §8» §6" + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
-                returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
+                // returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
                     returnable.add(c + "§lStaff§aenabled");
@@ -134,7 +133,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
                     returnable.add("&3Staff: §aenabled");
                 returnable.add("§2§l$§a" + profile.getBalance());
-                returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
+                // returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
                 returnable.add("§e" + energy);
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());

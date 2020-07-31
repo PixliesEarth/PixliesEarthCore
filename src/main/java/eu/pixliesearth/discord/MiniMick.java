@@ -33,7 +33,7 @@ public class MiniMick {
         }
 
         api = new DiscordApiBuilder().setToken(token).login().join();
-        api.updateActivity(ActivityType.LISTENING, "to your heart <3");
+        api.updateActivity(ActivityType.WATCHING, "you.");
 
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().startsWith("/link")) {
