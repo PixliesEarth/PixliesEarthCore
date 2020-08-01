@@ -51,16 +51,16 @@ public class chatNation implements SubCommand {
                     switch (map.get(player.getUniqueId())) {
                         case NATION:
                             instance.getUtilLists().chatTypes.put(player.getUniqueId(), ChatType.ALLY);
-                            Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;&dAlly");
+                            Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§dAlly");
                             break;
                         case ALLY:
                             instance.getUtilLists().chatTypes.remove(player.getUniqueId());
-                            Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;&aPublic");
+                            Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§aPublic");
                             break;
                     }
                 } else {
                     instance.getUtilLists().chatTypes.put(player.getUniqueId(), ChatType.NATION);
-                    Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;&bNation");
+                    Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§bNation");
                 }
                 break;
             case 1:

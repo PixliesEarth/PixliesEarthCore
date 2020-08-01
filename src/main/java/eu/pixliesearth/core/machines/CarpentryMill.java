@@ -40,7 +40,7 @@ public class CarpentryMill extends Machine {
             return;
         }
         Gui gui = new Gui(instance, 5, "§b§lCarpentry Mill");
-        
+
         gui.show(player);
     }
 

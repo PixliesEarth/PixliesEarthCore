@@ -109,6 +109,10 @@ public class ChatSystem implements Listener, Module {
                     switch (instance.getUtilLists().chatTypes.get(player.getUniqueId())) {
                         case NATION:
                             profile.getCurrentNation().broadcastMembers("§bNATION-CHAT §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            for (UUID uuid : instance.getUtilLists().staffMode) {
+                                if (Bukkit.getPlayer(uuid) == null) continue;
+                                Bukkit.getPlayer(uuid).sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            }
                             break;
                         case ALLY:
                             profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
