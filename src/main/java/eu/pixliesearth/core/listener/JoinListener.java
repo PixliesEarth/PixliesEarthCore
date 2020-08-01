@@ -29,9 +29,6 @@ public class JoinListener implements Listener {
         final long started = System.currentTimeMillis();
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-        if (!profile.getKnownIps().contains(Methods.getIp(player))) {
-            profile.getKnownIps().add(Methods.getIp(player));
-        }
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }

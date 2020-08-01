@@ -31,6 +31,7 @@ public class Profile {
     private double balance;
     private List<String> receipts;
     private int playTime;
+    private int elo;
     private String marriagePartner;
     private List<String> marriageRequests;
     private Map<String, String> relations;
@@ -40,7 +41,6 @@ public class Profile {
     private List<String> homes;
     private boolean scoreboard;
     private String nationRank;
-    private List<String> knownIps;
     private List<String> knownUsernames;
     private String nickname;
     private String messageSound;
@@ -67,6 +67,7 @@ public class Profile {
             profile.append("balance", 4000.0);
             profile.append("receipts", new ArrayList<>());
             profile.append("playTime", 0);
+            profile.append("elo", 0);
             profile.append("marriagePartner", "NONE");
             profile.append("marriageRequests", new ArrayList<>());
             profile.append("relations", new HashMap<>());
@@ -76,7 +77,6 @@ public class Profile {
             profile.append("homes", new ArrayList<>());
             profile.append("scoreboard", true);
             profile.append("nationRank", "NONE");
-            profile.append("knownIps", new ArrayList<>());
             profile.append("knownUsernames", new ArrayList<>());
             profile.append("nickname", "NONE");
             profile.append("messageSound", Sound.BLOCK_NOTE_BLOCK_PLING.name());
@@ -93,7 +93,7 @@ public class Profile {
             profile.append("banned", false);
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0, "NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), false, new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0, 0,"NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), false, new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -110,6 +110,7 @@ public class Profile {
         profile.append("balance", balance);
         profile.append("receipts", receipts);
         profile.append("playTime", playTime);
+        profile.append("elo", elo);
         profile.append("marriagePartner", marriagePartner);
         profile.append("marriageRequests", marriageRequests);
         profile.append("relations", relations);
@@ -119,7 +120,6 @@ public class Profile {
         profile.append("homes", homes);
         profile.append("scoreboard", scoreboard);
         profile.append("nationRank", nationRank);
-        profile.append("knownIps", knownIps);
         profile.append("knownUsernames", knownUsernames);
         profile.append("nickname", nickname);
         profile.append("messageSound", messageSound);
