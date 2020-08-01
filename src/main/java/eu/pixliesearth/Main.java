@@ -204,6 +204,10 @@ public final class Main extends JavaPlugin {
         rest = new REST();
         machineTask = new MachineTask();
 
+        // MACHINES
+        saveResource("machines.yml", false);
+        MachineTask.init();
+
     }
 
     @Override

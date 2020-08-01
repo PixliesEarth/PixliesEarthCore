@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.machines;
 
+import eu.pixliesearth.Main;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Location;
@@ -12,6 +13,8 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class Machine {
+
+    protected static final Main instance = Main.getInstance();
 
     private Location location;
     private Material center;
