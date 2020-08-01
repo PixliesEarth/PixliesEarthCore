@@ -112,6 +112,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add("  §8» §6" + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + profile.getBalance());
                 // returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
+                returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
                     returnable.add(c + "§lStaff§aenabled");
@@ -134,6 +135,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add("&3Staff: §aenabled");
                 returnable.add("§2§l$§a" + profile.getBalance());
                 // returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
+                returnable.add("§4§l✦§c" + profile.getElo());
                 returnable.add("§e" + energy);
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());

@@ -189,6 +189,9 @@ commands:
       - ultimate
   gulagsetspawn:
     description: Set gulag spawn
+  stats:
+    description: stats
+
 permissions:
   # GENERAL
   earth.admin:

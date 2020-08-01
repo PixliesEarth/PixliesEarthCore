@@ -278,6 +278,7 @@ public final class Main extends JavaPlugin {
         getCommand("premium").setExecutor(new PremiumCommand());
         getCommand("gulagsetspawn").setExecutor(new GulagSetSpawn());
         getCommand("gulagsetspawn").setTabCompleter(new GulagSetSpawnTab());
+        getCommand("stats").setExecutor(new StatsCommand());
     }
 
     private void registerEvents(PluginManager manager) {

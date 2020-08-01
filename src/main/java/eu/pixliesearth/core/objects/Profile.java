@@ -143,6 +143,12 @@ public class Profile {
         instance.getUtilLists().profiles.put(UUID.fromString(uniqueId), this);
     }
 
+    public String getDisplayName() {
+        if (nickname.equalsIgnoreCase("NONE") || nickname.equalsIgnoreCase(""))
+            return getAsOfflinePlayer().getName();
+        return nickname;
+    }
+
     public void addToNation(String id, Rank rank) {
         if (inNation) return;
         this.nationId = id;
