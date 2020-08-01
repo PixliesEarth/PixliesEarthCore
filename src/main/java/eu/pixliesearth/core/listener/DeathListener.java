@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
@@ -51,8 +52,8 @@ public class DeathListener implements Listener {
         }
         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-        TextComponent comp = new TextComponent(PlaceholderAPI.setPlaceholders(player, "§c☠§7%vault_prefix%" + player.getDisplayName() + "§8[§b" + profile.getElo() + "§8]"));
-        comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§o" + e.getDeathMessage() + "\n\n§cElo: §b" + profile.getElo())));
+        TextComponent comp = new TextComponent("§c☠ §7" + player.getDisplayName() + " §8[§c" + profile.getElo() + "§8]");
+        comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§o" + e.getDeathMessage() + "\n\n§7ELO: §c" + profile.getElo())));
         Bukkit.broadcast(comp);
         e.setDeathMessage("");
         profile.save();
