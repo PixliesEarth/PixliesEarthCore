@@ -1,5 +1,6 @@
 package eu.pixliesearth;
 
+import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -17,6 +18,8 @@ import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.guns.commands.GunGive;
 import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
+import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.carpentrymill.CarpentryMillListener;
 import eu.pixliesearth.core.machines.MachineTask;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
@@ -48,6 +51,8 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
@@ -57,6 +62,10 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -76,8 +85,7 @@ public final class Main extends JavaPlugin {
     private @Getter NTop nationsTop;
     private @Getter REST rest;
     public boolean gulagActive = false;
-    private @Getter
-    MachineTask machineTask;
+    private @Getter MachineTask machineTask;
 
     @Override
     public void onEnable() {
@@ -86,6 +94,13 @@ public final class Main extends JavaPlugin {
     }
 
     private void init() {
+
+        if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+            getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
+            getLogger().severe("*** This plugin will be disabled. ***");
+            this.setEnabled(false);
+            return;
+        }
 
         utilLists = new UtilLists();
 
@@ -222,6 +237,14 @@ public final class Main extends JavaPlugin {
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())
             chest.setType(Material.AIR);
+        List<String> machines = new ArrayList<>();
+        Gson gson = new Gson();
+        for (Machine machine : utilLists.machines.values()) {
+            machines.add(gson.toJson(machine));
+        }
+        FileManager machineCfg = new FileManager(this, "machines", getDataFolder().getAbsolutePath());
+        machineCfg.getConfiguration().set("machines", machines);
+        machineCfg.save();
     }
 
     private void registerCommands() {
@@ -309,6 +332,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
+        manager.registerEvents(new CarpentryMillListener(), this);
     }
 
     /**

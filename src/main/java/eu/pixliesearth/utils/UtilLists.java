@@ -73,6 +73,8 @@ public class UtilLists {
 
     public Map<Location, Machine> machines;
 
+    public Map<UUID, Machine> openMachines;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -103,6 +105,7 @@ public class UtilLists {
         chatTypes = new HashMap<>();
         craftingTables = new HashMap<>();
         machines = new HashMap<>();
+        openMachines = new HashMap<>();
     }
 
 }

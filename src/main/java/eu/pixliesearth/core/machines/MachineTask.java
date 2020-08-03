@@ -14,10 +14,8 @@ public class MachineTask extends BukkitRunnable {
 
     private static final Main instance = Main.getInstance();
 
-    private static final List<Machine> machines = new ArrayList<>();
-
     public MachineTask() {
-        this.runTaskTimer(instance, 0, 2);
+        this.runTaskTimer(instance, 0, 10);
     }
 
     public static void init() {
@@ -25,13 +23,13 @@ public class MachineTask extends BukkitRunnable {
         Gson gson = new Gson();
         for (String string : config.getStringList("machines")) {
             Machine machine = gson.fromJson(string, Machine.class);
-            machines.add(machine);
+            instance.getUtilLists().machines.put(machine.getLocation(), machine);
         }
     }
 
     @Override
     public void run() {
-        for (Machine machine : machines)
+        for (Machine machine : instance.getUtilLists().machines.values())
             machine.tick();
     }
 

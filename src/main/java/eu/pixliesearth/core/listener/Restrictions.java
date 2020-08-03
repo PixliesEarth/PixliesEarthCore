@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 
 public class Restrictions implements Listener {
 
@@ -22,6 +23,15 @@ public class Restrictions implements Listener {
             event.setCancelled(true);
         if (event.getEntity() instanceof TNTPrimed)
             event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void manipulate(PlayerArmorStandManipulateEvent e)
+    {
+        if(!e.getRightClicked().isVisible())
+        {
+            e.setCancelled(true);
+        }
     }
 
 }
