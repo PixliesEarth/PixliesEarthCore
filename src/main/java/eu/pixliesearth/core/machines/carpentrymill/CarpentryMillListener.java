@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.machines.carpentrymill;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.utils.Methods;
+import org.apache.avro.generic.GenericData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,6 +21,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+
+import java.util.ArrayList;
 
 public class CarpentryMillListener implements Listener {
 
@@ -42,7 +46,7 @@ public class CarpentryMillListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         ItemStack item = event.getItemInHand();
         if (!item.isSimilar(CarpentryMill.item)) return;
-        instance.getUtilLists().machines.put(event.getBlockPlaced().getLocation(), new CarpentryMill(event.getBlockPlaced().getLocation()));
+        instance.getUtilLists().machines.put(event.getBlockPlaced().getLocation(), new CarpentryMill(Methods.generateId(7), event.getBlockPlaced().getLocation()));
     }
 
     @EventHandler
@@ -50,7 +54,7 @@ public class CarpentryMillListener implements Listener {
         if (!instance.getUtilLists().machines.containsKey(event.getBlock().getLocation())) return;
         if (!(instance.getUtilLists().machines.get(event.getBlock().getLocation()) instanceof CarpentryMill)) return;
         CarpentryMill mill = (CarpentryMill) instance.getUtilLists().machines.get(event.getBlock().getLocation());
-        mill.armorStand.delete();
+        mill.getArmorStand().delete();
         instance.getUtilLists().machines.remove(event.getBlock().getLocation());
     }
 

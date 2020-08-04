@@ -16,6 +16,11 @@ public class Timer {
         this.ended = (boolean) map.get("ended");
     }
 
+    public Timer(long expiry, boolean ended) {
+        this.expiry = expiry;
+        this.ended = ended;
+    }
+
     public Map<String, Object> toMap() {
         Map<String, Object> returner = new HashMap<>();
         returner.put("expiry", expiry);

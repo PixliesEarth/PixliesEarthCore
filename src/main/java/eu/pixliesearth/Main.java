@@ -171,6 +171,17 @@ public final class Main extends JavaPlugin {
             }
         }, (20 * 60) * 60, (20 * 60) * 60);
 
+        // MACHINES
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (Machine machine : utilLists.machines.values()) {
+                try {
+                    machine.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, (20 * 60) * 5, (20 * 60) * 5);
+
         NationManager.init();
 
         //BungeeCord
@@ -220,8 +231,7 @@ public final class Main extends JavaPlugin {
         machineTask = new MachineTask();
 
         // MACHINES
-        saveResource("machines.yml", false);
-        MachineTask.init();
+        machineTask.init();
 
     }
 
@@ -237,14 +247,13 @@ public final class Main extends JavaPlugin {
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())
             chest.setType(Material.AIR);
-        List<String> machines = new ArrayList<>();
-        Gson gson = new Gson();
         for (Machine machine : utilLists.machines.values()) {
-            machines.add(gson.toJson(machine));
+            try {
+                machine.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        FileManager machineCfg = new FileManager(this, "machines", getDataFolder().getAbsolutePath());
-        machineCfg.getConfiguration().set("machines", machines);
-        machineCfg.save();
     }
 
     private void registerCommands() {

@@ -7,16 +7,12 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
-import eu.pixliesearth.core.machines.MachineProcess;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,29 +22,25 @@ import java.util.*;
 public class CarpentryMill extends Machine {
 
     public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/83d47199d034fae71e5c7ef1e12bf9f1adbb88c22ad4b0e9453abf8cee5c350b")).setDisplayName("§b§lCarpentry Mill").build();
-    public static final List<Integer> craftSlots = Arrays.asList(0, 1, 2, 3, 9, 18, 27, 10, 11, 12, 19, 20, 21, 28, 29, 30);
-    public static final List<Integer> resultSlots = Arrays.asList(5, 6, 7, 8, 17, 26, 35, 14, 15, 16, 23, 24, 25, 32, 33, 34);
-    public static final List<Integer> progressSlots = Arrays.asList(36, 37, 38, 39, 40, 41, 42, 43, 44);
-
-    private MachineProcess task;
-    private CMItem wantsToCraft;
     private Inventory inventory;
-    public Hologram armorStand;
 
-    public CarpentryMill(Location location) {
-        super(location, item);
-        Location toSpawn = location.clone();
-        toSpawn.setY(toSpawn.getY() + 1D);
-        toSpawn.setX(toSpawn.getX() + 0.5);
-        toSpawn.setZ(toSpawn.getZ() + 0.5);
-        armorStand = HologramsAPI.createHologram(instance, toSpawn);
-        armorStand.appendTextLine("§b§lCarpentry Mill");
+    public CarpentryMill(String id, Location location) {
+        super(id, location, MachineType.CARPENTRY_MILL, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
+        armorStand.appendTextLine(getTitle());
+    }
+
+    public String getTitle() {
+        return "§b§lCarpentry Mill";
+    }
+
+    public CarpentryMill(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
+        super(id, location, MachineType.CARPENTRY_MILL, item, timer, armorStand, wantsToCraft);
     }
 
     public void reopen(Player player) {
         inventory = null;
         wantsToCraft = null;
-        task = null;
+        timer = null;
         open(player);
     }
 
@@ -66,7 +58,8 @@ public class CarpentryMill extends Machine {
         StaticPane pane = new StaticPane(1, 1, 9, 4);
         int x = 0;
         int y = 0;
-        for (CMItem item : CMItem.values()) {
+        for (MachineCraftable item : MachineCraftable.values()) {
+            if (!item.type.equals(MachineType.CARPENTRY_MILL)) continue;
             if (x + 1 > 8) {
                 x = 0;
                 y++;
@@ -78,7 +71,7 @@ public class CarpentryMill extends Machine {
         gui.show(player);
     }
 
-    private void openItemCrafter(Player player, CMItem item) {
+    private void openItemCrafter(Player player, MachineCraftable item) {
         wantsToCraft = item;
         if (inventory == null) {
             inventory = Bukkit.createInventory(null, 9 * 6, "§b§lCarpentry Mill §8| " + item.icon.getItemMeta().getDisplayName());
@@ -99,9 +92,9 @@ public class CarpentryMill extends Machine {
 
     private void update() {
         if (inventory == null) return;
-        if (task != null) {
-            if (task.getTimer().getRemaining() <= 0) {
-                task = null;
+        if (timer != null) {
+            if (timer.getRemaining() <= 0) {
+                timer = null;
                 int i = 0;
                 for (ItemStack result : wantsToCraft.results) {
                     inventory.setItem(resultSlots.get(i), result);
@@ -114,7 +107,7 @@ public class CarpentryMill extends Machine {
             boolean matching = recipeMatching(inventory);
             setProgressBar(matching);
             if (matching) {
-                task = new MachineProcess(new Timer(wantsToCraft.seconds * 1000));
+                timer = new Timer(wantsToCraft.seconds * 1000);
                 for (int i : craftSlots)
                     inventory.clear(i);
             }
@@ -122,9 +115,9 @@ public class CarpentryMill extends Machine {
     }
 
     private void setProgressBar(boolean matching) {
-        if (task != null && task.getTimer().getRemaining() > 0) {
+        if (timer != null && timer.getRemaining() > 0) {
             for (int i : progressSlots)
-                inventory.setItem(i, new ItemBuilder(Material.CYAN_STAINED_GLASS_PANE).setDisplayName("§3§lLeft").addLoreLine("§b" + task.getTimer().getRemainingAsString()).build());
+                inventory.setItem(i, new ItemBuilder(Material.CYAN_STAINED_GLASS_PANE).setDisplayName("§3§lLeft").addLoreLine("§b" + timer.getRemainingAsString()).build());
         } else {
             if (!matching)
                 for (int i : progressSlots)
@@ -145,24 +138,6 @@ public class CarpentryMill extends Machine {
     @Override
     public void tick() {
         update();
-    }
-
-    enum CMItem {
-
-        CUT_WOOD(new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").build(), Arrays.asList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 4);
-
-        public ItemStack icon;
-        public List<ItemStack> ingredients;
-        public List<ItemStack> results;
-        public int seconds;
-
-        CMItem(ItemStack icon, List<ItemStack> ingredients, List<ItemStack> results, int seconds) {
-            this.icon = icon;
-            this.ingredients = ingredients;
-            this.results = results;
-            this.seconds = seconds;
-        }
-
     }
 
 }
