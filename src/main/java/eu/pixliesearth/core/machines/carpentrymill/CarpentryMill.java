@@ -13,6 +13,9 @@ import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -110,6 +113,21 @@ public class CarpentryMill extends Machine {
                 timer = new Timer(wantsToCraft.seconds * 1000);
                 for (int i : craftSlots)
                     inventory.clear(i);
+            }
+        }
+        if (location.getBlock().getRelative(BlockFace.WEST).getState().getType().equals(Material.CHEST)) {
+            Chest chest = (Chest) location.getBlock().getRelative(BlockFace.WEST).getState();
+            for (int i : resultSlots) {
+                if (inventory.getItem(i) == null) continue;
+                chest.getInventory().addItem(inventory.getItem(i));
+                inventory.clear(i);
+            }
+        } else if (location.getBlock().getRelative(BlockFace.EAST).getState().getType().equals(Material.CHEST)) {
+            Chest chest = (Chest) location.getBlock().getRelative(BlockFace.EAST).getState();
+            for (int i : resultSlots) {
+                if (inventory.getItem(i) == null) continue;
+                chest.getInventory().addItem(inventory.getItem(i));
+                inventory.clear(i);
             }
         }
     }

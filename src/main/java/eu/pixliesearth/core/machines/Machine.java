@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -110,8 +111,15 @@ public class Machine {
 
     public enum MachineCraftable {
 
+        // CARPENTRY MILL
         CUT_WOOD(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").addLoreLine("§7Time: §b5 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 5),
-        MAKE_CHESTS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.CHEST).setDisplayName("Make Chests").addLoreLine("§a64 §7oak-logs > §a64 §7chests").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Collections.singletonList(new ItemStack(Material.CHEST, 64)), 10);
+        MAKE_CHESTS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.CHEST).setDisplayName("Make Chests").addLoreLine("§a64 §7oak-logs > §a64 §7chests").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Collections.singletonList(new ItemStack(Material.CHEST, 64)), 10),
+        MAKE_FENCES(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_FENCE).setGlow().setDisplayName("Make Fences").addLoreLine("§a64 §7oak-log > §a3x64 §7oak-fences").addLoreLine("§7Time: §b20 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Arrays.asList(new ItemStack(Material.OAK_FENCE, 64), new ItemStack(Material.OAK_FENCE, 64), new ItemStack(Material.OAK_FENCE, 64)), 20),
+        STICKS_TO_PLANKS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.STICK).setDisplayName("Sticks to Planks").addLoreLine("§a2x64 §7sticks > §a64 oak-planks").addLoreLine("§7Time: §b5 sec").build(), Arrays.asList(new ItemStack(Material.STICK, 64), new ItemStack(Material.STICK, 64)), Collections.singletonList(new ItemStack(Material.OAK_PLANKS, 64)), 5),
+        MAKE_ITEMFRAMES(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.ITEM_FRAME).setGlow().setDisplayName("Make Itemframes").addLoreLine("§a1 §7white-wool, §a16 §7sticks > §a16 §7item-frames").addLoreLine("§7Time: §b9 seconds").build(), Arrays.asList(new ItemStack(Material.WHITE_WOOL), new ItemStack(Material.STICK, 16)), Collections.singletonList(new ItemStack(Material.ITEM_FRAME, 16)), 9),
+
+
+        ;
 
         public MachineType type;
         public ItemStack icon;
