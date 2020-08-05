@@ -54,8 +54,7 @@ public class CarpentryMillListener implements Listener {
         if (!instance.getUtilLists().machines.containsKey(event.getBlock().getLocation())) return;
         if (!(instance.getUtilLists().machines.get(event.getBlock().getLocation()) instanceof CarpentryMill)) return;
         CarpentryMill mill = (CarpentryMill) instance.getUtilLists().machines.get(event.getBlock().getLocation());
-        mill.getArmorStand().delete();
-        instance.getUtilLists().machines.remove(event.getBlock().getLocation());
+        mill.remove();
     }
 
     @EventHandler

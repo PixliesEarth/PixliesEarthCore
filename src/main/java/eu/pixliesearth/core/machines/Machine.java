@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -68,6 +69,14 @@ public class Machine {
         conf.save(file);
     }
 
+    public void remove() {
+        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+        instance.getUtilLists().machines.remove(location);
+        armorStand.delete();
+        if (!file.exists()) return;
+        file.delete();
+    }
+
     protected static Location holoLocation(Location location) {
         Location toSpawn = location.clone();
         toSpawn.setY(toSpawn.getY() + 1D);
@@ -101,7 +110,8 @@ public class Machine {
 
     public enum MachineCraftable {
 
-        CUT_WOOD(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").build(), Arrays.asList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 4);
+        CUT_WOOD(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").addLoreLine("§7Time: §b5 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 5),
+        MAKE_CHESTS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.CHEST).setDisplayName("Make Chests").addLoreLine("§a64 §7oak-logs > §a64 §7chests").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Collections.singletonList(new ItemStack(Material.CHEST, 64)), 10);
 
         public MachineType type;
         public ItemStack icon;

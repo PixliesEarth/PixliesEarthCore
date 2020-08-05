@@ -1,6 +1,7 @@
 package eu.pixliesearth.utils;
 
 
+import org.apache.avro.generic.GenericData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Skull;
@@ -19,32 +20,25 @@ import java.util.UUID;
 public class ItemBuilder {
 
     private ItemStack item;
-    private List<String> lore = new ArrayList<String>();
+    private List<String> lore;
     private ItemMeta meta;
-
-    public ItemBuilder(Material mat, short subid, int amount) {
-        item = new ItemStack(mat, amount, subid);
-        meta = item.getItemMeta();
-    }
 
     public ItemBuilder(ItemStack item) {
         this.item = item;
         this.meta = item.getItemMeta();
-    }
-
-    public ItemBuilder(Material mat, short subid) {
-        item = new ItemStack(mat, 1, subid);
-        meta = item.getItemMeta();
+        this.lore = item.getLore() == null ? new ArrayList<>() : item.getLore();
     }
 
     public ItemBuilder(Material mat, int amount) {
-        item = new ItemStack(mat, amount, (short) 0);
+        item = new ItemStack(mat, amount);
         meta = item.getItemMeta();
+        this.lore = item.getLore() == null ? new ArrayList<>() : item.getLore();
     }
 
     public ItemBuilder(Material mat) {
-        item = new ItemStack(mat, 1, (short) 0);
+        item = new ItemStack(mat);
         meta = item.getItemMeta();
+        this.lore = item.getLore() == null ? new ArrayList<>() : item.getLore();
     }
 
     public ItemBuilder setDurability(short durability) {

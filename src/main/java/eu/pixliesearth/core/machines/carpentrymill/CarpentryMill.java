@@ -64,7 +64,7 @@ public class CarpentryMill extends Machine {
                 x = 0;
                 y++;
             }
-            pane.addItem(new GuiItem(new ItemBuilder(item.icon).addLoreLine("§7Time: §3" + item.seconds + "§bsec").build(), event -> { event.setCancelled(true); openItemCrafter(player, item); }), x, y);
+            pane.addItem(new GuiItem(new ItemBuilder(item.icon).build(), event -> { event.setCancelled(true); openItemCrafter(player, item); }), x, y);
             x++;
         }
         gui.addPane(pane);
