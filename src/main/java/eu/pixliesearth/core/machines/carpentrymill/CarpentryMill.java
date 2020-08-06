@@ -8,6 +8,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -67,7 +69,10 @@ public class CarpentryMill extends Machine {
                 x = 0;
                 y++;
             }
-            pane.addItem(new GuiItem(new ItemBuilder(item.icon).build(), event -> { event.setCancelled(true); openItemCrafter(player, item); }), x, y);
+            pane.addItem(new GuiItem(new ItemBuilder(item.icon).build(), event -> {
+                event.setCancelled(true);
+                openItemCrafter(player, item);
+            }), x, y);
             x++;
         }
         gui.addPane(pane);
@@ -98,37 +103,59 @@ public class CarpentryMill extends Machine {
         if (timer != null) {
             if (timer.getRemaining() <= 0) {
                 timer = null;
-                int i = 0;
                 for (ItemStack result : wantsToCraft.results) {
-                    inventory.setItem(resultSlots.get(i), result);
-                    i++;
+                    addResult(result);
                 }
-                return;
             }
             setProgressBar(true);
         } else {
             boolean matching = recipeMatching(inventory);
             setProgressBar(matching);
             if (matching) {
-                timer = new Timer(wantsToCraft.seconds * 1000);
-                for (int i : craftSlots)
-                    inventory.clear(i);
+                if (canAddResult()) {
+                    timer = new Timer(wantsToCraft.seconds * 1000);
+                    for (int i : craftSlots)
+                        inventory.clear(i);
+                }
             }
         }
-        if (location.getBlock().getRelative(BlockFace.WEST).getState().getType().equals(Material.CHEST)) {
-            Chest chest = (Chest) location.getBlock().getRelative(BlockFace.WEST).getState();
-            for (int i : resultSlots) {
-                if (inventory.getItem(i) == null) continue;
-                chest.getInventory().addItem(inventory.getItem(i));
-                inventory.clear(i);
+        int radius = 1;
+        final Block block = location.getBlock();
+        boolean stop = false;
+        for (int x = -(radius); x <= radius; x++) {
+            for (int z = -(radius); z <= radius; z++) {
+                final Block relative = block.getRelative(x, 0, z);
+                if (relative.getState() instanceof Chest) {
+                    final Chest chest = (Chest) relative.getState();
+                    if (!(relative.getRelative(BlockFace.NORTH, 1).getState() instanceof Sign)) continue;
+                    final Sign sign = (Sign) relative.getRelative(BlockFace.NORTH, 1).getState();
+                    if (sign.getLine(1).equals("INPUT")) {
+                        if (timer == null) {
+                            for (ItemStack ingredient : wantsToCraft.ingredients) {
+                                if (chest.getInventory().containsAtLeast(ingredient, ingredient.getAmount())) {
+                                    for (int i : craftSlots) {
+                                        if (inventory.getItem(i) != null) continue;
+                                        Methods.removeRequiredAmount(ingredient, chest.getInventory());
+                                        inventory.setItem(i, ingredient);
+                                        stop = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } else if (sign.getLine(1).equals("OUTPUT")) {
+                        for (int i : resultSlots) {
+                            if (inventory.getItem(i) == null) continue;
+                            if (chest.getInventory().firstEmpty() == -1) break;
+                            chest.getInventory().addItem(inventory.getItem(i));
+                            inventory.clear(i);
+                            stop = true;
+                        }
+                    }
+                }
+                if (stop) break;
             }
-        } else if (location.getBlock().getRelative(BlockFace.EAST).getState().getType().equals(Material.CHEST)) {
-            Chest chest = (Chest) location.getBlock().getRelative(BlockFace.EAST).getState();
-            for (int i : resultSlots) {
-                if (inventory.getItem(i) == null) continue;
-                chest.getInventory().addItem(inventory.getItem(i));
-                inventory.clear(i);
-            }
+            if (stop) break;
         }
     }
 
@@ -156,6 +183,20 @@ public class CarpentryMill extends Machine {
     @Override
     public void tick() {
         update();
+    }
+
+    private void addResult(ItemStack result) {
+        for (int i : resultSlots) {
+            if (inventory.getItem(i) != null) continue;
+            inventory.setItem(i, result);
+            break;
+        }
+    }
+
+    private boolean canAddResult() {
+        for (int i : resultSlots)
+            if (inventory.getItem(i) == null) return true;
+        return false;
     }
 
 }

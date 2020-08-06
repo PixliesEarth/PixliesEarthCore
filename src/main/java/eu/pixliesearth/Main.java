@@ -155,10 +155,10 @@ public final class Main extends JavaPlugin {
 
         // NATION SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            getLogger().info("§aSaving all nations in the database...");
+            System.out.println("§aSaving all nations in the database...");
             for (Nation nation : NationManager.nations.values())
                 nation.backup();
-            getLogger().info("§aSaved all nations in the database.");
+            System.out.println("§aSaved all nations in the database.");
         }, (20 * 60) * 15, (20 * 60) * 15);
 
         // ENERGY SCHEDULER

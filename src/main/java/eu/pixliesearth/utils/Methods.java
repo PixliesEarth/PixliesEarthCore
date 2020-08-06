@@ -6,6 +6,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Methods {
 
@@ -202,6 +207,22 @@ public class Methods {
             }
         }
         return returner;
+    }
+
+    public static void removeRequiredAmount(ItemStack item, final Inventory inventory) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack value = inventory.getItem(i);
+            if (value == null) continue;
+            if (!value.isSimilar(item)) continue;
+            if (value.getAmount() != 0) {
+                if (value.getAmount() == item.getAmount()) inventory.clear(i);
+                else {
+                    value.setAmount(value.getAmount() - item.getAmount());
+                    inventory.setItem(i, value);
+                }
+                break;
+            }
+        }
     }
 
 }
