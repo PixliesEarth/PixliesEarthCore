@@ -7,6 +7,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -141,6 +142,28 @@ public class menuNation implements SubCommand {
                         }), x1, y1);
                     }
                 }), 0, 0);
+                Ideology ideology = Ideology.valueOf(nation.getIdeology());
+                String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase());
+                menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine(ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
+                    event.setCancelled(true);
+                    menu.clear();
+                    menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
+                    int x1 = 0;
+                    int y1 = 0;
+                    for (Ideology ideology1 : Ideology.values()) {
+                        String ideology1Name = StringUtils.capitalize(ideology1.name().toLowerCase());
+                        ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName(ideology1.getColour() + ideology1Name);
+                        if (ideology == ideology1)
+                            iBuilder.setGlow();
+                        menu.addItem(new GuiItem(iBuilder.build(), event1 -> {
+                            event1.setCancelled(true);
+                            nation.setIdeology(ideology1.name());
+                            nation.save();
+                            player.closeInventory();
+                            open(gui, player, MenuPage.SETTINGS);
+                        }), x1, y1);
+                    }
+                }), 1, 0);
                 break;
             case RELATIONS:
                 x = 0;
