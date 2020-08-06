@@ -119,11 +119,11 @@ public class menuNation implements SubCommand {
                 }
                 break;
             case SETTINGS:
-                //TODO
                 Religion religion = Religion.valueOf(nation.getReligion());
                 String religionName = StringUtils.capitalize(religion.name().toLowerCase());
                 menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine(religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
+                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
                     menu.clear();
                     menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
                     int x1 = 0;
@@ -146,6 +146,7 @@ public class menuNation implements SubCommand {
                 String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase());
                 menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine(ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
+                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
                     menu.clear();
                     menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
                     int x1 = 0;
