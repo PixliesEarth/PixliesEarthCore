@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-//TODO
 public class BoostCommand implements CommandExecutor {
 
     private static final Main instance = Main.getInstance();

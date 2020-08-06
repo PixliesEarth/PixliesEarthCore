@@ -8,9 +8,11 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.ItemBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -115,6 +117,31 @@ public class menuNation implements SubCommand {
                     x++;
                 }
                 break;
+            case SETTINGS:
+                //TODO
+                Religion religion = Religion.valueOf(nation.getReligion());
+                String religionName = StringUtils.capitalize(religion.name().toLowerCase());
+                menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine(religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
+                    event.setCancelled(true);
+                    menu.clear();
+                    menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
+                    int x1 = 0;
+                    int y1 = 0;
+                    for (Religion religion1 : Religion.values()) {
+                        String religion1Name = StringUtils.capitalize(religion1.name().toLowerCase());
+                        ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName(religion1.getColour() + religion1Name);
+                        if (religion == religion1)
+                            iBuilder.setGlow();
+                        menu.addItem(new GuiItem(iBuilder.build(), event1 -> {
+                            event1.setCancelled(true);
+                            nation.setReligion(religion1.name());
+                            nation.save();
+                            player.closeInventory();
+                            open(gui, player, MenuPage.SETTINGS);
+                        }), x1, y1);
+                    }
+                }), 0, 0);
+                break;
             case RELATIONS:
                 x = 0;
                 y = 0;
@@ -141,6 +168,7 @@ public class menuNation implements SubCommand {
             case RESEARCH:
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 //TODO ACTUALLY MAKE THEM WORK
+                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3HAS§8/§3NEEDED§9XP").build(), event -> event.setCancelled(true)), 8, 4);
                 menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> event.setCancelled(true)), 2, 2);
                 menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> event.setCancelled(true)), 4, 2);
                 menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> event.setCancelled(true)), 6, 2);
@@ -227,6 +255,7 @@ public class menuNation implements SubCommand {
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK),
         RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),
+        SETTINGS("§bSettings", Material.COMMAND_BLOCK),
         RESEARCH("§6Research", Material.LECTERN);
 
         String title;
