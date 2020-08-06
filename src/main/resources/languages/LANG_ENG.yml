@@ -206,3 +206,5 @@ GULAG_SET_SPECTATOR_SPAWN: "&7You &asuccessfully &7set the gulag spectator spawn
 GULAG_SET_FIGHTER_SPAWN1: "&7You &asuccessfully &7set the first fighter in the gulag!"
 GULAG_SET_FIGHTER_SPAWN2: "&7You &asuccessfully &7set the second fighter in the gulag!"
 GULAG_SET_CAP: "&7You &asuccessfully &7set the cap for the gulag!"
+ITEM_HAS_TO_BE_X: "&7The item in your hand has to be a &b%ITEM%&7."
+PLAYER_CHANGED_FLAG: "&6%PLAYER% &7just changed your nations flag."

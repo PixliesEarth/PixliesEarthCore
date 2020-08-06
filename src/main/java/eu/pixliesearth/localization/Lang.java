@@ -79,6 +79,7 @@ public enum Lang {
     PLAYER_BOOSTED(Lang.EARTH, new HashMap<>()),
     NOT_ENOUGH_BOOSTS(Lang.EARTH, new HashMap<>()),
     BOOST_EXPIRED(Lang.EARTH, new HashMap<>()),
+    ITEM_HAS_TO_BE_X(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
@@ -156,6 +157,7 @@ public enum Lang {
     NATION_BALANCE(Lang.NATION, new HashMap<>()),
     NOT_ENOUGH_MONEY_IN_NATION(Lang.NATION, new HashMap<>()),
     WITHDREW_MONEY_FROM_NATION(Lang.NATION, new HashMap<>()),
+    PLAYER_CHANGED_FLAG(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
