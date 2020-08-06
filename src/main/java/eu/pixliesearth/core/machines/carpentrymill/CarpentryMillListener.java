@@ -68,6 +68,14 @@ public class CarpentryMillListener implements Listener {
         if (event.getCurrentItem() == null) return;
         if (event.getCurrentItem().getType() == Material.BARRIER && event.getCurrentItem().getItemMeta().getDisplayName().equals("§c§lBack")) {
             CarpentryMill targetMill = (CarpentryMill) instance.getUtilLists().openMachines.get(event.getWhoClicked().getUniqueId());
+            for (int i : CarpentryMill.craftSlots) {
+                if (event.getClickedInventory().getItem(i) != null)
+                    event.getWhoClicked().getWorld().dropItemNaturally(targetMill.getLocation(), event.getClickedInventory().getItem(i));
+            }
+            for (int i : CarpentryMill.resultSlots) {
+                if (event.getClickedInventory().getItem(i) != null)
+                    event.getWhoClicked().getWorld().dropItemNaturally(targetMill.getLocation(), event.getClickedInventory().getItem(i));
+            }
             targetMill.reopen((Player) event.getWhoClicked());
         }
     }
