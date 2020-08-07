@@ -3,16 +3,20 @@ package eu.pixliesearth.core.machines;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.cargo.InputNode;
+import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.core.machines.carpentrymill.CarpentryMill;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
@@ -93,19 +97,42 @@ public class Machine {
     public static void loadAll() {
         for (File file : new File("plugins/PixliesEarthCore/machines/").listFiles()) {
             FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
-            Hologram holo = HologramsAPI.createHologram(instance, conf.getLocation("holo.location"));
-            holo.appendTextLine(conf.getString("holo.text"));
-            Timer timer = conf.contains("timer.expiry") ? new Timer(conf.getLong("timer.expiry"), conf.getBoolean("timer.ended")) : null;
-            MachineCraftable wantsToCraft = conf.contains("wantsToCraft") ? MachineCraftable.valueOf(conf.getString("wantsToCraft")) : null;
-            if (conf.getString("type").equalsIgnoreCase(MachineType.CARPENTRY_MILL.name())) {
-                instance.getUtilLists().machines.put(conf.getLocation("location"), new CarpentryMill(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft));
-            }
+            Machine machine = load(file, conf);
+            instance.getUtilLists().machines.put(machine.getLocation(), machine);
         }
+    }
+
+    public static Machine load(File file, FileConfiguration conf) {
+        Hologram holo = HologramsAPI.createHologram(instance, conf.getLocation("holo.location"));
+        Timer timer = conf.contains("timer.expiry") ? new Timer(conf.getLong("timer.expiry"), conf.getBoolean("timer.ended")) : null;
+        MachineCraftable wantsToCraft = conf.contains("wantsToCraft") ? MachineCraftable.valueOf(conf.getString("wantsToCraft")) : null;
+        if (conf.getString("type").equalsIgnoreCase(MachineType.CARPENTRY_MILL.name())) {
+            holo.appendTextLine(conf.getString("holo.text"));
+            return new CarpentryMill(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
+        } else if (conf.getString("type").equalsIgnoreCase(MachineType.OUTPUT_NODE.name())) {
+            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§b§lOutput Node");
+            if (conf.contains("storage")) {
+                for (String s : conf.getConfigurationSection("storage").getKeys(false))
+                    inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
+            }
+            return new OutputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
+        } else if (conf.getString("type").equalsIgnoreCase(MachineType.INPUT_NODE.name())) {
+            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§c§lInput Node");
+            if (conf.contains("storage")) {
+                for (String s : conf.getConfigurationSection("storage").getKeys(false))
+                    inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
+            }
+            return new InputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
+        }
+        return null;
     }
 
     public enum MachineType {
 
-        CARPENTRY_MILL;
+        CARPENTRY_MILL,
+        INPUT_NODE,
+        OUTPUT_NODE
+        ;
 
     }
 
@@ -142,6 +169,18 @@ public class Machine {
             return false;
         }
 
+    }
+
+    protected void setProgressBarItems(final Inventory inventory, long current_progress, long required_progress) {
+        int progress_percentage = (int)(current_progress * 100.0 / required_progress + 0.5);
+        int bar_length = 9;
+        for (int i = 0; i < bar_length; i++) {
+            if (i < bar_length * progress_percentage) {
+                inventory.setItem(Machine.progressSlots.get(i), new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setNoName().build());
+            } else {
+                inventory.setItem(Machine.progressSlots.get(i), new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
+            }
+        }
     }
 
 }

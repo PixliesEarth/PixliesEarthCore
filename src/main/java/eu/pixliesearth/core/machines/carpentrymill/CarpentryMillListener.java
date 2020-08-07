@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.machines.carpentrymill;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.utils.Methods;
 import org.apache.avro.generic.GenericData;
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ public class CarpentryMillListener implements Listener {
     private static final Main instance = Main.getInstance();
 
     public CarpentryMillListener() {
+        //TODO REMOVE
         Bukkit.addRecipe(new ShapedRecipe(NamespacedKey.minecraft(NamespacedKey.BUKKIT), CarpentryMill.item).shape("sss", "lcl", "lpl").setIngredient('s', new ItemStack(Material.SPRUCE_SLAB)).setIngredient('l', new ItemStack(Material.OAK_LOG)).setIngredient('c', new ItemStack(Material.CRAFTING_TABLE)).setIngredient('p', new ItemStack(Material.SPRUCE_PLANKS)));
     }
 
@@ -52,8 +54,7 @@ public class CarpentryMillListener implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if (!instance.getUtilLists().machines.containsKey(event.getBlock().getLocation())) return;
-        if (!(instance.getUtilLists().machines.get(event.getBlock().getLocation()) instanceof CarpentryMill)) return;
-        CarpentryMill mill = (CarpentryMill) instance.getUtilLists().machines.get(event.getBlock().getLocation());
+        Machine mill = instance.getUtilLists().machines.get(event.getBlock().getLocation());
         mill.remove();
     }
 

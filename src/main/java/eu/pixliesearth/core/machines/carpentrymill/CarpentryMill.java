@@ -7,6 +7,8 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.cargo.InputNode;
+import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
@@ -125,32 +127,30 @@ public class CarpentryMill extends Machine {
         for (int x = -(radius); x <= radius; x++) {
             for (int z = -(radius); z <= radius; z++) {
                 final Block relative = block.getRelative(x, 0, z);
-                if (relative.getState() instanceof Chest) {
-                    final Chest chest = (Chest) relative.getState();
-                    if (!(relative.getRelative(BlockFace.NORTH, 1).getState() instanceof Sign)) continue;
-                    final Sign sign = (Sign) relative.getRelative(BlockFace.NORTH, 1).getState();
-                    if (sign.getLine(1).equals("INPUT")) {
-                        if (timer == null) {
-                            for (ItemStack ingredient : wantsToCraft.ingredients) {
-                                if (chest.getInventory().containsAtLeast(ingredient, ingredient.getAmount())) {
-                                    for (int i : craftSlots) {
-                                        if (inventory.getItem(i) != null) continue;
-                                        Methods.removeRequiredAmount(ingredient, chest.getInventory());
-                                        inventory.setItem(i, ingredient);
-                                        stop = true;
-                                        break;
-                                    }
+                if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof InputNode) {
+                    InputNode in = (InputNode) instance.getUtilLists().machines.get(relative.getLocation());
+                    if (timer == null) {
+                        for (ItemStack ingredient : wantsToCraft.ingredients) {
+                            boolean take = in.takeItem(ingredient);
+                            if (take) {
+                                for (int i : craftSlots) {
+                                    if (inventory.getItem(i) != null) continue;
+                                    inventory.setItem(i, ingredient);
+                                    stop = true;
+                                    break;
                                 }
+                                if (!stop) in.addItem(ingredient);
                             }
                         }
-                    } else if (sign.getLine(1).equals("OUTPUT")) {
-                        for (int i : resultSlots) {
-                            if (inventory.getItem(i) == null) continue;
-                            if (chest.getInventory().firstEmpty() == -1) break;
-                            chest.getInventory().addItem(inventory.getItem(i));
-                            inventory.clear(i);
-                            stop = true;
-                        }
+                    }
+                } else if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof OutputNode) {
+                    OutputNode in = (OutputNode) instance.getUtilLists().machines.get(relative.getLocation());
+                    for (int i : resultSlots) {
+                        if (inventory.getItem(i) == null) continue;
+                        boolean add = in.addItem(inventory.getItem(i));
+                        if (!add) break;
+                        inventory.clear(i);
+                        stop = true;
                     }
                 }
                 if (stop) break;

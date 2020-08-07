@@ -1,5 +1,6 @@
 package eu.pixliesearth.utils;
 
+import eu.pixliesearth.core.machines.Machine;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Methods {

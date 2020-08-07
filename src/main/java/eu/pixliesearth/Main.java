@@ -19,6 +19,7 @@ import eu.pixliesearth.core.guns.commands.GunGive;
 import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.cargo.CargoListener;
 import eu.pixliesearth.core.machines.carpentrymill.CarpentryMillListener;
 import eu.pixliesearth.core.machines.MachineTask;
 import eu.pixliesearth.core.modules.ChatSystem;
@@ -342,6 +343,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new CarpentryMillListener(), this);
+        manager.registerEvents(new CargoListener(), this);
     }
 
     /**
