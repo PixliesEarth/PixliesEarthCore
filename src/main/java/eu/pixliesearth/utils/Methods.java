@@ -227,4 +227,20 @@ public class Methods {
         }
     }
 
+    public static void removeRequiredAmountWithinBound(ItemStack item, final Inventory inventory, List<Integer> slots) {
+        for (int i : slots) {
+            ItemStack value = inventory.getItem(i);
+            if (value == null) continue;
+            if (!value.isSimilar(item)) continue;
+            if (value.getAmount() != 0) {
+                if (value.getAmount() == item.getAmount()) inventory.clear(i);
+                else {
+                    value.setAmount(value.getAmount() - item.getAmount());
+                    inventory.setItem(i, value);
+                }
+                break;
+            }
+        }
+    }
+
 }

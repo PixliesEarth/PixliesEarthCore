@@ -53,8 +53,7 @@ public class flagNation implements SubCommand {
             return false;
         }
         Nation nation = profile.getCurrentNation();
-        nation.setFlag(inHand.serialize());
-        nation.save();
+        nation.setFlag(inHand);
         for (String uuid : nation.getMembers()) {
             if (Bukkit.getPlayer(UUID.fromString(uuid)) == null) continue;
             Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.getDisplayName());

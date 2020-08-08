@@ -125,6 +125,12 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder resetLore() {
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        return this;
+    }
+
     public ItemStack build() {
         if (!lore.isEmpty()) {
             meta.setLore(lore);

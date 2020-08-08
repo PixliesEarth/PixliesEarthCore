@@ -87,6 +87,7 @@ public final class Main extends JavaPlugin {
     private @Getter REST rest;
     public boolean gulagActive = false;
     private @Getter MachineTask machineTask;
+    private @Getter FileManager flags;
 
     @Override
     public void onEnable() {
@@ -127,6 +128,9 @@ public final class Main extends JavaPlugin {
 
         dynmapCfg = new FileManager(this, "dynmap", getDataFolder().getAbsolutePath());
         dynmapCfg.save();
+
+        flags = new FileManager(this, "flags", getDataFolder().getAbsolutePath());
+        flags.save();
 
         saveDefaultConfig();
 

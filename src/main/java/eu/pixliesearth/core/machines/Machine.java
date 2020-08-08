@@ -110,14 +110,14 @@ public class Machine {
             holo.appendTextLine(conf.getString("holo.text"));
             return new CarpentryMill(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
         } else if (conf.getString("type").equalsIgnoreCase(MachineType.OUTPUT_NODE.name())) {
-            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§b§lOutput Node");
+            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§c§lOutput Node");
             if (conf.contains("storage")) {
                 for (String s : conf.getConfigurationSection("storage").getKeys(false))
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
             }
             return new OutputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
         } else if (conf.getString("type").equalsIgnoreCase(MachineType.INPUT_NODE.name())) {
-            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§c§lInput Node");
+            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§b§lInput Node");
             if (conf.contains("storage")) {
                 for (String s : conf.getConfigurationSection("storage").getKeys(false))
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));

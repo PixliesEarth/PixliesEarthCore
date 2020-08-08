@@ -10,6 +10,7 @@ import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -35,7 +36,6 @@ public class Nation {
     private List<String> allyRequests;
     private List<String> allies;
     private List<String> pacts;
-    private Map<String, Object> flag;
     private List<String> upgrades;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
@@ -62,7 +62,6 @@ public class Nation {
         nation.append("allyRequests", allyRequests);
         nation.append("allies", allies);
         nation.append("pacts", pacts);
-        nation.append("flag", flag);
         nation.append("upgrades", upgrades);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
@@ -70,6 +69,16 @@ public class Nation {
             Main.getNationCollection().deleteOne(found);
         }
         Main.getNationCollection().insertOne(nation);
+    }
+
+    public ItemStack getFlag() {
+        return Main.getInstance().getFlags().getConfiguration().getItemStack(nationId);
+    }
+
+    public void setFlag(ItemStack flag) {
+        Main.getInstance().getFlags().getConfiguration().set(nationId, flag);
+        Main.getInstance().getFlags().save();
+        Main.getInstance().getFlags().reload();
     }
 
     public Nation save() {

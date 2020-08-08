@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
 import java.util.*;
 
 public class CarpentryMill extends Machine {
@@ -116,8 +117,9 @@ public class CarpentryMill extends Machine {
             if (matching) {
                 if (canAddResult()) {
                     timer = new Timer(wantsToCraft.seconds * 1000);
-                    for (int i : craftSlots)
-                        inventory.clear(i);
+                    for (ItemStack ingredient : wantsToCraft.ingredients) {
+                        Methods.removeRequiredAmountWithinBound(ingredient, inventory, craftSlots);
+                    }
                 }
             }
         }
@@ -143,19 +145,18 @@ public class CarpentryMill extends Machine {
                             }
                         }
                     }
-                } else if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof OutputNode) {
-                    OutputNode in = (OutputNode) instance.getUtilLists().machines.get(relative.getLocation());
+                }
+                if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof OutputNode) {
+                    OutputNode out = (OutputNode) instance.getUtilLists().machines.get(relative.getLocation());
                     for (int i : resultSlots) {
                         if (inventory.getItem(i) == null) continue;
-                        boolean add = in.addItem(inventory.getItem(i));
+                        boolean add = out.addItem(inventory.getItem(i));
                         if (!add) break;
                         inventory.clear(i);
                         stop = true;
                     }
                 }
-                if (stop) break;
             }
-            if (stop) break;
         }
     }
 
@@ -197,6 +198,23 @@ public class CarpentryMill extends Machine {
         for (int i : resultSlots)
             if (inventory.getItem(i) == null) return true;
         return false;
+    }
+
+    @Override
+    public void remove() {
+        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+        instance.getUtilLists().machines.remove(location);
+        armorStand.delete();
+        if (!file.exists()) return;
+        file.delete();
+        for (int i : craftSlots) {
+            if (inventory.getItem(i) == null) continue;
+            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+        }
+        for (int i : resultSlots) {
+            if (inventory.getItem(i) == null) continue;
+            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+        }
     }
 
 }

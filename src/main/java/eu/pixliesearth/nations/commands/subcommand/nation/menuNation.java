@@ -74,12 +74,16 @@ public class menuNation implements SubCommand {
         StaticPane menu = new StaticPane(0, 1, 9, 5);
         menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         Profile profile = instance.getProfile(player.getUniqueId());
+        if (!profile.isInNation()) {
+            Lang.NOT_IN_A_NATION.send(player);
+            return;
+        }
         Nation nation = profile.getCurrentNation();
         int x;
         int y;
         switch (page) {
             case MAIN:
-                menu.addItem(new GuiItem(new ItemBuilder(ItemStack.deserialize(nation.getFlag())).setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).resetLore().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
                 break;
             case MEMBERS:
                 x = 0;
@@ -121,49 +125,64 @@ public class menuNation implements SubCommand {
             case SETTINGS:
                 Religion religion = Religion.valueOf(nation.getReligion());
                 String religionName = StringUtils.capitalize(religion.name().toLowerCase());
-                menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine(religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
+                menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine("§" + religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
                     if (profile.getCurrentNationRank().getPriority() != 666.0) return;
-                    menu.clear();
-                    menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
+                    StaticPane pane = new StaticPane(0, 1, 9, 5);
+                    pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
                     int x1 = 0;
                     int y1 = 0;
                     for (Religion religion1 : Religion.values()) {
                         String religion1Name = StringUtils.capitalize(religion1.name().toLowerCase());
-                        ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName(religion1.getColour() + religion1Name);
+                        ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName("§" + religion1.getColour() + religion1Name);
                         if (religion == religion1)
                             iBuilder.setGlow();
-                        menu.addItem(new GuiItem(iBuilder.build(), event1 -> {
+                        if (x1 + 1 > 8) {
+                            x1 = 0;
+                            y1++;
+                        }
+                        pane.addItem(new GuiItem(iBuilder.build(), event1 -> {
                             event1.setCancelled(true);
                             nation.setReligion(religion1.name());
                             nation.save();
                             player.closeInventory();
                             open(gui, player, MenuPage.SETTINGS);
                         }), x1, y1);
+                        x1++;
                     }
+                    gui.addPane(pane);
+                    gui.update();
                 }), 0, 0);
                 Ideology ideology = Ideology.valueOf(nation.getIdeology());
                 String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase());
-                menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine(ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
+                menu.addItem(new GuiItem(new ItemBuilder(ideology.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine("§" + ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
                     if (profile.getCurrentNationRank().getPriority() != 666.0) return;
-                    menu.clear();
-                    menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
+                    StaticPane pane = new StaticPane(0, 1, 9, 5);
+                    pane.clear();
+                    pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
                     int x1 = 0;
                     int y1 = 0;
                     for (Ideology ideology1 : Ideology.values()) {
                         String ideology1Name = StringUtils.capitalize(ideology1.name().toLowerCase());
-                        ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName(ideology1.getColour() + ideology1Name);
+                        ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName("§" + ideology1.getColour() + ideology1Name);
                         if (ideology == ideology1)
                             iBuilder.setGlow();
-                        menu.addItem(new GuiItem(iBuilder.build(), event1 -> {
+                        if (x1 + 1 > 8) {
+                            x1 = 0;
+                            y1++;
+                        }
+                        pane.addItem(new GuiItem(iBuilder.build(), event1 -> {
                             event1.setCancelled(true);
                             nation.setIdeology(ideology1.name());
                             nation.save();
                             player.closeInventory();
                             open(gui, player, MenuPage.SETTINGS);
                         }), x1, y1);
+                        x1++;
                     }
+                    gui.addPane(pane);
+                    gui.update();
                 }), 1, 0);
                 break;
             case RELATIONS:
@@ -180,7 +199,7 @@ public class menuNation implements SubCommand {
                         y++;
                         x = 0;
                     }
-                    ItemStack item = new ItemBuilder(ItemStack.deserialize(ally.getFlag())).setDisplayName("§d" + ally.getName()).addLoreLine("§7§o" + ally.getDescription()).addLoreLine("§7Money: §2§l$§a" + ally.getMoney()).addLoreLine("§c§oClick to neutralize").build();
+                    ItemStack item = new ItemBuilder(ally.getFlag()).resetLore().setDisplayName("§d" + ally.getName()).addLoreLine("§7§o" + ally.getDescription()).addLoreLine("§7Money: §2§l$§a" + ally.getMoney()).addLoreLine("§c§oClick to neutralize").build();
                     menu.addItem(new GuiItem(item, event -> {
                         event.setCancelled(true);
                         player.performCommand("n neutral " + ally.getName());

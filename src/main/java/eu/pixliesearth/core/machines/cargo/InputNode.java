@@ -9,6 +9,9 @@ import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Hopper;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -30,7 +33,7 @@ public class InputNode extends Machine {
     }
 
     public InputNode(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, Inventory storage) {
-        super(id, location, MachineType.CARPENTRY_MILL, item, timer, armorStand, wantsToCraft);
+        super(id, location, MachineType.INPUT_NODE, item, timer, armorStand, wantsToCraft);
         this.storage = storage;
     }
 
@@ -73,8 +76,14 @@ public class InputNode extends Machine {
 
     @Override
     public void remove() {
+        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+        instance.getUtilLists().machines.remove(location);
+        armorStand.delete();
+        if (!file.exists()) return;
+        file.delete();
         for (ItemStack item : storage.getContents())
-            location.getWorld().dropItemNaturally(location, item);
+            if (item != null)
+                location.getWorld().dropItemNaturally(location, item);
     }
 
     public boolean takeItem(ItemStack item) {
@@ -90,6 +99,44 @@ public class InputNode extends Machine {
     @Override
     public String getTitle() {
         return "§b§lInput Node";
+    }
+
+    @Override
+    public void tick() {
+        int radius = 1;
+        final Block block = location.getBlock();
+        boolean stop = false;
+        for (int x = -(radius); x <= radius; x++) {
+            for (int z = -(radius); z <= radius; z++) {
+                final Block relative = block.getRelative(x, 0, z);
+                if (relative.getState() instanceof Chest) {
+                    Chest chest = (Chest) relative.getState();
+                    for (ItemStack item : chest.getInventory().getContents()) {
+                        if (item == null) continue;
+                        if (storage.firstEmpty() == -1) break;
+                        storage.addItem(item);
+                        Methods.removeRequiredAmount(item, chest.getInventory());
+                        stop = true;
+                        break;
+                    }
+                    if (stop) break;
+                }
+                if (relative.getState() instanceof Hopper) {
+                    Hopper hopper = (Hopper) relative.getState();
+                    for (ItemStack item : hopper.getInventory().getContents()) {
+                        if (item == null) continue;
+                        if (storage.firstEmpty() == -1) break;
+                        storage.addItem(item);
+                        Methods.removeRequiredAmount(item, hopper.getInventory());
+                        stop = true;
+                        break;
+                    }
+                    if (stop) break;
+                }
+                if (stop) break;
+            }
+            if (stop) break;
+        }
     }
 
 }
