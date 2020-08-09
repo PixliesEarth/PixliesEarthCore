@@ -158,6 +158,8 @@ public enum Lang {
     NOT_ENOUGH_MONEY_IN_NATION(Lang.NATION, new HashMap<>()),
     WITHDREW_MONEY_FROM_NATION(Lang.NATION, new HashMap<>()),
     PLAYER_CHANGED_FLAG(Lang.NATION, new HashMap<>()),
+    CANT_PURCHASE_UPGRADE(Lang.NATION, new HashMap<>()),
+    PLAYER_PURCHASED_NATION_UPGRADE(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

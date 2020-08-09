@@ -208,3 +208,5 @@ GULAG_SET_FIGHTER_SPAWN2: "&7You &asuccessfully &7set the second fighter in the 
 GULAG_SET_CAP: "&7You &asuccessfully &7set the cap for the gulag!"
 ITEM_HAS_TO_BE_X: "&7The item in your hand has to be a &b%ITEM%&7."
 PLAYER_CHANGED_FLAG: "&6%PLAYER% &7just changed your nations flag."
+CANT_PURCHASE_UPGRADE: "§7Your nation either does not have enough XP-Points, or is not in the required Era for this upgrade."
+PLAYER_PURCHASED_NATION_UPGRADE: "&6%PLAYER% &7just purchased the &b%UPGRADE% &7upgrade for your nation."

@@ -9,7 +9,7 @@ public class MachineTask extends BukkitRunnable {
     private boolean ready = false;
 
     public MachineTask() {
-        this.runTaskTimer(instance, 0, 10);
+        this.runTaskTimer(instance, 20, 20);
     }
 
     public void init() {
@@ -19,10 +19,9 @@ public class MachineTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (ready) {
+        if (ready)
             for (Machine machine : instance.getUtilLists().machines.values())
                 machine.tick();
-        }
     }
 
 }

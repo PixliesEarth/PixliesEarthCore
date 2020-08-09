@@ -46,6 +46,7 @@ public class Rank {
         perms.add(Permission.UNCLAIM.name());
         perms.add(Permission.EDIT_RANKS.name());
         perms.add(Permission.BANK.name());
+        perms.add(Permission.PURCHASE_UPGRADES.name());
         return new Rank("admin", "§c***", 333, perms);
     }
 

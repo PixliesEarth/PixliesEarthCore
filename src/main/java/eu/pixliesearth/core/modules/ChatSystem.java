@@ -151,8 +151,7 @@ public class ChatSystem implements Listener, Module {
                     for (String s : split)
                         for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
                             if (s.equalsIgnoreCase(s1)) {
-                                player.sendMessage("§aEARTH §8| §7You are not allowed to say §b" + s1 + " §7here.");
-                                event.setCancelled(true);
+                                event.setMessage(event.getMessage().replace(s, Methods.replaceBadWord(s)));
                                 return;
                             }
                 }

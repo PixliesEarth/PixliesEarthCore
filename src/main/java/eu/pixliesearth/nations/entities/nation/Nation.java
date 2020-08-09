@@ -190,6 +190,8 @@ public class Nation {
         return (int) (members.size() * money);
     }
 
+    public Era getCurrentEra() { return Era.valueOf(era); }
+
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
             return NationRelation.SAME;

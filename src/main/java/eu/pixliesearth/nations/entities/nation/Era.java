@@ -49,4 +49,8 @@ public enum Era {
         return null;
     }
 
+    public boolean canAccess(Nation nation) {
+        return nation.getCurrentEra().level >= level;
+    }
+
 }

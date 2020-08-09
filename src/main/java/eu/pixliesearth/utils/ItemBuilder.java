@@ -127,7 +127,6 @@ public class ItemBuilder {
 
     public ItemBuilder resetLore() {
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         return this;
     }
 

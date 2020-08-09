@@ -2,14 +2,12 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.nation.Era;
-import eu.pixliesearth.nations.entities.nation.Ideology;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.entities.nation.Religion;
+import eu.pixliesearth.nations.entities.nation.*;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -22,9 +20,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class menuNation implements SubCommand {
 
@@ -124,7 +120,7 @@ public class menuNation implements SubCommand {
                 break;
             case SETTINGS:
                 Religion religion = Religion.valueOf(nation.getReligion());
-                String religionName = StringUtils.capitalize(religion.name().toLowerCase());
+                String religionName = StringUtils.capitalize(religion.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine("§" + religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
                     if (profile.getCurrentNationRank().getPriority() != 666.0) return;
@@ -133,7 +129,7 @@ public class menuNation implements SubCommand {
                     int x1 = 0;
                     int y1 = 0;
                     for (Religion religion1 : Religion.values()) {
-                        String religion1Name = StringUtils.capitalize(religion1.name().toLowerCase());
+                        String religion1Name = StringUtils.capitalize(religion1.name().toLowerCase().replace("_", " "));
                         ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName("§" + religion1.getColour() + religion1Name);
                         if (religion == religion1)
                             iBuilder.setGlow();
@@ -154,7 +150,7 @@ public class menuNation implements SubCommand {
                     gui.update();
                 }), 0, 0);
                 Ideology ideology = Ideology.valueOf(nation.getIdeology());
-                String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase());
+                String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(ideology.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine("§" + ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
                     if (profile.getCurrentNationRank().getPriority() != 666.0) return;
@@ -164,7 +160,7 @@ public class menuNation implements SubCommand {
                     int x1 = 0;
                     int y1 = 0;
                     for (Ideology ideology1 : Ideology.values()) {
-                        String ideology1Name = StringUtils.capitalize(ideology1.name().toLowerCase());
+                        String ideology1Name = StringUtils.capitalize(ideology1.name().toLowerCase().replace("_", " "));
                         ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName("§" + ideology1.getColour() + ideology1Name);
                         if (ideology == ideology1)
                             iBuilder.setGlow();
@@ -212,13 +208,61 @@ public class menuNation implements SubCommand {
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 //TODO ACTUALLY MAKE THEM WORK
                 menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3HAS§8/§3NEEDED§9XP").build(), event -> event.setCancelled(true)), 8, 4);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> event.setCancelled(true)), 2, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> event.setCancelled(true)), 4, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> event.setCancelled(true)), 6, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE);}), 2, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.MILITARY);}), 4, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.INDUSTRY);}), 6, 2);
                 break;
         }
         gui.addPane(menu);
         gui.show(player);
+    }
+
+    void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type) {
+        Profile profile = instance.getProfile(player.getUniqueId());
+        Nation nation = profile.getCurrentNation();
+        PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4);
+        List<GuiItem> upgradeItems = new ArrayList<>();
+        for (NationUpgrade upgrade : NationUpgrade.values()) {
+            if (upgrade.getType() != type) continue;
+            upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
+                event.setCancelled(true);
+                player.closeInventory();
+                if (nation.getXpPoints() < upgrade.getCost() || !upgrade.getEra().canAccess(nation)) {
+                    Lang.CANT_PURCHASE_UPGRADE.send(player);
+                    return;
+                }
+                if (!Permission.hasNationPermission(profile, Permission.PURCHASE_UPGRADES)) {
+                    Lang.NO_PERMISSIONS.send(player);
+                    return;
+                }
+                nation.setXpPoints(nation.getXpPoints() - upgrade.getCost());
+                nation.getUpgrades().add(upgrade.name());
+                nation.save();
+                for (String s : nation.getMembers())
+                    if (Bukkit.getPlayer(UUID.fromString(s)) != null)
+                        Lang.PLAYER_PURCHASED_NATION_UPGRADE.send(Bukkit.getPlayer(UUID.fromString(s)), "%PLAYER%;" + player.getName(), "%UPGRADE%;" + upgrade.getDisplayName());
+            }));
+        }
+        pagePane.populateWithGuiItems(upgradeItems);
+        gui.addPane(pagePane);
+        StaticPane controlBar = new StaticPane(0, 5, 9, 1);
+        controlBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
+        controlBar.addItem(new GuiItem(new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cBack").build(), event -> {
+            event.setCancelled(true);
+            if (pagePane.getPage() > 1 && pagePane.getPages() > 1) {
+                pagePane.setPage(pagePane.getPage() - 1);
+                gui.update();
+            }
+        }), 0, 0);
+        controlBar.addItem(new GuiItem(new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§aNext").build(), event -> {
+            event.setCancelled(true);
+            if (pagePane.getPage() < pagePane.getPages()) {
+                pagePane.setPage(pagePane.getPage() + 1);
+                gui.update();
+            }
+        }), 0, 8);
+        gui.addPane(controlBar);
+        gui.update();
     }
 
     void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {
