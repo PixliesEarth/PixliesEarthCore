@@ -262,7 +262,7 @@ public class menuNation implements SubCommand {
             }
         }), 0, 8);
         gui.addPane(controlBar);
-        gui.update();
+        gui.show(player);
     }
 
     void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {

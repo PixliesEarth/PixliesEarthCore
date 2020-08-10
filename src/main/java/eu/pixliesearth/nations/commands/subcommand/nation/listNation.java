@@ -4,7 +4,12 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_16_R1.NBTTagCompound;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
 
 import java.util.*;
 
@@ -43,7 +48,7 @@ public class listNation implements SubCommand {
         } else if (page < 1) {
             page = 1;
         }
-        List<String> lines = new LinkedList<>();
+        List<TextComponent> lines = new LinkedList<>();
         int start = (page - 1) * height;
         int end = start + height;
         if (end > Nations.size())
@@ -51,7 +56,9 @@ public class listNation implements SubCommand {
         for (Nation nation : Nations.subList(start, end)) {
             if (nation.getNationId().equals("safezone") || nation.getNationId().equals("warzone"))
                 continue;
-            lines.add("§7* §b" + nation.getName() + " §8- §2§l$§a" + nation.getMoney() + " §8- §a☺ " + nation.getMembers().size());
+            //TODO HoverEvent flag
+            TextComponent comp = new TextComponent("§7* §b" + nation.getName() + " §8- §2§l$§a" + nation.getMoney() + " §8- §a☺ " + nation.getMembers().size());
+            lines.add(comp);
         }
 
         sender.sendMessage(Methods.getCenteredMessage("&8-= &bNations &7(&b" + page + "&8/&b" + pages + "&7) &8=-"));
