@@ -196,6 +196,16 @@ public class Nation {
         save();
     }
 
+    public void addChunkAccess(NationChunk chunk) {
+        extras.put("ACCESS:" + chunk.serialize(), true);
+        save();
+    }
+
+    public void removeChunkAccess(NationChunk chunk) {
+        extras.remove("ACCESS:" + chunk.serialize());
+        save();
+    }
+
     //TODO OTHER FORMULA?
     public int getPoints() {
         return (int) (members.size() * money);

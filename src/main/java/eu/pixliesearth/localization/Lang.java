@@ -164,6 +164,9 @@ public enum Lang {
     ADDED_PERMISSION_TO_X(Lang.NATION, new HashMap<>()),
     X_DOESN_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
     REMOVED_PERMISSION_FROM_X(Lang.NATION, new HashMap<>()),
+    ADDED_CHUNK_ACCESS_TO_X(Lang.NATION, new HashMap<>()),
+    REMOVED_CHUNK_ACCESS_FROM_X(Lang.NATION, new HashMap<>()),
+    BOTH_PLAYERS_IN_THE_SAME_NATION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),

@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.entities.nation.ranks;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 
 import java.util.ArrayList;
@@ -44,29 +45,10 @@ public enum Permission {
         return guest.getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name());
     }
 
-/*    public static List<Permission> getPermissions(int day) {
-        List<Integer> places = new ArrayList<>();
-        for (Permission p : values())
-            places.add(p.number);
-        ArrayList<Permission> d = new ArrayList<>();
-        for (Integer i : places) {
-            if (bitWiseAnd(day, i)) {
-                d.add(getByNumber(i));
-            }
-        }
-        return d;
+    public static boolean hasAccessHere(Profile profile, NationChunk chunk) {
+        if (profile.getCurrentNation().getExtras().containsKey("ACCESS:" + chunk.serialize())) return true;
+        return profile.getExtras().containsKey("ACCESS:" + chunk.serialize());
     }
-
-    public static boolean bitWiseAnd(int bitwise, int operator) {
-        return (bitwise & operator) > 0;
-    }
-
-    public static Permission getByNumber(int number) {
-        for (Permission p : values())
-            if (p.number == number)
-                return p;
-        return null;
-    }*/
 
     public static boolean exists(String name) {
         for (Permission p : values()) {

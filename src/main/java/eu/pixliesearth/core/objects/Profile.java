@@ -5,6 +5,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.Timer;
@@ -228,6 +229,16 @@ public class Profile {
 
     public void removeForeignPermission(Nation host, Permission permission) {
         extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        save();
+    }
+
+    public void addChunkAccess(NationChunk chunk) {
+        extras.put("ACCESS:" + chunk.serialize(), true);
+        save();
+    }
+
+    public void removeChunkAccess(NationChunk chunk) {
+        extras.remove("ACCESS:" + chunk.serialize());
         save();
     }
 

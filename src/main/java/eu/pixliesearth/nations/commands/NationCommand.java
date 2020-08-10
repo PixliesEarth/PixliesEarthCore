@@ -40,6 +40,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new topNation());
         subCommands.add(new flagNation());
         subCommands.add(new foreignPermission());
+        subCommands.add(new accessNation());
         return subCommands;
     }
 
@@ -145,7 +146,8 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n bank §c<deposit/withdraw/balance> [AMOUNT/NATION] §e[NATION]");
                 sender.sendMessage("§b* §7/n top");
                 sender.sendMessage("§b* §7/n setflag");
-                sender.sendMessage("§b* §7/n fp set/unset PERMISSION nation/player NATIONNAME/PLAYERNAME");
+                sender.sendMessage("§b* §7/n fp §cset/unset PERMISSION nation/player §eNATIONNAME/PLAYERNAME");
+                sender.sendMessage("§b* §7/n access §cplayer/nation PLAYERNAME/NATIONNAME §eset/unset");
                 break;
             default:
                 sender.sendMessage("§b* §7/n create §c<NAME>");
