@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.entities.nation;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
@@ -183,6 +184,16 @@ public class Nation {
         if (amount > money) return false;
         money = money + amount;
         return true;
+    }
+
+    public void addForeignPermission(Nation host, Permission permission) {
+        extras.put("PERMISSION:" + host.getNationId() + ":" + permission.name(), true);
+        save();
+    }
+
+    public void removeForeignPermission(Nation host, Permission permission) {
+        extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        save();
     }
 
     //TODO OTHER FORMULA?

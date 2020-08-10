@@ -40,6 +40,10 @@ public enum Permission {
         return false;
     }
 
+    public static boolean hasForeignPermission(Nation guest, Permission permission, Nation host) {
+        return guest.getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name());
+    }
+
 /*    public static List<Permission> getPermissions(int day) {
         List<Integer> places = new ArrayList<>();
         for (Permission p : values())

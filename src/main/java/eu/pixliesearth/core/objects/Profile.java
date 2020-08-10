@@ -5,6 +5,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -218,6 +219,16 @@ public class Profile {
 
     public boolean isMarried() {
         return !marriagePartner.equals("NONE");
+    }
+
+    public void addForeignPermission(Nation host, Permission permission) {
+        extras.put("PERMISSION:" + host.getNationId() + ":" + permission.name(), true);
+        save();
+    }
+
+    public void removeForeignPermission(Nation host, Permission permission) {
+        extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        save();
     }
 
     public boolean areRelated(UUID uuid) {

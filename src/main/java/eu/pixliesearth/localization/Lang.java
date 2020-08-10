@@ -160,6 +160,10 @@ public enum Lang {
     PLAYER_CHANGED_FLAG(Lang.NATION, new HashMap<>()),
     CANT_PURCHASE_UPGRADE(Lang.NATION, new HashMap<>()),
     PLAYER_PURCHASED_NATION_UPGRADE(Lang.NATION, new HashMap<>()),
+    X_ALREADY_HAS_PERMISSION(Lang.NATION, new HashMap<>()),
+    ADDED_PERMISSION_TO_X(Lang.NATION, new HashMap<>()),
+    X_DOESN_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
+    REMOVED_PERMISSION_FROM_X(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
