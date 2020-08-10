@@ -24,6 +24,10 @@ public class foreignPermission implements SubCommand {
         map.put("unset", 1);
         map.put("BUILD", 2);
         map.put("INTERACT", 2);
+        map.put("BANK_DEPOSIT", 2);
+        map.put("BANK_WITHDRAW", 2);
+        map.put("CLAIM", 2);
+        map.put("UNCLAIM", 2);
         return map;
     }
 
@@ -48,8 +52,8 @@ public class foreignPermission implements SubCommand {
             Lang.NO_PERMISSIONS.send(player);
             return false;
         }
-        if (!(args[1].equalsIgnoreCase("build") || args[1].equalsIgnoreCase("interact"))) {
-            Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n fp set BUILD/INTERACT nation/player NATIONNAME/PLAYERNAME");
+        if (!Permission.exists(args[1])) {
+            Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n fp set PERMISSION nation/player NATIONNAME/PLAYERNAME");
             return false;
         }
         if (args[0].equalsIgnoreCase("set")) {

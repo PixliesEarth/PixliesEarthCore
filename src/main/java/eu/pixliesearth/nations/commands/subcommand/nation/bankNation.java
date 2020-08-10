@@ -87,6 +87,10 @@ public class bankNation implements SubCommand {
                         Lang.NOT_ENOUGH_MONEY.send(player);
                         return false;
                     }
+                    if (!Permission.hasNationPermission(profile, Permission.BANK_DEPOSIT) && !profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
                     nation.deposit(amount);
                     profile.save();
                     nation.save();
@@ -108,7 +112,7 @@ public class bankNation implements SubCommand {
                         return false;
                     }
                     int amount = Integer.parseInt(args[1]);
-                    if (!Permission.hasNationPermission(profile, Permission.BANK) && !profile.isStaff()) {
+                    if (!Permission.hasNationPermission(profile, Permission.BANK_WITHDRAW) && !profile.isStaff()) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
@@ -119,6 +123,84 @@ public class bankNation implements SubCommand {
                     }
                     profile.depositMoney(amount, "Nation-bank withdraw");
                     Lang.WITHDREW_MONEY_FROM_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                }
+                break;
+            case 3:
+                if (args[0].equalsIgnoreCase("deposit")) {
+                    Nation nation = Nation.getByName(args[1]);
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(sender);
+                        return false;
+                    }
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (!Permission.hasForeignPermission(profile, Permission.BANK_DEPOSIT, nation) && !profile.isStaff() && !profile.getNationId().equals(nation.getNationId())) {
+                            Lang.NO_PERMISSIONS.send(sender);
+                            return false;
+                        }
+                        if (!StringUtils.isNumeric(args[2]) || args[2].startsWith("-")) {
+                            Lang.INVALID_INPUT.send(player);
+                            return false;
+                        }
+                        int amount = Integer.parseInt(args[2]);
+                        boolean withdrawPlayer = profile.withdrawMoney(amount, "Nation-bank deposit: " + nation.getName());
+                        if (!withdrawPlayer) {
+                            Lang.NOT_ENOUGH_MONEY.send(player);
+                            return false;
+                        }
+                        nation.deposit(amount);
+                        profile.save();
+                        nation.save();
+                        Lang.DEPOSIT_MONEY_INTO_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                    } else {
+                        if (!StringUtils.isNumeric(args[2]) || args[2].startsWith("-")) {
+                            Lang.INVALID_INPUT.send(sender);
+                            return false;
+                        }
+                        int amount = Integer.parseInt(args[2]);
+                        nation.deposit(amount);
+                        nation.save();
+                        Lang.DEPOSIT_MONEY_INTO_NATION.send(sender, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                    }
+                } else if (args[0].equalsIgnoreCase("withdraw")) {
+                    Nation nation = Nation.getByName(args[1]);
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(sender);
+                        return false;
+                    }
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (!Permission.hasForeignPermission(profile, Permission.BANK_WITHDRAW, nation) && !profile.isStaff() && !profile.getNationId().equals(nation.getNationId())) {
+                            Lang.NO_PERMISSIONS.send(sender);
+                            return false;
+                        }
+                        if (!StringUtils.isNumeric(args[2]) || args[2].startsWith("-")) {
+                            Lang.INVALID_INPUT.send(player);
+                            return false;
+                        }
+                        int amount = Integer.parseInt(args[2]);
+                        boolean nationWithdraw = nation.withdraw(amount);
+                        if (!nationWithdraw) {
+                            Lang.NOT_ENOUGH_MONEY_IN_NATION.send(player);
+                            return false;
+                        }
+                        profile.depositMoney(amount, "Nation-bank withdraw: " + nation.getName());
+                        Lang.WITHDREW_MONEY_FROM_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                    } else {
+                        if (!StringUtils.isNumeric(args[2]) || args[2].startsWith("-")) {
+                            Lang.INVALID_INPUT.send(sender);
+                            return false;
+                        }
+                        int amount = Integer.parseInt(args[2]);
+                        boolean nationWithdraw = nation.withdraw(amount);
+                        if (!nationWithdraw) {
+                            Lang.NOT_ENOUGH_MONEY_IN_NATION.send(sender);
+                            return false;
+                        }
+                        Lang.WITHDREW_MONEY_FROM_NATION.send(sender, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
+                    }
                 }
                 break;
         }

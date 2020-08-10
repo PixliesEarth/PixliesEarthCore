@@ -19,7 +19,8 @@ public enum Permission {
     MANAGE_SETTLEMENTS,
     EDIT_RANKS,
     MANAGE_RELATIONS,
-    BANK,
+    BANK_DEPOSIT,
+    BANK_WITHDRAW,
     PURCHASE_UPGRADES,
     FOREIGN_PERMS
     ;
@@ -30,6 +31,13 @@ public enum Permission {
         Nation nation = profile.getCurrentNation();
         Rank rank = Rank.get(nation.getRanks().get(profile.getNationRank()));
         return rank.getPermissions().contains(permission.name());
+    }
+
+    public static boolean hasForeignPermission(Profile profile, Permission permission, Nation host) {
+        if (profile.getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name())) return true;
+        if (profile.isInNation())
+            return profile.getCurrentNation().getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        return false;
     }
 
 /*    public static List<Permission> getPermissions(int day) {

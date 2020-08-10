@@ -34,6 +34,7 @@ public class Rank {
         List<String> perms = new ArrayList<>();
         perms.add(Permission.BUILD.name());
         perms.add(Permission.INTERACT.name());
+        perms.add(Permission.BANK_DEPOSIT.name());
         perms.add(Permission.CLAIM.name());
         return new Rank("member", "§b**", 222, perms);
     }
@@ -45,7 +46,7 @@ public class Rank {
         perms.add(Permission.MANAGE_SETTLEMENTS.name());
         perms.add(Permission.UNCLAIM.name());
         perms.add(Permission.EDIT_RANKS.name());
-        perms.add(Permission.BANK.name());
+        perms.add(Permission.BANK_WITHDRAW.name());
         perms.add(Permission.PURCHASE_UPGRADES.name());
         perms.add(Permission.FOREIGN_PERMS.name());
         return new Rank("admin", "§c***", 333, perms);
