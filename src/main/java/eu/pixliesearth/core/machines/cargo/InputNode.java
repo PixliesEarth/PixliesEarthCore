@@ -103,40 +103,42 @@ public class InputNode extends Machine {
 
     @Override
     public void tick() {
-        int radius = 1;
-        final Block block = location.getBlock();
-        boolean stop = false;
-        for (int x = -(radius); x <= radius; x++) {
-            for (int z = -(radius); z <= radius; z++) {
-                final Block relative = block.getRelative(x, 0, z);
-                if (relative.getState() instanceof Chest) {
-                    Chest chest = (Chest) relative.getState();
-                    for (ItemStack item : chest.getInventory().getContents()) {
-                        if (item == null) continue;
-                        if (storage.firstEmpty() == -1) break;
-                        storage.addItem(item);
-                        Methods.removeRequiredAmount(item, chest.getInventory());
-                        stop = true;
-                        break;
+        try {
+            int radius = 1;
+            final Block block = location.getBlock();
+            boolean stop = false;
+            for (int x = -(radius); x <= radius; x++) {
+                for (int z = -(radius); z <= radius; z++) {
+                    final Block relative = block.getRelative(x, 0, z);
+                    if (relative.getState() instanceof Chest) {
+                        Chest chest = (Chest) relative.getState();
+                        for (ItemStack item : chest.getInventory().getContents()) {
+                            if (item == null) continue;
+                            if (storage.firstEmpty() == -1) break;
+                            storage.addItem(item);
+                            Methods.removeRequiredAmount(item, chest.getInventory());
+                            stop = true;
+                            break;
+                        }
+                        if (stop) break;
                     }
-                    if (stop) break;
-                }
-                if (relative.getState() instanceof Hopper) {
-                    Hopper hopper = (Hopper) relative.getState();
-                    for (ItemStack item : hopper.getInventory().getContents()) {
-                        if (item == null) continue;
-                        if (storage.firstEmpty() == -1) break;
-                        storage.addItem(item);
-                        Methods.removeRequiredAmount(item, hopper.getInventory());
-                        stop = true;
-                        break;
+                    if (relative.getState() instanceof Hopper) {
+                        Hopper hopper = (Hopper) relative.getState();
+                        for (ItemStack item : hopper.getInventory().getContents()) {
+                            if (item == null) continue;
+                            if (storage.firstEmpty() == -1) break;
+                            storage.addItem(item);
+                            Methods.removeRequiredAmount(item, hopper.getInventory());
+                            stop = true;
+                            break;
+                        }
+                        if (stop) break;
                     }
                     if (stop) break;
                 }
                 if (stop) break;
             }
-            if (stop) break;
-        }
+        } catch (Exception e ) {}
     }
 
 }

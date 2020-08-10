@@ -54,7 +54,9 @@ public class CarpentryMillListener implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if (!instance.getUtilLists().machines.containsKey(event.getBlock().getLocation())) return;
+        event.setDropItems(false);
         Machine mill = instance.getUtilLists().machines.get(event.getBlock().getLocation());
+        mill.getLocation().getWorld().dropItemNaturally(mill.getLocation(), mill.getItem());
         mill.remove();
     }
 

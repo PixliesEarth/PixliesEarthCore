@@ -33,7 +33,7 @@ public class MiniMick {
         }
 
         api = new DiscordApiBuilder().setToken(token).login().join();
-        api.updateActivity(ActivityType.WATCHING, "you.");
+        api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
 
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().startsWith("/link")) {

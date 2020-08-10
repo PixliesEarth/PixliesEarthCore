@@ -21,6 +21,7 @@ public enum Permission {
     MANAGE_RELATIONS,
     BANK,
     PURCHASE_UPGRADES,
+    FOREIGN_PERMS
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {

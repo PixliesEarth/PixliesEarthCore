@@ -39,6 +39,7 @@ public class ProtectionListener implements Listener {
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return;
         if (host.getExtras().containsKey("PERMISSION:" + guest.getNationId() + ":BUILD")) return;
+        if (profile.getExtras().containsKey("PERMISSION:" + guest.getNationId() + ":BUILD")) return;
 
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
