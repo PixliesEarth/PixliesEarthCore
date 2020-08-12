@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.discord.DiscordIngameRank;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -12,12 +14,14 @@ import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import net.luckperms.api.model.group.Group;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.permission.Role;
 
 import java.util.*;
 
@@ -252,6 +256,26 @@ public class Profile {
 
     public boolean isStaff() {
         return instance.getUtilLists().staffMode.contains(UUID.fromString(uniqueId));
+    }
+
+    public Player getAsPlayer() {
+        return getAsOfflinePlayer().isOnline() ? getAsOfflinePlayer().getPlayer() : null;
+    }
+
+    public Group getRank() {
+        return instance.getLuckPerms().getGroupManager().getGroup(instance.getLuckPerms().getUserManager().getUser(UUID.fromString(uniqueId)).getPrimaryGroup());
+    }
+
+    public boolean discordIsSynced() {
+        return !discord.equalsIgnoreCase("NONE");
+    }
+
+    public void syncDiscordAndIngameRoles() {
+        if (!discordIsSynced()) return;
+        try {
+            Role rank = MiniMick.getApi().getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(getRank().getName())).get();
+            rank.addUser(MiniMick.getApi().getUserById(discord).get());
+        } catch (Exception ignored) {}
     }
 
     public static Profile getByDiscord(String discordId) {

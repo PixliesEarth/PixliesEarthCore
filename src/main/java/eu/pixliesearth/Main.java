@@ -47,6 +47,7 @@ import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.*;
 import lombok.Getter;
+import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -56,6 +57,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -88,6 +90,7 @@ public final class Main extends JavaPlugin {
     public boolean gulagActive = false;
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
+    private @Getter LuckPerms luckPerms;
 
     @Override
     public void onEnable() {
@@ -150,10 +153,12 @@ public final class Main extends JavaPlugin {
                 }
             }
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Profile profile : utilLists.profiles.values()) {
+            for (Player player : getServer().getOnlinePlayers()) {
+                Profile profile = getProfile(player.getUniqueId());
                 if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
                     profile.setPlayTime(profile.getPlayTime() + 1);
-                profile.backup();
+                profile.syncDiscordAndIngameRoles();
+                profile.save();
             }
             Bukkit.getConsoleSender().sendMessage("§aDone.");
         }, 20 * 60, (20 * 60) * 5);
@@ -237,6 +242,10 @@ public final class Main extends JavaPlugin {
 
         // MACHINES
         machineTask.init();
+
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if (provider != null)
+            luckPerms = provider.getProvider();
 
     }
 

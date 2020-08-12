@@ -13,6 +13,7 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionType;
+import org.javacord.api.entity.permission.Role;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class MiniMick {
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().startsWith("/link")) {
                 String[] split = event.getMessageContent().split(" ");
+                event.deleteMessage();
                 if (split.length == 1) {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, you have to give me a code so I can verify your account.");
                     return;
@@ -53,8 +55,10 @@ public class MiniMick {
                     profile.setDiscord(event.getMessageAuthor().getIdAsString());
                     profile.backup();
                     event.getServer().get().addRoleToUser(event.getMessageAuthor().asUser().get(), event.getServer().get().getRoleById("709463355529887854").get());
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
                     Main.getInstance().getUtilLists().discordcodes.remove(split[1]);
+                    Role rank = api.getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(profile.getRank().getName())).get();
+                    rank.addUser(event.getMessageAuthor().asUser().get());
+                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
                 } else {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is invalid.");
                 }
