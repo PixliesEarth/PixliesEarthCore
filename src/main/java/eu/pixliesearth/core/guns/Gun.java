@@ -69,7 +69,7 @@ public class Gun {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
             Main.getInstance().getUtilLists().ammos.remove(sb.get());
-        }, 20 * 30);
+        }, 20 * 5);
     }
 
     public static Gun getByItem(@Nonnull ItemStack item) {

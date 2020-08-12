@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
@@ -94,7 +95,13 @@ public class NationCommand implements CommandExecutor, TabExecutor {
             if (!found)
                 sendHelp(sender, 1);
         } else {
-            sendHelp(sender, 1);
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Profile profile = instance.getProfile(player.getUniqueId());
+                infoNation.sendNationInfo(profile.getCurrentNation(), player);
+            } else  {
+                sendHelp(sender, 1);
+            }
         }
         return false;
     }

@@ -82,7 +82,7 @@ public class infoNation implements SubCommand {
         return false;
     }
 
-    public void sendNationInfo(Nation nation, CommandSender sender) {
+    public static void sendNationInfo(Nation nation, CommandSender sender) {
         sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
         sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());

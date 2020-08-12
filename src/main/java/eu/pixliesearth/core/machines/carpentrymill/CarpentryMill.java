@@ -176,7 +176,7 @@ public class CarpentryMill extends Machine {
         // Change a pane to green when the time decreases, time / numberOfCells.
         switch ( p_progressIndex )
         {
-            case 0:
+            case 36:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / numberOfCells) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -184,7 +184,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 1:
+            case 37:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 1) ) )
                 inventory.setItem(p_progressIndex,
                         new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -192,7 +192,7 @@ public class CarpentryMill extends Machine {
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
-            case 2:
+            case 38:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 2) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -200,7 +200,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 3:
+            case 39:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 3) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -208,7 +208,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 4:
+            case 40:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 4) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -216,7 +216,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 5:
+            case 41:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 5) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -224,7 +224,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 6:
+            case 42:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 6) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -232,7 +232,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 7:
+            case 43:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 7) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -240,7 +240,7 @@ public class CarpentryMill extends Machine {
                                     .addLoreLine("§b" + timer.getRemainingAsString())
                                     .build());
                 break;
-            case 8:
+            case 44:
                 if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 8) ) )
                     inventory.setItem(p_progressIndex,
                             new ItemBuilder(GREEN_STAINED_GLASS_PANE)
@@ -254,7 +254,6 @@ public class CarpentryMill extends Machine {
     private void setProgressBar(boolean matching) {
         if (timer != null && timer.getRemaining() > 0) {
             for (int i : progressSlots) {
-                inventory.setItem(i, new ItemBuilder(CYAN_STAINED_GLASS_PANE).setDisplayName("§3§lLeft").addLoreLine("§b" + timer.getRemainingAsString()).build());
                 setProgressBarColourByIndex(i, timer.getRemaining());
             }
         } else {
