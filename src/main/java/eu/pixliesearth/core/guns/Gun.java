@@ -66,15 +66,6 @@ public class Gun {
             sb.set(snowball);
         });
         player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, SoundCategory.NEUTRAL, 10, 10);
-/*        new BukkitRunnable() {
-            public void run() {
-                if (!Main.getInstance().getUtilLists().ammos.containsKey(sb.get())) {
-                    this.cancel();
-                    return;
-                }
-                sb.get().getWorld().spawnParticle(Particle.SMOKE_NORMAL, sb.get().getLocation(), 1);
-            }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);*/
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             sb.get().remove();
             Main.getInstance().getUtilLists().ammos.remove(sb.get());

@@ -7,14 +7,8 @@ import java.util.List;
 
 public enum Era {
 
-    START("start", 0, 1, 0),
-    WOODEN("wooden", 1, 5, 5),
-    STONE("stone", 2, 10,10),
-    TRIBAL("tribal", 3, 15,20),
-    PROTO("proto", 4, 25,50),
-    ANCIENT("ancient", 5, 100,100),
-    BRONZE("bronze", 6, 125,150),
-    IRON("iron", 7, 200,200),
+    TRIBAL("Tribal", 0, 15, 0),
+    BRONZE("Bronze", 1, 30, 50),
     ;
 
     private @Getter String name;
@@ -29,21 +23,8 @@ public enum Era {
         this.cost = cost;
     }
 
-    public static List<Era> listEras() {
-        List<Era> list = new ArrayList<>();
-        list.add(START);
-        list.add(WOODEN);
-        list.add(STONE);
-        list.add(TRIBAL);
-        list.add(PROTO);
-        list.add(ANCIENT);
-        list.add(BRONZE);
-        list.add(IRON);
-        return list;
-    }
-
     public static Era getByName(String name) {
-        for (Era era : listEras())
+        for (Era era : values())
             if (era.name.equalsIgnoreCase(name))
                 return era;
         return null;
