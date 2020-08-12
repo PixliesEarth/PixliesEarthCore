@@ -41,10 +41,8 @@ public class InputNode extends Machine {
     public void save() throws IOException {
         File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
 
-        if (file.exists())
-            file.delete();
-
-        file.createNewFile();
+        if (!file.exists())
+            file.createNewFile();
 
         FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
         conf.set("location", location);
@@ -63,6 +61,7 @@ public class InputNode extends Machine {
         }
         conf.set("holo.location", armorStand.getLocation());
         conf.set("holo.text", getTitle());
+        conf.set("storage", null);
         for (int i = 0; i < storage.getSize(); i++) {
             if (storage.getItem(i) == null) continue;
             conf.set("storage." + i, storage.getItem(i));
