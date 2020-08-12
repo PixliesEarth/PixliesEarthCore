@@ -208,16 +208,19 @@ public class menuNation implements SubCommand {
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 //TODO ACTUALLY MAKE THEM WORK
                 menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3HAS§8/§3NEEDED§9XP").build(), event -> event.setCancelled(true)), 8, 4);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE);}), 2, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.MILITARY);}), 4, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.INDUSTRY);}), 6, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE, menu);}), 2, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.MILITARY, menu);}), 4, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.INDUSTRY, menu);}), 6, 2);
                 break;
         }
         gui.addPane(menu);
         gui.show(player);
     }
 
-    void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type) {
+    void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type, StaticPane menuPane) {
+        menuPane.clear();
+        menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
+        gui.addPane(menuPane);
         Profile profile = instance.getProfile(player.getUniqueId());
         Nation nation = profile.getCurrentNation();
         PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4);
@@ -260,7 +263,7 @@ public class menuNation implements SubCommand {
                 pagePane.setPage(pagePane.getPage() + 1);
                 gui.update();
             }
-        }), 0, 8);
+        }), 8, 0);
         gui.addPane(controlBar);
         gui.show(player);
     }

@@ -188,11 +188,15 @@ public class Nation {
 
     public void addForeignPermission(Nation host, Permission permission) {
         extras.put("PERMISSION:" + host.getNationId() + ":" + permission.name(), true);
+        host.getExtras().put("FOREIGN-PM:NATION:" + nationId + ":" + permission.name(), true);
+        host.save();
         save();
     }
 
     public void removeForeignPermission(Nation host, Permission permission) {
         extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        host.getExtras().remove("FOREIGN-PM:NATION:" + nationId + ":" + permission.name());
+        host.save();
         save();
     }
 
