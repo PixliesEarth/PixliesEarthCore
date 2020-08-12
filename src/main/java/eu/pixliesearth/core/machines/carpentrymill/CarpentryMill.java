@@ -27,6 +27,8 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.*;
 
+import static org.bukkit.Material.*;
+
 public class CarpentryMill extends Machine {
 
     public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/83d47199d034fae71e5c7ef1e12bf9f1adbb88c22ad4b0e9453abf8cee5c350b")).setDisplayName("§b§lCarpentry Mill").build();
@@ -60,7 +62,7 @@ public class CarpentryMill extends Machine {
         }
         Gui gui = new Gui(instance, 6, "§b§lCarpentry Mill");
         OutlinePane outline = new OutlinePane(0, 0, 9, 6);
-        outline.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
+        outline.addItem(new GuiItem(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
         outline.setRepeat(true);
         gui.addPane(outline);
         StaticPane pane = new StaticPane(1, 1, 9, 4);
@@ -88,7 +90,7 @@ public class CarpentryMill extends Machine {
             inventory = Bukkit.createInventory(null, 9 * 6, "§b§lCarpentry Mill §8| " + item.icon.getItemMeta().getDisplayName());
             for (int i = 0; i < inventory.getSize(); i++) {
                 if (craftSlots.contains(i) || resultSlots.contains(i)) continue;
-                inventory.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
+                inventory.setItem(i, new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build());
             }
             int ingredientsAdded = 0;
             for (ItemStack ingredients : item.ingredients) {
@@ -96,7 +98,7 @@ public class CarpentryMill extends Machine {
                 ingredientsAdded++;
             }
         }
-        inventory.setItem(53, new ItemBuilder(Material.BARRIER).setDisplayName("§c§lBack").build());
+        inventory.setItem(53, new ItemBuilder(BARRIER).setDisplayName("§c§lBack").build());
         update();
         player.openInventory(inventory);
     }
@@ -160,14 +162,105 @@ public class CarpentryMill extends Machine {
         }
     }
 
+    /*
+     * Used to change the colour of the progressbar panels.
+     * @param p_progressIndex: Position of pane in inventory row.
+     * @param p_timeToCompleteMilliseconds: Time left for the recipe to be completed.
+    */
+    private void setProgressBarColourByIndex
+    ( int p_progressIndex, long p_timeToCompleteMilliseconds )
+    {
+        // The progress bar is only 9 inventory cells long.
+        int numberOfCells = 9;
+
+        // Change a pane to green when the time decreases, time / numberOfCells.
+        switch ( p_progressIndex )
+        {
+            case 0:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / numberOfCells) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 1:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 1) ) )
+                inventory.setItem(p_progressIndex,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
+                break;
+            case 2:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 2) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 3:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 3) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 4:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 4) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 5:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 5) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 6:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 6) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 7:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 7) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+            case 8:
+                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 8) ) )
+                    inventory.setItem(p_progressIndex,
+                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                    .setDisplayName("§3§lLeft")
+                                    .addLoreLine("§b" + timer.getRemainingAsString())
+                                    .build());
+                break;
+        }
+    }
+
     private void setProgressBar(boolean matching) {
         if (timer != null && timer.getRemaining() > 0) {
-            for (int i : progressSlots)
-                inventory.setItem(i, new ItemBuilder(Material.CYAN_STAINED_GLASS_PANE).setDisplayName("§3§lLeft").addLoreLine("§b" + timer.getRemainingAsString()).build());
+            for (int i : progressSlots) {
+                inventory.setItem(i, new ItemBuilder(CYAN_STAINED_GLASS_PANE).setDisplayName("§3§lLeft").addLoreLine("§b" + timer.getRemainingAsString()).build());
+                setProgressBarColourByIndex(i, timer.getRemaining());
+            }
         } else {
             if (!matching)
                 for (int i : progressSlots)
-                    inventory.setItem(i, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§lWrong ingredients").build());
+                    inventory.setItem(i, new ItemBuilder(RED_STAINED_GLASS_PANE).setDisplayName("§c§lWrong ingredients").build());
         }
     }
 
