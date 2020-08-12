@@ -51,8 +51,10 @@ public class Machine {
     public void save() throws IOException {
         File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
 
-        if (!file.exists())
-            file.createNewFile();
+        if (file.exists())
+            file.delete();
+
+        file.createNewFile();
 
         FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
         conf.set("location", location);

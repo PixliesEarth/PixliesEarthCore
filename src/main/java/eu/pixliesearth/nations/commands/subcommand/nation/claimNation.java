@@ -17,6 +17,7 @@ import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class claimNation implements SubCommand {
             case 2:
                 if (args[0].equalsIgnoreCase("one")) {
                     Nation nation = Nation.getByName(args[1]);
-                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
@@ -103,12 +104,12 @@ public class claimNation implements SubCommand {
                     NationChunk.claim(player, player.getWorld().getName(), player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_OTHER, nation.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     Nation nation = Nation.getByName(args[1]);
-                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                        Lang.NO_PERMISSIONS.send(player);
-                        return false;
-                    }
                     if (nation == null) {
                         Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
+                        Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
@@ -120,6 +121,14 @@ public class claimNation implements SubCommand {
                     }
                 } else if (args[0].equalsIgnoreCase("fill")) {
                     Nation nation = Nation.getByName(args[1]);
+                    if (nation == null) {
+                        Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
@@ -128,6 +137,10 @@ public class claimNation implements SubCommand {
                     long start = System.currentTimeMillis();
                     if (!profile.isInNation()) {
                         Lang.NOT_IN_A_NATION.send(player);
+                        return false;
+                    }
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, profile.getCurrentNation())) {
+                        Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
                     int max = Integer.parseInt(args[1]);
@@ -168,6 +181,10 @@ public class claimNation implements SubCommand {
                     Nation nation = Nation.getByName(args[2]);
                     if (nation == null) {
                         Lang.NATION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
+                        Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
                     int max = Integer.parseInt(args[1]);
@@ -211,13 +228,14 @@ public class claimNation implements SubCommand {
                         Lang.NATION_DOESNT_EXIST.send(player);
                         return false;
                     }
-                    final List<String> chunks1 = nation1.getChunks();
-                    nation1.unclaimAll();
-                    for (String s : chunks1) {
-                        NationChunk nc = NationChunk.fromString(s);
-                        nc.setNationId(nation2.getNationId());
-                        nc.claim();
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && (!Permission.hasForeignPermission(profile, Permission.CLAIM, nation1) || !Permission.hasForeignPermission(profile, Permission.CLAIM, nation2))) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
                     }
+                    final List<String> chunks1 = new ArrayList<>(nation1.getChunks());
+                    nation1.unclaimAll();
+                    for (String s : chunks1)
+                        NationChunk.fromString(s.replace(nation1.getNationId(), nation2.getNationId())).claim();
                     Lang.PLAYER_CLAIM_ALLED.broadcast("%PLAYER%;" + player.getName(), "%NATION1%;" + nation1.getName(), "%NATION2%;" + nation2.getName());
                 }
                 break;

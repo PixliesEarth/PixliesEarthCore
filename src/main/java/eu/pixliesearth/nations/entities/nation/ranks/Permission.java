@@ -35,6 +35,8 @@ public enum Permission {
     }
 
     public static boolean hasForeignPermission(Profile profile, Permission permission, Nation host) {
+        if (profile.getNationId().equals(host.getNationId()))
+            return hasNationPermission(profile, permission);
         if (profile.getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name())) return true;
         if (profile.isInNation())
             return profile.getCurrentNation().getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name());

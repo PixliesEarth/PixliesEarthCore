@@ -143,7 +143,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
                 sender.sendMessage("§b* §7/n info §c<NATION/player> §c[player]");
                 sender.sendMessage("§b* §7/n settlements §c[add/remove] [NAME]");
-                sender.sendMessage("§b* §7/n list");
+                sender.sendMessage("§b* §7/n list §c[PAGE]");
                 sender.sendMessage("§b* §7/n ally §c<NATION>");
                 sender.sendMessage("§b* §7/n neutral §c<NATION>");
                 sender.sendMessage("§b* §7/n menu");
@@ -151,7 +151,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
             case 3:
                 sender.sendMessage("§b* §7/n chat §c<public/ally/nation>");
                 sender.sendMessage("§b* §7/n bank §c<deposit/withdraw/balance> [AMOUNT/NATION] §e[NATION]");
-                sender.sendMessage("§b* §7/n top");
+                sender.sendMessage("§b* §7/n top §c[PAGE]");
                 sender.sendMessage("§b* §7/n setflag");
                 sender.sendMessage("§b* §7/n fp §cset/unset PERMISSION nation/player §eNATIONNAME/PLAYERNAME");
                 sender.sendMessage("§b* §7/n access §cplayer/nation PLAYERNAME/NATIONNAME §eset/unset");
