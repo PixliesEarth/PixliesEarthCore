@@ -23,7 +23,7 @@ public class PrivateMessage implements CommandExecutor, Module {
         }
         if (!sender.hasPermission("earth.chat.bypassblacklist")) {
             for (String arg : args)
-                for (String s1 : config.getStringList("modules.privatemessage.blacklist"))
+                for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
                     if (arg.equalsIgnoreCase(s1)) {
                         sender.sendMessage("§aEARTH §8| §7You are not allowed to say §b" + s1 + " §7here.");
                         return false;

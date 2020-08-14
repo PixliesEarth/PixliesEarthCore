@@ -252,6 +252,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         discordDisable();
+        machineTask.stop();
         dynmapKernel.onDisable();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();

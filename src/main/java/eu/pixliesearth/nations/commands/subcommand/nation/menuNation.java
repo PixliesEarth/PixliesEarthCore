@@ -241,6 +241,7 @@ public class menuNation implements SubCommand {
                 nation.setXpPoints(nation.getXpPoints() - upgrade.getCost());
                 nation.getUpgrades().add(upgrade.name());
                 nation.save();
+                upgrade.getExecute().accept(nation, player);
                 for (String s : nation.getMembers())
                     if (Bukkit.getPlayer(UUID.fromString(s)) != null)
                         Lang.PLAYER_PURCHASED_NATION_UPGRADE.send(Bukkit.getPlayer(UUID.fromString(s)), "%PLAYER%;" + player.getName(), "%UPGRADE%;" + upgrade.getDisplayName());

@@ -24,4 +24,9 @@ public class MachineTask extends BukkitRunnable {
                 machine.tick();
     }
 
+    public void stop() {
+        ready = false;
+        cancel();
+    }
+
 }
