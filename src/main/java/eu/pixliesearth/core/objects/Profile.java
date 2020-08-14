@@ -10,16 +10,14 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.luckperms.api.model.group.Group;
 import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.javacord.api.entity.permission.Role;
 
@@ -226,6 +224,10 @@ public class Profile {
         return !marriagePartner.equals("NONE");
     }
 
+    public int canAddHomes() {
+        return instance.getConfig().getInt("homesystem." + getRank().getName());
+    }
+
     public void addForeignPermission(Nation host, Permission permission) {
         extras.put("PERMISSION:" + host.getNationId() + ":" + permission.name(), true);
         host.getExtras().put("FOREIGN-PM:PLAYER:" + uniqueId + ":" + permission.name(), true);
@@ -256,6 +258,31 @@ public class Profile {
         if (relations.get(uuid.toString()) == null)
             return false;
         return relations.get(uuid.toString()) == null || !relations.get(uuid.toString()).startsWith("REQ=");
+    }
+
+    public void teleport(Location location, String locationName) {
+        Player player = getAsPlayer();
+        if (Energy.calculateNeeded(player.getLocation(), location) > energy) {
+            player.sendMessage(Lang.NOT_ENOUGH_ENERGY.get(player));
+            return;
+        }
+        long cooldown = (long) Energy.calculateTime(player.getLocation(), location);
+        if (cooldown < 1.0)
+            cooldown = (long) 1.0;
+        Timer timer = new Timer(cooldown * 1000);
+        timers.put("Teleport", timer.toMap());
+        save();
+        player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", locationName).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
+        Bukkit.getScheduler().runTaskLater(instance, () -> {
+            if (timers.containsKey("Teleport")) {
+                timers.remove("Teleport");
+                save();
+                player.teleport(location);
+                Energy.take(instance.getProfile(player.getUniqueId()), Energy.calculateNeeded(player.getLocation(), location));
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+            }
+        }, cooldown * 20);
     }
 
     public boolean isStaff() {

@@ -80,6 +80,11 @@ public enum Lang {
     NOT_ENOUGH_BOOSTS(Lang.EARTH, new HashMap<>()),
     BOOST_EXPIRED(Lang.EARTH, new HashMap<>()),
     ITEM_HAS_TO_BE_X(Lang.EARTH, new HashMap<>()),
+    X_DOESNT_EXIST(Lang.EARTH, new HashMap<>()),
+    X_ALREADY_EXISTS(Lang.EARTH, new HashMap<>()),
+    MAX_HOMESIZE_REACHED(Lang.EARTH, new HashMap<>()),
+    HOME_ADDED(Lang.EARTH, new HashMap<>()),
+    HOME_REMOVED(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),

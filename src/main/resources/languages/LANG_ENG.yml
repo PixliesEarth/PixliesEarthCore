@@ -217,3 +217,8 @@ REMOVED_PERMISSION_FROM_X: "&7You took the permission &b%PERMISSION% &7from &b%X
 ADDED_CHUNK_ACCESS_TO_X: "&7You just gave &b%X% &7elevated access to this chunk."
 REMOVED_CHUNK_ACCESS_FROM_X: "&7You just took the elevated access on this chunk away from &b%X%&7."
 BOTH_PLAYERS_IN_THE_SAME_NATION: "&7Both players are in the same nation."
+X_DOESNT_EXIST: "&7This %X% doesn't exist."
+X_ALREADY_EXISTS: "&7This %X% already exists."
+MAX_HOMESIZE_REACHED: "&7You already set the maximum amount of homes. You want more? &6purchase a rank at &6&lhttps://store.pixlies.net"
+HOME_ADDED: "&7You added a home with the name &b%HOME%&7."
+HOME_REMOVED: "&7You removed a home with the name &b%HOME%&7."

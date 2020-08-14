@@ -26,3 +26,15 @@ modules:
     min-amount: 1.0
   shopsystem:
     enabled: true
+  homesystem:
+    helper: 3
+    mod: 3
+    admin: 666
+    dev: 666
+    manager: 666
+    ultimate: 5
+    snow: 4
+    nitrogen: 4
+    royal: 3
+    corporal: 3
+    default: 1

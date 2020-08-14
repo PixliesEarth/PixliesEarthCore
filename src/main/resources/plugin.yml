@@ -192,6 +192,8 @@ commands:
     description: Set gulag spawn
   stats:
     description: stats
+  home:
+    description: homecommand
 
 permissions:
   # GENERAL
