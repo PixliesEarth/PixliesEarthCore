@@ -49,10 +49,7 @@ public class claimNation implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
-            return false;
-        }
+        if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
