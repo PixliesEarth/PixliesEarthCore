@@ -225,7 +225,7 @@ public class Profile {
     }
 
     public int canAddHomes() {
-        return instance.getConfig().getInt("homesystem." + getRank().getName());
+        return instance.getConfig().getInt("modules.homesystem." + getRank().getName());
     }
 
     public void addForeignPermission(Nation host, Permission permission) {
