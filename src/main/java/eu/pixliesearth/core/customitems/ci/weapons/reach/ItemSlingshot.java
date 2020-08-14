@@ -2,8 +2,14 @@ package eu.pixliesearth.core.customitems.ci.weapons.reach;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.CustomItem;
+import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
+import eu.pixliesearth.events.SlingShotEvent;
+import eu.pixliesearth.localization.Lang;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -73,6 +79,43 @@ public class ItemSlingshot implements CustomItem {
     @Override
     public boolean enchantable() {
         return false;
+    }
+
+    @Override
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.STICK) {
+                if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
+                    if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
+                        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(1).equals(new ItemSlingshot().getLore().get(1))) {
+                            if (event.getPlayer().getInventory().contains(Material.COBBLESTONE) || event.getPlayer().getInventory().contains(Material.STONE) || event.getPlayer().getInventory().contains(Material.GRAVEL)) {
+                                if (!(Main.getInstance().getUtilLists().reloading.isEmpty())) {
+                                    if (Main.getInstance().getUtilLists().reloading.contains(event.getPlayer().getUniqueId())) {
+                                        event.getPlayer().sendActionBar(Lang.CUSTOM_SLINGSHOT_RELOADING_ACTIONBAR.get(event.getPlayer()));
+                                        return;
+                                    }
+                                }
+                                String[] splitted = event.getPlayer().getInventory().getItemInMainHand().getLore().get(2).split(":");
+                                String predurability = splitted[1].replace(" ", "");
+                                int durability = Integer.parseInt(predurability);
+
+                                int newDurability = durability - 1;
+                                if (newDurability == 0) {
+                                    ItemsInteractEvent.removeOne(event.getPlayer().getInventory().getItemInMainHand(), event.getPlayer());
+                                } else {
+                                    ArrayList<String> lore = new ArrayList<String>();
+                                    lore.add(new ItemSlingshot().getLore().get(0));
+                                    lore.add(new ItemSlingshot().getLore().get(1));
+                                    lore.add(splitted[0] + ": " + newDurability);
+                                    event.getPlayer().getInventory().getItemInMainHand().setLore(lore);
+                                }
+                                Bukkit.getPluginManager().callEvent(new SlingShotEvent(event.getPlayer(), "SnowStone"));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

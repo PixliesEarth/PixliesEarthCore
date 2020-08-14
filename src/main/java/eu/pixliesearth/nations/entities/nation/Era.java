@@ -8,7 +8,10 @@ import java.util.List;
 public enum Era {
 
     TRIBAL("Tribal", 0, 15, 0),
-    BRONZE("Bronze", 1, 30, 50),
+    ANCIENT("Ancient", 1, 25, 15),
+    MEDIEVAL("Medieval", 2, 100, 40),
+    MODERN("Modern", 3, 200, 75),
+    FUTURE("Future", 4, 300, 150),
     ;
 
     private @Getter String name;

@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 public class ChatSystem implements Listener, Module {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event) {
         // CHAT INPUTS
         if (config.getBoolean("modules.chatsystem.enabled")) {
@@ -147,13 +148,9 @@ public class ChatSystem implements Listener, Module {
                 }
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
-                    String[] split = event.getMessage().split(" ");
-                    for (String s : split)
                         for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (s.equalsIgnoreCase(s1)) {
-                                event.setMessage(event.getMessage().replace(s, Methods.replaceBadWord(s)));
-                                return;
-                            }
+                            if (event.getMessage().contains(s1))
+                                event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
                 }
 
                 // "@" MENTIONING SYSTEM

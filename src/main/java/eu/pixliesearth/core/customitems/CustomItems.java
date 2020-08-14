@@ -31,4 +31,11 @@ public enum CustomItems {
         return false;
     }
 
+    public static CustomItems getByItemStack(ItemStack item) {
+        for (CustomItems ci : values())
+            if (item.isSimilar(ci.clazz.getItem()))
+                return ci;
+        return null;
+    }
+
 }
