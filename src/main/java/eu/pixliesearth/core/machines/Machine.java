@@ -6,6 +6,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.core.machines.carpentrymill.CarpentryMill;
+import eu.pixliesearth.core.machines.ingotforge.IngotForge;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
@@ -123,6 +124,9 @@ public class Machine {
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
             }
             return new InputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
+        } else if (conf.getString("type").equalsIgnoreCase(MachineType.INGOT_FORGE.name())) {
+            holo.appendTextLine(conf.getString("holo.text"));
+            return new IngotForge(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
         }
         return null;
     }
@@ -131,7 +135,8 @@ public class Machine {
 
         CARPENTRY_MILL,
         INPUT_NODE,
-        OUTPUT_NODE
+        OUTPUT_NODE,
+        INGOT_FORGE,
         ;
 
     }
