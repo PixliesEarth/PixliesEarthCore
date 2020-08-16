@@ -80,7 +80,7 @@ public class ProtectionListener implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
         Nation host = nc.getCurrentNation();
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
         if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
@@ -104,7 +104,7 @@ public class ProtectionListener implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
         Nation host = nc.getCurrentNation();
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
         if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
@@ -129,7 +129,7 @@ public class ProtectionListener implements Listener {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (nc == null) return;
             Nation host = nc.getCurrentNation();
-            if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+            if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
             if (Permission.hasAccessHere(profile, nc)) return;
             if (!profile.isInNation()) {
                 player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
