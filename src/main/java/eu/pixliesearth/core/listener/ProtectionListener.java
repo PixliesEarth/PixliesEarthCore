@@ -30,20 +30,17 @@ public class ProtectionListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
             event.setCancelled(true);
             return;
         }
-        Nation host = nc.getCurrentNation();
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return;
         if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return;
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) {
-            player.sendActionBar("§aYou have elevated access here.");
-            return;
-        }
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
     }
@@ -56,20 +53,17 @@ public class ProtectionListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
             event.setCancelled(true);
             return;
         }
-        Nation host = nc.getCurrentNation();
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return;
         if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return;
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) {
-            player.sendActionBar("§aYou have elevated access here.");
-            return;
-        }
 
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
@@ -85,20 +79,17 @@ public class ProtectionListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
             event.setCancelled(true);
             return;
         }
-        Nation host = nc.getCurrentNation();
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return;
         if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return;
-        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) {
-            player.sendActionBar("§aYou have elevated access here.");
-            return;
-        }
 
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
@@ -112,20 +103,17 @@ public class ProtectionListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+        if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
             event.setCancelled(true);
             return;
         }
-        Nation host = nc.getCurrentNation();
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return;
         if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return;
-        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) {
-            player.sendActionBar("§aYou have elevated access here.");
-            return;
-        }
 
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
@@ -140,20 +128,17 @@ public class ProtectionListener implements Listener {
             Player player = (Player) event.getDamager();
             Profile profile = instance.getProfile(player.getUniqueId());
             if (nc == null) return;
+            Nation host = nc.getCurrentNation();
+            if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
+            if (Permission.hasAccessHere(profile, nc)) return;
             if (!profile.isInNation()) {
                 player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
                 event.setCancelled(true);
                 return;
             }
-            Nation host = nc.getCurrentNation();
             Nation guest = profile.getCurrentNation();
             if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return;
             if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return;
-            if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
-            if (Permission.hasAccessHere(profile, nc)) {
-                player.sendActionBar("§aYou have elevated access here.");
-                return;
-            }
 
             player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
             event.setCancelled(true);
