@@ -9,17 +9,16 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -56,11 +55,17 @@ public class CarpentryMill extends Machine {
 
     @Override
     public void open(Player player) {
+        NationChunk nc = NationChunk.get(location.getChunk());
+        if (nc == null) {
+            player.sendActionBar(Lang.MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY.get(player));
+            return;
+        }
         if (inventory != null) {
             player.openInventory(inventory);
             return;
         }
-        Gui gui = new Gui(instance, 6, "§b§lCarpentry Mill");
+        Nation nation = nc.getCurrentNation();
+        Gui gui = new Gui(instance, 6, getTitle());
         OutlinePane outline = new OutlinePane(0, 0, 9, 6);
         outline.addItem(new GuiItem(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
         outline.setRepeat(true);
@@ -69,14 +74,23 @@ public class CarpentryMill extends Machine {
         int x = 0;
         int y = 0;
         for (MachineCraftable item : MachineCraftable.values()) {
-            if (!item.type.equals(MachineType.CARPENTRY_MILL)) continue;
+            if (!item.type.equals(type)) continue;
             if (x + 1 > 8) {
                 x = 0;
                 y++;
             }
-            pane.addItem(new GuiItem(new ItemBuilder(item.icon).build(), event -> {
+            ItemBuilder iconBuilder = new ItemBuilder(item.icon);
+            if (item.eraNeeded.canAccess(nation)) {
+                iconBuilder.setDisplayName("§a§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.addLoreLine("§7Era needed: §a" + item.eraNeeded.getName());
+            } else {
+                iconBuilder.setDisplayName("§c§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.addLoreLine("§7Era needed: §c" + item.eraNeeded.getName());
+            }
+            pane.addItem(new GuiItem(iconBuilder.build(), event -> {
                 event.setCancelled(true);
-                openItemCrafter(player, item);
+                if (item.eraNeeded.canAccess(nation))
+                    openItemCrafter(player, item);
             }), x, y);
             x++;
         }
@@ -87,7 +101,7 @@ public class CarpentryMill extends Machine {
     private void openItemCrafter(Player player, MachineCraftable item) {
         wantsToCraft = item;
         if (inventory == null) {
-            inventory = Bukkit.createInventory(null, 9 * 6, "§b§lCarpentry Mill §8| " + item.icon.getItemMeta().getDisplayName());
+            inventory = Bukkit.createInventory(null, 9 * 6, getTitle() + " §8| " + item.icon.getItemMeta().getDisplayName());
             for (int i = 0; i < inventory.getSize(); i++) {
                 if (craftSlots.contains(i) || resultSlots.contains(i)) continue;
                 inventory.setItem(i, new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build());

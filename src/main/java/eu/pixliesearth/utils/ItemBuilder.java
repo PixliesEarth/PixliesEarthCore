@@ -24,9 +24,9 @@ public class ItemBuilder {
     private ItemMeta meta;
 
     public ItemBuilder(ItemStack item) {
-        this.item = item;
-        this.meta = item.getItemMeta();
-        this.lore = item.getLore() == null ? new ArrayList<>() : item.getLore();
+        this.item = item.clone();
+        this.meta = this.item.getItemMeta();
+        this.lore = this.item.getLore() == null ? new ArrayList<>() : item.getLore();
     }
 
     public ItemBuilder(Material mat, int amount) {

@@ -7,21 +7,22 @@ import java.util.List;
 
 public enum Era {
 
-    TRIBAL("Tribal", 0, 15, 0),
-    ANCIENT("Ancient", 1, 25, 15),
-    MEDIEVAL("Medieval", 2, 100, 40),
-    MODERN("Modern", 3, 200, 75),
-    FUTURE("Future", 4, 300, 150),
+    TRIBAL("Tribal", 1, 3, 0),
+    ANCIENT("Ancient", 2, 20, 15),
+    MEDIEVAL("Medieval", 3, 100, 40),
+    VICTORIAN("Victorian", 4, 150, 75),
+    MODERN("Modern", 5, 300, 150),
+    FUTURE("Future", 6, 300, 300),
     ;
 
-    private @Getter String name;
-    private @Getter int level;
-    private @Getter int chunksPerPlayer;
-    private @Getter int cost;
+    private @Getter final String name;
+    private @Getter final int number;
+    private @Getter final int chunksPerPlayer;
+    private @Getter final int cost;
 
-    Era(String name, int level, int chunksPerPlayer, int cost) {
+    Era(String name, int number, int chunksPerPlayer, int cost) {
         this.name = name;
-        this.level = level;
+        this.number = number;
         this.chunksPerPlayer = chunksPerPlayer;
         this.cost = cost;
     }
@@ -33,8 +34,15 @@ public enum Era {
         return null;
     }
 
+    public static Era getByNumber(int number) {
+        for (Era era : values())
+            if (era.number == number)
+                return era;
+        return null;
+    }
+
     public boolean canAccess(Nation nation) {
-        return nation.getCurrentEra().level >= level;
+        return nation.getCurrentEra().number >= number;
     }
 
 }

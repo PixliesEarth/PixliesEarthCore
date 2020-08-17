@@ -1,6 +1,5 @@
 package eu.pixliesearth;
 
-import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -22,7 +21,7 @@ import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.CargoListener;
 import eu.pixliesearth.core.machines.carpentrymill.CarpentryMillListener;
 import eu.pixliesearth.core.machines.MachineTask;
-import eu.pixliesearth.core.machines.ingotforge.IngotForgeListener;
+import eu.pixliesearth.core.machines.kiln.KilnListener;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.ShopSystem;
@@ -53,8 +52,6 @@ import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
@@ -66,11 +63,9 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -373,7 +368,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new CarpentryMillListener(), this);
         manager.registerEvents(new CargoListener(), this);
-        manager.registerEvents(new IngotForgeListener(), this);
+        manager.registerEvents(new KilnListener(), this);
     }
 
     /**

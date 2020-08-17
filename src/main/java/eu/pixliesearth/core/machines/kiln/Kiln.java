@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.machines.ingotforge;
+package eu.pixliesearth.core.machines.kiln;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
@@ -9,17 +9,16 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -32,24 +31,24 @@ import java.util.*;
 
 import static org.bukkit.Material.*;
 
-public class IngotForge extends Machine {
+public class Kiln extends Machine {
 
-    public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/368ab8cf594da55f90f593bdc0b41e05925d75daa3ee7f1b49c2421d2bdead0")).setDisplayName("§c§lIngot Forge").build();
+    public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/368ab8cf594da55f90f593bdc0b41e05925d75daa3ee7f1b49c2421d2bdead0")).setDisplayName("§c§lKiln").build();
     private Inventory inventory;
     private int fuel;
 
-    public IngotForge(String id, Location location) {
-        super(id, location, MachineType.INGOT_FORGE, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
+    public Kiln(String id, Location location) {
+        super(id, location, MachineType.KILN, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
         armorStand.appendTextLine(getTitle());
         fuel = 0;
     }
 
     public String getTitle() {
-        return "§c§lIngot Forge";
+        return "§c§lKiln";
     }
 
-    public IngotForge(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, int fuel) {
-        super(id, location, MachineType.INGOT_FORGE, item, timer, armorStand, wantsToCraft);
+    public Kiln(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, int fuel) {
+        super(id, location, MachineType.KILN, item, timer, armorStand, wantsToCraft);
         this.fuel = fuel;
     }
 
@@ -90,30 +89,42 @@ public class IngotForge extends Machine {
 
     @Override
     public void open(Player player) {
+        NationChunk nc = NationChunk.get(location.getChunk());
+        if (nc == null) {
+            player.sendActionBar(Lang.MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY.get(player));
+            return;
+        }
         if (inventory != null) {
             player.openInventory(inventory);
             return;
         }
-        Gui gui = new Gui(instance, 6, "§c§lIngot Forge");
+        Nation nation = nc.getCurrentNation();
+        Gui gui = new Gui(instance, 6, getTitle());
         OutlinePane outline = new OutlinePane(0, 0, 9, 6);
         outline.addItem(new GuiItem(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
         outline.setRepeat(true);
         gui.addPane(outline);
-        StaticPane fuelPane = new StaticPane(0, 5, 1, 1);
-        fuelPane.addItem(new GuiItem(new ItemBuilder(MAGMA_BLOCK).setDisplayName("§c§lFUEL").addLoreLine("§a" + fuel + "§7/§a100").build(), event -> event.setCancelled(true)), 0, 0);
-        gui.addPane(fuelPane);
         StaticPane pane = new StaticPane(1, 1, 9, 4);
         int x = 0;
         int y = 0;
         for (MachineCraftable item : MachineCraftable.values()) {
-            if (!item.type.equals(MachineType.INGOT_FORGE)) continue;
+            if (!item.type.equals(type)) continue;
             if (x + 1 > 8) {
                 x = 0;
                 y++;
             }
-            pane.addItem(new GuiItem(new ItemBuilder(item.icon).build(), event -> {
+            ItemBuilder iconBuilder = new ItemBuilder(item.icon);
+            if (item.eraNeeded.canAccess(nation)) {
+                iconBuilder.setDisplayName("§a§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.addLoreLine("§7Era needed: §a" + item.eraNeeded.getName());
+            } else {
+                iconBuilder.setDisplayName("§c§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.addLoreLine("§7Era needed: §c" + item.eraNeeded.getName());
+            }
+            pane.addItem(new GuiItem(iconBuilder.build(), event -> {
                 event.setCancelled(true);
-                openItemCrafter(player, item);
+                if (item.eraNeeded.canAccess(nation))
+                    openItemCrafter(player, item);
             }), x, y);
             x++;
         }
@@ -124,7 +135,7 @@ public class IngotForge extends Machine {
     private void openItemCrafter(Player player, MachineCraftable item) {
         wantsToCraft = item;
         if (inventory == null) {
-            inventory = Bukkit.createInventory(null, 9 * 6, "§c§lIngot Forge §8| " + item.icon.getItemMeta().getDisplayName());
+            inventory = Bukkit.createInventory(null, 9 * 6, getTitle() + " §8| " + item.icon.getItemMeta().getDisplayName());
             for (int i = 0; i < inventory.getSize(); i++) {
                 if (craftSlots.contains(i) || resultSlots.contains(i)) continue;
                 inventory.setItem(i, new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build());

@@ -6,7 +6,8 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.core.machines.carpentrymill.CarpentryMill;
-import eu.pixliesearth.core.machines.ingotforge.IngotForge;
+import eu.pixliesearth.core.machines.kiln.Kiln;
+import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -124,9 +124,9 @@ public class Machine {
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
             }
             return new InputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
-        } else if (conf.getString("type").equalsIgnoreCase(MachineType.INGOT_FORGE.name())) {
+        } else if (conf.getString("type").equalsIgnoreCase(MachineType.KILN.name())) {
             holo.appendTextLine(conf.getString("holo.text"));
-            return new IngotForge(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
+            return new Kiln(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
         }
         return null;
     }
@@ -136,7 +136,7 @@ public class Machine {
         CARPENTRY_MILL,
         INPUT_NODE,
         OUTPUT_NODE,
-        INGOT_FORGE,
+        KILN,
         ;
 
     }
@@ -144,11 +144,7 @@ public class Machine {
     public enum MachineCraftable {
 
         // CARPENTRY MILL
-        CUT_WOOD(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").addLoreLine("§7Time: §b5 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 5),
-        MAKE_CHESTS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.CHEST).setDisplayName("Make Chests").addLoreLine("§a64 §7oak-logs > §a64 §7chests").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Collections.singletonList(new ItemStack(Material.CHEST, 64)), 10),
-        MAKE_FENCES(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_FENCE).setGlow().setDisplayName("Make Fences").addLoreLine("§a64 §7oak-log > §a3x64 §7oak-fences").addLoreLine("§7Time: §b20 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 64)), Arrays.asList(new ItemStack(Material.OAK_FENCE, 64), new ItemStack(Material.OAK_FENCE, 64), new ItemStack(Material.OAK_FENCE, 64)), 20),
-        STICKS_TO_PLANKS(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.STICK).setDisplayName("Sticks to Planks").addLoreLine("§a2x64 §7sticks > §a64 oak-planks").addLoreLine("§7Time: §b5 sec").build(), Arrays.asList(new ItemStack(Material.STICK, 64), new ItemStack(Material.STICK, 64)), Collections.singletonList(new ItemStack(Material.OAK_PLANKS, 64)), 5),
-        MAKE_ITEMFRAMES(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.ITEM_FRAME).setGlow().setDisplayName("Make Itemframes").addLoreLine("§a1 §7white-wool, §a16 §7sticks > §a16 §7item-frames").addLoreLine("§7Time: §b9 seconds").build(), Arrays.asList(new ItemStack(Material.WHITE_WOOL), new ItemStack(Material.STICK, 16)), Collections.singletonList(new ItemStack(Material.ITEM_FRAME, 16)), 9),
+        CUT_WOOD(MachineType.CARPENTRY_MILL, new ItemBuilder(Material.OAK_LOG).setDisplayName("Cut Wood").addLoreLine("§a32 §7oak-log > §a4x64 §7oak-planks").addLoreLine("§7Time: §b5 sec").build(), Collections.singletonList(new ItemStack(Material.OAK_LOG, 32)), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64), new ItemStack(Material.OAK_PLANKS, 64)), 5, Era.ANCIENT),
 
 
         ;
@@ -158,13 +154,15 @@ public class Machine {
         public List<ItemStack> ingredients;
         public List<ItemStack> results;
         public int seconds;
+        public Era eraNeeded;
 
-        MachineCraftable(MachineType type, ItemStack icon, List<ItemStack> ingredients, List<ItemStack> results, int seconds) {
+        MachineCraftable(MachineType type, ItemStack icon, List<ItemStack> ingredients, List<ItemStack> results, int seconds, Era eraNeeded) {
             this.type = type;
             this.icon = icon;
             this.ingredients = ingredients;
             this.results = results;
             this.seconds = seconds;
+            this.eraNeeded = eraNeeded;
         }
 
         public static boolean exists(String name) {
