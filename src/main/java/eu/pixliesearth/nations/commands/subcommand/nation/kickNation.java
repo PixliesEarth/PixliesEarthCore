@@ -49,7 +49,7 @@ public class kickNation implements SubCommand {
                 Lang.PLAYER_NOT_IN_NATION.send(player);
                 return false;
             }
-            if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasNationPermission(profile, Permission.MODERATE) && (!target.getNationId().equals(profile.getNationId()) && !Permission.hasForeignPermission(profile, Permission.MODERATE, target.getCurrentNation()))) {
+            if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.MODERATE, target.getCurrentNation())) {
                 Lang.NO_PERMISSIONS.send(player);
                 return false;
             }

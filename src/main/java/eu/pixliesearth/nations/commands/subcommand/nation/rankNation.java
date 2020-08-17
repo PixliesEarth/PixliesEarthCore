@@ -97,7 +97,7 @@ public class rankNation implements SubCommand {
                         Lang.RANK_DOESNT_EXIST.send(player);
                         return false;
                     }
-                    if (target.getNationRank().equalsIgnoreCase("leader")) {
+                    if (target.isLeader()) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }

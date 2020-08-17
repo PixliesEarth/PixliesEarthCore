@@ -40,8 +40,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
-import eu.pixliesearth.nations.entities.nation.NTop;
-import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.*;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
@@ -57,6 +56,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
@@ -69,6 +69,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -247,6 +248,18 @@ public final class Main extends JavaPlugin {
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null)
             luckPerms = provider.getProvider();
+
+        if (!NationManager.nations.containsKey("safezone")) {
+            Nation safezone = new Nation("safezone", "§6§lSafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            safezone.save();
+            safezone.setFlag(new ItemStack(Material.YELLOW_BANNER));
+        }
+
+        if (!NationManager.nations.containsKey("warzone")) {
+            Nation warzone = new Nation("warzone", "§c§lWarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            warzone.save();
+            warzone.setFlag(new ItemStack(Material.RED_BANNER));
+        }
 
     }
 

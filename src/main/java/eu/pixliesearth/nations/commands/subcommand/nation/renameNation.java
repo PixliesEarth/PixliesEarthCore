@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -37,11 +38,11 @@ public class renameNation implements SubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Nation nation;
+            Profile profile = instance.getProfile(player.getUniqueId());
             Map<String, String> placeholders;
             boolean success;
             switch (args.length) {
                 case 1:
-                    Profile profile = instance.getProfile(player.getUniqueId());
                     if (!profile.isInNation()) {
                         player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
                         return false;
@@ -68,11 +69,11 @@ public class renameNation implements SubCommand {
                     Lang.PLAYER_NAMED_NATION_NAME.broadcast(placeholders);
                     break;
                 case 2:
-                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    nation = Nation.getByName(args[1]);
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.NAME, nation)) {
                         player.sendMessage(Lang.NO_PERMISSIONS.get(player));
                         return false;
                     }
-                    nation = Nation.getByName(args[1]);
                     if (nation == null) {
                         player.sendMessage(Lang.NATION_DOESNT_EXIST.get(player));
                         return false;

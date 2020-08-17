@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -52,7 +53,7 @@ public class handoverCommand implements SubCommand {
                     Lang.NOT_IN_A_NATION.send(player);
                     return false;
                 }
-                if (!profile.getNationRank().equalsIgnoreCase("leader")) {
+                if (!profile.isLeader()) {
                     Lang.YOU_HAVE_TO_BE_LEADER.send(player);
                     return false;
                 }
@@ -76,9 +77,11 @@ public class handoverCommand implements SubCommand {
                 Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + player.getName(), "%NATION%;" + nation.getName(), "%TARGET%;" + target.getAsOfflinePlayer().getName());
                 break;
             case 2:
+                nation = Nation.getByName(args[1]);
                 boolean allowed = false;
                 if (!(sender instanceof Player)) allowed = true;
                 if (sender instanceof Player && instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) allowed = true;
+                if (sender instanceof Player && Permission.hasForeignPermission(instance.getProfile(((Player) sender).getUniqueId()), Permission.CHANGE_LEADERSHIP, nation)) allowed = true;
                 if (!allowed) {
                     Lang.NO_PERMISSIONS.send(sender);
                     return false;
@@ -89,25 +92,10 @@ public class handoverCommand implements SubCommand {
                     return false;
                 }
                 target = instance.getProfile(targetUUID);
-                nation = Nation.getByName(args[1]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(sender);
                     return false;
                 }
-/*                if (target.isInNation() && !target.getNationId().equals(nation.getNationId()) && target.getCurrentNation().getMembers().size() > 1) {
-                    for (String member : target.getCurrentNation().getMembers()) {
-                        Profile memberProf = instance.getProfile(UUID.fromString(member));
-                        if (memberProf.getNationRank().equalsIgnoreCase("admin")) {
-                            memberProf.setNationRank("leader");
-                            Nation n = memberProf.getCurrentNation();
-                            n.setLeader(memberProf.getUniqueId());
-                            memberProf.save();
-                            n.save();
-                            Lang.PLAYER_TRANSFERED_LEADERSHIP.broadcast("%PLAYER%;" + target.getAsOfflinePlayer().getName(), "%NATION%;" + n.getName(), "%TARGET%;" + memberProf.getAsOfflinePlayer().getName());
-                            break;
-                        }
-                    }
-                }*/
                 if (target.isInNation() && !target.getNationId().equals(nation.getNationId())) {
                     Nation oldNation = target.getCurrentNation();
                     oldNation.setLeader("NONE");

@@ -41,7 +41,7 @@ public class descriptionNation implements SubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
-        if (!profile.getNationRank().equals("leader")) {
+        if (!Permission.hasNationPermission(profile, Permission.DESCRIPTION)) {
             Lang.NO_PERMISSIONS.send(sender);
             return false;
         }
@@ -52,7 +52,6 @@ public class descriptionNation implements SubCommand {
         nation.save();
         for (Player np : nation.getOnlineMemberSet())
             np.sendMessage(Lang.PLAYER_CHANGED_DESCRIPTION.get(np).replace("%PLAYER%", np.getName()).replace("%DESC%", nation.getDescription()));
-
         return false;
     }
 }

@@ -60,6 +60,10 @@ public class foreignPermission implements SubCommand {
             return false;
         }
         Permission permission = Permission.valueOf(args[1].toUpperCase());
+        if (!Permission.hasForeignPermission(profile, permission, host)) {
+            Lang.NO_PERMISSIONS.send(player);
+            return false;
+        }
         if (args[2].equalsIgnoreCase("nation")) {
             Nation nation = Nation.getByName(args[3]);
             if (nation == null) {

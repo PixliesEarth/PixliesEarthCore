@@ -182,6 +182,10 @@ public class Profile {
         return Bukkit.getOfflinePlayer(UUID.fromString(uniqueId));
     }
 
+    public boolean isLeader() {
+        return nationRank.equalsIgnoreCase("leader");
+    }
+
     public void removeFromNation() {
         if (!isInNation()) return;
         this.inNation = false;

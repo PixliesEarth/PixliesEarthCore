@@ -38,7 +38,7 @@ public class leaveNation implements SubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
-        if (profile.getCurrentNationRank().getPriority() == 666.0) {
+        if (profile.isLeader()) {
             Lang.LEADER_CANT_LEAVE_NATION.send(player);
             return false;
         }

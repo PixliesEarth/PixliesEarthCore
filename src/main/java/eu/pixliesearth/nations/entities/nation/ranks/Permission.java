@@ -23,12 +23,16 @@ public enum Permission {
     BANK_DEPOSIT,
     BANK_WITHDRAW,
     PURCHASE_UPGRADES,
-    FOREIGN_PERMS
+    FOREIGN_PERMS,
+    DESCRIPTION,
+    NAME,
+    CHANGE_LEADERSHIP,
+    SET_FLAG
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
         if (!profile.isInNation()) return false;
-        if (profile.getNationRank().equals("leader")) return true;
+        if (profile.isLeader()) return true;
         Nation nation = profile.getCurrentNation();
         Rank rank = Rank.get(nation.getRanks().get(profile.getNationRank()));
         return rank.getPermissions().contains(permission.name());
