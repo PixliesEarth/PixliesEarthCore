@@ -174,18 +174,18 @@ public enum Lang {
     BOTH_PLAYERS_IN_THE_SAME_NATION(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
-    BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
-    BALANCE_OTHERS(Lang.ECONOMY, new HashMap<>()),
-    SET_PLAYER_BALANCE(Lang.ECONOMY, new HashMap<>()),
-    PAID_HIMSELF(Lang.ECONOMY, new HashMap<>()),
-    PAY_AMT_BELOW_MIN(Lang.ECONOMY, new HashMap<>()),
-    NOT_ENOUGH_MONEY(Lang.ECONOMY, new HashMap<>()),
-    UNEXPECTED_ECO_ERROR(Lang.ECONOMY, new HashMap<>()),
-    PAID_PLAYER_MONEY(Lang.ECONOMY, new HashMap<>()),
-    RECEIVED_MONEY_FROM_PLAYER(Lang.ECONOMY, new HashMap<>()),
-    PLAYER_DOESNT_HAVE_ENOUGH_MONEY(Lang.ECONOMY, new HashMap<>()),
-    TOOK_MONEY_FROM_PLAYER(Lang.ECONOMY, new HashMap<>()),
-    GAVE_MONEY_TO_PLAYER(Lang.ECONOMY, new HashMap<>()),
+    BALANCE_YOU(Lang.EARTH, new HashMap<>()),
+    BALANCE_OTHERS(Lang.EARTH, new HashMap<>()),
+    SET_PLAYER_BALANCE(Lang.EARTH, new HashMap<>()),
+    PAID_HIMSELF(Lang.EARTH, new HashMap<>()),
+    PAY_AMT_BELOW_MIN(Lang.EARTH, new HashMap<>()),
+    NOT_ENOUGH_MONEY(Lang.EARTH, new HashMap<>()),
+    UNEXPECTED_ECO_ERROR(Lang.EARTH, new HashMap<>()),
+    PAID_PLAYER_MONEY(Lang.EARTH, new HashMap<>()),
+    RECEIVED_MONEY_FROM_PLAYER(Lang.EARTH, new HashMap<>()),
+    PLAYER_DOESNT_HAVE_ENOUGH_MONEY(Lang.EARTH, new HashMap<>()),
+    TOOK_MONEY_FROM_PLAYER(Lang.EARTH, new HashMap<>()),
+    GAVE_MONEY_TO_PLAYER(Lang.EARTH, new HashMap<>()),
     DEPOSIT_MONEY_INTO_NATION(Lang.NATION, new HashMap<>()),
 
     // SUICIDE
@@ -276,7 +276,6 @@ public enum Lang {
     private Map<String, String> languages;
 
     public static final String EARTH = "§x§2§E§D§C§3§E§lE§x§3§0§C§A§3§E§lA§x§3§1§B§F§3§E§lR§x§3§8§B§2§4§3§lT§x§3§7§A§3§4§1§lH §8| ";
-    public static final String ECONOMY = "§aECONOMY §8| ";
     public static final String NATION = "§x§2§F§D§1§E§5§lN§x§3§4§C§6§D§8§lA§x§3§7§B§A§C§A§lT§x§3§5§B§0§B§F§lI§x§3§3§A§3§B§0§lO§x§3§2§9§9§A§5§lN §8| ";
     public static final String DISCORD = "§3DISCORD §8| ";
     public static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";

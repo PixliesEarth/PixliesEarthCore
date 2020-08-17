@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.commands.util;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,15 +19,15 @@ public class StaffCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (!player.hasPermission("earth.admin")) {
-            player.sendMessage("§aEARTH §8| §cInsufficient permissions.");
+            player.sendMessage(Lang.EARTH + "§cInsufficient permissions.");
             return false;
         }
         if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
             instance.getUtilLists().staffMode.remove(player.getUniqueId());
-            player.sendMessage("§aEARTH §8| §cDisabled §7staffmode.");
+            player.sendMessage(Lang.EARTH + "§cDisabled §7staffmode.");
         } else {
             instance.getUtilLists().staffMode.add(player.getUniqueId());
-            player.sendMessage("§aEARTH §8| §aenabled §7staffmode.");
+            player.sendMessage(Lang.EARTH + "§aenabled §7staffmode.");
         }
         return false;
     }

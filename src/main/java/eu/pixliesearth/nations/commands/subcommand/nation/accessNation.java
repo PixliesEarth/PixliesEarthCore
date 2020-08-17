@@ -48,6 +48,10 @@ public class accessNation implements SubCommand {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
+        if (args.length < 3) {
+            Lang.WRONG_USAGE.send(sender, "%USAGE%;/access player/nation PLAYERNAME/NATIONNAME set/unset");
+            return false;
+        }
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
