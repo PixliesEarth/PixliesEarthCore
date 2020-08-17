@@ -313,13 +313,15 @@ public class CarpentryMill extends Machine {
         armorStand.delete();
         if (!file.exists()) return;
         file.delete();
-        for (int i : craftSlots) {
-            if (inventory.getItem(i) == null) continue;
-            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
-        }
-        for (int i : resultSlots) {
-            if (inventory.getItem(i) == null) continue;
-            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+        if (inventory != null) {
+            for (int i : craftSlots) {
+                if (inventory.getItem(i) == null) continue;
+                location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+            }
+            for (int i : resultSlots) {
+                if (inventory.getItem(i) == null) continue;
+                location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+            }
         }
     }
 

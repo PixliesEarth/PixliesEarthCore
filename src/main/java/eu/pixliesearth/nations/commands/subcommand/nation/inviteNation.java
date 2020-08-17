@@ -32,6 +32,8 @@ public class inviteNation implements SubCommand {
         returner.put("add", 2);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 3);
+        for (Player player : Bukkit.getOnlinePlayers())
+            returner.put(player.getName(), 1);
         return returner;
     }
 

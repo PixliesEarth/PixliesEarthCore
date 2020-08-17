@@ -104,6 +104,9 @@ public class Kiln extends Machine {
         outline.addItem(new GuiItem(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
         outline.setRepeat(true);
         gui.addPane(outline);
+        StaticPane fuelPane = new StaticPane(0, 5, 1, 1);
+        fuelPane.addItem(new GuiItem(new ItemBuilder(MachineCraftable.CHARCOAL_CHUNK.results.get(0)).setDisplayName("§c§lFUEL").addLoreLine("§a" + fuel + "§8/§a100").build(), event -> event.setCancelled(true)), 0, 0);
+        gui.addPane(fuelPane);
         StaticPane pane = new StaticPane(1, 1, 9, 4);
         int x = 0;
         int y = 0;
@@ -161,7 +164,7 @@ public class Kiln extends Machine {
                     if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof InputNode) {
                         InputNode in = (InputNode) instance.getUtilLists().machines.get(relative.getLocation());
                         if (timer == null) {
-                            boolean take = in.takeItem(new ItemStack(MAGMA_BLOCK));
+                            boolean take = in.takeItem(MachineCraftable.CHARCOAL_CHUNK.results.get(0));
                             if (take) {
                                 fuel = 100;
                             }
@@ -367,13 +370,15 @@ public class Kiln extends Machine {
         armorStand.delete();
         if (!file.exists()) return;
         file.delete();
-        for (int i : craftSlots) {
-            if (inventory.getItem(i) == null) continue;
-            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
-        }
-        for (int i : resultSlots) {
-            if (inventory.getItem(i) == null) continue;
-            location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+        if (inventory != null) {
+            for (int i : craftSlots) {
+                if (inventory.getItem(i) == null) continue;
+                location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+            }
+            for (int i : resultSlots) {
+                if (inventory.getItem(i) == null) continue;
+                location.getWorld().dropItemNaturally(location, inventory.getItem(i));
+            }
         }
     }
 

@@ -88,12 +88,14 @@ public class OutputNode extends Machine {
     }
 
     public boolean takeItem(ItemStack item) {
+        if (storage == null) return false;
         if (!storage.containsAtLeast(item, item.getAmount())) return false;
         Methods.removeRequiredAmount(item, storage);
         return true;
     }
 
     public boolean addItem(ItemStack item) {
+        if (storage == null) return false;
         if (storage.firstEmpty() == -1) return false;
         storage.addItem(item);
         return true;
