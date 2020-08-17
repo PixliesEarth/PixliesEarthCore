@@ -207,7 +207,12 @@ public class menuNation implements SubCommand {
             case RESEARCH:
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 //TODO ACTUALLY MAKE THEM WORK
-                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3HAS§8/§3NEEDED§9XP").build(), event -> event.setCancelled(true)), 8, 4);
+                if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> event.setCancelled(true)), 8, 4);
+                } else {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§cAlready on highest Era").build(), event -> event.setCancelled(true)), 8, 4);
+                }
+
                 menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE, menu);}), 2, 2);
                 menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.MILITARY, menu);}), 4, 2);
                 menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.INDUSTRY, menu);}), 6, 2);

@@ -27,6 +27,8 @@ public enum Era {
         this.cost = cost;
     }
 
+    public static final Era HIGHEST = Era.FUTURE;
+
     public static Era getByName(String name) {
         for (Era era : values())
             if (era.name.equalsIgnoreCase(name))
