@@ -19,7 +19,7 @@ import eu.pixliesearth.core.guns.listeners.GunListener;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.CargoListener;
-import eu.pixliesearth.core.machines.carpentrymill.CarpentryMillListener;
+import eu.pixliesearth.core.machines.tinkertable.TinkerTableListener;
 import eu.pixliesearth.core.machines.MachineTask;
 import eu.pixliesearth.core.machines.kiln.KilnListener;
 import eu.pixliesearth.core.modules.ChatSystem;
@@ -150,11 +150,8 @@ public final class Main extends JavaPlugin {
                 }
             }*/
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Profile profile : getUtilLists().profiles.values()) {
-                if (!profile.isOnline()) {
-                    getUtilLists().profiles.remove(UUID.fromString(profile.getUniqueId()));
-                    continue;
-                }
+            for (Player player : getServer().getOnlinePlayers()) {
+                Profile profile = getProfile(player.getUniqueId());
 /*                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
                     profile.setPlayTime(profile.getPlayTime() + 1);*/
                 profile.syncDiscordAndIngameRoles();
@@ -369,7 +366,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
-        manager.registerEvents(new CarpentryMillListener(), this);
+        manager.registerEvents(new TinkerTableListener(), this);
         manager.registerEvents(new CargoListener(), this);
         manager.registerEvents(new KilnListener(), this);
     }

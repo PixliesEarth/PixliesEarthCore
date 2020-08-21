@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.machines.carpentrymill;
+package eu.pixliesearth.core.machines.tinkertable;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
@@ -28,22 +28,22 @@ import java.util.*;
 
 import static org.bukkit.Material.*;
 
-public class CarpentryMill extends Machine {
+public class TinkerTable extends Machine {
 
-    public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/83d47199d034fae71e5c7ef1e12bf9f1adbb88c22ad4b0e9453abf8cee5c350b")).setDisplayName("§b§lCarpentry Mill").build();
+    public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/83d47199d034fae71e5c7ef1e12bf9f1adbb88c22ad4b0e9453abf8cee5c350b")).setDisplayName("§b§lTinker Table").build();
     private Inventory inventory;
 
-    public CarpentryMill(String id, Location location) {
-        super(id, location, MachineType.CARPENTRY_MILL, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
+    public TinkerTable(String id, Location location) {
+        super(id, location, MachineType.TINKER_TABLE, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
         armorStand.appendTextLine(getTitle());
     }
 
     public String getTitle() {
-        return "§b§lCarpentry Mill";
+        return "§b§lTinker Table";
     }
 
-    public CarpentryMill(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
-        super(id, location, MachineType.CARPENTRY_MILL, item, timer, armorStand, wantsToCraft);
+    public TinkerTable(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
+        super(id, location, MachineType.TINKER_TABLE, item, timer, armorStand, wantsToCraft);
     }
 
     public void reopen(Player player) {

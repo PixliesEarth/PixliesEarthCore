@@ -1,17 +1,13 @@
 package eu.pixliesearth.core.machines.cargo;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.carpentrymill.CarpentryMill;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
