@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -37,7 +36,7 @@ public class menuNation implements SubCommand {
         return false;
     }
 
-    static final String defaultTitle = "§bNations-menu §8| ";
+    static final String defaultTitle = "§bNations menu §8| ";
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
@@ -45,9 +44,9 @@ public class menuNation implements SubCommand {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Gui gui = new Gui(instance, 6, "§bNations-menu");
+        Gui gui = new Gui(instance, 6, "§bNations menu");
         Player player = (Player) sender;
-        open(gui, player, MenuPage.MAIN);
+        open(gui, player, MenuPage.HOME);
         return false;
     }
 
@@ -76,7 +75,7 @@ public class menuNation implements SubCommand {
         int x;
         int y;
         switch (page) {
-            case MAIN:
+            case HOME:
                 menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).resetLore().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
                 break;
             case MEMBERS:
@@ -204,9 +203,8 @@ public class menuNation implements SubCommand {
                 break;
             case RESEARCH:
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
-                //TODO ACTUALLY MAKE THEM WORK
                 if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§bNext Era").addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§6§lNext Era").addLoreLine("§b" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getName()).addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> {
                         event.setCancelled(true);
                         upgradeEra(player, nation);
                     }), 8, 4);
@@ -364,7 +362,7 @@ public class menuNation implements SubCommand {
 
     enum MenuPage {
 
-        MAIN("§eMain", Material.CYAN_BANNER),
+        HOME("§eHome", Material.CYAN_BANNER),
         MEMBERS("§cMembers", Material.PLAYER_HEAD),
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK),
         RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),

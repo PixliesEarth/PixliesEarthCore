@@ -84,6 +84,7 @@ public class JoinListener implements Listener {
             //VANISHES FOR PLAYERS WHO NEWLY JOINED
             for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+                if (p == null) continue;
                 if (!(player.hasPermission("earth.seevanished"))) {
                     player.hidePlayer(Main.getInstance(), p);
                 }
@@ -95,15 +96,15 @@ public class JoinListener implements Listener {
             player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
             if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
-                player.sendTitle("§b" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§b§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
-                player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("warzone")) { // WARZONE
-                player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
             } else if (tn.getCurrentNation().isAlliedWith(profile.getNationId())) { // ALLIES
-                player.sendTitle("§d" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§d§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else { // ANY OTHER NATION
-                player.sendTitle(tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             }
         }
 

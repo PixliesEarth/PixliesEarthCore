@@ -7,12 +7,12 @@ import java.util.List;
 
 public enum Era {
 
-    TRIBAL("Tribal", 1, 3, 0),
+    TRIBAL("Tribal", 1, 10, 0),
     ANCIENT("Ancient", 2, 20, 15),
-    MEDIEVAL("Medieval", 3, 100, 40),
+    MEDIEVAL("Medieval", 3, 75, 40),
     VICTORIAN("Victorian", 4, 150, 75),
-    MODERN("Modern", 5, 300, 150),
-    FUTURE("Future", 6, 300, 300),
+    MODERN("Modern", 5, 200, 150),
+    FUTURE("Future", 6, 250, 300),
     ;
 
     private @Getter final String name;
