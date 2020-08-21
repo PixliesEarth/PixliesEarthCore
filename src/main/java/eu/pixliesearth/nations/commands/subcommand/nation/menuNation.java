@@ -12,12 +12,10 @@ import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.ItemBuilder;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -208,9 +206,12 @@ public class menuNation implements SubCommand {
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 //TODO ACTUALLY MAKE THEM WORK
                 if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_BLOCK).setDisplayName("§bNext Era").addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> event.setCancelled(true)), 8, 4);
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§bNext Era").addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> {
+                        event.setCancelled(true);
+                        upgradeEra(player, nation);
+                    }), 8, 4);
                 } else {
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName("§cAlready on highest Era").build(), event -> event.setCancelled(true)), 8, 4);
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.CHARCOAL).setDisplayName("§cAlready on highest Era").build(), event -> event.setCancelled(true)), 8, 4);
                 }
 
                 menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE, menu);}), 2, 2);
@@ -220,6 +221,22 @@ public class menuNation implements SubCommand {
         }
         gui.addPane(menu);
         gui.show(player);
+    }
+
+    public static void upgradeEra(Player player, Nation nation) {
+        Era toUpgrade = Era.getByNumber(nation.getCurrentEra().getNumber() + 1);
+        if (toUpgrade == null) return;
+        if (toUpgrade.getCost() > nation.getXpPoints()) {
+            player.closeInventory();
+            Lang.NOT_ENOUGH_XP_POINTS.send(player);
+            return;
+        }
+        nation.setXpPoints(nation.getXpPoints() - toUpgrade.getCost());
+        nation.setEra(toUpgrade.name());
+        for (Player member : nation.getOnlineMemberSet()) {
+            member.sendTitle("§a" + toUpgrade.getName(), Lang.NATION_REACHED_NEW_ERA.get(member), 20, 20 * 3, 20);
+            member.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        }
     }
 
     void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type, StaticPane menuPane) {

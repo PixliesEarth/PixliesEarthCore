@@ -223,3 +223,5 @@ MAX_HOMESIZE_REACHED: "&7You already set the maximum amount of homes. You want m
 HOME_ADDED: "&7You added a home with the name &b%HOME%&7."
 HOME_REMOVED: "&7You removed a home with the name &b%HOME%&7."
 MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY: "&cMachines have to be in claimed territory."
+NOT_ENOUGH_XP_POINTS: "&7Your nation does not have enough Research-Points for this action."
+NATION_REACHED_NEW_ERA: "&7Your nation reached a new Era!"

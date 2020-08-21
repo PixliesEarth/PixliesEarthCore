@@ -173,6 +173,8 @@ public enum Lang {
     REMOVED_CHUNK_ACCESS_FROM_X(Lang.NATION, new HashMap<>()),
     BOTH_PLAYERS_IN_THE_SAME_NATION(Lang.NATION, new HashMap<>()),
     MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY("", new HashMap<>()),
+    NOT_ENOUGH_XP_POINTS(Lang.NATION, new HashMap<>()),
+    NATION_REACHED_NEW_ERA("", new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.EARTH, new HashMap<>()),

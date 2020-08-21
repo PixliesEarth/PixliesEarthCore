@@ -223,3 +223,5 @@ MAX_HOMESIZE_REACHED: "&7Du hast schon die maximale Anzahl an Homes gesetzt. &6D
 HOME_ADDED: "&7Du hast einen Home mit den Namen &b%HOME%&7 gesetzt."
 HOME_REMOVED: "&7Du hast einen Home mit den Namen &b%HOME% &7entfernt."
 MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY: "&cMaschinen müssen in geclaimtes Territorium liegen."
+NOT_ENOUGH_XP_POINTS: "&7Deine Nation benötigt mehr Forschungs-Punkte für diese Aktion."
+NATION_REACHED_NEW_ERA: "&7Deine Nation hat eine neue Era erreicht."
