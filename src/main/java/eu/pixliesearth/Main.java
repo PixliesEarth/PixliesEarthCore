@@ -136,7 +136,7 @@ public final class Main extends JavaPlugin {
 
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (UUID uuid : utilLists.locationMap.keySet()) {
+/*            for (UUID uuid : utilLists.locationMap.keySet()) {
                 if (utilLists.locationMap.get(uuid).getLocation() == Bukkit.getPlayer(uuid).getLocation()) {
                     AfkMap map = utilLists.locationMap.get(uuid);
                     map.setMinutes(map.getMinutes() + 1);
@@ -148,12 +148,15 @@ public final class Main extends JavaPlugin {
                     utilLists.afk.add(uuid);
                     Bukkit.broadcastMessage("§8Player §7" + Bukkit.getPlayer(uuid).getDisplayName() + " §8is now AFK.");
                 }
-            }
+            }*/
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Player player : getServer().getOnlinePlayers()) {
-                Profile profile = getProfile(player.getUniqueId());
-                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
-                    profile.setPlayTime(profile.getPlayTime() + 1);
+            for (Profile profile : getUtilLists().profiles.values()) {
+                if (!profile.isOnline()) {
+                    getUtilLists().profiles.remove(UUID.fromString(profile.getUniqueId()));
+                    continue;
+                }
+/*                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
+                    profile.setPlayTime(profile.getPlayTime() + 1);*/
                 profile.syncDiscordAndIngameRoles();
                 profile.save();
             }
