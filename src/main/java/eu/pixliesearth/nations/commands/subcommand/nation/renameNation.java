@@ -40,7 +40,7 @@ public class renameNation implements SubCommand {
             Nation nation;
             Profile profile = instance.getProfile(player.getUniqueId());
             Map<String, String> placeholders;
-            boolean success;
+            boolean rename;
             switch (args.length) {
                 case 1:
                     if (!profile.isInNation()) {
@@ -57,8 +57,8 @@ public class renameNation implements SubCommand {
                         player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
                         return false;
                     }
-                    success = nation.rename(args[0].replace("&", ""));
-                    if (!success) {
+                    rename = nation.rename(args[0].replace("&", ""));
+                    if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
@@ -79,8 +79,8 @@ public class renameNation implements SubCommand {
                         return false;
                     }
                     final String oldName1 = nation.getName();
-                    success = nation.rename(args[0]);
-                    if (!success) {
+                    rename = nation.rename(args[0]);
+                    if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }

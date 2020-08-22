@@ -65,6 +65,7 @@ import org.javacord.api.entity.server.Server;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -245,13 +246,13 @@ public final class Main extends JavaPlugin {
             luckPerms = provider.getProvider();
 
         if (!NationManager.nations.containsKey("safezone")) {
-            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             safezone.save();
             safezone.setFlag(new ItemStack(Material.YELLOW_BANNER));
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
-            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             warzone.save();
             warzone.setFlag(new ItemStack(Material.RED_BANNER));
         }
@@ -369,6 +370,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new TinkerTableListener(), this);
         manager.registerEvents(new CargoListener(), this);
         manager.registerEvents(new KilnListener(), this);
+        manager.registerEvents(new FlagListener(), this);
     }
 
     /**

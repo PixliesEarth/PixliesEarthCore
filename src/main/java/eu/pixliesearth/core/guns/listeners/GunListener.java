@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class GunListener implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (e.getHand() == null || e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
         Gun gun = Gun.getByItem(p.getInventory().getItemInMainHand());
         if (gun == null) return;
         if (gun.automatic) {

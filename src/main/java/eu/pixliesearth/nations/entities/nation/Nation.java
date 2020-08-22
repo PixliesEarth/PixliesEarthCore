@@ -32,6 +32,7 @@ public class Nation {
     private String dynmapBorder;
     private String created;
     private Map<String, Map<String, Object>> ranks;
+    private List<String> flags;
     private List<String> members;
     private List<String> chunks;
     private List<String> allyRequests;
@@ -58,6 +59,7 @@ public class Nation {
         nation.append("dynmapBorder", dynmapBorder);
         nation.append("created", created);
         nation.append("ranks", ranks);
+        nation.append("flags", flags);
         nation.append("members", members);
         nation.append("chunks", chunks);
         nation.append("allyRequests", allyRequests);
