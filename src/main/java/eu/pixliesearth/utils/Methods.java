@@ -214,7 +214,8 @@ public class Methods {
         return returner;
     }
 
-    public static void removeRequiredAmount(ItemStack item, final Inventory inventory) {
+    public static boolean removeRequiredAmount(ItemStack item, final Inventory inventory) {
+        boolean found = false;
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack value = inventory.getItem(i);
             if (value == null) continue;
@@ -224,10 +225,12 @@ public class Methods {
                 else {
                     value.setAmount(value.getAmount() - item.getAmount());
                     inventory.setItem(i, value);
+                    found = true;
                 }
                 break;
             }
         }
+        return found;
     }
 
     public static void removeRequiredAmountWithinBound(ItemStack item, final Inventory inventory, List<Integer> slots) {

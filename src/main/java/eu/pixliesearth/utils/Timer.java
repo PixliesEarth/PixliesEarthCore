@@ -40,4 +40,6 @@ public class Timer {
         return Methods.getTimeAsString(expiry - System.currentTimeMillis(), false);
     }
 
+    public boolean hasExpired() { return getRemaining() <= 0; }
+
 }
