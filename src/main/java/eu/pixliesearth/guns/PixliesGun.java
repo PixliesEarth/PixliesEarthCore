@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.ammo.RifleAmmo;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.Methods;
@@ -24,6 +25,7 @@ public class PixliesGun {
     private ItemStack item;
     private AmmoType ammoType;
     private int maxRange;
+    private int ammo;
     private int maxAmmo;
     private int accuracy;
     private long delay;
@@ -33,10 +35,8 @@ public class PixliesGun {
         if (!triggers.contains(event.getAction())) return;
         Player player = event.getPlayer();
         PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getLocation(), this);
-        boolean useAmmo = Methods.removeRequiredAmount(ammo.getItem(), player.getInventory());
-        if (!useAmmo) {
-            player.sendActionBar("§c§lNEED TO RELOAD!");
-            player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+        if (this.ammo <= 0) {
+            reload(event);
             return;
         }
         PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(player, ammo);
@@ -54,7 +54,20 @@ public class PixliesGun {
     }
 
     public void reload(PlayerInteractEvent event) {
-
+        ItemStack needed = ammoType.getAmmo().getItem();
+        Player player = event.getPlayer();
+        boolean hasItem = Methods.removeRequiredAmount(needed, player.getInventory());
+        if (!hasItem) {
+            player.sendActionBar("§c§lNO AMMO!");
+            player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+            return;
+        }
+        player.sendActionBar("§7§lReloading...");
+        player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            ammo = maxAmmo;
+            player.sendActionBar("§a§lReloaded!");
+        }, 40);
     }
 
 }
