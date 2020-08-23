@@ -1,9 +1,11 @@
 package eu.pixliesearth.guns;
 
 import eu.pixliesearth.guns.ammo.RifleAmmo;
+import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.Methods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -37,13 +39,17 @@ public class PixliesGun {
             player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
             return;
         }
-        GunFireResult result = ammo.trace(player);
-        if (result == null) return;
-        if (result.isHeadshot()) {
-            result.getEntity().setKiller(player);
-            result.getEntity().setHealth(0.0);
-        } else {
-            result.getEntity().damage(ammo.getDamage(), player);
+        PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(player, ammo);
+        Bukkit.getPluginManager().callEvent(shootEvent);
+        if (!shootEvent.isCancelled()) {
+            GunFireResult result = ammo.trace(player);
+            if (result == null) return;
+            if (result.isHeadshot()) {
+                result.getEntity().setKiller(player);
+                result.getEntity().setHealth(0.0);
+            } else {
+                result.getEntity().damage(ammo.getDamage(), player);
+            }
         }
     }
 
