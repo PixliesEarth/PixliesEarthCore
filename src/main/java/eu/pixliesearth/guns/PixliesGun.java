@@ -27,7 +27,7 @@ public class PixliesGun {
     private int maxRange;
     private int ammo;
     private int maxAmmo;
-    private int accuracy;
+    private double accuracy;
     private long delay;
     private List<Action> triggers;
 
@@ -42,6 +42,8 @@ public class PixliesGun {
         PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(player, ammo);
         Bukkit.getPluginManager().callEvent(shootEvent);
         if (!shootEvent.isCancelled()) {
+            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
+            player.getLocation().setPitch(player.getLocation().getPitch() + 0.4f);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
             if (result.isHeadshot()) {

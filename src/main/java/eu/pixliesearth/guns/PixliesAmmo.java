@@ -38,7 +38,6 @@ public class PixliesAmmo {
             return null;
 
         Vector origin = this.location.toVector();
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
         for(double distance = 0.0; distance <= maxSearchDistance; distance += gun.getAccuracy()) {
             Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
             Location positionLocation = position.toLocation(player.getWorld());
