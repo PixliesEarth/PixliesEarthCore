@@ -31,6 +31,7 @@ public class PixliesGun {
     private long delay;
     private List<Action> triggers;
 
+    //TODO: shooting delay
     public void trigger(PlayerInteractEvent event) {
         if (!triggers.contains(event.getAction())) return;
         Player player = event.getPlayer();

@@ -105,7 +105,17 @@ public class Kiln extends Machine {
         outline.setRepeat(true);
         gui.addPane(outline);
         StaticPane fuelPane = new StaticPane(0, 5, 1, 1);
-        fuelPane.addItem(new GuiItem(new ItemBuilder(MachineCraftable.CHARCOAL_CHUNK.results.get(0)).setDisplayName("§c§lFUEL").addLoreLine("§a" + fuel + "§8/§a100").build(), event -> event.setCancelled(true)), 0, 0);
+        fuelPane.addItem(new GuiItem(new ItemBuilder(MachineCraftable.CHARCOAL_CHUNK.results.get(0)).setDisplayName("§c§lFUEL").addLoreLine("§a" + fuel + "§8/§a100").addLoreLine("§7§oClick to refuel...").build(), event -> {
+            event.setCancelled(true);
+            if (fuel == 0) {
+                boolean takeFromPlayer = Methods.removeRequiredAmount(MachineCraftable.CHARCOAL_CHUNK.results.get(0), player.getInventory());
+                if (takeFromPlayer) {
+                    fuel = 100;
+                    player.closeInventory();
+                    open(player);
+                }
+            }
+        }), 0, 0);
         gui.addPane(fuelPane);
         StaticPane pane = new StaticPane(1, 1, 9, 4);
         int x = 0;
