@@ -1,11 +1,10 @@
-package eu.pixliesearth.core.machines.kiln;
+package eu.pixliesearth.core.machines.autocrafters;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.OutlinePane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
@@ -14,71 +13,27 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.bukkit.Material.*;
 
-public class Kiln extends Machine {
+public class AutoCrafterMachine extends Machine {
 
-    public static final ItemStack item = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/368ab8cf594da55f90f593bdc0b41e05925d75daa3ee7f1b49c2421d2bdead0")).setDisplayName("§c§lKiln").build();
-    private Inventory inventory;
-    private int fuel;
-
-    public Kiln(String id, Location location) {
-        super(id, location, MachineType.KILN, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
-        armorStand.appendTextLine(getTitle());
-        fuel = 0;
+    public AutoCrafterMachine(String id, Location location, MachineType type, ItemStack item, Timer timer, Hologram armorStand, MachineCraftable wantsToCraft) {
+        super(id, location, type, item, timer, armorStand, wantsToCraft);
     }
 
-    public String getTitle() {
-        return "§c§lKiln";
-    }
-
-    public Kiln(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, int fuel) {
-        super(id, location, MachineType.KILN, item, timer, armorStand, wantsToCraft);
-        this.fuel = fuel;
-    }
-
-    @Override
-    public void save() throws IOException {
-        File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
-
-        if (!file.exists())
-            file.createNewFile();
-
-        FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
-        conf.set("location", location);
-        conf.set("type", type.name());
-        conf.set("fuel", fuel);
-        if (wantsToCraft != null) {
-            conf.set("wantsToCraft", wantsToCraft.name());
-        } else {
-            conf.set("wantsToCraft", null);
-        }
-        conf.set("item", item);
-        if (timer != null) {
-            conf.set("timer.expiry", timer.getExpiry());
-            conf.set("timer.ended", timer.isEnded());
-        } else {
-            conf.set("timer", null);
-        }
-        conf.set("holo.location", armorStand.getLocation());
-        conf.set("holo.text", getTitle());
-        conf.save(file);
-    }
+    protected Inventory inventory;
 
     public void reopen(Player player) {
         inventory = null;
@@ -86,6 +41,8 @@ public class Kiln extends Machine {
         timer = null;
         open(player);
     }
+
+    protected void beforeUpdate() { }
 
     @Override
     public void open(Player player) {
@@ -104,19 +61,6 @@ public class Kiln extends Machine {
         outline.addItem(new GuiItem(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true)));
         outline.setRepeat(true);
         gui.addPane(outline);
-        StaticPane fuelPane = new StaticPane(0, 5, 1, 1);
-        fuelPane.addItem(new GuiItem(new ItemBuilder(MachineCraftable.CHARCOAL_CHUNK.results.get(0)).setDisplayName("§c§lFUEL").addLoreLine("§a" + fuel + "§8/§a100").addLoreLine("§7§oClick to refuel...").build(), event -> {
-            event.setCancelled(true);
-            if (fuel == 0) {
-                boolean takeFromPlayer = Methods.removeRequiredAmount(MachineCraftable.CHARCOAL_CHUNK.results.get(0), player.getInventory());
-                if (takeFromPlayer) {
-                    fuel = 100;
-                    player.closeInventory();
-                    open(player);
-                }
-            }
-        }), 0, 0);
-        gui.addPane(fuelPane);
         StaticPane pane = new StaticPane(1, 1, 9, 4);
         int x = 0;
         int y = 0;
@@ -165,25 +109,7 @@ public class Kiln extends Machine {
     }
 
     private void update() {
-        if (fuel == 0) {
-            int radius = 1;
-            final Block block = location.getBlock();
-            for (int x = -(radius); x <= radius; x++) {
-                for (int z = -(radius); z <= radius; z++) {
-                    final Block relative = block.getRelative(x, 0, z);
-                    if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof InputNode) {
-                        InputNode in = (InputNode) instance.getUtilLists().machines.get(relative.getLocation());
-                        if (timer == null) {
-                            boolean take = in.takeItem(MachineCraftable.CHARCOAL_CHUNK.results.get(0));
-                            if (take) {
-                                fuel = 100;
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+        beforeUpdate();
         if (inventory == null) return;
         if (timer != null) {
             if (timer.getRemaining() <= 0) {
@@ -202,13 +128,13 @@ public class Kiln extends Machine {
                     for (ItemStack ingredient : wantsToCraft.ingredients) {
                         Methods.removeRequiredAmountWithinBound(ingredient, inventory, craftSlots);
                     }
-                    fuel -= 25;
                 }
             }
         }
         int radius = 1;
         final Block block = location.getBlock();
         boolean stop = false;
+        x:
         for (int x = -(radius); x <= radius; x++) {
             for (int z = -(radius); z <= radius; z++) {
                 final Block relative = block.getRelative(x, 0, z);
@@ -222,7 +148,7 @@ public class Kiln extends Machine {
                                     if (inventory.getItem(i) != null) continue;
                                     inventory.setItem(i, ingredient);
                                     stop = true;
-                                    break;
+                                    break x;
                                 }
                                 if (!stop) in.addItem(ingredient);
                             }

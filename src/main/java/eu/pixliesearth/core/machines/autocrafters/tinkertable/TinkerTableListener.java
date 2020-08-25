@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.machines.tinkertable;
+package eu.pixliesearth.core.machines.autocrafters.tinkertable;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;

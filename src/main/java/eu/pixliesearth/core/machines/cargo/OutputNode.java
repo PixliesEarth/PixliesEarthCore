@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
 import org.bukkit.block.Hopper;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -111,39 +112,23 @@ public class OutputNode extends Machine {
         try {
             int radius = 1;
             final Block block = location.getBlock();
-            boolean stop = false;
+            x:
             for (int x = -(radius); x <= radius; x++) {
                 for (int z = -(radius); z <= radius; z++) {
                     final Block relative = block.getRelative(x, 0, z);
-                    if (relative.getState() instanceof Chest) {
-                        Chest chest = (Chest) relative.getState();
+                    if (relative.getState() instanceof Container) {
+                        Container container = (Container) relative.getState();
                         for (ItemStack item : storage.getContents()) {
                             if (item == null) continue;
-                            if (chest.getInventory().firstEmpty() == -1) break;
-                            chest.getInventory().addItem(item);
+                            if (container.getInventory().firstEmpty() == -1) break;
+                            container.getInventory().addItem(item);
                             Methods.removeRequiredAmount(item, storage);
-                            stop = true;
-                            break;
+                            break x;
                         }
-                        if (stop) break;
                     }
-                    if (relative.getState() instanceof Hopper) {
-                        Hopper hopper = (Hopper) relative.getState();
-                        for (ItemStack item : storage.getContents()) {
-                            if (item == null) continue;
-                            if (hopper.getInventory().firstEmpty() == -1) break;
-                            hopper.getInventory().addItem(item);
-                            Methods.removeRequiredAmount(item, storage);
-                            stop = true;
-                            break;
-                        }
-                        if (stop) break;
-                    }
-                    if (stop) break;
                 }
-                if (stop) break;
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
 }

@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.machines.kiln;
+package eu.pixliesearth.core.machines.autocrafters.kiln;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.utils.Methods;
