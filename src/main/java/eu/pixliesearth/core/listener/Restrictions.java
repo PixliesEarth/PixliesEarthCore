@@ -19,9 +19,7 @@ public class Restrictions implements Listener {
 
     @EventHandler
     public void onExplosion(EntityExplodeEvent event) {
-        if (event.getEntity() instanceof Creeper)
-            event.setCancelled(true);
-        if (event.getEntity() instanceof TNTPrimed)
+        if (event.getEntity() instanceof Creeper || event.getEntity() instanceof TNTPrimed)
             event.setCancelled(true);
     }
 

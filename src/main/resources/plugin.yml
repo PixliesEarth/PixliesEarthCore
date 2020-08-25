@@ -194,6 +194,8 @@ commands:
     description: stats
   home:
     description: homecommand
+  invsee:
+    description: insvee
 
 permissions:
   # GENERAL
@@ -248,6 +250,8 @@ permissions:
         default: op
       snow:
         default: op
+  earth.invsee:
+    default: op
 
   # CHAT
   earth.chat.colours:
