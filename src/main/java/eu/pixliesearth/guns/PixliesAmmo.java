@@ -38,21 +38,19 @@ public class PixliesAmmo {
             return null;
 
         final Vector origin = this.location.toVector();
+        player.getWorld().playEffect(player.getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
         for(double distance = 0.0; distance <= maxSearchDistance; distance += gun.getAccuracy()) {
             Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
             Location positionLocation = position.toLocation(player.getWorld());
 
-            player.getWorld().playEffect(player.getEyeLocation(), Effect.SMOKE, 2);
-
             AxisAlignedBB locationBoundingBox = new AxisAlignedBB(position.getX(), position.getY(), position.getZ(), position.getX(), position.getY(), position.getZ());
             for(LivingEntity entity : entityList) {
-                if(entity == null || entity.isDead() || entity.getEntityId() == player.getEntityId()) {
+                if(entity == null || entity.isDead() || entity.getEntityId() == player.getEntityId())
                     continue;
-                }
 
                 AxisAlignedBB entityBoundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
                 if(entityBoundingBox.intersects(locationBoundingBox))
-                    return new GunFireResult(entity, (location.distance(entity.getEyeLocation()) <= 0.5), positionLocation);
+                    return new GunFireResult(entity, location.distance(entity.getEyeLocation()) <= 1, positionLocation);
             }
         }
 

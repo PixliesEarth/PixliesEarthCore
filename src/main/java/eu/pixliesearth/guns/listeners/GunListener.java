@@ -1,7 +1,6 @@
-package eu.pixliesearth.core.guns.listeners;
+package eu.pixliesearth.guns.listeners;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.guns.Gun;
 import eu.pixliesearth.guns.PixliesGun;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -10,13 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 public class GunListener implements Listener {
     private final Main plugin;
@@ -28,11 +25,15 @@ public class GunListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Player player = event.getPlayer();
+        if (event.getItem() == null) return;
         if(player.getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) return;
-        PixliesGun gun = PixliesGun.getByItem(player.getInventory().getItemInMainHand());
-        if (gun == null) return;
-        gun.trigger(event);
+        if (!event.getItem().isSimilar(player.getInventory().getItemInMainHand())) return;
+        if (event.getHand() == EquipmentSlot.HAND) {
+            PixliesGun gun = PixliesGun.getByItem(player.getInventory().getItemInMainHand());
+            if (gun == null) return;
+            event.setCancelled(true);
+            gun.trigger(event);
+        }
     }
 
     @EventHandler

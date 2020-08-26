@@ -1,6 +1,8 @@
-package eu.pixliesearth.core.guns.commands;
+package eu.pixliesearth.guns.commands;
 
-import eu.pixliesearth.core.guns.Guns;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabExecutor;
+import eu.pixliesearth.guns.Guns;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GunGive implements CommandExecutor, TabExecutor {
+public class GunGiveCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {

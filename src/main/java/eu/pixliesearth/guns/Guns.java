@@ -1,18 +1,11 @@
-package eu.pixliesearth.core.guns;
+package eu.pixliesearth.guns;
 
-import eu.pixliesearth.core.guns.gunObjects.AK47;
-import eu.pixliesearth.core.guns.gunObjects.Musket;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.guns.guns.AutomaticRifle;
+import eu.pixliesearth.guns.guns.M16;
 import lombok.Getter;
 
 public enum Guns {
 
-    /*
-    AK(new AK47()),
-    MUSKET(new Musket());*/
-
-    AUTORIFLE(new AutomaticRifle(30)),
+    M16(new M16(30)),
     ;
 
     private @Getter
