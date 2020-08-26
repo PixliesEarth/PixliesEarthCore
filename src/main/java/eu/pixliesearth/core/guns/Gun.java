@@ -4,7 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.events.ShootEvent;
 import lombok.AllArgsConstructor;
-import net.minecraft.server.v1_16_R1.EntityPlayer;
+import net.minecraft.server.v1_16_R2.EntityPlayer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -73,12 +73,12 @@ public class Gun {
         }, 20 * 5);
     }
 
-    public static Gun getByItem(@Nonnull ItemStack item) {
+/*    public static Gun getByItem(@Nonnull ItemStack item) {
         for (Guns guns : Guns.values()) {
             if (guns.getClazz().getItem(ammoLeft(item)).getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName()) && guns.getClazz().getItem(ammoLeft(item)).getType().equals(item.getType()))
                 return guns.getClazz();
         }
         return null;
-    }
+    }*/
 
 }

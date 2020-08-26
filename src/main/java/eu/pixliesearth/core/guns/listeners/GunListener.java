@@ -2,6 +2,7 @@ package eu.pixliesearth.core.guns.listeners;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.guns.Gun;
+import eu.pixliesearth.guns.PixliesGun;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;
@@ -14,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GunListener implements Listener {
@@ -24,21 +26,13 @@ public class GunListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler
-    public void onInteract(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        if(p.getInventory().getItemInMainHand().getItemMeta() == null) return;
-        if (e.getHand() == null || e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
-        Gun gun = Gun.getByItem(p.getInventory().getItemInMainHand());
+    public void onInteract(PlayerInteractEvent event) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Player player = event.getPlayer();
+        if(player.getInventory().getItemInMainHand().getItemMeta() == null) return;
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) return;
+        PixliesGun gun = PixliesGun.getByItem(player.getInventory().getItemInMainHand());
         if (gun == null) return;
-        if (gun.automatic) {
-            if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                gun.shoot(p);
-            }
-        } else {
-            if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                gun.shoot(p);
-            }
-        }
+        gun.trigger(event);
     }
 
     @EventHandler

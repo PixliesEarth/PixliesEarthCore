@@ -3,9 +3,11 @@ package eu.pixliesearth.guns;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.ammo.RifleAmmo;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
+import eu.pixliesearth.guns.guns.AutomaticRifle;
 import eu.pixliesearth.utils.Methods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,7 +15,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
@@ -71,6 +76,21 @@ public class PixliesGun {
             ammo = maxAmmo;
             player.sendActionBar("§a§lReloaded!");
         }, 40);
+    }
+
+    public static Map<String, Class<? extends PixliesGun>> classMap() {
+        Map<String, Class<? extends PixliesGun>> map = new HashMap<>();
+        map.put("§c§lAuto-rifle", AutomaticRifle.class);
+        return map;
+    }
+
+    public static PixliesGun getByItem(ItemStack item) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        for (Map.Entry<String, Class<? extends PixliesGun>> entry : classMap().entrySet())
+            if (item.hasItemMeta() && item.getItemMeta().getDisplayName().split(" §8| ")[0].equals(entry.getKey())) {
+                int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
+                return entry.getValue().getConstructor(int.class).newInstance(ammo);
+            }
+        return null;
     }
 
 }
