@@ -7,10 +7,7 @@ import eu.pixliesearth.utils.Methods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -53,7 +50,10 @@ public class PixliesGun {
             Methods.removeRequiredAmount(event.getItem(), player.getInventory());
             player.getInventory().setItemInMainHand(reloadItem());
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
-            player.getLocation().setYaw(player.getLocation().getYaw() + 0.8f);
+            float newPitch = player.getLocation().getPitch() - 10;
+            Location newLocation = player.getLocation();
+            newLocation.setPitch(newPitch);
+            player.teleport(newLocation);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
             if (result.isHeadshot()) {
