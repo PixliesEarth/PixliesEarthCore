@@ -59,11 +59,10 @@ public class PixliesGun {
             if (result.isHeadshot()) {
                 result.getEntity().setKiller(player);
                 result.getEntity().setHealth(0.0);
-                result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 1));
             } else {
                 result.getEntity().damage(ammo.getDamage(), player);
-                result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 1));
             }
+            result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 1));
         }
     }
 

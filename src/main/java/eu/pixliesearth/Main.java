@@ -363,7 +363,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new settlementsCommand(), this);
         manager.registerEvents(new PlayerLoginListener(), this);
         manager.registerEvents(new CommandListener(), this);
-        manager.registerEvents(new GulagDeathListener(), this);
+        // manager.registerEvents(new GulagDeathListener(), this);
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionListener(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
