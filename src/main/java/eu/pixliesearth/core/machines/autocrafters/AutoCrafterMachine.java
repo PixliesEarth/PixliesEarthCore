@@ -180,9 +180,16 @@ public class AutoCrafterMachine extends Machine {
         // The progress bar is only 9 inventory cells long.
         int numberOfCells = 9;
         long timeTaken = p_timeToCompleteMilliseconds - timer.getRemaining();
-        int framesToFill = (int)( (timeTaken) / (p_timeToCompleteMilliseconds / numberOfCells) );
+        int framesToFill = (int)(
+                (timeTaken) / (p_timeToCompleteMilliseconds / numberOfCells)
+        );
 
-        // Change a pane to green when the time decreases, time / numberOfCells.
+        // Debug
+        Bukkit.broadcastMessage(
+                "Time Taken: " + timeTaken + " | Frames to fill: " + framesToFill
+        );
+
+        // Change a pane to green when framesToFill is a number from 1 to 9.
         switch ( framesToFill )
         {
             case 1:
