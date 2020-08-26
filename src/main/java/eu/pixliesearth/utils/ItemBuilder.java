@@ -1,12 +1,10 @@
 package eu.pixliesearth.utils;
 
 
-import net.minecraft.server.v1_16_R2.NBTTagCompound;
 import org.apache.avro.generic.GenericData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Skull;
-import org.bukkit.craftbukkit.v1_16_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
