@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -40,7 +41,7 @@ public class PixliesGun {
     public void trigger(PlayerInteractEvent event) {
         if (!triggers.contains(event.getAction())) return;
         Player player = event.getPlayer();
-        PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getLocation(), this);
+        PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getEyeLocation(), this);
         if (this.ammo <= 0) {
             reload(event);
             return;
