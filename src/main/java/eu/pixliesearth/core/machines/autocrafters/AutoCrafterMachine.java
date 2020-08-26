@@ -180,7 +180,7 @@ public class AutoCrafterMachine extends Machine {
         // The progress bar is only 9 inventory cells long.
         int numberOfCells = 9;
         long timeTaken = p_timeToCompleteMilliseconds - timer.getRemaining();
-        int framesToFill = (int)( (timeTaken) / (p_timeToCompleteMilliseconds / 9) );
+        int framesToFill = (int)( (timeTaken) / (p_timeToCompleteMilliseconds / numberOfCells) );
 
         // Change a pane to green when the time decreases, time / numberOfCells.
         switch ( framesToFill )
