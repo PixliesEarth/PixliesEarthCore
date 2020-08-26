@@ -179,81 +179,74 @@ public class AutoCrafterMachine extends Machine {
     {
         // The progress bar is only 9 inventory cells long.
         int numberOfCells = 9;
+        long timeTaken = p_timeToCompleteMilliseconds - timer.getRemaining();
+        int framesToFill = (int)( (timeTaken) / (p_timeToCompleteMilliseconds / 9) );
 
         // Change a pane to green when the time decreases, time / numberOfCells.
-        switch ( p_progressIndex )
+        switch ( framesToFill )
         {
-            case 36:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / numberOfCells) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 1:
+                inventory.setItem(36,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 37:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 1) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 2:
+                inventory.setItem(37,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 38:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 2) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 3:
+                inventory.setItem(38,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 39:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 3) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 4:
+                inventory.setItem(39,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 40:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 4) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 5:
+                inventory.setItem(40,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 41:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 5) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 6:
+                inventory.setItem(41,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 42:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 6) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 7:
+                inventory.setItem(42,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 43:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 7) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 8:
+                inventory.setItem(43,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
-            case 44:
-                if ( p_timeToCompleteMilliseconds >= (p_timeToCompleteMilliseconds / ( numberOfCells - 8) ) )
-                    inventory.setItem(p_progressIndex,
-                            new ItemBuilder(GREEN_STAINED_GLASS_PANE)
-                                    .setDisplayName("§3§lLeft")
-                                    .addLoreLine("§b" + timer.getRemainingAsString())
-                                    .build());
+            case 9:
+                inventory.setItem(44,
+                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                                .setDisplayName("§3§lLeft")
+                                .addLoreLine("§b" + timer.getRemainingAsString())
+                                .build());
                 break;
         }
     }
