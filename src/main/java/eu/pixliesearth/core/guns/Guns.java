@@ -2,15 +2,23 @@ package eu.pixliesearth.core.guns;
 
 import eu.pixliesearth.core.guns.gunObjects.AK47;
 import eu.pixliesearth.core.guns.gunObjects.Musket;
+import eu.pixliesearth.guns.PixliesGun;
+import eu.pixliesearth.guns.guns.AutomaticRifle;
 import lombok.Getter;
 
 public enum Guns {
 
+    /*
     AK(new AK47()),
-    MUSKET(new Musket());
-    private @Getter Gun clazz;
+    MUSKET(new Musket());*/
 
-    Guns(Gun clazz) {
+    AUTORIFLE(new AutomaticRifle(30)),
+    ;
+
+    private @Getter
+    PixliesGun clazz;
+
+    Guns(PixliesGun clazz) {
         this.clazz = clazz;
     }
 
