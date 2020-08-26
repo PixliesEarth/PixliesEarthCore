@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import net.minecraft.server.v1_16_R2.AxisAlignedBB;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -36,12 +37,12 @@ public class PixliesAmmo {
         if(entityList.isEmpty())
             return null;
 
-        Vector origin = this.location.toVector();
+        final Vector origin = this.location.toVector();
         for(double distance = 0.0; distance <= maxSearchDistance; distance += gun.getAccuracy()) {
             Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
             Location positionLocation = position.toLocation(player.getWorld());
 
-            positionLocation.getWorld().spawnParticle(Particle.SMOKE_NORMAL, positionLocation, 2);
+            player.getWorld().playEffect(player.getEyeLocation(), Effect.SMOKE, 2);
 
             AxisAlignedBB locationBoundingBox = new AxisAlignedBB(position.getX(), position.getY(), position.getZ(), position.getX(), position.getY(), position.getZ());
             for(LivingEntity entity : entityList) {
