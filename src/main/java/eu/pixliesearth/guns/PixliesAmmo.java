@@ -50,7 +50,7 @@ public class PixliesAmmo {
 
                 AxisAlignedBB entityBoundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
                 if(entityBoundingBox.intersects(locationBoundingBox))
-                    return new GunFireResult(entity, location.distance(entity.getEyeLocation()) <= 1, positionLocation);
+                    return new GunFireResult(entity, positionLocation.distance(entity.getEyeLocation()) <= 0.5, positionLocation);
             }
         }
 

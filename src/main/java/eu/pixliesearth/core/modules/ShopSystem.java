@@ -1,11 +1,6 @@
 package eu.pixliesearth.core.modules;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
-import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
-import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.interfaces.Module;
-import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

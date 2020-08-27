@@ -8,7 +8,6 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.SkullCreator;
 import org.bukkit.Bukkit;
