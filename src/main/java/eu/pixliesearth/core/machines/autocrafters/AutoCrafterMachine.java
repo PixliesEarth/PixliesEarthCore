@@ -263,7 +263,9 @@ public class AutoCrafterMachine extends Machine {
 
     private void setProgressBar(boolean matching) {
         if (timer != null && timer.getRemaining() > 0) {
-            long long_TimeToComplete = timer.getRemaining();
+
+            // The time required for the recipe to be completed.
+            final long long_TimeToComplete = timer.getRemaining();
 
             for (int i : progressSlots) {
                 setProgressBarColourByIndex(long_TimeToComplete);
