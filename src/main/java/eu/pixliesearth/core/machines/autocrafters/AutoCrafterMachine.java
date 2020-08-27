@@ -29,6 +29,9 @@ import static org.bukkit.Material.*;
 
 public class AutoCrafterMachine extends Machine {
 
+    // The time required for the recipe to be completed.
+    final long long_TimeToComplete = timer.getRemaining();
+
     public AutoCrafterMachine(String id, Location location, MachineType type, ItemStack item, Timer timer, Hologram armorStand, MachineCraftable wantsToCraft) {
         super(id, location, type, item, timer, armorStand, wantsToCraft);
     }
@@ -263,7 +266,6 @@ public class AutoCrafterMachine extends Machine {
 
     private void setProgressBar(boolean matching) {
         if (timer != null && timer.getRemaining() > 0) {
-            long long_TimeToComplete = timer.getRemaining();
 
             for (int i : progressSlots) {
                 setProgressBarColourByIndex(long_TimeToComplete);
