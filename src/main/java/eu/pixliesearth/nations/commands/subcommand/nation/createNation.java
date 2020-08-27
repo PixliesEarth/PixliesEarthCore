@@ -70,7 +70,7 @@ public class createNation implements SubCommand {
             return false;
         }
         final String id = Methods.generateId(7);
-        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEIST.name(), 0, 0.0, player.getUniqueId().toString(), "#34ebc3", "#33968b", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 0, 0.0, player.getUniqueId().toString(), "#34ebc3", "#33968b", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
