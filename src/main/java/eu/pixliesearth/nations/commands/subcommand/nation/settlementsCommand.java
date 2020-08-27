@@ -86,7 +86,7 @@ public class settlementsCommand implements SubCommand, Listener {
                         Lang.SETTLEMENT_HAS_TO_BE_IN_TERRITORY.send(player);
                         return false;
                     }
-                    Settlement settlement = new Settlement(args[1], new SimpleLocation(player.getLocation()).parseString());
+                    Settlement settlement = new Settlement(args[1], new SimpleLocation(player.getLocation()).parseString(), false);
                     nation.getSettlements().put(args[1], new Gson().toJson(settlement));
                     nation.save();
                     for (Player member : nation.getOnlineMemberSet())

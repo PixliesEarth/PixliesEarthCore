@@ -7,6 +7,8 @@ public enum NationFlag {
 
     OPEN(false),
     MONSTERS(false),
+    PERMANENT(true),
+    PEACEFUL(true),
     ;
 
     private final boolean requiresStaff;

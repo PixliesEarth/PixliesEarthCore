@@ -162,7 +162,7 @@ commands:
     description: tphere command
   family:
     description: show family info
-  sex:
+  woohoo:
     description: Have sex
   adopt:
     description: Adopt command

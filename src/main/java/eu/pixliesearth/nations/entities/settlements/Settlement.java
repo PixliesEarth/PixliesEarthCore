@@ -19,6 +19,7 @@ public class Settlement {
 
     private String name;
     private String location;
+    private boolean capital;
 
     public void teleport(Player player) {
         Main instance = Main.getInstance();

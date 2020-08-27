@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.bukkit.event.block.Action.*;
 
@@ -18,7 +19,7 @@ public class M16 extends PixliesGun {
 
     @Override
     public ItemStack reloadItem() {
-        return new ItemBuilder(Material.WOODEN_AXE).setCustomModelData(6).setDisplayName("§c§lM-16 §8| §8[§c" + getAmmo() + "§7/§c30§8]").addLoreLine("§7Ammo: §3RifleAmmo").addLoreLine("§7Range: §315 blocks").addLoreLine("§7Accuracy: §30.1").build();
+        return new ItemBuilder(getItem()).setDisplayName("§c§lM-16 §8| §8[§c" + getAmmo() + "§7/§c30§8]").build();
     }
 
 }

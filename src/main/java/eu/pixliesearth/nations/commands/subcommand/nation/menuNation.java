@@ -76,7 +76,7 @@ public class menuNation implements SubCommand {
         int y;
         switch (page) {
             case HOME:
-                menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).resetLore().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).hideFlags().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
                 break;
             case MEMBERS:
                 x = 0;
@@ -192,7 +192,7 @@ public class menuNation implements SubCommand {
                         y++;
                         x = 0;
                     }
-                    ItemStack item = new ItemBuilder(ally.getFlag()).resetLore().setDisplayName("§d" + ally.getName()).addLoreLine("§7§o" + ally.getDescription()).addLoreLine("§7Money: §2§l$§a" + ally.getMoney()).addLoreLine("§c§oClick to neutralize").build();
+                    ItemStack item = new ItemBuilder(ally.getFlag()).hideFlags().setDisplayName("§d" + ally.getName()).addLoreLine("§7§o" + ally.getDescription()).addLoreLine("§7Money: §2§l$§a" + ally.getMoney()).addLoreLine("§c§oClick to neutralize").build();
                     menu.addItem(new GuiItem(item, event -> {
                         event.setCancelled(true);
                         player.performCommand("n neutral " + ally.getName());

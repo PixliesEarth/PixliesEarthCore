@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
@@ -50,7 +51,7 @@ public class joinNation implements SubCommand {
                     player.sendMessage(Lang.YOU_ARE_ALREADY_IN_NATION.get(player));
                     return false;
                 }
-                if (!profile.getInvites().contains(nation.getNationId()) && !profile.isStaff()) {
+                if (!profile.getInvites().contains(nation.getNationId()) && !profile.isStaff() && !nation.getFlags().contains(NationFlag.OPEN.name())) {
                     player.sendMessage(Lang.YOU_DONT_HAVE_OPEN_INV.get(player));
                     return false;
                 }

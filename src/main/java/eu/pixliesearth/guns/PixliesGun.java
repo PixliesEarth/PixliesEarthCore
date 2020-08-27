@@ -1,6 +1,5 @@
 package eu.pixliesearth.guns;
 
-import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.guns.guns.M16;
 import eu.pixliesearth.utils.Methods;
@@ -62,7 +61,7 @@ public class PixliesGun {
             } else {
                 result.getEntity().damage(ammo.getDamage(), player);
             }
-            result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 1));
+            result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 15));
         }
     }
 
@@ -76,13 +75,10 @@ public class PixliesGun {
             return;
         }
         Methods.removeRequiredAmount(event.getItem(), player.getInventory());
-        player.sendActionBar("§7§lReloading...");
         player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            ammo = maxAmmo;
-            player.sendActionBar("§a§lReloaded!");
-            player.getInventory().setItemInMainHand(reloadItem());
-        }, 40);
+        ammo = maxAmmo;
+        player.sendActionBar("§a§lReloaded!");
+        player.getInventory().setItemInMainHand(reloadItem());
     }
 
     public ItemStack reloadItem() {

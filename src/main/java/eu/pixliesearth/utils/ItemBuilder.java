@@ -125,8 +125,13 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder resetLore() {
+    public ItemBuilder hideFlags() {
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        return this;
+    }
+
+    public ItemBuilder addNBTTag(String key, String value) {
+        item = NBTUtils.addString(item, key, value);
         return this;
     }
 
