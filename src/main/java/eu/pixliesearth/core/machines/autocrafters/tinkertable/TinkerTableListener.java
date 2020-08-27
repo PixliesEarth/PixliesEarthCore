@@ -2,6 +2,7 @@ package eu.pixliesearth.core.machines.autocrafters.tinkertable;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,7 +25,7 @@ public class TinkerTableListener implements Listener {
     private static final Main instance = Main.getInstance();
 
     public TinkerTableListener() {
-        //TODO REMOVE
+        // TODO REMOVE
         Bukkit.addRecipe(new ShapedRecipe(NamespacedKey.minecraft(NamespacedKey.BUKKIT), TinkerTable.item).shape("sss", "lcl", "lpl").setIngredient('s', new ItemStack(Material.SPRUCE_SLAB)).setIngredient('l', new ItemStack(Material.OAK_LOG)).setIngredient('c', new ItemStack(Material.CRAFTING_TABLE)).setIngredient('p', new ItemStack(Material.SPRUCE_PLANKS)));
     }
 

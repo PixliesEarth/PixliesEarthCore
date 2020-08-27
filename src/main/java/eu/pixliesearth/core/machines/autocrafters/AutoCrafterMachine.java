@@ -171,17 +171,16 @@ public class AutoCrafterMachine extends Machine {
 
     /*
      * Used to change the colour of the progressbar panels.
-     * @param p_progressIndex: Position of pane in inventory row.
      * @param p_timeToCompleteMilliseconds: Time left for the recipe to be completed.
      */
     private void setProgressBarColourByIndex
-    ( int p_progressIndex, long p_timeToCompleteMilliseconds )
+    (long p_timeToCompleteMilliseconds )
     {
         // The progress bar is only 9 inventory cells long.
         int numberOfCells = 9;
         long timeTaken = p_timeToCompleteMilliseconds - timer.getRemaining();
-        int framesToFill = (int)(
-                (timeTaken) / (p_timeToCompleteMilliseconds / numberOfCells)
+        int framesToFill = ( int )(
+                ( timeTaken ) / ( p_timeToCompleteMilliseconds / numberOfCells )
         );
 
         // Debug
@@ -264,8 +263,10 @@ public class AutoCrafterMachine extends Machine {
 
     private void setProgressBar(boolean matching) {
         if (timer != null && timer.getRemaining() > 0) {
+            long long_TimeToComplete = timer.getRemaining();
+
             for (int i : progressSlots) {
-                setProgressBarColourByIndex(i, timer.getRemaining());
+                setProgressBarColourByIndex(long_TimeToComplete);
             }
         } else {
             if (!matching)
