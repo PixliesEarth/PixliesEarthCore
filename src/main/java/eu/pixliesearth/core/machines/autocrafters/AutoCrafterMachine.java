@@ -189,6 +189,10 @@ public class AutoCrafterMachine extends Machine {
                 "Time Taken: " + timeTaken + " | Frames to fill: " + framesToFill
         );
 
+        Bukkit.broadcastMessage(
+                "Time to complete: " + p_timeToCompleteMilliseconds + " | Time remaining: " + timer.getRemaining()
+        );
+
         // Change a pane to green when framesToFill is a number from 1 to 9.
         switch ( framesToFill )
         {
