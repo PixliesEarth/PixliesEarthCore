@@ -6,6 +6,7 @@ import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
+import org.apache.avro.generic.GenericData;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -75,6 +76,8 @@ public class UtilLists {
 
     public Map<UUID, Machine> openMachines;
 
+    public Map<UUID, Timer> waitingGuns;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -106,6 +109,7 @@ public class UtilLists {
         craftingTables = new HashMap<>();
         machines = new HashMap<>();
         openMachines = new HashMap<>();
+        waitingGuns = new HashMap<>();
     }
 
 }

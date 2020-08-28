@@ -3,9 +3,11 @@ package eu.pixliesearth.guns;
 import eu.pixliesearth.guns.guns.M16;
 import lombok.Getter;
 
+import java.util.UUID;
+
 public enum Guns {
 
-    M16(new M16(30)),
+    M16(new M16(30, UUID.randomUUID())),
     ;
 
     private @Getter

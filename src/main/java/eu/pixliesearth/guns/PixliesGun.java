@@ -1,14 +1,17 @@
 package eu.pixliesearth.guns;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.guns.guns.M16;
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
@@ -23,6 +27,9 @@ import static eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 @AllArgsConstructor
 public class PixliesGun {
 
+    private static Main instance = Main.getInstance();
+
+    private UUID uuid;
     private String name;
     private ItemStack item;
     private AmmoType ammoType;
@@ -33,9 +40,9 @@ public class PixliesGun {
     private long delay;
     private List<Action> triggers;
 
-    //TODO: shooting delay
     public void trigger(final PlayerInteractEvent event) {
         if (!triggers.contains(event.getAction())) return;
+        if (instance.getUtilLists().waitingGuns.containsKey(uuid)) return;
         Player player = event.getPlayer();
         PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getEyeLocation(), this);
         if (this.ammo <= 0) {
@@ -49,19 +56,21 @@ public class PixliesGun {
             Methods.removeRequiredAmount(event.getItem(), player.getInventory());
             player.getInventory().setItemInMainHand(reloadItem());
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
-            float newPitch = player.getLocation().getPitch() - 10;
+            float newPitch = player.getLocation().getPitch() - 4;
             Location newLocation = player.getLocation();
             newLocation.setPitch(newPitch);
             player.teleport(newLocation);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
             if (result.isHeadshot()) {
+                if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
                 result.getEntity().setKiller(player);
                 result.getEntity().setHealth(0.0);
             } else {
                 result.getEntity().damage(ammo.getDamage(), player);
             }
             result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 15));
+            instance.getUtilLists().waitingGuns.put(uuid, new Timer(delay));
         }
     }
 
@@ -95,7 +104,12 @@ public class PixliesGun {
         for (Map.Entry<String, Class<? extends PixliesGun>> entry : classMap().entrySet())
             if (item.hasItemMeta() && item.getItemMeta().getDisplayName().split(" §8| ")[0].equals(entry.getKey())) {
                 int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
-                return entry.getValue().getConstructor(int.class).newInstance(ammo);
+                UUID uuid = null;
+                if (item.getLore() == null) return null;
+                for (String s : item.getLore())
+                    if (s.startsWith("§7§oID: "))
+                        uuid = UUID.fromString(s.replace("§7§oID: ", ""));
+                return entry.getValue().getConstructor(int.class, UUID.class).newInstance(ammo, uuid);
             }
         return null;
     }

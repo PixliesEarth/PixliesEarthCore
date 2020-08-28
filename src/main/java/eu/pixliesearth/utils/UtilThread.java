@@ -33,6 +33,11 @@ public class UtilThread extends Thread {
     }
 
     private void tick() {
+        // GUN DELAYS
+        for (Map.Entry<UUID, Timer> entry : Main.getInstance().getUtilLists().waitingGuns.entrySet())
+            if (entry.getValue().getRemaining() <= 0)
+                Main.getInstance().getUtilLists().waitingGuns.remove(entry.getKey());
+
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
                     .withUsername(Bukkit.getOfflinePlayer(entry.getKey()).getName())
