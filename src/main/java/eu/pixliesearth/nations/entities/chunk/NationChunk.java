@@ -9,6 +9,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -108,7 +109,7 @@ public class NationChunk {
             return false;
         }
         Nation nation = Nation.getById(nationId);
-        if (nation.getClaimingPower() <= 0 && !Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
+        if (nation.getClaimingPower() <= 0 && !Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()) && !nation.getFlags().contains(NationFlag.INF_POWER.name())) {
             Lang.NOT_ENOUGH_POWER_TO_CLAIM.send(player);
             return false;
         }

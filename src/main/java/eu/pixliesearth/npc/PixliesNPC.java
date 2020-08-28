@@ -12,11 +12,13 @@ import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import java.util.UUID;
 
 @Data
-public class PixliesNPC {
+public class PixliesNPC implements Listener {
 
     private Player npcPlayer;
     private EntityPlayer npc;
@@ -58,6 +60,10 @@ public class PixliesNPC {
            for (Player p : Bukkit.getOnlinePlayers())
                p.showPlayer(instance, npcPlayer);
         }, 15);
+
+    }
+
+    public void onRightClick(PlayerInteractAtEntityEvent event) {
 
     }
 

@@ -50,10 +50,14 @@ import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
@@ -245,15 +249,23 @@ public final class Main extends JavaPlugin {
             luckPerms = provider.getProvider();
 
         if (!NationManager.nations.containsKey("safezone")) {
-            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             safezone.save();
-            safezone.setFlag(new ItemStack(Material.YELLOW_BANNER));
+            ItemStack flag = new ItemStack(Material.LIME_BANNER);
+            BannerMeta meta = (BannerMeta) flag.getItemMeta();
+            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
+            flag.setItemMeta(meta);
+            safezone.setFlag(flag);
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
-            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             warzone.save();
-            warzone.setFlag(new ItemStack(Material.RED_BANNER));
+            ItemStack flag = new ItemStack(Material.RED_BANNER);
+            BannerMeta meta = (BannerMeta) flag.getItemMeta();
+            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
+            flag.setItemMeta(meta);
+            warzone.setFlag(flag);
         }
 
     }
