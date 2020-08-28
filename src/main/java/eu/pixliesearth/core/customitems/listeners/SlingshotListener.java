@@ -48,15 +48,7 @@ public class SlingshotListener implements Listener {
         if(!(Main.getInstance().getUtilLists().reloading.contains(uuid))) {
             Main.getInstance().getUtilLists().reloading.add(uuid);
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-                        Main.getInstance().getUtilLists().reloading.remove(uuid);
-                    }
-        },30);
-        //2 Seconds
-
-
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Main.getInstance().getUtilLists().reloading.remove(uuid),30);
     }
 
     public void removeOne(Material m, Player p){

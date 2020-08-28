@@ -20,7 +20,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.destroystokyo.paper:paper:1.16.2-R0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.destroystokyo.paper:paper:1.16.2-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.5.19" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.5" level="project" />
@@ -97,5 +96,7 @@
     <orderEntry type="library" name="Maven: com.github.stephenc:jamm:0.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.luckperms:api:5.1" level="project" />
+    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.27-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: ch.ethz.globis.phtree:phtree:2.3.0" level="project" />
   </component>
 </module>
