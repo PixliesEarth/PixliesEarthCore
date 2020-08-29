@@ -3,6 +3,7 @@ package eu.pixliesearth.core.machines;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.autocrafters.pottery.Pottery;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
@@ -127,6 +128,9 @@ public class Machine {
         } else if (conf.getString("type").equalsIgnoreCase(MachineType.KILN.name())) {
             holo.appendTextLine(conf.getString("holo.text"));
             return new Kiln(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
+        } else if (conf.getString("type").equalsIgnoreCase(MachineType.POTTERY.name())) {
+            holo.appendTextLine(conf.getString("holo.text"));
+            return new Pottery(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
         }
         return null;
     }
@@ -137,6 +141,7 @@ public class Machine {
         INPUT_NODE,
         OUTPUT_NODE,
         KILN,
+        POTTERY,
         ;
 
     }
