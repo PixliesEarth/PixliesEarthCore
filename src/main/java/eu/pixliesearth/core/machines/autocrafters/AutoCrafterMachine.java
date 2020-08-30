@@ -197,63 +197,63 @@ public class AutoCrafterMachine extends Machine {
         {
             case 1:
                 inventory.setItem(36,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 2:
                 inventory.setItem(37,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 3:
                 inventory.setItem(38,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 4:
                 inventory.setItem(39,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 5:
                 inventory.setItem(40,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 6:
                 inventory.setItem(41,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 7:
                 inventory.setItem(42,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 8:
                 inventory.setItem(43,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
                 break;
             case 9:
                 inventory.setItem(44,
-                        new ItemBuilder(GREEN_STAINED_GLASS_PANE)
+                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
                                 .setDisplayName("§3§lLeft")
                                 .addLoreLine("§b" + timer.getRemainingAsString())
                                 .build());
@@ -262,14 +262,11 @@ public class AutoCrafterMachine extends Machine {
     }
 
     private void setProgressBar(boolean matching) {
-        if (timer != null && timer.getRemaining() > 0) {
-
-            // The time required for the recipe to be completed.
-            final long long_TimeToComplete = timer.getRemaining();
-
-            for (int i : progressSlots) {
+        // The time required for the recipe to be completed.
+        final long long_TimeToComplete = timer.getRemaining();
+        if (timer != null && long_TimeToComplete > 0) {
+            for (int ignored : progressSlots)
                 setProgressBarColourByIndex(long_TimeToComplete);
-            }
         } else {
             if (!matching)
                 for (int i : progressSlots)

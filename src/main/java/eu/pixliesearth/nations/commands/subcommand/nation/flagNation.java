@@ -4,27 +4,29 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.entities.nation.ranks.Permission;
-import org.bukkit.Bukkit;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class flagNation implements SubCommand {
 
     @Override
     public String[] aliases() {
-        return new String[]{"flag", "setflag", "banner", "setbanner"};
+        return new String[]{"flag", "flags"};
     }
 
     @Override
     public Map<String, Integer> autoCompletion() {
-        return Collections.emptyMap();
+        Map<String, Integer> map = new HashMap<>();
+        for (NationFlag flag : NationFlag.values())
+            map.put(flag.name(), 1);
+        for (String s : NationManager.names.keySet())
+            map.put(s, 2);
+        return map;
     }
 
     @Override
@@ -34,58 +36,102 @@ public class flagNation implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            Lang.ONLY_PLAYERS_EXEC.send(sender);
-            return false;
-        }
-        Player player = (Player) sender;
-        Profile profile = instance.getProfile(player.getUniqueId());
-        Nation nation;
-        ItemStack inHand;
-        switch (args.length) {
-            case 0:
-                if (!profile.isInNation()) {
-                    Lang.NOT_IN_A_NATION.send(player);
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            Profile profile = instance.getProfile(player.getUniqueId());
+            if (profile.isStaff()) {
+                if (args.length < 2) {
+                    Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE&;/n flag <FLAG> [NATION]");
                     return false;
                 }
-                inHand = player.getInventory().getItemInMainHand();
-                if (inHand == null || !inHand.getType().name().contains("BANNER")) {
-                    Lang.ITEM_HAS_TO_BE_X.send(player, "%ITEM%;BANNER");
-                    return false;
-                }
-                if (!Permission.hasForeignPermission(profile, Permission.SET_FLAG, profile.getCurrentNation())) {
-                    Lang.NO_PERMISSIONS.send(player);
-                    return false;
-                }
-                nation = profile.getCurrentNation();
-                nation.setFlag(inHand);
-                for (String uuid : nation.getMembers()) {
-                    if (Bukkit.getPlayer(UUID.fromString(uuid)) == null) continue;
-                    Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.getDisplayName());
-                }
-                break;
-            case 1:
-                nation = Nation.getByName(args[0]);
+                Nation nation = Nation.getByName(args[1]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(player);
                     return false;
                 }
-                inHand = player.getInventory().getItemInMainHand();
-                if (inHand == null || !inHand.getType().name().contains("BANNER")) {
-                    Lang.ITEM_HAS_TO_BE_X.send(player, "%ITEM%;BANNER");
+                if (!NationFlag.exists(args[0])) {
+                    Lang.X_DOESNT_EXIST.send(player, "%X%;flag");
                     return false;
                 }
-                if (!Permission.hasForeignPermission(profile, Permission.SET_FLAG, profile.getCurrentNation())) {
-                    Lang.NO_PERMISSIONS.send(player);
+                NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
+                if (nation.getFlags().contains(flag.name())) {
+                    nation.getFlags().remove(flag.name());
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet()) {
+                        if (member.getUniqueId() == player.getUniqueId()) continue;
+                        Lang.PLAYER_REMOVED_X.send(member, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                    }
+                    Lang.PLAYER_REMOVED_X.send(player, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                } else {
+                    nation.getFlags().add(flag.name());
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet()) {
+                        if (member.getUniqueId() == player.getUniqueId()) continue;
+                        Lang.PLAYER_ADDED_X.send(member, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                    }
+                    Lang.PLAYER_ADDED_X.send(player, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                }
+            } else {
+                if (args.length < 1) {
+                    Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE&;/n flag <FLAG> [NATION]");
                     return false;
                 }
-                nation.setFlag(inHand);
-                for (String uuid : nation.getMembers()) {
-                    if (Bukkit.getPlayer(UUID.fromString(uuid)) == null) continue;
-                    Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.getDisplayName());
+                if (!profile.isInNation()) {
+                    Lang.NOT_IN_A_NATION.send(player);
+                    return false;
                 }
-                Lang.PLAYER_CHANGED_FLAG.send(player, "%PLAYER%;" + player.getDisplayName());
-                break;
+                Nation nation = profile.getCurrentNation();
+                if (!NationFlag.exists(args[0])) {
+                    Lang.X_DOESNT_EXIST.send(player, "%X%;flag");
+                    return false;
+                }
+                NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
+                if (nation.getFlags().contains(flag.name())) {
+                    nation.getFlags().remove(flag.name());
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet()) {
+                        if (member.getUniqueId() == player.getUniqueId()) continue;
+                        Lang.PLAYER_REMOVED_X.send(member, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                    }
+                    Lang.PLAYER_REMOVED_X.send(player, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                } else {
+                    nation.getFlags().add(flag.name());
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet()) {
+                        if (member.getUniqueId() == player.getUniqueId()) continue;
+                        Lang.PLAYER_ADDED_X.send(member, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                    }
+                    Lang.PLAYER_ADDED_X.send(player, "%PLAYER%;" + player.getDisplayName(), "%X%;flag", "%Y%;" + flag.name());
+                }
+            }
+        } else {
+            if (args.length < 2) {
+                Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE&;/n flag <FLAG> [NATION]");
+                return false;
+            }
+            Nation nation = Nation.getByName(args[1]);
+            if (nation == null) {
+                Lang.NATION_DOESNT_EXIST.send(sender);
+                return false;
+            }
+            if (!NationFlag.exists(args[0])) {
+                Lang.X_DOESNT_EXIST.send(sender, "%X%;flag");
+                return false;
+            }
+            NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
+            if (nation.getFlags().contains(flag.name())) {
+                nation.getFlags().remove(flag.name());
+                nation.save();
+                for (Player member : nation.getOnlineMemberSet())
+                    Lang.PLAYER_REMOVED_X.send(member, "%PLAYER%;" + sender.getName(), "%X%;flag", "%Y%;" + flag.name());
+                Lang.PLAYER_REMOVED_X.send(sender, "%PLAYER%;" + sender.getName(), "%X%;flag", "%Y%;" + flag.name());
+            } else {
+                nation.getFlags().add(flag.name());
+                nation.save();
+                for (Player member : nation.getOnlineMemberSet())
+                    Lang.PLAYER_ADDED_X.send(member, "%PLAYER%;" + sender.getName(), "%X%;flag", "%Y%;" + flag.name());
+                Lang.PLAYER_ADDED_X.send(sender, "%PLAYER%;" + sender.getName(), "%X%;flag", "%Y%;" + flag.name());
+            }
         }
         return false;
     }

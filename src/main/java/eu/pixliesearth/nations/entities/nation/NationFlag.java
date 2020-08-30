@@ -25,4 +25,11 @@ public enum NationFlag {
         return Arrays.asList(PERMANENT.name(), PEACEFUL.name(), INF_POWER.name());
     }
 
+    public static boolean exists(String name) {
+        for (NationFlag flag : values())
+            if (flag.name().equalsIgnoreCase(name))
+                return true;
+        return false;
+    }
+
 }

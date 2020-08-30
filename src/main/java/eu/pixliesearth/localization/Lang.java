@@ -85,6 +85,8 @@ public enum Lang {
     MAX_HOMESIZE_REACHED(Lang.EARTH, new HashMap<>()),
     HOME_ADDED(Lang.EARTH, new HashMap<>()),
     HOME_REMOVED(Lang.EARTH, new HashMap<>()),
+    PLAYER_REMOVED_X(Lang.EARTH, new HashMap<>()),
+    PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
