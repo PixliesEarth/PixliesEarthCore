@@ -86,6 +86,10 @@ public class flagNation implements SubCommand {
                     return false;
                 }
                 NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
+                if (flag.isRequiresStaff()) {
+                    Lang.NO_PERMISSIONS.send(player);
+                    return false;
+                }
                 if (nation.getFlags().contains(flag.name())) {
                     nation.getFlags().remove(flag.name());
                     nation.save();
