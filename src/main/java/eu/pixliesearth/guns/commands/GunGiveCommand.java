@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns.commands;
 
+import lombok.SneakyThrows;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabExecutor;
 import eu.pixliesearth.guns.Guns;
@@ -13,9 +14,11 @@ import org.bukkit.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class GunGiveCommand implements CommandExecutor, TabExecutor {
 
+    @SneakyThrows
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
@@ -33,7 +36,7 @@ public class GunGiveCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
-                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem();
+                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getConstructor(int.class, UUID.class).newInstance(Guns.valueOf(args[0].toUpperCase()).getMaxAmmo(), UUID.randomUUID()).getItem();
                 p.getInventory().addItem(is);
                 p.sendMessage(Lang.GUN_GIVEN.get(sender).replace("%gun%", args[0].toUpperCase()));
 
@@ -47,7 +50,7 @@ public class GunGiveCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
-                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem();
+                ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getConstructor(int.class, UUID.class).newInstance(Guns.valueOf(args[0].toUpperCase()).getMaxAmmo(), UUID.randomUUID()).getItem();
                 player.getInventory().addItem(is);
                 player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", args[0].toUpperCase()));
                 p.sendMessage(Lang.GUN_GIVEN_OTHER.get(p).replace("%gun%", args[0].toUpperCase()).replace("%player%", player.getName()));
@@ -67,7 +70,7 @@ public class GunGiveCommand implements CommandExecutor, TabExecutor {
                 return false;
             }
             Player player = Bukkit.getPlayer(args[1]);
-            ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getItem();
+            ItemStack is = Guns.valueOf(args[0].toUpperCase()).getClazz().getConstructor(int.class, UUID.class).newInstance(Guns.valueOf(args[0].toUpperCase()).getMaxAmmo(), UUID.randomUUID()).getItem();
             assert player != null;
             player.getInventory().addItem(is);
             player.sendMessage(Lang.GUN_RECIEVED.get(player).replace("%gun%", args[0].toUpperCase()));

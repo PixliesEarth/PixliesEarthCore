@@ -2,6 +2,7 @@ package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
+import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.guns.guns.M16;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
@@ -47,6 +48,10 @@ public class PixliesGun {
         PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getEyeLocation(), this);
         if (this.ammo <= 0) {
             reload(event);
+            return;
+        }
+        if (player.isSwimming()) {
+            player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
             return;
         }
         PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(player, ammo);
@@ -97,6 +102,7 @@ public class PixliesGun {
     public static Map<String, Class<? extends PixliesGun>> classMap() {
         Map<String, Class<? extends PixliesGun>> map = new HashMap<>();
         map.put("§c§lM-16", M16.class);
+        map.put("§c§lAK-47", AK47.class);
         return map;
     }
 
