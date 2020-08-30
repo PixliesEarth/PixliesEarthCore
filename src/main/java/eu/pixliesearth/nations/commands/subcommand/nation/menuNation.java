@@ -201,6 +201,21 @@ public class menuNation implements SubCommand {
                     x++;
                 }
                 break;
+            case FLAGS:
+                x = 0;
+                y = 0;
+                for (NationFlag flag : NationFlag.values()) {
+                    if (x + 1 > 8) {
+                        y++;
+                        x = 0;
+                    }
+                    ItemStack item = nation.getFlags().contains(flag.name()) ? new ItemBuilder(Material.LIME_BANNER).setDisplayName("§a§l" + flag.name()).addLoreLine("§7§oClick to toggle").build() : new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§l" + flag.name()).addLoreLine("§7§oClick to toggle").build();
+                    menu.addItem(new GuiItem(item, event -> {
+                        player.performCommand("n flag " + flag.name());
+                    }), x, y);
+                    x++;
+                }
+                break;
             case RESEARCH:
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
@@ -367,6 +382,7 @@ public class menuNation implements SubCommand {
         PERMISSIONS("§3Permissions", Material.WRITABLE_BOOK),
         RELATIONS("§9Relations", Material.ENCHANTED_GOLDEN_APPLE),
         SETTINGS("§bSettings", Material.COMMAND_BLOCK),
+        FLAGS("§dFlags", Material.RED_BANNER),
         RESEARCH("§6Research", Material.LECTERN);
 
         String title;
