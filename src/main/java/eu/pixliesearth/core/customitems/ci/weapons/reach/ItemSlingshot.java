@@ -1,23 +1,25 @@
 package eu.pixliesearth.core.customitems.ci.weapons.reach;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.customitems.CustomItem;
-import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
-import eu.pixliesearth.events.SlingShotEvent;
-import eu.pixliesearth.localization.Lang;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.tags.ItemTagType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.customitems.CustomItem;
+import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
+import eu.pixliesearth.events.SlingShotEvent;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.ItemBuilder.NBTTagType;
+import eu.pixliesearth.utils.ItemBuilder.NBTUtil;
+import eu.pixliesearth.utils.ItemBuilder.NBTUtil.NBTTags;
 
 public class ItemSlingshot implements CustomItem {
 
@@ -34,13 +36,17 @@ public class ItemSlingshot implements CustomItem {
         meta.setCustomModelData(1);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
-        NamespacedKey key = new NamespacedKey(Main.getInstance(), "antistack");
+        //NamespacedKey key = new NamespacedKey(Main.getInstance(), "antistack");
         Random r = new Random();
         double randomValue = 1 + (10000 - 1) * r.nextDouble();
-
-        meta.getCustomTagContainer().setCustomTag(key, ItemTagType.DOUBLE, randomValue);
-
+        
+        //meta.getCustomTagContainer().setCustomTag(key, ItemTagType.DOUBLE, randomValue);
         slingshot.setItemMeta(meta);
+        
+        NBTTags tags = NBTUtil.getTagsFromItem(slingshot);
+        tags.addTag("antistack", randomValue, NBTTagType.DOUBLE);
+        slingshot = NBTUtil.addTagsToItem(slingshot, tags);
+
         // net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(slingshot);
         //NBTTagCompound comp = nmsItem.getTag();
         //comp.set()
