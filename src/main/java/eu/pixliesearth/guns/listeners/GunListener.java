@@ -2,6 +2,7 @@ package eu.pixliesearth.guns.listeners;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.PixliesGun;
+import eu.pixliesearth.utils.NBTUtil;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.LivingEntity;

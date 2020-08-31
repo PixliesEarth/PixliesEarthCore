@@ -3,21 +3,15 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
-import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.utils.AfkMap;
 import eu.pixliesearth.warsystem.GulagStartListener;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Date;
 import java.util.Map;
@@ -51,7 +45,6 @@ public class LeaveListener implements Listener {
         }
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
-        Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());
         if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))
             Main.getInstance().getUtilLists().afk.remove(player.getUniqueId());
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
@@ -99,8 +92,6 @@ public class LeaveListener implements Listener {
         }
 
         profile.backup();
-
-        Main.getInstance().getUtilLists().locationMap.remove(player.getUniqueId());
 /*
         //Discord Leaves
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));*/

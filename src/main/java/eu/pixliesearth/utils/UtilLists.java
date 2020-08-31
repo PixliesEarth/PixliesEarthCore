@@ -30,8 +30,6 @@ public class UtilLists {
 
     public List<UUID> afk;
 
-    public Map<UUID, AfkMap> locationMap;
-
     public List<UUID> vanishList;
 
     public Map<Entity, Double> ammos;
@@ -86,7 +84,6 @@ public class UtilLists {
         warpAdder = new HashSet<>();
         nationDisbander = new HashMap<>();
         afk = new ArrayList<>();
-        locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
         ammos = new HashMap<>();
         claimAuto = new HashMap<>();

@@ -6,6 +6,7 @@ import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.guns.guns.M16;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -68,8 +69,8 @@ public class PixliesGun {
             player.teleport(newLocation);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
+            if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
             if (result.isHeadshot()) {
-                if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
                 result.getEntity().setKiller(player);
                 result.getEntity().setHealth(0.0);
             } else {
@@ -111,7 +112,7 @@ public class PixliesGun {
         for (Map.Entry<String, Class<? extends PixliesGun>> entry : classMap().entrySet())
             if (item.hasItemMeta() && item.getItemMeta().getDisplayName().split(" §8| ")[0].equals(entry.getKey())) {
                 int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
-                ItemBuilder.NBTUtil.NBTTags tags = ItemBuilder.NBTUtil.getTagsFromItem(item);
+                NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
                 if (tags == null) return null;
                 String uuidS = tags.getString("gunId");
                 if (uuidS == null) return null;
