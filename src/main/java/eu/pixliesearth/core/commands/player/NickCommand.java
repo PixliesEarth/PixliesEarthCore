@@ -1,17 +1,18 @@
 package eu.pixliesearth.core.commands.player;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
-import org.apache.commons.lang.StringUtils;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 
 public class NickCommand implements CommandExecutor {
 
@@ -32,7 +33,7 @@ public class NickCommand implements CommandExecutor {
                     player.setDisplayName(player.getName());
                     return false;
                 }
-                if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                if (getPlayer(args[0]).hasPlayedBefore()) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
                     return false;
                 }
@@ -76,7 +77,7 @@ public class NickCommand implements CommandExecutor {
                         target.getAsOfflinePlayer().getPlayer().setDisplayName(target.getAsOfflinePlayer().getName());
                     return false;
                 }
-                if (Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                if (getPlayer(args[0]).hasPlayedBefore()) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(sender);
                     return false;
                 }
@@ -96,5 +97,7 @@ public class NickCommand implements CommandExecutor {
         }
         return false;
     }
-
+    private OfflinePlayer getPlayer(String name) {
+    	return Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(name));
+    }
 }
