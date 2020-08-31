@@ -21,10 +21,10 @@ public class AK47 extends PixliesGun {
     }
 
     @Override
-    public void reloadItem() {
-        ItemMeta meta = getItem().getItemMeta();
-        meta.setDisplayName("§c§lAK-47 §8| §8[§c" + getAmmo() + "§7/§c40§8]");
-        getItem().setItemMeta(meta);
+    public void reloadItem(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§c§lAK-47 §8| §8[§c" + getAmmo() + "§7/§c" + getMaxAmmo() + "§8]");
+        item.setItemMeta(meta);
     }
 
 }

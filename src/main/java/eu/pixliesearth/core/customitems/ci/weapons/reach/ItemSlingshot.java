@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -17,9 +19,6 @@ import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.events.SlingShotEvent;
 import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.ItemBuilder.NBTTagType;
-import eu.pixliesearth.utils.ItemBuilder.NBTUtil;
-import eu.pixliesearth.utils.ItemBuilder.NBTUtil.NBTTags;
 
 public class ItemSlingshot implements CustomItem {
 
@@ -43,7 +42,7 @@ public class ItemSlingshot implements CustomItem {
         //meta.getCustomTagContainer().setCustomTag(key, ItemTagType.DOUBLE, randomValue);
         slingshot.setItemMeta(meta);
         
-        NBTTags tags = NBTUtil.getTagsFromItem(slingshot);
+        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(slingshot);
         tags.addTag("antistack", randomValue, NBTTagType.DOUBLE);
         slingshot = NBTUtil.addTagsToItem(slingshot, tags);
 

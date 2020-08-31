@@ -46,6 +46,7 @@ public class PixliesGun {
     public void trigger(final PlayerInteractEvent event) {
         if (!triggers.contains(event.getAction())) return;
         if (instance.getUtilLists().waitingGuns.containsKey(uuid)) return;
+        instance.getUtilLists().waitingGuns.put(uuid, new Timer(delay));
         Player player = event.getPlayer();
         PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getEyeLocation(), this);
         if (this.ammo <= 0) {
@@ -60,8 +61,7 @@ public class PixliesGun {
         Bukkit.getPluginManager().callEvent(shootEvent);
         if (!shootEvent.isCancelled()) {
             this.ammo -= 1;
-            Methods.removeRequiredAmount(event.getItem(), player.getInventory());
-            reloadItem();
+            reloadItem(event.getItem());
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
             float newPitch = player.getLocation().getPitch() - 4;
             Location newLocation = player.getLocation();
@@ -77,7 +77,6 @@ public class PixliesGun {
                 result.getEntity().damage(ammo.getDamage(), player);
             }
             result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 15));
-            instance.getUtilLists().waitingGuns.put(uuid, new Timer(delay));
         }
     }
 
@@ -90,14 +89,16 @@ public class PixliesGun {
             player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
             return;
         }
-        Methods.removeRequiredAmount(event.getItem(), player.getInventory());
-        player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
-        ammo = maxAmmo;
-        player.sendActionBar("§a§lReloaded!");
-        reloadItem();
+        player.sendActionBar("§b§lReloading...");
+        Bukkit.getScheduler().runTaskLaterAsynchronously(instance, () -> {
+            player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
+            ammo = maxAmmo;
+            player.sendActionBar("§a§lReloaded!");
+            reloadItem(event.getItem());
+        }, 20 * 2);
     }
 
-    public void reloadItem() {}
+    public void reloadItem(ItemStack item) {}
 
     public static Map<String, Class<? extends PixliesGun>> classMap() {
         Map<String, Class<? extends PixliesGun>> map = new HashMap<>();

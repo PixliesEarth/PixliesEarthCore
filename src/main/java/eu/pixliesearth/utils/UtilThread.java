@@ -9,7 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 public class UtilThread extends Thread {
@@ -23,20 +25,18 @@ public class UtilThread extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //Thread Sleep
+/*            //Thread Sleep
             try {
                 sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
     private void tick() {
         // GUN DELAYS
-        for (Map.Entry<UUID, Timer> entry : Main.getInstance().getUtilLists().waitingGuns.entrySet())
-            if (entry.getValue().getRemaining() <= 0)
-                Main.getInstance().getUtilLists().waitingGuns.remove(entry.getKey());
+        Main.getInstance().getUtilLists().waitingGuns.entrySet().removeIf(entry -> entry.getValue().getRemaining() <= 0);
 
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
