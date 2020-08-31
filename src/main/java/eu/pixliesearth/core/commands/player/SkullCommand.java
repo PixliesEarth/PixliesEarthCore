@@ -24,7 +24,6 @@ public class SkullCommand implements CommandExecutor {
        }
 
        if(args.length == 0){
-           Material type;
            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
            SkullMeta meta = (SkullMeta) skull.getItemMeta();
            meta.setOwningPlayer(p);
@@ -34,10 +33,9 @@ public class SkullCommand implements CommandExecutor {
        }
 
        if(args.length == 1){
-           Material type;
            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
            SkullMeta meta = (SkullMeta) skull.getItemMeta();
-           meta.setOwningPlayer(Bukkit.getOfflinePlayer(args[0]));
+           meta.setOwningPlayer(Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0])));
            skull.setItemMeta(meta);
            p.getInventory().addItem(skull);
            p.sendMessage(Lang.SKULL_GIVEN.get(sender).replace("%player%", args[0]));
