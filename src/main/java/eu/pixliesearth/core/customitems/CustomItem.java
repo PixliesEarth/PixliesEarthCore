@@ -1,10 +1,9 @@
 package eu.pixliesearth.core.customitems;
 
+import java.util.List;
+
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-import java.util.Map;
 
 public interface CustomItem {
 
