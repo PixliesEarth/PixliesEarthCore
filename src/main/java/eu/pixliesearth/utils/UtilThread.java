@@ -25,8 +25,8 @@ public class UtilThread extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-/*            //Thread Sleep
-            try {
+            //Thread Sleep
+/*            try {
                 sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -36,7 +36,12 @@ public class UtilThread extends Thread {
 
     private void tick() {
         // GUN DELAYS
-        Main.getInstance().getUtilLists().waitingGuns.entrySet().removeIf(entry -> entry.getValue().getRemaining() <= 0);
+        Iterator it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<UUID, Timer> item = (Entry<UUID, Timer>) it.next();
+            if (item.getValue().getRemaining() <= 0)
+                it.remove();
+        }
 
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
