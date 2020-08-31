@@ -6,6 +6,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -19,8 +20,10 @@ public class M16 extends PixliesGun {
     }
 
     @Override
-    public ItemStack reloadItem() {
-        return new ItemBuilder(getItem()).setDisplayName("§c§lM-16 §8| §8[§c" + getAmmo() + "§7/§c30§8]").build();
+    public void reloadItem() {
+        ItemMeta meta = getItem().getItemMeta();
+        meta.setDisplayName("§c§lM-16 §8| §8[§c" + getAmmo() + "§7/§c40§8]");
+        getItem().setItemMeta(meta);
     }
 
 }

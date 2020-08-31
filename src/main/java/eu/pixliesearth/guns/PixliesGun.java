@@ -61,7 +61,7 @@ public class PixliesGun {
         if (!shootEvent.isCancelled()) {
             this.ammo -= 1;
             Methods.removeRequiredAmount(event.getItem(), player.getInventory());
-            player.getInventory().setItemInMainHand(reloadItem());
+            reloadItem();
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
             float newPitch = player.getLocation().getPitch() - 4;
             Location newLocation = player.getLocation();
@@ -94,12 +94,10 @@ public class PixliesGun {
         player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
         ammo = maxAmmo;
         player.sendActionBar("§a§lReloaded!");
-        player.getInventory().setItemInMainHand(reloadItem());
+        reloadItem();
     }
 
-    public ItemStack reloadItem() {
-        return new ItemStack(Material.STICK);
-    }
+    public void reloadItem() {}
 
     public static Map<String, Class<? extends PixliesGun>> classMap() {
         Map<String, Class<? extends PixliesGun>> map = new HashMap<>();

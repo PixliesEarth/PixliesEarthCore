@@ -1,80 +1,45 @@
 package eu.pixliesearth.core.commands.player;
 
-import java.util.UUID;
-
-import org.apache.commons.lang.StringUtils;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
-import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import java.util.UUID;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.ItemBuilder;
-
-public class BoostCommand implements CommandExecutor {
-
-    private static final Main instance = Main.getInstance();
+public class BlockCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        switch (args.length) {
-            default:
-                Player player = (Player) sender;
-                Profile profile = instance.getProfile(player.getUniqueId());
-                Gui boostGui = new Gui(Main.getInstance(), 3, "&dBoosters");
-                StaticPane pane = new StaticPane(0, 0, 9, 3);
-                boolean alreadyDoubleExp = instance.getUtilLists().boosts.containsKey(Boost.BoostType.DOUBLE_EXP);
-                ItemStack doubleExp = alreadyDoubleExp ? new ItemBuilder(Material.RED_STAINED_GLASS_PANE).addLoreLine("§c§oSomeone already boosted").build() : new ItemBuilder(Material.EXPERIENCE_BOTTLE).setDisplayName("§bDouble-EXP §8(§d2B§8)").addLoreLine("§7With this booster").addLoreLine("§7everyone on the server").addLoreLine("§7will get double-EXP").addLoreLine("§7for §a10 minutes§7!").build();
-                pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-                pane.addItem(new GuiItem(doubleExp, event -> {
-                    event.setCancelled(true);
-                    if (!alreadyDoubleExp) {
-                        if (profile.getBoosts() < 2) {
-                            Lang.NOT_ENOUGH_BOOSTS.send(player);
-                            return;
-                        }
-                        instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_EXP, new DoubleExpBoost());
-                        Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double-EXP");
-                    }
-                }), 2, 1);
-                boostGui.addPane(pane);
-                boostGui.show(player);
-                break;
-            case 3:
-                if (!sender.hasPermission("earth.admin")) {
-                    Lang.NO_PERMISSIONS.send(sender);
-                    return false;
-                }
-                if (args[0].equalsIgnoreCase("add")) {
-                    UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
-                    if (targetUUID == null) {
-                        Lang.PLAYER_DOES_NOT_EXIST.send(sender);
-                        return false;
-                    }
-                    Profile target = instance.getProfile(targetUUID);
-                    if (!StringUtils.isNumeric(args[2])) {
-                        Lang.INVALID_INPUT.send(sender);
-                        return false;
-                    }
-                    target.setBoosts(target.getBoosts() + Integer.parseInt(args[2]));
-                    target.save();
-                    sender.sendMessage("§aDone.");
-                }
-                break;
+        if (!(sender instanceof Player)) {
+            Lang.ONLY_PLAYERS_EXEC.send(sender);
+            return false;
         }
+        Player player = (Player) sender;
+        Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        UUID targetUUID = Bukkit.getPlayerUniqueId(args[0]);
+        if (targetUUID == null) {
+            Lang.PLAYER_DOES_NOT_EXIST.send(player);
+            return false;
+        }
+        if (args[0].equalsIgnoreCase(player.getName())) {
+            Lang.YOU_CANT_BLOCK_YOURSELF.send(player);
+            return false;
+        }
+        if (profile.getBlocked().contains(targetUUID.toString())) {
+            profile.getBlocked().remove(targetUUID.toString());
+            profile.save();
+            player.sendMessage(Lang.EARTH + "§7You just unblocked §6" + args[0] + "§7.");
+            return false;
+        }
+        profile.getBlocked().add(targetUUID.toString());
+        profile.save();
+        Lang.BLOCKED_PLAYER.send(player, "%PLAYER%;" + args[0]);
         return false;
     }
 
 }
-=
