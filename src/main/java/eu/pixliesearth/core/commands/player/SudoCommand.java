@@ -36,7 +36,6 @@ public class SudoCommand implements CommandExecutor {
             List<String> list = new ArrayList<>(Arrays.asList(args));
             list.remove(args[0]);
             String[] commands = list.toArray(new String[0]);
-            CharSequence separator;
             StringJoiner sj = new StringJoiner(" ");
             for(String strings : commands){
                 sj.add(strings);
