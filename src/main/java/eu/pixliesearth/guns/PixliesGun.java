@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.guns.guns.M16;
+import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
@@ -110,11 +111,12 @@ public class PixliesGun {
         for (Map.Entry<String, Class<? extends PixliesGun>> entry : classMap().entrySet())
             if (item.hasItemMeta() && item.getItemMeta().getDisplayName().split(" §8| ")[0].equals(entry.getKey())) {
                 int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
-                UUID uuid = null;
+                ItemBuilder.NBTUtil.NBTTags tags = ItemBuilder.NBTUtil.getTagsFromItem(item);
+                if (tags == null) return null;
+                String uuidS = tags.getString("gunId");
+                if (uuidS == null) return null;
+                UUID uuid = UUID.fromString(uuidS);
                 if (item.getLore() == null) return null;
-                for (String s : item.getLore())
-                    if (s.startsWith("§7§oID: "))
-                        uuid = UUID.fromString(s.replace("§7§oID: ", ""));
                 return entry.getValue().getConstructor(int.class, UUID.class).newInstance(ammo, uuid);
             }
         return null;

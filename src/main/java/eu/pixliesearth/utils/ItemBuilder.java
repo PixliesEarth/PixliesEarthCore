@@ -141,17 +141,11 @@ public class ItemBuilder {
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         return this;
     }
-    /**
-     * Don't use!
-     * 
-     * @deprecated Due to nbt being wiped on {@link ItemBuilder#build()}
-     * 
-     * @param key The key used to save the nbt
-     * @param value The data being saved
-     * @return builder
-     */
-    @Deprecated
-    public ItemBuilder addNBTTag(String key, String value) {
+
+    public ItemBuilder addNBTTag(String key, Object value, NBTTagType type) {
+		NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
+		tags.addTag(key, value, type);
+		item = NBTUtil.addTagsToItem(item, tags);
         return this;
     }
 
