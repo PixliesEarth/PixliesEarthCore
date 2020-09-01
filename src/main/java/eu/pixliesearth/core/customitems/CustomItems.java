@@ -1,8 +1,10 @@
 package eu.pixliesearth.core.customitems;
 
 import eu.pixliesearth.core.customcrafting.CustomRecipe;
+import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
+import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
 import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemStoneHatchet;
 import org.bukkit.Material;

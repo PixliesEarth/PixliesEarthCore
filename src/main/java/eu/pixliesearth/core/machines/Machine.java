@@ -161,8 +161,10 @@ public class Machine {
         SMELT_GOLD(MachineType.KILN, new ItemBuilder(Material.GOLD_ORE).setGlow().setDisplayName("Smelt gold").addLoreLine("§a16 §7gold-ores > §a32 §7gold-ingots").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.GOLD_ORE, 16)), Collections.singletonList(new ItemStack(Material.GOLD_INGOT, 32)), 10, Era.ANCIENT),
         
         // BRONZE FORGE
-        FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots §r& §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(new ItemBuilder(Material.GOLD_INGOT, 2).setDisplayName("§c§lBronze Ingot").setCustomModelData(10).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
-        
+        FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots & §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(ConstIngredients.BRONZE_INGOT.setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
+
+        // POTTERY
+        MUD_BRICK(MachineType.POTTERY, ConstIngredients.MUD_BRICK.addLoreLine("§a1 §7water-bucket & §a4 §7clay >> §a1 §7Mud Brick").addLoreLine("§7Time: §b16 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 16, Era.TRIBAL),
         ;
 
         public MachineType type;
