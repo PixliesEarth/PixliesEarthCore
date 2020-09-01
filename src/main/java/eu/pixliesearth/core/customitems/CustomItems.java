@@ -13,7 +13,10 @@ public enum CustomItems {
     SLINGSHOT(new ItemSlingshot(), null),
     EXPLOSIVE_PICKAXE(new ItemExplosivePick(), new CustomRecipe(new ItemStack(Material.TNT), new ItemStack(Material.TNT), new ItemStack(Material.TNT), null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosivePick().getItem())),
     EXPLOSIVE_SHOVEL(new ItemExplosiveShovel(), new CustomRecipe(null, new ItemStack(Material.TNT), null, null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosiveShovel().getItem())),
-    STONE_HATCHET(new ItemStoneHatchet(), null),;
+    STONE_HATCHET(new ItemStoneHatchet(), null),
+    BRONZE_SWORD(new ItemBronzeSword(), null),
+    BRONZE_INGOT(new BronzeIngot(), null),
+    ;
 
     public CustomItem clazz;
     public CustomRecipe recipe;
