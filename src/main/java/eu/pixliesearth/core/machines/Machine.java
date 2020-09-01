@@ -1,18 +1,11 @@
 package eu.pixliesearth.core.machines;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.autocrafters.pottery.Pottery;
-import eu.pixliesearth.core.machines.cargo.InputNode;
-import eu.pixliesearth.core.machines.cargo.OutputNode;
-import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
-import eu.pixliesearth.core.machines.autocrafters.kiln.Kiln;
-import eu.pixliesearth.nations.entities.nation.Era;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Timer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,11 +15,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
+import eu.pixliesearth.core.machines.autocrafters.kiln.Kiln;
+import eu.pixliesearth.core.machines.autocrafters.pottery.Pottery;
+import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
+import eu.pixliesearth.core.machines.cargo.InputNode;
+import eu.pixliesearth.core.machines.cargo.OutputNode;
+import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Timer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
@@ -142,6 +145,7 @@ public class Machine {
         OUTPUT_NODE,
         KILN,
         POTTERY,
+        BRONZE_FORGE,
         ;
 
     }
@@ -155,7 +159,10 @@ public class Machine {
         //KILN
         SMELT_IRON(MachineType.KILN, new ItemBuilder(Material.IRON_ORE).setGlow().setDisplayName("Smelt iron").addLoreLine("§a16 §7iron-ores > §a32 §7iron-ingots").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.IRON_ORE, 16)), Collections.singletonList(new ItemStack(Material.IRON_INGOT, 32)), 10, Era.ANCIENT),
         SMELT_GOLD(MachineType.KILN, new ItemBuilder(Material.GOLD_ORE).setGlow().setDisplayName("Smelt gold").addLoreLine("§a16 §7gold-ores > §a32 §7gold-ingots").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.GOLD_ORE, 16)), Collections.singletonList(new ItemStack(Material.GOLD_INGOT, 32)), 10, Era.ANCIENT),
-
+        
+        // BRONZE FORGE
+        FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots §r& §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(new ItemBuilder(Material.GOLD_INGOT, 2).setDisplayName("§c§lBronze Ingot").setCustomModelData(10).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
+        
         ;
 
         public MachineType type;
