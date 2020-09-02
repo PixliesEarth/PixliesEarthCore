@@ -170,6 +170,10 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder cloneBuilder() {
+        return new ItemBuilder(build().clone());
+    }
+
     public ItemStack build() {
         return item;
     }
