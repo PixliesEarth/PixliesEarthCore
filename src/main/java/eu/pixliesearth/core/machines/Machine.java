@@ -167,7 +167,8 @@ public class Machine {
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots & §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(ConstIngredients.BRONZE_INGOT.cloneBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
 
         // POTTERY
-        MUD_BRICK(MachineType.POTTERY, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a1 §7water-bucket & §a4 §7clay >> §a1 §7Mud Brick").addLoreLine("§7Time: §b16 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 16, Era.TRIBAL),
+        MUD_BRICK(MachineType.POTTERY, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a1 §7water-bucket & §a4 §7clay > §a1 §7Mud Brick").addLoreLine("§7Time: §b4 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 4, Era.TRIBAL),
+        UNFIRED_POT(MachineType.POTTERY, ConstIngredients.UNFIRED_POT.cloneBuilder().addLoreLine("§a4 §7Mud-brick > §a1 §7Unfired Pot").addLoreLine("§7Time: 6 sec").build(), Collections.singletonList(ConstIngredients.MUD_BRICK.cloneBuilder().setAmount(4).build()), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 6, Era.TRIBAL),
         ;
 
         public MachineType type;
