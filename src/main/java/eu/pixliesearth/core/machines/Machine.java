@@ -148,18 +148,20 @@ public class Machine {
 
     public enum MachineType {
 
-        TINKER_TABLE(TinkerTable.item),
-        INPUT_NODE(InputNode.item),
-        OUTPUT_NODE(OutputNode.item),
-        KILN(Kiln.item),
-        POTTERY(Pottery.item),
-        BRONZE_FORGE(BronzeForge.item),
+        TINKER_TABLE(TinkerTable.item, TinkerTable.class),
+        INPUT_NODE(InputNode.item, InputNode.class),
+        OUTPUT_NODE(OutputNode.item, OutputNode.class),
+        KILN(Kiln.item, Kiln.class),
+        POTTERY(Pottery.item, Pottery.class),
+        BRONZE_FORGE(BronzeForge.item, BronzeForge.class),
         ;
 
         private @Getter final ItemStack item;
+        private @Getter final Class<? extends Machine> clazz;
 
-        MachineType (ItemStack item) {
+        MachineType (ItemStack item, Class<? extends Machine> clazz) {
             this.item = item;
+            this.clazz = clazz;
         }
 
     }

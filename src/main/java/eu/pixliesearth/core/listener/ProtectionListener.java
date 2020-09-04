@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
@@ -16,60 +17,65 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import static org.bukkit.event.EventPriority.HIGH;
+import static org.bukkit.event.EventPriority.MONITOR;
 
 public class ProtectionListener implements Listener {
 
     private static final Main instance = Main.getInstance();
 
-    @EventHandler(priority = HIGH)
+    @EventHandler(priority = MONITOR)
     public void onBreak(BlockBreakEvent event) {
-        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
-        Chunk c = event.getBlock().getChunk();
-        NationChunk nc = NationChunk.get(c);
+        boolean canBreak = canBreak(event);
         Player player = event.getPlayer();
-        Profile profile = instance.getProfile(player.getUniqueId());
-        if (nc == null) return;
-        Nation host = nc.getCurrentNation();
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) return;
-        if (!profile.isInNation()) {
-            player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-            event.setCancelled(true);
-            return;
-        }
-        Nation guest = profile.getCurrentNation();
-        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return;
-        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return;
+        if (canBreak) return;
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = HIGH)
+    public static boolean canBreak(BlockBreakEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
+        Chunk c = event.getBlock().getChunk();
+        NationChunk nc = NationChunk.get(c);
+        Player player = event.getPlayer();
+        Profile profile = instance.getProfile(player.getUniqueId());
+        if (nc == null) return true;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
+        if (Permission.hasAccessHere(profile, nc)) return true;
+        if (!profile.isInNation()) return false;
+        Nation guest = profile.getCurrentNation();
+        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;
+        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return true;
+        return false;
+    }
+
+    @EventHandler(priority = MONITOR)
     public void onPlace(BlockPlaceEvent event) {
-        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
-        Chunk c = event.getBlock().getChunk();
-        NationChunk nc = NationChunk.get(c);
+        boolean canPlace = canPlace(event);
         Player player = event.getPlayer();
-        Profile profile = instance.getProfile(player.getUniqueId());
-        if (nc == null) return;
-        Nation host = nc.getCurrentNation();
-        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) return;
-        if (!profile.isInNation()) {
-            player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-            event.setCancelled(true);
-            return;
-        }
-        Nation guest = profile.getCurrentNation();
-        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return;
-        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return;
-
+        if (canPlace) return;
         player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = HIGH)
+    public static boolean canPlace(BlockPlaceEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
+        Chunk c = event.getBlock().getChunk();
+        NationChunk nc = NationChunk.get(c);
+        Player player = event.getPlayer();
+        Profile profile = instance.getProfile(player.getUniqueId());
+        if (nc == null) return true;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
+        if (Permission.hasAccessHere(profile, nc)) return true;
+        if (!profile.isInNation()) return false;
+        Nation guest = profile.getCurrentNation();
+        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;
+        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return true;
+        return false;
+    }
+
+    @EventHandler(priority = MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         if (event.getClickedBlock() == null) return;
@@ -95,7 +101,7 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = HIGH)
+    @EventHandler(priority = MONITOR)
     public void onEnityInteract(PlayerInteractEntityEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         Chunk c = event.getRightClicked().getChunk();
@@ -119,7 +125,7 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = HIGH)
+    @EventHandler(priority = MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             if (instance.getUtilLists().staffMode.contains(event.getDamager().getUniqueId())) return;
