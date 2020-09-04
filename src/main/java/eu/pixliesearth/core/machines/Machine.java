@@ -2,10 +2,14 @@ package eu.pixliesearth.core.machines;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
+import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
+import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
+import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
+import eu.pixliesearth.core.machines.cargo.CargoMachine;
+import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,6 +59,10 @@ public class Machine {
 
     public void open(Player player) {}
 
+    protected Map<String, Object> extras() {
+        return new HashMap<>();
+    }
+
     public void save() throws IOException {
         File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
 
@@ -62,6 +70,7 @@ public class Machine {
             file.createNewFile();
 
         FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
+        conf.set("class", this.getClass().getName());
         conf.set("location", location);
         conf.set("type", type.name());
         if (wantsToCraft != null) {
@@ -78,6 +87,8 @@ public class Machine {
         }
         conf.set("holo.location", armorStand.getLocation());
         conf.set("holo.text", getTitle());
+        for (Map.Entry<String, Object> entry : extras().entrySet())
+            conf.set(entry.getKey(), entry.getValue());
         conf.save(file);
     }
 
@@ -109,46 +120,47 @@ public class Machine {
         }
     }
 
+    @SneakyThrows
     public static Machine load(File file, FileConfiguration conf) {
         Hologram holo = HologramsAPI.createHologram(instance, conf.getLocation("holo.location"));
         Timer timer = conf.contains("timer.expiry") ? new Timer(conf.getLong("timer.expiry"), conf.getBoolean("timer.ended")) : null;
         MachineCraftable wantsToCraft = conf.contains("wantsToCraft") ? MachineCraftable.valueOf(conf.getString("wantsToCraft")) : null;
-        if (conf.getString("type").equalsIgnoreCase(MachineType.TINKER_TABLE.name())) {
+        Class<? extends Machine> clazz = (Class<? extends Machine>) Class.forName(conf.getString("class"));
+        MachineType type = MachineType.valueOf(conf.getString("type"));
+
+        if (clazz.isAssignableFrom(FuelableAutoCrafterMachine.class)) {
             holo.appendTextLine(conf.getString("holo.text"));
-            return new TinkerTable(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
-        } else if (conf.getString("type").equalsIgnoreCase(MachineType.OUTPUT_NODE.name())) {
-            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§c§lOutput Node");
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, int.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
+        } else if (clazz.isAssignableFrom(AutoCrafterMachine.class)) {
+            holo.appendTextLine(conf.getString("holo.text"));
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
+        } else if (clazz.isAssignableFrom(CargoMachine.class)) {
+            Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
             if (conf.contains("storage")) {
                 for (String s : conf.getConfigurationSection("storage").getKeys(false))
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
             }
-            return new OutputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
-        } else if (conf.getString("type").equalsIgnoreCase(MachineType.INPUT_NODE.name())) {
-            Inventory inventory = Bukkit.createInventory(null, 9 * 6, "§b§lInput Node");
-            if (conf.contains("storage")) {
-                for (String s : conf.getConfigurationSection("storage").getKeys(false))
-                    inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
-            }
-            return new InputNode(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
-        } else if (conf.getString("type").equalsIgnoreCase(MachineType.KILN.name())) {
-            holo.appendTextLine(conf.getString("holo.text"));
-            return new Kiln(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
-        } else if (conf.getString("type").equalsIgnoreCase(MachineType.POTTERY.name())) {
-            holo.appendTextLine(conf.getString("holo.text"));
-            return new Pottery(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
         }
+
         return null;
     }
 
     public enum MachineType {
 
-        TINKER_TABLE,
-        INPUT_NODE,
-        OUTPUT_NODE,
-        KILN,
-        POTTERY,
-        BRONZE_FORGE,
+        TINKER_TABLE(TinkerTable.item),
+        INPUT_NODE(InputNode.item),
+        OUTPUT_NODE(OutputNode.item),
+        KILN(Kiln.item),
+        POTTERY(Pottery.item),
+        BRONZE_FORGE(BronzeForge.item),
         ;
+
+        private @Getter final ItemStack item;
+
+        MachineType (ItemStack item) {
+            this.item = item;
+        }
 
     }
 
