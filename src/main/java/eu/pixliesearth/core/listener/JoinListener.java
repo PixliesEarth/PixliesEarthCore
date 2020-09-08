@@ -121,10 +121,7 @@ public class JoinListener implements Listener {
         profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));
-        player.sendTitle("§b§lPlease Wait", "§7We are applying our resource-pack on you", 20, 20 * 3, 20);
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            player.setResourcePack("http://46.4.64.96/staxx/earth.zip");
-        }, 20);
+        player.sendMessage("§7Please wait. We are applying our resource-pack on you");
     }
 
 }
