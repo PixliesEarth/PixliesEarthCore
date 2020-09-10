@@ -47,6 +47,13 @@ public class JSONFile extends FileBase {
 		saveJsonToFile();
 	}
 	
+	public void put(String key, Object value) {
+		if (value==null) return;
+		if (this.json.has(key)) this.json.remove(key);
+		this.json.addProperty(key, value.toString());
+		saveJsonToFile();
+	}
+	
 	public void put(String key, Long value) {
 		if (value==null) return;
 		if (this.json.has(key)) this.json.remove(key);

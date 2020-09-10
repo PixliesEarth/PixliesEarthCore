@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.google.gson.JsonObject;
 
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.machines.Machine;
@@ -31,10 +32,11 @@ public class CargoMachine extends Machine {
 
     public Map<String, Object> extras() {
         Map<String, Object> map = new HashMap<>();
+        JsonObject j = new JsonObject();
         for (int i = 0; i < storage.getSize(); i++) {
-            if (storage.getItem(i) == null) continue;
-            map.put("storage." + i, storage.getItem(i));
+            if (storage.getItem(i) != null) j.addProperty(Integer.toString(i), serialize(storage.getItem(i))); else j.addProperty(Integer.toString(i), "EMPTY");
         }
+        map.put("storage", j.toString());
         return map;
     }
 

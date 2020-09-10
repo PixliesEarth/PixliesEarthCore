@@ -5,6 +5,7 @@ import static org.bukkit.Material.IRON_INGOT;
 import static org.bukkit.Material.MAGMA_BLOCK;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class Machine {
         return new HashMap<>();
     }
     
-    private static final String serialize(Object o) {
+    public static final String serialize(Object o) {
 	    try {
 	        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
 	        BukkitObjectOutputStream out = new BukkitObjectOutputStream(bytesOut);
@@ -92,7 +93,7 @@ public class Machine {
 	    }
 	}
 
-	private static final Object deserialize(String base64) {
+    public static final Object deserialize(String base64) {
 	    try {
 	        byte[] data = Base64Coder.decodeLines(base64);
 	        ByteArrayInputStream bytesIn = new ByteArrayInputStream(data);
@@ -105,6 +106,7 @@ public class Machine {
 	        return null;
 	    }
 	}
+    
 	
 	private static final String locationToSaveableString(Location l) {
 		return l.getWorld().getUID().toString().concat(":").concat(Double.toString(l.getX())).concat(":").concat(Double.toString(l.getY())).concat(":").concat(Double.toString(l.getZ())).concat(":").concat(Float.toString(l.getYaw())).concat(":").concat(Float.toString(l.getPitch()));
@@ -119,9 +121,11 @@ public class Machine {
     	JSONFile f;
     	try {
         	f = new JSONFile(getMachineSavePath(), id); // Create or load file
+        	f.clearFile();
     	} catch (Exception e) {
     		new FileDirectory(getMachineSavePath()); // Create directory as exception was caused by directory not existing
-    		f = new JSONFile(getMachineSavePath(), id); // Create or load file
+			f = new JSONFile(getMachineSavePath(), id);
+			try {f.clearFile();} catch (IOException e2) {e2.printStackTrace();} // clear old data
     	}
         f.put("id", id);
     	f.put("class", this.getClass().getName());
@@ -136,7 +140,7 @@ public class Machine {
     	json.addProperty("location", locationToSaveableString(armorStand.getLocation()));
     	json.addProperty("text", getTitle());
     	f.put("holo", json.toString());
-    	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), serialize(entry.getValue()));
+    	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), entry.getValue());
     	f.saveJsonToFile();
         
         /*
@@ -189,7 +193,7 @@ public class Machine {
 
     public static void loadAll() {
         for (FileBase f : new FileDirectory("plugins/PixliesEarthCore/machines/").getFilesInDirectory()) {
-        	JSONFile jf = (JSONFile) f;
+        	JSONFile jf = new JSONFile(f.getFilePath(), f.getFileName());
             //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
             Machine machine = load(jf);
             if (machine == null) {
@@ -225,7 +229,7 @@ public class Machine {
             if (!f.get("storage").equalsIgnoreCase("NULL")) {
             	JsonObject js = jp.parse(f.get("storage")).getAsJsonObject();
                 for (Map.Entry<String, JsonElement> entry : js.entrySet()) {
-                	inventory.setItem(Integer.parseInt(entry.getKey()), (ItemStack) deserialize(entry.getValue().getAsString()));
+                	if (!entry.getValue().getAsString().equalsIgnoreCase("EMPTY")) inventory.setItem(Integer.parseInt(entry.getKey()), (ItemStack) deserialize(entry.getValue().getAsString()));
                 }
             }
             return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, inventory, type);

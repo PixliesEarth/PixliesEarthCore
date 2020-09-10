@@ -140,8 +140,7 @@ public class FileBase {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void clearFile() throws FileNotFoundException, IOException {
-		if (!doesFileExist()) throw new FileNotFoundException("The file "+getFileConstruct()+" does not exist!");
+	public void clearFile() throws IOException {
 		Writer output = new BufferedWriter(new FileWriter(getFileConstruct(), false));
 		output.write("");
 		output.close();
@@ -153,7 +152,6 @@ public class FileBase {
 	 * @throws FileNotFoundException
 	 */
 	public ArrayList<String> loadFileIntoArray() throws FileNotFoundException {
-		if (!doesFileExist()) throw new FileNotFoundException("The file "+getFileConstruct()+" does not exist!");
 	    Scanner reader = new Scanner(getFile());
 	    ArrayList<String> result = new ArrayList<>();
 	    while (reader.hasNext()) {
