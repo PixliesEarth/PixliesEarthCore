@@ -1,32 +1,47 @@
 package eu.pixliesearth.core.machines;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import static org.bukkit.Material.GOLD_INGOT;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.MAGMA_BLOCK;
 
-import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
-import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
-import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
-import eu.pixliesearth.core.machines.cargo.CargoMachine;
-import lombok.Getter;
-import lombok.SneakyThrows;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.FileDirectory;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
+import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
+import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
 import eu.pixliesearth.core.machines.autocrafters.kiln.Kiln;
 import eu.pixliesearth.core.machines.autocrafters.pottery.Pottery;
 import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
+import eu.pixliesearth.core.machines.cargo.CargoMachine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.nations.entities.nation.Era;
@@ -34,13 +49,14 @@ import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import static org.bukkit.Material.*;
+import lombok.Getter;
+import lombok.SneakyThrows;
 
 @Data
 @AllArgsConstructor
 public class Machine {
-
+	public static final @Getter String MachineSavePath = Main.getInstance().getDataFolder().getAbsolutePath()+"/machines/";
+	
     protected static final Main instance = Main.getInstance();
 
     public static final List<Integer> craftSlots = Arrays.asList(0, 1, 2, 3, 9, 18, 27, 10, 11, 12, 19, 20, 21, 28, 29, 30);
@@ -62,11 +78,72 @@ public class Machine {
     protected Map<String, Object> extras() {
         return new HashMap<>();
     }
+    
+    private static final String serialize(Object o) {
+	    try {
+	        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+	        BukkitObjectOutputStream out = new BukkitObjectOutputStream(bytesOut);
+	        out.writeObject(o);
+	        out.flush();
+	        out.close();
+	        return Base64Coder.encodeLines(bytesOut.toByteArray());
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return null;
+	    }
+	}
 
-    public void save() throws IOException {
-        File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
-
-        if (!file.exists())
+	private static final Object deserialize(String base64) {
+	    try {
+	        byte[] data = Base64Coder.decodeLines(base64);
+	        ByteArrayInputStream bytesIn = new ByteArrayInputStream(data);
+	        BukkitObjectInputStream in = new BukkitObjectInputStream(bytesIn);
+	        Object o = in.readObject();
+	        in.close();
+	        return o;
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	private static final String locationToSaveableString(Location l) {
+		return l.getWorld().getUID().toString().concat(":").concat(Double.toString(l.getX())).concat(":").concat(Double.toString(l.getY())).concat(":").concat(Double.toString(l.getZ())).concat(":").concat(Float.toString(l.getYaw())).concat(":").concat(Float.toString(l.getPitch()));
+	}
+	
+	private static final Location locationFromSaveableString(String s) {
+		String[] data = s.split(":");
+		return new Location(Bukkit.getWorld(UUID.fromString(data[0])), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]), Float.parseFloat(data[4]), Float.parseFloat(data[5]));
+	}
+    
+    public void save() {
+    	JSONFile f;
+    	try {
+        	f = new JSONFile(getMachineSavePath(), id); // Create or load file
+    	} catch (Exception e) {
+    		new FileDirectory(getMachineSavePath()); // Create directory as exception was caused by directory not existing
+    		f = new JSONFile(getMachineSavePath(), id); // Create or load file
+    	}
+        f.put("id", id);
+    	f.put("class", this.getClass().getName());
+    	f.put("location", locationToSaveableString(location));
+    	f.put("type", type.name());
+    	f.put("fuel", "NULL"); // Set to null as its not a fuelable autocrafter
+    	f.put("storage", "NULL"); // Set to null as its does not have a storage
+    	if (wantsToCraft != null) f.put("wantsToCraft", wantsToCraft.name()); else f.put("wantsToCraft", "NULL");
+    	f.put("item", serialize(item));
+    	if (timer != null) {JsonObject json = new JsonObject();json.addProperty("expiry", timer.getExpiry());json.addProperty("ended", timer.isEnded());f.put("timer", json.toString());} else f.put("timer", "NULL");
+    	JsonObject json = new JsonObject();
+    	json.addProperty("location", locationToSaveableString(armorStand.getLocation()));
+    	json.addProperty("text", getTitle());
+    	f.put("holo", json.toString());
+    	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), serialize(entry.getValue()));
+    	f.saveJsonToFile();
+        
+        /*
+         File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
+         
+         if (!file.exists())
             file.createNewFile();
 
         FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
@@ -89,7 +166,7 @@ public class Machine {
         conf.set("holo.text", getTitle());
         for (Map.Entry<String, Object> entry : extras().entrySet())
             conf.set(entry.getKey(), entry.getValue());
-        conf.save(file);
+        conf.save(file); */
     }
 
     public void remove() {
@@ -113,11 +190,12 @@ public class Machine {
     }
 
     public static void loadAll() {
-        for (File file : new File("plugins/PixliesEarthCore/machines/").listFiles()) {
-            FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
-            Machine machine = load(file, conf);
+        for (FileBase f : new FileDirectory("plugins/PixliesEarthCore/machines/").getFilesInDirectory()) {
+        	JSONFile jf = (JSONFile) f;
+            //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
+            Machine machine = load(jf);
             if (machine == null) {
-                instance.getLogger().warning("Could not load machine " + file.getName());
+                instance.getLogger().warning("Could not load machine " + jf.getFileConstruct());
                 continue;
             }
             instance.getUtilLists().machines.put(machine.getLocation(), machine);
@@ -125,25 +203,34 @@ public class Machine {
     }
 
     @SneakyThrows
-    public static Machine load(File file, FileConfiguration conf) {
-        Hologram holo = HologramsAPI.createHologram(instance, conf.getLocation("holo.location"));
-        Timer timer = conf.contains("timer.expiry") ? new Timer(conf.getLong("timer.expiry"), conf.getBoolean("timer.ended")) : null;
-        MachineCraftable wantsToCraft = conf.contains("wantsToCraft") ? MachineCraftable.valueOf(conf.getString("wantsToCraft")) : null;
-        MachineType type = MachineType.valueOf(conf.getString("type"));
+    public static Machine load(JSONFile f) {
+    	JsonParser jp = new JsonParser();
+    	JsonObject jh = jp.parse(f.get("holo")).getAsJsonObject();
+    	Timer timer = null;
+    	if (!f.get("timer").equalsIgnoreCase("NULL")) {
+    		JsonObject jt = jp.parse(f.get("timer")).getAsJsonObject();
+    		timer = new Timer(jt.get("timer.expiry").getAsLong(), jt.get("timer.ended").getAsBoolean());
+    	}
+        Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));
+        MachineCraftable wantsToCraft = !f.get("wantsToCraft").equalsIgnoreCase("NULL") ? MachineCraftable.valueOf(f.get("wantsToCraft")) : null;
+        MachineType type = MachineType.valueOf(f.get("type"));
         Class<? extends Machine> clazz = type.getClazz();
 
         if (clazz.isAssignableFrom(FuelableAutoCrafterMachine.class)) {
-            holo.appendTextLine(conf.getString("holo.text"));
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, type, conf.getInt("fuel"));
+            holo.appendTextLine(jh.get("text").getAsString());
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, type, Integer.parseInt(f.get("fuel")));
         } else if (clazz.isAssignableFrom(AutoCrafterMachine.class)) {
-            holo.appendTextLine(conf.getString("holo.text"));
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, type);
+            holo.appendTextLine(jh.get("text").getAsString());
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, type);
         } else if (clazz.isAssignableFrom(CargoMachine.class)) {
             Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
-            if (conf.contains("storage"))
-                for (String s : conf.getConfigurationSection("storage").getKeys(false))
-                    inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory, type);
+            if (!f.get("storage").equalsIgnoreCase("NULL")) {
+            	JsonObject js = jp.parse(f.get("storage")).getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : js.entrySet()) {
+                	inventory.setItem(Integer.parseInt(entry.getKey()), (ItemStack) deserialize(entry.getValue().getAsString()));
+                }
+            }
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, inventory, type);
         }
         return null;
     }

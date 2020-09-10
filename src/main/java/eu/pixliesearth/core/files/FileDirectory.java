@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.FilenameUtils;
 
 public class FileDirectory {
 	public String DirectoryName;
@@ -85,5 +89,15 @@ public class FileDirectory {
 	public void deleteDirectory() throws FileNotFoundException {
 		if (!doesDirectoryExist()) throw new FileNotFoundException("The directory "+getDirectoryConstruct()+" does not exist!");
 		new File(getDirectoryConstruct()).delete();
+	}
+	
+	public Set<FileBase> getFilesInDirectory() {
+		Set<FileBase> set = new HashSet<FileBase>();
+		File dir = new File(getDirectoryConstruct());
+		for (File f : dir.listFiles()) {
+			String path = f.getAbsolutePath();
+			set.add(new FileBase(FilenameUtils.getFullPath(path), FilenameUtils.getBaseName(path), FilenameUtils.getExtension(path)));
+		}
+		return set;
 	}
 }
