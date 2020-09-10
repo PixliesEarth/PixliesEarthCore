@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.machines;
 
-import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+
+import eu.pixliesearth.utils.ItemBuilder;
 
 public class ConstIngredients {
 

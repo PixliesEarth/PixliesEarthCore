@@ -1,11 +1,5 @@
 package eu.pixliesearth.core.machines;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.listener.ProtectionListener;
-import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
-import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
-import eu.pixliesearth.utils.Methods;
-import lombok.SneakyThrows;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,6 +13,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.listener.ProtectionListener;
+import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
+import eu.pixliesearth.utils.Methods;
+import lombok.SneakyThrows;
 
 public class MachineListener implements Listener {
 

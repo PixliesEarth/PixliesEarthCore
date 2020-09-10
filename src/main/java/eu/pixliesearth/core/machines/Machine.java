@@ -5,7 +5,6 @@ import static org.bukkit.Material.IRON_INGOT;
 import static org.bukkit.Material.MAGMA_BLOCK;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -170,11 +169,10 @@ public class Machine {
     }
 
     public void remove() {
-        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+    	JSONFile file = new JSONFile(getMachineSavePath(), id);
         instance.getUtilLists().machines.remove(location);
         armorStand.delete();
-        if (!file.exists()) return;
-        file.delete();
+        file.deleteFile();
     }
 
     protected static Location holoLocation(Location location) {

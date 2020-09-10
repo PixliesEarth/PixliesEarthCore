@@ -1,26 +1,18 @@
 package eu.pixliesearth.core.machines.cargo;
 
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Container;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import eu.pixliesearth.core.machines.Machine;
+
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Container;
-import org.bukkit.block.Hopper;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.io.File;
-import java.io.IOException;
 
 public class OutputNode extends CargoMachine {
 

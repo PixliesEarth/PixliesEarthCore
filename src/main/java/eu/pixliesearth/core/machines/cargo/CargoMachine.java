@@ -1,18 +1,20 @@
 package eu.pixliesearth.core.machines.cargo;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import eu.pixliesearth.core.machines.Machine;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.Timer;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 
 public class CargoMachine extends Machine {
 
@@ -44,11 +46,10 @@ public class CargoMachine extends Machine {
 
     @Override
     public void remove() {
-        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+    	JSONFile file = new JSONFile(getMachineSavePath(), id);
         instance.getUtilLists().machines.remove(location);
         armorStand.delete();
-        if (!file.exists()) return;
-        file.delete();
+        file.deleteFile();
         for (ItemStack item : storage.getContents())
             if (item != null)
                 location.getWorld().dropItemNaturally(location, item);

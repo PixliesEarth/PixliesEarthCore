@@ -1,10 +1,27 @@
 package eu.pixliesearth.core.machines.autocrafters;
 
+import static org.bukkit.Material.BARRIER;
+import static org.bukkit.Material.BLACK_STAINED_GLASS_PANE;
+import static org.bukkit.Material.LIME_STAINED_GLASS_PANE;
+import static org.bukkit.Material.RED_STAINED_GLASS_PANE;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.OutlinePane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+
+import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
@@ -14,18 +31,6 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.bukkit.Material.*;
 
 public class AutoCrafterMachine extends Machine {
 
@@ -269,7 +274,7 @@ public class AutoCrafterMachine extends Machine {
         // The time required for the recipe to be completed.
         if (timer != null && timer.getRemaining() > 0) {
             final long long_TimeToComplete = timer.getRemaining();
-            for (int ignored : progressSlots)
+            for (@SuppressWarnings("unused") int ignored : progressSlots)
                 setProgressBarColourByIndex(long_TimeToComplete);
         } else {
             if (!matching)
@@ -309,11 +314,10 @@ public class AutoCrafterMachine extends Machine {
 
     @Override
     public void remove() {
-        File file = new File("plugins/PixliesEarthCore/machines/" + id + ".yml");
+    	JSONFile file = new JSONFile(getMachineSavePath(), id);
         instance.getUtilLists().machines.remove(location);
         armorStand.delete();
-        if (!file.exists()) return;
-        file.delete();
+        file.deleteFile();
         if (inventory != null) {
             for (int i : craftSlots) {
                 if (inventory.getItem(i) == null) continue;

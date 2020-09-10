@@ -180,8 +180,7 @@ public class FileBase {
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void deleteFile() throws FileNotFoundException {
-		if (!doesFileExist()) throw new FileNotFoundException("The file "+getFileConstruct()+" does not exist!");
+	public void deleteFile() {
 	    getFile().delete();
 	}
 	/**
