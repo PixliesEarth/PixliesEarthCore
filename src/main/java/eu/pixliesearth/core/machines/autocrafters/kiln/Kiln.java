@@ -5,7 +5,6 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
-import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,11 +20,6 @@ public class Kiln extends FuelableAutoCrafterMachine {
 
     public String getTitle() {
         return "§c§lKiln";
-    }
-
-    public Kiln(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, int fuel) {
-        super(id, location, MachineType.KILN, item, timer, armorStand, wantsToCraft);
-        this.fuel = fuel;
     }
 
 }

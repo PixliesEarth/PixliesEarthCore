@@ -23,8 +23,4 @@ public class TinkerTable extends AutoCrafterMachine {
         return "§b§lTinker Table";
     }
 
-    public TinkerTable(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
-        super(id, location, MachineType.TINKER_TABLE, item, timer, armorStand, wantsToCraft);
-    }
-
 }

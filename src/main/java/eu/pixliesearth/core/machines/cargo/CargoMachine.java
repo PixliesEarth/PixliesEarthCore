@@ -22,6 +22,11 @@ public class CargoMachine extends Machine {
         super(id, location, type, item, timer, armorStand, wantsToCraft);
     }
 
+    public CargoMachine(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, Inventory storage, MachineType type) {
+        super(id, location, type, type.getItem(), timer, armorStand, wantsToCraft);
+        this.storage = storage;
+    }
+
     public Map<String, Object> extras() {
         Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < storage.getSize(); i++) {

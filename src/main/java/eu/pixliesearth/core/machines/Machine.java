@@ -116,6 +116,10 @@ public class Machine {
         for (File file : new File("plugins/PixliesEarthCore/machines/").listFiles()) {
             FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
             Machine machine = load(file, conf);
+            if (machine == null) {
+                instance.getLogger().warning("Could not load machine " + file.getName());
+                continue;
+            }
             instance.getUtilLists().machines.put(machine.getLocation(), machine);
         }
     }
@@ -125,43 +129,43 @@ public class Machine {
         Hologram holo = HologramsAPI.createHologram(instance, conf.getLocation("holo.location"));
         Timer timer = conf.contains("timer.expiry") ? new Timer(conf.getLong("timer.expiry"), conf.getBoolean("timer.ended")) : null;
         MachineCraftable wantsToCraft = conf.contains("wantsToCraft") ? MachineCraftable.valueOf(conf.getString("wantsToCraft")) : null;
-        Class<? extends Machine> clazz = (Class<? extends Machine>) Class.forName(conf.getString("class"));
         MachineType type = MachineType.valueOf(conf.getString("type"));
+        Class<? extends Machine> clazz = type.getClazz();
 
         if (clazz.isAssignableFrom(FuelableAutoCrafterMachine.class)) {
             holo.appendTextLine(conf.getString("holo.text"));
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, int.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, conf.getInt("fuel"));
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, type, conf.getInt("fuel"));
         } else if (clazz.isAssignableFrom(AutoCrafterMachine.class)) {
             holo.appendTextLine(conf.getString("holo.text"));
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft);
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, type);
         } else if (clazz.isAssignableFrom(CargoMachine.class)) {
             Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
-            if (conf.contains("storage")) {
+            if (conf.contains("storage"))
                 for (String s : conf.getConfigurationSection("storage").getKeys(false))
                     inventory.setItem(Integer.parseInt(s), conf.getItemStack("storage." + s));
-            }
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory);
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(file.getName().replace(".yml", ""), conf.getLocation("location"), holo, timer, wantsToCraft, inventory, type);
         }
-
         return null;
     }
 
     public enum MachineType {
 
-        TINKER_TABLE(TinkerTable.item, TinkerTable.class),
-        INPUT_NODE(InputNode.item, InputNode.class),
-        OUTPUT_NODE(OutputNode.item, OutputNode.class),
-        KILN(Kiln.item, Kiln.class),
-        POTTERY(Pottery.item, Pottery.class),
-        BRONZE_FORGE(BronzeForge.item, BronzeForge.class),
+        TINKER_TABLE(TinkerTable.item, TinkerTable.class, AutoCrafterMachine.class),
+        INPUT_NODE(InputNode.item, InputNode.class, CargoMachine.class),
+        OUTPUT_NODE(OutputNode.item, OutputNode.class, CargoMachine.class),
+        KILN(Kiln.item, Kiln.class, FuelableAutoCrafterMachine.class),
+        POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class),
+        BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class),
         ;
 
         private @Getter final ItemStack item;
         private @Getter final Class<? extends Machine> clazz;
+        private @Getter final Class<? extends Machine> parent;
 
-        MachineType (ItemStack item, Class<? extends Machine> clazz) {
+        MachineType (ItemStack item, Class<? extends Machine> clazz, Class<? extends Machine> parent) {
             this.item = item;
             this.clazz = clazz;
+            this.parent = parent;
         }
 
     }
@@ -181,7 +185,7 @@ public class Machine {
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots & §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(ConstIngredients.BRONZE_INGOT.cloneBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
 
         // POTTERY
-        MUD_BRICK(MachineType.POTTERY, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a1 §7water-bucket & §a4 §7clay > §a1 §7Mud Brick").addLoreLine("§7Time: §b4 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 4, Era.TRIBAL),
+        MUD_BRICK_POTTERY(MachineType.POTTERY, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a1 §7water-bucket & §a4 §7clay > §a1 §7Mud Brick").addLoreLine("§7Time: §b4 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 4, Era.TRIBAL),
         UNFIRED_POT(MachineType.POTTERY, ConstIngredients.UNFIRED_POT.cloneBuilder().addLoreLine("§a4 §7Mud-brick > §a1 §7Unfired Pot").addLoreLine("§7Time: 6 sec").build(), Collections.singletonList(ConstIngredients.MUD_BRICK.cloneBuilder().setAmount(4).build()), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 6, Era.TRIBAL),
         ;
 

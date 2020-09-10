@@ -12,8 +12,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -24,6 +22,11 @@ public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
 
     public FuelableAutoCrafterMachine(String id, Location location, MachineType type, ItemStack item, Timer timer, Hologram armorStand, MachineCraftable wantsToCraft) {
         super(id, location, type, item, timer, armorStand, wantsToCraft);
+    }
+
+    public FuelableAutoCrafterMachine(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType, int fuel) {
+        super(id, location, machineType, machineType.getItem(), timer, armorStand, wantsToCraft);
+        this.fuel = fuel;
     }
 
     @Override

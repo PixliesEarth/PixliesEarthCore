@@ -22,8 +22,4 @@ public class Pottery extends AutoCrafterMachine {
         return "§6§lPottery";
     }
 
-    public Pottery(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
-        super(id, location, MachineType.KILN, item, timer, armorStand, wantsToCraft);
-    }
-
 }

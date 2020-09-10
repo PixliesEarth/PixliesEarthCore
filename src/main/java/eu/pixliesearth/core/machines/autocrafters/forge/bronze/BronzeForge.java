@@ -1,11 +1,9 @@
 package eu.pixliesearth.core.machines.autocrafters.forge.bronze;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
-import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,10 +19,6 @@ public class BronzeForge extends AutoCrafterMachine {
     @Override
     public String getTitle() {
         return "§b§lBronzeForge";
-    }
-
-    public BronzeForge(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft) {
-        super(id, location, MachineType.BRONZE_FORGE, item, timer, armorStand, wantsToCraft);
     }
 
 }

@@ -33,6 +33,10 @@ public class AutoCrafterMachine extends Machine {
         super(id, location, type, item, timer, armorStand, wantsToCraft);
     }
 
+    public AutoCrafterMachine(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType) {
+        super(id, location, machineType, machineType.getItem(), timer, armorStand, wantsToCraft);
+    }
+
     protected Inventory inventory;
 
     public void reopen(Player player) {
@@ -263,8 +267,8 @@ public class AutoCrafterMachine extends Machine {
 
     private void setProgressBar(boolean matching) {
         // The time required for the recipe to be completed.
-        final long long_TimeToComplete = timer.getRemaining();
-        if (timer != null && long_TimeToComplete > 0) {
+        if (timer != null && timer.getRemaining() > 0) {
+            final long long_TimeToComplete = timer.getRemaining();
             for (int ignored : progressSlots)
                 setProgressBarColourByIndex(long_TimeToComplete);
         } else {
