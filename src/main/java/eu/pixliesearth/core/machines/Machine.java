@@ -211,7 +211,7 @@ public class Machine {
     	Timer timer = null;
     	if (!f.get("timer").equalsIgnoreCase("NULL")) {
     		JsonObject jt = jp.parse(f.get("timer")).getAsJsonObject();
-    		timer = new Timer(jt.get("timer.expiry").getAsLong(), jt.get("timer.ended").getAsBoolean());
+    		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
     	}
         Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));
         MachineCraftable wantsToCraft = !f.get("wantsToCraft").equalsIgnoreCase("NULL") ? MachineCraftable.valueOf(f.get("wantsToCraft")) : null;
