@@ -90,7 +90,11 @@ public class FileDirectory {
 		if (!doesDirectoryExist()) throw new FileNotFoundException("The directory "+getDirectoryConstruct()+" does not exist!");
 		new File(getDirectoryConstruct()).delete();
 	}
-	
+	/**
+	 * Adds the files in a directory into a set as filebases
+	 * 
+	 * @return The files in the directory
+	 */
 	public Set<FileBase> getFilesInDirectory() {
 		Set<FileBase> set = new HashSet<FileBase>();
 		File dir = new File(getDirectoryConstruct());
