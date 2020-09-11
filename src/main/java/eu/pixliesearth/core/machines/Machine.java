@@ -133,7 +133,7 @@ public class Machine {
     	f.put("storage", "NULL"); // Set to null as its does not have a storage
     	if (wantsToCraft != null) f.put("wantsToCraft", wantsToCraft.name()); else f.put("wantsToCraft", "NULL");
     	f.put("item", serialize(item));
-    	if (timer != null) {JsonObject json = new JsonObject();json.addProperty("expiry", timer.getExpiry());json.addProperty("ended", timer.isEnded());f.put("timer", json.toString());} else f.put("timer", "NULL");
+    	if (timer != null) {JsonObject json = new JsonObject();json.addProperty("expiry", timer.getExpiry());json.addProperty("ended", timer.isEnded());f.put("timer", json);} else f.put("timer", "NULL");
     	JsonObject json = new JsonObject();
     	json.addProperty("location", locationToSaveableString(armorStand.getLocation()));
     	json.addProperty("text", getTitle());
@@ -209,10 +209,10 @@ public class Machine {
     @SneakyThrows
     public static Machine load(JSONFile f) {
     	JsonParser jp = new JsonParser();
-    	JsonObject jh = jp.parse(f.get("holo")).getAsJsonObject();
+    	JsonObject jh = jp.parse(f.get("holo").replaceAll("\\", "")).getAsJsonObject();
     	Timer timer = null;
     	if (!f.get("timer").equalsIgnoreCase("NULL")) {
-    		JsonObject jt = jp.parse(f.get("timer")).getAsJsonObject();
+    		JsonObject jt = jp.parse(f.get("timer").replaceAll("\\", "")).getAsJsonObject();
     		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
     	}
         Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));

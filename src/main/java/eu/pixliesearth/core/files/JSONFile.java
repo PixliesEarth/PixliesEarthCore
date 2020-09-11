@@ -8,6 +8,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -50,7 +56,14 @@ public class JSONFile extends FileBase {
 	public void put(String key, Object value) {
 		if (value==null) return;
 		if (this.json.has(key)) this.json.remove(key);
-		this.json.addProperty(key, value.toString());
+		try {
+			if (value instanceof Location) this.json.addProperty(key, locationToSaveableString((Location) value));
+			else if (value instanceof JsonObject) this.json.addProperty(key, ((JsonObject) value).toString());
+			else if (value instanceof ItemStack) this.json.addProperty(key, serialize((ItemStack) value));
+			else this.json.addProperty(key, value.toString());
+		} catch (Exception e) {
+			this.json.addProperty(key, value.toString());
+		}
 		saveJsonToFile();
 	}
 	
@@ -119,5 +132,23 @@ public class JSONFile extends FileBase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private final String locationToSaveableString(Location l) {
+		return l.getWorld().getUID().toString().concat(":").concat(Double.toString(l.getX())).concat(":").concat(Double.toString(l.getY())).concat(":").concat(Double.toString(l.getZ())).concat(":").concat(Float.toString(l.getYaw())).concat(":").concat(Float.toString(l.getPitch()));
+	}
+	
+	private final String serialize(Object o) {
+	    try {
+	        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+	        BukkitObjectOutputStream out = new BukkitObjectOutputStream(bytesOut);
+	        out.writeObject(o);
+	        out.flush();
+	        out.close();
+	        return Base64Coder.encodeLines(bytesOut.toByteArray());
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return null;
+	    }
 	}
 }

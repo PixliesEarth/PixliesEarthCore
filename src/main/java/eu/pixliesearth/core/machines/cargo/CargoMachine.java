@@ -36,7 +36,7 @@ public class CargoMachine extends Machine {
         for (int i = 0; i < storage.getSize(); i++) {
             if (storage.getItem(i) != null) j.addProperty(Integer.toString(i), serialize(storage.getItem(i))); else j.addProperty(Integer.toString(i), "EMPTY");
         }
-        map.put("storage", j.toString());
+        map.put("storage", j);
         return map;
     }
 
