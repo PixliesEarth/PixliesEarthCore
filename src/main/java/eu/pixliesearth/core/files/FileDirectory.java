@@ -96,7 +96,7 @@ public class FileDirectory {
 		File dir = new File(getDirectoryConstruct());
 		for (File f : dir.listFiles()) {
 			String path = f.getAbsolutePath();
-			set.add(new FileBase(FilenameUtils.getFullPath(path), FilenameUtils.getBaseName(path), FilenameUtils.getExtension(path)));
+			set.add(new FileBase(FilenameUtils.getFullPath(path), FilenameUtils.getBaseName(path), "."+FilenameUtils.getExtension(path)));
 		}
 		return set;
 	}
