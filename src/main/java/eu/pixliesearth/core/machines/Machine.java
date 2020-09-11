@@ -1,5 +1,12 @@
 package eu.pixliesearth.core.machines;
 
+import static org.bukkit.Material.BRICK;
+import static org.bukkit.Material.CLAY;
+import static org.bukkit.Material.FLOWER_POT;
+import static org.bukkit.Material.GOLD_INGOT;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.MAGMA_BLOCK;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -35,6 +42,7 @@ import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
 import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
 import eu.pixliesearth.core.machines.autocrafters.kiln.Kiln;
+import eu.pixliesearth.core.machines.autocrafters.machinecrafter.MachineCrafter;
 import eu.pixliesearth.core.machines.autocrafters.pottery.Pottery;
 import eu.pixliesearth.core.machines.autocrafters.tinkertable.TinkerTable;
 import eu.pixliesearth.core.machines.cargo.CargoMachine;
@@ -47,8 +55,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
-
-import static org.bukkit.Material.*;
 
 @Data
 @AllArgsConstructor
@@ -247,6 +253,7 @@ public class Machine {
         KILN(Kiln.item, Kiln.class, FuelableAutoCrafterMachine.class),
         POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class),
         BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class),
+        MACHINE_CRAFTER(MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class),
         ;
 
         private @Getter final ItemStack item;
@@ -281,6 +288,12 @@ public class Machine {
         // POTTERY
         MUD_BRICK_POTTERY(MachineType.POTTERY, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a1 §7water-bucket & §a4 §7clay > §a1 §7Mud Brick").addLoreLine("§7Time: §b4 sec").build(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 4, Era.TRIBAL),
         UNFIRED_POT(MachineType.POTTERY, ConstIngredients.UNFIRED_POT.cloneBuilder().addLoreLine("§a4 §7Mud-brick > §a1 §7Unfired Pot").addLoreLine("§7Time: 6 sec").build(), Collections.singletonList(ConstIngredients.MUD_BRICK.cloneBuilder().setAmount(4).build()), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 6, Era.TRIBAL),
+        
+        // MACHINE CRAFTER
+        TINKER_TABLE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.TINKER_TABLE.getItem()).addLoreLine("§a16 §7Oak Planks & §a4 §7Iron Ingots > §a1 §7Tinker Table").addLoreLine("§7Time: 20 sec").build(), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 16), new ItemStack(Material.IRON_INGOT, 4)), Collections.singletonList(MachineType.TINKER_TABLE.getItem()), 20, Era.TRIBAL),
+    	KILN(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.KILN.getItem()).addLoreLine("§a16 §7Smooth Stone & §a2 §7Iron Block > §a1 §7Kiln").addLoreLine("§7Time: 20 sec").build(), Arrays.asList(new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)), Collections.singletonList(MachineType.KILN.getItem()), 20, Era.TRIBAL),
+    	POTTERY(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.POTTERY.getItem()).addLoreLine("§a4 §7Flower Pot & §a2 §7Iron Ingots > §a1 §7Pottery").addLoreLine("§7Time: 20 sec").build(), Arrays.asList(new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)), Collections.singletonList(MachineType.POTTERY.getItem()), 20, Era.TRIBAL),
+    	BRONZE_FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.BRONZE_FORGE.getItem()).addLoreLine("§a1 §7Lava Bucket & §a16 §7Stone Bricks & §a4 §7Bronze Ingot > §a1 §7Bronze Forge").addLoreLine("§7Time: 30 sec").build(), Arrays.asList(ConstIngredients.BRONZE_INGOT.cloneBuilder().setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)), Collections.singletonList(MachineType.BRONZE_FORGE.getItem()), 30, Era.TRIBAL),
         ;
 
         public MachineType type;
