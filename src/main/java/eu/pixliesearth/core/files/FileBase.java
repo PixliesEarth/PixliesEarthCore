@@ -106,7 +106,7 @@ public class FileBase {
 	 * @return Weather or not the file exists
 	 */
 	public boolean doesFileExist() {
-		if (Files.exists(Paths.get(getFileConstruct()))) return true; else return false;
+		return Files.exists(Paths.get(getFileConstruct()));
 	}
 	/**
 	 * Returns the file save structure, For example "KEY=DATA" would mean that the data is stored as a key and data with an equals sign to separate them

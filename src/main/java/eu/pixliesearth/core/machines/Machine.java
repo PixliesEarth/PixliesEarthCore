@@ -55,8 +55,8 @@ import lombok.SneakyThrows;
 @Data
 @AllArgsConstructor
 public class Machine {
-	public static final @Getter String MachineSavePath = Main.getInstance().getDataFolder().getAbsolutePath()+"/machines/";
-	
+
+	protected static final @Getter String MachineSavePath = Main.getInstance().getDataFolder().getAbsolutePath()+"/machines/";
     protected static final Main instance = Main.getInstance();
 
     public static final List<Integer> craftSlots = Arrays.asList(0, 1, 2, 3, 9, 18, 27, 10, 11, 12, 19, 20, 21, 28, 29, 30);
@@ -193,6 +193,10 @@ public class Machine {
 
     public static void loadAll() {
         for (FileBase f : new FileDirectory("plugins/PixliesEarthCore/machines/").getFilesInDirectory()) {
+            if (!f.getFile().getName().endsWith(".json")) {
+                f.deleteFile();
+                continue;
+            }
         	JSONFile jf = new JSONFile(f.getFilePath(), f.getFileName());
             //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
             Machine machine = load(jf);
