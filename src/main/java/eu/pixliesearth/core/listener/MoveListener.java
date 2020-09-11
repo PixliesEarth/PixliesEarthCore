@@ -67,7 +67,7 @@ public class MoveListener implements Listener {
                 Nation tn = NationChunk.getNationData(tc);
                 if (fn != tn) {
                     if (tn == null) {  // WILDERNESS
-                        player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
+                        player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
                     } else {
                         if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
                             player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
