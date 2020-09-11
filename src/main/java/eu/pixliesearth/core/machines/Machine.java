@@ -1,9 +1,5 @@
 package eu.pixliesearth.core.machines;
 
-import static org.bukkit.Material.GOLD_INGOT;
-import static org.bukkit.Material.IRON_INGOT;
-import static org.bukkit.Material.MAGMA_BLOCK;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -52,11 +48,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
+import static org.bukkit.Material.*;
+
 @Data
 @AllArgsConstructor
 public class Machine {
-	public static final @Getter String MachineSavePath = Main.getInstance().getDataFolder().getAbsolutePath()+"/machines/";
-	
+
+	protected static final @Getter String MachineSavePath = Main.getInstance().getDataFolder().getAbsolutePath()+"/machines/";
     protected static final Main instance = Main.getInstance();
 
     public static final List<Integer> craftSlots = Arrays.asList(0, 1, 2, 3, 9, 18, 27, 10, 11, 12, 19, 20, 21, 28, 29, 30);
@@ -193,6 +191,10 @@ public class Machine {
 
     public static void loadAll() {
         for (FileBase f : new FileDirectory("plugins/PixliesEarthCore/machines/").getFilesInDirectory()) {
+            if (!f.getFile().getName().endsWith(".json")) {
+                f.deleteFile();
+                continue;
+            }
         	JSONFile jf = new JSONFile(f.getFilePath(), f.getFileName());
             //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
             Machine machine = load(jf);
@@ -269,6 +271,9 @@ public class Machine {
         SMELT_IRON(MachineType.KILN, new ItemBuilder(Material.IRON_ORE).setGlow().setDisplayName("Smelt iron").addLoreLine("§a16 §7iron-ores > §a32 §7iron-ingots").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.IRON_ORE, 16)), Collections.singletonList(new ItemStack(Material.IRON_INGOT, 32)), 10, Era.ANCIENT),
         SMELT_GOLD(MachineType.KILN, new ItemBuilder(Material.GOLD_ORE).setGlow().setDisplayName("Smelt gold").addLoreLine("§a16 §7gold-ores > §a32 §7gold-ingots").addLoreLine("§7Time: §b10 sec").build(), Collections.singletonList(new ItemStack(Material.GOLD_ORE, 16)), Collections.singletonList(new ItemStack(Material.GOLD_INGOT, 32)), 10, Era.ANCIENT),
         MAKE_BRONZE_INGOT(MachineType.KILN, ConstIngredients.BRONZE_INGOT.cloneBuilder().addLoreLine("§a3 §7gold-ingot, §a2 iron-ingot & §a1 §7magma-block > §a4 §7Bronze-Ingot").addLoreLine("§7Time: §b10 sec").build(), Arrays.asList(new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(IRON_INGOT), new ItemStack(IRON_INGOT), new ItemStack(MAGMA_BLOCK)), Collections.singletonList(ConstIngredients.BRONZE_INGOT.cloneBuilder().setAmount(4).build()), 10, Era.ANCIENT),
+        MUD_BRICK_KILN(MachineType.KILN, ConstIngredients.MUD_BRICK.cloneBuilder().addLoreLine("§a9 §7clay > §a1 §7Mud Brick").addLoreLine("§7Time: §b4 sec").build(), Collections.singletonList(new ItemStack(CLAY, 9)), Collections.singletonList(ConstIngredients.MUD_BRICK.build()), 4, Era.ANCIENT),
+        BRICK_KILN(MachineType.KILN, new ItemBuilder(BRICK).setAmount(4).addLoreLine("§a1 §7Mud Brick > §a4 §7Brick").addLoreLine("§7Time: §b4 sec").build(), Collections.singletonList(ConstIngredients.MUD_BRICK.setAmount(1).build()), Collections.singletonList(new ItemStack(BRICK, 4)), 4, Era.ANCIENT),
+        POT_KILN(MachineType.KILN, new ItemBuilder(FLOWER_POT).setAmount(1).addLoreLine("§a1 §7Unfired Pot > §a1 §7Pot").addLoreLine("§7Time: §b3 sec").build(), Collections.singletonList(ConstIngredients.UNFIRED_POT.setAmount(1).build()), Collections.singletonList(new ItemStack(FLOWER_POT)), 3, Era.ANCIENT),
         
         // BRONZE FORGE
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").addLoreLine("§a2 §7bronze-ingots & §a1 §7stick > §a1 §7bronze-sword").addLoreLine("§7Time: §b60 sec").build(), Arrays.asList(ConstIngredients.BRONZE_INGOT.cloneBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),

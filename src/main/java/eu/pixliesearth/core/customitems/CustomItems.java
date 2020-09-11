@@ -2,11 +2,14 @@ package eu.pixliesearth.core.customitems;
 
 import eu.pixliesearth.core.customcrafting.CustomRecipe;
 import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
+import eu.pixliesearth.core.customitems.ci.machines.*;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
 import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemStoneHatchet;
+import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
+import eu.pixliesearth.core.machines.cargo.InputNode;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,6 +21,12 @@ public enum CustomItems {
     STONE_HATCHET(new ItemStoneHatchet(), null),
     BRONZE_SWORD(new ItemBronzeSword(), null),
     BRONZE_INGOT(new BronzeIngot(), null),
+    TINKER_TABLE(new TinkerTableCI(), null),
+    KILN(new KilnCI(), null),
+    POTTERY(new PotteryCI(), null),
+    BRONZE_FORGE(new BronzeForgeCI(), null),
+    INPUT_NODE(new InputNodeCI(), null),
+    OUTPUT_NODE(new OutputNodeCI(), null),
     ;
 
     public CustomItem clazz;

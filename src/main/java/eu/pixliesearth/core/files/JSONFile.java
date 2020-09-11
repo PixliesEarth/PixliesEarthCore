@@ -36,7 +36,7 @@ public class JSONFile extends FileBase {
 		BufferedReader reader = new BufferedReader(new FileReader(getFile()));
 		String s = reader.lines().collect(Collectors.joining("\n"));
 		reader.close();
-		if (s==null || s.equals("")) s = "{}";
+		if (s.equals("")) s = "{}";
 		return this.jsonParser.parse(s).getAsJsonObject();
 	}
 	

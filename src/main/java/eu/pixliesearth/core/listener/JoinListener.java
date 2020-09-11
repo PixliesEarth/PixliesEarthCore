@@ -92,7 +92,7 @@ public class JoinListener implements Listener {
 
         NationChunk tn = NationChunk.get(player.getLocation().getChunk());
         if (tn == null) {  // WILDERNESS
-            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
+            player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
             if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
                 player.sendTitle("§b§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
