@@ -216,10 +216,10 @@ public class Machine {
     @SneakyThrows
     public static Machine load(JSONFile f) {
     	JsonParser jp = new JsonParser();
-    	JsonObject jh = jp.parse(f.get("holo").replaceAll("\\", "")).getAsJsonObject();
+    	JsonObject jh = jp.parse(f.get("holo").replace("\\", "")).getAsJsonObject();
     	Timer timer = null;
     	if (!f.get("timer").equalsIgnoreCase("NULL")) {
-    		JsonObject jt = jp.parse(f.get("timer").replaceAll("\\", "")).getAsJsonObject();
+    		JsonObject jt = jp.parse(f.get("timer").replace("\\", "")).getAsJsonObject();
     		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
     	}
         Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));
