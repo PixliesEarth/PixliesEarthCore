@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FilenameUtils;
 
 public class FileDirectory {
