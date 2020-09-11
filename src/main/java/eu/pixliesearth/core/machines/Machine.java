@@ -136,6 +136,7 @@ public class Machine {
     	f.put("location", locationToSaveableString(location));
     	f.put("type", type.name());
     	f.put("fuel", "NULL"); // Set to null as its not a fuelable autocrafter
+    	f.put("energy", "NULL"); // Set to null as its not a energy machine
     	f.put("storage", "NULL"); // Set to null as its does not have a storage
     	if (wantsToCraft != null) f.put("wantsToCraft", wantsToCraft.name()); else f.put("wantsToCraft", "NULL");
     	f.put("item", serialize(item));
