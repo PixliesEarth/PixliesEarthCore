@@ -103,6 +103,10 @@ public class JSONFile extends FileBase {
 		if (this.json.has(key)) return json.get(key).getAsString(); else return null;
 	}
 	
+	public JsonElement getAsJsonElement(String key) {
+		if (this.json.has(key)) return json.get(key); else return null;
+	}
+	
 	public Object containsKey(String key) {
 		return this.json.has(key);
 	}

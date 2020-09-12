@@ -29,9 +29,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
@@ -215,13 +213,12 @@ public class Machine {
 
     @SneakyThrows
     public static Machine load(JSONFile f) {
-    	JsonParser jp = new JsonParser();
-    	JsonObject jh = jp.parse(f.get("holo").replace("\\", "")).getAsJsonObject();
     	Timer timer = null;
     	if (!f.get("timer").equalsIgnoreCase("NULL")) {
-    		JsonObject jt = jp.parse(f.get("timer").replace("\\", "")).getAsJsonObject();
+    		JsonObject jt = f.getAsJsonElement("timer").getAsJsonObject();
     		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
     	}
+    	JsonObject jh = f.getAsJsonElement("holo").getAsJsonObject();
         Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));
         MachineCraftable wantsToCraft = !f.get("wantsToCraft").equalsIgnoreCase("NULL") ? MachineCraftable.valueOf(f.get("wantsToCraft")) : null;
         MachineType type = MachineType.valueOf(f.get("type"));
@@ -236,10 +233,10 @@ public class Machine {
         } else if (clazz.isAssignableFrom(CargoMachine.class)) {
             Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
             if (!f.get("storage").equalsIgnoreCase("NULL")) {
-            	JsonObject js = jp.parse(f.get("storage")).getAsJsonObject();
-                for (Map.Entry<String, JsonElement> entry : js.entrySet()) {
-                	if (!entry.getValue().getAsString().equalsIgnoreCase("EMPTY")) inventory.setItem(Integer.parseInt(entry.getKey()), (ItemStack) deserialize(entry.getValue().getAsString()));
-                }
+            	JsonObject js = f.getAsJsonElement("storage").getAsJsonObject();
+            	for (int i = 0; i < 9 * 6; i++) {
+            		inventory.setItem(i, (ItemStack) deserialize(js.get(Integer.toString(i)).getAsString()));
+            	}
             }
             return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, inventory, type);
         }
