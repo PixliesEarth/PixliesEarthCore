@@ -119,7 +119,7 @@ public class JSONFile extends FileBase {
 	public void saveJsonToFile(JsonObject json) {
 		try {
 			clearFile();
-			writeLineToFile(json.toString());
+			writeToFile(json.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

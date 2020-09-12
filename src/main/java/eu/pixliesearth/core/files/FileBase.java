@@ -195,4 +195,15 @@ public class FileBase {
 		}
 		pr.close();
 	}
+	/**
+	 * Writes to the file without adding a new line
+	 * 
+	 * @param line The input to write to the file
+	 * @throws IOException
+	 */
+	public void writeToFile(String line) throws IOException {
+		PrintWriter pr = new PrintWriter(new BufferedWriter(new FileWriter(getFile(), true)));
+		pr.print(line);
+		pr.close();
+	}
 }
