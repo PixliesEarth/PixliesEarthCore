@@ -10,8 +10,10 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -80,6 +82,8 @@ public class AutoCrafterMachine extends Machine {
                 y++;
             }
             ItemBuilder iconBuilder = new ItemBuilder(item.icon);
+            iconBuilder.addLoreLine("§f§lLEFT §7to open crafter.");
+            iconBuilder.addLoreLine("§7Time: §b" + item.seconds + "second(s)");
             if (item.eraNeeded.canAccess(nation)) {
                 iconBuilder.setDisplayName("§a§l" + item.icon.getItemMeta().getDisplayName());
                 iconBuilder.addLoreLine("§7Era needed: §a" + item.eraNeeded.getName());
@@ -89,6 +93,7 @@ public class AutoCrafterMachine extends Machine {
             }
             pane.addItem(new GuiItem(iconBuilder.build(), event -> {
                 event.setCancelled(true);
+                if (event.getClick() != ClickType.LEFT) return;
                 if (item.eraNeeded.canAccess(nation))
                     openItemCrafter(player, item);
             }), x, y);
@@ -106,11 +111,10 @@ public class AutoCrafterMachine extends Machine {
                 if (craftSlots.contains(i) || resultSlots.contains(i)) continue;
                 inventory.setItem(i, new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build());
             }
-            int ingredientsAdded = 0;
-            for (ItemStack ingredients : item.ingredients) {
-                inventory.setItem(45 + ingredientsAdded, ingredients);
-                ingredientsAdded++;
-            }
+            ItemBuilder recipeBuilder = new ItemBuilder(Material.BOOK).setDisplayName("§f§lRECIPE");
+            for (ItemStack ingredient : item.ingredients)
+                recipeBuilder.addLoreLine(ingredient.hasItemMeta() ? "§b§l" + ingredient.getAmount() + " §7" + ingredient.getItemMeta().getDisplayName() : "§b§l" + ingredient.getAmount() + " §7" + ingredient.getI18NDisplayName());
+            inventory.setItem(45, recipeBuilder.build());
         }
         inventory.setItem(53, new ItemBuilder(BARRIER).setDisplayName("§c§lBack").build());
         update();
