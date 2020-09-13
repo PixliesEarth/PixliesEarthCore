@@ -1,5 +1,13 @@
 package eu.pixliesearth.core.machines;
 
+import static org.bukkit.Material.BRICK;
+import static org.bukkit.Material.CLAY;
+import static org.bukkit.Material.CRAFTING_TABLE;
+import static org.bukkit.Material.FLOWER_POT;
+import static org.bukkit.Material.GOLD_INGOT;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.MAGMA_BLOCK;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -12,13 +20,10 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
@@ -49,8 +54,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
-
-import static org.bukkit.Material.*;
 
 @Data
 @AllArgsConstructor
