@@ -1,7 +1,6 @@
 package eu.pixliesearth;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -320,9 +319,8 @@ public final class Main extends JavaPlugin {
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())
             chest.setType(Material.AIR);
-        for (Machine machine : utilLists.machines.values()) {
+        for (Machine machine : utilLists.machines.values())
             machine.save();
-        }
     }
 
     private void registerCommands() {
