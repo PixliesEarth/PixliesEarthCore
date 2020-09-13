@@ -49,7 +49,7 @@ public class MachineListener implements Listener {
         InventoryView view = event.getView();
         Machine.MachineType type = null;
         for (Machine.MachineType types : Machine.MachineType.values())
-            if (view.getTitle().startsWith(types.getItem().getItemMeta().getDisplayName()))
+            if (view.getTitle().startsWith(types.getItem().getItemMeta().getDisplayName() + " §8| "))
                 type = types;
         if (type == null) return;
         if (event.getClickedInventory() == null) return;

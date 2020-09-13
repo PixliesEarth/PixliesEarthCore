@@ -82,13 +82,13 @@ public class AutoCrafterMachine extends Machine {
                 y++;
             }
             ItemBuilder iconBuilder = new ItemBuilder(item.icon);
-            iconBuilder.addLoreLine("§f§lLEFT §7to open crafter.");
-            iconBuilder.addLoreLine("§7Time: §b" + item.seconds + "second(s)");
+            iconBuilder.addLoreLine("§f§lLEFT §7to open crafter");
+            iconBuilder.addLoreLine("§7Time: §b" + item.seconds + " §7second(s)");
             if (item.eraNeeded.canAccess(nation)) {
-                iconBuilder.setDisplayName("§a§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.setDisplayName(item.icon.hasItemMeta() ? "§a§l" + item.icon.getItemMeta().getDisplayName() : "§a§l" + item.icon.getI18NDisplayName());
                 iconBuilder.addLoreLine("§7Era needed: §a" + item.eraNeeded.getName());
             } else {
-                iconBuilder.setDisplayName("§c§l" + item.icon.getItemMeta().getDisplayName());
+                iconBuilder.setDisplayName(item.icon.hasItemMeta() ? "§c§l" + item.icon.getItemMeta().getDisplayName() : "§c§l" + item.icon.getI18NDisplayName());
                 iconBuilder.addLoreLine("§7Era needed: §c" + item.eraNeeded.getName());
             }
             pane.addItem(new GuiItem(iconBuilder.build(), event -> {
@@ -106,7 +106,8 @@ public class AutoCrafterMachine extends Machine {
     private void openItemCrafter(Player player, MachineCraftable item) {
         wantsToCraft = item;
         if (inventory == null) {
-            inventory = Bukkit.createInventory(null, 9 * 6, getTitle() + " §8| " + item.icon.getItemMeta().getDisplayName());
+            String itemName = item.icon.hasItemMeta() ? item.icon.getItemMeta().getDisplayName() : item.icon.getI18NDisplayName();
+            inventory = Bukkit.createInventory(null, 9 * 6, getTitle() + " §8| " + itemName);
             for (int i = 0; i < inventory.getSize(); i++) {
                 if (craftSlots.contains(i) || resultSlots.contains(i)) continue;
                 inventory.setItem(i, new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build());
