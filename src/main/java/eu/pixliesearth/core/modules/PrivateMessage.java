@@ -35,7 +35,7 @@ public class PrivateMessage implements CommandExecutor, Module {
             sender.sendMessage("§5PM §8| §7This player is not online!");
             return false;
         }
-        if (sender instanceof Player && instance.getProfile(receiver.getUniqueId()).getBlocked().contains(((Player) sender).getUniqueId())) {
+        if (sender instanceof Player && instance.getProfile(receiver.getUniqueId()).getBlocked().contains(((Player) sender).getUniqueId().toString())) {
             Lang.PLAYER_BLOCKED_YOU.send(sender);
             return false;
         }
@@ -50,15 +50,10 @@ public class PrivateMessage implements CommandExecutor, Module {
         } else {
             receiverformat = config.getString("modules.privatemessage.format-receiver-console").replace("%message%", messageBuilder.toString());
         }
-        String senderformat = PlaceholderAPI.setPlaceholders(receiver, config.getString("modules.privatemessage.format-sender")).replace("%message%", messageBuilder.toString());
+        String senderFormat = PlaceholderAPI.setPlaceholders(receiver, config.getString("modules.privatemessage.format-sender")).replace("%message%", messageBuilder.toString());
         receiver.sendMessage(receiverformat);
-        sender.sendMessage(senderformat);
-        String senderName = "";
-        if (sender instanceof Player) {
-            senderName = sender.getName();
-        } else {
-            senderName = "§cCONSOLE";
-        }
+        sender.sendMessage(senderFormat);
+        String senderName = sender instanceof Player ? sender.getName() : "§c§lCONSOLE";
         System.out.println("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
         return false;
     }

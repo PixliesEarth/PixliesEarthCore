@@ -196,10 +196,17 @@ commands:
     description: homecommand
   invsee:
     description: insvee
+  machines:
+    description: machines
+    aliases:
+      - machinery
+      - machine
 
 permissions:
   # GENERAL
   earth.admin:
+    default: op
+  earth.machines.admin:
     default: op
   earth.seen:
     default: op
