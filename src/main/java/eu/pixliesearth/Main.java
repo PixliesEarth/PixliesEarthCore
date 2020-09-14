@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-import eu.pixliesearth.core.commands.player.*;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -34,6 +33,41 @@ import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
 import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
+import eu.pixliesearth.core.commands.player.AdoptCommand;
+import eu.pixliesearth.core.commands.player.BlockCommand;
+import eu.pixliesearth.core.commands.player.BoostCommand;
+import eu.pixliesearth.core.commands.player.CraftCommand;
+import eu.pixliesearth.core.commands.player.DivorceCommand;
+import eu.pixliesearth.core.commands.player.EnderchestCommand;
+import eu.pixliesearth.core.commands.player.FamilyCommand;
+import eu.pixliesearth.core.commands.player.FeedCommand;
+import eu.pixliesearth.core.commands.player.FlyCommand;
+import eu.pixliesearth.core.commands.player.FlySpeedCommand;
+import eu.pixliesearth.core.commands.player.GamemodeAdventureCommand;
+import eu.pixliesearth.core.commands.player.GamemodeCreativeCommand;
+import eu.pixliesearth.core.commands.player.GamemodeSpectatorCommand;
+import eu.pixliesearth.core.commands.player.GamemodeSurvivalCommand;
+import eu.pixliesearth.core.commands.player.HealCommand;
+import eu.pixliesearth.core.commands.player.HomeCommand;
+import eu.pixliesearth.core.commands.player.LinkCommand;
+import eu.pixliesearth.core.commands.player.LobbyCommand;
+import eu.pixliesearth.core.commands.player.MachinesCommand;
+import eu.pixliesearth.core.commands.player.MarryCommand;
+import eu.pixliesearth.core.commands.player.NickCommand;
+import eu.pixliesearth.core.commands.player.PremiumCommand;
+import eu.pixliesearth.core.commands.player.ProfileCommand;
+import eu.pixliesearth.core.commands.player.RealNameCommand;
+import eu.pixliesearth.core.commands.player.SkullCommand;
+import eu.pixliesearth.core.commands.player.SmiteCommand;
+import eu.pixliesearth.core.commands.player.StatsCommand;
+import eu.pixliesearth.core.commands.player.SudoCommand;
+import eu.pixliesearth.core.commands.player.SuicideCommand;
+import eu.pixliesearth.core.commands.player.TpHereCommand;
+import eu.pixliesearth.core.commands.player.TpaCommand;
+import eu.pixliesearth.core.commands.player.TpacceptCommand;
+import eu.pixliesearth.core.commands.player.VanishCommand;
+import eu.pixliesearth.core.commands.player.WalkSpeedCommand;
+import eu.pixliesearth.core.commands.player.WoohooCommand;
 import eu.pixliesearth.core.commands.util.BackupCommand;
 import eu.pixliesearth.core.commands.util.BroadcastCommand;
 import eu.pixliesearth.core.commands.util.ChatCommand;
@@ -92,6 +126,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
+import eu.pixliesearth.utils.CustomRecipies;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.GulagThread;
 import eu.pixliesearth.utils.UtilLists;
@@ -141,7 +176,9 @@ public final class Main extends JavaPlugin {
         }
 
         utilLists = new UtilLists();
-
+        
+        CustomRecipies.register(this);
+        
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
 
