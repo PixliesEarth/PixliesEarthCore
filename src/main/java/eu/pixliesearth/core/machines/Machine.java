@@ -7,6 +7,8 @@ import static org.bukkit.Material.FLOWER_POT;
 import static org.bukkit.Material.GOLD_INGOT;
 import static org.bukkit.Material.IRON_INGOT;
 import static org.bukkit.Material.MAGMA_BLOCK;
+import static org.bukkit.Material.CLAY_BALL;
+import static org.bukkit.Material.STICK;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
