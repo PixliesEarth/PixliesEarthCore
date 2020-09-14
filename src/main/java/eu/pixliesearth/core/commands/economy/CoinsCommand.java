@@ -37,12 +37,13 @@ public class CoinsCommand implements CommandExecutor {
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("check")) {
-                    if (Bukkit.getPlayerUniqueId(args[1]) == null) {
+                    UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
+                    if (targetUUID == null) {
                         sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                         return false;
                     }
                     Profile targetProf = Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(args[1]));
-                    sender.sendMessage(Lang.PC_BALANCE_OTHERS.get(sender).replace("%PLAYER%", Bukkit.getOfflinePlayer(UUID.fromString(targetProf.getUniqueId())).getName()).replace("%AMOUNT%", targetProf.getPixliecoins()+""));
+                    sender.sendMessage(Lang.PC_BALANCE_OTHERS.get(sender).replace("%PLAYER%", targetProf.getAsOfflinePlayer().getName()).replace("%AMOUNT%", targetProf.getPixliecoins()+""));
                 }
                 break;
             case 3:

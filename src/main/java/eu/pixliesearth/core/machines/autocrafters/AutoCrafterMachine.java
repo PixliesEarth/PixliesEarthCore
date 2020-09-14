@@ -82,7 +82,7 @@ public class AutoCrafterMachine extends Machine {
                 y++;
             }
             ItemBuilder iconBuilder = new ItemBuilder(item.icon);
-            iconBuilder.addLoreLine("§f§lLEFT §7to open crafter");
+            iconBuilder.addLoreLine("§f§lLEFT §7click to open crafter");
             iconBuilder.addLoreLine("§7Time: §b" + item.seconds + " §7second(s)");
             if (item.eraNeeded.canAccess(nation)) {
                 iconBuilder.setDisplayName(item.icon.hasItemMeta() ? "§a§l" + item.icon.getItemMeta().getDisplayName() : "§a§l" + item.icon.getI18NDisplayName());
