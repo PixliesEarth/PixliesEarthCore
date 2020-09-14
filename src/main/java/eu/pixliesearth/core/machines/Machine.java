@@ -130,7 +130,25 @@ public class Machine {
 			f = new JSONFile(getMachineSavePath(), id);
 			try {f.clearFile();} catch (IOException e2) {e2.printStackTrace();} // clear old data
     	}
-        f.put("id", id);
+    	JsonObject o = new JsonObject();
+    	o.addProperty("id", id);
+    	o.addProperty("class", this.getClass().getName());
+    	o.addProperty("location", locationToSaveableString(location));
+    	o.addProperty("type", type.name());
+    	o.addProperty("fuel", "NULL"); // Set to null as its not a fuelable autocrafter
+    	o.addProperty("energy", "NULL"); // Set to null as its not a energy machine
+    	o.addProperty("storage", "NULL"); // Set to null as its does not have a storage
+    	if (wantsToCraft != null) o.addProperty("wantsToCraft", wantsToCraft.name()); else o.addProperty("wantsToCraft", "NULL");
+    	o.addProperty("item", serialize(item));
+    	if (timer != null) {JsonObject json = new JsonObject();json.addProperty("expiry", timer.getExpiry());json.addProperty("ended", timer.isEnded());o.addProperty("timer", json.toString());} else o.addProperty("timer", "NULL");
+    	JsonObject json = new JsonObject();
+    	json.addProperty("location", locationToSaveableString(armorStand.getLocation()));
+    	json.addProperty("text", getTitle());
+    	o.addProperty("holo", json.toString());
+    	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), entry.getValue());
+    	f.saveJsonToFile(o);
+    	
+        /*f.put("id", id);
     	f.put("class", this.getClass().getName());
     	f.put("location", locationToSaveableString(location));
     	f.put("type", type.name());
@@ -147,7 +165,8 @@ public class Machine {
     	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), entry.getValue());
     	f.saveJsonToFile();
         
-        /*
+        
+        
          File file = new File("plugins/PixliesEarthCore/machines", id + ".yml");
          
          if (!file.exists())
@@ -214,32 +233,35 @@ public class Machine {
 
     @SneakyThrows
     public static Machine load(JSONFile f) {
+    	JsonObject o = f.toJsonOject();
     	Timer timer = null;
-    	if (!f.get("timer").equalsIgnoreCase("NULL")) {
-    		JsonObject jt = f.getAsJsonElement("timer").getAsJsonObject();
-    		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
+    	if (!o.get("timer").getAsString().equalsIgnoreCase("NULL")) {
+    		if (o.get("timer").isJsonObject()) {
+	    		JsonObject jt = o.get("timer").getAsJsonObject();
+	    		timer = new Timer(jt.get("expiry").getAsLong(), jt.get("ended").getAsBoolean());
+    		}
     	}
-    	JsonObject jh = f.getAsJsonElement("holo").getAsJsonObject();
+    	JsonObject jh = o.get("holo").getAsJsonObject();
         Hologram holo = HologramsAPI.createHologram(instance, locationFromSaveableString(jh.get("location").getAsString()));
-        MachineCraftable wantsToCraft = !f.get("wantsToCraft").equalsIgnoreCase("NULL") ? MachineCraftable.valueOf(f.get("wantsToCraft")) : null;
-        MachineType type = MachineType.valueOf(f.get("type"));
+        MachineCraftable wantsToCraft = !o.get("wantsToCraft").getAsString().equalsIgnoreCase("NULL") ? MachineCraftable.valueOf(o.get("wantsToCraft").getAsString()) : null;
+        MachineType type = MachineType.valueOf(o.get("type").getAsString());
         Class<? extends Machine> clazz = type.getClazz();
 
         if (clazz.isAssignableFrom(FuelableAutoCrafterMachine.class)) {
             holo.appendTextLine(jh.get("text").getAsString());
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, type, Integer.parseInt(f.get("fuel")));
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type, o.get("fuel").getAsInt());
         } else if (clazz.isAssignableFrom(AutoCrafterMachine.class)) {
             holo.appendTextLine(jh.get("text").getAsString());
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, type);
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type);
         } else if (clazz.isAssignableFrom(CargoMachine.class)) {
             Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
-            if (!f.get("storage").equalsIgnoreCase("NULL")) {
-            	JsonObject js = f.getAsJsonElement("storage").getAsJsonObject();
+            if (!o.get("storage").getAsString().equalsIgnoreCase("NULL")) {
+            	JsonObject js = o.get("storage").getAsJsonObject();
             	for (int i = 0; i < 9 * 6; i++) {
             		inventory.setItem(i, (ItemStack) deserialize(js.get(Integer.toString(i)).getAsString()));
             	}
             }
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(f.get("id"), locationFromSaveableString(f.get("location")), holo, timer, wantsToCraft, inventory, type);
+            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, inventory, type);
         }
         return null;
     }

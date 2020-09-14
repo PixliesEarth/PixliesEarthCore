@@ -38,6 +38,10 @@ public class JSONFile extends FileBase {
 		return "{}";
 	}
 	
+	public JsonObject toJsonOject() {
+		return this.json;
+	}
+	
 	public JsonObject loadFileIntoJson() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(getFile()));
 		String s = reader.lines().collect(Collectors.joining("\n"));
