@@ -2,6 +2,10 @@ package eu.pixliesearth.core.customitems;
 
 import org.bukkit.inventory.ItemStack;
 
+import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeBoots;
+import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeChestPlate;
+import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeHelmet;
+import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeLeggings;
 import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
 import eu.pixliesearth.core.customitems.ci.machines.BronzeForgeCI;
 import eu.pixliesearth.core.customitems.ci.machines.InputNodeCI;
@@ -31,6 +35,10 @@ public enum CustomItems {
     INPUT_NODE(new InputNodeCI()),
     OUTPUT_NODE(new OutputNodeCI()),
     MACHINE_CRAFTER(new MachineCrafterCI()),
+    BRONZE_HELMET(new ArmourBronzeHelmet()),
+    BRONZE_CHESTPLATE(new ArmourBronzeChestPlate()),
+    BRONZE_LEGGINGS(new ArmourBronzeLeggings()),
+    BRONZE_BOOTS(new ArmourBronzeBoots()),
     ;
 
     public CustomItem clazz;
