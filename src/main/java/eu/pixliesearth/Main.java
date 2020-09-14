@@ -75,6 +75,7 @@ import eu.pixliesearth.core.commands.util.InvseeCommand;
 import eu.pixliesearth.core.commands.util.ModulesCommand;
 import eu.pixliesearth.core.commands.util.SeenCommand;
 import eu.pixliesearth.core.commands.util.StaffCommand;
+import eu.pixliesearth.core.customcrafting.CustomRecipies;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
 import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
@@ -126,7 +127,6 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
-import eu.pixliesearth.utils.CustomRecipies;
 import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.GulagThread;
 import eu.pixliesearth.utils.UtilLists;
@@ -177,7 +177,7 @@ public final class Main extends JavaPlugin {
 
         utilLists = new UtilLists();
         
-        CustomRecipies.register(this);
+        CustomRecipies.register();
         
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
