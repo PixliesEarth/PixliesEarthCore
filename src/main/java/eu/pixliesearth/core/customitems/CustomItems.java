@@ -1,40 +1,46 @@
 package eu.pixliesearth.core.customitems;
 
-import eu.pixliesearth.core.customcrafting.CustomRecipe;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
-import eu.pixliesearth.core.customitems.ci.machines.*;
+import eu.pixliesearth.core.customitems.ci.machines.BronzeForgeCI;
+import eu.pixliesearth.core.customitems.ci.machines.InputNodeCI;
+import eu.pixliesearth.core.customitems.ci.machines.KilnCI;
+import eu.pixliesearth.core.customitems.ci.machines.MachineCrafterCI;
+import eu.pixliesearth.core.customitems.ci.machines.OutputNodeCI;
+import eu.pixliesearth.core.customitems.ci.machines.PotteryCI;
+import eu.pixliesearth.core.customitems.ci.machines.TinkerTableCI;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
-import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemStoneHatchet;
-import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
-import eu.pixliesearth.core.machines.cargo.InputNode;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 
 public enum CustomItems {
 
-    SLINGSHOT(new ItemSlingshot(), null),
-    EXPLOSIVE_PICKAXE(new ItemExplosivePick(), new CustomRecipe(new ItemStack(Material.TNT), new ItemStack(Material.TNT), new ItemStack(Material.TNT), null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosivePick().getItem())),
-    EXPLOSIVE_SHOVEL(new ItemExplosiveShovel(), new CustomRecipe(null, new ItemStack(Material.TNT), null, null, new ItemStack(Material.STICK), null, null, new ItemStack(Material.STICK), null, new ItemExplosiveShovel().getItem())),
-    STONE_HATCHET(new ItemStoneHatchet(), null),
-    BRONZE_SWORD(new ItemBronzeSword(), null),
-    BRONZE_INGOT(new BronzeIngot(), null),
-    TINKER_TABLE(new TinkerTableCI(), null),
-    KILN(new KilnCI(), null),
-    POTTERY(new PotteryCI(), null),
-    BRONZE_FORGE(new BronzeForgeCI(), null),
-    INPUT_NODE(new InputNodeCI(), null),
-    OUTPUT_NODE(new OutputNodeCI(), null),
+    SLINGSHOT(new ItemSlingshot()),
+    EXPLOSIVE_PICKAXE(new ItemExplosivePick()),
+    EXPLOSIVE_SHOVEL(new ItemExplosiveShovel()),
+    STONE_HATCHET(new ItemStoneHatchet()),
+    BRONZE_SWORD(new ItemBronzeSword()),
+    BRONZE_INGOT(new BronzeIngot()),
+    TINKER_TABLE(new TinkerTableCI()),
+    KILN(new KilnCI()),
+    POTTERY(new PotteryCI()),
+    BRONZE_FORGE(new BronzeForgeCI()),
+    INPUT_NODE(new InputNodeCI()),
+    OUTPUT_NODE(new OutputNodeCI()),
+    MACHINE_CRAFTER(new MachineCrafterCI()),
     ;
 
     public CustomItem clazz;
-    public CustomRecipe recipe;
 
-    CustomItems(CustomItem clazz, CustomRecipe recipe) {
+    CustomItems(CustomItem clazz) { // CustomItem clazz, CustomRecipe recipe
         this.clazz = clazz;
-        this.recipe = recipe;
+    }
+    
+    public ItemStack getItem() {
+    	return clazz.getItem();
     }
 
     public static boolean contains(String test) {

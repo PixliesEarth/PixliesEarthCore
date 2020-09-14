@@ -43,7 +43,7 @@ public class ItemBuilder {
         this.lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
     }
     /**
-     * Use setDamage instead!
+     * Use {@link ItemBuilder#setDamage(int)} instead!
      * 
      * @param durability the durability to set the item to
      */
@@ -174,6 +174,19 @@ public class ItemBuilder {
     public ItemBuilder setAttackDamage(double amount) {
         AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, modifier);
+        item.setItemMeta(meta);
+        return this;
+    }
+    
+    public ItemBuilder setArmour(double amount) {
+        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier);
+        item.setItemMeta(meta);
+        return this;
+    }
+    public ItemBuilder setArmourToughness(double amount) {
+        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, modifier);
         item.setItemMeta(meta);
         return this;
     }
