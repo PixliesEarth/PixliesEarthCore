@@ -6,7 +6,6 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.utils.ItemBuilder;
-import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import java.util.Random;
 
 import static org.bukkit.Material.*;
 
@@ -29,7 +27,7 @@ public class MachinesCommand implements CommandExecutor {
         return false;
     }
 
-    private void openRecipe(Player player, Machine.MachineType type) {
+    private void openMachineRecipe(Player player, Machine.MachineType type) {
         Gui gui = new Gui(instance, 5, type.getItem().getItemMeta().getDisplayName());
         StaticPane pane = new StaticPane(0, 0, 9, 5);
         pane.fillWith(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
@@ -63,6 +61,45 @@ public class MachinesCommand implements CommandExecutor {
                 gui.getInventory().clear(i);
     }
 
+    private void openItemRecipe(Player player, Machine.MachineCraftable item) {
+        Gui gui = new Gui(instance, 5, item.icon.getItemMeta().getDisplayName());
+        StaticPane pane = new StaticPane(0, 0, 9, 5);
+        pane.fillWith(new ItemBuilder(BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
+        pane.addItem(new GuiItem(item.type.getItem(), event -> event.setCancelled(true)), 4, 2);
+        int xC = 0;
+        int yC = 0;
+        for (ItemStack ingredient : item.ingredients) {
+            if (xC + 1 > 3) {
+                yC++;
+                xC = 0;
+            }
+            pane.addItem(new GuiItem(ingredient, event -> event.setCancelled(true)), xC, yC);
+            xC++;
+        }
+        int xR = 5;
+        int yR = 0;
+        for (ItemStack result : item.results) {
+            if (xR + 1 > 9) {
+                yR++;
+                xR = 0;
+            }
+            pane.addItem(new GuiItem(result, event -> event.setCancelled(true)) , xR, yR);
+            xR++;
+        }
+        ItemBuilder builder = new ItemBuilder(item.results.get(0));
+        pane.addItem(new GuiItem(new ItemBuilder(BARRIER).setDisplayName("§c§lGo back").build(), event -> {
+            execute(player);
+        }), 4, 4);
+        gui.addPane(pane);
+        gui.show(player);
+        for (int i : Machine.craftSlots)
+            if (gui.getInventory().getItem(i).getType() == BLACK_STAINED_GLASS_PANE)
+                gui.getInventory().clear(i);
+        for (int i : Machine.resultSlots)
+            if (gui.getInventory().getItem(i).getType() == BLACK_STAINED_GLASS_PANE)
+                gui.getInventory().clear(i);
+    }
+
     private void execute(Player player) {
         Gui gui = new Gui(instance, 3, "§b§lMachinery");
         StaticPane categoriesPane = new StaticPane(0, 0, 9, 3);
@@ -83,7 +120,7 @@ public class MachinesCommand implements CommandExecutor {
                 machinesPane.addItem(new GuiItem(new ItemBuilder(machines.getItem().clone()).addLoreLine("§f§lLEFT §7click for more info").build(), event1 -> {
                     event1.setCancelled(true);
                     if (machines.getRecipe() != null)
-                        openRecipe(player, machines);
+                        openMachineRecipe(player, machines);
                 }), x, y);
                 x++;
             }
@@ -105,7 +142,10 @@ public class MachinesCommand implements CommandExecutor {
                     y++;
                     x = 0;
                 }
-                itemsPane.addItem(new GuiItem(new ItemBuilder(craftables.icon.clone()).addLoreLine("§7Machine: " + craftables.type.getItem().getItemMeta().getDisplayName()).build(), event1 -> event1.setCancelled(true)), x, y);
+                itemsPane.addItem(new GuiItem(new ItemBuilder(craftables.icon.clone()).addLoreLine("§f§lLEFT §7click for more info").addLoreLine("§7Machine: " + craftables.type.getItem().getItemMeta().getDisplayName()).build(), event1 -> {
+                    event1.setCancelled(true);
+                    openItemRecipe(player, craftables);
+                }), x, y);
                 x++;
             }
             sixRow.addPane(itemsPane);

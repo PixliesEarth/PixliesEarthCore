@@ -16,9 +16,9 @@ public class CustomRecipe {
     
     public CustomRecipe(String name, ItemStack i, ItemStack i2, ItemStack i3, ItemStack i4, ItemStack i5, ItemStack i6, ItemStack i7, ItemStack i8, ItemStack i9, ItemStack result) {
     	ShapedRecipe r = newShapedRecipe(result, name);
-    	r.shape("a", "b", "c", 
-				"d", "e", "f", 
-				"g", "h", "i");
+    	r.shape("abc",
+				"def",
+				"ghi");
     	r.setIngredient('a', i);
     	r.setIngredient('b', i2);
     	r.setIngredient('c', i3);
@@ -33,9 +33,9 @@ public class CustomRecipe {
     
     public CustomRecipe(String name, Material i, Material i2, Material i3, Material i4, Material i5, Material i6, Material i7, Material i8, Material i9, ItemStack result) {
     	ShapedRecipe r = newShapedRecipe(result, name);
-    	r.shape("a", "b", "c", 
-				"d", "e", "f", 
-				"g", "h", "i");
+		r.shape("abc",
+				"def",
+				"ghi");
     	r.setIngredient('a', i);
     	r.setIngredient('b', i2);
     	r.setIngredient('c', i3);
