@@ -210,9 +210,7 @@ public class Profile {
         return Bukkit.getPlayer(UUID.fromString(uniqueId)) != null;
     }
 
-    public boolean isMarried() {
-        return !marriagePartner.equals("NONE");
-    }
+    public boolean isMarried() { return !marriagePartner.equals("NONE"); }
 
     public boolean areRelated(UUID uuid) {
         if (marriagePartner.equals(uuid.toString()))
