@@ -6,14 +6,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.io.File;
 import java.util.Date;
 
 public class GulagDeathListener implements Listener {
+    File file = new File("plugins/PixliesEarthCore", "gulag.yml");
+    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         //TODO: Check if in war
@@ -24,13 +29,19 @@ public class GulagDeathListener implements Listener {
             //TODO: funi message
             Date date = new Date(System.currentTimeMillis() + 60 * 60 * 1000 * 24);
             if(!p.isBanned()) {
-                p.banPlayer("Trying to avoid gulag", date, "The gulag");
+                if(!p.hasPermission("gulag.bypass.ban")) {
+                    p.banPlayer("Trying to avoid gulag", date, "The gulag");
+                }
             }
             return;
         }
         if (Main.getInstance().getUtilLists().wasGulag.contains(p.getUniqueId())) {
             //TODO: funi message
-            p.banPlayer("Died after being in gulag. No second chances. You will be unbanned after the war.");
+            if(p.hasPermission("gulag.bypass.ban")){
+                p.sendMessage(Lang.GULAG_BYPASS_BAN.get(p));
+            }else {
+                p.banPlayer("Died after being in gulag. No second chances. You will be unbanned after the war.");
+            }
             Main.getInstance().getUtilLists().wasGulag.remove(p.getUniqueId());
             return;
         }
@@ -42,10 +53,19 @@ public class GulagDeathListener implements Listener {
                 Main.getInstance().getUtilLists().awaitingGulag2.add(p.getUniqueId());
             }
             p.spigot().respawn();
-            //TODO: dont hardcode locations
-            World world = Bukkit.getWorld("gulag");
-            Location awaitingGulagLoc = new Location(world, 5, 73, 6);
-            p.teleport(awaitingGulagLoc);
+            String world = cfg.getString("spectatorspawn" + ".world");
+            double x = cfg.getDouble("spectatorspawn" + ".x");
+            double y = cfg.getDouble("spectatorspawn" + ".y");
+            double z = cfg.getDouble("spectatorspawn" + ".z");
+            double yaw = cfg.getDouble("spectatorspawn" + ".yaw");
+            double pitch = cfg.getDouble("spectatorspawn" + ".pitch");
+
+            Location loc = new Location(Bukkit.getWorld(world), x, y, z);
+            loc.setPitch((float) pitch);
+            loc.setYaw((float)yaw);
+
+            p.teleport(loc);
+
             p.sendMessage(Lang.GULAGED.get(p));
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                 @Override

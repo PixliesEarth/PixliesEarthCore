@@ -4,6 +4,7 @@ main: eu.pixliesearth.Main
 api-version: 1.13
 depend:
   - Vault
+  - HolographicDisplays
 softdepend:
   - PlaceholderAPI
 authors: [MickMMars, Machmeinparaillegal]
@@ -161,7 +162,7 @@ commands:
     description: tphere command
   family:
     description: show family info
-  sex:
+  woohoo:
     description: Have sex
   adopt:
     description: Adopt command
@@ -176,10 +177,36 @@ commands:
       - disguise
   realname:
     description: realname
+  skipgulag:
+    description: skipgulag
+    aliases:
+      - gulagskip
+  smite:
+    description: smite
+  premium:
+    description: Premium command
+    aliases:
+      - snow
+      - ultimate
+  gulagsetspawn:
+    description: Set gulag spawn
+  stats:
+    description: stats
+  home:
+    description: homecommand
+  invsee:
+    description: insvee
+  machines:
+    description: machines
+    aliases:
+      - machinery
+      - machine
 
 permissions:
   # GENERAL
   earth.admin:
+    default: op
+  earth.machines.admin:
     default: op
   earth.seen:
     default: op
@@ -221,6 +248,17 @@ permissions:
     default: op
   earth.bypass.whitelist:
     default: op
+  earth.smite:
+    default: op
+  earth.premium:
+    default: op
+    children:
+      ultimate:
+        default: op
+      snow:
+        default: op
+  earth.invsee:
+    default: op
 
   # CHAT
   earth.chat.colours:
@@ -253,4 +291,13 @@ permissions:
      default: op
    #CUSTOM ITEMS
   earth.ci.give:
+     default: op
+   #GULAG
+  gulag.command.skip:
+     default: op
+  gulag.commandblock.bypass:
+     default: op
+  gulag.bypass.ban:
+     default: op
+  gulag.command.setspawn:
      default: op

@@ -8,7 +8,6 @@ import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -52,7 +51,7 @@ public class WarpSystem implements CommandExecutor, Module {
                         warp.teleport(player);
                     }));
                 warps.populateWithGuiItems(items);
-                toolbar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
+                toolbar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
                 if (player.hasPermission("earth.warps.edit"))
                     toolbar.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/b056bc1244fcff99344f12aba42ac23fee6ef6e3351d27d273c1572531f")).setDisplayName("§aAdd").build(), event -> {
                         event.setCancelled(true);

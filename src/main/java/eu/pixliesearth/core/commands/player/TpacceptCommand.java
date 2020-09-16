@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.commands.player;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Energy;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Energy;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 
 public class TpacceptCommand implements CommandExecutor {
 
@@ -40,23 +39,7 @@ public class TpacceptCommand implements CommandExecutor {
             return false;
         }
         instance.getUtilLists().tpaRequests.remove(player.getUniqueId());
-        long cooldown = (long) Energy.calculateTime(player.getLocation(), requester.getLocation());
-        if (cooldown < 1.0)
-            cooldown = (long) 1.0;
-        Timer timer = new Timer(cooldown * 1000);
-        rqProf.getTimers().put("Teleport", timer);
-        rqProf.save();
-        requester.sendMessage(Lang.YOU_WILL_BE_TPD.get(requester).replace("%LOCATION%", player.getName()).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
-        Bukkit.getScheduler().runTaskLater(instance, () -> {
-            if (rqProf.getTimers().containsKey("Teleport")) {
-                rqProf.getTimers().remove("Teleport");
-                rqProf.save();
-                requester.teleport(player.getLocation());
-                Energy.take(rqProf, Energy.calculateNeeded(player.getLocation(), requester.getLocation()));
-                requester.sendMessage(Lang.TELEPORTATION_SUCESS.get(requester).replace("%LOCATION%", player.getName()));
-            }
-        }, cooldown * 20);
-
+        rqProf.teleport(player.getLocation(), player.getDisplayName());
         return false;
     }
 

@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -37,11 +38,11 @@ public class renameNation implements SubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Nation nation;
+            Profile profile = instance.getProfile(player.getUniqueId());
             Map<String, String> placeholders;
-            boolean success;
+            boolean rename;
             switch (args.length) {
                 case 1:
-                    Profile profile = instance.getProfile(player.getUniqueId());
                     if (!profile.isInNation()) {
                         player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
                         return false;
@@ -52,12 +53,12 @@ public class renameNation implements SubCommand {
                     }
                     nation = profile.getCurrentNation();
                     final String oldName = nation.getName();
-                    if (args[0].length() < 3 || args[0].length() > 10 || !StringUtils.isAlphanumeric(args[0])) {
-                        player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
+                    if (args[0].length() < 3 || args[0].length() > 15 || !StringUtils.isAlphanumeric(args[0])) {
+                        player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
                         return false;
                     }
-                    success = nation.rename(args[0].replace("&", ""));
-                    if (!success) {
+                    rename = nation.rename(args[0].replace("&", ""));
+                    if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
@@ -68,18 +69,18 @@ public class renameNation implements SubCommand {
                     Lang.PLAYER_NAMED_NATION_NAME.broadcast(placeholders);
                     break;
                 case 2:
-                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    nation = Nation.getByName(args[1]);
+                    if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.NAME, nation)) {
                         player.sendMessage(Lang.NO_PERMISSIONS.get(player));
                         return false;
                     }
-                    nation = Nation.getByName(args[1]);
                     if (nation == null) {
                         player.sendMessage(Lang.NATION_DOESNT_EXIST.get(player));
                         return false;
                     }
                     final String oldName1 = nation.getName();
-                    success = nation.rename(args[0]);
-                    if (!success) {
+                    rename = nation.rename(args[0]);
+                    if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }

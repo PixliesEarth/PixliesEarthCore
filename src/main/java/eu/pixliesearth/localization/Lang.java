@@ -75,6 +75,18 @@ public enum Lang {
     CHANGED_NICKNAME(Lang.EARTH, new HashMap<>()),
     CHANGED_PLAYER_NICKNAME(Lang.EARTH, new HashMap<>()),
     CLICK_TO_PM("", new HashMap<>()),
+    STRIKED_PLAYER(Lang.EARTH, new HashMap<>()),
+    PLAYER_BOOSTED(Lang.EARTH, new HashMap<>()),
+    NOT_ENOUGH_BOOSTS(Lang.EARTH, new HashMap<>()),
+    BOOST_EXPIRED(Lang.EARTH, new HashMap<>()),
+    ITEM_HAS_TO_BE_X(Lang.EARTH, new HashMap<>()),
+    X_DOESNT_EXIST(Lang.EARTH, new HashMap<>()),
+    X_ALREADY_EXISTS(Lang.EARTH, new HashMap<>()),
+    MAX_HOMESIZE_REACHED(Lang.EARTH, new HashMap<>()),
+    HOME_ADDED(Lang.EARTH, new HashMap<>()),
+    HOME_REMOVED(Lang.EARTH, new HashMap<>()),
+    PLAYER_REMOVED_X(Lang.EARTH, new HashMap<>()),
+    PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
@@ -121,20 +133,65 @@ public enum Lang {
     CLAIMFILL_LIMIT_REACHED(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMFILLED(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMLINED(Lang.NATION, new HashMap<>()),
+    UNCLAIMFILL_LIMIT_REACHED(Lang.NATION, new HashMap<>()),
+    PLAYER_UNCLAIMFILLED(Lang.NATION, new HashMap<>()),
+    RANK_ALREADY_EXISTS(Lang.NATION, new HashMap<>()),
+    RANK_CREATED(Lang.NATION, new HashMap<>()),
+    CANT_INTERACT_TERRITORY(Lang.NATION, new HashMap<>()),
+    CHANGED_PLAYERS_NATION_RANK(Lang.NATION, new HashMap<>()),
+    CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY(Lang.NATION, new HashMap<>()),
+    YOU_DELETED_NATION_RANK(Lang.NATION, new HashMap<>()),
+    PERMISSION_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    RANK_ALREADY_HAS_PERMISSION(Lang.NATION, new HashMap<>()),
+    ADDED_PERMISSION_TO_RANK(Lang.NATION, new HashMap<>()),
+    RANK_DOES_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
+    REMOVED_PERMISSION_FROM_RANK(Lang.NATION, new HashMap<>()),
+    PLAYER_CLAIM_ALLED(Lang.NATION, new HashMap<>()),
+    NOT_ENOUGH_POWER_TO_CLAIM(Lang.NATION, new HashMap<>()),
+    ALREADY_ALLIED(Lang.NATION, new HashMap<>()),
+    SENT_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
+    RECEIVED_ALLY_REQUEST(Lang.NATION, new HashMap<>()),
+    YOU_ARE_NOW_ALLIED(Lang.NATION, new HashMap<>()),
+    NOT_ALLIED(Lang.NATION, new HashMap<>()),
+    NEUTRALED_NATION(Lang.NATION, new HashMap<>()),
+    TWO_NATIONS_ARE_THE_SAME(Lang.NATION, new HashMap<>()),
+    CHANGED_CHATTYPE(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_ALREADY_EXISTS(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_HAS_TO_BE_IN_TERRITORY(Lang.NATION, new HashMap<>()),
+    PLAYER_SET_SETTLEMENT(Lang.NATION, new HashMap<>()),
+    SETTLEMENT_DOESNT_EXIST(Lang.NATION, new HashMap<>()),
+    PLAYER_REMOVED_SETTLEMENT(Lang.NATION, new HashMap<>()),
+    NATION_BALANCE(Lang.NATION, new HashMap<>()),
+    NOT_ENOUGH_MONEY_IN_NATION(Lang.NATION, new HashMap<>()),
+    WITHDREW_MONEY_FROM_NATION(Lang.NATION, new HashMap<>()),
+    PLAYER_CHANGED_FLAG(Lang.NATION, new HashMap<>()),
+    CANT_PURCHASE_UPGRADE(Lang.NATION, new HashMap<>()),
+    PLAYER_PURCHASED_NATION_UPGRADE(Lang.NATION, new HashMap<>()),
+    X_ALREADY_HAS_PERMISSION(Lang.NATION, new HashMap<>()),
+    ADDED_PERMISSION_TO_X(Lang.NATION, new HashMap<>()),
+    X_DOESN_NOT_HAVE_PERMISSION(Lang.NATION, new HashMap<>()),
+    REMOVED_PERMISSION_FROM_X(Lang.NATION, new HashMap<>()),
+    ADDED_CHUNK_ACCESS_TO_X(Lang.NATION, new HashMap<>()),
+    REMOVED_CHUNK_ACCESS_FROM_X(Lang.NATION, new HashMap<>()),
+    BOTH_PLAYERS_IN_THE_SAME_NATION(Lang.NATION, new HashMap<>()),
+    MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY("", new HashMap<>()),
+    NOT_ENOUGH_XP_POINTS(Lang.NATION, new HashMap<>()),
+    NATION_REACHED_NEW_ERA("", new HashMap<>()),
 
     // ECONOMY
-    BALANCE_YOU(Lang.ECONOMY, new HashMap<>()),
-    BALANCE_OTHERS(Lang.ECONOMY, new HashMap<>()),
-    SET_PLAYER_BALANCE(Lang.ECONOMY, new HashMap<>()),
-    PAID_HIMSELF(Lang.ECONOMY, new HashMap<>()),
-    PAY_AMT_BELOW_MIN(Lang.ECONOMY, new HashMap<>()),
-    NOT_ENOUGH_MONEY(Lang.ECONOMY, new HashMap<>()),
-    UNEXPECTED_ECO_ERROR(Lang.ECONOMY, new HashMap<>()),
-    PAID_PLAYER_MONEY(Lang.ECONOMY, new HashMap<>()),
-    RECEIVED_MONEY_FROM_PLAYER(Lang.ECONOMY, new HashMap<>()),
-    PLAYER_DOESNT_HAVE_ENOUGH_MONEY(Lang.ECONOMY, new HashMap<>()),
-    TOOK_MONEY_FROM_PLAYER(Lang.ECONOMY, new HashMap<>()),
-    GAVE_MONEY_TO_PLAYER(Lang.ECONOMY, new HashMap<>()),
+    BALANCE_YOU(Lang.EARTH, new HashMap<>()),
+    BALANCE_OTHERS(Lang.EARTH, new HashMap<>()),
+    SET_PLAYER_BALANCE(Lang.EARTH, new HashMap<>()),
+    PAID_HIMSELF(Lang.EARTH, new HashMap<>()),
+    PAY_AMT_BELOW_MIN(Lang.EARTH, new HashMap<>()),
+    NOT_ENOUGH_MONEY(Lang.EARTH, new HashMap<>()),
+    UNEXPECTED_ECO_ERROR(Lang.EARTH, new HashMap<>()),
+    PAID_PLAYER_MONEY(Lang.EARTH, new HashMap<>()),
+    RECEIVED_MONEY_FROM_PLAYER(Lang.EARTH, new HashMap<>()),
+    PLAYER_DOESNT_HAVE_ENOUGH_MONEY(Lang.EARTH, new HashMap<>()),
+    TOOK_MONEY_FROM_PLAYER(Lang.EARTH, new HashMap<>()),
+    GAVE_MONEY_TO_PLAYER(Lang.EARTH, new HashMap<>()),
+    DEPOSIT_MONEY_INTO_NATION(Lang.NATION, new HashMap<>()),
 
     // SUICIDE
     SMSG_1("", new HashMap<>()),
@@ -211,19 +268,25 @@ public enum Lang {
     GULAG_CAP(Lang.WAR, new HashMap<>()),
     GULAG_COMMAND(Lang.WAR, new HashMap<>()),
     GULAG_COUNTDOWN(Lang.WAR, new HashMap<>()),
-    GULAG_TIMED_OUT(Lang.WAR, new HashMap<>());
+    GULAG_TIMED_OUT(Lang.WAR, new HashMap<>()),
+    GULAG_SKIP_NOT_AWAITING(Lang.WAR, new HashMap<>()),
+    GULAG_SKIPPED(Lang.WAR, new HashMap<>()),
+    GULAG_BYPASS_BAN(Lang.WAR, new HashMap<>()),
+    GULAG_SET_SPECTATOR_SPAWN(Lang.WAR, new HashMap<>()),
+    GULAG_SET_FIGHTER_SPAWN1(Lang.WAR, new HashMap<>()),
+    GULAG_SET_FIGHTER_SPAWN2(Lang.WAR, new HashMap<>()),
+    GULAG_SET_CAP(Lang.WAR, new HashMap<>());
 
     private String PREFIX;
     private Map<String, String> languages;
 
-    private static final String EARTH = "§aEARTH §8| ";
-    private static final String ECONOMY = "§aECONOMY §8| ";
-    private static final String NATION = "§bNATION §8| ";
-    private static final String DISCORD = "§3DISCORD §8| ";
-    private static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
-    private static final String GUNS = "§aGUNS §8| ";
-    private static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";
-    private static final String WAR = "§4WAR §8| ";
+    public static final String EARTH = "§x§2§E§D§C§3§E§lE§x§3§0§C§A§3§E§lA§x§3§1§B§F§3§E§lR§x§3§8§B§2§4§3§lT§x§3§7§A§3§4§1§lH §8| ";
+    public static final String NATION = "§x§2§F§D§1§E§5§lN§x§3§4§C§6§D§8§lA§x§3§7§B§A§C§A§lT§x§3§5§B§0§B§F§lI§x§3§3§A§3§B§0§lO§x§3§2§9§9§A§5§lN §8| ";
+    public static final String DISCORD = "§3DISCORD §8| ";
+    public static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
+    public static final String GUNS = "§aGUNS §8| ";
+    public static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";
+    public static final String WAR = "§4WAR §8| ";
 
     Lang(String PREFIX, Map<String, String> languages) {
         this.PREFIX = PREFIX;

@@ -29,13 +29,9 @@ public class JoinListener implements Listener {
         final long started = System.currentTimeMillis();
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-        if (!profile.getKnownIps().contains(Methods.getIp(player))) {
-            profile.getKnownIps().add(Methods.getIp(player));
-        }
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }
-        Main.getInstance().getUtilLists().locationMap.put(player.getUniqueId(), new AfkMap(player.getLocation(), 0));
         event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
 
         if (!player.hasPlayedBefore()) {
@@ -87,6 +83,7 @@ public class JoinListener implements Listener {
             //VANISHES FOR PLAYERS WHO NEWLY JOINED
             for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
+                if (p == null) continue;
                 if (!(player.hasPermission("earth.seevanished"))) {
                     player.hidePlayer(Main.getInstance(), p);
                 }
@@ -95,18 +92,18 @@ public class JoinListener implements Listener {
 
         NationChunk tn = NationChunk.get(player.getLocation().getChunk());
         if (tn == null) {  // WILDERNESS
-            player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
+            player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
-            if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
-                player.sendTitle("§b" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+            if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
+                player.sendTitle("§b§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
-                player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
             } else if (tn.getNationId().equals("warzone")) { // WARZONE
-                player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
             } else if (tn.getCurrentNation().isAlliedWith(profile.getNationId())) { // ALLIES
-                player.sendTitle("§d" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§d§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             } else { // ANY OTHER NATION
-                player.sendTitle(tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
+                player.sendTitle("§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             }
         }
 
@@ -124,6 +121,7 @@ public class JoinListener implements Listener {
         profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));
+        player.sendMessage("§7Please wait. We are applying our resource-pack on you");
     }
 
 }

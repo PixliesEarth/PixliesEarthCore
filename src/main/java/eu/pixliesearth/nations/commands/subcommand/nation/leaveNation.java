@@ -3,6 +3,8 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -38,7 +40,15 @@ public class leaveNation implements SubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
-        if (profile.getNationRank().equals("LEADER")) {
+        if (profile.isLeader()) {
+            final Nation nation = profile.getCurrentNation();
+            if (nation.getFlags().contains(NationFlag.PERMANENT.name())) {
+                nation.setLeader("NONE");
+                nation.save();
+                profile.leaveNation();
+                player.sendMessage(Lang.YOU_LEFT_NATION.get(player).replace("%NATION%", nation.getName()));
+                return false;
+            }
             Lang.LEADER_CANT_LEAVE_NATION.send(player);
             return false;
         }

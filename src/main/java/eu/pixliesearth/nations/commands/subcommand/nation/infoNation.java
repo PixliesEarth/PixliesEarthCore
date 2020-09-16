@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,10 +43,7 @@ public class infoNation implements SubCommand {
         Nation nation;
         switch (args.length) {
             case 0:
-                if (!(sender instanceof Player)) {
-                    Lang.ONLY_PLAYERS_EXEC.send(sender);
-                    return false;
-                }
+                if (!checkIfPlayer(sender)) return false;
                 Player player = (Player) sender;
                 Profile profile = instance.getProfile(player.getUniqueId());
                 if (!profile.isInNation()) {
@@ -81,12 +79,13 @@ public class infoNation implements SubCommand {
         return false;
     }
 
-    public void sendNationInfo(Nation nation, CommandSender sender) {
-        sender.sendMessage("§b§n" + nation.getName());
+    public static void sendNationInfo(Nation nation, CommandSender sender) {
+        sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
         sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
         sender.sendMessage("§7Era: §b" + nation.getEra());
-        sender.sendMessage("§7Leader: §6" + Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName());
+        String leader = nation.getLeader().equals("NONE") ? "SERVER" : Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName();
+        sender.sendMessage("§7Leader: §6" + leader);
         sender.sendMessage("§7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower());
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {

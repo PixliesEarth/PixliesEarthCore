@@ -67,18 +67,18 @@ public class MoveListener implements Listener {
                 Nation tn = NationChunk.getNationData(tc);
                 if (fn != tn) {
                     if (tn == null) {  // WILDERNESS
-                        player.sendTitle("§c" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
+                        player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
                     } else {
-                        if (tn.getNationId().equals(profile.getCurrentNation().getNationId())) { // YOUR NATION
-                            player.sendTitle("§b" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                        if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
+                            player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
                         } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
-                            player.sendTitle("§aSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                            player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
                         } else if (tn.getNationId().equals("warzone")) { // WARZONE
-                            player.sendTitle("§cWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+                            player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
                         } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
-                            player.sendTitle("§d" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                            player.sendTitle("§d§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
                         } else { // ANY OTHER NATION
-                            player.sendTitle(tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+                            player.sendTitle("§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
                         }
                     }
                 }

@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -31,6 +32,8 @@ public class inviteNation implements SubCommand {
         returner.put("add", 2);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 3);
+        for (Player player : Bukkit.getOnlinePlayers())
+            returner.put(player.getName(), 1);
         return returner;
     }
 
@@ -116,13 +119,13 @@ public class inviteNation implements SubCommand {
                 }
                 break;
             case 3:
-                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
-                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
-                    return false;
-                }
                 Nation nation = Nation.getByName(args[2]);
                 if (nation == null) {
                     sender.sendMessage(Lang.NATION_DOESNT_EXIST.get(sender));
+                    return false;
+                }
+                if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId()) && !Permission.hasForeignPermission(instance.getProfile(((Player) sender).getUniqueId()), Permission.INVITE, nation)) {
+                    sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                     return false;
                 }
                 if (args[1].equalsIgnoreCase("add")) {

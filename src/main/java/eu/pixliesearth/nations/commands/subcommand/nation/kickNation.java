@@ -39,10 +39,6 @@ public class kickNation implements SubCommand {
                 Lang.NOT_IN_A_NATION.send(player);
                 return false;
             }
-            if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasNationPermission(profile, Permission.MODERATE)) {
-                Lang.NO_PERMISSIONS.send(player);
-                return false;
-            }
             UUID targetUUID = Bukkit.getPlayerUniqueId(args[0]);
             if (targetUUID == null) {
                 Lang.PLAYER_DOES_NOT_EXIST.send(player);
@@ -53,11 +49,15 @@ public class kickNation implements SubCommand {
                 Lang.PLAYER_NOT_IN_NATION.send(player);
                 return false;
             }
+            if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.MODERATE, target.getCurrentNation())) {
+                Lang.NO_PERMISSIONS.send(player);
+                return false;
+            }
             if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !target.getNationId().equals(profile.getNationId())) {
                 Lang.PLAYER_IS_NOT_IN_SAME_NATION_AS_YOU.send(player);
                 return false;
             }
-            if (target.getNationRank().equalsIgnoreCase("leader")) {
+            if (target.getCurrentNationRank().getPriority() == 666.0) {
                 Lang.CANT_KICK_LEADER.send(player);
                 return false;
             }

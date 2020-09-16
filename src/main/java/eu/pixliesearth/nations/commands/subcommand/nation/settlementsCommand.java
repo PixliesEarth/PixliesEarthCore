@@ -2,9 +2,12 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import com.google.gson.Gson;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -67,6 +70,42 @@ public class settlementsCommand implements SubCommand, Listener {
                 }
                 player.openInventory(inventory);
                 break;
+            case 2:
+                if (args[0].equalsIgnoreCase("add")) {
+                    if (!Permission.hasNationPermission(profile, Permission.MANAGE_SETTLEMENTS)) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (nation.getSettlements().containsKey(args[1])) {
+                        Lang.SETTLEMENT_ALREADY_EXISTS.send(player);
+                        return false;
+                    }
+                    //TODO HOW MANY CAN BE SET
+                    NationChunk nc = NationChunk.get(player.getChunk());
+                    if (nc == null || !nc.getNationId().equals(nation.getNationId())) {
+                        Lang.SETTLEMENT_HAS_TO_BE_IN_TERRITORY.send(player);
+                        return false;
+                    }
+                    Settlement settlement = new Settlement(args[1], new SimpleLocation(player.getLocation()).parseString(), false);
+                    nation.getSettlements().put(args[1], new Gson().toJson(settlement));
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet())
+                        Lang.PLAYER_SET_SETTLEMENT.send(member, "%PLAYER%;" + player.getName(), "%SETTLEMENT%;" + args[1]);
+                } else if (args[0].equalsIgnoreCase("remove")) {
+                    if (!Permission.hasNationPermission(profile, Permission.MANAGE_SETTLEMENTS)) {
+                        Lang.NO_PERMISSIONS.send(player);
+                        return false;
+                    }
+                    if (!nation.getSettlements().containsKey(args[1])) {
+                        Lang.SETTLEMENT_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    nation.getSettlements().remove(args[1]);
+                    nation.save();
+                    for (Player member : nation.getOnlineMemberSet())
+                        Lang.PLAYER_REMOVED_SETTLEMENT.send(member, "%PLAYER%;" + player.getName(), "%SETTLEMENT%;" + args[1]);
+                }
+                break;
         }
         return false;
     }
@@ -84,7 +123,7 @@ public class settlementsCommand implements SubCommand, Listener {
             if (!profile.isInNation()) player.closeInventory();
             Nation nation = profile.getCurrentNation();
             if (item.getType().equals(Material.CAMPFIRE)) {
-                Settlement settlement = new Gson().fromJson(nation.getSettlements().get("§b" + item.getItemMeta().getDisplayName()), Settlement.class);
+                Settlement settlement = new Gson().fromJson(nation.getSettlements().get(item.getItemMeta().getDisplayName().replace("§b", "")), Settlement.class);
                 settlement.teleport(player);
             }
         }

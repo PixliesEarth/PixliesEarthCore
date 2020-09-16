@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
@@ -50,12 +51,12 @@ public class joinNation implements SubCommand {
                     player.sendMessage(Lang.YOU_ARE_ALREADY_IN_NATION.get(player));
                     return false;
                 }
-                if (!profile.getInvites().contains(nation.getNationId())) {
+                if (!profile.getInvites().contains(nation.getNationId()) && !profile.isStaff() && !nation.getFlags().contains(NationFlag.OPEN.name())) {
                     player.sendMessage(Lang.YOU_DONT_HAVE_OPEN_INV.get(player));
                     return false;
                 }
                 profile.getInvites().remove(nation.getNationId());
-                profile.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
+                profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", player.getName()));
                 break;
@@ -66,8 +67,13 @@ public class joinNation implements SubCommand {
                 }
                 UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target = instance.getProfile(targetUUID);
+                if (target.isInNation()) {
+                    Nation oldNation = target.getCurrentNation();
+                    oldNation.getMembers().remove(target.getUniqueId());
+                    oldNation.save();
+                }
                 target.getInvites().remove(nation.getNationId());
-                target.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
+                target.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID).getName()));
                 break;
@@ -83,7 +89,7 @@ public class joinNation implements SubCommand {
                 UUID targetUUID2 = Bukkit.getPlayerUniqueId(args[1]);
                 Profile target2 = instance.getProfile(targetUUID2);
                 target2.getInvites().remove(nation.getNationId());
-                target2.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("newbie")));
+                target2.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get(args[2])));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", Bukkit.getOfflinePlayer(targetUUID2).getName()));
                 break;

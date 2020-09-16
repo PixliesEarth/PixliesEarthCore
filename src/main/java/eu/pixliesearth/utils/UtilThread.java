@@ -1,11 +1,17 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Boost;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 public class UtilThread extends Thread {
@@ -20,15 +26,23 @@ public class UtilThread extends Thread {
                 e.printStackTrace();
             }
             //Thread Sleep
-            try {
+/*            try {
                 sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
     private void tick() {
+        // GUN DELAYS
+        Iterator it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<UUID, Timer> item = (Entry<UUID, Timer>) it.next();
+            if (item.getValue().getRemaining() <= 0)
+                it.remove();
+        }
+
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
                     .withUsername(Bukkit.getOfflinePlayer(entry.getKey()).getName())
@@ -37,6 +51,12 @@ public class UtilThread extends Thread {
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
+        }
+        for (Map.Entry<Boost.BoostType, Boost> entry : Main.getInstance().getUtilLists().boosts.entrySet()) {
+            if (entry.getValue().getTimer().getRemaining() < 0) {
+                Main.getInstance().getUtilLists().boosts.remove(entry.getKey());
+                Lang.BOOST_EXPIRED.broadcast("%BOOST%;" + entry.getValue().getName());
+            }
         }
     }
 

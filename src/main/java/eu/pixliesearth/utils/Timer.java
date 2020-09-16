@@ -1,16 +1,32 @@
 package eu.pixliesearth.utils;
 
-import com.mongodb.BasicDBObject;
+import lombok.Data;
 
-public class Timer extends BasicDBObject {
+import java.util.HashMap;
+import java.util.Map;
 
-    private static final long serialVersionUID = 2105061907470199595L;
+@Data
+public class Timer {
 
     private final long expiry;
     private boolean ended;
 
-    public static final String ENDED = "ended";
-    public static final String EXPIRY = "expiry";
+    public Timer(Map<String, Object> map) {
+        this.expiry = (long) map.get("expiry");
+        this.ended = (boolean) map.get("ended");
+    }
+
+    public Timer(long expiry, boolean ended) {
+        this.expiry = expiry;
+        this.ended = ended;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> returner = new HashMap<>();
+        returner.put("expiry", expiry);
+        returner.put("ended", ended);
+        return returner;
+    }
 
     public Timer(long duration) {
         this.expiry = System.currentTimeMillis() + duration;
@@ -20,16 +36,10 @@ public class Timer extends BasicDBObject {
         return expiry - System.currentTimeMillis();
     }
 
-    public boolean isEnded() {
-        return getBoolean(ENDED);
+    public String getRemainingAsString() {
+        return Methods.getTimeAsString(expiry - System.currentTimeMillis(), false);
     }
 
-    public void setEnded(boolean ended) {
-        put(ENDED, ended);
-    }
-
-    public long getExpiry() {
-        return getLong(EXPIRY);
-    }
+    public boolean hasExpired() { return getRemaining() <= 0; }
 
 }

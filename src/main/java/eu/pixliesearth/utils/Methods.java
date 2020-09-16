@@ -1,11 +1,21 @@
 package eu.pixliesearth.utils;
 
+import eu.pixliesearth.core.machines.Machine;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Methods {
 
@@ -202,6 +212,48 @@ public class Methods {
             }
         }
         return returner;
+    }
+
+    public static boolean removeRequiredAmount(ItemStack item, final Inventory inventory) {
+        boolean found = false;
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack value = inventory.getItem(i);
+            if (value == null) continue;
+            if (!value.isSimilar(item)) continue;
+            if (value.getAmount() != 0) {
+                if (value.getAmount() == item.getAmount()) inventory.clear(i);
+                else {
+                    value.setAmount(value.getAmount() - item.getAmount());
+                    inventory.setItem(i, value);
+                    found = true;
+                }
+                break;
+            }
+        }
+        return found;
+    }
+
+    public static void removeRequiredAmountWithinBound(ItemStack item, final Inventory inventory, List<Integer> slots) {
+        for (int i : slots) {
+            ItemStack value = inventory.getItem(i);
+            if (value == null) continue;
+            if (!value.isSimilar(item)) continue;
+            if (value.getAmount() != 0) {
+                if (value.getAmount() == item.getAmount()) inventory.clear(i);
+                else {
+                    value.setAmount(value.getAmount() - item.getAmount());
+                    inventory.setItem(i, value);
+                }
+                break;
+            }
+        }
+    }
+
+    public static String replaceBadWord(String s) {
+        StringBuilder builder = new StringBuilder();
+        for (char c : s.toCharArray())
+            builder.append("*");
+        return builder.toString();
     }
 
 }

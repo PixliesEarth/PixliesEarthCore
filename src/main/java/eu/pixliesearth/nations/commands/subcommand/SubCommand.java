@@ -19,7 +19,7 @@ public interface SubCommand {
 
     boolean execute(CommandSender sender, String[] args);
 
-    static boolean checkIfPlayer(CommandSender sender) {
+    default boolean checkIfPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;

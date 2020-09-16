@@ -27,11 +27,11 @@ public class BalanceCommand implements CommandExecutor {
                 sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                 return false;
             }
-            if (Bukkit.getPlayerUniqueId(args[0]) == null) {
+            UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
+            if (uuid == null) {
                 sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
                 return false;
             }
-            UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
             sender.sendMessage(Lang.BALANCE_OTHERS.get(sender).replace("%PLAYER%", args[0]).replace("%BALANCE%", Main.getEconomy().getBalance(Bukkit.getOfflinePlayer(uuid)) + ""));
         }
         return false;

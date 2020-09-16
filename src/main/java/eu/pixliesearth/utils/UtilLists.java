@@ -1,15 +1,17 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
+import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
+import org.apache.avro.generic.GenericData;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
-import java.rmi.server.UID;
 import java.util.*;
 
 public class UtilLists {
@@ -28,8 +30,6 @@ public class UtilLists {
 
     public List<UUID> afk;
 
-    public Map<UUID, AfkMap> locationMap;
-
     public List<UUID> vanishList;
 
     public Map<Entity, Double> ammos;
@@ -46,11 +46,13 @@ public class UtilLists {
 
     public DiscordWebhook webhook;
 
-    public Map<UUID, Boost> boosts;
+    public Map<Boost.BoostType, Boost> boosts;
 
     public List<UUID> scoreboardMaps;
 
     public List<UUID> claimFill;
+
+    public List<UUID> unclaimFill;
 
     public List<UUID> awaitingGulag1;
 
@@ -60,6 +62,20 @@ public class UtilLists {
 
     public List<UUID> wasGulag;
 
+    public List<UUID> dynmapSetters;
+
+    public List<UUID> royalGifters;
+
+    public Map<UUID, chatNation.ChatType> chatTypes;
+
+    public Map<UUID, Integer> craftingTables;
+
+    public Map<Location, Machine> machines;
+
+    public Map<UUID, Machine> openMachines;
+
+    public Map<UUID, Timer> waitingGuns;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -68,7 +84,6 @@ public class UtilLists {
         warpAdder = new HashSet<>();
         nationDisbander = new HashMap<>();
         afk = new ArrayList<>();
-        locationMap = new HashMap<>();
         vanishList = new ArrayList<>();
         ammos = new HashMap<>();
         claimAuto = new HashMap<>();
@@ -80,10 +95,18 @@ public class UtilLists {
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();
         claimFill = new ArrayList<>();
+        unclaimFill = new ArrayList<>();
         awaitingGulag1 = new ArrayList<>();
         awaitingGulag2 = new ArrayList<>();
         fightingGulag = new HashMap<>();
         wasGulag = new ArrayList<>();
+        dynmapSetters = new ArrayList<>();
+        royalGifters = new ArrayList<>();
+        chatTypes = new HashMap<>();
+        craftingTables = new HashMap<>();
+        machines = new HashMap<>();
+        openMachines = new HashMap<>();
+        waitingGuns = new HashMap<>();
     }
 
 }

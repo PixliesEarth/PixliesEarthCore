@@ -1,5 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import com.google.common.collect.Table;
+import com.google.common.collect.HashBasedTable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
@@ -27,6 +29,7 @@ public class unclaimNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);
+        returner.put("fill", 1);
         return returner;
     }
 
@@ -37,10 +40,7 @@ public class unclaimNation implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
-            return false;
-        }
+        if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
@@ -49,30 +49,93 @@ public class unclaimNation implements SubCommand {
             player.sendMessage(Lang.NOT_CLAIMED.get(player));
             return false;
         }
-        if (args.length == 1) {
-            if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
-                return false;
-            }
-            if (!Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                Lang.NO_PERMISSIONS.send(sender);
-                return false;
-            }
-            if (args[0].equalsIgnoreCase("one")) {
-                NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
-            } else if (args[0].equalsIgnoreCase("auto")) {
-                if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
-                    instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-                    player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
-                } else {
-                    instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
-                    player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
+        switch (args.length) {
+            case 1:
+                if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
+                    return false;
                 }
-            } else if (args[0].equalsIgnoreCase("fill")) {
-
-            }
+                if (!Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
+                if (args[0].equalsIgnoreCase("one")) {
+                    NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
+                } else if (args[0].equalsIgnoreCase("auto")) {
+                    if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
+                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
+                        player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
+                    } else {
+                        instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
+                        player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
+                    }
+                } else if (args[0].equalsIgnoreCase("fill")) {
+                    long start = System.currentTimeMillis();
+                    instance.getUtilLists().unclaimFill.add(player.getUniqueId());
+                    Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
+                    floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
+                    unclaimFill(player, profile.getCurrentNation(), toClaim);
+                    player.sendMessage(System.currentTimeMillis() - start + "ms");
+                } else if (args[0].equalsIgnoreCase("all")) {
+                    Nation nation = profile.getCurrentNation();
+                    final int chunks = nation.getChunks().size();
+                    nation.unclaimAll();
+                    for (Player p : nation.getOnlineMemberSet())
+                        p.sendMessage(Lang.PLAYER_UNCLAIMFILLED.get(p).replace("%CHUNKS%", chunks + "").replace("Claim-fill", "Claim-all"));
+                }
+                break;
+            case 2:
+                if (args[0].equalsIgnoreCase("fill")) {
+                    Nation nation = Nation.getByName(args[1]);
+                    instance.getUtilLists().unclaimFill.add(player.getUniqueId());
+                    Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
+                    floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
+                    unclaimFill(player, nation, toClaim);
+                }
+                break;
         }
         return false;
+    }
+
+    private void floodSearch(Player player, Nation nation, int x, int z, String world, Table<Integer, Integer, NationChunk> toUnclaim) {
+
+        if (!instance.getUtilLists().unclaimFill.contains(player.getUniqueId())) return;
+
+        if (toUnclaim.contains(x, z)) return;
+
+        NationChunk nc = NationChunk.get(world, x, z);
+
+        if (nc == null) return;
+
+        if (!nc.getNationId().equals(nation.getNationId())) return;
+
+        int claimFillLimit = 500;
+        if (toUnclaim.size() > claimFillLimit && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+            instance.getUtilLists().claimFill.remove(player.getUniqueId());
+            toUnclaim.clear();
+            Lang.UNCLAIMFILL_LIMIT_REACHED.send(player);
+            return;
+        }
+
+        toUnclaim.put(x, z, nc);
+
+        floodSearch(player, nation, x + 1, z, world, toUnclaim);
+        floodSearch(player, nation, x - 1, z, world, toUnclaim);
+        floodSearch(player, nation, x, z + 1, world, toUnclaim);
+        floodSearch(player, nation, x, z - 1, world, toUnclaim);
+    }
+
+    private void unclaimFill(Player claimer, Nation nation, Table<Integer, Integer, NationChunk> toClaim) {
+        if (toClaim.size() > 0) {
+            int unclaimed = 0;
+            for (NationChunk chunk : toClaim.values()) {
+                chunk.unclaim();
+                unclaimed++;
+            }
+            for (Player member : nation.getOnlineMemberSet())
+                Lang.PLAYER_UNCLAIMFILLED.send(member, "%CHUNKS%;" + unclaimed, "%PLAYER%;" + claimer.getName());
+            Lang.PLAYER_UNCLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + unclaimed, "%PLAYER%;" + claimer.getName());
+        }
     }
 
 }

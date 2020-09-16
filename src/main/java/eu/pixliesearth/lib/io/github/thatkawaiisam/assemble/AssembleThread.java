@@ -48,8 +48,8 @@ public class AssembleThread extends Thread {
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
             if (profile.isScoreboard()) {
                 if (profile.getTimers().size() > 0) {
-                    for (Map.Entry<String, Timer> entry : profile.getTimers().entrySet()) {
-                        if (entry.getValue().getRemaining() <= 0) {
+                    for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet()) {
+                        if (new Timer(entry.getValue()).getRemaining() <= 0) {
                             profile.getTimers().remove(entry.getKey());
                             profile.save();
                         }

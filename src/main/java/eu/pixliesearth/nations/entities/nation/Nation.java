@@ -1,13 +1,17 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
+import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -24,12 +28,17 @@ public class Nation {
     private int xpPoints;
     private double money;
     private String leader;
+    private String dynmapFill;
+    private String dynmapBorder;
+    private String created;
     private Map<String, Map<String, Object>> ranks;
+    private List<String> flags;
     private List<String> members;
     private List<String> chunks;
     private List<String> allyRequests;
     private List<String> allies;
     private List<String> pacts;
+    private List<String> upgrades;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -46,18 +55,33 @@ public class Nation {
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
         nation.append("leader", leader);
+        nation.append("dynmapFill", dynmapFill);
+        nation.append("dynmapBorder", dynmapBorder);
+        nation.append("created", created);
         nation.append("ranks", ranks);
+        nation.append("flags", flags);
         nation.append("members", members);
         nation.append("chunks", chunks);
         nation.append("allyRequests", allyRequests);
         nation.append("allies", allies);
         nation.append("pacts", pacts);
+        nation.append("upgrades", upgrades);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
             Main.getNationCollection().deleteOne(found);
         }
         Main.getNationCollection().insertOne(nation);
+    }
+
+    public ItemStack getFlag() {
+        return Main.getInstance().getFlags().getConfiguration().getItemStack(nationId);
+    }
+
+    public void setFlag(ItemStack flag) {
+        Main.getInstance().getFlags().getConfiguration().set(nationId, flag);
+        Main.getInstance().getFlags().save();
+        Main.getInstance().getFlags().reload();
     }
 
     public Nation save() {
@@ -83,14 +107,22 @@ public class Nation {
         NationManager.names.remove(name);
     }
 
+    public void unclaimAll() {
+        Iterator<String> iter = chunks.iterator();
+        while(iter.hasNext()) {
+            String it = iter.next();
+            NationChunk nc = NationChunk.fromString(it);
+            iter.remove();
+            nc.unclaim();
+        }
+    }
+
     public int getClaimingPower() {
-        //TODO
-        return 9999;
+        return getMaxClaimingPower() - chunks.size();
     }
 
     public int getMaxClaimingPower() {
-        //TODO
-        return 9999;
+        return Era.getByName(era).getChunksPerPlayer() * members.size();
     }
 
     public boolean rename(String newName) {
@@ -115,6 +147,25 @@ public class Nation {
         return oplayers;
     }
 
+    public Rank getRankByPriority(int priority) {
+        for (Map.Entry<String, Map<String, Object>> entry : ranks.entrySet()) {
+            Rank r = Rank.get(entry.getValue());
+            if (r.getPriority() == priority)
+                return r;
+        }
+        return null;
+    }
+
+    public List<Profile> getProfilesByRank(Rank rank) {
+        List<Profile> profiles = new ArrayList<>();
+        for (String s : members) {
+            Profile profile = Main.getInstance().getProfile(UUID.fromString(s));
+            if (profile.getNationRank().equalsIgnoreCase(rank.getName()))
+                profiles.add(profile);
+        }
+        return profiles;
+    }
+
     public int broadcastMembers(String message) {
         int i = 0;
         for (Player player : getOnlineMemberSet())
@@ -125,6 +176,48 @@ public class Nation {
     public boolean isAlliedWith(String nationId) {
         return allies.contains(nationId);
     }
+
+    public void deposit(double amount) {
+        money = money + amount;
+        save();
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > money) return false;
+        money = money + amount;
+        return true;
+    }
+
+    public void addForeignPermission(Nation host, Permission permission) {
+        extras.put("PERMISSION:" + host.getNationId() + ":" + permission.name(), true);
+        host.getExtras().put("FOREIGN-PM:NATION:" + nationId + ":" + permission.name(), true);
+        host.save();
+        save();
+    }
+
+    public void removeForeignPermission(Nation host, Permission permission) {
+        extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
+        host.getExtras().remove("FOREIGN-PM:NATION:" + nationId + ":" + permission.name());
+        host.save();
+        save();
+    }
+
+    public void addChunkAccess(NationChunk chunk) {
+        extras.put("ACCESS:" + chunk.serialize(), true);
+        save();
+    }
+
+    public void removeChunkAccess(NationChunk chunk) {
+        extras.remove("ACCESS:" + chunk.serialize());
+        save();
+    }
+
+    //TODO OTHER FORMULA?
+    public int getPoints() {
+        return (int) (members.size() * money);
+    }
+
+    public Era getCurrentEra() { return Era.valueOf(era.toUpperCase()); }
 
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))

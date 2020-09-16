@@ -42,20 +42,11 @@
                         </goals>
                         <configuration>
                             <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
-<!--                            <artifactSet>
-                                <includes>
-                                    <include>me.lucko:commodore</include>
-                                </includes>
-                            </artifactSet>-->
                             <relocations>
                                 <relocation>
                                     <pattern>com.github.stefvanschie.inventoryframework</pattern>
                                     <shadedPattern>eu.pixliesearth.core.lib.inventoryframework</shadedPattern>
                                 </relocation>
-<!--                                <relocation>
-                                    <pattern>me.lucko.commodore</pattern>
-                                    <shadedPattern>eu.pixliesearth.core.lib.commodore</shadedPattern>
-                                </relocation>-->
                             </relocations>
                         </configuration>
                     </execution>
@@ -84,12 +75,20 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
-            <id>dmulloy2-repo</id>
-            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
-        </repository>
-        <repository>
             <id>minecraft-repo</id>
             <url>https://libraries.minecraft.net/</url>
+        </repository>
+        <repository>
+            <id>dynmap</id>
+            <url>http://repo.mikeprimm.com/</url>
+        </repository>
+        <repository>
+            <id>codemc</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>citizens</id>
+            <url>http://repo.citizensnpcs.co/</url>
         </repository>
     </repositories>
 
@@ -97,7 +96,7 @@
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -160,11 +159,79 @@
             <version>4.5.0</version>
             <scope>provided</scope>
         </dependency>
-        <!--        <dependency>
-                    <groupId>me.lucko</groupId>
-                    <artifactId>commodore</artifactId>
-                    <version>1.5</version>
-                    <scope>compile</scope>
-                </dependency>-->
+        <dependency>
+            <groupId>org.dynmap</groupId>
+            <artifactId>dynmap</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>org.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>Permissions</artifactId>
+                    <groupId>com.nijikokun.bukkit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>bPermissions</artifactId>
+                    <groupId>de.bananaco</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>EssentialsGroupManager</artifactId>
+                    <groupId>org.anjocaido</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spoutpluginapi</artifactId>
+                    <groupId>org.getspout</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>PermissionsBukkit</artifactId>
+                    <groupId>com.platymuus.bukkit.permissions</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>PermissionsEx</artifactId>
+                    <groupId>ru.tehkode</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId> org.apache.cassandra</groupId>
+            <artifactId>cassandra-all</artifactId>
+            <version>0.8.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizensapi</artifactId>
+            <version>2.0.27-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

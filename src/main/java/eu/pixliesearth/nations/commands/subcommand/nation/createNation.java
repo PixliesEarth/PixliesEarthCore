@@ -13,8 +13,10 @@ import eu.pixliesearth.utils.Methods;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
 import java.lang.reflect.Array;
@@ -63,37 +65,22 @@ public class createNation implements SubCommand {
             player.sendMessage(Lang.NATION_WITH_NAME_ALREADY_EXISTS.get(player));
             return false;
         }
-        if (name.length() < 3 || name.length() > 10 || !StringUtils.isAlphanumeric(name)) {
-            player.sendMessage(Lang.NATION_NAME_UNVALID.get(player));
+        if (name.length() < 3 || name.length() > 15 || !StringUtils.isAlphanumeric(name)) {
+            player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
             return false;
         }
         final String id = Methods.generateId(7);
-        Nation nation = new Nation(id, name, "No description :(", Era.START.getName(), Ideology.DEMOCRACY.name(), Religion.ATHEIST.name(), 0, 0.0, player.getUniqueId().toString(), new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 0, 0.0, player.getUniqueId().toString(), "#34ebc3", "#33968b", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            Map<String, Object> admin = new HashMap<>();
-            admin.put("name", "admin");
-            admin.put("prefix", "§c***");
-            admin.put("permissions", new ArrayList<>());
-            Map<String, Object> member = new HashMap<>();
-            member.put("name", "member");
-            member.put("prefix", "§b**");
-            member.put("permissions", new ArrayList<>());
-            Map<String, Object> newbie = new HashMap<>();
-            newbie.put("name", "newbie");
-            newbie.put("prefix", "§a*");
-            newbie.put("permissions", new ArrayList<>());
-            Map<String, Object> leader = new HashMap<>();
-            leader.put("name", "leader");
-            leader.put("prefix", "§c+");
-            leader.put("permissions", new ArrayList<>());
-            nation.getRanks().put("admin", admin);
-            nation.getRanks().put("member", member);
-            nation.getRanks().put("newbie", newbie);
-            nation.getRanks().put("leader", leader);
+            nation.getRanks().put("admin", Rank.ADMIN().toMap());
+            nation.getRanks().put("member", Rank.MEMBER().toMap());
+            nation.getRanks().put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
+            nation.getRanks().put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
             nation.save();
-            profile.addToNation(nation.getNationId(), Rank.getFromMap(nation.getRanks().get("leader")));
+            nation.setFlag(new ItemStack(Material.WHITE_BANNER));
+            profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("leader")));
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
         }

@@ -5,6 +5,8 @@ import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.events.GulagStartEvent;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -13,13 +15,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.List;
 
-import static org.bukkit.Bukkit.getScheduler;
-import static org.bukkit.Bukkit.getServer;
-
 public class GulagStartListener implements Listener {
-
+    File file = new File("plugins/PixliesEarthCore", "gulag.yml");
+    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
     @EventHandler
     public void onFightStart(GulagStartEvent e){
@@ -50,8 +51,8 @@ public class GulagStartListener implements Listener {
             @Override
             public void run(){
                 if (countdown[0] != 0) {
-                    p.sendMessage(Lang.GULAG_COUNTDOWN.get(p).replace("%COUNTER%", String.valueOf(countdown[0])));
-                    enemy.sendMessage(Lang.GULAG_COUNTDOWN.get(enemy).replace("%COUNTER%", String.valueOf(countdown[0])));
+                    p.sendTitle("", Lang.GULAG_COUNTDOWN.get(p).replace("%COUNTER%", String.valueOf(countdown[0])), 20, 20 * 3, 20);
+                    enemy.sendTitle("", Lang.GULAG_COUNTDOWN.get(enemy).replace("%COUNTER%", String.valueOf(countdown[0])), 20, 20 * 3, 20);
                     countdown[0]--;
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                     enemy.playSound(enemy.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
@@ -66,10 +67,30 @@ public class GulagStartListener implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             @Override
             public void run() {
-                //TODO: DONT HARDCODE LOCATIONS
-                Location spawn1 = new Location(world, 7, 75, -3);
-                Location spawn2 = new Location(world, 1, 75, 7);
+                String world = cfg.getString("fighter1" + ".world");
+                double x = cfg.getDouble("fighter1" + ".x");
+                double y = cfg.getDouble("fighter1" + ".y");
+                double z = cfg.getDouble("fighter1" + ".z");
+                double yaw = cfg.getDouble("fighter1" + ".yaw");
+                double pitch = cfg.getDouble("fighter1" + ".pitch");
+
+                Location spawn1 = new Location(Bukkit.getWorld(world), x, y, z);
+                System.out.println(yaw + "attempting to tp");
+                spawn1.setPitch((float) pitch);
+                spawn1.setYaw((float)yaw);
                 p.teleport(spawn1);
+
+                String world2 = cfg.getString("fighter2" + ".world");
+                double x2 = cfg.getDouble("fighter2" + ".x");
+                double y2 = cfg.getDouble("fighter2" + ".y");
+                double z2 = cfg.getDouble("fighter2" + ".z");
+                double yaw2 = cfg.getDouble("fighter2" + ".yaw");
+                double pitch2 = cfg.getDouble("fighter2" + ".pitch");
+
+                Location spawn2 = new Location(Bukkit.getWorld(world2), x2, y2, z2);
+                spawn2.setPitch((float) pitch2);
+                spawn2.setYaw((float) yaw2);
+
                 enemy.teleport(spawn2);
                 setKit(p, enemy);
 
@@ -83,10 +104,12 @@ public class GulagStartListener implements Listener {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                         @Override//distance calc
                         public void run() {
-                            //TODO: Dont hardcode locations
-                            World world;
                             if (Main.getInstance().getUtilLists().fightingGulag.containsKey(p.getUniqueId()) && Main.getInstance().getUtilLists().fightingGulag.containsValue(enemy.getUniqueId())){
-                                Location middle = new Location(Bukkit.getWorld("gulag"), 4, 73, 2);
+                                String world3 = cfg.getString("cap" + ".world");
+                                double x3 = cfg.getDouble("cap" + ".x");
+                                double y3 = cfg.getDouble("cap" + ".y");
+                                double z3 = cfg.getDouble("cap" + ".z");
+                                Location middle = new Location(Bukkit.getWorld(world3), x3, y3, z3);
                             if (p.getLocation().distance(middle) > enemy.getLocation().distance(middle)) {
                                 fightOver(p, enemy);
                                 }else if(p.getLocation().distance(middle) < enemy.getLocation().distance(middle)){
@@ -120,9 +143,9 @@ public class GulagStartListener implements Listener {
           } else {
               Main.getInstance().getUtilLists().fightingGulag.remove(winner.getUniqueId(), loser.getUniqueId());
           }
+          if(loser.isDead()) loser.spigot().respawn();
           loser.getInventory().clear();
           loser.teleport(Bukkit.getWorld("world").getSpawnLocation());
-          loser.banPlayer("Died in gulag. You will be unbanned after the war.");
           winner.sendMessage(Lang.WON_GULAG.get(winner));
           winner.playSound(winner.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
       }
@@ -136,6 +159,14 @@ public class GulagStartListener implements Listener {
                 winner.setHealth(20);
                 winner.setFoodLevel(20);
                 winner.getInventory().clear();
+                if(loser != null) {
+                    if(loser.hasPermission("gulag.bypass.ban")){
+                        loser.sendMessage(Lang.GULAG_BYPASS_BAN.get(loser));
+                    }else {
+                        loser.banPlayer("Died in gulag. You will be unbanned after the war.");
+                    }
+
+                }
             }
         }, 20*5);
         Main.getInstance().gulagActive = false;
@@ -155,14 +186,14 @@ public class GulagStartListener implements Listener {
                 p.getInventory().setChestplate(chestplate);
                 p.getInventory().setLeggings(pant);
                 p.getInventory().setBoots(boot);
-                p.getInventory().addItem(steak);
-                p.getInventory().addItem(sword);
+                p.getInventory().setItem(0, sword);
+                p.getInventory().setItem(1,steak);
                 player.getInventory().setHelmet(helmet);
                 player.getInventory().setChestplate(chestplate);
                 player.getInventory().setLeggings(pant);
                 player.getInventory().setBoots(boot);
-                player.getInventory().addItem(sword);
-                player.getInventory().addItem(steak);
+                player.getInventory().setItem(0,sword);
+                player.getInventory().setItem(1,steak);
                 break;
             case 1:
                 ItemStack helmet1 = new ItemStack(Material.LEATHER_HELMET);
@@ -175,8 +206,8 @@ public class GulagStartListener implements Listener {
                 p.getInventory().setLeggings(pant1);
                 p.getInventory().setBoots(boot1);
                 p.getInventory().addItem(rock);
-                p.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getRecipe());
-                player.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getRecipe());
+                p.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
+                player.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
                 player.getInventory().setHelmet(helmet1);
                 player.getInventory().setChestplate(chestplate1);
                 player.getInventory().setLeggings(pant1);
@@ -201,8 +232,9 @@ public class GulagStartListener implements Listener {
         Player player = Bukkit.getPlayer(Main.getInstance().getUtilLists().awaitingGulag1.get(0));
         Player player2 = Bukkit.getPlayer(Main.getInstance().getUtilLists().awaitingGulag2.get(0));
         Main.getInstance().getUtilLists().fightingGulag.put(player.getUniqueId(), player2.getUniqueId());
-        Bukkit.getPluginManager().callEvent(new GulagStartEvent(player, player2));
         Main.getInstance().getUtilLists().awaitingGulag1.remove(player.getUniqueId());
         Main.getInstance().getUtilLists().awaitingGulag2.remove(player2.getUniqueId());
+        Bukkit.getPluginManager().callEvent(new GulagStartEvent(player, player2));
+
     }
 }

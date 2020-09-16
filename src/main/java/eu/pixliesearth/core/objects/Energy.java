@@ -20,23 +20,22 @@ public class Energy {
     }
 
     public static void add(Profile profile, double amount) {
-        if (profile.getEnergy() + amount > 5) {
-            double toAdd = 5 - amount;
-            profile.setEnergy(profile.getEnergy() + toAdd);
+        if (profile.getEnergy() + amount > 5D) {
+            profile.setEnergy(5);
         } else {
             profile.setEnergy(profile.getEnergy() + amount);
         }
         profile.save();
         if (Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())) != null)
-            Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())).sendActionBar("§eYou lost §a" + amount + " §eenergy.");
+            Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())).sendActionBar("§eYou gained §a" + amount + " §eenergy.");
     }
 
     public static double calculateNeeded(Location a, Location b) {
-        return Methods.calculateDistance(a.getX(), b.getX(), a.getZ(), b.getZ()) / 2000;
+        return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 2000;
     }
 
     public static double calculateTime(Location a, Location b) {
-        return Methods.calculateDistance(a.getX(), b.getX(), a.getZ(), b.getZ()) / 1000;
+        return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 500;
     }
 
 }
