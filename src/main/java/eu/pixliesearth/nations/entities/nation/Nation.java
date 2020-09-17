@@ -135,6 +135,10 @@ public class Nation {
         return true;
     }
 
+    public double getGDP() {
+        return Main.getInstance().getNationsTop().getTopMap().get(nationId).getGDP();
+    }
+
     public int getOnlineMembers() {
         return (int) members.stream().filter(string -> Bukkit.getPlayer(UUID.fromString(string)) != null).count();
     }

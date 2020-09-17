@@ -34,7 +34,7 @@ public class topNation implements SubCommand {
         int page = 1;
         if (args.length > 0 && args[0].chars().allMatch(Character::isDigit))
             page = Integer.parseInt(args[0]);
-        Object[] array = instance.getNationsTop().getTopMap().toArray();
+        Object[] array = instance.getNationsTop().getTopMap().values().toArray();
         sender.sendMessage(Methods.getCenteredMessage("§8--== §bN-TOP §7(§b" + page + "§8/§b" + (array.length <= 10 ? 1 : ((array.length + 5) / 10))  + "§7) §8==--"));
         List<Object> currentPage = Arrays.asList(Arrays.copyOfRange(array, (page * 10) - 10, Math.min(array.length, (page * 10))));
         for(int i = 0; i < 10; i++) {
