@@ -224,9 +224,7 @@ public class Profile {
         return Bukkit.getPlayer(UUID.fromString(uniqueId)) != null;
     }
 
-    public boolean isMarried() {
-        return !marriagePartner.equals("NONE");
-    }
+    public boolean isMarried() { return !marriagePartner.equals("NONE"); }
 
     public int canAddHomes() {
         return instance.getConfig().getInt("modules.homesystem." + getRank().getName());
