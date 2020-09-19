@@ -1,17 +1,21 @@
-package eu.pixliesearth.core.customitems.ci.machines;
+package eu.pixliesearth.core.customitems.ci.armour.wooden;
 
 import eu.pixliesearth.core.customitems.CustomItem;
-import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.utils.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class TinkerTableCI implements CustomItem {
-
+public class ArmourWoodenChestPlate implements CustomItem {
     @Override
     public ItemStack getItem() {
-        return Machine.MachineType.TINKER_TABLE.getItem();
+        return new ItemBuilder(Material.GOLDEN_CHESTPLATE)
+                .setDisplayName("§cWooden Chestplate")
+                .setCustomModelData(21)
+                .setArmour(5)
+                .build();
     }
 
     @Override
@@ -21,17 +25,22 @@ public class TinkerTableCI implements CustomItem {
 
     @Override
     public List<String> getLore() {
-        return getItem().getLore();
+        List<String> lore = getItem().getItemMeta().getLore();
+        return lore;
     }
 
     @Override
     public ItemStack getStatic(int durability) {
         return getItem();
     }
+    
+    public ItemStack getStatic() {
+        return getItem();
+    }
 
     @Override
     public boolean enchantable() {
-        return false;
+        return true;
     }
 
     @Override

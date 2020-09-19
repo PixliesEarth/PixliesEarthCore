@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.customitems.ci.armour;
+package eu.pixliesearth.core.customitems.ci.armour.bronze;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -8,13 +8,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class ArmourBronzeChestPlate implements CustomItem {
+public class ArmourBronzeBoots implements CustomItem {
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.GOLDEN_CHESTPLATE)
-                .setDisplayName("§6Bronze Chestplate")
-                .setCustomModelData(16)
-                .setArmour(6)
+        return new ItemBuilder(Material.GOLDEN_BOOTS)
+                .setDisplayName("§6Bronze Boots")
+                .setCustomModelData(19)
+                .setArmour(2)
                 .setArmourToughness(1) // This makes it better than iron!
                 .build();
     }

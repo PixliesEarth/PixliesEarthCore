@@ -11,5 +11,5 @@ public class ConstItems {
     public static final ItemBuilder UNFIRED_POT = new ItemBuilder(BRICK).setDisplayName("§cUnfired Pot").setCustomModelData(13);
     public static final ItemBuilder TABLET = new ItemBuilder(PAPER).setDisplayName("§6§lTablet").setCustomModelData(14);
     public static final ItemBuilder CLAY_DAGGER = new ItemBuilder(WOODEN_SWORD).setDisplayName("§cClay Dagger").setCustomModelData(15).setAttackDamage(3);
-
+    
 }

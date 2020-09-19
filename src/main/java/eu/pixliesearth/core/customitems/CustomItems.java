@@ -1,19 +1,16 @@
 package eu.pixliesearth.core.customitems;
 
+import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeBoots;
+import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeChestPlate;
+import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeHelmet;
+import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeLeggings;
+import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenBoots;
+import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenChestPlate;
+import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenHelmet;
+import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenLeggings;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeBoots;
-import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeChestPlate;
-import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeHelmet;
-import eu.pixliesearth.core.customitems.ci.armour.ArmourBronzeLeggings;
 import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
-import eu.pixliesearth.core.customitems.ci.machines.BronzeForgeCI;
-import eu.pixliesearth.core.customitems.ci.machines.InputNodeCI;
-import eu.pixliesearth.core.customitems.ci.machines.KilnCI;
-import eu.pixliesearth.core.customitems.ci.machines.MachineCrafterCI;
-import eu.pixliesearth.core.customitems.ci.machines.OutputNodeCI;
-import eu.pixliesearth.core.customitems.ci.machines.PotteryCI;
-import eu.pixliesearth.core.customitems.ci.machines.TinkerTableCI;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
@@ -28,17 +25,14 @@ public enum CustomItems {
     STONE_HATCHET(new ItemStoneHatchet()),
     BRONZE_SWORD(new ItemBronzeSword()),
     BRONZE_INGOT(new BronzeIngot()),
-    TINKER_TABLE(new TinkerTableCI()),
-    KILN(new KilnCI()),
-    POTTERY(new PotteryCI()),
-    BRONZE_FORGE(new BronzeForgeCI()),
-    INPUT_NODE(new InputNodeCI()),
-    OUTPUT_NODE(new OutputNodeCI()),
-    MACHINE_CRAFTER(new MachineCrafterCI()),
     BRONZE_HELMET(new ArmourBronzeHelmet()),
     BRONZE_CHESTPLATE(new ArmourBronzeChestPlate()),
     BRONZE_LEGGINGS(new ArmourBronzeLeggings()),
     BRONZE_BOOTS(new ArmourBronzeBoots()),
+    WOODEN_BOOTS(new ArmourWoodenBoots()),
+    WOODEN_CHESTPLATE(new ArmourWoodenChestPlate()),
+    WOODEN_HELMET(new ArmourWoodenHelmet()),
+    WOODEN_LEGGINGS(new ArmourWoodenLeggings()),
     ;
 
     public CustomItem clazz;

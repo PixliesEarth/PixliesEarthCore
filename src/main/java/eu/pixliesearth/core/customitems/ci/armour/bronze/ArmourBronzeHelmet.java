@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.customitems.ci.armour;
+package eu.pixliesearth.core.customitems.ci.armour.bronze;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;

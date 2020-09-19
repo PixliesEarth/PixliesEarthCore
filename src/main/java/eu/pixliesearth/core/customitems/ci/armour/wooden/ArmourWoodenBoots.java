@@ -1,17 +1,21 @@
-package eu.pixliesearth.core.customitems.ci.machines;
+package eu.pixliesearth.core.customitems.ci.armour.wooden;
 
 import eu.pixliesearth.core.customitems.CustomItem;
-import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.utils.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class KilnCI implements CustomItem {
-
+public class ArmourWoodenBoots implements CustomItem {
     @Override
     public ItemStack getItem() {
-        return Machine.MachineType.KILN.getItem();
+        return new ItemBuilder(Material.GOLDEN_BOOTS)
+                .setDisplayName("§cWooden Boots")
+                .setCustomModelData(20)
+                .setArmour(1)
+                .build();
     }
 
     @Override
@@ -21,17 +25,22 @@ public class KilnCI implements CustomItem {
 
     @Override
     public List<String> getLore() {
-        return getItem().getLore();
+        List<String> lore = getItem().getItemMeta().getLore();
+        return lore;
     }
 
     @Override
     public ItemStack getStatic(int durability) {
         return getItem();
     }
+    
+    public ItemStack getStatic() {
+        return getItem();
+    }
 
     @Override
     public boolean enchantable() {
-        return false;
+        return true;
     }
 
     @Override

@@ -159,6 +159,7 @@ public final class Main extends JavaPlugin {
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
+    // private @Getter Jedis jedis;
 
     @Override
     public void onEnable() {
@@ -174,6 +175,8 @@ public final class Main extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
+
+        // jedis = new Jedis("localhost");
 
         utilLists = new UtilLists();
         
@@ -209,19 +212,6 @@ public final class Main extends JavaPlugin {
 
         // PROFILE & AFK SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-/*            for (UUID uuid : utilLists.locationMap.keySet()) {
-                if (utilLists.locationMap.get(uuid).getLocation() == Bukkit.getPlayer(uuid).getLocation()) {
-                    AfkMap map = utilLists.locationMap.get(uuid);
-                    map.setMinutes(map.getMinutes() + 1);
-                    utilLists.locationMap.put(uuid, map);
-                } else {
-                    utilLists.locationMap.get(uuid).setMinutes(0);
-                }
-                if (utilLists.locationMap.get(uuid).getMinutes() == getConfig().getInt("afktime", 15)) {
-                    utilLists.afk.add(uuid);
-                    Bukkit.broadcastMessage("§8Player §7" + Bukkit.getPlayer(uuid).getDisplayName() + " §8is now AFK.");
-                }
-            }*/
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
             for (Player player : getServer().getOnlinePlayers()) {
                 Profile profile = getProfile(player.getUniqueId());
@@ -360,6 +350,7 @@ public final class Main extends JavaPlugin {
             machine.save();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void registerCommands() {
         getCommand("modules").setExecutor(new ModulesCommand());
         getCommand("chat").setExecutor(new ChatCommand());
@@ -428,7 +419,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ItemInteractListener(), this);
         manager.registerEvents(new GunListener(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
-        //TODO manager.registerEvents(new PacketListener(), this);
+        // manager.registerEvents(new PacketListener(), this);
         manager.registerEvents(new AchievementListener(), this);
         //THIS IS NOT ITEMINTERACTLISTENER DONT DELETE
         manager.registerEvents(new ItemsInteractEvent(), this);
@@ -457,12 +448,9 @@ public final class Main extends JavaPlugin {
      * @return A profile object of the given playerUUID
      */
     public Profile getProfile(UUID uuid) {
-        if (utilLists.profiles.get(uuid) == null) {
+        if (utilLists.profiles.get(uuid) == null)
             utilLists.profiles.put(uuid, Profile.get(uuid));
-            return utilLists.profiles.get(uuid);
-        } else {
-            return utilLists.profiles.get(uuid);
-        }
+        return utilLists.profiles.get(uuid);
     }
 
     public void discordEnable() {
@@ -482,7 +470,7 @@ public final class Main extends JavaPlugin {
         );
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, () -> {
             if (!(MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().getTopic().equals("<:online:716052437848424558> Earth is online!"))) {
                 MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
             }
@@ -498,6 +486,7 @@ public final class Main extends JavaPlugin {
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
         MiniMick.getApi().disconnect();
     }
+
     public boolean isGulagActive(){
         return gulagActive;
     }
