@@ -1,23 +1,19 @@
-package eu.pixliesearth.core.customitems.ci.weapons.melee;
+package eu.pixliesearth.core.customitems.ci.items;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
-import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class ItemStoneHatchet implements CustomItem {
+import static org.bukkit.Material.BRICK;
+
+public class UnfiredPot implements CustomItem {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STONE_AXE)
-                .setDisplayName("§7§lStone Hatchet")
-                .setDurability((short) 100)
-                .setCustomModelData(5)
-                .setAttackDamage(2.0)
-                .build();
+        return new ItemBuilder(BRICK).setDisplayName("§cUnfired Pot").setCustomModelData(13).build();
     }
 
     @Override
@@ -37,13 +33,12 @@ public class ItemStoneHatchet implements CustomItem {
 
     @Override
     public boolean enchantable() {
-        return true;
+        return false;
     }
 
     @Override
     public void onInteract(PlayerInteractEvent event) {
 
     }
-
 
 }

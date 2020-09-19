@@ -8,9 +8,14 @@ import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenBoots;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenChestPlate;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenHelmet;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenLeggings;
+import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
+import eu.pixliesearth.core.customitems.ci.items.MudBrick;
+import eu.pixliesearth.core.customitems.ci.items.Tablet;
+import eu.pixliesearth.core.customitems.ci.items.UnfiredPot;
+import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemClayDagger;
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
@@ -24,7 +29,6 @@ public enum CustomItems {
     EXPLOSIVE_SHOVEL(new ItemExplosiveShovel()),
     STONE_HATCHET(new ItemStoneHatchet()),
     BRONZE_SWORD(new ItemBronzeSword()),
-    BRONZE_INGOT(new BronzeIngot()),
     BRONZE_HELMET(new ArmourBronzeHelmet()),
     BRONZE_CHESTPLATE(new ArmourBronzeChestPlate()),
     BRONZE_LEGGINGS(new ArmourBronzeLeggings()),
@@ -33,6 +37,11 @@ public enum CustomItems {
     WOODEN_CHESTPLATE(new ArmourWoodenChestPlate()),
     WOODEN_HELMET(new ArmourWoodenHelmet()),
     WOODEN_LEGGINGS(new ArmourWoodenLeggings()),
+    BRONZE_INGOT(new BronzeIngot()),
+    MUD_BRICK(new MudBrick()),
+    TABLET(new Tablet()),
+    UNFIRED_POT(new UnfiredPot()),
+    CLAY_DAGGER(new ItemClayDagger()),
     ;
 
     public CustomItem clazz;
@@ -42,8 +51,10 @@ public enum CustomItems {
     }
     
     public ItemStack getItem() {
-    	return clazz.getItem();
+    	return clazz.getItem().clone();
     }
+
+    public ItemBuilder getBuilder() { return new ItemBuilder(getItem()); }
 
     public static boolean contains(String test) {
         for (CustomItems c : values()) {

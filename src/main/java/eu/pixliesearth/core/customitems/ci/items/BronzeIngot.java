@@ -2,16 +2,18 @@ package eu.pixliesearth.core.customitems.ci.items;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
-import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.List;
+
+import static org.bukkit.Material.GOLD_INGOT;
 
 public class BronzeIngot implements CustomItem {
+
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.GOLD_INGOT).setDisplayName("§c§lBronze Ingot").setCustomModelData(10).build();
+        return new ItemBuilder(GOLD_INGOT).setDisplayName("§c§lBronze Ingot").setCustomModelData(10).build();
     }
 
     @Override
@@ -21,8 +23,7 @@ public class BronzeIngot implements CustomItem {
 
     @Override
     public List<String> getLore() {
-        List<String> lore = getItem().getItemMeta().getLore();
-        return lore;
+        return getItem().getLore();
     }
 
     @Override
@@ -32,7 +33,7 @@ public class BronzeIngot implements CustomItem {
 
     @Override
     public boolean enchantable() {
-        return true;
+        return false;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package eu.pixliesearth.core.customitems.ci.weapons.melee;
 
-import eu.pixliesearth.core.customitems.DamagerCI;
+import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBronzeSword implements DamagerCI {
+public class ItemBronzeSword implements CustomItem {
 
     @Override
     public ItemStack getItem() {
@@ -16,7 +16,7 @@ public class ItemBronzeSword implements DamagerCI {
                 .setDisplayName("§7§lBronze Sword")
                 .setDamage(0)
                 .setCustomModelData(11)
-                .addLoreLine("§2Damage: " + damage())
+                .setAttackDamage(6.5)
                 .build();
     }
 
@@ -27,19 +27,12 @@ public class ItemBronzeSword implements DamagerCI {
 
     @Override
     public List<String> getLore() {
-        List<String> returner = new ArrayList<>();
-        returner.add("§2Damage: " + damage());
-        return returner;
+        return getItem().getLore();
     }
 
     @Override
     public ItemStack getStatic(int durability) {
-        return new ItemBuilder(Material.GOLDEN_SWORD)
-                .setDisplayName("§7§lBronze Sword")
-                .setDamage(0)
-                .setCustomModelData(11)
-                .addLoreLine("§2Damage: " + damage())
-                .build();
+        return getItem();
     }
 
     @Override
@@ -52,8 +45,4 @@ public class ItemBronzeSword implements DamagerCI {
 
     }
 
-    @Override
-    public double damage() {
-        return 6.5;
-    }
 }

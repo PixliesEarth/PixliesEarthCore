@@ -1,22 +1,19 @@
 package eu.pixliesearth.core.customcrafting;
 
-import static org.bukkit.Material.AIR;
-import static org.bukkit.Material.DIAMOND_PICKAXE;
-import static org.bukkit.Material.DIAMOND_SHOVEL;
-import static org.bukkit.Material.REDSTONE;
-import static org.bukkit.Material.REDSTONE_BLOCK;
-import static org.bukkit.Material.STICK;
-import static org.bukkit.Material.STONE;
-import static org.bukkit.Material.TNT;
-
+import eu.pixliesearth.core.machines.Machine;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.CustomItems;
+
+import java.util.Arrays;
+
+import static org.bukkit.Material.*;
 
 public class CustomRecipies {
 	/**
@@ -27,9 +24,21 @@ public class CustomRecipies {
 				REDSTONE, STONE, REDSTONE, // Row one
 				STONE, REDSTONE_BLOCK, STONE, // Row two
 				REDSTONE, STONE, REDSTONE, // Row three
-				CustomItems.MACHINE_CRAFTER.getItem()); // Result
+				Machine.MachineType.MACHINE_CRAFTER.getItem()); // Result
 		new CustomRecipe("Explosive_Pickaxe", TNT, TNT, TNT, AIR, DIAMOND_PICKAXE, AIR, AIR, STICK, AIR, CustomItems.EXPLOSIVE_PICKAXE.getItem());
 		new CustomRecipe("Explosive_Shovel", AIR, TNT, AIR, AIR, DIAMOND_SHOVEL, AIR, AIR, STICK, AIR, CustomItems.EXPLOSIVE_SHOVEL.getItem());
+		new CustomRecipe("Wooden_Boots", new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(AIR), CustomItems.WOODEN_BOOTS.getItem());
+		new CustomRecipe("Wooden_Chestplate", new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), CustomItems.WOODEN_CHESTPLATE.getItem());
+		new CustomRecipe("Wooden_Helmet", new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(AIR), CustomItems.WOODEN_HELMET.getItem());
+		new CustomRecipe("Wooden_Leggings", new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(AIR), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG),
+				new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), new RecipeChoice.MaterialChoice(OAK_LOG, BIRCH_LOG, SPRUCE_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG), CustomItems.WOODEN_LEGGINGS.getItem());
 	}
 	/**
 	 * Deprecated! Please use {@link CustomRecipe#newShapedRecipe(ItemStack, String)}!

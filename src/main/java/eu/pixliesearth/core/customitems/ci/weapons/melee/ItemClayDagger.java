@@ -5,19 +5,17 @@ import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemStoneHatchet implements CustomItem {
+import static org.bukkit.Material.WOODEN_SWORD;
+
+public class ItemClayDagger implements CustomItem {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STONE_AXE)
-                .setDisplayName("§7§lStone Hatchet")
-                .setDurability((short) 100)
-                .setCustomModelData(5)
-                .setAttackDamage(2.0)
-                .build();
+        return new ItemBuilder(WOODEN_SWORD).setDisplayName("§cClay Dagger").setCustomModelData(15).setAttackDamage(3).build();
     }
 
     @Override
@@ -44,6 +42,5 @@ public class ItemStoneHatchet implements CustomItem {
     public void onInteract(PlayerInteractEvent event) {
 
     }
-
 
 }

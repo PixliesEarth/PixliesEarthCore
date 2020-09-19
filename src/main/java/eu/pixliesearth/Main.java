@@ -77,7 +77,6 @@ import eu.pixliesearth.core.commands.util.SeenCommand;
 import eu.pixliesearth.core.commands.util.StaffCommand;
 import eu.pixliesearth.core.customcrafting.CustomRecipies;
 import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
-import eu.pixliesearth.core.customitems.listeners.CIEntityDamageByEntityListener;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.listener.AchievementListener;
