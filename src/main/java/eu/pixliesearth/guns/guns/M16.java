@@ -19,11 +19,4 @@ public class M16 extends PixliesGun {
         super(uuid, "§c§lM-16", new ItemBuilder(Material.WOODEN_AXE).setCustomModelData(6).setDisplayName("§c§lM-16 §8| §8[§c30§7/§c30§8]").addLoreLine("§7Ammo: §3RifleAmmo").addLoreLine("§7Origin: §bUSA").addLoreLine("§7Range: §325 blocks").addLoreLine("§7Accuracy: §30.1").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 25, ammo,30, 0.1, 400, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
     }
 
-    @Override
-    public void reloadItem(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§c§lM-16 §8| §8[§c" + getAmmo() + "§7/§c" + getMaxAmmo() + "§8]");
-        item.setItemMeta(meta);
-    }
-
 }

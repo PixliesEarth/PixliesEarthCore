@@ -14,6 +14,7 @@ public enum Guns {
     AK47(AK47.class, 40),
     UZI(Uzi.class, 32),
     K98K(eu.pixliesearth.guns.guns.K98K.class, 5),
+    MP5(eu.pixliesearth.guns.guns.MP5.class, 15),
     ;
 
     private @Getter Class<? extends PixliesGun> clazz;

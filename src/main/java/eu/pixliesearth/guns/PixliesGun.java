@@ -2,8 +2,7 @@ package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
-import eu.pixliesearth.guns.guns.AK47;
-import eu.pixliesearth.guns.guns.M16;
+import eu.pixliesearth.guns.guns.*;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTUtil;
@@ -17,6 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -94,16 +94,24 @@ public class PixliesGun {
             player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
             ammo = maxAmmo;
             player.sendActionBar("§a§lReloaded!");
+            if (event.getItem() == null) return;
             reloadItem(event.getItem());
         }, 20 * 2);
     }
 
-    public void reloadItem(ItemStack item) {}
+    public void reloadItem(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name + " §8| §8[§c" + getAmmo() + "§7/§c" + getMaxAmmo() + "§8]");
+        item.setItemMeta(meta);
+    }
 
     public static Map<String, Class<? extends PixliesGun>> classMap() {
         Map<String, Class<? extends PixliesGun>> map = new HashMap<>();
         map.put("§c§lM-16", M16.class);
         map.put("§c§lAK-47", AK47.class);
+        map.put("§3§lUzi", Uzi.class);
+        map.put("§c§lMP5", MP5.class);
+        map.put("§c§lKarabiner98k", K98K.class);
         return map;
     }
 

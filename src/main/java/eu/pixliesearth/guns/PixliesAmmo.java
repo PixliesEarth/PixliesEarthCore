@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns;
 
+import eu.pixliesearth.guns.ammo.Ammo762x51mm;
 import eu.pixliesearth.guns.ammo.NineMMAmmo;
 import eu.pixliesearth.guns.ammo.RifleAmmo;
 import lombok.AllArgsConstructor;
@@ -72,6 +73,7 @@ public class PixliesAmmo {
 
         RIFLE_AMMO(new RifleAmmo(null, null)),
         NINEMM(new NineMMAmmo(null, null)),
+        NATO762x51(new Ammo762x51mm(null, null)),
         ;
 
         private final PixliesAmmo ammo;
