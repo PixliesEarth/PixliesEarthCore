@@ -2,6 +2,7 @@ package eu.pixliesearth.guns;
 
 import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.guns.guns.M16;
+import eu.pixliesearth.guns.guns.Uzi;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -10,6 +11,7 @@ public enum Guns {
 
     M16(M16.class, 30),
     AK47(AK47.class, 40),
+    UZI(Uzi.class, 32),
     ;
 
     private @Getter Class<? extends PixliesGun> clazz;

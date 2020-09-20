@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns;
 
+import eu.pixliesearth.guns.ammo.NineMMAmmo;
 import eu.pixliesearth.guns.ammo.RifleAmmo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -70,6 +71,7 @@ public class PixliesAmmo {
     public enum AmmoType {
 
         RIFLE_AMMO(new RifleAmmo(null, null)),
+        NINEMM(new NineMMAmmo(null, null)),
         ;
 
         private final PixliesAmmo ammo;
