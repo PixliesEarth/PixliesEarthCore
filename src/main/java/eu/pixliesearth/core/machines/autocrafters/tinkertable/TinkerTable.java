@@ -1,5 +1,7 @@
 package eu.pixliesearth.core.machines.autocrafters.tinkertable;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,6 +18,10 @@ public class TinkerTable extends AutoCrafterMachine {
     public TinkerTable(String id, Location location) {
         super(id, location, MachineType.TINKER_TABLE, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
         armorStand.appendTextLine(getTitle());
+    }
+
+    public TinkerTable(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType) {
+        super(id, location, machineType, machineType.getItem(), timer, armorStand, wantsToCraft);
     }
 
     @Override

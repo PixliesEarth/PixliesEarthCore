@@ -1,5 +1,7 @@
 package eu.pixliesearth.core.machines.autocrafters.pottery;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,6 +18,10 @@ public class Pottery extends AutoCrafterMachine {
     public Pottery(String id, Location location) {
         super(id, location, MachineType.POTTERY, item, null, HologramsAPI.createHologram(instance, holoLocation(location)), null);
         armorStand.appendTextLine(getTitle());
+    }
+
+    public Pottery(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType) {
+        super(id, location, machineType, machineType.getItem(), timer, armorStand, wantsToCraft);
     }
 
     public String getTitle() {
