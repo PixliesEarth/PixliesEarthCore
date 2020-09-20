@@ -14,10 +14,10 @@ import java.util.UUID;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 
-public class Uzi extends PixliesGun {
+public class K98K extends PixliesGun {
 
-    public Uzi(int ammo, UUID uuid) {
-        super(uuid, "§3§lUzi", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(4).setDisplayName("§3§lUzi §8| §8[§c32§7/§c32§8]").addLoreLine("§7Ammo: §39mm").addLoreLine("§7Origin: §3Israel").addLoreLine("§7Range: §320 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.NINEMM, 20, ammo,32, 0.04, 200, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+    public K98K(int ammo, UUID uuid) {
+        super(uuid, "§6§lKarabiner 98k", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(6).setDisplayName("§6§lKarabiner 98k §8| §8[§c5§7/§c5§8]").addLoreLine("§7Ammo: §3Rifle Ammo").addLoreLine("§7Origin: §cGermany").addLoreLine("§7Range: §340 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 40, ammo,5, 0.04, 800, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
     }
 
     @Override
