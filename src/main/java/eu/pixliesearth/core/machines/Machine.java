@@ -214,7 +214,7 @@ public class Machine {
 
             case KILN:
                 holo.appendTextLine(o.get("holo-text").getAsString());
-                return new Kiln(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type);
+                return new Kiln(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type, o.get("fuel").getAsInt());
 
             case POTTERY:
                 holo.appendTextLine(o.get("holo-text").getAsString());

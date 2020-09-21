@@ -21,8 +21,9 @@ public class Kiln extends FuelableAutoCrafterMachine {
         fuel = 0;
     }
 
-    public Kiln(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType) {
+    public Kiln(String id, Location location, Hologram armorStand, Timer timer, MachineCraftable wantsToCraft, MachineType machineType, int fuel) {
         super(id, location, machineType, machineType.getItem(), timer, armorStand, wantsToCraft);
+        this.fuel = fuel;
     }
 
     public String getTitle() {
