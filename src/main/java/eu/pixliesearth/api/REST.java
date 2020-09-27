@@ -7,13 +7,13 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 
 import java.util.UUID;
 import static eu.pixliesearth.Main.*;
-import static spark.Spark.*;
+// import static spark.Spark.*;
 
 public class REST {
 
-    private final Gson gson;
+    // private final Gson gson;
 
-    public REST() {
+/*    public REST() {
         gson = new GsonBuilder().setPrettyPrinting().create();
 
         get("/profile/:uuid", (request, response) -> {
@@ -39,6 +39,6 @@ public class REST {
             profile.save();
             return "OK";
         });
-    }
+    }*/
 
 }

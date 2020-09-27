@@ -99,7 +99,11 @@ public class NationCommand implements CommandExecutor, TabExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 Profile profile = instance.getProfile(player.getUniqueId());
-                infoNation.sendNationInfo(profile.getCurrentNation(), player);
+                if (profile.isInNation()) {
+                    infoNation.sendNationInfo(profile.getCurrentNation(), player);
+                } else {
+                    sendHelp(sender, 1);
+                }
             } else  {
                 sendHelp(sender, 1);
             }

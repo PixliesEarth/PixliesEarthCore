@@ -195,12 +195,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.7.2</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId> org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
             <version>0.8.1</version>
@@ -214,7 +214,7 @@
                     <artifactId>log4j</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
             <artifactId>holographicdisplays-api</artifactId>
@@ -233,10 +233,10 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>3.3.0</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
 </project>

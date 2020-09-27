@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import com.google.gson.Gson;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -138,6 +139,7 @@ import eu.pixliesearth.warsystem.GulagStartListener;
 import lombok.Getter;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
+import redis.clients.jedis.Jedis;
 
 public final class Main extends JavaPlugin {
 
@@ -153,12 +155,13 @@ public final class Main extends JavaPlugin {
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
-    private @Getter REST rest;
+    // private @Getter REST rest;
     public boolean gulagActive = false;
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
-    // private @Getter Jedis jedis;
+    private @Getter Jedis jedis;
+    private @Getter Gson gson;
 
     @Override
     public void onEnable() {
@@ -175,7 +178,9 @@ public final class Main extends JavaPlugin {
             return;
         }
 
-        // jedis = new Jedis("localhost");
+        jedis = new Jedis("localhost");
+
+        gson = new Gson();
 
         utilLists = new UtilLists();
         
@@ -217,7 +222,7 @@ public final class Main extends JavaPlugin {
 /*                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
                     profile.setPlayTime(profile.getPlayTime() + 1);*/
                 profile.syncDiscordAndIngameRoles();
-                profile.save();
+                profile.backup();
             }
             Bukkit.getConsoleSender().sendMessage("§aDone.");
         }, 20 * 60, (20 * 60) * 5);
@@ -292,7 +297,7 @@ public final class Main extends JavaPlugin {
         dynmapKernel.onEnable();
 
         nationsTop = new NTop();
-        rest = new REST();
+        // rest = new REST();
         machineTask = new MachineTask();
 
         // MACHINES
@@ -446,9 +451,11 @@ public final class Main extends JavaPlugin {
      * @return A profile object of the given playerUUID
      */
     public Profile getProfile(UUID uuid) {
-        if (utilLists.profiles.get(uuid) == null)
-            utilLists.profiles.put(uuid, Profile.get(uuid));
-        return utilLists.profiles.get(uuid);
+/*        if (utilLists.profiles.get(uuid) == null)
+            utilLists.profiles.put(uuid, Profile.get(uuid));*/
+        if (jedis.get("profile:" + uuid.toString()) == null)
+            jedis.set("profile:" + uuid.toString(), gson.toJson(Profile.get(uuid)));
+        return gson.fromJson(jedis.get("profile:" + uuid.toString()), Profile.class);
     }
 
     public void discordEnable() {
@@ -456,9 +463,7 @@ public final class Main extends JavaPlugin {
             if (!server.getIdAsString().equals("589958750866112512")) {
                 try {
                     server.leave().get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }

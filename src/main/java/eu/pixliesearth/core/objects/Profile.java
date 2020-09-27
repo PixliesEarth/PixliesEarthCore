@@ -139,12 +139,11 @@ public class Profile {
         profile.append("blocked", blocked);
         profile.append("punishments", punishments);
         profile.append("extras", extras);
-        Main.getPlayerCollection().deleteOne(found);
-        Main.getPlayerCollection().insertOne(profile);
+        Main.getPlayerCollection().replaceOne(found, profile);
     }
 
     public void save() {
-        instance.getUtilLists().profiles.put(UUID.fromString(uniqueId), this);
+        instance.getJedis().set("profile:" + uniqueId, instance.getGson().toJson(this));
     }
 
     public String getDisplayName() {

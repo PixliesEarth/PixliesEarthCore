@@ -6,7 +6,6 @@ import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
-import org.apache.avro.generic.GenericData;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -17,8 +16,6 @@ import java.util.*;
 public class UtilLists {
 
     public Set<UUID> staffMode;
-
-    public Map<UUID, Profile> profiles;
 
     public Map<UUID, UUID> tpaRequests;
 
@@ -78,7 +75,7 @@ public class UtilLists {
 
     public UtilLists() {
         staffMode = new HashSet<>();
-        profiles = new HashMap<>();
+        // profiles = new HashMap<>();
         tpaRequests = new HashMap<>();
         discordcodes = new HashMap<>();
         warpAdder = new HashSet<>();
