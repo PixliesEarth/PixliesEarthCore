@@ -39,6 +39,7 @@ public class claimNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);
+        returner.put("here", 1);
         returner.put("fill", 1);
         returner.put("line", 1);
         returner.put("all", 1);
@@ -63,7 +64,7 @@ public class claimNation implements SubCommand {
                     Lang.NO_PERMISSIONS.send(sender);
                     return false;
                 }
-                if (args[0].equalsIgnoreCase("one")) {
+                if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
                     NationChunk.claim(player, player.getWorld().getName(), player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, profile.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
@@ -88,7 +89,7 @@ public class claimNation implements SubCommand {
                 }
                 break;
             case 2:
-                if (args[0].equalsIgnoreCase("one")) {
+                if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
                     Nation nation = Nation.getByName(args[1]);
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
                         Lang.NO_PERMISSIONS.send(player);

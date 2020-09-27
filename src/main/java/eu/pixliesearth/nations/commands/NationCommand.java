@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
@@ -87,7 +88,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                             if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
                                 sub.execute(sender, args);
                             } else {
-                                sender.sendMessage("§aEARTH §8| §cInsufficient permissions.");
+                                Lang.NO_PERMISSIONS.send(sender);
                             }
                         } else {
                             sub.execute(sender, args);

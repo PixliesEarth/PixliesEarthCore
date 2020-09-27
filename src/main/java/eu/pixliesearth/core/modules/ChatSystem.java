@@ -168,11 +168,11 @@ public class ChatSystem implements Listener, Module {
                 }
 
                 if (player.hasPermission("earth.chat.hex")) {
-                    event.setMessage(Methods.translateToHex(event.getMessage().replace("%", "%%")).replace("&", "§"));
+                    event.setMessage(Methods.translateToHex("§" + profile.getChatColor() + event.getMessage().replace("%", "%%")).replace("&", "§"));
                 } else if (player.hasPermission("earth.chat.colours")) {
-                    event.setMessage(event.getMessage().replace("%", "%%").replace("&", "§"));
+                    event.setMessage("§" + profile.getChatColor() + event.getMessage().replace("%", "%%").replace("&", "§"));
                 } else {
-                    event.setMessage(event.getMessage().replace("&", "").replace("%", "%%"));
+                    event.setMessage("§" + profile.getChatColor() + event.getMessage().replace("&", "").replace("%", "%%"));
                 }
 
                 String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor()).replace("%message%", event.getMessage()));
