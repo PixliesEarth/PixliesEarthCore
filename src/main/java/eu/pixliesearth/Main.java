@@ -139,7 +139,9 @@ import eu.pixliesearth.warsystem.GulagStartListener;
 import lombok.Getter;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
-import redis.clients.jedis.Jedis;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 
 public final class Main extends JavaPlugin {
 
@@ -160,7 +162,9 @@ public final class Main extends JavaPlugin {
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
-    private @Getter Jedis jedis;
+    // private @Getter Jedis jedis;
+    private @Getter Config redissonConfig;
+    private @Getter RedissonClient redissonClient;
     private @Getter Gson gson;
 
     @Override
@@ -178,7 +182,10 @@ public final class Main extends JavaPlugin {
             return;
         }
 
-        jedis = new Jedis("localhost");
+        // jedis = new Jedis("localhost");
+        redissonConfig = new Config();
+        redissonConfig.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        redissonClient = Redisson.create(redissonConfig);
 
         gson = new Gson();
 
@@ -453,9 +460,9 @@ public final class Main extends JavaPlugin {
     public Profile getProfile(UUID uuid) {
 /*        if (utilLists.profiles.get(uuid) == null)
             utilLists.profiles.put(uuid, Profile.get(uuid));*/
-        if (jedis.get("profile:" + uuid.toString()) == null)
-            jedis.set("profile:" + uuid.toString(), gson.toJson(Profile.get(uuid)));
-        return gson.fromJson(jedis.get("profile:" + uuid.toString()), Profile.class);
+        if (!redissonClient.getBucket("profile:" + uuid.toString()).isExists())
+            redissonClient.getBucket("profile:" + uuid.toString()).set(gson.toJson(Profile.get(uuid)));
+        return gson.fromJson((String) redissonClient.getBucket("profile:" + uuid.toString()).get(), Profile.class);
     }
 
     public void discordEnable() {

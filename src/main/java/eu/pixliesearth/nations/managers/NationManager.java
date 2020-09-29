@@ -10,11 +10,11 @@ import java.util.*;
 
 public class NationManager {
 
-    public static Map<String, Nation> nations;
+    public static NationStorage nations;
     public static Map<String, String> names;
 
     public static void init() {
-        nations = new HashMap<>();
+        nations = new NationStorage();
         names = new HashMap<>();
         Gson gson = new Gson();
         for (Document d : Main.getNationCollection().find()) {
@@ -30,28 +30,29 @@ public class NationManager {
     public static class NationStorage {
 
         private static final Gson gson = new Gson();
+        private static final Main instance = Main.getInstance();
 
         public boolean containsKey(String id) {
-            return Main.getInstance().getJedis().get("nation:" + id) != null;
+            return instance.getRedissonClient().getBucket("nation:" + id).isExists();
         }
 
         public Collection<Nation> values() {
             Collection<Nation> set = new HashSet<>();
-            for (String s : Main.getInstance().getJedis().keys("nation:*"))
-                set.add(gson.fromJson(s, Nation.class));
+            for (String s : instance.getRedissonClient().getKeys().getKeysByPattern("nation:*"))
+                set.add(instance.getGson().fromJson((String) instance.getRedissonClient().getBucket(s).get(), Nation.class));
             return set;
         }
 
         public Nation get(String id) {
-            return containsKey(id) ? gson.fromJson(Main.getInstance().getJedis().get("nation:" + id), Nation.class) : null;
+            return containsKey(id) ? instance.getGson().fromJson((String) instance.getRedissonClient().getBucket("nation:" + id).get(), Nation.class) : null;
         }
 
         public void put(String id, Nation value) {
-            Main.getInstance().getJedis().set("nation:" + id, gson.toJson(value));
+            instance.getRedissonClient().getBucket("nation:" + id).set(instance.getGson().toJson(value));
         }
 
         public void remove(String id) {
-            Main.getInstance().getJedis().del("nation:" + id);
+            instance.getRedissonClient().getBucket("nation:" + id).delete();
         }
 
     }
