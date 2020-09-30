@@ -226,13 +226,11 @@ public final class Main extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
             for (Player player : getServer().getOnlinePlayers()) {
                 Profile profile = getProfile(player.getUniqueId());
-/*                if (!utilLists.afk.contains(UUID.fromString(profile.getUniqueId())))
-                    profile.setPlayTime(profile.getPlayTime() + 1);*/
                 profile.syncDiscordAndIngameRoles();
                 profile.backup();
             }
             Bukkit.getConsoleSender().sendMessage("§aDone.");
-        }, 20 * 60, (20 * 60) * 5);
+        }, (20 * 60) * 10, (20 * 60) * 10);
 
         // NATION SCHEDULER
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
@@ -254,9 +252,8 @@ public final class Main extends JavaPlugin {
 
         // MACHINES
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Machine machine : utilLists.machines.values()) {
+            for (Machine machine : utilLists.machines.values())
                 machine.save();
-            }
         }, (20 * 60) * 5, (20 * 60) * 5);
 
         NationManager.init();

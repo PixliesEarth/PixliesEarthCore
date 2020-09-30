@@ -16,14 +16,14 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class MoveListener implements Listener {
 
-    
+    private static final Main instance = Main.getInstance();
     
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
-            Main instance = Main.getInstance();
             Player player = event.getPlayer();
             Profile profile = instance.getProfile(player.getUniqueId());
+
             if (profile.getTimers().containsKey("Teleport")) {
                 profile.getTimers().remove("Teleport");
                 profile.save();
@@ -37,7 +37,7 @@ public class MoveListener implements Listener {
             // CHUNK TO CHUNK MOVEMENTS
             Chunk fc = event.getFrom().getChunk();
             Chunk tc = event.getTo().getChunk();
-            if (event.getFrom().getChunk() != tc) {
+            if (fc != tc) {
                 // CLAIM/UNCLAIM AUTOS
                 if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
                     if (Nation.getById(instance.getUtilLists().claimAuto.get(player.getUniqueId())) == null)

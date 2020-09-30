@@ -22,17 +22,19 @@ import java.util.UUID;
 
 public class JoinListener implements Listener {
 
+    private static final Main instance = Main.getInstance();
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         final long started = System.currentTimeMillis();
 
-        Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.getKnownUsernames().contains(player.getName())) {
             profile.getKnownUsernames().add(player.getName());
         }
-        event.setJoinMessage(PlaceholderAPI.setPlaceholders(player, "§8[§a§l+§8] %vault_prefix%" + player.getName()));
+        event.setJoinMessage("§8[§a§l+§8] §7" + player.getName());
 
         if (!player.hasPlayedBefore()) {
             for (Player op : Bukkit.getOnlinePlayers())
@@ -79,7 +81,7 @@ public class JoinListener implements Listener {
         }
 
         //VANISH
-        if (!(Main.getInstance().getUtilLists().vanishList.isEmpty())) {
+        if (!(instance.getUtilLists().vanishList.isEmpty())) {
             //VANISHES FOR PLAYERS WHO NEWLY JOINED
             for (UUID pUUID : Main.getInstance().getUtilLists().vanishList) {
                 Player p = Bukkit.getOfflinePlayer(pUUID).getPlayer();
