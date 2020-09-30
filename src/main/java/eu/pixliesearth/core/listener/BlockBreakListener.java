@@ -1,8 +1,7 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
-import eu.pixliesearth.localization.Lang;
+import java.util.ArrayList;
+
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -12,10 +11,14 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
+import eu.pixliesearth.core.customitems.ci.tools.ItemScythe;
+import eu.pixliesearth.localization.Lang;
 
 public class BlockBreakListener implements Listener {
 
@@ -120,6 +123,15 @@ public class BlockBreakListener implements Listener {
 
                         }
                     }
+                } else if(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WOODEN_HOE) {
+                	if (event.getPlayer().getInventory().getItemInMainHand().hasItemMeta()) {
+                		if (event.getPlayer().getInventory().getItemInMainHand().getLore() != null && (event.getPlayer().getInventory().getItemInMainHand().getLore().containsAll(new ItemScythe().getLore()))) {
+                			Block b = event.getBlock();
+                			if (b!=null && b.getType().equals(Material.GRASS)) {
+                				event.getPlayer().getInventory().addItem(new ItemStack(Material.WHEAT_SEEDS));
+                			}
+                		}
+                	}
                 }
             }
         }
