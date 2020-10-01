@@ -27,11 +27,6 @@ public class CustomBlock {
 		this.id = id;
 	}
 	
-	public CustomBlock() {
-		this.location = null;
-		this.id = null;
-	}
-	
 	public ItemStack getItem() {
 		return null;
 	}
