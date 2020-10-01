@@ -7,6 +7,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.gson.Gson;
+import lombok.Data;
+import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -156,7 +158,7 @@ public final class Main extends JavaPlugin {
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
     // private @Getter REST rest;
-    private @Getter boolean gulagActive = false;
+    private @Getter @Setter boolean gulagActive = false;
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;

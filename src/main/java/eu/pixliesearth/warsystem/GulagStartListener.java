@@ -24,7 +24,7 @@ public class GulagStartListener implements Listener {
 
     @EventHandler
     public void onFightStart(GulagStartEvent e){
-        Main.getInstance().gulagActive = true;
+        Main.getInstance().setGulagActive(true);
         Player p = e.getPlayer();
         Player enemy = e.getEnemy();
 
@@ -169,7 +169,7 @@ public class GulagStartListener implements Listener {
                 }
             }
         }, 20*5);
-        Main.getInstance().gulagActive = false;
+        Main.getInstance().setGulagActive(false);
 
     }
     private void setKit(Player p, Player player){
