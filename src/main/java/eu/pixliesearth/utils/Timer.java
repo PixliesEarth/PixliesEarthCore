@@ -11,9 +11,9 @@ public class Timer {
     private final long expiry;
     private boolean ended;
 
-    public Timer(Map<String, Object> map) {
-        this.expiry = (long) map.get("expiry");
-        this.ended = (boolean) map.get("ended");
+    public Timer(Map<String, String> map) {
+        this.expiry = Long.parseLong(map.get("expiry"));
+        this.ended = Boolean.parseBoolean(map.get("ended"));
     }
 
     public Timer(long expiry, boolean ended) {
@@ -21,10 +21,10 @@ public class Timer {
         this.ended = ended;
     }
 
-    public Map<String, Object> toMap() {
-        Map<String, Object> returner = new HashMap<>();
-        returner.put("expiry", expiry);
-        returner.put("ended", ended);
+    public Map<String, String> toMap() {
+        Map<String, String> returner = new HashMap<>();
+        returner.put("expiry", Long.toString(expiry));
+        returner.put("ended", Boolean.toString(ended));
         return returner;
     }
 

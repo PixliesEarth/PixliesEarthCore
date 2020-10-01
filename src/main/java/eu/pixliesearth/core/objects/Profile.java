@@ -53,7 +53,7 @@ public class Profile {
     private int boosts;
     private String lastAt;
     private double pixliecoins;
-    private Map<String, Map<String, Object>> timers;
+    private Map<String, Map<String, String>> timers;
     private String favoriteColour;
     private String boardType;
     private String lang;

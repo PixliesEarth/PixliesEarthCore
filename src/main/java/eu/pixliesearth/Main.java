@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.gson.Gson;
+import eu.pixliesearth.core.customblocks.CustomBlockListener;
 import eu.pixliesearth.core.customblocks.CustomBlocks;
 import lombok.Data;
 import lombok.Setter;
@@ -451,6 +452,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new MachineListener(), this);
         manager.registerEvents(new FlagListener(), this);
+        manager.registerEvents(new CustomBlockListener(), this);
     }
 
     /**

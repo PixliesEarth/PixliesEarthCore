@@ -124,7 +124,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0)
-                    for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet())
+                    for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
                         returnable.add(c + "§l" + entry.getKey() + "§7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
@@ -144,7 +144,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "☗ §8| §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {
-                    for (Map.Entry<String, Map<String, Object>> entry : profile.getTimers().entrySet()) {
+                    for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet()) {
                         returnable.add("§7" + entry.getKey());
                         returnable.add("§3" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                     }
