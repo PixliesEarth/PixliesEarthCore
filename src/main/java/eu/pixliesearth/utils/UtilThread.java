@@ -25,23 +25,19 @@ public class UtilThread extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //Thread Sleep
-/*            try {
-                sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
         }
     }
 
     private void tick() {
         // GUN DELAYS
-        Iterator it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
+        Main.getInstance().getUtilLists().waitingGuns.entrySet().removeIf(item -> item.getValue().getRemaining() <= 0);
+
+ /*       Iterator<Entry<UUID, Timer>> it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<UUID, Timer> item = (Entry<UUID, Timer>) it.next();
+            Map.Entry<UUID, Timer> item = it.next();
             if (item.getValue().getRemaining() <= 0)
                 it.remove();
-        }
+        }*/
 
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
@@ -52,6 +48,7 @@ public class UtilThread extends Thread {
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
         }
+
         for (Map.Entry<Boost.BoostType, Boost> entry : Main.getInstance().getUtilLists().boosts.entrySet()) {
             if (entry.getValue().getTimer().getRemaining() < 0) {
                 Main.getInstance().getUtilLists().boosts.remove(entry.getKey());

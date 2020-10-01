@@ -30,7 +30,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
 import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
@@ -84,7 +83,6 @@ import eu.pixliesearth.core.listener.AchievementListener;
 import eu.pixliesearth.core.listener.AnvilListener;
 import eu.pixliesearth.core.listener.BlockBreakListener;
 import eu.pixliesearth.core.listener.DeathListener;
-import eu.pixliesearth.core.listener.EntitySpawnListener;
 import eu.pixliesearth.core.listener.ItemInteractListener;
 import eu.pixliesearth.core.listener.JoinListener;
 import eu.pixliesearth.core.listener.LeaveListener;
@@ -158,7 +156,7 @@ public final class Main extends JavaPlugin {
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
     // private @Getter REST rest;
-    public boolean gulagActive = false;
+    private @Getter boolean gulagActive = false;
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
@@ -344,7 +342,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         discordDisable();
-        machineTask.stop();
+        machineTask.stopThread();
         dynmapKernel.onDisable();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
@@ -437,7 +435,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new PlayerInteractListener(), this);
         manager.registerEvents(new AnvilListener(), this);
         manager.registerEvents(new BlockBreakListener(), this);
-        manager.registerEvents(new EntitySpawnListener(), this);
         manager.registerEvents(new MapClickListener(), this);
         manager.registerEvents(new settlementsCommand(), this);
         manager.registerEvents(new PlayerLoginListener(), this);
@@ -492,10 +489,6 @@ public final class Main extends JavaPlugin {
         );
         MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
         MiniMick.getApi().disconnect();
-    }
-
-    public boolean isGulagActive(){
-        return gulagActive;
     }
 
 }

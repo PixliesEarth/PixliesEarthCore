@@ -7,7 +7,7 @@ depend:
   - HolographicDisplays
 softdepend:
   - PlaceholderAPI
-authors: [MickMMars, Machmeinparaillegal]
+authors: [MickMMars, Machmeinparaillegal, BradBot_1]
 description: PixliesEarth core
 commands:
   modules:

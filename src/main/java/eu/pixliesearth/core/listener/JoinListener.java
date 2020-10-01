@@ -31,9 +31,10 @@ public class JoinListener implements Listener {
         final long started = System.currentTimeMillis();
 
         Profile profile = instance.getProfile(player.getUniqueId());
-        if (!profile.getKnownUsernames().contains(player.getName())) {
+
+        if (!profile.getKnownUsernames().contains(player.getName()))
             profile.getKnownUsernames().add(player.getName());
-        }
+
         event.setJoinMessage("§8[§a§l+§8] §7" + player.getName());
 
         if (!player.hasPlayedBefore()) {
@@ -92,7 +93,7 @@ public class JoinListener implements Listener {
             }
         }
 
-        NationChunk tn = NationChunk.get(player.getLocation().getChunk());
+/*        NationChunk tn = NationChunk.get(player.getLocation().getChunk());
         if (tn == null) {  // WILDERNESS
             player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
         } else {
@@ -107,7 +108,7 @@ public class JoinListener implements Listener {
             } else { // ANY OTHER NATION
                 player.sendTitle("§l" + tn.getCurrentNation().getName(), "§7" + tn.getCurrentNation().getDescription(), 20, 20 * 2, 20);
             }
-        }
+        }*/
 
 /*
         //Discord Joins

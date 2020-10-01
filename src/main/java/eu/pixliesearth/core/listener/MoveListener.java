@@ -53,6 +53,7 @@ public class MoveListener implements Listener {
                         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                     NationChunk nc = NationChunk.get(tc);
                     boolean allowed = false;
+                    if (nc == null) allowed = true;
                     if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
                     if (profile.getNationId().equals(nc.getNationId())) allowed = true;
                     if (!allowed) {
@@ -62,7 +63,7 @@ public class MoveListener implements Listener {
                         NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
                     }
                 }
-                // CHUNKTITLES
+                // CHUNK TITLES
                 Nation fn = NationChunk.getNationData(fc);
                 Nation tn = NationChunk.getNationData(tc);
                 if (fn != tn) {
@@ -83,7 +84,6 @@ public class MoveListener implements Listener {
                     }
                 }
             }
-
         }
     }
 

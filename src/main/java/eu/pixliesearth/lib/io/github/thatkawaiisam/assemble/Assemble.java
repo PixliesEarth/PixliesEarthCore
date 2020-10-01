@@ -45,7 +45,11 @@ public class Assemble {
 
 		//Ensure that the thread has stopped running
 		if (this.thread != null) {
-			this.thread.stop();
+			try {
+				this.thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			this.thread = null;
 		}
 

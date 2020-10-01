@@ -12,24 +12,9 @@ import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 public class Restrictions implements Listener {
 
     @EventHandler
-    public void onSpawn(EntitySpawnEvent event) {
-        if (event instanceof Phantom)
-            event.setCancelled(true);
-    }
-
-    @EventHandler
     public void onExplosion(EntityExplodeEvent event) {
         if (event.getEntity() instanceof Creeper || event.getEntity() instanceof TNTPrimed)
             event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void manipulate(PlayerArmorStandManipulateEvent e)
-    {
-        if(!e.getRightClicked().isVisible())
-        {
-            e.setCancelled(true);
-        }
     }
 
 }

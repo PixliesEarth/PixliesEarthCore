@@ -50,9 +50,7 @@ public class DynmapEngine {
     private Main factionAPI;
     private boolean playersets;
     private int blocksize;
-    private FileConfiguration cfg;
     private long updperiod;
-    private boolean use3d;
     private String infoWindow;
     private AreaStyle defstyle;
     private Map<String, AreaStyle> cusstyle;
@@ -476,7 +474,7 @@ public class DynmapEngine {
 
         set.setLayerPriority(cfg.getInt("layer.layerprio", 10));
         set.setHideByDefault(cfg.getBoolean("layer.hidebydefault", false));
-        use3d = cfg.getBoolean("use3dregions", false);
+        // use3d = cfg.getBoolean("use3dregions", false);
         infoWindow = cfg.getString("infoWindow", DEF_INFO_WINDOW);
         displayFactionName = cfg.getBoolean("show-Nation-name", true);
         displayWarps = cfg.getBoolean("display-warp", true);
