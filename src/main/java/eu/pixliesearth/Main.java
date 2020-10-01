@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.gson.Gson;
+import eu.pixliesearth.core.customblocks.CustomBlocks;
 import lombok.Data;
 import lombok.Setter;
 import org.bson.Document;
@@ -307,6 +308,8 @@ public final class Main extends JavaPlugin {
         // MACHINES
         machineTask.init();
 
+        CustomBlocks.load();
+
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null)
             luckPerms = provider.getProvider();
@@ -346,6 +349,7 @@ public final class Main extends JavaPlugin {
         discordDisable();
         machineTask.stopThread();
         dynmapKernel.onDisable();
+        CustomBlocks.save();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())
