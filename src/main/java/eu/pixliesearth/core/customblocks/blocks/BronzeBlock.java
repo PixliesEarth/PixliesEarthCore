@@ -21,6 +21,6 @@ public class BronzeBlock extends CustomBlock {
 	
 	@Override
 	public String getTitle() {
-		return "BronzeBlock";
+		return new BlockBronze().getTitle();
 	}
 }
