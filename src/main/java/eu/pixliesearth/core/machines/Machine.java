@@ -246,23 +246,6 @@ public class Machine {
                 return new OutputNode(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, inventory);
 
         }
-
-/*        if (clazz.isAssignableFrom(FuelableAutoCrafterMachine.class)) {
-            holo.appendTextLine(o.get("holo-text").getAsString());
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class, int.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type, o.get("fuel").getAsInt());
-        } else if (clazz.isAssignableFrom(AutoCrafterMachine.class)) {
-            holo.appendTextLine(o.get("holo-text").getAsString());
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, MachineType.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type);
-        } else if (clazz.isAssignableFrom(CargoMachine.class)) {
-            Inventory inventory = Bukkit.createInventory(null, 9 * 6, type.getItem().getItemMeta().getDisplayName());
-            if (!o.get("storage").getAsString().equalsIgnoreCase("NULL")) {
-            	JsonObject js = o.get("storage").getAsJsonObject();
-            	for (int i = 0; i < 9 * 6; i++) {
-            		inventory.setItem(i, (ItemStack) deserialize(js.get(Integer.toString(i)).getAsString()));
-            	}
-            }
-            return clazz.getConstructor(String.class, Location.class, Hologram.class, Timer.class, MachineCraftable.class, Inventory.class, MachineType.class).newInstance(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, inventory, type);
-        }*/
         return null;
     }
 
@@ -306,7 +289,7 @@ public class Machine {
         MUD_BRICK_KILN(MachineType.KILN, CustomItems.MUD_BRICK.getItem(), Collections.singletonList(new ItemStack(CLAY, 9)), Collections.singletonList(CustomItems.MUD_BRICK.getItem()), 4, Era.ANCIENT),
         BRICK_KILN(MachineType.KILN, new ItemStack(BRICK, 4), Collections.singletonList(new ItemBuilder(CustomItems.MUD_BRICK.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(BRICK, 4)), 4, Era.ANCIENT),
         POT_KILN(MachineType.KILN, new ItemStack(FLOWER_POT), Collections.singletonList(new ItemBuilder(CustomItems.UNFIRED_POT.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(FLOWER_POT)), 3, Era.ANCIENT),
-        
+
         // BRONZE FORGE
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").build(), Arrays.asList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
         FORGE_BRONZE_HELMET(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_HELMET).setGlow().setDisplayName("Forge bronze helmet").build(), Collections.singletonList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(5).build()), Collections.singletonList(new ArmourBronzeHelmet().getItem()), 60, Era.ANCIENT),

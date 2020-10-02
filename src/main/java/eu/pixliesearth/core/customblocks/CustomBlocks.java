@@ -87,7 +87,7 @@ public class CustomBlocks {
 	}
 	
 	public static CustomBlock getBlockFromLocation(Location loc) {
-		for(CustomBlock customblock : set) 
+		for(CustomBlock customblock : set)
 			if (customblock.getLocation().equals(loc)) 
 				return customblock;
 		return null;
