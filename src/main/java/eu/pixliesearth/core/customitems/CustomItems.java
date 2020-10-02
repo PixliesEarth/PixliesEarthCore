@@ -4,6 +4,10 @@ import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeBoots;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeChestPlate;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeHelmet;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeLeggings;
+import eu.pixliesearth.core.customitems.ci.armour.rock.ArmourRockBoots;
+import eu.pixliesearth.core.customitems.ci.armour.rock.ArmourRockChestplate;
+import eu.pixliesearth.core.customitems.ci.armour.rock.ArmourRockHelmet;
+import eu.pixliesearth.core.customitems.ci.armour.rock.ArmourRockLeggings;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenBoots;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenChestPlate;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenHelmet;
@@ -41,7 +45,11 @@ public enum CustomItems {
     UNFIRED_POT(new UnfiredPot()),
     CLAY_DAGGER(new ItemClayDagger()),
     BRONZE_BLOCK(new BlockBronze()),
-    COPPER_INGOT(new Copper()),
+    COPPER_INGOT(new DustCopper()),
+    ROCK_HELMET(new ArmourRockHelmet()),
+    ROCK_CHESTPLATE(new ArmourRockChestplate()),
+    ROCK_LEGGINGS(new ArmourRockLeggings()),
+    ROCK_BOOTS(new ArmourRockBoots()),
     ;
 
     public CustomItem clazz;
