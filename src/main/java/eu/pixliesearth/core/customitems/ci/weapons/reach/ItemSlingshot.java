@@ -6,8 +6,11 @@ import java.util.Random;
 
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
+import net.minecraft.server.v1_16_R2.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.craftbukkit.v1_16_R2.inventory.CraftItemStack;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -19,6 +22,7 @@ import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
 import eu.pixliesearth.events.SlingShotEvent;
 import eu.pixliesearth.localization.Lang;
+import org.bukkit.inventory.meta.tags.ItemTagType;
 
 public class ItemSlingshot implements CustomItem {
 
@@ -35,20 +39,20 @@ public class ItemSlingshot implements CustomItem {
         meta.setCustomModelData(1);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
-        //NamespacedKey key = new NamespacedKey(Main.getInstance(), "antistack");
+        NamespacedKey key = new NamespacedKey(Main.getInstance(), "antistack");
         Random r = new Random();
         double randomValue = 1 + (10000 - 1) * r.nextDouble();
         
-        //meta.getCustomTagContainer().setCustomTag(key, ItemTagType.DOUBLE, randomValue);
+        meta.getCustomTagContainer().setCustomTag(key, ItemTagType.DOUBLE, randomValue);
         slingshot.setItemMeta(meta);
         
         NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(slingshot);
         tags.addTag("antistack", randomValue, NBTTagType.DOUBLE);
         slingshot = NBTUtil.addTagsToItem(slingshot, tags);
 
-        // net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(slingshot);
-        //NBTTagCompound comp = nmsItem.getTag();
-        //comp.set()
+        // net.minecraft.server.v1_16_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(slingshot);
+        // NBTTagCompound comp = nmsItem.getTag();
+        // comp.set()
         return slingshot;
     }
 
