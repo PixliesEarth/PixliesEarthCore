@@ -9,10 +9,7 @@ import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenChestPlate;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenHelmet;
 import eu.pixliesearth.core.customitems.ci.armour.wooden.ArmourWoodenLeggings;
 import eu.pixliesearth.core.customitems.ci.blocks.BlockBronze;
-import eu.pixliesearth.core.customitems.ci.items.BronzeIngot;
-import eu.pixliesearth.core.customitems.ci.items.MudBrick;
-import eu.pixliesearth.core.customitems.ci.items.Tablet;
-import eu.pixliesearth.core.customitems.ci.items.UnfiredPot;
+import eu.pixliesearth.core.customitems.ci.items.*;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemClayDagger;
 import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +41,7 @@ public enum CustomItems {
     UNFIRED_POT(new UnfiredPot()),
     CLAY_DAGGER(new ItemClayDagger()),
     BRONZE_BLOCK(new BlockBronze()),
+    COPPER_INGOT(new CopperIngot()),
     ;
 
     public CustomItem clazz;
