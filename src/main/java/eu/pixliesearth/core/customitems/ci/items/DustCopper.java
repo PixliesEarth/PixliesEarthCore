@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.bukkit.Material.GLOWSTONE_DUST;
 
-public class Copper implements CustomItem {
+public class DustCopper implements CustomItem {
 
     @Override
     public ItemStack getItem() {
