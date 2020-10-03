@@ -159,12 +159,10 @@ public final class Main extends JavaPlugin {
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
-    // private @Getter REST rest;
     private @Getter @Setter boolean gulagActive = false;
     private @Getter MachineTask machineTask;
     private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
-    // private @Getter Jedis jedis;
     private @Getter Config redissonConfig;
     private @Getter RedissonClient redissonClient;
     private @Getter Gson gson;
@@ -184,7 +182,6 @@ public final class Main extends JavaPlugin {
             return;
         }
 
-        // jedis = new Jedis("localhost");
         redissonConfig = new Config();
         redissonConfig.useSingleServer().setAddress("redis://127.0.0.1:6379");
         redissonClient = Redisson.create(redissonConfig);
@@ -275,16 +272,6 @@ public final class Main extends JavaPlugin {
 
         emptyScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
-/*        // check if brigadier is supported
-        if (CommodoreProvider.isSupported()) {
-
-            // get a commodore instance
-            Commodore commodore = CommodoreProvider.getCommodore(this);
-
-            // register your completions.
-            registerCompletions(commodore, command);
-        }*/
-
         //LANGUAGE STUFF
         saveResource("languages/LANG_DE.yml", true);
         saveResource("languages/LANG_ENG.yml", true);
@@ -342,7 +329,6 @@ public final class Main extends JavaPlugin {
             flag.setItemMeta(meta);
             warzone.setFlag(flag);
         }
-
     }
 
     @Override

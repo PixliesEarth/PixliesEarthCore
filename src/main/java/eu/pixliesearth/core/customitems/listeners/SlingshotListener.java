@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class SlingshotListener implements Listener {
 
     @EventHandler
-    public void onShoot(SlingShotEvent e){
+    public void onShoot(SlingShotEvent e) {
         Player p = e.getPlayer();
         if(e.isCancelled()) return;
         AtomicReference<Snowball> sb = new AtomicReference<>();
@@ -36,18 +36,18 @@ public class SlingshotListener implements Listener {
             Main.getInstance().getUtilLists().ammos.put(snowball, 3.0);
             sb.set(snowball);
         });
-        if(e.getPlayer().getInventory().contains(Material.COBBLESTONE)){
+        if(e.getPlayer().getInventory().contains(Material.COBBLESTONE))
             removeOne(Material.COBBLESTONE, p);
-        }else if(e.getPlayer().getInventory().contains(Material.GRAVEL)){
+        else if(e.getPlayer().getInventory().contains(Material.GRAVEL))
             removeOne(Material.GRAVEL, p);
-        }else if(e.getPlayer().getInventory().contains(Material.STONE)){
+        else if(e.getPlayer().getInventory().contains(Material.STONE))
            removeOne(Material.STONE, p);
 
-        }
         UUID uuid = p.getUniqueId();
-        if(!(Main.getInstance().getUtilLists().reloading.contains(uuid))) {
+
+        if(!(Main.getInstance().getUtilLists().reloading.contains(uuid)))
             Main.getInstance().getUtilLists().reloading.add(uuid);
-        }
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Main.getInstance().getUtilLists().reloading.remove(uuid),30);
     }
 

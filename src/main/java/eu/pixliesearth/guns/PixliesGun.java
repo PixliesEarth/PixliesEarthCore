@@ -112,6 +112,7 @@ public class PixliesGun {
         map.put("§3§lUzi", Uzi.class);
         map.put("§c§lMP5", MP5.class);
         map.put("§c§lKarabiner98k", K98K.class);
+        map.put("§6Slingshot", Slingshot.class);
         return map;
     }
 
