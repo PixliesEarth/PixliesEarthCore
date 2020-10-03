@@ -22,11 +22,9 @@ import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
 import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
 import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemStoneHatchet;
-import eu.pixliesearth.core.customitems.ci.weapons.reach.ItemSlingshot;
 
 public enum CustomItems {
 
-    SLINGSHOT(new ItemSlingshot()),
     EXPLOSIVE_PICKAXE(new ItemExplosivePick()),
     EXPLOSIVE_SHOVEL(new ItemExplosiveShovel()),
     STONE_HATCHET(new ItemStoneHatchet()),

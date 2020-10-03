@@ -3,7 +3,9 @@ package eu.pixliesearth.warsystem;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.events.GulagStartEvent;
+import eu.pixliesearth.guns.Guns;
 import eu.pixliesearth.localization.Lang;
+import lombok.SneakyThrows;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 public class GulagStartListener implements Listener {
     File file = new File("plugins/PixliesEarthCore", "gulag.yml");
@@ -172,6 +175,7 @@ public class GulagStartListener implements Listener {
         Main.getInstance().setGulagActive(false);
 
     }
+    @SneakyThrows
     private void setKit(Player p, Player player){
         int random = (int) (2 * Math.random());
         switch (random){
@@ -206,8 +210,8 @@ public class GulagStartListener implements Listener {
                 p.getInventory().setLeggings(pant1);
                 p.getInventory().setBoots(boot1);
                 p.getInventory().addItem(rock);
-                p.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
-                player.getInventory().addItem(CustomItems.SLINGSHOT.clazz.getItem());
+                p.getInventory().addItem(Guns.SLINGSHOT.getClazz().getConstructor(int.class, UUID.class).newInstance(1, UUID.randomUUID()).getItem());
+                player.getInventory().addItem(Guns.SLINGSHOT.getClazz().getConstructor(int.class, UUID.class).newInstance(1, UUID.randomUUID()).getItem());
                 player.getInventory().setHelmet(helmet1);
                 player.getInventory().setChestplate(chestplate1);
                 player.getInventory().setLeggings(pant1);
