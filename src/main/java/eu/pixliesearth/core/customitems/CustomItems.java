@@ -43,11 +43,14 @@ public enum CustomItems {
     UNFIRED_POT(new UnfiredPot()),
     CLAY_DAGGER(new ItemClayDagger()),
     BRONZE_BLOCK(new BlockBronze()),
-    COPPER_INGOT(new DustCopper()),
+    COPPER_DUST(new CopperDust()),
     ROCK_HELMET(new ArmourRockHelmet()),
     ROCK_CHESTPLATE(new ArmourRockChestplate()),
     ROCK_LEGGINGS(new ArmourRockLeggings()),
     ROCK_BOOTS(new ArmourRockBoots()),
+    ARSENIC_INGOT(new ArsenicDust()),
+    ARSENIC_BRONZE_INGOT(new ArsenicBronzeIngot()),
+    COPPER_INGOT(new CopperIngot()),
     ;
 
     public CustomItem clazz;

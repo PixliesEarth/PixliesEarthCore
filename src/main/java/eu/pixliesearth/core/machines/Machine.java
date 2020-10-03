@@ -289,6 +289,7 @@ public class Machine {
         MUD_BRICK_KILN(MachineType.KILN, CustomItems.MUD_BRICK.getItem(), Collections.singletonList(new ItemStack(CLAY, 9)), Collections.singletonList(CustomItems.MUD_BRICK.getItem()), 4, Era.ANCIENT),
         BRICK_KILN(MachineType.KILN, new ItemStack(BRICK, 4), Collections.singletonList(new ItemBuilder(CustomItems.MUD_BRICK.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(BRICK, 4)), 4, Era.ANCIENT),
         POT_KILN(MachineType.KILN, new ItemStack(FLOWER_POT), Collections.singletonList(new ItemBuilder(CustomItems.UNFIRED_POT.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(FLOWER_POT)), 3, Era.ANCIENT),
+        ARSENIC_BRONZE(MachineType.KILN, CustomItems.ARSENIC_BRONZE_INGOT.getItem(), Arrays.asList(CustomItems.ARSENIC_INGOT.getItem(), CustomItems.COPPER_INGOT.getItem()), Collections.singletonList(CustomItems.ARSENIC_BRONZE_INGOT.getItem()), 4, Era.ANCIENT),
 
         // BRONZE FORGE
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").build(), Arrays.asList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),

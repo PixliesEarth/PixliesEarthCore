@@ -7,13 +7,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-import static org.bukkit.Material.GLOWSTONE_DUST;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.SUGAR;
 
-public class DustCopper implements CustomItem {
+public class ArsenicDust implements CustomItem {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(GLOWSTONE_DUST).setDisplayName("§c§lCopper").setCustomModelData(11).build();
+        return new ItemBuilder(SUGAR).setDisplayName("§c§lArsenic").setCustomModelData(10).build();
     }
 
     @Override
