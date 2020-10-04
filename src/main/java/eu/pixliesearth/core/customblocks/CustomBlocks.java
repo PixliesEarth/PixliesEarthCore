@@ -109,7 +109,7 @@ public class CustomBlocks {
 			Location loc = locationFromSaveableString(jf.get("location"));
 			if (isRegistered(jf.get("type"))) {
 				try {
-					customblock = getFromBlockType(jf.get("type")).getConstructor(UUID.class, Location.class).newInstance(jf.get("id"), loc);
+					customblock = getFromBlockType(jf.get("type")).getConstructor(UUID.class, Location.class).newInstance(UUID.fromString(jf.get("id")), loc);
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 					e.printStackTrace();
 					customblock = null;

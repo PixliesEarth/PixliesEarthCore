@@ -2,7 +2,9 @@ package eu.pixliesearth.core.customblocks;
 
 import java.util.UUID;
 
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -21,6 +23,7 @@ public class CustomBlockListener implements Listener {
         if (CustomBlocks.getFromItemStack(item)!=null) {
         	CustomBlock cb = CustomBlocks.getFromItemStack(item).getConstructor(UUID.class, Location.class).newInstance(UUID.randomUUID(), event.getBlockPlaced().getLocation());
         	CustomBlocks.placedCustomBlock(cb);
+
         } else 
         	return;
     }
