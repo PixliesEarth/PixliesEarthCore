@@ -1,15 +1,14 @@
 package eu.pixliesearth.core.commands.player;
 
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Energy;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Energy;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
 
 public class TpacceptCommand implements CommandExecutor {
 

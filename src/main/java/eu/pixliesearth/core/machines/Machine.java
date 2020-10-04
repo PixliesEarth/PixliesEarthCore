@@ -1,42 +1,10 @@
 package eu.pixliesearth.core.machines;
 
-import static org.bukkit.Material.BRICK;
-import static org.bukkit.Material.CLAY;
-import static org.bukkit.Material.CLAY_BALL;
-import static org.bukkit.Material.CRAFTING_TABLE;
-import static org.bukkit.Material.FLOWER_POT;
-import static org.bukkit.Material.GOLD_INGOT;
-import static org.bukkit.Material.IRON_INGOT;
-import static org.bukkit.Material.MAGMA_BLOCK;
-import static org.bukkit.Material.STICK;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import eu.pixliesearth.core.customitems.CustomItem;
-import eu.pixliesearth.core.customitems.CustomItems;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.gson.JsonObject;
-
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeBoots;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeChestPlate;
 import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeHelmet;
@@ -62,6 +30,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.*;
+
+import static org.bukkit.Material.*;
 
 @Data
 @AllArgsConstructor
@@ -179,18 +163,23 @@ public class Machine {
 
     public static void loadAll() {
         for (FileBase f : new FileDirectory("plugins/PixliesEarthCore/machines/").getFilesInDirectory()) {
-            if (!f.getFile().getName().endsWith(".json")) {
-                f.deleteFile();
-                continue;
+            try {
+                if (!f.getFile().getName().endsWith(".json")) {
+                    f.deleteFile();
+                    continue;
+                }
+                JSONFile jf = new JSONFile(f.getFilePath(), f.getFileName());
+                //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
+                Machine machine = load(jf);
+                if (machine == null) {
+                    instance.getLogger().warning("Could not load machine " + jf.getFileConstruct());
+                    continue;
+                }
+                instance.getUtilLists().machines.put(machine.getLocation(), machine);
+            } catch (Exception e) {
+                System.out.println("Could not load machine " + f.getFileName());
+                e.printStackTrace();
             }
-        	JSONFile jf = new JSONFile(f.getFilePath(), f.getFileName());
-            //FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
-            Machine machine = load(jf);
-            if (machine == null) {
-                instance.getLogger().warning("Could not load machine " + jf.getFileConstruct());
-                continue;
-            }
-            instance.getUtilLists().machines.put(machine.getLocation(), machine);
         }
     }
 

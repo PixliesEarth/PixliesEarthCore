@@ -1,14 +1,13 @@
 package eu.pixliesearth.core.customcrafting;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import eu.pixliesearth.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
 
-import eu.pixliesearth.Main;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomRecipe {
     

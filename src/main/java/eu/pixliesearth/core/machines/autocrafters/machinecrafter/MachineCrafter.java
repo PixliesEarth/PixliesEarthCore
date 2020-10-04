@@ -1,15 +1,13 @@
 package eu.pixliesearth.core.machines.autocrafters.machinecrafter;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import eu.pixliesearth.utils.Timer;
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
-
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
+import eu.pixliesearth.utils.Timer;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 public class MachineCrafter extends AutoCrafterMachine {
 

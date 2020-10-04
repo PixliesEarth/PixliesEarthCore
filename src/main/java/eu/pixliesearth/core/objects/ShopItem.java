@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.objects;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.FileManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.entity.Player;

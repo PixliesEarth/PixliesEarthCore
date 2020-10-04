@@ -1,5 +1,8 @@
 package eu.pixliesearth.core.listener;
 
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.nation.Era;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,10 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.nation.Era;
-import lombok.Getter;
 
 public class CraftingListener implements Listener {
 	

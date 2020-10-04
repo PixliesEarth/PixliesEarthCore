@@ -1,7 +1,9 @@
 package eu.pixliesearth.core.listener;
 
-import java.util.ArrayList;
-
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
+import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
+import eu.pixliesearth.core.customitems.ci.tools.ItemScythe;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -15,10 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
-import eu.pixliesearth.core.customitems.ci.tools.ItemScythe;
-import eu.pixliesearth.localization.Lang;
+import java.util.ArrayList;
 
 public class BlockBreakListener implements Listener {
 

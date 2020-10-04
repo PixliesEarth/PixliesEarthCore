@@ -1,5 +1,7 @@
 package eu.pixliesearth.core.customcrafting;
 
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.core.machines.Machine;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -7,11 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.customitems.CustomItems;
-
-import java.util.Arrays;
 
 import static org.bukkit.Material.*;
 

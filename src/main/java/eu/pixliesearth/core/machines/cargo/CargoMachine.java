@@ -1,21 +1,19 @@
 package eu.pixliesearth.core.machines.cargo;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.google.gson.JsonObject;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.google.gson.JsonObject;
-
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.machines.Machine;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.Timer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CargoMachine extends Machine {
 

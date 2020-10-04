@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.customitems.ci.blocks;
 
-import java.util.List;
-
+import eu.pixliesearth.core.customitems.CustomItem;
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.customitems.CustomItem;
-import eu.pixliesearth.utils.ItemBuilder;
+import java.util.List;
 
 public class BlockBronze implements CustomItem {
 	

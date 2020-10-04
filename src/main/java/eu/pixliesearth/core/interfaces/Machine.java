@@ -1,8 +1,7 @@
 package eu.pixliesearth.core.interfaces;
 
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.machines.Machine.MachineType;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * 

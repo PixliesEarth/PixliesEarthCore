@@ -14,7 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import static org.bukkit.Material.*;
+import static org.bukkit.Material.BARRIER;
+import static org.bukkit.Material.BLACK_STAINED_GLASS_PANE;
 
 public class MachinesCommand implements CommandExecutor {
 

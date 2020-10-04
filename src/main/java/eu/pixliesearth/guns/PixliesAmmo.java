@@ -11,7 +11,6 @@ import net.minecraft.server.v1_16_R2.AxisAlignedBB;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;

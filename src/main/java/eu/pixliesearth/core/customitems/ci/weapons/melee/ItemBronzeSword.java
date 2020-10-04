@@ -5,7 +5,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class ItemBronzeSword implements CustomItem {

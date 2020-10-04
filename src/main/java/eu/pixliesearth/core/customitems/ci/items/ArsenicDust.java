@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-import static org.bukkit.Material.IRON_INGOT;
 import static org.bukkit.Material.SUGAR;
 
 public class ArsenicDust implements CustomItem {

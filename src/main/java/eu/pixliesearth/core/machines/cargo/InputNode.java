@@ -1,18 +1,16 @@
 package eu.pixliesearth.core.machines.cargo;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullCreator;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullCreator;
-import eu.pixliesearth.utils.Timer;
 
 public class InputNode extends CargoMachine {
 

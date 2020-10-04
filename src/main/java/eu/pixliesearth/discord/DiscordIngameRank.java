@@ -1,9 +1,5 @@
 package eu.pixliesearth.discord;
 
-import eu.pixliesearth.Main;
-import net.luckperms.api.LuckPerms;
-import org.javacord.api.DiscordApi;
-
 import java.util.HashMap;
 import java.util.Map;
 

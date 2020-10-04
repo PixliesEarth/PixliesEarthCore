@@ -1,18 +1,15 @@
 package eu.pixliesearth.core.customblocks;
 
-import java.util.UUID;
-
-import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.core.listener.ProtectionListener;
+import lombok.SneakyThrows;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.listener.ProtectionListener;
-import lombok.SneakyThrows;
+import java.util.UUID;
 
 public class CustomBlockListener implements Listener {
 	@EventHandler

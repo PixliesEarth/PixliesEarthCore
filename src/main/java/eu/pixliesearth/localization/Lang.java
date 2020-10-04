@@ -1,6 +1,5 @@
 package eu.pixliesearth.localization;
 
-import com.mysql.fabric.HashShardMapping;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import org.bukkit.Bukkit;

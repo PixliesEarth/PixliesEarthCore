@@ -1,7 +1,6 @@
 package eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.connection;
 
 import com.google.gson.annotations.SerializedName;
-//import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;

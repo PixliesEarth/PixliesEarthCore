@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.interfaces;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.configuration.file.FileConfiguration;
-
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.ShopSystem;
 import eu.pixliesearth.core.modules.WarpSystem;
 import eu.pixliesearth.core.modules.economy.EconomySystem;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public interface Module {
 

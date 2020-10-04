@@ -2,8 +2,8 @@ package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

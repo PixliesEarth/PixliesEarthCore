@@ -2,7 +2,6 @@ package eu.pixliesearth.core.modules.economy;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;

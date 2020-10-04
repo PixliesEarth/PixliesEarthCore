@@ -1,16 +1,14 @@
 package eu.pixliesearth.core.machines.autocrafters.forge.bronze;
 
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
-
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-
 import eu.pixliesearth.core.interfaces.Machine;
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 public class BronzeForge extends AutoCrafterMachine implements Machine {
 

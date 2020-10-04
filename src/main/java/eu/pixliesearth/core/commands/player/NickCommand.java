@@ -1,7 +1,8 @@
 package eu.pixliesearth.core.commands.player;
 
-import java.util.UUID;
-
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -10,9 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
+import java.util.UUID;
 
 public class NickCommand implements CommandExecutor {
 

@@ -1,15 +1,8 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.events.GulagStartEvent;
-import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
 import eu.pixliesearth.warsystem.GulagStartListener;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
-import java.util.Map;
-import java.util.UUID;
 
 public class GulagThread extends Thread{
 

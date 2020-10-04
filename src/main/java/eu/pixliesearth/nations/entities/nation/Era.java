@@ -2,9 +2,6 @@ package eu.pixliesearth.nations.entities.nation;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum Era {
 
     TRIBAL("Tribal", 1, 10, 0),

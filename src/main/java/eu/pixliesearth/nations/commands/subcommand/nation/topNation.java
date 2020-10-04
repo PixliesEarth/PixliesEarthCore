@@ -2,7 +2,6 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.NTop;
-import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

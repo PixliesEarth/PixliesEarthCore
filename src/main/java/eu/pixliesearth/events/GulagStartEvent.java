@@ -1,7 +1,5 @@
 package eu.pixliesearth.events;
 
-import eu.pixliesearth.nations.entities.nation.Nation;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

@@ -2,15 +2,9 @@ package eu.pixliesearth.guns.listeners;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.NBTUtil;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 

@@ -2,16 +2,12 @@ package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 public class UtilThread extends Thread {

@@ -1,18 +1,16 @@
 package eu.pixliesearth.core.machines.autocrafters;
 
-import java.util.Collections;
-import java.util.Map;
-
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Collections;
+import java.util.Map;
 
 public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
 

@@ -6,7 +6,10 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import lombok.Data;
 import org.bson.Document;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class NationManager {
 

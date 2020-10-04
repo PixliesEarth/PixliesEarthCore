@@ -2,9 +2,9 @@ package eu.pixliesearth.nations.managers.dynmap.area;
 
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.dynmap.TileFlags;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import eu.pixliesearth.nations.managers.dynmap.TileFlags;
 import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerIcon;
 

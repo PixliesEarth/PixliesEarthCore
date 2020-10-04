@@ -201,6 +201,8 @@ commands:
     aliases:
       - machinery
       - machine
+      - sf
+      - slimefun
 
 permissions:
   # GENERAL

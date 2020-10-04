@@ -2,11 +2,9 @@ package eu.pixliesearth.core.customitems.ci.weapons.melee;
 
 import eu.pixliesearth.core.customitems.CustomItem;
 import eu.pixliesearth.utils.ItemBuilder;
-import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.bukkit.Material.WOODEN_SWORD;

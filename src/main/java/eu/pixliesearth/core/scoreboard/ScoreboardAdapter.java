@@ -2,15 +2,13 @@ package eu.pixliesearth.core.scoreboard;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

@@ -1,12 +1,5 @@
 package eu.pixliesearth.api;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.nation.Nation;
-
-import java.util.UUID;
-import static eu.pixliesearth.Main.*;
 // import static spark.Spark.*;
 
 public class REST {

@@ -1,7 +1,6 @@
 package eu.pixliesearth.warsystem;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.customitems.CustomItems;
 import eu.pixliesearth.events.GulagStartEvent;
 import eu.pixliesearth.guns.Guns;
 import eu.pixliesearth.localization.Lang;

@@ -1,10 +1,8 @@
 package eu.pixliesearth.guns.commands;
 
-import lombok.SneakyThrows;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.TabExecutor;
 import eu.pixliesearth.guns.Guns;
 import eu.pixliesearth.localization.Lang;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;

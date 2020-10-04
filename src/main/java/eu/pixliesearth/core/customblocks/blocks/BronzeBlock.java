@@ -1,12 +1,11 @@
 package eu.pixliesearth.core.customblocks.blocks;
 
-import java.util.UUID;
-
+import eu.pixliesearth.core.customblocks.CustomBlock;
+import eu.pixliesearth.core.customitems.ci.blocks.BlockBronze;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.customblocks.CustomBlock;
-import eu.pixliesearth.core.customitems.ci.blocks.BlockBronze;
+import java.util.UUID;
 
 public class BronzeBlock extends CustomBlock {
 	

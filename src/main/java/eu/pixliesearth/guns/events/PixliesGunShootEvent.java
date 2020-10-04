@@ -3,8 +3,6 @@ package eu.pixliesearth.guns.events;
 import eu.pixliesearth.events.ShootEvent;
 import eu.pixliesearth.guns.PixliesAmmo;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

@@ -1,9 +1,10 @@
 package eu.pixliesearth.guns;
 
-import eu.pixliesearth.guns.guns.*;
+import eu.pixliesearth.guns.guns.AK47;
+import eu.pixliesearth.guns.guns.M16;
+import eu.pixliesearth.guns.guns.Slingshot;
+import eu.pixliesearth.guns.guns.Uzi;
 import lombok.Getter;
-
-import java.util.UUID;
 
 public enum Guns {
 

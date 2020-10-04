@@ -3,7 +3,6 @@ package eu.pixliesearth.utils;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
 import org.bukkit.Location;

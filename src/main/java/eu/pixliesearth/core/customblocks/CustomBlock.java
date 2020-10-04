@@ -1,15 +1,14 @@
 package eu.pixliesearth.core.customblocks;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class CustomBlock {
 	

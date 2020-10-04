@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
