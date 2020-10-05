@@ -30,6 +30,7 @@ public class unclaimNation implements SubCommand {
         returner.put("auto", 1);
         returner.put("one", 1);
         returner.put("fill", 1);
+        returner.put("here", 1);
         return returner;
     }
 
@@ -59,7 +60,7 @@ public class unclaimNation implements SubCommand {
                     Lang.NO_PERMISSIONS.send(sender);
                     return false;
                 }
-                if (args[0].equalsIgnoreCase("one")) {
+                if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
                     NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
                 } else if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {

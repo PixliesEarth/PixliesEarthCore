@@ -52,6 +52,7 @@ public class claimNation implements SubCommand {
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Chunk c = player.getLocation().getChunk();
+        Nation nation;
         switch (args.length) {
             case 1:
                 if (!profile.isInNation()) {
@@ -87,23 +88,18 @@ public class claimNation implements SubCommand {
                 }
                 break;
             case 2:
+                nation = Nation.getByName(args[1]);
+                if (nation == null) {
+                    Lang.NATION_DOESNT_EXIST.send(player);
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
-                    Nation nation = Nation.getByName(args[1]);
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
-                    if (nation == null) {
-                        Lang.NATION_DOESNT_EXIST.send(player);
-                        return false;
-                    }
                     NationChunk.claim(player, player.getWorld().getName(), player.getLocation().getChunk().getX(), player.getLocation().getChunk().getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_OTHER, nation.getNationId());
                 } else if (args[0].equalsIgnoreCase("auto")) {
-                    Nation nation = Nation.getByName(args[1]);
-                    if (nation == null) {
-                        Lang.NATION_DOESNT_EXIST.send(player);
-                        return false;
-                    }
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
@@ -116,11 +112,6 @@ public class claimNation implements SubCommand {
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
                 } else if (args[0].equalsIgnoreCase("fill")) {
-                    Nation nation = Nation.getByName(args[1]);
-                    if (nation == null) {
-                        Lang.NATION_DOESNT_EXIST.send(player);
-                        return false;
-                    }
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.CLAIM, nation)) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
@@ -129,7 +120,7 @@ public class claimNation implements SubCommand {
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
                     claimFill(player, nation, toClaim);
-                } else if (args[0].equalsIgnoreCase("line")) {
+                } /*else if (args[0].equalsIgnoreCase("line")) {
                     long start = System.currentTimeMillis();
                     if (!profile.isInNation()) {
                         Lang.NOT_IN_A_NATION.send(player);
@@ -165,16 +156,16 @@ public class claimNation implements SubCommand {
                         Lang.PLAYER_CLAIMLINED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     Lang.PLAYER_CLAIMLINED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     player.sendMessage(System.currentTimeMillis() - start + "ms");
-                }
+                }*/
                 break;
             case 3:
-                if (args[0].equalsIgnoreCase("line")) {
+/*                if (args[0].equalsIgnoreCase("line")) {
                     long start = System.currentTimeMillis();
                     if (!profile.isStaff()) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
-                    Nation nation = Nation.getByName(args[2]);
+                    nation = Nation.getByName(args[2]);
                     if (nation == null) {
                         Lang.NATION_DOESNT_EXIST.send(player);
                         return false;
@@ -209,7 +200,8 @@ public class claimNation implements SubCommand {
                         Lang.PLAYER_CLAIMLINED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     Lang.PLAYER_CLAIMLINED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + player.getName());
                     player.sendMessage(System.currentTimeMillis() - start + "ms");
-                } else if (args[0].equalsIgnoreCase("all")) {
+                } else*/
+                if (args[0].equalsIgnoreCase("all")) {
                     if (!profile.isStaff()) {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
