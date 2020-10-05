@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.NationCreationEvent;
 import eu.pixliesearth.localization.Lang;
@@ -66,7 +67,7 @@ public class createNation implements SubCommand {
             return false;
         }
         final String id = Methods.generateId(7);
-        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 0, 0.0, player.getUniqueId().toString(), "#34ebc3", "#33968b", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(new ItemStack(Material.WHITE_BANNER)), 0, 0.0, player.getUniqueId().toString(), "#34ebc3", "#33968b", System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
@@ -75,7 +76,6 @@ public class createNation implements SubCommand {
             nation.getRanks().put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
             nation.getRanks().put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
             nation.save();
-            nation.setFlag(new ItemStack(Material.WHITE_BANNER));
             profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("leader")));
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));

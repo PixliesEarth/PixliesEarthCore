@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -25,6 +26,7 @@ public class Nation {
     private String era;
     private String ideology;
     private String religion;
+    private String banner;
     private int xpPoints;
     private double money;
     private String leader;
@@ -52,6 +54,7 @@ public class Nation {
         nation.append("era", era);
         nation.append("ideology", ideology);
         nation.append("religion", religion);
+        nation.append("banner", banner);
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
         nation.append("leader", leader);
@@ -75,13 +78,12 @@ public class Nation {
     }
 
     public ItemStack getFlag() {
-        return Main.getInstance().getFlags().getConfiguration().getItemStack(nationId);
+        return (ItemStack) Machine.deserialize(banner);
     }
 
     public void setFlag(ItemStack flag) {
-        Main.getInstance().getFlags().getConfiguration().set(nationId, flag);
-        Main.getInstance().getFlags().save();
-        Main.getInstance().getFlags().reload();
+        setBanner(Machine.serialize(flag));
+        save();
     }
 
     public Nation save() {

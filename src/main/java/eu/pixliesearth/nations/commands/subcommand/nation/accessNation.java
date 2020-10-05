@@ -28,10 +28,8 @@ public class accessNation implements SubCommand {
         Map<String, Integer> map = new HashMap<>();
         map.put("player", 1);
         map.put("nation", 1);
-        for (Player player : Bukkit.getOnlinePlayers())
-            map.put(ChatColor.GOLD + player.getName(), 2);
-        for (String s : NationManager.names.keySet())
-            map.put(ChatColor.AQUA + s, 2);
+        map.put(ChatColor.GOLD + "PLAYER", 2);
+        map.put(ChatColor.AQUA + "NATION", 2);
         map.put(ChatColor.GREEN + "set", 3);
         map.put(ChatColor.RED + "unset", 3);
         return map;

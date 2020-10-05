@@ -43,10 +43,7 @@ public class bankNation implements SubCommand {
         switch (args.length) {
             case 1:
                 if (args[0].equalsIgnoreCase("balance")) {
-                    if (!(sender instanceof Player)) {
-                        Lang.ONLY_PLAYERS_EXEC.send(sender);
-                        return false;
-                    }
+                    if (!checkIfPlayer(sender)) return false;
                     Player player = (Player) sender;
                     Profile profile = instance.getProfile(player.getUniqueId());
                     if (!profile.isInNation()) {
@@ -66,10 +63,7 @@ public class bankNation implements SubCommand {
                     }
                     Lang.NATION_BALANCE.send(sender, "%NATION%;" + nation.getName(), "%AMOUNT%;" + nation.getMoney());
                 } else if (args[0].equalsIgnoreCase("deposit")) {
-                    if (!(sender instanceof Player)) {
-                        Lang.ONLY_PLAYERS_EXEC.send(sender);
-                        return false;
-                    }
+                    if (!checkIfPlayer(sender)) return false;
                     Player player = (Player) sender;
                     Profile profile = instance.getProfile(player.getUniqueId());
                     if (!profile.isInNation()) {

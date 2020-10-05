@@ -96,7 +96,6 @@ public final class Main extends JavaPlugin {
     private @Getter NTop nationsTop;
     private @Getter @Setter boolean gulagActive = false;
     private @Getter MachineTask machineTask;
-    private @Getter FileManager flags;
     private @Getter LuckPerms luckPerms;
     private @Getter Config redissonConfig;
     private @Getter RedissonClient redissonClient;
@@ -149,9 +148,6 @@ public final class Main extends JavaPlugin {
 
         dynmapCfg = new FileManager(this, "dynmap", getDataFolder().getAbsolutePath());
         dynmapCfg.save();
-
-        flags = new FileManager(this, "flags", getDataFolder().getAbsolutePath());
-        flags.save();
 
         saveDefaultConfig();
 
@@ -238,31 +234,29 @@ public final class Main extends JavaPlugin {
             luckPerms = provider.getProvider();
 
         if (!NationManager.nations.containsKey("safezone")) {
-            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            ItemStack flag = new ItemStack(Material.LIME_BANNER);
+            BannerMeta meta = (BannerMeta) flag.getItemMeta();
+            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
+            flag.setItemMeta(meta);
+            Nation safezone = new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             safezone.getRanks().put("admin", Rank.ADMIN().toMap());
             safezone.getRanks().put("member", Rank.MEMBER().toMap());
             safezone.getRanks().put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
             safezone.getRanks().put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
             safezone.save();
-            ItemStack flag = new ItemStack(Material.LIME_BANNER);
-            BannerMeta meta = (BannerMeta) flag.getItemMeta();
-            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
-            flag.setItemMeta(meta);
-            safezone.setFlag(flag);
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
-            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            ItemStack flag = new ItemStack(Material.RED_BANNER);
+            BannerMeta meta = (BannerMeta) flag.getItemMeta();
+            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
+            flag.setItemMeta(meta);
+            Nation warzone = new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
             warzone.getRanks().put("admin", Rank.ADMIN().toMap());
             warzone.getRanks().put("member", Rank.MEMBER().toMap());
             warzone.getRanks().put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
             warzone.getRanks().put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
             warzone.save();
-            ItemStack flag = new ItemStack(Material.RED_BANNER);
-            BannerMeta meta = (BannerMeta) flag.getItemMeta();
-            meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
-            flag.setItemMeta(meta);
-            warzone.setFlag(flag);
         }
     }
 

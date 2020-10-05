@@ -8,9 +8,9 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -156,38 +156,38 @@ public class mapNation implements SubCommand {
                 if (chunkX == playerCX && chunkZ == playerCZ) {
                     if (nc == null) {
                         TextComponent cComp = new TextComponent("§e█");
-                        cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness\n§7You may claim here.").create()));
+                        cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§cWilderness\n§7You may claim here.")));
                         cComp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n claim " + chunkX +  ";" + chunkZ));
                         comp.addExtra(cComp);
                     } else {
                         Nation nation = nc.getCurrentNation();
                         TextComponent cComp = new TextComponent("§e█");
-                        cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§f" + nation.getName() + "\n" + "§7" + nation.getDescription()).create()));
+                        cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§f" + nation.getName() + "\n" + "§7" + nation.getDescription())));
                         comp.addExtra(cComp);
                     }
                 } else {
                     if (profile.isInNation()) {
                         if (nc == null) {
                             TextComponent cComp = new TextComponent("§2█");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness\n§7You may claim here.").create()));
+                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§cWilderness\n§7You may claim here.")));
                             cComp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n claim " + chunkX +  ";" + chunkZ));
                             comp.addExtra(cComp);
                         } else {
                             char colChar = Nation.getRelation(nc.getNationId(), profile.getNationId()).colChar;
                             Nation nation = nc.getCurrentNation();
                             TextComponent cComp = new TextComponent("§" + colChar + "█");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§" + colChar + nation.getName() + "\n" + "§7" + nation.getDescription()).create()));
+                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§" + colChar + nation.getName() + "\n" + "§7" + nation.getDescription())));
                             comp.addExtra(cComp);
                         }
                     } else {
                         if (nc == null) {
                             TextComponent cComp = new TextComponent("§2█");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cWilderness").create()));
+                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§cWilderness")));
                             comp.addExtra(cComp);
                         } else {
                             Nation nation = nc.getCurrentNation();
                             TextComponent cComp = new TextComponent("§f█");
-                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§f" + nation.getName() + "\n" + "§7" + nation.getDescription()).create()));
+                            cComp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§f" + nation.getName() + "\n" + "§7" + nation.getDescription())));
                             comp.addExtra(cComp);
                         }
                     }

@@ -5,11 +5,11 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
-import eu.pixliesearth.nations.managers.NationManager;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,10 +25,10 @@ public class allyNation implements SubCommand {
 
     @Override
     public Map<String, Integer> autoCompletion() {
-        Map<String, Integer> map = new HashMap<>();
-        for (String s : NationManager.names.keySet())
-            map.put(s, 1);
-        return map;
+        return new HashMap<>(){
+            private static final long serialVersionUID = -1002643333466882536L;
+
+            {put(ChatColor.AQUA + "NATION", 1);}};
     }
 
     @Override
@@ -38,10 +38,7 @@ public class allyNation implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            Lang.ONLY_PLAYERS_EXEC.send(sender);
-            return false;
-        }
+        if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
@@ -85,7 +82,7 @@ public class allyNation implements SubCommand {
             if (Permission.hasNationPermission(instance.getProfile(member.getUniqueId()), Permission.MANAGE_RELATIONS)) {
                 Lang.RECEIVED_ALLY_REQUEST.send(member, "%NATION%;" + nation.getName());
                 TextComponent accept = new TextComponent(Lang.ACCEPT.get(member));
-                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§oClick to accept").create()));
+                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§oClick to accept")));
                 accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n ally " + nation.getName()));
                 member.spigot().sendMessage(accept);
             }

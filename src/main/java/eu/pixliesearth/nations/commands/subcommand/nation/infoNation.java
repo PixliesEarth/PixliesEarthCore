@@ -4,9 +4,10 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,11 +26,9 @@ public class infoNation implements SubCommand {
     @Override
     public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
-        for (String n : NationManager.names.keySet())
-            returner.put(n, 1);
+        returner.put(ChatColor.AQUA + "NATION", 1);
         returner.put("player", 1);
-        for (Player player : Bukkit.getOnlinePlayers())
-            returner.put(player.getName(), 2);
+        returner.put(ChatColor.GOLD + "PLAYER", 2);
         return returner;
     }
 
@@ -91,12 +90,9 @@ public class infoNation implements SubCommand {
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {
             UUID uuid = UUID.fromString(s);
-            Profile profile = instance.getProfile(uuid);
-            if (profile.isOnline()) {
-                memberJoiner.add("§a" + profile.getAsOfflinePlayer().getName());
-            } else {
-                memberJoiner.add("§7" + profile.getAsOfflinePlayer().getName());
-            }
+            OfflinePlayer member = Bukkit.getPlayer(uuid);
+            if (member == null) continue;
+            if (member.isOnline()) memberJoiner.add("§a" + member.getName()); else memberJoiner.add("§7" + member.getName());
         }
         StringJoiner allyJoiner = new StringJoiner("§8, ");
         for (String s : nation.getAllies()) {

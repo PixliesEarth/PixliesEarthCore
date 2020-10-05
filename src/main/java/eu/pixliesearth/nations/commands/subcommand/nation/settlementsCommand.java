@@ -46,10 +46,7 @@ public class settlementsCommand implements SubCommand, Listener {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
-            Lang.ONLY_PLAYERS_EXEC.send(sender);
-            return false;
-        }
+        if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {

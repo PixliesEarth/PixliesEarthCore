@@ -5,12 +5,12 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
-import eu.pixliesearth.nations.managers.NationManager;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -30,10 +30,8 @@ public class inviteNation implements SubCommand {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("remove", 2);
         returner.put("add", 2);
-        for (Map.Entry<String, String> entry : NationManager.names.entrySet())
-            returner.put(entry.getKey(), 3);
-        for (Player player : Bukkit.getOnlinePlayers())
-            returner.put(player.getName(), 1);
+        returner.put(ChatColor.AQUA + "NATION", 3);
+        returner.put(ChatColor.GOLD + "PLAYER", 1);
         return returner;
     }
 
@@ -62,6 +60,7 @@ public class inviteNation implements SubCommand {
                     Lang.NOT_IN_A_NATION.send(player);
                     return false;
                 }
+                if (target == null) return false;
                 if (target.getInvites().contains(profile.getNationId())) {
                     player.sendMessage(Lang.PLAYER_ALREADY_INVITED.get(sender));
                     return false;
@@ -69,11 +68,11 @@ public class inviteNation implements SubCommand {
                 target.getInvites().add(profile.getNationId());
                 target.save();
                 for (Player np : profile.getCurrentNation().getOnlineMemberSet())
-                    np.sendMessage(Lang.SUCCESSFULLY_INVITED.get(np).replace("%INVITER%", sender.getName()).replace("%TARGET%", Bukkit.getOfflinePlayer(targetUUID).getName()));
+                    np.sendMessage(Lang.SUCCESSFULLY_INVITED.get(np).replace("%INVITER%", sender.getName()).replace("%TARGET%", target.getAsOfflinePlayer().getName()));
                 if (target.isOnline()) {
-                    Bukkit.getPlayer(targetUUID).sendMessage(Lang.YOU_HAVE_BEEN_INVITED.get(Bukkit.getPlayer(targetUUID)).replace("%NATION%", profile.getCurrentNation().getName()));
+                    target.getAsPlayer().sendMessage(Lang.YOU_HAVE_BEEN_INVITED.get(Bukkit.getPlayer(targetUUID)).replace("%NATION%", profile.getCurrentNation().getName()));
                     TextComponent accept = new TextComponent("§a" + Lang.ACCEPT.get(target.getAsOfflinePlayer().getPlayer()));
-                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§oClick me to accept!").create()));
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§oClick me to accept!")));
                     accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n join " + profile.getCurrentNation().getName()));
                     target.getAsOfflinePlayer().getPlayer().spigot().sendMessage(accept);
                 }
@@ -97,7 +96,7 @@ public class inviteNation implements SubCommand {
                     if (target.isOnline()) {
                         Bukkit.getPlayer(targetUUID).sendMessage(Lang.YOU_HAVE_BEEN_INVITED.get(Bukkit.getPlayer(targetUUID)).replace("%NATION%", profile1.getCurrentNation().getName()));
                         TextComponent accept = new TextComponent("§a" + Lang.ACCEPT.get(target.getAsOfflinePlayer().getPlayer()));
-                        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§oClick me to accept!").create()));
+                        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§oClick me to accept!")));
                         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n join " + profile1.getCurrentNation().getName()));
                         target.getAsOfflinePlayer().getPlayer().spigot().sendMessage(accept);
                     }
@@ -140,7 +139,7 @@ public class inviteNation implements SubCommand {
                     if (target.isOnline()) {
                         Bukkit.getPlayer(targetUUID).sendMessage(Lang.YOU_HAVE_BEEN_INVITED.get(Bukkit.getPlayer(targetUUID)).replace("%NATION%", nation.getName()));
                         TextComponent accept = new TextComponent("§a" + Lang.ACCEPT.get(target.getAsOfflinePlayer().getPlayer()));
-                        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§oClick me to accept!").create()));
+                        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§oClick me to accept!")));
                         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n join " + nation.getName()));
                         target.getAsOfflinePlayer().getPlayer().spigot().sendMessage(accept);
                     }
@@ -152,7 +151,7 @@ public class inviteNation implements SubCommand {
                     target.getInvites().remove(nation.getNationId());
                     target.save();
                     for (Player np : nation.getOnlineMemberSet())
-                        np.sendMessage(Lang.REMOVED_INVITE.get(np).replace("%INVITER%", sender.getName()).replace("%TARGET%", Bukkit.getOfflinePlayer(targetUUID).getName()));
+                        np.sendMessage(Lang.REMOVED_INVITE.get(np).replace("%INVITER%", sender.getName()).replace("%TARGET%", target.getAsOfflinePlayer().getName()));
                 }
                 break;
         }

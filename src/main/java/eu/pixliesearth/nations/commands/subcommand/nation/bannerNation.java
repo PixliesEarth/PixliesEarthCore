@@ -48,7 +48,7 @@ public class bannerNation implements SubCommand {
                     return false;
                 }
                 inHand = player.getInventory().getItemInMainHand();
-                if (inHand == null || !inHand.getType().name().contains("BANNER")) {
+                if (!inHand.getType().name().contains("BANNER")) {
                     Lang.ITEM_HAS_TO_BE_X.send(player, "%ITEM%;BANNER");
                     return false;
                 }
@@ -70,7 +70,7 @@ public class bannerNation implements SubCommand {
                     return false;
                 }
                 inHand = player.getInventory().getItemInMainHand();
-                if (inHand == null || !inHand.getType().name().contains("BANNER")) {
+                if (!inHand.getType().name().contains("BANNER")) {
                     Lang.ITEM_HAS_TO_BE_X.send(player, "%ITEM%;BANNER");
                     return false;
                 }
