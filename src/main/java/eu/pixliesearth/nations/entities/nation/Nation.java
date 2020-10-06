@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.entities.nation;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
@@ -174,8 +175,19 @@ public class Nation {
 
     public int broadcastMembers(String message) {
         int i = 0;
-        for (Player player : getOnlineMemberSet())
-            player.sendMessage(message); i++;
+        for (Player player : getOnlineMemberSet()) {
+            player.sendMessage(message);
+            i++;
+        }
+        return i;
+    }
+
+    public int broadcastMembers(Lang lang) {
+        int i = 0;
+        for (Player player : getOnlineMemberSet()) {
+            lang.send(player);
+            i++;
+        }
         return i;
     }
 

@@ -16,7 +16,7 @@ public class MachineTask extends Thread implements Serializable {
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             //Tick
             try {
                 if (ready)
