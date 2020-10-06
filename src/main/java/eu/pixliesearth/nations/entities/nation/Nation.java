@@ -27,7 +27,7 @@ public class Nation {
     private String ideology;
     private String religion;
     private String banner;
-    private int xpPoints;
+    private double xpPoints;
     private double money;
     private String leader;
     private String dynmapFill;

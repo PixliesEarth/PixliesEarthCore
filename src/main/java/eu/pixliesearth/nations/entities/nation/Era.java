@@ -15,7 +15,7 @@ public enum Era {
     private @Getter final String name;
     private @Getter final int number;
     private @Getter final int chunksPerPlayer;
-    private @Getter final int cost;
+    private @Getter final double cost;
 
     Era(String name, int number, int chunksPerPlayer, int cost) {
         this.name = name;

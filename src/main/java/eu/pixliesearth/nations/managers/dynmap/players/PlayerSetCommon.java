@@ -31,11 +31,11 @@ public class PlayerSetCommon {
             factionUUID = nation.getNationId();
         }
 
-        final String setId = new StringBuilder(PREFIX_FACTION_SET_ID).append(factionUUID).toString();
+        final String setId = PREFIX_FACTION_SET_ID + factionUUID;
         final PlayerSet set = markerApi.getPlayerSet(setId); // See if set exists
         if (set == null && nation != null) {
             markerApi.createPlayerSet(setId, true, playerIds, false);
-            info( new StringBuilder(MESSAGE_ADDED_PLAYER).append(setId).append(MESSAGE_FOR_FACTION).append(factionUUID).toString());
+            info(MESSAGE_ADDED_PLAYER + setId + MESSAGE_FOR_FACTION + factionUUID);
         }
         else if (nation != null) {
             set.setPlayers(playerIds);
