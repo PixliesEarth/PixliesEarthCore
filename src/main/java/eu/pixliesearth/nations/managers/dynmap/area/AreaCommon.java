@@ -95,17 +95,15 @@ public class AreaCommon {
 
     public static void addStyle(final Map<String, AreaStyle> cusstyle, final AreaStyle defstyle, final String resid, final AreaMarker areaMarker) {
         AreaStyle as = cusstyle.get(resid);
-        if (as == null) {
+        if (as == null)
             as = defstyle;
-        }
 
         int sc = 0xFF0000;
         int fc = 0xFF0000;
         try {
             sc = Integer.parseInt(as.getStrokecolor().substring(1), 16);
             fc = Integer.parseInt(as.getFillcolor().substring(1), 16);
-        } catch (NumberFormatException nfx) {
-        }
+        } catch (NumberFormatException ignored) { }
 
         areaMarker.setLineStyle(as.getStrokeweight(), as.getStrokeopacity(), sc);
         areaMarker.setFillStyle(as.getFillopacity(), fc);

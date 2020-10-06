@@ -37,7 +37,6 @@ public class DynmapEngine {
     private Plugin dynmap;
     private Main factions;
     private DynmapAPI dynmapAPI;
-    private boolean displayFactionName;
     private boolean displayWarps;
 
     // Status of the plugin.
@@ -159,7 +158,7 @@ public class DynmapEngine {
 
     private boolean isVisible(final String id, final String worldName) {
         if (visible != null && visible.size() > 0) {
-            if ((visible.contains(id) == false) && (visible.contains("world:" + worldName) == false)) {
+            if ((!visible.contains(id)) && (!visible.contains("world:" + worldName))) {
                 return false;
             }
         }
@@ -172,7 +171,7 @@ public class DynmapEngine {
     /**
      * Handle specific Nation on specific world
      */
-    private void handleFactionOnWorld(String factionName, Nation fact, String world, LinkedList<NationBlock> blocks, Map<String, AreaMarker> newmap, Map<String, Marker> newmark) {
+    private void handleFactionOnWorld(String factionName, Nation fact, String world, LinkedList<NationBlock> blocks, Map<String, AreaMarker> newmap) {
         int poly_index = 0; /* Index of polygon for given Nation */
 
         /* Build popup */
@@ -225,14 +224,12 @@ public class DynmapEngine {
                 nodevals = newlist; /* Replace list (null if no more to process) */
                 if (ourblks != null) {
                     /* Trace outline of blocks - start from minx, minz going to x+ */
-                    int init_x = minx;
-                    int init_z = minz;
                     int cur_x = minx;
                     int cur_z = minz;
                     Direction dir = Direction.XPLUS;
                     ArrayList<int[]> linelist = new ArrayList<>();
-                    linelist.add(new int[]{init_x, init_z}); // Add start point
-                    while ((cur_x != init_x) || (cur_z != init_z) || (dir != Direction.ZMINUS)) {
+                    linelist.add(new int[]{minx, minz}); // Add start point
+                    while ((cur_x != minx) || (cur_z != minz) || (dir != Direction.ZMINUS)) {
                         switch (dir) {
                             case XPLUS: /* Segment in X+ Direction */
                                 if (!ourblks.getFlag(cur_x + 1, cur_z)) { /* Right turn? */
@@ -290,7 +287,7 @@ public class DynmapEngine {
                     }
 
                     /* Build information for specific area */
-                    final String polyId = new StringBuilder().append(factionName).append("__").append(world).append("__").append(poly_index).toString();
+                    final String polyId = factionName + "__" + world + "__" + poly_index;
 
                     final int sz = linelist.size();
                     final double[] x = new double[sz];
@@ -316,12 +313,7 @@ public class DynmapEngine {
                     areaMarker.setDescription(desc); /* Set popup */
 
                     /* Set line and fill properties */
-                    addStyle(cusstyle, defstyle, factionName, areaMarker);
-
-                    /* Set the Nation name */
-                    if (displayFactionName) {
-                        
-                    }
+                    addStyle(cusstyle, defstyle, fact.getNationId(), areaMarker);
 
                     /* Add to map */
                     newmap.put(polyId, areaMarker);
@@ -354,11 +346,7 @@ public class DynmapEngine {
                 final String world = cc.getWorld();
 
                 /* Get block set for given world */
-                LinkedList<NationBlock> blocks = factblocks.getBlocks().get(world);
-                if (blocks == null) {
-                    blocks = new LinkedList<>();
-                    factblocks.getBlocks().put(world, blocks);
-                }
+                LinkedList<NationBlock> blocks = factblocks.getBlocks().computeIfAbsent(world, k -> new LinkedList<>());
 
                 blocks.add(new NationBlock(cc.getX(), cc.getZ())); /* Add to list */
             }
@@ -366,13 +354,13 @@ public class DynmapEngine {
         /* Loop through factions */
         for (final Nation nation : facts) {
             final String factname = ChatColor.stripColor(nation.getName());
-            final String fid = new StringBuilder().append("World").append("_").append(nation.getNationId()).toString();
+            final String fid = "World" + "_" + nation.getNationId();
             final NationBlocks factblocks = blocks_by_faction.get(fid); /* Look up Nation */
             if (factblocks == null) continue;
 
             /* Loop through each world that Nation has blocks on */
             for (Map.Entry<String, LinkedList<NationBlock>> worldblocks : factblocks.getBlocks().entrySet()) {
-                handleFactionOnWorld(factname, nation, worldblocks.getKey(), worldblocks.getValue(), newmap, newmark);
+                handleFactionOnWorld(factname, nation, worldblocks.getKey(), worldblocks.getValue(), newmap);
             }
             factblocks.clear();
 
@@ -386,10 +374,10 @@ public class DynmapEngine {
                     final MarkerIcon ico = getMarkerIcon(cusstyle, defstyle, factname);
                     if (ico != null) {
                         final SimpleLocation pos = SimpleLocation.fromString(settlement.getLocation());
-                        final Double lx = pos.getX();
-                        final Double ly = pos.getY();
-                        final Double lz = pos.getZ();
-                        final String labelName = new StringBuilder("[Settlement] ").append(factname).append(" - ").append(settlement.getName()).toString();
+                        final double lx = pos.getX();
+                        final double ly = pos.getY();
+                        final double lz = pos.getZ();
+                        final String labelName = "[Settlement] " + factname + " - " + settlement.getName();
 
                         Marker marker = resmark.remove(name);
                         if (marker == null) {
@@ -473,23 +461,18 @@ public class DynmapEngine {
         set.setHideByDefault(cfg.getBoolean("layer.hidebydefault", false));
         // use3d = cfg.getBoolean("use3dregions", false);
         infoWindow = cfg.getString("infoWindow", DEF_INFO_WINDOW);
-        displayFactionName = cfg.getBoolean("show-Nation-name", true);
+        // displayFactionName = cfg.getBoolean("show-Nation-name", true);
         displayWarps = cfg.getBoolean("display-warp", true);
 
         /* Get style information */
         defstyle = new AreaStyle(markerAPI, cfg, "regionstyle", "#34ebc3", "#33968b");
         cusstyle = new HashMap<>();
-        for (Nation nation : NationManager.nations.values()) {
+        for (Nation nation : NationManager.nations.values())
             cusstyle.put(nation.getNationId(), new AreaStyle(markerAPI, cfg, "custstyle." + nation.getNationId(), defstyle, nation.getDynmapFill(), nation.getDynmapBorder()));
-        }
         List<String> vis = cfg.getStringList("visibleregions");
-        if (vis != null) {
-            visible = new HashSet<>(vis);
-        }
+        visible = new HashSet<>(vis);
         List<String> hid = cfg.getStringList("hiddenregions");
-        if (hid != null) {
-            hidden = new HashSet<>(hid);
-        }
+        hidden = new HashSet<>(hid);
         /* Chec if player sets enabled */
         playersets = cfg.getBoolean("visibility-by-Nation", false);
         if (playersets) {
@@ -508,9 +491,8 @@ public class DynmapEngine {
 
         /* Set up update job - based on periond */
         int per = cfg.getInt("update.period", 300);
-        if (per < 15) {
+        if (per < 15)
             per = 15;
-        }
         updperiod = (per * TICKRATE_RATIO);
         stop = false;
 
