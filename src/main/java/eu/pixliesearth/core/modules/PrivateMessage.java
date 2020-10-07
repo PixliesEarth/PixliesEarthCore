@@ -43,15 +43,15 @@ public class PrivateMessage implements CommandExecutor, Module {
         for (int i = 1; i != args.length; i++)
             messageBuilder.append(args[i]).append(" ");
 
-        String receiverformat = "";
+        String receiverFormat;
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            receiverformat = PlaceholderAPI.setPlaceholders(player, config.getString("modules.privatemessage.format-receiver-player")).replace("%message%", messageBuilder.toString());
+            receiverFormat = PlaceholderAPI.setPlaceholders(player, config.getString("modules.privatemessage.format-receiver-player")).replace("%message%", messageBuilder.toString());
         } else {
-            receiverformat = config.getString("modules.privatemessage.format-receiver-console").replace("%message%", messageBuilder.toString());
+            receiverFormat = config.getString("modules.privatemessage.format-receiver-console").replace("%message%", messageBuilder.toString());
         }
         String senderFormat = PlaceholderAPI.setPlaceholders(receiver, config.getString("modules.privatemessage.format-sender")).replace("%message%", messageBuilder.toString());
-        receiver.sendMessage(receiverformat);
+        receiver.sendMessage(receiverFormat);
         sender.sendMessage(senderFormat);
         String senderName = sender instanceof Player ? sender.getName() : "§c§lCONSOLE";
         System.out.println("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());

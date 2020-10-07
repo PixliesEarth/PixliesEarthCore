@@ -45,6 +45,7 @@ public class Warp {
     public static Warp get(String name) {
         FileManager cfg = Main.getInstance().getWarpsCfg();
 
+        if (!cfg.getConfiguration().contains("warps." + name)) return null;
 
         String item = cfg.getConfiguration().getString("warps." + name + ".item");
         Location location = cfg.getConfiguration().getLocation("warps." + name + ".location");
