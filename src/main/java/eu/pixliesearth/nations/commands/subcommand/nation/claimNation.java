@@ -260,9 +260,12 @@ public class claimNation implements SubCommand {
         if (toClaim.size() > 0) {
             int claimed = 0;
             for (NationChunk chunk : toClaim.values()) {
+                if (nation.getMoney() < claimed * 15) break;
                 chunk.claim();
                 claimed++;
             }
+            double price = claimed * 15;
+            nation.withdraw(price);
             for (Player member : nation.getOnlineMemberSet())
                 Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
             Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());

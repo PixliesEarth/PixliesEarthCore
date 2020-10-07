@@ -111,11 +111,16 @@ public class NationChunk {
             Lang.NOT_ENOUGH_POWER_TO_CLAIM.send(player);
             return false;
         }
+        if (nation.getMoney() < 15 && !Main.getInstance().getProfile(player.getUniqueId()).isStaff()) {
+            Lang.NOT_ENOUGH_MONEY_IN_NATION.send(player);
+            return false;
+        }
         NationChunk nc = new NationChunk(nationId, world, x, z);
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             nc.claim();
+            nation.withdraw(15);
             for (Player members : nation.getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
         }
@@ -135,6 +140,7 @@ public class NationChunk {
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
+            Nation.getById(nc.getNationId()).deposit(15);
             nc.unclaim();
             for (Player members : profile.getCurrentNation().getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
