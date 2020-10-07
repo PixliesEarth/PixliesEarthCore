@@ -209,6 +209,7 @@ public final class Main extends JavaPlugin {
         saveResource("languages/LANG_fr.yml", true);
         saveResource("languages/LANG_es.yml", true);
         saveResource("languages/LANG_nl.yml", true);
+        saveResource("languages/LANG_SWE.yml", true);
 
         Lang.init();
 

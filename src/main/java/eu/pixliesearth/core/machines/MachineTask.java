@@ -41,11 +41,7 @@ public class MachineTask extends Thread implements Serializable {
 
     public void stopThread() {
         this.ready = false;
-        try {
-            join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        stop();
     }
 
 }

@@ -2,11 +2,13 @@ package eu.pixliesearth.localization;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.HashMap;
@@ -276,8 +278,10 @@ public enum Lang {
     GULAG_SET_FIGHTER_SPAWN2(Lang.WAR, new HashMap<>()),
     GULAG_SET_CAP(Lang.WAR, new HashMap<>());
 
-    private String PREFIX;
+    private final String PREFIX;
     private Map<String, String> languages;
+
+    private static @Getter final Map<String, ItemStack> items = new HashMap<>();
 
     public static final String EARTH = "§x§2§E§D§C§3§E§lE§x§3§0§C§A§3§E§lA§x§3§1§B§F§3§E§lR§x§3§8§B§2§4§3§lT§x§3§7§A§3§4§1§lH §8| ";
     public static final String NATION = "§x§2§F§D§1§E§5§lN§x§3§4§C§6§D§8§lA§x§3§7§B§A§C§A§lT§x§3§5§B§0§B§F§lI§x§3§3§A§3§B§0§lO§x§3§2§9§9§A§5§lN §8| ";
@@ -296,21 +300,7 @@ public enum Lang {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-/*            switch (profile.getLang()) {
-                case "DE":
-                    return PREFIX + languages.get("DE").replace("&", "§");
-                case "ENG":
-                    return PREFIX + languages.get("ENG").replace("&", "§");
-                case "FR":
-                    return PREFIX + languages.get("FR").replace("&", "§");
-                case "ES":
-                    return PREFIX + languages.get("ES").replace("&", "§");
-                case "GBENG":
-                    return PREFIX + languages.get("ENG").replace("&", "§").replace("t", " ");
-            }*/
-            if (languages.containsKey(profile.getLang()))
-                return PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang()));
-            return PREFIX + languages.get("ENG").replace("&", "§");
+            return languages.containsKey(profile.getLang()) ? PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang())) : PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get("ENG"));
         }
         return PREFIX + languages.get("ENG").replace("&", "§");
     }
@@ -360,15 +350,20 @@ public enum Lang {
 
     public static void init() {
         int loaded = 0;
-        for (File file : new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/languages/").listFiles()) {
+        File folder = new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/languages/");
+        if (!folder.exists()) {
+            System.out.println("Couldn't load languages. Folder doesn't exist.");
+            return;
+        }
+        for (File file : folder.listFiles()) {
             if (!file.getName().endsWith(".yml"))
                 continue;
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
             String langName = file.getName().replace("LANG_", "").replace(".yml", "").toUpperCase();
-            for (String s : cfg.getConfigurationSection("").getKeys(true)) {
-                Map<String, String> map = new HashMap<>(Lang.valueOf(s).languages);
-                map.put(langName, cfg.getString(s));
-                Lang.valueOf(s).setLanguage(map);
+            for (Lang l : values()) {
+                Map<String, String> map = new HashMap<>(l.languages);
+                map.put(langName, cfg.getString(l.name()));
+                l.setLanguage(map);
             }
             loaded++;
         }

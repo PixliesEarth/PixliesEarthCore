@@ -73,6 +73,13 @@ public class JoinListener implements Listener {
                 gui.update();
                 player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
             }), 4, 0);
+            pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/7d86242b0d97ece9994660f3974d72df7b887f630a4530dadc5b1ab7c2134aec")).setDisplayName("§eSvenska").build(), e -> {
+                e.setCancelled(true);
+                profile.setLang("SWE");
+                profile.save();
+                gui.update();
+                Lang.LANGUAGE_CHANGED.send(player);
+            }), 5, 0);
             gui.addPane(pane);
             gui.show(player);
         }

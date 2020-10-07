@@ -26,7 +26,10 @@ public class helpNation implements SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        NationCommand.sendHelp(sender, Integer.parseInt(args[0]));
+        int i = 0;
+        if (args.length > 0)
+            i = Integer.parseInt(args[0]);
+        NationCommand.sendHelp(sender, i);
         return false;
     }
 
