@@ -27,8 +27,7 @@ public class Receipt {
 
     public static LocalDateTime millsToLocalDateTime(long millis) {
         Instant instant = Instant.ofEpochMilli(millis);
-        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return date;
+        return instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
 }

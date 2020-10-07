@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.List;
+import java.util.UUID;
 
 public class VaultAPI implements Economy {
 
@@ -48,7 +49,9 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean hasAccount(String playerName) {
-        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)) != null;
+        UUID targetUUID = Bukkit.getPlayerUniqueId(playerName);
+        if (targetUUID == null) return false;
+        return Main.getInstance().getProfile(targetUUID) != null;
     }
 
     @Override
@@ -68,7 +71,9 @@ public class VaultAPI implements Economy {
 
     @Override
     public double getBalance(String playerName) {
-        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)).getBalance();
+        UUID targetUUID = Bukkit.getPlayerUniqueId(playerName);
+        if (targetUUID == null) return 0.0;
+        return Main.getInstance().getProfile(targetUUID).getBalance();
     }
 
     @Override
@@ -88,7 +93,9 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean has(String playerName, double amount) {
-        return Main.getInstance().getProfile(Bukkit.getPlayerUniqueId(playerName)).getBalance() - amount >= 0;
+        UUID targetUUID = Bukkit.getPlayerUniqueId(playerName);
+        if (targetUUID == null) return false;
+        return Main.getInstance().getProfile(targetUUID).getBalance() - amount >= 0;
     }
 
     @Override
