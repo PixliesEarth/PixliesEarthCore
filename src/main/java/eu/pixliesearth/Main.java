@@ -40,7 +40,6 @@ import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.*;
-import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
@@ -67,7 +66,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
+import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.redisson.Redisson;
@@ -130,6 +131,11 @@ public final class Main extends JavaPlugin {
         registerEvents(Bukkit.getPluginManager());
 
         String uri = getConfig().getString("mongodb-connectionstring");
+        if (uri == null) {
+            getLogger().warning("Plugin can't start because MongoDB URI is missing.");
+            Bukkit.getPluginManager().disablePlugin(instance);
+            return;
+        }
         MongoClientURI clientURI = new MongoClientURI(uri);
         MongoClient mongoClient = new MongoClient(clientURI);
 
@@ -152,39 +158,51 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
 
         // PROFILE & AFK SCHEDULER
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
-            for (Player player : getServer().getOnlinePlayers()) {
-                Profile profile = getProfile(player.getUniqueId());
-                profile.syncDiscordAndIngameRoles();
-                profile.backup();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
+                for (Player player : getServer().getOnlinePlayers()) {
+                    Profile profile = getProfile(player.getUniqueId());
+                    profile.syncDiscordAndIngameRoles();
+                    profile.backup();
+                }
+                Bukkit.getConsoleSender().sendMessage("§aDone.");
             }
-            Bukkit.getConsoleSender().sendMessage("§aDone.");
-        }, (20 * 60) * 10, (20 * 60) * 10);
+        }.runTaskTimerAsynchronously(this, (20 * 60) * 10, (20 * 60) * 10);
 
         // NATION SCHEDULER
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            System.out.println("§aSaving all nations in the database...");
-            for (Nation nation : NationManager.nations.values())
-                nation.backup();
-            System.out.println("§aSaved all nations in the database.");
-        }, (20 * 60) * 15, (20 * 60) * 15);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                System.out.println("§aSaving all nations in the database...");
+                for (Nation nation : NationManager.nations.values())
+                    nation.backup();
+                System.out.println("§aSaved all nations in the database.");
+            }
+        }.runTaskTimerAsynchronously(this, (20 * 60) * 16, (20 * 60) * 15);
 
         // ENERGY SCHEDULER
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (!utilLists.afk.contains(player.getUniqueId())) {
-                    Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 1D);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (!utilLists.afk.contains(player.getUniqueId())) {
+                        Profile profile = getProfile(player.getUniqueId());
+                        Energy.add(profile, 1D);
+                    }
                 }
             }
-        }, (20 * 60) * 60, (20 * 60) * 60);
+        }.runTaskTimerAsynchronously(this, (20 * 60) * 60, (20 * 60) * 60);
 
         // MACHINES
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            for (Machine machine : utilLists.machines.values())
-                machine.save();
-        }, (20 * 60) * 5, (20 * 60) * 5);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for  (Machine machine : utilLists.machines.values())
+                    machine.save();
+            }
+        }.runTaskTimerAsynchronously(this, (20 * 60) * 5, (20 * 60) * 5);
 
         NationManager.init();
 
@@ -239,7 +257,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -247,7 +265,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
     }
 
@@ -380,26 +398,30 @@ public final class Main extends JavaPlugin {
                     e.printStackTrace();
                 }
             }
-        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
+        ServerTextChannel chatChannel = MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get();
+        chatChannel.sendMessage(new EmbedBuilder()
                 .setColor(Color.green)
-                .setDescription("<:online:716052437848424558> Server is online!")
-        );
-        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
+                .setDescription("<:online:716052437848424558> Server is online!"));
+        chatChannel.createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
 
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, () -> {
-            if (!(MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().getTopic().equals("<:online:716052437848424558> Earth is online!"))) {
-                MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!(chatChannel.getTopic().equals("<:online:716052437848424558> Earth is online!"))) {
+                    chatChannel.createUpdater().setTopic("<:online:716052437848424558> Earth is online!").update();
+                }
             }
-        }, (20 * 60) * 10);
+        }.runTaskLaterAsynchronously(this, (20 * 60) * 10);
 
     }
 
     public void discordDisable() {
-        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().sendMessage(new EmbedBuilder()
+        ServerTextChannel chatChannel = MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get();
+        chatChannel.sendMessage(new EmbedBuilder()
                 .setColor(Color.RED)
                 .setDescription("<:offline:716052437688909825> Server is offline!")
         );
-        MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get().createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
+        chatChannel.createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
         MiniMick.getApi().disconnect();
     }
 

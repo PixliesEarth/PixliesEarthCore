@@ -7,6 +7,7 @@ import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,14 +27,12 @@ public class UtilThread extends Thread {
 
     private void tick() {
         // GUN DELAYS
-        Main.getInstance().getUtilLists().waitingGuns.entrySet().removeIf(item -> item.getValue().getRemaining() <= 0);
-
- /*       Iterator<Entry<UUID, Timer>> it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
+        Iterator<Map.Entry<UUID, Timer>> it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<UUID, Timer> item = it.next();
             if (item.getValue().getRemaining() <= 0)
                 it.remove();
-        }*/
+        }
 
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()
