@@ -32,7 +32,7 @@ public class ChatSystem implements Listener, Module {
             if (instance.getUtilLists().warpAdder.contains(player.getUniqueId())) {
                 event.setCancelled(true);
                 Material mat = Material.GRASS_BLOCK;
-                if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType() != Material.AIR)
+                if (player.getInventory().getItemInMainHand().getType() != Material.AIR)
                     mat = player.getInventory().getItemInMainHand().getType();
                 new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
                 instance.getUtilLists().warpAdder.remove(player.getUniqueId());
@@ -92,9 +92,7 @@ public class ChatSystem implements Listener, Module {
                         Lang.PLAYER_DOES_NOT_EXIST.send(player);
                         return;
                     }
-                    Bukkit.getScheduler().runTask(instance, () -> {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + event.getMessage().split(" ")[0] + " parent addtemp royal 6d");
-                    });
+                    Bukkit.getScheduler().runTask(instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + event.getMessage().split(" ")[0] + " parent addtemp royal 6d"));
                     profile.getExtras().put("giftedRoyal", true);
                     profile.save();
                     instance.getUtilLists().royalGifters.remove(player.getUniqueId());
@@ -111,8 +109,9 @@ public class ChatSystem implements Listener, Module {
                         case NATION:
                             profile.getCurrentNation().broadcastMembers("§bNATION-CHAT §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
                             for (UUID uuid : instance.getUtilLists().staffMode) {
-                                if (Bukkit.getPlayer(uuid) == null) continue;
-                                Bukkit.getPlayer(uuid).sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                Player target = Bukkit.getPlayer(uuid);
+                                if (target == null) continue;
+                                target.sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
                             }
                             break;
                         case ALLY:
@@ -123,8 +122,9 @@ public class ChatSystem implements Listener, Module {
                                 ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
                             }
                             for (UUID uuid : instance.getUtilLists().staffMode) {
-                                if (Bukkit.getPlayer(uuid) == null) continue;
-                                Bukkit.getPlayer(uuid).sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                Player target = Bukkit.getPlayer(uuid);
+                                if (target == null) continue;
+                                target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
                             }
                             break;
                     }
@@ -183,12 +183,12 @@ public class ChatSystem implements Listener, Module {
                         if (profile.isInNation()) {
                             if (oProfile.isInNation()) {
                                 Nation.NationRelation rel = Nation.getRelation(oProfile.getNationId(), profile.getNationId());
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§" + rel.colChar + profile.getCurrentNation().getName()));
+                                oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§" + rel.colChar + profile.getCurrentNation().getName()));
                             } else {
-                                oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
+                                oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
                             }
                         } else {
-                            oProfile.getAsOfflinePlayer().getPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation% " + ChatColor.DARK_GRAY + "| ", ""));
+                            oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation% " + ChatColor.DARK_GRAY + "| ", ""));
                         }
                     }
                 }
