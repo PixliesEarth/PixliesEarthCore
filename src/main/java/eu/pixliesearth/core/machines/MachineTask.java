@@ -8,7 +8,7 @@ public class MachineTask extends Thread implements Serializable {
 
     private static final Main instance = Main.getInstance();
     private static final long serialVersionUID = -4595269124932363893L;
-    private boolean ready = false;
+    private boolean tick = false;
 
     public MachineTask() {
         start();
@@ -16,12 +16,11 @@ public class MachineTask extends Thread implements Serializable {
 
     @Override
     public void run() {
-        while (true) {
+        while (tick) {
             //Tick
             try {
-                if (ready)
-                    for (Machine machine : instance.getUtilLists().machines.values())
-                        machine.tick();
+                for (Machine machine : instance.getUtilLists().machines.values())
+                    machine.tick();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -36,12 +35,16 @@ public class MachineTask extends Thread implements Serializable {
 
     public void init() {
         Machine.loadAll();
-        this.ready = true;
+        this.tick = true;
     }
 
     public void stopThread() {
-        this.ready = false;
-        stop();
+        this.tick = false;
+        try {
+            join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
