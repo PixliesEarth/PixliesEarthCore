@@ -35,7 +35,7 @@ public class IngotCastIron extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Cast Iron Ingot";
+        return "ยง6Cast Iron Ingot";
     }
 
     @Override

@@ -35,7 +35,7 @@ public class IngotSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Steel Ingot";
+        return "ยง6Steel Ingot";
     }
 
     @Override

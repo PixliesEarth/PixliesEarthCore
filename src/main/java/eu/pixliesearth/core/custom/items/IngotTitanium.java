@@ -35,7 +35,7 @@ public class IngotTitanium extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Titanium Ingot";
+        return "ยง6Titanium Ingot";
     }
 
     @Override

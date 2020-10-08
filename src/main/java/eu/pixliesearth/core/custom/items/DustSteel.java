@@ -35,7 +35,7 @@ public class DustSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Steel Dust";
+        return "ยง6Steel Dust";
     }
 
     @Override

@@ -1,31 +1,23 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomArmour;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomItem;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class DustStainlessSteel extends CustomItem {
-	
-    public DustStainlessSteel() {
+import java.util.*;
+
+public class ArmourWoodenLeggings extends CustomArmour {
+
+    public ArmourWoodenLeggings() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.GUNPOWDER;
+        return Material.GOLDEN_LEGGINGS;
     }
 
     @Override
@@ -35,7 +27,7 @@ public class DustStainlessSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Stainless Steel Dust";
+        return "§6Wooden Leggings";
     }
 
     @Override
@@ -65,21 +57,32 @@ public class DustStainlessSteel extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 23;
+    }
+
+    @Override
+    public double getArmour() {
+        return 4D;
     }
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.REDSTONE;
+        return CreativeTabs.COMBAT;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Stainless_Steel_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Wooden_Leggings"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+    @Override
+    public boolean EntityDamageEvent(EntityDamageEvent event) {
+        return false;
+    }
+
 }

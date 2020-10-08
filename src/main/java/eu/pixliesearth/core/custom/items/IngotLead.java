@@ -35,7 +35,7 @@ public class IngotLead extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Lead Ingot";
+        return "ยง6Lead Ingot";
     }
 
     @Override

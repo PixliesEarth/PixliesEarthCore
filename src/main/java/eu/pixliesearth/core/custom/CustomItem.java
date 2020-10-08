@@ -74,6 +74,10 @@ public class CustomItem {
 		return CreativeTabs.NONE;
 	}
 	
+	public Rarity getRarity() {
+		return Rarity.NONE;
+	}
+	
 	public ItemStack buildItem() {
 		return new ItemBuilder(getMaterial()) {{
 			setGlow(isGlowing());
@@ -93,6 +97,8 @@ public class CustomItem {
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
 				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
+				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
+				addLoreLine("§fRarity: "+getRarity().getName());
 			}}.build();
 	}
 	
@@ -161,6 +167,48 @@ public class CustomItem {
 				if (c.getName().equals(name)) 
 					return c;
 			return CreativeTabs.NONE;
+		}
+	}
+	/**
+	 * 
+	 * @author BradBot_1
+	 * 
+	 * <h3>An enum containing all rarities</h3>
+	 *
+	 */
+	public static enum Rarity {
+		NONE("Pixlies:Rarity_NONE", 0, "§lNone"),
+		COMMON("Pixlies:Rarity_COMMON", 1, "§a§lCommon"),
+		UNCOMMON("Pixlies:Rarity_UNCOMMON", 2, "§2§lUncommon"),
+		RARE("Pixlies:Rarity_RARE", 3, "§b§lRare"),
+		VERYRARE("Pixlies:Rarity_VERYRARE", 4, "§3§lVery Rare"),
+		LEGENDARY("Pixlies:Rarity_LEGENDARY", 5, "§c§lLegandary"),
+		MYTHIC("Pixlies:Rarity_MYTHIC", 6, "§4§lMythic"),
+		GODLIKE("Pixlies:Rarity_GODLIKE", 7, "§6§lGodlike"),
+		;
+		
+		@Getter String UUID;
+		@Getter int level;
+		@Getter String name;
+		
+		Rarity(String id, int level, String name) {
+			this.UUID = id;
+			this.level = level;
+			this.name = name;
+		}
+		
+		public static Rarity getRarityFromUUID(String id) {
+			for (Rarity r : values()) 
+				if (r.getUUID().equals(id)) 
+						return r;
+			return Rarity.NONE;
+		}
+		
+		public static Rarity getRarityFromLevel(int level) {
+			for (Rarity r : values()) 
+				if (r.getLevel()==level) 
+						return r;
+			return Rarity.NONE;
 		}
 	}
 }

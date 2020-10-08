@@ -35,7 +35,7 @@ public class IngotAluminum extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Aluminum Ingot";
+        return "ยง6Aluminum Ingot";
     }
 
     @Override

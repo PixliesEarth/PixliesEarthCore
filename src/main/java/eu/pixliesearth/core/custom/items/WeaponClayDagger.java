@@ -11,21 +11,17 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomItem;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class IngotCopper extends CustomItem {
+import eu.pixliesearth.core.custom.CustomWeapon;
+
+public class WeaponClayDagger extends CustomWeapon {
 	
-	public IngotCopper() {
+	public WeaponClayDagger() {
 		
 	}
 	
 	@Override
 	public Material getMaterial() {
-		return Material.BRICK;
+		return Material.WOODEN_SWORD;
 	}
 
 	@Override
@@ -35,7 +31,7 @@ public class IngotCopper extends CustomItem {
 
 	@Override
 	public String getDefaultDisplayName() {
-		return "§6Copper Ingot";
+		return "§6Clay Dagger";
 	}
 
 	@Override
@@ -75,7 +71,12 @@ public class IngotCopper extends CustomItem {
 	
 	@Override
 	public String getUUID() {
-		return "Pixlies:Copper_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+		return "Pixlies:Clay_Dagger"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+	}
+	
+	@Override
+	public int getDamage() {
+		return 3;
 	}
 	
 	@Override

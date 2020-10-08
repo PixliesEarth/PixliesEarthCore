@@ -35,7 +35,7 @@ public class IngotDamascusSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Damascus Steel Ingot";
+        return "ยง6Damascus Steel Ingot";
     }
 
     @Override

@@ -25,7 +25,7 @@ public class allyNation implements SubCommand {
 
     @Override
     public Map<String, Integer> autoCompletion() {
-        return new HashMap<>(){
+        return new HashMap<String, Integer>(){
             private static final long serialVersionUID = -1002643333466882536L;
 
             {put(ChatColor.AQUA + "NATION", 1);}};

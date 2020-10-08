@@ -12,20 +12,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
 import eu.pixliesearth.core.custom.CustomItem;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class DustStainlessSteel extends CustomItem {
+
+public class ItemUnfiredPot extends CustomItem {
 	
-    public DustStainlessSteel() {
+    public ItemUnfiredPot() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.GUNPOWDER;
+        return Material.FLOWER_POT;
     }
 
     @Override
@@ -35,7 +31,7 @@ public class DustStainlessSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Stainless Steel Dust";
+        return "§6Unfired Pot";
     }
 
     @Override
@@ -75,7 +71,7 @@ public class DustStainlessSteel extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Stainless_Steel_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Unfired_Pot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override

@@ -35,7 +35,7 @@ public class IngotStainlessSteel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Stainless Steel Ingot";
+        return "ยง6Stainless Steel Ingot";
     }
 
     @Override

@@ -60,6 +60,8 @@ public class CustomWeapon extends CustomItem {
 					addItemFlag(flag);
 				setDamage(getDamage());
 				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
+				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
+				addLoreLine("§fRarity: "+getRarity().getName());
 			}}.build();
 	}
 }

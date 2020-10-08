@@ -1,15 +1,40 @@
 package eu.pixliesearth.core.machines;
 
+import static org.bukkit.Material.BRICK;
+import static org.bukkit.Material.CLAY;
+import static org.bukkit.Material.CLAY_BALL;
+import static org.bukkit.Material.CRAFTING_TABLE;
+import static org.bukkit.Material.FLOWER_POT;
+import static org.bukkit.Material.GOLD_INGOT;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.MAGMA_BLOCK;
+import static org.bukkit.Material.STICK;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.gson.JsonObject;
+
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.customitems.CustomItems;
-import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeBoots;
-import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeChestPlate;
-import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeHelmet;
-import eu.pixliesearth.core.customitems.ci.armour.bronze.ArmourBronzeLeggings;
-import eu.pixliesearth.core.customitems.ci.weapons.melee.ItemBronzeSword;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
@@ -24,28 +49,13 @@ import eu.pixliesearth.core.machines.cargo.CargoMachine;
 import eu.pixliesearth.core.machines.cargo.InputNode;
 import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.*;
-
-import static org.bukkit.Material.*;
 
 @Data
 @AllArgsConstructor
@@ -245,7 +255,7 @@ public class Machine {
         OUTPUT_NODE(OutputNode.item, OutputNode.class, CargoMachine.class, MachineCrafter.item),
         KILN(Kiln.item, Kiln.class, FuelableAutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)),
         POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)),
-        BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, CustomItems.BRONZE_INGOT.getBuilder().setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
+        BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
         MACHINE_CRAFTER(MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class, new ItemStack(CRAFTING_TABLE)),
         ;
 
@@ -274,31 +284,31 @@ public class Machine {
         //KILN
         SMELT_IRON(MachineType.KILN, new ItemBuilder(Material.IRON_ORE).setGlow().setDisplayName("Smelt iron").build(), Collections.singletonList(new ItemStack(Material.IRON_ORE, 16)), Collections.singletonList(new ItemStack(Material.IRON_INGOT, 32)), 10, Era.ANCIENT),
         SMELT_GOLD(MachineType.KILN, new ItemBuilder(Material.GOLD_ORE).setGlow().setDisplayName("Smelt gold").build(), Collections.singletonList(new ItemStack(Material.GOLD_ORE, 16)), Collections.singletonList(new ItemStack(Material.GOLD_INGOT, 32)), 10, Era.ANCIENT),
-        MAKE_BRONZE_INGOT(MachineType.KILN, CustomItems.BRONZE_INGOT.getItem(), Arrays.asList(new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(IRON_INGOT), new ItemStack(IRON_INGOT), new ItemStack(MAGMA_BLOCK)), Collections.singletonList(new ItemBuilder(CustomItems.BRONZE_INGOT.getItem()).setAmount(4).build()), 10, Era.ANCIENT),
-        MUD_BRICK_KILN(MachineType.KILN, CustomItems.MUD_BRICK.getItem(), Collections.singletonList(new ItemStack(CLAY, 9)), Collections.singletonList(CustomItems.MUD_BRICK.getItem()), 4, Era.ANCIENT),
-        BRICK_KILN(MachineType.KILN, new ItemStack(BRICK, 4), Collections.singletonList(new ItemBuilder(CustomItems.MUD_BRICK.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(BRICK, 4)), 4, Era.ANCIENT),
-        POT_KILN(MachineType.KILN, new ItemStack(FLOWER_POT), Collections.singletonList(new ItemBuilder(CustomItems.UNFIRED_POT.getItem()).setAmount(1).build()), Collections.singletonList(new ItemStack(FLOWER_POT)), 3, Era.ANCIENT),
-        ARSENIC_BRONZE(MachineType.KILN, CustomItems.ARSENIC_BRONZE_INGOT.getItem(), Arrays.asList(CustomItems.ARSENIC_INGOT.getItem(), CustomItems.COPPER_INGOT.getItem()), Collections.singletonList(CustomItems.ARSENIC_BRONZE_INGOT.getItem()), 4, Era.ANCIENT),
-
+        MAKE_BRONZE_INGOT(MachineType.KILN, CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot"), Arrays.asList(new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(GOLD_INGOT), new ItemStack(IRON_INGOT), new ItemStack(IRON_INGOT), new ItemStack(MAGMA_BLOCK)), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build()), 10, Era.ANCIENT),
+        MUD_BRICK_KILN(MachineType.KILN, CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick"), Collections.singletonList(new ItemStack(CLAY, 9)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")), 4, Era.ANCIENT),
+        BRICK_KILN(MachineType.KILN, new ItemStack(BRICK, 4), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")).setAmount(1).build()), Collections.singletonList(new ItemStack(BRICK, 4)), 4, Era.ANCIENT),
+        POT_KILN(MachineType.KILN, new ItemStack(FLOWER_POT), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Unfired_Pot")).setAmount(1).build()), Collections.singletonList(new ItemStack(FLOWER_POT)), 3, Era.ANCIENT),
+        ARSENIC_BRONZE(MachineType.KILN, CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Ingot"), Arrays.asList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Ingot"), CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Ingot")), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Ingot")), 4, Era.ANCIENT),
+        
         // BRONZE FORGE
-        FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").build(), Arrays.asList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(new ItemBronzeSword().getItem()), 60, Era.ANCIENT),
-        FORGE_BRONZE_HELMET(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_HELMET).setGlow().setDisplayName("Forge bronze helmet").build(), Collections.singletonList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(5).build()), Collections.singletonList(new ArmourBronzeHelmet().getItem()), 60, Era.ANCIENT),
-        FORGE_BRONZE_CHESTPLATE(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_CHESTPLATE).setGlow().setDisplayName("Forge bronze chestplate").build(), Collections.singletonList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(8).build()), Collections.singletonList(new ArmourBronzeChestPlate().getItem()), 60, Era.ANCIENT),
-        FORGE_BRONZE_LEGGINGS(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_LEGGINGS).setGlow().setDisplayName("Forge bronze leggings").build(), Collections.singletonList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(7).build()), Collections.singletonList(new ArmourBronzeLeggings().getItem()), 60, Era.ANCIENT),
-        FORGE_BRONZE_BOOTS(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_BOOTS).setGlow().setDisplayName("Forge bronze boots").build(), Collections.singletonList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(4).build()), Collections.singletonList(new ArmourBronzeBoots().getItem()), 60, Era.ANCIENT),
+        FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(2).build(), new ItemStack(Material.STICK)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Sword")), 60, Era.ANCIENT),
+        FORGE_BRONZE_HELMET(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_HELMET).setGlow().setDisplayName("Forge bronze helmet").build(), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(5).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Helmet")), 60, Era.ANCIENT),
+        FORGE_BRONZE_CHESTPLATE(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_CHESTPLATE).setGlow().setDisplayName("Forge bronze chestplate").build(), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(8).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Chestplate")), 60, Era.ANCIENT),
+        FORGE_BRONZE_LEGGINGS(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_LEGGINGS).setGlow().setDisplayName("Forge bronze leggings").build(), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(7).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Leggings")), 60, Era.ANCIENT),
+        FORGE_BRONZE_BOOTS(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_BOOTS).setGlow().setDisplayName("Forge bronze boots").build(), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Boots")), 60, Era.ANCIENT),
         
         
         // POTTERY
-        MUD_BRICK_POTTERY(MachineType.POTTERY, CustomItems.MUD_BRICK.getItem(), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(CustomItems.MUD_BRICK.getItem()), 4, Era.TRIBAL),
-        UNFIRED_POT(MachineType.POTTERY, CustomItems.UNFIRED_POT.getBuilder().setAmount(4).build(), Collections.singletonList(CustomItems.MUD_BRICK.getBuilder().setAmount(4).build()), Collections.singletonList(CustomItems.MUD_BRICK.getItem()), 6, Era.TRIBAL),
-        TABLET_POTTERY(MachineType.POTTERY, CustomItems.TABLET.getItem(), Collections.singletonList(CustomItems.MUD_BRICK.getBuilder().setAmount(4).build()), Collections.singletonList(CustomItems.TABLET.getItem()), 6, Era.TRIBAL),
-        CLAY_DAGGER_POTTERY(MachineType.POTTERY, CustomItems.CLAY_DAGGER.getItem(), Arrays.asList(new ItemStack(CLAY_BALL, 2), new ItemStack(STICK)), Collections.singletonList(CustomItems.CLAY_DAGGER.getItem()), 3, Era.TRIBAL),
+        MUD_BRICK_POTTERY(MachineType.POTTERY, CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick"), Arrays.asList(new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.CLAY, 4)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")), 4, Era.TRIBAL),
+        UNFIRED_POT(MachineType.POTTERY, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Unfired_Pot")).setAmount(4).build(), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")).setAmount(4).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")), 6, Era.TRIBAL),
+        TABLET_POTTERY(MachineType.POTTERY, CustomItemUtil.getItemStackFromUUID("Pixlies:Tablet"), Collections.singletonList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Mud_Brick")).setAmount(4).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Tablet")), 6, Era.TRIBAL),
+        CLAY_DAGGER_POTTERY(MachineType.POTTERY, CustomItemUtil.getItemStackFromUUID("Pixlies:Clay_Dagger"), Arrays.asList(new ItemStack(CLAY_BALL, 2), new ItemStack(STICK)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Clay_Dagger")), 3, Era.TRIBAL),
 
         // MACHINE CRAFTER
         TINKER_TABLE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.TINKER_TABLE.getItem()).build(), Arrays.asList(new ItemStack(Material.OAK_PLANKS, 16), new ItemStack(Material.IRON_INGOT, 4)), Collections.singletonList(MachineType.TINKER_TABLE.getItem()), 20, Era.TRIBAL),
     	KILN(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.KILN.getItem()).build(), Arrays.asList(new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)), Collections.singletonList(MachineType.KILN.getItem()), 20, Era.TRIBAL),
     	POTTERY(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.POTTERY.getItem()).build(), Arrays.asList(new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)), Collections.singletonList(MachineType.POTTERY.getItem()), 20, Era.TRIBAL),
-    	BRONZE_FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.BRONZE_FORGE.getItem()).build(), Arrays.asList(CustomItems.BRONZE_INGOT.getBuilder().setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)), Collections.singletonList(MachineType.BRONZE_FORGE.getItem()), 30, Era.TRIBAL),
+    	BRONZE_FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.BRONZE_FORGE.getItem()).build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)), Collections.singletonList(MachineType.BRONZE_FORGE.getItem()), 30, Era.TRIBAL),
     	
         ;
 

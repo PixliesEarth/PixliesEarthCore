@@ -35,7 +35,7 @@ public class DustTitanium extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "ง6Titanium Dust";
+        return "ยง6Titanium Dust";
     }
 
     @Override
