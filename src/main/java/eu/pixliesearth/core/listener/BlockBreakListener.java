@@ -1,29 +1,15 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosivePick;
-import eu.pixliesearth.core.customitems.ci.tools.ItemExplosiveShovel;
-import eu.pixliesearth.core.customitems.ci.tools.ItemScythe;
-import eu.pixliesearth.localization.Lang;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 public class BlockBreakListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         //Explosive Pick
+    	/*
         if (!event.isCancelled()) {
             if (event.getPlayer().getInventory().getItemInMainHand() != null) {
                 if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE || event.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_SHOVEL) {
@@ -133,7 +119,7 @@ public class BlockBreakListener implements Listener {
                 	}
                 }
             }
-        }
+        }*/
 
     }
 

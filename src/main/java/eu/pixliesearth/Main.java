@@ -1,57 +1,11 @@
 package eu.pixliesearth;
 
-import com.google.gson.Gson;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import eu.pixliesearth.core.commands.economy.BalanceCommand;
-import eu.pixliesearth.core.commands.economy.CoinsCommand;
-import eu.pixliesearth.core.commands.economy.PayCommand;
-import eu.pixliesearth.core.commands.player.*;
-import eu.pixliesearth.core.commands.util.*;
-import eu.pixliesearth.core.customblocks.CustomBlockListener;
-import eu.pixliesearth.core.customblocks.CustomBlocks;
-import eu.pixliesearth.core.customcrafting.CustomRecipies;
-import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
-import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
-import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
-import eu.pixliesearth.core.listener.*;
-import eu.pixliesearth.core.machines.Machine;
-import eu.pixliesearth.core.machines.MachineListener;
-import eu.pixliesearth.core.machines.MachineTask;
-import eu.pixliesearth.core.modules.ChatSystem;
-import eu.pixliesearth.core.modules.PrivateMessage;
-import eu.pixliesearth.core.modules.ShopSystem;
-import eu.pixliesearth.core.modules.WarpSystem;
-import eu.pixliesearth.core.modules.economy.EconomySystem;
-import eu.pixliesearth.core.modules.economy.VaultAPI;
-import eu.pixliesearth.core.objects.Energy;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
-import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
-import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.guns.commands.GunGiveCommand;
-import eu.pixliesearth.guns.listeners.GunListener;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.commands.NationCommand;
-import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
-import eu.pixliesearth.nations.entities.chunk.NationChunk;
-import eu.pixliesearth.nations.entities.nation.*;
-import eu.pixliesearth.nations.listener.MapClickListener;
-import eu.pixliesearth.nations.managers.NationManager;
-import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.GulagThread;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.utils.UtilThread;
-import eu.pixliesearth.warsystem.*;
-import lombok.Getter;
-import lombok.Setter;
-import net.luckperms.api.LuckPerms;
-import net.milkbowl.vault.economy.Economy;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -75,11 +29,117 @@ import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
+import com.google.gson.Gson;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import eu.pixliesearth.core.commands.economy.BalanceCommand;
+import eu.pixliesearth.core.commands.economy.CoinsCommand;
+import eu.pixliesearth.core.commands.economy.PayCommand;
+import eu.pixliesearth.core.commands.player.AdoptCommand;
+import eu.pixliesearth.core.commands.player.BlockCommand;
+import eu.pixliesearth.core.commands.player.BoostCommand;
+import eu.pixliesearth.core.commands.player.CraftCommand;
+import eu.pixliesearth.core.commands.player.DivorceCommand;
+import eu.pixliesearth.core.commands.player.EnderchestCommand;
+import eu.pixliesearth.core.commands.player.FamilyCommand;
+import eu.pixliesearth.core.commands.player.FeedCommand;
+import eu.pixliesearth.core.commands.player.FlyCommand;
+import eu.pixliesearth.core.commands.player.FlySpeedCommand;
+import eu.pixliesearth.core.commands.player.GamemodeAdventureCommand;
+import eu.pixliesearth.core.commands.player.GamemodeCreativeCommand;
+import eu.pixliesearth.core.commands.player.GamemodeSpectatorCommand;
+import eu.pixliesearth.core.commands.player.GamemodeSurvivalCommand;
+import eu.pixliesearth.core.commands.player.HealCommand;
+import eu.pixliesearth.core.commands.player.HomeCommand;
+import eu.pixliesearth.core.commands.player.LinkCommand;
+import eu.pixliesearth.core.commands.player.LobbyCommand;
+import eu.pixliesearth.core.commands.player.MachinesCommand;
+import eu.pixliesearth.core.commands.player.MarryCommand;
+import eu.pixliesearth.core.commands.player.NickCommand;
+import eu.pixliesearth.core.commands.player.PremiumCommand;
+import eu.pixliesearth.core.commands.player.ProfileCommand;
+import eu.pixliesearth.core.commands.player.RealNameCommand;
+import eu.pixliesearth.core.commands.player.SkullCommand;
+import eu.pixliesearth.core.commands.player.SmiteCommand;
+import eu.pixliesearth.core.commands.player.StatsCommand;
+import eu.pixliesearth.core.commands.player.SudoCommand;
+import eu.pixliesearth.core.commands.player.SuicideCommand;
+import eu.pixliesearth.core.commands.player.TpHereCommand;
+import eu.pixliesearth.core.commands.player.TpaCommand;
+import eu.pixliesearth.core.commands.player.TpacceptCommand;
+import eu.pixliesearth.core.commands.player.VanishCommand;
+import eu.pixliesearth.core.commands.player.WalkSpeedCommand;
+import eu.pixliesearth.core.commands.player.WoohooCommand;
+import eu.pixliesearth.core.commands.util.BackupCommand;
+import eu.pixliesearth.core.commands.util.BroadcastCommand;
+import eu.pixliesearth.core.commands.util.ChatCommand;
+import eu.pixliesearth.core.commands.util.InvseeCommand;
+import eu.pixliesearth.core.commands.util.ModulesCommand;
+import eu.pixliesearth.core.commands.util.SeenCommand;
+import eu.pixliesearth.core.commands.util.StaffCommand;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
+import eu.pixliesearth.core.listener.AchievementListener;
+import eu.pixliesearth.core.listener.AnvilListener;
+import eu.pixliesearth.core.listener.BlockBreakListener;
+import eu.pixliesearth.core.listener.DeathListener;
+import eu.pixliesearth.core.listener.ItemInteractListener;
+import eu.pixliesearth.core.listener.JoinListener;
+import eu.pixliesearth.core.listener.LeaveListener;
+import eu.pixliesearth.core.listener.MoveListener;
+import eu.pixliesearth.core.listener.PlayerCombatListener;
+import eu.pixliesearth.core.listener.PlayerInteractListener;
+import eu.pixliesearth.core.listener.PlayerLoginListener;
+import eu.pixliesearth.core.listener.ProtectionListener;
+import eu.pixliesearth.core.listener.Restrictions;
+import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.core.machines.MachineListener;
+import eu.pixliesearth.core.machines.MachineTask;
+import eu.pixliesearth.core.modules.ChatSystem;
+import eu.pixliesearth.core.modules.PrivateMessage;
+import eu.pixliesearth.core.modules.ShopSystem;
+import eu.pixliesearth.core.modules.WarpSystem;
+import eu.pixliesearth.core.modules.economy.EconomySystem;
+import eu.pixliesearth.core.modules.economy.VaultAPI;
+import eu.pixliesearth.core.objects.Energy;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
+import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
+import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.guns.commands.GunGiveCommand;
+import eu.pixliesearth.guns.listeners.GunListener;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
+import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.commands.NationCommand;
+import eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand;
+import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.nations.entities.nation.FlagListener;
+import eu.pixliesearth.nations.entities.nation.Ideology;
+import eu.pixliesearth.nations.entities.nation.NTop;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
+import eu.pixliesearth.nations.entities.nation.Religion;
+import eu.pixliesearth.nations.listener.MapClickListener;
+import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
+import eu.pixliesearth.utils.FileManager;
+import eu.pixliesearth.utils.GulagThread;
+import eu.pixliesearth.utils.UtilLists;
+import eu.pixliesearth.utils.UtilThread;
+import eu.pixliesearth.warsystem.CommandListener;
+import eu.pixliesearth.warsystem.GulagSetSpawn;
+import eu.pixliesearth.warsystem.GulagSetSpawnTab;
+import eu.pixliesearth.warsystem.GulagSkipCommand;
+import eu.pixliesearth.warsystem.GulagStartListener;
+import lombok.Getter;
+import lombok.Setter;
+import net.luckperms.api.LuckPerms;
+import net.milkbowl.vault.economy.Economy;
 
 public final class Main extends JavaPlugin {
 
@@ -101,6 +161,7 @@ public final class Main extends JavaPlugin {
     private @Getter Config redissonConfig;
     private @Getter RedissonClient redissonClient;
     private @Getter Gson gson;
+    private @Getter CustomFeatureLoader loader;
 
     @Override
     public void onEnable() {
@@ -125,7 +186,7 @@ public final class Main extends JavaPlugin {
 
         utilLists = new UtilLists();
         
-        CustomRecipies.register();
+        loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
@@ -246,8 +307,6 @@ public final class Main extends JavaPlugin {
         // MACHINES
         machineTask.init();
 
-        CustomBlocks.load();
-
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null)
             luckPerms = provider.getProvider();
@@ -274,7 +333,7 @@ public final class Main extends JavaPlugin {
         discordDisable();
         machineTask.stopThread();
         dynmapKernel.onDisable();
-        CustomBlocks.save();
+        loader.save();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())
@@ -325,8 +384,6 @@ public final class Main extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
-        getCommand("cigive").setExecutor(new CiGiveCommand());
-        getCommand("cigive").setTabCompleter(new CiGiveCommand());
         getCommand("marry").setExecutor(new MarryCommand());
         getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
@@ -357,8 +414,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GunListener(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
         manager.registerEvents(new AchievementListener(), this);
-        manager.registerEvents(new ItemsInteractEvent(), this);
-        manager.registerEvents(new SlingshotListener(), this);
         manager.registerEvents(new Restrictions(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new PlayerInteractListener(), this);
