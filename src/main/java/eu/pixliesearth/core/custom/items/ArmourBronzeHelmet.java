@@ -1,13 +1,18 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomArmour;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomArmour;
 
 public class ArmourBronzeHelmet extends CustomArmour {
 
