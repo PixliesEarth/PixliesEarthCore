@@ -58,7 +58,7 @@ public class CustomWeapon extends CustomItem {
 					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
-				setDamage(getDamage());
+				setAttackDamage(getDamage());
 				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 				addLoreLine("§fRarity: "+getRarity().getName());

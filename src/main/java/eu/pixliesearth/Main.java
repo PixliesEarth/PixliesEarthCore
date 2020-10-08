@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -166,6 +167,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         init();
     }
 
@@ -185,8 +187,6 @@ public final class Main extends JavaPlugin {
         gson = new Gson();
 
         utilLists = new UtilLists();
-        
-        loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
@@ -403,6 +403,8 @@ public final class Main extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
         getCommand("machines").setExecutor(new MachinesCommand());
+        getCommand("cigive").setExecutor(new GiveCustomItems());
+        getCommand("cigive").setTabCompleter(new GiveCustomItems());
     }
 
     private void registerEvents(PluginManager manager) {

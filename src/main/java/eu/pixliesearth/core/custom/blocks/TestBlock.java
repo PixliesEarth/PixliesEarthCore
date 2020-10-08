@@ -34,7 +34,7 @@ public class TestBlock extends CustomBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Test Block";
+        return "Â§6Test Block";
     }
 
     @Override
@@ -79,28 +79,28 @@ public class TestBlock extends CustomBlock {
     
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	event.getPlayer().sendMessage("§rYou clicked with the custom block §a"+getDefaultDisplayName()+"§r(§a"+getUUID()+"§r)");
+    	event.getPlayer().sendMessage("Â§rYou clicked with the custom block Â§a"+getDefaultDisplayName()+"Â§r(Â§a"+getUUID()+"Â§r)");
         return false;
     }
     
 	@Override
 	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
 		Location l = event.getClickedBlock().getLocation();
-		event.getPlayer().sendMessage("§rYou clicked on the custom block §a"+getDefaultDisplayName()+"§r(§a"+getUUID()+"§r) at §a"+l.getBlockX()+"§r, §a"+l.getBlockY()+"§r, §a"+l.getBlockZ());
+		event.getPlayer().sendMessage("Â§rYou clicked on the custom block Â§a"+getDefaultDisplayName()+"Â§r(Â§a"+getUUID()+"Â§r) at Â§a"+l.getBlockX()+"Â§r, Â§a"+l.getBlockY()+"Â§r, Â§a"+l.getBlockZ());
 		return false;
 	}
 
 	@Override
 	public boolean BlockBreakEvent(BlockBreakEvent event) {
 		Location l = event.getBlock().getLocation();
-		event.getPlayer().sendMessage("§rYou broke the custom block §a"+getDefaultDisplayName()+"§r(§a"+getUUID()+"§r) at §a"+l.getBlockX()+"§r, §a"+l.getBlockY()+"§r, §a"+l.getBlockZ());
+		event.getPlayer().sendMessage("Â§rYou broke the custom block Â§a"+getDefaultDisplayName()+"Â§r(Â§a"+getUUID()+"Â§r) at Â§a"+l.getBlockX()+"Â§r, Â§a"+l.getBlockY()+"Â§r, Â§a"+l.getBlockZ());
 		return false;
 	}
 	
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		Location l = event.getBlock().getLocation();
-		event.getPlayer().sendMessage("§rYou placed the custom block §a"+getDefaultDisplayName()+"§r(§a"+getUUID()+"§r) at §a"+l.getBlockX()+"§r, §a"+l.getBlockY()+"§r, §a"+l.getBlockZ());
+		event.getPlayer().sendMessage("Â§rYou placed the custom block Â§a"+getDefaultDisplayName()+"Â§r(Â§a"+getUUID()+"Â§r) at Â§a"+l.getBlockX()+"Â§r, Â§a"+l.getBlockY()+"Â§r, Â§a"+l.getBlockZ());
 		return false;
 	}
 	

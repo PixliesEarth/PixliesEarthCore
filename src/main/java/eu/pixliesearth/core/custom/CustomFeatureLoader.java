@@ -104,7 +104,11 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCustomItems(String path) {
-		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) 
+		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class))
+			loadCustomItem(clazz.newInstance());
+		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class))
+			loadCustomItem(clazz.newInstance());
+		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class))
 			loadCustomItem(clazz.newInstance());
 	}
 	/**
@@ -191,15 +195,19 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCommands(String path) {
-		for (Class<? extends CustomCommand> clazz : reflectBasedOnExtentionOf(path+".commands", CustomCommand.class)) 
-				loadCommand(clazz.newInstance());
+		System.out.println("Registering commands");
+		for (Class<? extends CustomCommand> clazz : reflectBasedOnExtentionOf(path+".commands", CustomCommand.class)) {
+			System.out.println("found " + clazz.getName());
+			loadCommand(clazz.getConstructor().newInstance());
+		}
 	}
 	/**
 	 * Loads the {@link CustomCommand} that is provided
 	 * 
-	 * @param command The {@link CustomCommand} to be loaded
+	 * @param c The {@link CustomCommand} to be loaded
 	 */
 	public void loadCommand(CustomCommand c) {
+		System.out.println("Registering command " + c.getName());
 		try {
 			Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             bukkitCommandMap.setAccessible(true);
@@ -224,8 +232,7 @@ public class CustomFeatureLoader {
 	 */
 	public static <E> Set<Class<? extends E>> reflectBasedOnExtentionOf(String pathtoclasses, Class<E> type) {
 		Reflections reflections = new Reflections(pathtoclasses);
-        Set<Class<? extends E>> scannersSet = reflections.getSubTypesOf(type);
-		return scannersSet;
+		return reflections.getSubTypesOf(type);
 	}
 	/**
 	 * Gets all the classes in a package that implement <E>

@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.listener;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,7 +52,7 @@ public class AnvilListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         
-    	if (!(e.getWhoClicked() instanceof Player) || e.getCurrentItem()==null) return;
+    	if (!(e.getWhoClicked() instanceof Player) || e.getCurrentItem()==null || e.getCurrentItem().getType() == Material.AIR) return;
         
         String id = CustomItemUtil.getUUIDFromItemStack(e.getCurrentItem());
         
