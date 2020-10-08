@@ -10,12 +10,8 @@ import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
-import eu.pixliesearth.core.customblocks.CustomBlockListener;
-import eu.pixliesearth.core.customblocks.CustomBlocks;
+import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
 import eu.pixliesearth.core.customcrafting.CustomRecipies;
-import eu.pixliesearth.core.customitems.commands.CiGiveCommand;
-import eu.pixliesearth.core.customitems.listeners.ItemsInteractEvent;
-import eu.pixliesearth.core.customitems.listeners.SlingshotListener;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.machines.MachineListener;
@@ -246,7 +242,7 @@ public final class Main extends JavaPlugin {
         // MACHINES
         machineTask.init();
 
-        CustomBlocks.load();
+        // CustomBlocks.load();
 
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null)
@@ -274,7 +270,6 @@ public final class Main extends JavaPlugin {
         discordDisable();
         machineTask.stopThread();
         dynmapKernel.onDisable();
-        CustomBlocks.save();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())
@@ -325,8 +320,8 @@ public final class Main extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
-        getCommand("cigive").setExecutor(new CiGiveCommand());
-        getCommand("cigive").setTabCompleter(new CiGiveCommand());
+        // getCommand("cigive").setExecutor(new CiGiveCommand());
+        // getCommand("cigive").setTabCompleter(new CiGiveCommand());
         getCommand("marry").setExecutor(new MarryCommand());
         getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
@@ -357,8 +352,8 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GunListener(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
         manager.registerEvents(new AchievementListener(), this);
-        manager.registerEvents(new ItemsInteractEvent(), this);
-        manager.registerEvents(new SlingshotListener(), this);
+        // manager.registerEvents(new ItemsInteractEvent(), this);
+        // manager.registerEvents(new SlingshotListener(), this);
         manager.registerEvents(new Restrictions(), this);
         manager.registerEvents(new DeathListener(), this);
         manager.registerEvents(new PlayerInteractListener(), this);

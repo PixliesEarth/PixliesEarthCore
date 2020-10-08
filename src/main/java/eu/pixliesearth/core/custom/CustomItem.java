@@ -92,7 +92,7 @@ public class CustomItem {
 					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
-				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
+				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 			}}.build();
 	}
 	
