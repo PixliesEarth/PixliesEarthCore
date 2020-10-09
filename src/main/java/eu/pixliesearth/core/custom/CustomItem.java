@@ -92,13 +92,13 @@ public class CustomItem {
 					addEnchantment(entry.getKey(), entry.getValue());
 				if (getDefaultLore()!=null)
 					addLoreAll(getDefaultLore());
-				for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
-					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
-				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
-				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 				addLoreLine("§fRarity: "+getRarity().getName());
+				for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
+					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
+				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
+				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 			}}.build();
 	}
 	
