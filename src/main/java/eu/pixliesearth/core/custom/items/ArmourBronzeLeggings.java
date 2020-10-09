@@ -82,7 +82,7 @@ public class ArmourBronzeLeggings extends CustomArmour {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Bronze_Chestplate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Bronze_Leggings"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
