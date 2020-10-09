@@ -75,7 +75,7 @@ public class CustomItem {
 	}
 	
 	public Rarity getRarity() {
-		return Rarity.NONE;
+		return Rarity.COMMON;
 	}
 	
 	public ItemStack buildItem() {
