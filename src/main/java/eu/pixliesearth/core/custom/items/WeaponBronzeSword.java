@@ -76,7 +76,7 @@ public class WeaponBronzeSword extends CustomWeapon {
 	
 	@Override
 	public int getDamage() {
-		return 13;
+		return 6;
 	}
 	
 	@Override
