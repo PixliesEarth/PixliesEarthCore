@@ -22,9 +22,6 @@ import java.util.UUID;
 
 public class ProfileCommand implements CommandExecutor {
 
-    Profile profile;
-    Player player;
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (args.length == 0) {
@@ -32,21 +29,21 @@ public class ProfileCommand implements CommandExecutor {
                 sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
                 return false;
             }
-            player = (Player) sender;
-            profile = Main.getInstance().getProfile(player.getUniqueId());
+            Player player = (Player) sender;
+            Profile profile = Main.getInstance().getProfile(player.getUniqueId());
 
             Gui menu = new Gui(Main.getInstance(), 3, "§e§l" + Lang.YOUR_PROFILE.get(player));
             StaticPane pane = new StaticPane(0, 0, 9, 3);
             // LANGUAGE
             pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4d48e75ff55cb57533c7b904be887a374925f93832f7ae16b7923987e970")).setDisplayName("§b§o" + Lang.LANGUAGE.get(player)).build(), event -> {
                 event.setCancelled(true);
-                getLangGui().show(player);
+                getLangGui(player, profile).show(player);
             }), 1, 1);
 
             // SCOREBOARD
             pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/6ff6a4af8fd64a87448e82879a12ff55194c874d14e472c26d8de86d1208274e")).setDisplayName("§b§oScoreboard").build(), event -> {
                 event.setCancelled(true);
-                getScoreboardGui().show(player);
+                getScoreboardGui(profile, player).show(player);
             }), 3, 1);
             menu.addPane(pane);
             menu.show(player);
@@ -72,7 +69,7 @@ public class ProfileCommand implements CommandExecutor {
         return false;
     }
 
-    private Gui getLangGui() {
+    private Gui getLangGui(Player player, Profile profile) {
         Gui langgui = new Gui(Main.getInstance(), 3, "§b"+ Lang.CHOOSE_LANG.get(player));
         StaticPane langpane = new StaticPane(0, 0, 9, 3);
         langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5e7899b4806858697e283f084d9173fe487886453774626b24bd8cfecc77b3f")).setDisplayName("§eDeutsch").build(), e -> {
@@ -121,7 +118,7 @@ public class ProfileCommand implements CommandExecutor {
         return langgui;
     }
 
-    private Gui getScoreboardGui() {
+    private Gui getScoreboardGui(Profile profile, Player player) {
         Gui scoregui = new Gui(Main.getInstance(), 3, "§bScoreboard");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
         pane.addItem(new GuiItem(new ItemBuilder(Material.MAP).setDisplayName("§7Style: §b" + profile.getBoardType()).build(), event -> {
