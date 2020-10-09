@@ -30,7 +30,7 @@ public class BoostCommand implements CommandExecutor {
             default:
                 Player player = (Player) sender;
                 Profile profile = instance.getProfile(player.getUniqueId());
-                Gui boostGui = new Gui(Main.getInstance(), 3, "&dBoosters");
+                Gui boostGui = new Gui(Main.getInstance(), 3, "§dBoosters");
                 StaticPane pane = new StaticPane(0, 0, 9, 3);
                 boolean alreadyDoubleExp = instance.getUtilLists().boosts.containsKey(Boost.BoostType.DOUBLE_EXP);
                 ItemStack doubleExp = alreadyDoubleExp ? new ItemBuilder(Material.RED_STAINED_GLASS_PANE).addLoreLine("§c§oSomeone already boosted").build() : new ItemBuilder(Material.EXPERIENCE_BOTTLE).setDisplayName("§bDouble-EXP §8(§d2B§8)").addLoreLine("§7With this booster").addLoreLine("§7everyone on the server").addLoreLine("§7will get double-EXP").addLoreLine("§7for §a10 minutes§7!").build();
@@ -46,6 +46,7 @@ public class BoostCommand implements CommandExecutor {
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double-EXP");
                     }
                 }), 2, 1);
+                pane.addItem(new GuiItem(new ItemBuilder(Material.CHEST_MINECART).setDisplayName("§f§lBoosts").addLoreLine("§d" + profile.getBoosts()).build(), event -> event.setCancelled(true)), 8, 2);
                 boostGui.addPane(pane);
                 boostGui.show(player);
                 break;
