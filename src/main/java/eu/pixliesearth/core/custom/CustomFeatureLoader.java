@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import eu.pixliesearth.core.files.FileDirectory;
-import eu.pixliesearth.utils.ThreadUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -55,29 +54,19 @@ public class CustomFeatureLoader {
 	public void load(String path) {
 		setHandler(new CustomFeatureHandler(this));
 		loadCommands(path);
-		new ThreadUtils(new Runnable() {
-			@Override
-			public void run() {
-				loadListeners(path);
-				loadRecipes(path);
-				loadCustomItems(path);
-				loadPermissions(path);
-				loadCustomBlocks(path);
-				loadCustomMachineRecipes(path);
-				getHandler().loadCustomBlocksFromFile();
-			}
-		});
+		loadListeners(path);
+		loadRecipes(path);
+		loadCustomItems(path);
+		loadPermissions(path);
+		loadCustomBlocks(path);
+		loadCustomMachineRecipes(path);
+		getHandler().loadCustomBlocksFromFile();
 	}
 	/**
 	 * Saves everything
 	 */
 	public void save() {
-		new ThreadUtils(new Runnable() {
-			@Override
-			public void run() {
-				getHandler().saveCustomBlocksToFile();
-			}
-		});
+		getHandler().saveCustomBlocksToFile();
 	}
 	/**
 	 * Uses reflection to load custom blocks
@@ -195,7 +184,6 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCommands(String path) {
-		System.out.println("Registering commands");
 		for (Class<? extends CustomCommand> clazz : reflectBasedOnExtentionOf(path+".commands", CustomCommand.class)) {
 			System.out.println("found " + clazz.getName());
 			loadCommand(clazz.getConstructor().newInstance());

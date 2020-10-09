@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -82,6 +81,7 @@ import eu.pixliesearth.core.commands.util.ModulesCommand;
 import eu.pixliesearth.core.commands.util.SeenCommand;
 import eu.pixliesearth.core.commands.util.StaffCommand;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
 import eu.pixliesearth.core.listener.AchievementListener;
 import eu.pixliesearth.core.listener.AnvilListener;

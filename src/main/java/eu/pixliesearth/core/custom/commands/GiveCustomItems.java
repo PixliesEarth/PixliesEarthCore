@@ -3,7 +3,6 @@ package eu.pixliesearth.core.custom.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.brigadier.exceptions.CommandExceptionType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
