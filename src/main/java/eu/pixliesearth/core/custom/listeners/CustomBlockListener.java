@@ -10,6 +10,7 @@ import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.listener.ProtectionListener;
 import eu.pixliesearth.utils.NBTUtil;
 import lombok.SneakyThrows;
 /**
@@ -35,6 +36,7 @@ public class CustomBlockListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
 	public void BlockPlaceEvent(BlockPlaceEvent event) {
+		if (!ProtectionListener.canPlace(event)) return;
 		if (event.isCancelled()) return;
 		String id = NBTUtil.getTagsFromItem(event.getItemInHand()).getString("UUID");
 		if (id==null) return;
@@ -53,6 +55,7 @@ public class CustomBlockListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
 	public void BlockBreakEvent(BlockBreakEvent event) {
+		if (!ProtectionListener.canBreak(event)) return;
 		if (event.isCancelled()) return;
 		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getBlock().getLocation());
 		if (c==null) return;
