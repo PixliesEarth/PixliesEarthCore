@@ -59,7 +59,7 @@ public class CustomWeapon extends CustomItem {
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
 				setAttackDamage(getDamage());
-				addNBTTag("UUID", getUUID().toString(), NBTTagType.STRING);
+				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 				addLoreLine("§fRarity: "+getRarity().getName());
 			}}.build();

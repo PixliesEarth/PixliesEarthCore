@@ -29,7 +29,7 @@ public class Exceptions {
 		/**
 		 * Creates an exception based on the {@link CustomRecipe} provided
 		 * 
-		 * @param customrecipe The {@link CustomRecipe} that has caused an exception
+		 * @param c The {@link CustomRecipe} that has caused an exception
 		 */
 		public CustomRecipeCreationException(CustomRecipe c) {
 			super("Unable to load a custom recipe"
@@ -57,7 +57,7 @@ public class Exceptions {
 		/**
 		 * Creates an exception based on the {@link Listener} provided
 		 * 
-		 * @param listener The {@link Listener} that has caused an exception
+		 * @param l The {@link Listener} that has caused an exception
 		 */
 		public ListenerRegistrationException(Listener l) {
 			super("Unable to register an event listener"
@@ -68,7 +68,7 @@ public class Exceptions {
 		/**
 		 * Creates an exception based on the {@link Listener} class provided
 		 * 
-		 * @param class The {@link Listener} class that has caused an exception
+		 * @param c The {@link Listener} class that has caused an exception
 		 */
 		public ListenerRegistrationException(Class<?> c) {
 			super("Unable to register an event listener"
@@ -86,7 +86,7 @@ public class Exceptions {
 		/**
 		 * Creates an exception based on a {@link CustomItem} that is provided
 		 * 
-		 * @param customitem The {@link CustomItem} that failed to be created
+		 * @param c The {@link CustomItem} that failed to be created
 		 */
 		public CustomItemCreationException(CustomItem c) {
 			super("Unable to create a custom item"
@@ -99,7 +99,7 @@ public class Exceptions {
 		/**
 		 * Creates an exception based on a {@link CustomItem} class that is provided
 		 * 
-		 * @param clazz The {@link CustomItem} class that could not be made into an item
+		 * @param c The {@link CustomItem} class that could not be made into an item
 		 */
 		public CustomItemCreationException(Class<? extends CustomItem> c) {
 			super("Unable to create a custom item"
@@ -109,7 +109,7 @@ public class Exceptions {
 		}
 		/**
 		 * 
-		 * @param customitem The {@link CustomItem} that failed to be created
+		 * @param c The {@link CustomItem} that failed to be created
 		 * @param note Extra information about the error
 		 */
 		public CustomItemCreationException(CustomItem c, String note) {
