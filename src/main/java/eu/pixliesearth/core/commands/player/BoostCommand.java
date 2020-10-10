@@ -6,6 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.boosts.DoubleDropBoost;
 import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -46,6 +47,19 @@ public class BoostCommand implements CommandExecutor {
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double-EXP");
                     }
                 }), 2, 1);
+                boolean alreadyDoubleDrop = instance.getUtilLists().boosts.containsKey(Boost.BoostType.DOUBLE_EXP);
+                ItemStack doubleDrop = alreadyDoubleDrop ? new ItemBuilder(Material.RED_STAINED_GLASS_PANE).addLoreLine("§c§oSomeone already boosted").build() : new ItemBuilder(Material.DIAMOND_ORE).setDisplayName("§bDouble ore-drop §8(§d2B§8)").addLoreLine("§7With this booster").addLoreLine("§7everyone on the server").addLoreLine("§7will get double ore-drops").addLoreLine("§7for §a10 minutes§7!").build();
+                pane.addItem(new GuiItem(doubleDrop, event -> {
+                    event.setCancelled(true);
+                    if (!alreadyDoubleDrop) {
+                        if (profile.getBoosts() < 2) {
+                            Lang.NOT_ENOUGH_BOOSTS.send(player);
+                            return;
+                        }
+                        instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_DROP, new DoubleDropBoost());
+                        Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double ore-drop");
+                    }
+                }), 4, 1);
                 pane.addItem(new GuiItem(new ItemBuilder(Material.CHEST_MINECART).setDisplayName("§f§lBoosts").addLoreLine("§d" + profile.getBoosts()).build(), event -> event.setCancelled(true)), 8, 2);
                 boostGui.addPane(pane);
                 boostGui.show(player);

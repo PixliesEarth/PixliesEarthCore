@@ -15,7 +15,7 @@ public class Boost {
     public enum BoostType {
 
         DOUBLE_EXP,
-        FLY,
+        DOUBLE_DROP,
 
     }
 
