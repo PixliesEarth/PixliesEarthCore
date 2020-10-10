@@ -32,18 +32,22 @@ public class BroadcastCommand implements CommandExecutor {
             sj.add(s1);
 
         String message = sj.toString();
+        broadcast(message, sender);
+        return false;
+    }
+
+    public static void broadcast(String message, CommandSender sender) {
         Bukkit.broadcastMessage("§aBROADCAST §8| §7" + message);
         for(Player players : Bukkit.getOnlinePlayers()){
             players.playSound(players.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1 );
         }
         MiniMick.getApi().getServerTextChannelById("712819947579113512").get().sendMessage(new EmbedBuilder()
-        .setTitle("BROADCAST")
-        .setDescription(ChatColor.stripColor(message))
-        .setFooter("MiniMick powered by PixliesEarth", "https://minotar.net/avatar/" + sender.getName())
-        .setColor(Color.YELLOW)
-        .setTimestampToNow()
+                .setTitle("BROADCAST")
+                .setDescription(ChatColor.stripColor(message))
+                .setFooter("MiniMick powered by PixliesEarth", "https://minotar.net/avatar/" + sender.getName())
+                .setColor(Color.YELLOW)
+                .setTimestampToNow()
         );
-        return false;
     }
 
 }

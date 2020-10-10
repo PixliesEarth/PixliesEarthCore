@@ -4,12 +4,14 @@ import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.commands.util.BroadcastCommand;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.boosts.DoubleDropBoost;
 import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;
+import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,6 +47,7 @@ public class BoostCommand implements CommandExecutor {
                         }
                         instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_EXP, new DoubleExpBoost());
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double-EXP");
+                        BroadcastCommand.broadcast(ChatColor.stripColor(Lang.PLAYER_BOOSTED.get("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Double ore-drop")), player);
                     }
                 }), 2, 1);
                 boolean alreadyDoubleDrop = instance.getUtilLists().boosts.containsKey(Boost.BoostType.DOUBLE_EXP);
@@ -58,6 +61,7 @@ public class BoostCommand implements CommandExecutor {
                         }
                         instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_DROP, new DoubleDropBoost());
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double ore-drop");
+                        BroadcastCommand.broadcast(ChatColor.stripColor(Lang.PLAYER_BOOSTED.get("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Double ore-drop")), player);
                     }
                 }), 4, 1);
                 pane.addItem(new GuiItem(new ItemBuilder(Material.CHEST_MINECART).setDisplayName("§f§lBoosts").addLoreLine("§d" + profile.getBoosts()).build(), event -> event.setCancelled(true)), 8, 2);

@@ -305,6 +305,10 @@ public enum Lang {
         return PREFIX + languages.get("ENG").replace("&", "§");
     }
 
+    public String get(String language) {
+        return PREFIX + languages.get(language).replace("&", "§");
+    }
+
     public boolean send(CommandSender sender) {
         if (sender == null)
             return false;

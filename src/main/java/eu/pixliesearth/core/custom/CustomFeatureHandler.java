@@ -20,6 +20,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
+import javax.print.attribute.HashAttributeSet;
+
 /**
  * 
  * @author BradBot_1
@@ -39,6 +41,7 @@ public class CustomFeatureHandler {
 	private @Getter Set<CustomBlock> customBlocks;
 	private @Getter Set<Tickable> tickables;
 	private @Getter Set<CustomMachineRecipe> customMachineRecipes;
+	private @Getter Set<CustomQuest> customQuests;
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */
@@ -51,7 +54,7 @@ public class CustomFeatureHandler {
 	/**
 	 * Initiates a new {@link CustomFeatureHandler} based of the {@link CustomFeatureLoader} provided
 	 * 
-	 * @param customfeatureloader The {@link CustomFeatureLoader} that is trying to initiate this class
+	 * @param cfl The {@link CustomFeatureLoader} that is trying to initiate this class
 	 */
 	public CustomFeatureHandler(CustomFeatureLoader cfl) {
 		setLoader(cfl);
@@ -65,6 +68,7 @@ public class CustomFeatureHandler {
 		this.customItemsToItemStackMap = new HashMap<CustomItem, ItemStack>();
 		this.locationToUUIDMap = new HashMap<Location, String>();
 		this.customMachineRecipes = new HashSet<CustomMachineRecipe>();
+		this.customQuests = new HashSet<CustomQuest>();
 		new ThreadUtils(new Runnable() {
 			@SneakyThrows
 			@Override
@@ -331,4 +335,9 @@ public class CustomFeatureHandler {
 	public boolean isCustomBlockAtLocation(Location location) {
 		return getCustomBlockFromLocation(location)!=null;
 	}
+
+	public void registerQuest(CustomQuest quest) {
+		customQuests.add(quest);
+	}
+
 }

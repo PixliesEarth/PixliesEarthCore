@@ -60,6 +60,7 @@ public class CustomFeatureLoader {
 		loadPermissions(path);
 		loadCustomBlocks(path);
 		loadCustomMachineRecipes(path);
+		loadQuests(path);
 		getHandler().loadCustomBlocksFromFile();
 	}
 	/**
@@ -149,6 +150,7 @@ public class CustomFeatureLoader {
 		for (Class<? extends CustomPermission> clazz : reflectBasedOnExtentionOf(path+".permissions", CustomPermission.class)) 
 			loadPermission(clazz.newInstance());
 	}
+
 	/**
 	 * Registers a permission to Bukkit
 	 * 
@@ -210,6 +212,29 @@ public class CustomFeatureLoader {
 			getHandler().registerCommand(c);
 		}
 	}
+
+	/**
+	 * Loads all {@link CustomQuest} instances
+	 *
+	 * @param path Path to search
+	 */
+	@SneakyThrows
+	public void loadQuests(String path) {
+		for (Class<? extends CustomQuest> clazz : reflectBasedOnExtentionOf(path + ".quests", CustomQuest.class)) {
+			loadListener(clazz.getConstructor().newInstance());
+			loadQuest(clazz.getConstructor().newInstance());
+		}
+	}
+
+	/**
+	 * registers the {@link CustomQuest} instances
+	 *
+	 * @param quest Quest to load
+	 */
+	public void loadQuest(CustomQuest quest) {
+		handler.registerQuest(quest);
+	}
+
 	/**
 	 * Gets all the classes in a package that extends <E>
 	 * 

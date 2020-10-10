@@ -222,7 +222,7 @@ public class menuNation implements SubCommand {
             case RESEARCH:
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aNation-EXP").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§6§lNext Era").addLoreLine("§b" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getName()).addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9XP").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§6§lNext Era").addLoreLine("§b" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getName()).addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9N-XP").build(), event -> {
                         event.setCancelled(true);
                         upgradeEra(player, nation);
                     }), 8, 4);
