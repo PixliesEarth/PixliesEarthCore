@@ -61,7 +61,7 @@ public class IngotArsenicBronze extends CustomItem {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 11;
 	}
 
 	@Override
