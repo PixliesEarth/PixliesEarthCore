@@ -210,7 +210,7 @@ public class VaultAPI implements Economy {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Amount is less than zero");
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setBalance(amount);
-        profile.backup();
+        profile.save();
         return new EconomyResponse(amount, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 

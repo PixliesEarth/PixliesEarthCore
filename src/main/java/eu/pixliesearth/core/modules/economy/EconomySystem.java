@@ -102,7 +102,7 @@ public class EconomySystem implements Module, CommandExecutor {
                 }
                 profile = instance.getProfile(targetUUID);
                 profile.setBalance(Double.parseDouble(args[2]));
-                profile.backup();
+                profile.save();
                 sender.sendMessage(Lang.SET_PLAYER_BALANCE.get(sender));
                 break;
 

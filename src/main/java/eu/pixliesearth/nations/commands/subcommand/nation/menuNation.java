@@ -14,6 +14,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -84,7 +85,7 @@ public class menuNation implements SubCommand {
                 for (String s : nation.getMembers()) {
                     OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(s));
                     Profile member = instance.getProfile(op.getUniqueId());
-                    if (x + 1 > 8) {
+                    if (x + 1 > 9) {
                         y++;
                         x = 0;
                     }
@@ -104,7 +105,7 @@ public class menuNation implements SubCommand {
                     Rank rank = Rank.get(ranks.getValue());
                     if (rank.getName().equalsIgnoreCase("leader")) continue;
                     if (rank.getPriority() >= profile.getCurrentNationRank().getPriority()) continue;
-                    if (x + 1 > 8) {
+                    if (x + 1 > 9) {
                         y++;
                         x = 0;
                     }
@@ -130,7 +131,7 @@ public class menuNation implements SubCommand {
                         ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName("§" + religion1.getColour() + religion1Name);
                         if (religion == religion1)
                             iBuilder.setGlow();
-                        if (x1 + 1 > 8) {
+                        if (x1 + 1 > 9) {
                             x1 = 0;
                             y1++;
                         }
@@ -161,7 +162,7 @@ public class menuNation implements SubCommand {
                         ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName("§" + ideology1.getColour() + ideology1Name);
                         if (ideology == ideology1)
                             iBuilder.setGlow();
-                        if (x1 + 1 > 8) {
+                        if (x1 + 1 > 9) {
                             x1 = 0;
                             y1++;
                         }
@@ -188,7 +189,7 @@ public class menuNation implements SubCommand {
                         nation.save();
                         continue;
                     }
-                    if (x + 1 > 8) {
+                    if (x + 1 > 9) {
                         y++;
                         x = 0;
                     }
@@ -205,7 +206,7 @@ public class menuNation implements SubCommand {
                 x = 0;
                 y = 0;
                 for (NationFlag flag : NationFlag.values()) {
-                    if (x + 1 > 8) {
+                    if (x + 1 > 9) {
                         y++;
                         x = 0;
                     }
@@ -250,6 +251,7 @@ public class menuNation implements SubCommand {
         nation.setXpPoints(nation.getXpPoints() - toUpgrade.getCost());
         nation.setEra(toUpgrade.name());
         for (Player member : nation.getOnlineMemberSet()) {
+            member.getWorld().spawnEntity(member.getLocation(), EntityType.FIREWORK);
             member.sendTitle("§a" + toUpgrade.getName(), Lang.NATION_REACHED_NEW_ERA.get(member), 20, 20 * 3, 20);
             member.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         }
@@ -314,7 +316,7 @@ public class menuNation implements SubCommand {
         int y = 0;
         for (Permission permission : Permission.values()) {
             ItemStack item = rank.getPermissions().contains(permission.name()) ? new ItemBuilder(Material.GREEN_WOOL).setDisplayName("§a" + permission.name() + " §8[§a✔§8]").addLoreLine("§7§oClick to toggle").build() : new ItemBuilder(Material.RED_WOOL).setDisplayName("§c" + permission.name() + " §8[§c✖§8]").addLoreLine("§7§oClick to toggle").build();
-            if (x + 1 > 8) {
+            if (x + 1 > 9) {
                 y++;
                 x = 0;
             }
