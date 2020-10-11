@@ -250,6 +250,8 @@ public class menuNation implements SubCommand {
         }
         nation.setXpPoints(nation.getXpPoints() - toUpgrade.getCost());
         nation.setEra(toUpgrade.name());
+        nation.save();
+        player.closeInventory();
         for (Player member : nation.getOnlineMemberSet()) {
             member.getWorld().spawnEntity(member.getLocation(), EntityType.FIREWORK);
             member.sendTitle("§a" + toUpgrade.getName(), Lang.NATION_REACHED_NEW_ERA.get(member), 20, 20 * 3, 20);
