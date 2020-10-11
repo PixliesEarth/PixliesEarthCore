@@ -47,6 +47,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new foreignPermission());
         subCommands.add(new accessNation());
         subCommands.add(new flagNation());
+        subCommands.add(new xpNation());
         return subCommands;
     }
 
