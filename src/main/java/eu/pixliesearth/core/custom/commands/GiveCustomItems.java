@@ -1,20 +1,19 @@
 package eu.pixliesearth.core.custom.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 
-public class GiveCustomItems extends CustomCommand implements CommandExecutor, TabExecutor {
+public class GiveCustomItems extends CustomCommand {
 	
 	public GiveCustomItems() {
 		
@@ -58,24 +57,28 @@ public class GiveCustomItems extends CustomCommand implements CommandExecutor, T
 	
 	@Override
 	public List<String> tabComplete(CommandSender commandsender, String alias, String[] args) {
-		ArrayList<String> array = new ArrayList<String>();
+		List<String> array = new ArrayList<String>();
+		
 		if (args.length<2) {
-			for (Player p : Bukkit.getOnlinePlayers()) 
-				array.add(p.getDisplayName());
+			StringUtil.copyPartialMatches(args[0], getOnlinePlayersAsStringList(), array);
 		} else if (args.length<3) {
-			for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
-				array.add(c.getUUID());
+			StringUtil.copyPartialMatches(args[0], getCustomItemsAsStringList(), array);
 		}
+		Collections.sort(array);
 		return array;
 	}
-
-	@Override
-	public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-		return execute(commandSender, s, strings);
+	
+	private static List<String> getOnlinePlayersAsStringList() {
+		ArrayList<String> array = new ArrayList<String>();
+		for (Player p : Bukkit.getOnlinePlayers()) 
+			array.add(p.getDisplayName());
+		return array;
 	}
-
-	@Override
-	public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-		return tabComplete(commandSender, s, strings);
+	
+	private static List<String> getCustomItemsAsStringList() {
+		ArrayList<String> array = new ArrayList<String>();
+		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
+			array.add(c.getUUID());
+		return array;
 	}
 }

@@ -403,8 +403,6 @@ public final class Main extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
         getCommand("machines").setExecutor(new MachinesCommand());
-        getCommand("cigive").setExecutor(new GiveCustomItems());
-        getCommand("cigive").setTabCompleter(new GiveCustomItems());
     }
 
     private void registerEvents(PluginManager manager) {
