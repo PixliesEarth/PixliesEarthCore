@@ -1,9 +1,11 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPistonEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -74,11 +76,21 @@ public class CustomBlockListener extends CustomListener {
 	
 	@EventHandler
     @SneakyThrows
-	public void BlockPistonEvent(BlockPistonEvent event) {
+	public void BlockPistonExtendEvent(BlockPistonExtendEvent event) {
 		if (event.getBlock()==null) return;
 		if (event.isCancelled()) return;
-		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getBlock().getLocation());
-		if (c==null) return;
-		event.setCancelled(true);
+		for (Block b : event.getBlocks()) 
+			if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null)
+				event.setCancelled(true);
+	}
+	
+	@EventHandler
+    @SneakyThrows
+	public void BlockPistonRetracEvent(BlockPistonRetractEvent event) {
+		if (event.getBlock()==null) return;
+		if (event.isCancelled()) return;
+		for (Block b : event.getBlocks()) 
+			if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null)
+				event.setCancelled(true);
 	}
 }
