@@ -19,36 +19,35 @@ import java.util.*;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 
-    private static Set<SubCommand> subCommands;
+    private static Map<String, SubCommand> subCommands;
 
-    public Set<SubCommand> getSubCommands() {
-        return subCommands;
+    public Collection<SubCommand> getSubCommands() {
+        return subCommands.values();
     }
 
     @SneakyThrows
     public static void init() {
-        subCommands = new HashSet<>();
-        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", SubCommand.class))
-            subCommands.add(clazz.getConstructor().newInstance());
+        subCommands = new HashMap<>();
+        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", SubCommand.class)) {
+            SubCommand cmd = clazz.getConstructor().newInstance();
+            System.out.println("Registering subcommand " + clazz.getName() + " for command Nation");
+            for (String s : cmd.aliases())
+                subCommands.put(s, cmd);
+            System.out.println("Registered subcommand " + clazz.getName() + " for command Nation");
+        }
+        for (String s : new menuNation().aliases())
+            subCommands.put(s, new menuNation());
     }
 
     public Map<String, SubCommand> subMap() {
-        Map<String, SubCommand> map = new HashMap<>();
-        for (SubCommand sub : getSubCommands())
-            for (String s : sub.aliases())
-                map.put(s, sub);
-        return map;
+        return subCommands;
     }
 
-    public List<String> getSubCommandAliases() {
-        // ADD ALL SUBCOMMAND ALIASES INTO THIS HASHSET
-        List<String> subCommandAliases = new ArrayList<>();
-        for (SubCommand sub : getSubCommands())
-            subCommandAliases.addAll(Arrays.asList(sub.aliases()));
-        return subCommandAliases;
+    public Set<String> getSubCommandAliases() {
+        return subCommands.keySet();
     }
 
-    private static Main instance = Main.getInstance();
+    private static final Main instance = Main.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
@@ -102,7 +101,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
         final List<String> completions = new ArrayList<>();
 
-        Map<Integer, List<String>> argCompletions = new HashMap<>();
+        Map<Integer, Set<String>> argCompletions = new HashMap<>();
 
         argCompletions.put(0, getSubCommandAliases());
 
@@ -111,12 +110,12 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 return completions;
             for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
                 if (args.length == entry.getValue() + 1) {
-                    argCompletions.computeIfAbsent(entry.getValue(), k -> new ArrayList<>());
+                    argCompletions.computeIfAbsent(entry.getValue(), k -> new HashSet<>());
                     argCompletions.get(entry.getValue()).add(entry.getKey());
                 }
         }
 
-        for (Map.Entry<Integer, List<String>> entry : argCompletions.entrySet())
+        for (Map.Entry<Integer, Set<String>> entry : argCompletions.entrySet())
             if (args.length == entry.getKey() + 1)
                 StringUtil.copyPartialMatches(args[entry.getKey()], entry.getValue(), completions);
 

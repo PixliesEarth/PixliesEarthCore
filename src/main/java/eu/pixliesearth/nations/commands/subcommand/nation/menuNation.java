@@ -51,7 +51,7 @@ public class menuNation implements SubCommand {
         return false;
     }
 
-    void open(Gui gui, Player player, MenuPage page) {
+    private void open(Gui gui, Player player, MenuPage page) {
         gui.setTitle(defaultTitle + page.title);
         StaticPane hotbar = new StaticPane(0, 0, 9, 1);
         int j = 0;
@@ -259,7 +259,7 @@ public class menuNation implements SubCommand {
         }
     }
 
-    void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type, StaticPane menuPane) {
+    private void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type, StaticPane menuPane) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         gui.addPane(menuPane);
@@ -311,7 +311,7 @@ public class menuNation implements SubCommand {
         gui.show(player);
     }
 
-    void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {
+    private void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         int x = 0;
@@ -341,7 +341,7 @@ public class menuNation implements SubCommand {
         gui.show(player);
     }
 
-    void showMemberMenu(Gui gui, StaticPane menu, Player requester, Profile target) {
+    private void showMemberMenu(Gui gui, StaticPane menu, Player requester, Profile target) {
         menu.clear();
         menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         Profile profile = instance.getProfile(requester.getUniqueId());

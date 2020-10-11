@@ -36,6 +36,7 @@ public class CustomArmourListener extends CustomListener {
 	public boolean isPlayerWearingCustomArmour(String id, Player p) {
 		ItemStack[] armours = p.getInventory().getArmorContents();
 		for (ItemStack i : armours) {
+			if (i == null || i.getType() == Material.AIR) continue;
 			if (!CustomItemUtil.isItemStackACustomItem(i)) 
 				continue;
 			if (CustomItemUtil.getUUIDFromItemStack(i).equals(id)) 
