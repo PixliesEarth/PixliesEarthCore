@@ -83,4 +83,5 @@ public class WeaponBronzeSword extends CustomWeapon {
 	public boolean PlayerInteractEvent(PlayerInteractEvent event) {
 		return false;
 	}
+
 }
