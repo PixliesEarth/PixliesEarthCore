@@ -44,8 +44,10 @@ public class CustomBlockListener extends CustomListener {
 		if (c==null) return;
 		boolean e = false;
 		for (CustomBlock b : CustomFeatureLoader.getLoader().getHandler().getCustomBlocks()) 
-			if (b.getUUID().equals(id)) 
+			if (b.getUUID().equals(id)) {
 				e = b.BlockPlaceEvent(event);
+				break;
+			}
 		if (!e) {
 			CustomFeatureLoader.getLoader().getHandler().setCustomBlockToLocation(event.getBlock().getLocation(), id);
 		} else 
