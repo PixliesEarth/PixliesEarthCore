@@ -25,59 +25,101 @@ import lombok.Getter;
  *
  * @apiNote To create a custom item extend this class then register it
  * 
- * @apiNote TODO: notes
- * 
  */
 public class CustomItem {
-	
+	/**
+	 * Initiates the class
+	 */
 	public CustomItem() {
 		
 	}
-	
+	/**
+	 * @return The {@link Material} the {@link CustomItem} uses
+	 */
 	public Material getMaterial() {
 		return null;
 	}
-	
+	/**
+	 * Extra lore like rarity is added later on! You don't have to add that yourself!
+	 * 
+	 * @return The {@link CustomItem}'s default lore
+	 */
 	public List<String> getDefaultLore() {
 		return null;
 	}
-	
+	/**
+	 * The {@link CustomItem}'s default display name, If null the item name will be blank
+	 * 
+	 * @return
+	 */
 	public String getDefaultDisplayName() {
 		return null;
 	}
-	
+	/**
+	 * @return If the {@link CustomItem} should have the enchantment glow
+	 */
 	public boolean isGlowing() {
 		return false;
 	}
-	
+	/**
+	 * @return If the {@link CustomItem} should take durability damage
+	 */
 	public boolean isUnbreakable() {
 		return false;
 	}
-	
+	/**
+	 * Done in the order String = key, Object = value!
+	 * 
+	 * @apiNote All Objects (values) will be saved as a string via the {@link #toString()} method!
+	 * 
+	 * @return The NBT to add to the {@link CustomItem} by default
+	 */
 	public Map<String, Object> getDefaultNBT() {
 		return new HashMap<String, Object>();
 	}
-	
+	/**
+	 * Done in the order Enchantment = {@link Enchantment}, Integer = {@link Enchantment} level!
+	 * 
+	 * @apiNote Do not set the enchantment level as null!
+	 * 
+	 * @return The {@link CustomItem}'s default enchants
+	 */
 	public Map<Enchantment, Integer> getDefaultEnchants() {
 		return new HashMap<Enchantment, Integer>();
 	}
-	
+	/**
+	 * @return The {@link CustomItem}'s default item flags
+	 */
 	public Set<ItemFlag> getItemFlags(){
 		return new HashSet<ItemFlag>();
 	}
-	
+	/**
+	 * If null no custom model data will be set
+	 * 
+	 * @return The {@link CustomItem}'s custom model data value
+	 */
 	public Integer getCustomModelData() {
 		return null;
 	}
-	
+	/**
+	 * This is not implemented yet, and may never be
+	 * 
+	 * @return The {@link CustomItem}'s creative tab menu
+	 */
 	public CreativeTabs getCreativeTab() {
 		return CreativeTabs.NONE;
 	}
-	
+	/**
+	 * The {@link Rarity} of the item, if none is provided this will be the default
+	 * 
+	 * @return The {@link CustomItems}'s rarity
+	 */
 	public Rarity getRarity() {
 		return Rarity.COMMON;
 	}
-	
+	/**
+	 * @return Build the {@link CustomItem} into an {@link ItemStack} that can be used ingame
+	 */
 	public ItemStack buildItem() {
 		return new ItemBuilder(getMaterial()) {{
 			setGlow(isGlowing());

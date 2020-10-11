@@ -59,7 +59,7 @@ public class CustomFeatureLoader {
 		loadCustomItems(path);
 		loadPermissions(path);
 		loadCustomBlocks(path);
-		loadCustomMachineRecipes(path);
+		//loadCustomMachineRecipes(path);
 		loadQuests(path);
 		getHandler().loadCustomBlocksFromFile();
 	}
@@ -68,6 +68,8 @@ public class CustomFeatureLoader {
 	 */
 	public void save() {
 		getHandler().saveCustomBlocksToFile();
+		for (Listener customListener : getHandler().getCustomListeners()) 
+			((CustomListener)customListener).onServerShutdown(this, getHandler());
 	}
 	/**
 	 * Uses reflection to load custom blocks
@@ -109,16 +111,17 @@ public class CustomFeatureLoader {
 	public void loadCustomItem(CustomItem c) {
 		getHandler().registerItem(c);
 	}
-	//TODO: notes
+	/**
 	@SneakyThrows
 	public void loadCustomMachineRecipes(String path) {
 		for (Class<? extends CustomMachineRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes.machine", CustomMachineRecipe.class)) 	
 			loadCustomMachineRecipe(clazz.newInstance());
 	}
-	//TODO: notes
+	
 	public void loadCustomMachineRecipe(CustomMachineRecipe customMachine) {
 		getHandler().registerCustomMachineRecipe(customMachine);
 	}
+	*/
 	/**
 	 * Uses reflection to load recipes into Minecraft
 	 * 

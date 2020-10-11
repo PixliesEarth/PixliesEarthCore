@@ -20,8 +20,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import javax.print.attribute.HashAttributeSet;
-
 /**
  * 
  * @author BradBot_1
@@ -146,12 +144,22 @@ public class CustomFeatureHandler {
 		this.tickables.add(tickable);
 		System.out.println("Registered the tickable "+tickable.getClass().getName());
 	}
-	//TODO: notes
+	/**
+	 * Registers the {@link CustomPermission} provided
+	 * 
+	 * @param customPermission
+	 */
 	public void registerPermission(CustomPermission customPermission) {
 		this.customPermissions.add(customPermission);
 		System.out.println("Registered the permission "+customPermission.getName());
 	}
-	//TODO: notes
+	/**
+	 * Registers the {@link CustomMachineRecipe} provided
+	 * 
+	 * @param customMachineRecipe The {@link CustomMachineRecipe} to register
+	 * @deprecated This has not been implemented yet! I will work on adding it later on -BB1
+	 */
+	@Deprecated
 	public void registerCustomMachineRecipe(CustomMachineRecipe customMachineRecipe) {
 		
 	}
@@ -210,10 +218,15 @@ public class CustomFeatureHandler {
 	public void unregisterTickable(Tickable tickable) {
 		tickables.remove(tickable);
 	}
-	//TODO: notes
-	public CustomItem getCustomItemFromClass(Class<? extends CustomItem> c) {
+	/**
+	 * Uses the provided {@link Class<? extends CustomItem>} to get a corresponding {@link CustomItem}
+	 * 
+	 * @param clazz The {@link Class<? extends CustomItem>} of the {@link CustomItem}
+	 * @return The corresponding {@link CustomItem}
+	 */
+	public CustomItem getCustomItemFromClass(Class<? extends CustomItem> clazz) {
 		for (CustomItem i : getCustomItems()) 
-			if (i.getClass().equals(c)) 
+			if (i.getClass().equals(clazz)) 
 				return i;
 		return null;
 	}
@@ -238,26 +251,51 @@ public class CustomFeatureHandler {
 				return entry.getKey();
 		return null;
 	}
-	//TODO: notes
-	public ItemStack getItemStackFromCustomItem(CustomItem c) {
-		return this.customItemsToItemStackMap.get(c).clone();
+	/**
+	 * Gets a {@link CustomItem}'s {@link ItemStack}
+	 * 
+	 * @param customItem The {@link CustomItem} to get the {@link ItemStack} of
+	 * @return The {@link ItemStack} of the {@link CustomItem}
+	 */
+	public ItemStack getItemStackFromCustomItem(CustomItem customItem) {
+		return this.customItemsToItemStackMap.get(customItem).clone();
 	}
-	//TODO: notes
-	public Class<? extends CustomItem> getClassFromItemStack(ItemStack i) {
-		return getClassFromCustomItem(getCustomItemFromItemStack(i));
+	/**
+	 * Inputs {@link CustomFeatureHandler#getCustomItemFromItemStack(ItemStack)} into {@link CustomFeatureHandler#getClassFromCustomItem(CustomItem)} and returns the result
+	 * 
+	 * @param itemStack The {@link ItemStack} to get the class of
+	 * @return The result of {@link CustomFeatureHandler#getCustomItemFromItemStack(ItemStack)} inputed into {@link CustomFeatureHandler#getClassFromCustomItem(CustomItem)}
+	 */
+	public Class<? extends CustomItem> getClassFromItemStack(ItemStack itemStack) {
+		return getClassFromCustomItem(getCustomItemFromItemStack(itemStack));
 	}
-	//TODO: notes
-	public ItemStack getItemStackFromClass(Class<? extends CustomItem> c) {
-		return getItemStackFromCustomItem(getCustomItemFromClass(c));
+	/**
+	 * Inputs {@link CustomFeatureHandler#getCustomItemFromClass(Class)} into {@link CustomFeatureHandler#getItemStackFromCustomItem(CustomItem)} and returns the result
+	 * 
+	 * @param clazz The {@link Class<? extends CustomItem>} to get the corresponding {@link ItemStack} of
+	 * @return The result of {@link CustomFeatureHandler#getCustomItemFromClass(Class)} being inputed into {@link CustomFeatureHandler#getItemStackFromCustomItem(CustomItem)}
+	 */
+	public ItemStack getItemStackFromClass(Class<? extends CustomItem> clazz) {
+		return getItemStackFromCustomItem(getCustomItemFromClass(clazz));
 	}
-	//TODO: notes
+	/**
+	 * Gets and returns a {@link CustomItems} with the same UUID as the one inputed
+	 * 
+	 * @param id The {@link CustomItems} UUID
+	 * @return The {@link CustomItems} with the same UUID
+	 */
 	public CustomItem getCustomItemFromUUID(String id) {
 		for (CustomItem i : this.customItems) 
 			if (i.getUUID().equals(id)) 
 				return i;
 		return null;
 	}
-	//TODO: notes
+	/**
+	 * Uses the provided UUID to get the corresponding {@link ItemStack}
+	 * 
+	 * @param id The {@link CustomItem}'s UUID to get the item from
+	 * @return The corresponding {@link ItemStack}
+	 */
 	public ItemStack getItemStackFromUUID(String id) {
 		for (CustomItem i : this.customItems) 
 			if (i.getUUID().equals(id)) 
@@ -322,7 +360,11 @@ public class CustomFeatureHandler {
 		location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
 		this.locationToUUIDMap.put(location, id);
 	}
-	// TODO: notes
+	/**
+	 * Called when a custom block at the location has been broken
+	 * 
+	 * @param location The {@link Location} of the block that has been broken
+	 */
 	public void removeCustomBlockFromLocation(Location location) {
 		this.locationToUUIDMap.remove(location);
 	}
@@ -335,9 +377,13 @@ public class CustomFeatureHandler {
 	public boolean isCustomBlockAtLocation(Location location) {
 		return getCustomBlockFromLocation(location)!=null;
 	}
-
-	public void registerQuest(CustomQuest quest) {
-		customQuests.add(quest);
+	/**
+	 * Registers the {@link CustomQuest} provided
+	 * 
+	 * @param customQuest The {@link CustomQuest} to be registered
+	 */
+	public void registerQuest(CustomQuest customQuest) {
+		customQuests.add(customQuest);
 	}
 
 }
