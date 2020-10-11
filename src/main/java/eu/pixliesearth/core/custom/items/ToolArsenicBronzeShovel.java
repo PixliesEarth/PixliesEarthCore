@@ -8,15 +8,15 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class ToolArsenicBronzePickaxe extends CustomItem {
+public class ToolArsenicBronzeShovel extends CustomItem {
 
-    public ToolArsenicBronzePickaxe() {
+    public ToolArsenicBronzeShovel() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.IRON_PICKAXE;
+        return Material.IRON_SHOVEL;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ToolArsenicBronzePickaxe extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§7§lArsenic Bronze Pickaxe";
+        return "§7§lArsenic Bronze Shovel";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ToolArsenicBronzePickaxe extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return 64;
+        return 65;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ToolArsenicBronzePickaxe extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Arsenic_Bronze_Pickaxe"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Arsenic_Bronze_Shovel"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
