@@ -87,7 +87,7 @@ public class MachinesCommand implements CommandExecutor {
             pane.addItem(new GuiItem(result, event -> event.setCancelled(true)) , xR, yR);
             xR++;
         }
-        ItemBuilder builder = new ItemBuilder(item.results.get(0));
+        //ItemBuilder builder = new ItemBuilder(item.results.get(0));
         pane.addItem(new GuiItem(new ItemBuilder(BARRIER).setDisplayName("§c§lGo back").build(), event -> {
             execute(player);
         }), 4, 4);

@@ -127,6 +127,8 @@ public class ChatSystem implements Listener, Module {
                                 target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
                             }
                             break;
+                       default :
+                    	    break;
                     }
                 }
             }

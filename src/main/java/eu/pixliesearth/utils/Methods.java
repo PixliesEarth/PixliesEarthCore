@@ -245,7 +245,8 @@ public class Methods {
 
     public static String replaceBadWord(String s) {
         StringBuilder builder = new StringBuilder();
-        for (char c : s.toCharArray())
+        //for (char c : s.toCharArray())
+        for (int i = 0; i < s.toCharArray().length; i++)
             builder.append("*");
         return builder.toString();
     }

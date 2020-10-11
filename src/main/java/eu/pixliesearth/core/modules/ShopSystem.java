@@ -25,7 +25,7 @@ public class ShopSystem implements Module, CommandExecutor {
             sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
             return false;
         }
-        Player player = (Player) sender;
+        //Player player = (Player) sender;
         switch (args.length) {
             case 0:
 /*                Gui gui = new Gui(instance, 6, "&bShop");

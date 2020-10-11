@@ -46,7 +46,7 @@ public class ToolArsenicBronzeShovel extends CustomItem {
 
     @Override
     public Map<Enchantment, Integer> getDefaultEnchants() {
-        return new HashMap<Enchantment, Integer>(){{
+        return new HashMap<Enchantment, Integer>(){private static final long serialVersionUID = -3854903160949154792L;{
             put(Enchantment.DIG_SPEED, 2);
         }};
     }

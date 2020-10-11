@@ -46,7 +46,7 @@ public class ToolArsenicBronzePickaxe extends CustomItem {
 
     @Override
     public Map<Enchantment, Integer> getDefaultEnchants() {
-        return new HashMap<Enchantment, Integer>(){{
+        return new HashMap<Enchantment, Integer>(){private static final long serialVersionUID = -3047091438050015655L;{
             put(Enchantment.DIG_SPEED, 2);
         }};
     }
