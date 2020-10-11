@@ -62,7 +62,7 @@ public class GiveCustomItems extends CustomCommand {
 		if (args.length<2) {
 			StringUtil.copyPartialMatches(args[0], getOnlinePlayersAsStringList(), array);
 		} else if (args.length<3) {
-			StringUtil.copyPartialMatches(args[0], getCustomItemsAsStringList(), array);
+			StringUtil.copyPartialMatches(args[1], getCustomItemsAsStringList(), array);
 		}
 		Collections.sort(array);
 		return array;
