@@ -1,10 +1,10 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 
  * @author BradBot_1

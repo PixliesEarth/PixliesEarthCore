@@ -1,17 +1,12 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import java.util.*;
 /**
  * 
  * @author BradBot_1

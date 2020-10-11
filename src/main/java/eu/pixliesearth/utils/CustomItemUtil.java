@@ -1,9 +1,8 @@
 package eu.pixliesearth.utils;
 
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
+import org.bukkit.inventory.ItemStack;
 /**
  * 
  * @author BradBot_1

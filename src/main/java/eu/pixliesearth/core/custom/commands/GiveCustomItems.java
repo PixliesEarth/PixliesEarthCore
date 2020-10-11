@@ -1,17 +1,16 @@
 package eu.pixliesearth.core.custom.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class GiveCustomItems extends CustomCommand {
 	

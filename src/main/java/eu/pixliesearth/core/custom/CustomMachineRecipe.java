@@ -1,11 +1,10 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import eu.pixliesearth.nations.entities.nation.Era;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.nations.entities.nation.Era;
+import java.util.HashSet;
+import java.util.Set;
 /**
  * 
  * @author BradBot_1

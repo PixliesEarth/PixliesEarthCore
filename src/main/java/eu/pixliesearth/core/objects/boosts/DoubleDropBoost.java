@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.objects.boosts;
 
 import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

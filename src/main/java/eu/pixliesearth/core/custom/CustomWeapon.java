@@ -1,14 +1,13 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.Map.Entry;
-
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
+import java.util.Map.Entry;
 /**
  * 
  * @author BradBot_1

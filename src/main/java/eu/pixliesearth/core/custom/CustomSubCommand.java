@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.ArrayList;
-
 import org.bukkit.command.CommandSender;
+
+import java.util.ArrayList;
 /**
  * 
  * @author BradBot_1

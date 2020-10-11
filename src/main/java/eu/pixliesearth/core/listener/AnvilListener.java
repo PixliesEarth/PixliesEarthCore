@@ -1,5 +1,8 @@
 package eu.pixliesearth.core.listener;
 
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,10 +12,6 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
-
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.CustomItemUtil;
 
 public class AnvilListener implements Listener {
     @EventHandler

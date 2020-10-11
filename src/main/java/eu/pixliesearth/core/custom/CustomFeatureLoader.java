@@ -1,19 +1,18 @@
 package eu.pixliesearth.core.custom;
 
-import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
-
+import eu.pixliesearth.core.files.FileDirectory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
-import eu.pixliesearth.core.files.FileDirectory;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 /**
  * 
  * @author BradBot_1
