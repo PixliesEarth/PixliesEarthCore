@@ -1,11 +1,13 @@
 package eu.pixliesearth.nations.commands;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
+import lombok.SneakyThrows;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,38 +19,17 @@ import java.util.*;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 
+    private static Set<SubCommand> subCommands;
+
     public Set<SubCommand> getSubCommands() {
-        // ADD ALL SUBCOMMANDS INTO THIS HASHSET<>();
-        Set<SubCommand> subCommands = new HashSet<>();
-        subCommands.add(new createNation());
-        subCommands.add(new claimNation());
-        subCommands.add(new disbandNation());
-        subCommands.add(new inviteNation());
-        subCommands.add(new renameNation());
-        subCommands.add(new unclaimNation());
-        subCommands.add(new descriptionNation());
-        subCommands.add(new joinNation());
-        subCommands.add(new leaveNation());
-        subCommands.add(new rankNation());
-        subCommands.add(new mapNation());
-        subCommands.add(new kickNation());
-        subCommands.add(new infoNation());
-        subCommands.add(new helpNation());
-        subCommands.add(new handoverCommand());
-        subCommands.add(new listNation());
-        subCommands.add(new settlementsCommand());
-        subCommands.add(new menuNation());
-        subCommands.add(new allyNation());
-        subCommands.add(new neutralNation());
-        subCommands.add(new chatNation());
-        subCommands.add(new bankNation());
-        subCommands.add(new topNation());
-        subCommands.add(new bannerNation());
-        subCommands.add(new foreignPermission());
-        subCommands.add(new accessNation());
-        subCommands.add(new flagNation());
-        subCommands.add(new xpNation());
         return subCommands;
+    }
+
+    @SneakyThrows
+    public static void init() {
+        subCommands = new HashSet<>();
+        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", SubCommand.class))
+            subCommands.add(clazz.getConstructor().newInstance());
     }
 
     public Map<String, SubCommand> subMap() {
