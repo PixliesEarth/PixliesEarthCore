@@ -32,7 +32,11 @@ public class CargoMachine extends Machine {
         Map<String, Object> map = new HashMap<>();
         JsonObject j = new JsonObject();
         for (int i = 0; i < storage.getSize(); i++) {
-        	j.addProperty(Integer.toString(i), serialize(storage.getItem(0)));
+        	ItemStack itemStack = storage.getItem(i);
+        	if (itemStack==null) 
+        		j.addProperty(Integer.toString(i), "EMPTY");
+        	else
+        		j.addProperty(Integer.toString(i), serialize(itemStack));
         }
         map.put("storage", j.toString());
         return map;
