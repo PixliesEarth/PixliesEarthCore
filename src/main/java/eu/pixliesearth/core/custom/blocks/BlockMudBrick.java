@@ -23,7 +23,7 @@ public class BlockMudBrick extends CustomBlock {
 	
 	@Override
     public Material getMaterial() {
-        return Material.BRICK;
+        return Material.BRICKS;
     }
 
     @Override
