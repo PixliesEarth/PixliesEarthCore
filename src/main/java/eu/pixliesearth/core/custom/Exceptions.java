@@ -21,34 +21,6 @@ public class Exceptions {
 	 * TODO: notes
 	 * 
 	 */
-	public static class CustomRecipeCreationException extends RuntimeException {
-		/**
-		 * The serial id
-		 */
-		private static final long serialVersionUID = -5528003360732751111L;
-		/**
-		 * Creates an exception based on the {@link CustomRecipe} provided
-		 * 
-		 * @param c The {@link CustomRecipe} that has caused an exception
-		 */
-		public CustomRecipeCreationException(CustomRecipe c) {
-			super("Unable to load a custom recipe"
-					+"Name: "+c.getRecipeName()
-					+"Type: "+c.getType().toString()
-					+"Class: "+c.getClass().getPackage()+"."+c.getClass().getName()
-					+"-End of exception-"
-					);
-		}
-	}
-	/**
-	 * 
-	 * @author BradBot_1
-	 * 
-	 * <h3>This has not been fully documented yet!</h3>
-	 * 
-	 * TODO: notes
-	 * 
-	 */
 	public static class ListenerRegistrationException extends RuntimeException {
 		/**
 		 * The serial id

@@ -40,6 +40,7 @@ import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
+import eu.pixliesearth.core.machines.autocrafters.compressor.Compressor;
 import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
 import eu.pixliesearth.core.machines.autocrafters.kiln.Kiln;
 import eu.pixliesearth.core.machines.autocrafters.machinecrafter.MachineCrafter;
@@ -257,6 +258,7 @@ public class Machine {
         POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)),
         BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
         MACHINE_CRAFTER(MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class, new ItemStack(CRAFTING_TABLE)),
+        COMPRESSOR(Compressor.item, Compressor.class, FuelableAutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Wire")).setAmount(4).build(), new ItemBuilder(Material.PISTON).setAmount(4).build(), new ItemBuilder(Material.REDSTONE_BLOCK).setAmount(4).build()),
         ;
 
         private @Getter final ItemStack item;
@@ -309,6 +311,11 @@ public class Machine {
     	KILN(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.KILN.getItem()).build(), Arrays.asList(new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)), Collections.singletonList(MachineType.KILN.getItem()), 20, Era.TRIBAL),
     	POTTERY(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.POTTERY.getItem()).build(), Arrays.asList(new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)), Collections.singletonList(MachineType.POTTERY.getItem()), 20, Era.TRIBAL),
     	BRONZE_FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.BRONZE_FORGE.getItem()).build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)), Collections.singletonList(MachineType.BRONZE_FORGE.getItem()), 30, Era.TRIBAL),
+    	COMPRESSOR(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.COMPRESSOR.getItem()).build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Wire")).setAmount(4).build(), new ItemBuilder(Material.PISTON).setAmount(4).build(), new ItemBuilder(Material.REDSTONE_BLOCK).setAmount(4).build()), Collections.singletonList(MachineType.COMPRESSOR.getItem()), 30, Era.VICTORIAN),
+    	
+    	// COMPRESSOR
+    	COMPRESSOR_TIN_BLOCK(MachineType.COMPRESSOR, CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Block"), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Ingot")).setAmount(9).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Block")), 3, Era.VICTORIAN),
+    	
     	
         ;
 

@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -23,6 +24,8 @@ public class CustomArmourListener extends CustomListener {
 	@EventHandler
 	public void EntityDamageEvent(EntityDamageEvent event) {
 		if (!(event.getEntity() instanceof Player)) return; // Not a player
+		ItemStack hand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
+		if (hand==null || hand.getType().equals(Material.AIR)) return;
 		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) {
 			if (c instanceof CustomArmour) 
 				if (isPlayerWearingCustomArmour(c.getUUID(), (Player)event.getEntity())) 

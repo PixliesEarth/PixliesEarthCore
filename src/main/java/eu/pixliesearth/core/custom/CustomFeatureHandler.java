@@ -32,7 +32,6 @@ import lombok.SneakyThrows;
 public class CustomFeatureHandler {
 	
 	private @Getter Set<CustomItem> customItems;
-	private @Getter Set<CustomRecipe> customRecipes;
 	private @Getter Set<Listener> customListeners;
 	private @Getter Set<CustomCommand> customCommands;
 	private @Getter Set<CustomPermission> customPermissions;
@@ -57,7 +56,6 @@ public class CustomFeatureHandler {
 	public CustomFeatureHandler(CustomFeatureLoader cfl) {
 		setLoader(cfl);
 		this.customItems = new HashSet<CustomItem>();
-		this.customRecipes = new HashSet<CustomRecipe>();
 		this.customListeners = new HashSet<Listener>();
 		this.tickables = new HashSet<Tickable>();
 		this.customCommands = new HashSet<CustomCommand>();
@@ -118,15 +116,6 @@ public class CustomFeatureHandler {
 		System.out.println("Registered the custom block "+customBlock.getUUID());
 	}
 	/**
-	 * Adds a {@link CustomRecipe} to {@link CustomFeatureHandler#customRecipes}
-	 * 
-	 * @param customRecipe The {@link CustomRecipe} to be registered
-	 */
-	public void registerRecipe(CustomRecipe customRecipe) {
-		this.customRecipes.add(customRecipe);
-		System.out.println("Registered the recipe "+customRecipe.getRecipeName());
-	}
-	/**
 	 * Registers the command
 	 * 
 	 * @param customCommand The {@link CustomCommand} instance to register 
@@ -173,19 +162,6 @@ public class CustomFeatureHandler {
 			if (l.getClass().equals(clazz)) {
 				HandlerList.unregisterAll(l);
 				this.customListeners.remove(l);
-				break;
-			}
-	}
-	/**
-	 * Disables a {@link CustomRecipe} based on its class
-	 * 
-	 * @param clazz The {@link CustomRecipe}'s class
-	 */
-	public void disableRecipe(Class<? extends CustomRecipe> clazz) {
-		for (CustomRecipe r : getCustomRecipes()) 
-			if (r.getClass().equals(clazz)) {
-				Bukkit.removeRecipe(r.getNamespacedKey(getInstance()));
-				this.customRecipes.remove(r);
 				break;
 			}
 	}

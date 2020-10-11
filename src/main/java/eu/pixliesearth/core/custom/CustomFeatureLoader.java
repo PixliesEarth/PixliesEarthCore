@@ -7,7 +7,6 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
@@ -55,7 +54,8 @@ public class CustomFeatureLoader {
 		setHandler(new CustomFeatureHandler(this));
 		loadCommands(path);
 		loadListeners(path);
-		loadRecipes(path);
+		//loadRecipes(path);
+		new CustomRecipes(getInstance());
 		loadCustomItems(path);
 		loadPermissions(path);
 		loadCustomBlocks(path);
@@ -122,27 +122,6 @@ public class CustomFeatureLoader {
 		getHandler().registerCustomMachineRecipe(customMachine);
 	}
 	*/
-	/**
-	 * Uses reflection to load recipes into Minecraft
-	 * 
-	 * @param path Path to reflect off
-	 */
-	@SneakyThrows
-	public void loadRecipes(String path) {
-		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes.craftingtable", CustomRecipe.class)) 
-			loadRecipe(clazz.newInstance());
-	}
-	/**
-	 * Loads a recipe into Minecraft base on a custom recipe
-	 * 
-	 * @param cr The custom recipe to load
-	 */
-	public void loadRecipe(CustomRecipe cr) {
-		Recipe r = cr.getRecipeAsMinecraftRecipe(getInstance()); // Get the custom recipe name
-		if (r==null) throw new Exceptions.CustomRecipeCreationException(cr); // The recipe failed to be created
-		Bukkit.addRecipe(r); // Register the recipe
-		getHandler().registerRecipe(cr);
-	}
 	/**
 	 * Uses reflection to register permissions
 	 * 

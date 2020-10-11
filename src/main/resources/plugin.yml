@@ -144,10 +144,6 @@ commands:
     aliases:
       - boosts
       - serverboost
-  cigive:
-    description: cigive
-    aliases:
-      - giveci
   marry:
     description: marriage command
     aliases:
