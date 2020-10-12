@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class settlementsCommand implements SubCommand, Listener {
+public class settlementsCommand extends SubCommand implements Listener {
 
     @Override
     public String[] aliases() {

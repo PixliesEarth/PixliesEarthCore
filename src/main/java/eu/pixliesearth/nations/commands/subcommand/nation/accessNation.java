@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class accessNation implements SubCommand {
+public class accessNation extends SubCommand {
 
     @Override
     public String[] aliases() {

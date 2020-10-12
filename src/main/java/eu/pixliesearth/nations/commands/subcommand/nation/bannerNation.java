@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-public class bannerNation implements SubCommand {
+public class bannerNation extends SubCommand {
 
     @Override
     public String[] aliases() {

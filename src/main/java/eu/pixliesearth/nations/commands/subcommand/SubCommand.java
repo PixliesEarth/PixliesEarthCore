@@ -7,19 +7,19 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 
-public interface SubCommand {
+public class SubCommand {
 
-    Main instance = Main.getInstance();
+    protected final static Main instance = Main.getInstance();
 
-    String[] aliases();
+    public String[] aliases() { return null; }
 
-    Map<String, Integer> autoCompletion();
+    public Map<String, Integer> autoCompletion() { return null; }
 
-    boolean staff();
+    public boolean staff() { return false; }
 
-    boolean execute(CommandSender sender, String[] args);
+    public boolean execute(CommandSender sender, String[] args) { return false; }
 
-    default boolean checkIfPlayer(CommandSender sender) {
+    protected boolean checkIfPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;

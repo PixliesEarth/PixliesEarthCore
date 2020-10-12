@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class descriptionNation implements SubCommand {
+public class descriptionNation extends SubCommand {
     @Override
     public String[] aliases() {
         return new String[]{"description", "setdescription", "desc", "setdesc"};

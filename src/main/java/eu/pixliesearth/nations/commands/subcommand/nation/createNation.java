@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class createNation implements SubCommand {
+public class createNation extends SubCommand {
 
     @Override
     public String[] aliases() {

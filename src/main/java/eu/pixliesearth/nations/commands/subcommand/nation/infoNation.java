@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-public class infoNation implements SubCommand {
+public class infoNation extends SubCommand {
 
     @Override
     public String[] aliases() {

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class handoverCommand implements SubCommand {
+public class handoverCommand extends SubCommand {
 
     @Override
     public String[] aliases() {

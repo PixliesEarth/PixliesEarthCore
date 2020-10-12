@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class menuNation implements SubCommand {
+public class menuNation extends SubCommand {
 
     @Override
     public String[] aliases() {

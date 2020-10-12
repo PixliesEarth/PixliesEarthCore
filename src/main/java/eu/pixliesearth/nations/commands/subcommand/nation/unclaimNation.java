@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class unclaimNation implements SubCommand {
+public class unclaimNation extends SubCommand {
 
     @Override
     public String[] aliases() {

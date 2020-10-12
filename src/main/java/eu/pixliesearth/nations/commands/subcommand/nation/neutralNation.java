@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class neutralNation implements SubCommand {
+public class neutralNation extends SubCommand {
 
     @Override
     public String[] aliases() {

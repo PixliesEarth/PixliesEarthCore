@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class listNation implements SubCommand {
+public class listNation extends SubCommand {
 
     @Override
     public String[] aliases() {

@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-public class kickNation implements SubCommand {
+public class kickNation extends SubCommand {
 
     @Override
     public String[] aliases() {

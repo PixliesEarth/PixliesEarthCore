@@ -36,8 +36,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 subCommands.put(s, cmd);
             System.out.println("Registered subcommand " + clazz.getName() + " for command Nation");
         }
-        for (String s : new menuNation().aliases())
-            subCommands.put(s, new menuNation());
     }
 
     public Map<String, SubCommand> subMap() {

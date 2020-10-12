@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import java.util.Collections;
 import java.util.Map;
 
-public class helpNation implements SubCommand {
+public class helpNation extends SubCommand {
 
     @Override
     public String[] aliases() {

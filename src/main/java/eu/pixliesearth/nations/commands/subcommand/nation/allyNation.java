@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class allyNation implements SubCommand {
+public class allyNation extends SubCommand {
 
     @Override
     public String[] aliases() {

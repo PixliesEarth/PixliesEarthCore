@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class disbandNation implements SubCommand {
+public class disbandNation extends SubCommand {
 
     @Override
     public String[] aliases() {
@@ -54,7 +54,6 @@ public class disbandNation implements SubCommand {
                 player.sendMessage(Lang.NATION_DELEATION_CONIIRMATION.get(player));
                 break;
             case 1:
-                System.out.println(args[0]);
                 Nation nation = Nation.getByName(args[0]);
                 if (nation == null) {
                     sender.sendMessage(Lang.NATION_DOESNT_EXIST.get(sender));

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class topNation implements SubCommand {
+public class topNation extends SubCommand {
 
     @Override
     public String[] aliases() {

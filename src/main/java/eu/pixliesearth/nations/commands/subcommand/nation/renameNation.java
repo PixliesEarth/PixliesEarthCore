@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class renameNation implements SubCommand {
+public class renameNation extends SubCommand {
 
     @Override
     public String[] aliases() {
