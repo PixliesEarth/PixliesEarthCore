@@ -64,7 +64,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     	
     	List<String> array = new ArrayList<String>();
     	
-    	if (args.length<1) {
+    	if (args.length<2) {
     		for (String s : getSubCommandAliases()) 
     			array.add(s);
     		Collections.sort(array);
