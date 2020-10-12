@@ -70,7 +70,7 @@ public class IngotCastIron extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:CastIron_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Cast_Iron_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
