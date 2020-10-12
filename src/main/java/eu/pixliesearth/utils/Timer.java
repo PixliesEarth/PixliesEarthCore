@@ -32,6 +32,10 @@ public class Timer {
         this.expiry = System.currentTimeMillis() + duration;
     }
 
+    public Timer addTime(long durationToAdd) {
+        return new Timer(this.expiry + durationToAdd);
+    }
+
     public long getRemaining() {
         return expiry - System.currentTimeMillis();
     }

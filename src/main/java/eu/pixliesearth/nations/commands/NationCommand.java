@@ -33,8 +33,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     
     public void registerSubcommand(SubCommand subCommand) {
     	this.subCommands.add(subCommand);
-    	for (String s : subCommand.aliases()) 
-    		SubCommandAliases.add(s);
+        SubCommandAliases.addAll(Arrays.asList(subCommand.aliases()));
     	System.out.println("Regsitered the nations subcommand" + subCommand.getClass().getName());
     }
 
@@ -44,14 +43,14 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         list.remove(strings[0]);
         String[] args = list.toArray(new String[0]);
 
-	    if (!SubCommandAliases.contains(args[0])) {
+	    if (!SubCommandAliases.contains(strings[0])) {
     		sendHelp(sender, 1);
     		return false;
     	}
 
     	for (SubCommand c : getSubCommands()) {
     		for (String s : c.aliases()) 
-    			if (s.equals(args[0]))
+    			if (s.equals(strings[0]))
     				return c.execute(sender, args);
     	}
     	
@@ -65,8 +64,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     	List<String> array = new ArrayList<String>();
     	
     	if (args.length<2) {
-    		for (String s : getSubCommandAliases()) 
-    			array.add(s);
+            array.addAll(getSubCommandAliases());
     		Collections.sort(array);
         	return array;
     	} else {
@@ -77,7 +75,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         				if (c.autoCompletion() == null) 
         					return array;
         				for (Entry<String, Integer> entry: c.autoCompletion().entrySet()) 
-        					if (entry.getValue().intValue()==(args.length+1)) 
+        					if (entry.getValue() == (args.length+1))
         						array.add(entry.getKey());
         				return array;
         			}
