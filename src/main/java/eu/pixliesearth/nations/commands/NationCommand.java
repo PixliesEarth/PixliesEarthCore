@@ -107,6 +107,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         if (args.length > 1) {
             if (subMap().get(args[0]) == null)
                 return completions;
+            if (subMap().get(args[0]).autoCompletion() == null) return completions;
             for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
                 if (args.length == entry.getValue() + 1) {
                     argCompletions.computeIfAbsent(entry.getValue(), k -> new HashSet<>());

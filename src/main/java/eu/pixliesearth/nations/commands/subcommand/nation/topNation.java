@@ -19,11 +19,6 @@ public class topNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
-        return new HashMap<>();
-    }
-
-    @Override
     public boolean staff() {
         return false;
     }

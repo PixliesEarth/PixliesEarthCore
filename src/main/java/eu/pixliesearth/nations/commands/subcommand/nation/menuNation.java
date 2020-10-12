@@ -28,11 +28,6 @@ public class menuNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
-        return Collections.emptyMap();
-    }
-
-    @Override
     public boolean staff() {
         return false;
     }
