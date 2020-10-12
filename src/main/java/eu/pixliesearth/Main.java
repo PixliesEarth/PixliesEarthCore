@@ -339,7 +339,6 @@ public final class Main extends JavaPlugin {
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
         getCommand("machines").setExecutor(new MachinesCommand());
-        NationCommand.init();
     }
 
     private void registerEvents(PluginManager manager) {

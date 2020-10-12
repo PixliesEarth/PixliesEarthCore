@@ -1,11 +1,7 @@
 package eu.pixliesearth.nations.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,15 +40,19 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
-    	if (!SubCommandAliases.contains(strings[0])) {
+        List<String> list = new ArrayList<>(Arrays.asList(strings));
+        list.remove(strings[0]);
+        String[] args = list.toArray(new String[0]);
+
+	    if (!SubCommandAliases.contains(args[0])) {
     		sendHelp(sender, 1);
     		return false;
     	}
-    	
+
     	for (SubCommand c : getSubCommands()) {
     		for (String s : c.aliases()) 
-    			if (s.equals(strings[0])) 
-    				return c.execute(sender, strings);
+    			if (s.equals(args[0]))
+    				return c.execute(sender, args);
     	}
     	
     	sendHelp(sender, 1);
