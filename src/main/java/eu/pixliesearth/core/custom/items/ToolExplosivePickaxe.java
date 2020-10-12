@@ -56,7 +56,7 @@ public class ToolExplosivePickaxe extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 3;
     }
 
     @Override

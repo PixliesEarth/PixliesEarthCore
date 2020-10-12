@@ -56,7 +56,7 @@ public class WeaponBronzeSword extends CustomWeapon {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 11;
 	}
 
 	@Override

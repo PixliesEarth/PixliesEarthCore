@@ -10,9 +10,9 @@ WARZONE_SUBTITLE: "&7اینجا همه میتوانند به شما حمله ک�
 NO_PERMISSIONS: "§cمجوزهای کافی نیست."
 PLAYER_DOES_NOT_EXIST: "&7این بازیکن &cوجود ندارد&7."
 ONLY_PLAYERS_EXEC: "§cاین فرمان فقت برایه بازیکن ها است."
-UNALLOWED_CHARS_IN_ARGS: "&7Invalid characters in argument."
-WRONG_USAGE: "&c&lWRONG USAGE! &e%USAGE%"
-CHAT_MUTED: "&7The chat has been muted by &6%PLAYER%&7."
+UNALLOWED_CHARS_IN_ARGS: "&7شخصیت های معتبر در ارگومنت."
+WRONG_USAGE: "&c&lاستفاده اشتباه! &e%USAGE%"
+CHAT_MUTED: "&6%PLAYER%&7 چت را ساکت کرد."
 CHAT_UNMUTED: "&7The chat has been unmuted by &6%PLAYER%&7."
 CHAT_IS_MUTED_ATM: "&7The chat is muted at the moment."
 CHAT_COOLDOWN: "&7You have to wait &3%COOLDOWN% &7to be able to chat again."

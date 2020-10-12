@@ -69,8 +69,7 @@ public class PixliesGun {
             if (result == null) return;
             if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
             if (result.isHeadshot()) {
-                result.getEntity().setKiller(player);
-                result.getEntity().setHealth(0.0);
+                result.getEntity().damage(ammo.getDamage() * 2, player);
             } else {
                 result.getEntity().damage(ammo.getDamage(), player);
             }
