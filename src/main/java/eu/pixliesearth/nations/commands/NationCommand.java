@@ -56,29 +56,25 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 IF ONE OF THEM MATCHES WITH THE STRINGS[0],
                 EXECUTE SUBCOMMAND.
          */
-        boolean found = false;
         if (strings.length > 0) {
-
             List<String> list = new ArrayList<>(Arrays.asList(strings));
             list.remove(strings[0]);
             String[] args = list.toArray(new String[0]);
 
-            for (SubCommand sub : getSubCommands())
-                for (String s : sub.aliases())
-                    if (strings[0].equalsIgnoreCase(s) ) {
-                        found = true;
-                        if (sub.staff() && sender instanceof Player) {
-                            if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
-                                sub.execute(sender, args);
-                            } else {
-                                Lang.NO_PERMISSIONS.send(sender);
-                            }
-                        } else {
-                            sub.execute(sender, args);
-                        }
+            if (subMap().containsKey(strings[0].toLowerCase())) {
+                SubCommand sub = subMap().get(strings[0].toLowerCase());
+                if (sub.staff() && sender instanceof Player) {
+                    if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
+                        sub.execute(sender, args);
+                    } else {
+                        Lang.NO_PERMISSIONS.send(sender);
                     }
-            if (!found)
+                } else {
+                    sub.execute(sender, args);
+                }
+            } else {
                 sendHelp(sender, 1);
+            }
         } else {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
