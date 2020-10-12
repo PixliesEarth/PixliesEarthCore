@@ -1,14 +1,15 @@
 package eu.pixliesearth.nations.commands;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.commands.subcommand.nation.infoNation;
-import eu.pixliesearth.nations.commands.subcommand.nation.menuNation;
-import eu.pixliesearth.utils.Methods;
-import lombok.SneakyThrows;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,14 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import java.util.*;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.commands.subcommand.nation.infoNation;
+import eu.pixliesearth.utils.Methods;
+import lombok.SneakyThrows;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 
@@ -29,7 +37,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     @SneakyThrows
     public static void init() {
         subCommands = new HashMap<>();
-        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", SubCommand.class)) {
+        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", eu.pixliesearth.nations.commands.subcommand.SubCommand.class)) {
             SubCommand cmd = clazz.getConstructor().newInstance();
             System.out.println("Registering subcommand " + clazz.getName() + " for command Nation");
             for (String s : cmd.aliases())
