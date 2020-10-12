@@ -1,13 +1,17 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.NBTUtil;
 import lombok.SneakyThrows;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEvent;
 /**
  * 
  * @author BradBot_1
@@ -29,5 +33,17 @@ public class CustomItemListener extends CustomListener {
 		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
 			if (c.getUUID().equals(id)) 
 				event.setCancelled(c.PlayerInteractEvent(event));
+	}
+	
+	@EventHandler
+    @SneakyThrows
+	public void BlockBreakEvent(BlockBreakEvent event) {
+		ItemStack i = event.getPlayer().getInventory().getItemInMainHand();
+		if (i==null || i.getType().equals(Material.AIR)) return;
+		String id = NBTUtil.getTagsFromItem(i).getString("UUID");
+		if (id==null) return;
+		CustomItem ci = CustomItemUtil.getCustomItemFromUUID(id);
+		if (ci==null) return;
+		event.setCancelled(ci.onBlockBrokeWithItem(event));
 	}
 }
