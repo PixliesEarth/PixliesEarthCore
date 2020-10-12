@@ -1,131 +1,90 @@
 package eu.pixliesearth.nations.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
-import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.commands.subcommand.nation.infoNation;
 import eu.pixliesearth.utils.Methods;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
-
-    private static Map<String, SubCommand> subCommands;
-
-    public Collection<SubCommand> getSubCommands() {
-        return subCommands.values();
+	
+	public NationCommand() {
+		subCommands = new HashSet<SubCommand>();
+		SubCommandAliases = new HashSet<String>();
+		loadSubCommands("eu.pixliesearth.nations.commands.subcommand.nation");
+	}
+	
+	private @Getter Set<SubCommand> subCommands;
+	private @Getter Set<String> SubCommandAliases;
+	
+	@SneakyThrows
+    public void loadSubCommands(String path) {
+    	for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf(path, SubCommand.class))
+    		registerSubcommand(clazz.newInstance());
     }
-
-    @SneakyThrows
-    public static void init() {
-        subCommands = new HashMap<>();
-        for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.nations.commands.subcommand.nation", eu.pixliesearth.nations.commands.subcommand.SubCommand.class)) {
-            SubCommand cmd = clazz.getConstructor().newInstance();
-            System.out.println("Registering subcommand " + clazz.getName() + " for command Nation");
-            for (String s : cmd.aliases())
-                subCommands.put(s, cmd);
-            System.out.println("Registered subcommand " + clazz.getName() + " for command Nation");
-        }
+    
+    public void registerSubcommand(SubCommand subCommand) {
+    	this.subCommands.add(subCommand);
+    	for (String s : subCommand.aliases()) 
+    		SubCommandAliases.add(s);
+    	System.out.println("Regsitered the nations subcommand" + subCommand.getClass().getName());
     }
-
-    public Map<String, SubCommand> subMap() {
-        return subCommands;
-    }
-
-    public Set<String> getSubCommandAliases() {
-        return subCommands.keySet();
-    }
-
-    private static final Main instance = Main.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
-
-        /*
-                GO THROUGH ALL SUBCOMMANDS AND THEIR ALIASES,
-                IF ONE OF THEM MATCHES WITH THE STRINGS[0],
-                EXECUTE SUBCOMMAND.
-         */
-        if (strings.length > 0) {
-            List<String> list = new ArrayList<>(Arrays.asList(strings));
-            list.remove(strings[0]);
-            String[] args = list.toArray(new String[0]);
-
-            if (subMap().containsKey(strings[0].toLowerCase())) {
-                SubCommand sub = subMap().get(strings[0].toLowerCase());
-                if (sub.staff() && sender instanceof Player) {
-                    if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
-                        sub.execute(sender, args);
-                    } else {
-                        Lang.NO_PERMISSIONS.send(sender);
-                    }
-                } else {
-                    sub.execute(sender, args);
-                }
-            } else {
-                sendHelp(sender, 1);
-            }
-        } else {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                Profile profile = instance.getProfile(player.getUniqueId());
-                if (profile.isInNation()) {
-                    infoNation.sendNationInfo(profile.getCurrentNation(), player);
-                } else {
-                    sendHelp(sender, 1);
-                }
-            } else  {
-                sendHelp(sender, 1);
-            }
-        }
-        return false;
+    	if (!SubCommandAliases.contains(strings[0])) {
+    		sendHelp(sender, 1);
+    		return false;
+    	}
+    	
+    	for (SubCommand c : getSubCommands()) {
+    		for (String s : c.aliases()) 
+    			if (s.equals(strings[0])) 
+    				return c.execute(sender, strings);
+    	}
+    	
+    	sendHelp(sender, 1);
+    	return false;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
-        final List<String> completions = new ArrayList<>();
-
-        Map<Integer, Set<String>> argCompletions = new HashMap<>();
-
-        argCompletions.put(0, getSubCommandAliases());
-
-        if (args.length > 1) {
-            if (subMap().get(args[0]) == null)
-                return completions;
-            if (subMap().get(args[0]).autoCompletion() == null) return completions;
-            for (Map.Entry<String, Integer> entry : subMap().get(args[0]).autoCompletion().entrySet())
-                if (args.length == entry.getValue() + 1) {
-                    argCompletions.computeIfAbsent(entry.getValue(), k -> new HashSet<>());
-                    argCompletions.get(entry.getValue()).add(entry.getKey());
-                }
-        }
-
-        for (Map.Entry<Integer, Set<String>> entry : argCompletions.entrySet())
-            if (args.length == entry.getKey() + 1)
-                StringUtil.copyPartialMatches(args[entry.getKey()], entry.getValue(), completions);
-
-        Collections.sort(completions);
-
-        return completions;
+    	
+    	List<String> array = new ArrayList<String>();
+    	
+    	if (args.length<1) {
+    		for (String s : getSubCommandAliases()) 
+    			array.add(s);
+    		Collections.sort(array);
+        	return array;
+    	} else {
+    		String arg = args[0];
+    		for (SubCommand c : getSubCommands()) {
+        		for (String s : c.aliases()) 
+        			if (s.equals(arg)) {
+        				if (c.autoCompletion() == null) 
+        					return array;
+        				for (Entry<String, Integer> entry: c.autoCompletion().entrySet()) 
+        					if (entry.getValue().intValue()==(args.length+1)) 
+        						array.add(entry.getKey());
+        				return array;
+        			}
+        	}
+    		array.add("?");
+    		return array;
+    	}
     }
 
     public static void sendHelp(CommandSender sender, int page) {
