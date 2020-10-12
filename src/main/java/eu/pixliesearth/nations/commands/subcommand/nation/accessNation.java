@@ -16,6 +16,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class accessNation extends SubCommand {
+	
+	public accessNation() {
+		
+	}
 
     @Override
     public String[] aliases() {
