@@ -46,6 +46,8 @@ public class DoubleDropBoost extends Boost implements Listener {
             case NETHER_GOLD_ORE:
                 event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.GOLD_NUGGET, 2));
                 break;
+            default :
+            	break;
         }
     }
 
