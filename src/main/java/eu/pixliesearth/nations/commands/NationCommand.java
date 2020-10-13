@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands;
 import java.util.*;
 import java.util.Map.Entry;
 
+import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,58 +14,72 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 	
 	public NationCommand() {
 		subCommands = new HashSet<SubCommand>();
-		SubCommandAliases = new HashSet<String>();
-		loadSubCommands("eu.pixliesearth.nations.commands.subcommand.nation");
+		// register subCommands
+        subCommands.add(new createNation());
+        subCommands.add(new claimNation());
+        subCommands.add(new disbandNation());
+        subCommands.add(new inviteNation());
+        subCommands.add(new renameNation());
+        subCommands.add(new unclaimNation());
+        subCommands.add(new descriptionNation());
+        subCommands.add(new joinNation());
+        subCommands.add(new leaveNation());
+        subCommands.add(new rankNation());
+        subCommands.add(new mapNation());
+        subCommands.add(new kickNation());
+        subCommands.add(new infoNation());
+        subCommands.add(new helpNation());
+        subCommands.add(new handoverCommand());
+        subCommands.add(new listNation());
+        subCommands.add(new settlementsCommand());
+        subCommands.add(new menuNation());
+        subCommands.add(new allyNation());
+        subCommands.add(new neutralNation());
+        subCommands.add(new chatNation());
+        subCommands.add(new bankNation());
+        subCommands.add(new topNation());
+        subCommands.add(new bannerNation());
+        subCommands.add(new foreignPermission());
+        subCommands.add(new accessNation());
+        subCommands.add(new flagNation());
+        subCommands.add(new xpNation());
+
+		SubCommandAliases = new HashMap<String, SubCommand>();
+		for (SubCommand subCommand : subCommands)
+		    for (String s : subCommand.aliases())
+		        SubCommandAliases.put(s, subCommand);
 	}
 	
-	private @Getter Set<SubCommand> subCommands;
-	private @Getter Set<String> SubCommandAliases;
-	
-	@SneakyThrows
-    public void loadSubCommands(String path) {
-    	for (Class<? extends SubCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf(path, SubCommand.class))
-    		registerSubcommand(clazz.newInstance());
-    }
-    
-    public void registerSubcommand(SubCommand subCommand) {
-    	this.subCommands.add(subCommand);
-        SubCommandAliases.addAll(Arrays.asList(subCommand.aliases()));
-    	System.out.println("Regsitered the nations subcommand" + subCommand.getClass().getName());
-    }
+	private @Getter final Set<SubCommand> subCommands;
+	private @Getter final Map<String, SubCommand> SubCommandAliases;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] strings) {
         List<String> list = new ArrayList<>(Arrays.asList(strings));
         list.remove(strings[0]);
         String[] args = list.toArray(new String[0]);
 
-	    if (!SubCommandAliases.contains(strings[0])) {
+	    if (!SubCommandAliases.containsKey(strings[0].toLowerCase())) {
     		sendHelp(sender, 1);
     		return false;
     	}
 
-    	for (SubCommand c : getSubCommands()) {
-    		for (String s : c.aliases()) 
-    			if (s.equals(strings[0]))
-    				return c.execute(sender, args);
-    	}
-    	
-    	sendHelp(sender, 1);
-    	return false;
+	    return SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
     	
     	List<String> array = new ArrayList<String>();
     	
     	if (args.length<2) {
-            array.addAll(getSubCommandAliases());
+            array.addAll(getSubCommandAliases().keySet());
     		Collections.sort(array);
         	return array;
     	} else {

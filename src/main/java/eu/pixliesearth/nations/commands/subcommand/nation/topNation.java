@@ -1,7 +1,9 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.NTop;
 import eu.pixliesearth.utils.Methods;
+import org.jetbrains.annotations.NotNull;
 
 public class topNation extends SubCommand {
 
@@ -18,12 +21,19 @@ public class topNation extends SubCommand {
     }
 
     @Override
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        returner.put("PAGE", 1);
+        return returner;
+    }
+
+    @Override
     public boolean staff() {
         return false;
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         int page = 1;
         if (args.length > 0 && args[0].chars().allMatch(Character::isDigit))
             page = Integer.parseInt(args[0]);

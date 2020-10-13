@@ -9,6 +9,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class renameNation extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Nation nation;

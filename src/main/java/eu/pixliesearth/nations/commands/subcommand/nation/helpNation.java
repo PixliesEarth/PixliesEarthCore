@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.nations.commands.NationCommand;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class helpNation extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         int i = 0;
         if (args.length > 0)
             i = Integer.parseInt(args[0]);

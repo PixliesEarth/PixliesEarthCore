@@ -1,7 +1,9 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 
@@ -10,6 +12,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 public class listNation extends SubCommand {
 
@@ -24,7 +27,14 @@ public class listNation extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        returner.put("PAGE", 1);
+        return returner;
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         int page = 1;
         if (args.length > 0 && args[0].chars().allMatch(Character::isDigit))
             page = Integer.parseInt(args[0]);

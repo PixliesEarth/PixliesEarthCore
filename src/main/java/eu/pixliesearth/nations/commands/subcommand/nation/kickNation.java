@@ -8,6 +8,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class kickNation extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = instance.getProfile(player.getUniqueId());

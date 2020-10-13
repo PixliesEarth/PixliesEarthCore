@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class SubCommand {
 
     public boolean staff() { return false; }
 
-    public boolean execute(CommandSender sender, String[] args) { return false; }
+    public boolean execute(@NotNull CommandSender sender, @NotNull String[] args) { return false; }
 
     protected boolean checkIfPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {

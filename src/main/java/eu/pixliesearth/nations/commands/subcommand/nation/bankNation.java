@@ -9,6 +9,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class bankNation extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         switch (args.length) {
             case 1:
                 if (args[0].equalsIgnoreCase("balance")) {

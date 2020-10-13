@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import com.google.common.collect.Maps;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
@@ -17,6 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -35,7 +37,14 @@ public class menuNation extends SubCommand {
     static final String defaultTitle = "§bNations menu §8| ";
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
+        Map<String, Integer> returner = new HashMap<>();
+        returner.put(" ", 1);
+        return returner;
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
@@ -46,7 +55,7 @@ public class menuNation extends SubCommand {
         return false;
     }
 
-    private void open(Gui gui, Player player, MenuPage page) {
+    private void open(@NotNull Gui gui, @NotNull Player player, @NotNull MenuPage page) {
         gui.setTitle(defaultTitle + page.title);
         StaticPane hotbar = new StaticPane(0, 0, 9, 1);
         int j = 0;
