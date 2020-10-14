@@ -62,41 +62,6 @@ public class OurServerListener implements Listener {
         kernel.requestUpdateFactions();
     }
 
-/*    @EventHandler(priority=EventPriority.MONITOR)
-    public void onFactionDisband(EventFactionsDisband event) {
-        if(event.isCancelled()) {
-            return;
-        }
-        if(kernel.isPlayersets()) {
-            kernel.requestUpdatePlayerSet(event.getFactionId());
-        }
-        kernel.requestUpdateFactions();
-    }*/
-/*
-    @EventHandler(priority=EventPriority.MONITOR)
-    public void onFactionNameChange(EventFactionsNameChange event) {
-        if(event.isCancelled()) {
-            return;
-        }
-        kernel.requestUpdateFactions();
-    }
-
-    @EventHandler(priority=EventPriority.MONITOR)
-    public void onFactionWarpAdd(EventFactionsWarpAdd event) {
-        if(event.isCancelled()) {
-            return;
-        }
-        kernel.requestUpdateFactions();
-    }
-
-    @EventHandler(priority=EventPriority.MONITOR)
-    public void onFactionWarpRemove(EventFactionsWarpRemove event) {
-        if(event.isCancelled()) {
-            return;
-        }
-        kernel.requestUpdateFactions();
-    }*/
-
     @EventHandler(priority=EventPriority.MONITOR)
     public void onFactionChunksChange(TerritoryChangeEvent event) {
         if(event.isCancelled()) {

@@ -313,6 +313,7 @@ public class DynmapEngine {
                     areaMarker.setDescription(desc); /* Set popup */
 
                     /* Set line and fill properties */
+                    cusstyle.put(fact.getNationId(), new AreaStyle(markerAPI, Main.getInstance().getConfig(), "custstyle." + fact.getNationId(), defstyle, fact.getDynmapFill(), fact.getDynmapBorder()));
                     addStyle(cusstyle, defstyle, fact.getNationId(), areaMarker);
 
                     /* Add to map */
