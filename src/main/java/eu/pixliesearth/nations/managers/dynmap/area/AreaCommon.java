@@ -5,6 +5,7 @@ import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.dynmap.TileFlags;
 import jodd.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.dynmap.markers.AreaMarker;
@@ -84,7 +85,7 @@ public class AreaCommon {
         formattedWindow = formattedWindow.replace("%members%", res.toString());
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
         formattedWindow = formattedWindow.replace("%era%", Era.getByName(nation.getEra()).getName());
-        formattedWindow = formattedWindow.replace("%ideology%", StringUtil.capitalize(nation.getIdeology()));
+        formattedWindow = formattedWindow.replace("%ideology%", StringUtils.capitalize(nation.getIdeology().replace("_", " ")));
 
 /*        // Build flags
         final StringBuilder flgs = new StringBuilder();

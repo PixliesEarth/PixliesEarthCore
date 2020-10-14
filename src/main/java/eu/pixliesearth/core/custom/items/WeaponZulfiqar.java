@@ -3,6 +3,9 @@ package eu.pixliesearth.core.custom.items;
 import eu.pixliesearth.core.custom.CustomWeapon;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
@@ -71,11 +74,19 @@ public class WeaponZulfiqar extends CustomWeapon {
 
     @Override
     public int getDamage() {
-        return 7;
+        return 14;
     }
 
     @Override
-    public boolean PlayerInteractEvent(PlayerInteractEvent event) {
+    public Rarity getRarity() {
+        return Rarity.GODLIKE;
+    }
+
+    @Override
+    public boolean EntityDamageEvent(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) return false;
+        Player target = (Player) event.getEntity();
+        target.sendMessage("§6You have been hit with divine intellect.");
         return false;
     }
 
