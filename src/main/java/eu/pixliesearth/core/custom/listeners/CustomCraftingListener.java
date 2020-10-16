@@ -15,6 +15,7 @@ import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.CustomItemUtil;
 import lombok.SneakyThrows;
 /**
@@ -43,7 +44,10 @@ public class CustomCraftingListener extends CustomListener {
 			//craft
 			Map<Integer, String> cwaftin = new HashMap<Integer, String>();
 			for (int i = 0; i<9; i++) {
-				cwaftin.put(i, CustomItemUtil.getUUIDFromItemStack(inv.getItem(i)));
+				if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial()))
+					cwaftin.compute(i, null);
+				else
+					cwaftin.put(i, CustomItemUtil.getUUIDFromItemStack(inv.getItem(i)));
 			}
 			craft(event.getPlayer(), cwaftin, inv);
 		} else {
@@ -57,6 +61,7 @@ public class CustomCraftingListener extends CustomListener {
 			player.sendMessage("§cInvalid recipe");
 			return false;
 		} else {
+			player.sendMessage("§aCrafting "+customRecipe.getResultUUID());
 			ItemStack[] isl = inv.getContents();
 			for (int i = 0; i < isl.length; i++) {
 				ItemStack is = isl[i];
