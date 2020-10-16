@@ -37,6 +37,7 @@ public class CustomFeatureHandler {
 	private @Getter Set<CustomBlock> customBlocks;
 	private @Getter Set<Tickable> tickables;
 	private @Getter Set<CustomMachineRecipe> customMachineRecipes;
+	private @Getter Set<CustomRecipe> customRecipes;
 	private @Getter Set<CustomQuest> customQuests;
 	/**
 	 *  Allows to get an item from a CustomItem instance
@@ -64,6 +65,7 @@ public class CustomFeatureHandler {
 		this.locationToUUIDMap = new HashMap<Location, String>();
 		this.customMachineRecipes = new HashSet<CustomMachineRecipe>();
 		this.customQuests = new HashSet<CustomQuest>();
+		this.customRecipes = new HashSet<CustomRecipe>();
 		new ThreadUtils(new Runnable() {
 			@SneakyThrows
 			@Override
@@ -92,6 +94,13 @@ public class CustomFeatureHandler {
 	public void registerListener(Listener listener) {
 		this.customListeners.add(listener);
 		System.out.println("Registered the listener "+listener.getClass().getName());
+	}
+	/**
+	 * 
+	 */
+	public void registerRecipe(CustomRecipe customRecipe) {
+		this.customRecipes.add(customRecipe);
+		System.out.println("Registered the recipe "+customRecipe.getResultUUID());
 	}
 	/**
 	 * Adds a {@link CustomItem} to {@link CustomFeatureHandler#customItems}

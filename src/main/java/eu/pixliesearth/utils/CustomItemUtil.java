@@ -1,8 +1,11 @@
 package eu.pixliesearth.utils;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
-import org.bukkit.inventory.ItemStack;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 /**
  * 
  * @author BradBot_1
@@ -15,7 +18,10 @@ import org.bukkit.inventory.ItemStack;
 public class CustomItemUtil {
 	
 	public static String getUUIDFromItemStack(ItemStack itemStack) {
-		return NBTUtil.getTagsFromItem(itemStack).getString("UUID");
+		String s = NBTUtil.getTagsFromItem(itemStack).getString("UUID");
+		if (s==null) 
+			s = MinecraftMaterial.getMinecraftMaterialFromItemStack(itemStack);
+		return s;
 	}
 	
 	public static boolean isItemStackACustomItem(ItemStack itemStack) {
@@ -27,6 +33,15 @@ public class CustomItemUtil {
 	}
 	
 	public static ItemStack getItemStackFromUUID(String id) {
-		return CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
+		ItemStack i = CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
+		if (i==null) {
+			Material m = MinecraftMaterial.getMinecraftMaterialFromUUID(id).getMaterial();
+			if (m==null || m.equals(Material.AIR)) {
+				return null;
+			} else {
+				return new ItemStack(m);
+			}
+		} else 
+			return CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
 	}
 }
