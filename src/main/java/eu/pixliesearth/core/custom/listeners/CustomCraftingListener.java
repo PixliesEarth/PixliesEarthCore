@@ -3,7 +3,6 @@ package eu.pixliesearth.core.custom.listeners;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +44,7 @@ public class CustomCraftingListener extends CustomListener {
 			Map<Integer, String> cwaftin = new HashMap<Integer, String>();
 			for (int i = 0; i<9; i++) {
 				if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial()))
-					cwaftin.compute(i, null);
+					cwaftin.put(i, MinecraftMaterial.AIR.getUUID());
 				else
 					cwaftin.put(i, CustomItemUtil.getUUIDFromItemStack(inv.getItem(i)));
 			}
@@ -65,7 +64,7 @@ public class CustomCraftingListener extends CustomListener {
 			ItemStack[] isl = inv.getContents();
 			for (int i = 0; i < isl.length; i++) {
 				ItemStack is = isl[i];
-				if (is==null || is.getType().equals(Material.AIR)) continue;
+				if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) continue;
 				is.setAmount(is.getAmount()-1);
 				isl[i] = is;
 			}
