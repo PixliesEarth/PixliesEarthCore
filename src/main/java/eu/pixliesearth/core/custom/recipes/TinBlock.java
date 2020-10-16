@@ -17,6 +17,7 @@ public class TinBlock extends CustomRecipe {
 	
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
+		map.put(0, "Pixlies:Tin_Ingot");
 		map.put(1, "Pixlies:Tin_Ingot");
 		map.put(2, "Pixlies:Tin_Ingot");
 		map.put(3, "Pixlies:Tin_Ingot");
@@ -25,7 +26,6 @@ public class TinBlock extends CustomRecipe {
 		map.put(6, "Pixlies:Tin_Ingot");
 		map.put(7, "Pixlies:Tin_Ingot");
 		map.put(8, "Pixlies:Tin_Ingot");
-		map.put(9, "Pixlies:Tin_Ingot");
 		return map;
 	}
 }

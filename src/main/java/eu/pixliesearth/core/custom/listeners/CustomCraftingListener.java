@@ -77,21 +77,28 @@ public class CustomCraftingListener extends CustomListener {
 	
 	public CustomRecipe getCustomRecipe(Map<Integer, String> map) {
 		for (CustomRecipe customRecipe : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
-			int i = compare(customRecipe.getContentsList(), map);
+			int i = compare(customRecipe.getContentsList(), map, true);
 			if (i>=9)
 				return customRecipe;
 		}
 		return null;
 	}
 	
-	public int compare(Map<Integer, String> map, Map<Integer, String> map2) {
+	public int compare(Map<Integer, String> map, Map<Integer, String> map2, boolean debug) {
+		if (debug) System.out.println("[DEBUG] Starting crafting map comarison!");
 		int res = 0;
 		for (int i = 0; i<9; i++) {
 			String s = map.get(i);
+			if (debug) System.out.println("[DEBUG] Map["+i+"]  - "+s+";");
 			String s2 = map2.get(i);
-			if (s==s2) 
+			if (debug) System.out.println("[DEBUG] Map2["+i+"] - "+s2+";");
+			if (s.equalsIgnoreCase(s2)) {
 				res += 1;
+				if (debug) System.out.println("[DEBUG] Values are the same");
+			} else 
+				if (debug) System.out.println("[DEBUG] Values are not the same");
 		}
+		if (debug) System.out.println("[DEBUG] Finished comparison with exit value of "+res);
 		return res;
 	}
 	

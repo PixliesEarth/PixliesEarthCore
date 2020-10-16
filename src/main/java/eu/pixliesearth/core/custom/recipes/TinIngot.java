@@ -24,15 +24,15 @@ public class TinIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
+		map.put(0, "Minecraft:air");
 		map.put(1, "Minecraft:air");
 		map.put(2, "Minecraft:air");
 		map.put(3, "Minecraft:air");
-		map.put(4, "Minecraft:air");
-		map.put(5, "Pixlies:Tin_Block");
+		map.put(4, "Pixlies:Tin_Block");
+		map.put(5, "Minecraft:air");
 		map.put(6, "Minecraft:air");
 		map.put(7, "Minecraft:air");
 		map.put(8, "Minecraft:air");
-		map.put(9, "Minecraft:air");
 		return map;
 	}
 }

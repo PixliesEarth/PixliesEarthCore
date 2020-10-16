@@ -1,10 +1,14 @@
 package eu.pixliesearth.core.custom;
 
-import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import eu.pixliesearth.utils.CustomItemUtil;
+import lombok.Getter;
 
 /**
  * 
@@ -24,6 +28,12 @@ public class CustomRecipes {
 	
 	public void load() {
 		//RegisterRecipe(new ShapedRecipe(getNamespacedKey("Tin_Block"), CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Block")) {{shape("aaa","aaa","aaa");setIngredient('a', CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Ingot"));}});
+		RegisterRecipe(new ShapedRecipe(getNamespacedKey("Craftin_Table"), CustomItemUtil.getItemStackFromUUID("Pixlies:Crafting_Table")) {{
+			shape("rwr","wcw","rwr");
+			setIngredient('r', Material.REDSTONE);
+			setIngredient('w', Material.STICK);
+			setIngredient('c', Material.CRAFTING_TABLE);
+			}});
 	}
 	
 	public NamespacedKey getNamespacedKey(String name) {
