@@ -92,7 +92,7 @@ public class BlockRubberGlass extends CustomBlock {
 	@Override
 	public boolean BlockBreakEvent(BlockBreakEvent event) {
 		int i = new Random().nextInt(4);
-		if (i==4) {
+		if (i==2) {
 			event.getPlayer().sendMessage("§aOh no! You tried to break §r"+getDefaultDisplayName()+"§a but the glass reflected your attack back at you!");
 			EntityDamageEvent event2 = new EntityDamageEvent(event.getPlayer(), DamageCause.CONTACT, 1.0);
 			event2.callEvent();
