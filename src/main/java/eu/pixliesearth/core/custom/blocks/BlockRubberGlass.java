@@ -96,6 +96,7 @@ public class BlockRubberGlass extends CustomBlock {
 			event.getPlayer().sendMessage("§aOh no! You tried to break §r"+getDefaultDisplayName()+"§a but the glass reflected your attack back at you!");
 			EntityDamageEvent event2 = new EntityDamageEvent(event.getPlayer(), DamageCause.CONTACT, 1.0);
 			event2.callEvent();
+			event.setCancelled(true);
 			return true; // Cancel event
 		}
 		return false;
