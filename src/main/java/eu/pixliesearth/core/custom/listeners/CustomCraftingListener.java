@@ -65,7 +65,8 @@ public class CustomCraftingListener extends CustomListener {
 				isl[i] = is;
 			}
 			inv.setContents(isl);
-			player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+			for (int i = 0; i < customRecipe.getResultAmount(); i++)
+				player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
 			return true;
 		}
 	}
