@@ -88,6 +88,11 @@ public class BlockNuke2 extends CustomBlock {
     	return false;
     }
     
+    @Override
+    public Rarity getRarity() {
+    	return Rarity.LEGENDARY;
+    }
+    
 	@Override
 	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
 		return false;

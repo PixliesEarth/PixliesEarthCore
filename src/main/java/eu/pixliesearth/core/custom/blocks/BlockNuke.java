@@ -63,7 +63,12 @@ public class BlockNuke extends CustomBlock {
     public Set<ItemFlag> getItemFlags(){
         return new HashSet<ItemFlag>();
     }
-
+    
+    @Override
+    public Rarity getRarity() {
+    	return Rarity.LEGENDARY;
+    }
+    
     @Override
     public Integer getCustomModelData() {
         return null;
@@ -97,7 +102,6 @@ public class BlockNuke extends CustomBlock {
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		if (event.isCancelled()) return true;
-		Block b = event.getBlock();
 		event.getPlayer().sendMessage("Nuclear bomb planted! It will explode upon recieveing a redston signal! (NOT IMPLEMENTED YET!)");
 		return false;
 	}
