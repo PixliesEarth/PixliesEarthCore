@@ -105,7 +105,7 @@ public class MachinesCommand implements CommandExecutor {
         Gui gui = new Gui(instance, 3, "§b§lMachinery");
         StaticPane categoriesPane = new StaticPane(0, 0, 9, 3);
         categoriesPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-        Machine.MachineType type = Machine.MachineType.KILN;
+        Machine.MachineType type = Machine.MachineType.FORGE;
         categoriesPane.addItem(new GuiItem(new ItemBuilder(type.getItem().clone()).setDisplayName("§b§lMachines").build(), event -> {
             event.setCancelled(true);
             Gui sixRow = new Gui(instance, 6, "§c§lMachines");
