@@ -11,7 +11,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 /**
  * 
@@ -96,12 +98,13 @@ public class CustomFeatureLoader {
 	@SneakyThrows
 	public void loadCustomItems(String path) {
 		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class))
-			loadCustomItem(clazz.newInstance());
+			loadCustomItem(clazz.getConstructor().newInstance());
 		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class))
 			loadCustomItem(clazz.newInstance());
 		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class))
 			loadCustomItem(clazz.newInstance());
 	}
+
 	/**
 	 * Loads a custom item based on the input
 	 * 
@@ -109,7 +112,13 @@ public class CustomFeatureLoader {
 	 */
 	public void loadCustomItem(CustomItem c) {
 		getHandler().registerItem(c);
+		if (c.getDropFromBlock() == null) return;
+		List<BlockDrop> bdrop = new ArrayList<>();
+		if (handler.getDropMap().containsKey(c.getDropFromBlock().getBlock())) bdrop = handler.getDropMap().get(c.getDropFromBlock().getBlock());
+		bdrop.add(c.getDropFromBlock());
+		handler.getDropMap().put(c.getDropFromBlock().getBlock(), bdrop);
 	}
+
 	/**
 	@SneakyThrows
 	public void loadCustomMachineRecipes(String path) {

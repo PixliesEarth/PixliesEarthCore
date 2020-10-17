@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.items;
 
+import eu.pixliesearth.core.custom.BlockDrop;
 import eu.pixliesearth.core.custom.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -73,4 +74,10 @@ public class DustTin extends CustomItem {
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+    @Override
+    public BlockDrop getDropFromBlock() {
+        return new BlockDrop(this.buildItem(), Material.IRON_ORE);
+    }
+
 }

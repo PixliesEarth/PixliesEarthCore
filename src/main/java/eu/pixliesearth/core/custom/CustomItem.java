@@ -113,7 +113,7 @@ public class CustomItem {
 	/**
 	 * The {@link Rarity} of the item, if none is provided this will be the default
 	 * 
-	 * @return The {@link CustomItems}'s rarity
+	 * @return The {@link CustomItem}'s rarity
 	 */
 	public Rarity getRarity() {
 		return Rarity.COMMON;
@@ -150,6 +150,13 @@ public class CustomItem {
 				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 			}}.build();
+	}
+
+	/**
+	 * @return If the block gets broken then this Item drops
+	 */
+	public BlockDrop getDropFromBlock() {
+		return null;
 	}
 	
 	/**

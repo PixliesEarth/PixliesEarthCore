@@ -86,14 +86,7 @@ public class AreaCommon {
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
         formattedWindow = formattedWindow.replace("%era%", Era.getByName(nation.getEra()).getName());
         formattedWindow = formattedWindow.replace("%ideology%", StringUtils.capitalize(nation.getIdeology().replace("_", " ")));
-
-/*        // Build flags
-        final StringBuilder flgs = new StringBuilder();
-        for (final MFlag mFlag : MFlagColl.get().getAll()) {
-            flgs.append("<br/>").append(mFlag.getName()).append(": ").append(Nation.getFlag(mFlag));
-            formattedWindow = formattedWindow.replace(new StringBuilder("%flag.").append(mFlag.getName()).append("%").toString(), String.valueOf(Nation.getFlag(mFlag)));
-        }
-        formattedWindow = formattedWindow.replace("%flags%", flgs.toString());*/
+        
         return formattedWindow;
     }
 

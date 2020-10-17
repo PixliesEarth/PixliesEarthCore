@@ -7,17 +7,15 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * 
@@ -38,6 +36,7 @@ public class CustomFeatureHandler {
 	private @Getter Set<Tickable> tickables;
 	private @Getter Set<CustomMachineRecipe> customMachineRecipes;
 	private @Getter Set<CustomQuest> customQuests;
+	private @Getter Map<Material, List<BlockDrop>> dropMap;
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */
@@ -64,6 +63,7 @@ public class CustomFeatureHandler {
 		this.locationToUUIDMap = new HashMap<Location, String>();
 		this.customMachineRecipes = new HashSet<CustomMachineRecipe>();
 		this.customQuests = new HashSet<CustomQuest>();
+		this.dropMap = new HashMap<>();
 		new ThreadUtils(new Runnable() {
 			@SneakyThrows
 			@Override
@@ -254,10 +254,10 @@ public class CustomFeatureHandler {
 		return getItemStackFromCustomItem(getCustomItemFromClass(clazz));
 	}
 	/**
-	 * Gets and returns a {@link CustomItems} with the same UUID as the one inputed
+	 * Gets and returns a {@link CustomItem} with the same UUID as the one inputed
 	 * 
-	 * @param id The {@link CustomItems} UUID
-	 * @return The {@link CustomItems} with the same UUID
+	 * @param id The {@link CustomItem} UUID
+	 * @return The {@link CustomItem} with the same UUID
 	 */
 	public CustomItem getCustomItemFromUUID(String id) {
 		for (CustomItem i : this.customItems) 
