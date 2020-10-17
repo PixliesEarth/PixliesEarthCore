@@ -55,8 +55,8 @@ public class CustomFeatureLoader {
 		setHandler(new CustomFeatureHandler(this));
 		loadCommands(path);
 		loadListeners(path);
-		//loadRecipes(path);
 		new CustomRecipes(getInstance());
+		loadCustomRecipes(path);
 		loadCustomItems(path);
 		loadPermissions(path);
 		loadCustomBlocks(path);
@@ -71,6 +71,24 @@ public class CustomFeatureLoader {
 		getHandler().saveCustomBlocksToFile();
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			((CustomListener)customListener).onServerShutdown(this, getHandler());
+	}
+	/**
+	 * Uses reflection to load custom recipes
+	 * 
+	 * @param path The path to reflect off
+	 */
+	@SneakyThrows
+	public void loadCustomRecipes(String path) {
+		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes", CustomRecipe.class)) 
+			loadCustomRecipe(clazz.newInstance());
+	}
+	/**
+	 * Registers the inputed {@link CustomRecipe}
+	 * 
+	 * @param customRecipe The {@link CustomRecipe} to register
+	 */
+	public void loadCustomRecipe(CustomRecipe customRecipe) {
+		getHandler().registerRecipe(customRecipe);
 	}
 	/**
 	 * Uses reflection to load custom blocks

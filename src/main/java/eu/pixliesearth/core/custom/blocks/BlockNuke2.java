@@ -88,6 +88,11 @@ public class BlockNuke2 extends CustomBlock {
     	return false;
     }
     
+    @Override
+    public Rarity getRarity() {
+    	return Rarity.LEGENDARY;
+    }
+    
 	@Override
 	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
 		return false;
@@ -109,6 +114,7 @@ public class BlockNuke2 extends CustomBlock {
 			public void run() {
 				b.setType(Material.AIR);
 				loc.getWorld().createExplosion(loc, 200f);
+				CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(event.getBlock().getLocation());
 			}
 		}, 1200L);
 		return false;

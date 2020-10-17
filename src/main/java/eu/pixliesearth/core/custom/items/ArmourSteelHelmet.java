@@ -1,32 +1,31 @@
-package eu.pixliesearth.core.custom.blocks;
+package eu.pixliesearth.core.custom.items;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomArmour;
 
-public class BlockRubberGlass extends CustomBlock {
-	
-	public BlockRubberGlass() {
-		
-	}
-	
-	@Override
+/**
+ * @author Zenake
+ */
+public class ArmourSteelHelmet extends CustomArmour {
+
+    public ArmourSteelHelmet() {
+
+    }
+
+    @Override
     public Material getMaterial() {
-        return Material.GREEN_STAINED_GLASS;
+        return Material.IRON_CHESTPLATE;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class BlockRubberGlass extends CustomBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Rubber Glass Block";
+        return "§7§lSteel Helmet";
     }
 
     @Override
@@ -70,41 +69,28 @@ public class BlockRubberGlass extends CustomBlock {
     }
 
     @Override
+    public double getArmour() {
+        return 2.5D;
+    }
+
+    @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.BUILDING;
+        return CreativeTabs.COMBAT;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Rubber_Glass"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Steel_Helmet"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-    
+
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	return false;
+        return false;
     }
-    
-	@Override
-	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
-		return false;
-	}
 
-	@Override
-	public boolean BlockBreakEvent(BlockBreakEvent event) {
-		int i = new Random().nextInt(4);
-		if (i==2) {
-			event.getPlayer().sendMessage("§aOh no! You tried to break §r"+getDefaultDisplayName()+"§a but the glass reflected your attack back at you!");
-			EntityDamageEvent event2 = new EntityDamageEvent(event.getPlayer(), DamageCause.CONTACT, 1.0);
-			event2.callEvent();
-			event.setCancelled(true);
-			return true; // Cancel event
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
-		return false;
-	}
-	
+    @Override
+    public boolean EntityDamageEvent(EntityDamageEvent event) {
+        return false;
+    }
+
 }
