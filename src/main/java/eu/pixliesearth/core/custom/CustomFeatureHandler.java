@@ -28,21 +28,21 @@ import java.util.Map.Entry;
  */
 public class CustomFeatureHandler {
 	
-	private @Getter Set<CustomItem> customItems;
-	private @Getter Set<Listener> customListeners;
-	private @Getter Set<CustomCommand> customCommands;
-	private @Getter Set<CustomPermission> customPermissions;
-	private @Getter Set<CustomBlock> customBlocks;
-	private @Getter Set<Tickable> tickables;
-	private @Getter Set<CustomMachineRecipe> customMachineRecipes;
-	private @Getter Set<CustomRecipe> customRecipes;
-	private @Getter Set<CustomQuest> customQuests;
-	private @Getter Map<Material, List<BlockDrop>> dropMap;
+	private @Getter final Set<CustomItem> customItems;
+	private @Getter final Set<Listener> customListeners;
+	private @Getter final Set<CustomCommand> customCommands;
+	private @Getter final Set<CustomPermission> customPermissions;
+	private @Getter final Set<CustomBlock> customBlocks;
+	private @Getter final Set<Tickable> tickables;
+	private @Getter final Set<CustomMachineRecipe> customMachineRecipes;
+	private @Getter final Set<CustomRecipe> customRecipes;
+	private @Getter final Set<CustomQuest> customQuests;
+	private @Getter final Map<Material, List<BlockDrop>> dropMap;
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */
-	private HashMap<CustomItem, ItemStack> customItemsToItemStackMap;
-	private HashMap<Location, String> locationToUUIDMap;
+	private final HashMap<CustomItem, ItemStack> customItemsToItemStackMap;
+	private final HashMap<Location, String> locationToUUIDMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
