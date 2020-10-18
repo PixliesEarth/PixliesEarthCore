@@ -161,7 +161,7 @@ public class ToolExplosivePickaxe extends CustomItem {
 	                counter++;
 	            }
 	        }
-	    	event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(event.getPlayer().getInventory().getItemInMainHand()).setDamage(((Damageable)event.getPlayer().getInventory().getItemInMainHand()).getDamage()-counter).build());
+	    	event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(event.getPlayer().getInventory().getItemInMainHand()).setDamage(((Damageable)event.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getDamage()-counter).build());
     	} else {
     		event.setCancelled(true);
     		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getBlock().getLocation());
