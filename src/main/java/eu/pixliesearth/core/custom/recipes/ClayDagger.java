@@ -1,9 +1,10 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import eu.pixliesearth.core.custom.CustomRecipe;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 
 public class ClayDagger extends CustomRecipe {
 
@@ -24,15 +25,15 @@ public class ClayDagger extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Minecraft:air");
-        map.put(1, "Minecraft:clay_ball");
-        map.put(2, "Minecraft:air");
-        map.put(3, "Minecraft:air");
-        map.put(4, "Minecraft:clay_ball");
-        map.put(5, "Minecraft:air");
-        map.put(6, "Minecraft:air");
-        map.put(7, "Minecraft:stick");
-        map.put(8, "Minecraft:air");
+        map.put(0, MinecraftMaterial.AIR.getUUID());
+        map.put(1, MinecraftMaterial.CLAY_BALL.getUUID());
+        map.put(2, MinecraftMaterial.AIR.getUUID());
+        map.put(3, MinecraftMaterial.AIR.getUUID());
+        map.put(4, MinecraftMaterial.CLAY_BALL.getUUID());
+        map.put(5, MinecraftMaterial.AIR.getUUID());
+        map.put(6, MinecraftMaterial.AIR.getUUID());
+        map.put(7, MinecraftMaterial.STICK.getUUID());
+        map.put(8, MinecraftMaterial.AIR.getUUID());
         return map;
     }
 

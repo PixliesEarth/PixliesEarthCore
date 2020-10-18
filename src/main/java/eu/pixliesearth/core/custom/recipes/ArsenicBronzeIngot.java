@@ -6,15 +6,15 @@ import java.util.Map;
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 
-public class TinIngot extends CustomRecipe {
+public class ArsenicBronzeIngot extends CustomRecipe {
 	
-	public TinIngot() {
+	public ArsenicBronzeIngot() {
 		
 	}
 	
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Tin_Ingot";
+		return "Pixlies:Arsenic_Bronze_Ingot";
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class TinIngot extends CustomRecipe {
 		map.put(1, MinecraftMaterial.AIR.getUUID());
 		map.put(2, MinecraftMaterial.AIR.getUUID());
 		map.put(3, MinecraftMaterial.AIR.getUUID());
-		map.put(4, "Pixlies:Tin_Block");
+		map.put(4, "Pixlies:Arsenic_Bronze_Block");
 		map.put(5, MinecraftMaterial.AIR.getUUID());
 		map.put(6, MinecraftMaterial.AIR.getUUID());
 		map.put(7, MinecraftMaterial.AIR.getUUID());

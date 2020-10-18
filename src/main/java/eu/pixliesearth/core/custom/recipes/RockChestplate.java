@@ -1,9 +1,10 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import eu.pixliesearth.core.custom.CustomRecipe;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 
 public class RockChestplate extends CustomRecipe {
 
@@ -20,15 +21,15 @@ public class RockChestplate extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Minecraft:stone");
-        map.put(1, "Minecraft:air");
-        map.put(2, "Minecraft:stone");
-        map.put(3, "Minecraft:stone");
-        map.put(4, "Minecraft:stone");
-        map.put(5, "Minecraft:stone");
-        map.put(6, "Minecraft:stone");
-        map.put(7, "Minecraft:stone");
-        map.put(8, "Minecraft:stone");
+        map.put(0, MinecraftMaterial.STONE.getUUID());
+        map.put(1, MinecraftMaterial.AIR.getUUID());
+        map.put(2, MinecraftMaterial.STONE.getUUID());
+        map.put(3, MinecraftMaterial.STONE.getUUID());
+        map.put(4, MinecraftMaterial.STONE.getUUID());
+        map.put(5, MinecraftMaterial.STONE.getUUID());
+        map.put(6, MinecraftMaterial.STONE.getUUID());
+        map.put(7, MinecraftMaterial.STONE.getUUID());
+        map.put(8, MinecraftMaterial.STONE.getUUID());
         return map;
     }
 
