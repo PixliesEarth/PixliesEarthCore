@@ -1,25 +1,16 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomItem;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class IngotAluminum extends CustomItem {
+import java.util.*;
+
+public class IngotSolder extends CustomItem {
 	
-    public IngotAluminum() {
+    public IngotSolder() {
 
     }
 
@@ -35,7 +26,7 @@ public class IngotAluminum extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminum Ingot";
+        return "§6Solder Ingot";
     }
 
     @Override
@@ -75,7 +66,7 @@ public class IngotAluminum extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Solder_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override

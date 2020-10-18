@@ -1,12 +1,12 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -16,32 +16,30 @@ import org.bukkit.inventory.ItemFlag;
 
 import eu.pixliesearth.core.custom.CustomBlock;
 
-public class BlockCustomCraftingTable extends CustomBlock {
+public class BlockPlastic3 extends CustomBlock {
 	
-	public BlockCustomCraftingTable() {
+	public BlockPlastic3() {
 		
 	}
 	
 	@Override
     public Material getMaterial() {
-        return Material.DISPENSER;
+		return Material.WHITE_STAINED_GLASS_PANE;
     }
 
     @Override
     public List<String> getDefaultLore() {
-        return new ArrayList<String>() {/** * */private static final long serialVersionUID = -7718795550188641493L;{
-        	add("§aUsed for crafting custom materials together!");
-        }};
+        return null;
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Crafting Table";
+        return "§6Hard Plastic Block";
     }
 
     @Override
     public boolean isGlowing() {
-        return true;
+        return false;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class BlockCustomCraftingTable extends CustomBlock {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Crafting_Table"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Plastic_Hard_Block"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
     @Override
@@ -91,7 +89,18 @@ public class BlockCustomCraftingTable extends CustomBlock {
 
 	@Override
 	public boolean BlockBreakEvent(BlockBreakEvent event) {
-		return false;
+		Location l = event.getBlock().getLocation().clone();
+		Location l2 = l.clone();
+		l2.setY(l.getY()-1);
+		if (l2.getBlock()==null) {
+			event.getPlayer().sendMessage("§aThis block seems to be to hard for you to break, maybe try heating it up?");
+			return true;
+		} else if (!l2.getBlock().getType().equals(Material.FIRE)) {
+			event.getPlayer().sendMessage("§aThis block seems to be to hard for you to break, maybe try heating it up?");
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
