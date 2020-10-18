@@ -10,11 +10,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Dispenser;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 
+import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
@@ -88,7 +91,15 @@ public class ItemICBM extends CustomItem {
 		if (event.getClickedBlock() == null || event.getClickedBlock().getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (!isHoldingAMissileKey(event.getPlayer())) return false;
 		if (!isAMissile(event.getClickedBlock())) return false;
-		event.getPlayer().sendMessage("MISSILE FOUND");
+		Player p = event.getPlayer();
+		Inventory i = getWarHeadInventory(event.getClickedBlock());
+		if (i==null) return false;
+		if (p.isSneaking()) {
+			p.sendMessage("MISSILE FOUND");
+			
+		} else {
+			p.sendMessage("MISSILE FOUND");
+		}
         return false;
     }
     
@@ -129,5 +140,14 @@ public class ItemICBM extends CustomItem {
 	
 	public boolean isHoldingAMissileKey(Player player) {
 		return CustomItemUtil.getUUIDFromItemStack(player.getInventory().getItemInMainHand()).equals("Pixlies:ICBM_Key");
+	}
+	
+	public Inventory getWarHeadInventory(Block warhead) {
+		CustomBlock cb = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(warhead.getLocation());
+		if (cb==null) return null;
+		if (!cb.getUUID().equalsIgnoreCase("Pixlies:Missile_Warhead_Block")) return null;
+		Dispenser d = (Dispenser) warhead.getState();
+		if (d==null) return null;
+		return d.getInventory();
 	}
 }
