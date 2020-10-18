@@ -24,6 +24,7 @@ public class CustomICBMListener extends CustomListener {
 	
 	@EventHandler
 	public void PlayerInteractEvent(PlayerInteractEvent event) {
+		if (event.getPlayer().getInventory().getItemInMainHand()==null) return;
 		if (event.getClickedBlock() == null || event.getClickedBlock().getType().equals(MinecraftMaterial.AIR.getMaterial())) return;
 		if (!isHoldingAMissileKey(event.getPlayer())) return;
 		if (!isAMissile(event.getClickedBlock())) return;
