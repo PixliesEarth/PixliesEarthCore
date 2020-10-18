@@ -156,14 +156,17 @@ public class ItemICBM extends CustomItem {
 			p.sendMessage("§aMissile Statistics");
 			if (location==null) {
 				event.getPlayer().sendMessage("§aLocation: §rNoLocationSaverFound");
-			} else 
+				event.getPlayer().sendMessage("§aDistanceFromTarget: §rNoLocationSaverFound");
+				event.getPlayer().sendMessage("§aHasRangeToLaunch: §rNoLocationSaverFound");
+			} else {
 				event.getPlayer().sendMessage("§aLocation: §r"+location.getBlockX()+"§a,§r"+location.getBlockY()+"§a,§r"+location.getBlockZ());
+				event.getPlayer().sendMessage("§aDistanceFromTarget: §r"+event.getClickedBlock().getLocation().clone().distance(location));
+				event.getPlayer().sendMessage("§aHasRangeToLaunch: §r"+(event.getClickedBlock().getLocation().clone().distance(location) < (range*100)));
+			}
 			event.getPlayer().sendMessage("§aRange: §r"+range+" hundered blocks");
 			event.getPlayer().sendMessage("§aExplosive: §r"+explosive);
 			event.getPlayer().sendMessage("§aDamage: §r"+playerdamage);
 			event.getPlayer().sendMessage("§aLaunchTime: §r"+launchtime);
-			event.getPlayer().sendMessage("§aDistanceFromTarget: §r"+event.getClickedBlock().getLocation().clone().distance(location));
-			event.getPlayer().sendMessage("§aHasRangeToLaunch: §r"+(event.getClickedBlock().getLocation().clone().distance(location) < (range*100)));
 			return false;
 		} else {
 			if (!enabled) {
