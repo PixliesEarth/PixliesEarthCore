@@ -56,13 +56,16 @@ public class Vendor {
             ItemStack finalSoldLast = soldLast;
             outline.addItem(new GuiItem(soldLast, event -> {
                 event.setCancelled(true);
-                boolean buy = buy(getFromVendorReady(finalSoldLast), finalSoldLast, profile);
-                if (buy) {
-                    profile.getExtras().remove("soldLast");
-                    profile.save();
-                    open(player);
+                if (event.isLeftClick()) {
+                    boolean buy = buy(getFromVendorReady(finalSoldLast), finalSoldLast, profile);
+                    if (buy) {
+                        profile.getExtras().remove("soldLast");
+                        profile.save();
+                        open(player);
+                    }
+                    if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+                    else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
                 }
-                if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
             }), 4, 5);
         }
 
@@ -91,6 +94,8 @@ public class Vendor {
                 } else if (event.isRightClick() && getSellPriceFromItem(finalItem) != null) {
                     boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile);
                     if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
+                } else {
+                    player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                 }
             }), x, y);
             x++;
