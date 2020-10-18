@@ -80,12 +80,19 @@ public class ItemICBMLocationHolder extends CustomItem {
 	
 	@Override
 	public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-		Location l = event.getPlayer().getLocation().clone();
-		NBTTags tags = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand());
-		tags.addTag("x", Integer.toString(l.getBlockX()), NBTTagType.STRING);
-		tags.addTag("y", Integer.toString(l.getBlockY()), NBTTagType.STRING);
-		tags.addTag("z", Integer.toString(l.getBlockZ()), NBTTagType.STRING);
-		event.getPlayer().sendMessage("§aBound §r"+getDefaultDisplayName()+"§a to the location §r"+l.getBlockX()+"§a,§r"+l.getBlockY()+"§a,§r"+l.getBlockZ());
-		return false;
+		if (event.getPlayer().isSneaking()) {
+			Location l = event.getPlayer().getLocation().clone();
+			NBTTags tags = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand());
+			tags.addTag("x", Integer.toString(l.getBlockX()), NBTTagType.STRING);
+			tags.addTag("y", Integer.toString(l.getBlockY()), NBTTagType.STRING);
+			tags.addTag("z", Integer.toString(l.getBlockZ()), NBTTagType.STRING);
+			NBTUtil.addTagsToItem(event.getPlayer().getInventory().getItemInMainHand(), tags);
+			event.getPlayer().sendMessage("§aSet the location to §r"+l.getBlockX()+"§a,§r"+l.getBlockY()+"§a,§r"+l.getBlockZ());
+			return false;
+		} else {
+			NBTTags tags = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand());
+			event.getPlayer().sendMessage("§aBound to the location §r"+tags.getString("x")+"§a,§r"+tags.getString("y")+"§a,§r"+tags.getString("z"));
+			return false;
+		}
 	}
 }
