@@ -150,7 +150,7 @@ public class ToolExplosivePickaxe extends CustomItem {
 	        blocks.add(upnortheast);
 	        int counter = 0;
 	    	for (Block block : blocks) {
-	            if (block.getType().equals(Material.BEDROCK) || block.getType().equals(Material.COMMAND_BLOCK) || block.getType().equals(Material.CHAIN_COMMAND_BLOCK) || block.getType().equals(Material.REPEATING_COMMAND_BLOCK) || block.getType().equals(Material.WATER) || block.getType().equals(Material.LAVA) || block.getType().equals(Material.BARRIER) || block.getType().equals(Material.ARMOR_STAND) || block.getType().equals(Material.AIR) || block.getType().equals(Material.OBSIDIAN))  {
+	            if (!block.getType().equals(Material.BEDROCK) || !block.getType().equals(Material.COMMAND_BLOCK) || !block.getType().equals(Material.CHAIN_COMMAND_BLOCK) || !block.getType().equals(Material.REPEATING_COMMAND_BLOCK) || !block.getType().equals(Material.WATER) || !block.getType().equals(Material.LAVA) || !block.getType().equals(Material.BARRIER) || !block.getType().equals(Material.ARMOR_STAND) || !block.getType().equals(Material.AIR) || !block.getType().equals(Material.OBSIDIAN))  {
 	            	CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(block.getLocation());
 	            	if (c==null) {
 	            		block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
