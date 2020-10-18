@@ -306,7 +306,7 @@ public class Machine {
         ARSENIC_BRONZE_BOOTS(MachineType.FORGE, CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Boots"), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Ingot").asQuantity(4)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Boots")), 8, Era.ANCIENT),
         ARSENIC_BRONZE_SWORD(MachineType.FORGE, CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Sword"), Arrays.asList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Ingot").asQuantity(2), new ItemStack(STICK)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Sword")), 8, Era.ANCIENT),
         ARSENIC_BRONZE_PICKAXE(MachineType.FORGE, CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Pickaxe"), Arrays.asList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Ingot").asQuantity(3), new ItemStack(STICK, 2)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Arsenic_Bronze_Pickaxe")), 8, Era.ANCIENT),
-
+        
 
         // BRONZE FORGE
         FORGE_BRONZE_SWORD(MachineType.BRONZE_FORGE, new ItemBuilder(Material.GOLDEN_SWORD).setGlow().setDisplayName("Forge bronze sword").build(), Arrays.asList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot").asQuantity(2), new ItemStack(Material.STICK)), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Sword")), 60, Era.ANCIENT),
