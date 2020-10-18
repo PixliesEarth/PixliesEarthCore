@@ -1,12 +1,10 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.listener.ProtectionListener;
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -16,11 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.Damageable;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.listener.ProtectionListener;
-import eu.pixliesearth.utils.ItemBuilder;
+import java.util.*;
 
 public class ToolExplosivePickaxe extends CustomItem {
 	

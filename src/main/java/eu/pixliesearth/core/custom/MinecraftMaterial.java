@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-
-import lombok.Getter;
 /**
  * 
  * @author BradBot_1

@@ -1,17 +1,16 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
+import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.NTop;
+import eu.pixliesearth.utils.Methods;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
-import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.nation.NTop;
-import eu.pixliesearth.utils.Methods;
-import org.jetbrains.annotations.NotNull;
 
 public class topNation extends SubCommand {
 

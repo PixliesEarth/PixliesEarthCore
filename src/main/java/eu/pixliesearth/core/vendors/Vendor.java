@@ -6,31 +6,34 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.utils.*;
-import lombok.AllArgsConstructor;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-import java.util.Map;
-
 @Data
-@AllArgsConstructor
 public class Vendor {
 
     protected static final Main instance = Main.getInstance();
 
-    private String npcId;
+    private String npcName;
     private String title;
-    private List<ItemStack> items;
+    private ItemStack[] items;
+
+    public Vendor(String npcName, String title, ItemStack... items) {
+        this.npcName = npcName;
+        this.title = title;
+        this.items = items;
+    }
 
     public void open(Player player) {
         Profile profile = instance.getProfile(player.getUniqueId());
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
-        if (profile.getExtras().containsKey("soldLast")) soldLast = (ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"));
+        if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§fBuy: §2§l$§a" + getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§7§oL-Click to buy").build();
         if (soldLast == null) return;
         Gui gui = new Gui(instance, 6, title);
 
@@ -69,8 +72,8 @@ public class Vendor {
         int y = 0;
         for (ItemStack item : items) {
             ItemBuilder builder = new ItemBuilder(item);
-            builder.addLoreLine("§fBuy: §2§l$§a" + getBuyPriceFromItem(item));
-            builder.addLoreLine("§fSell: §2§l$§a" + getSellPriceFromItem(item));
+            builder.addLoreLine(getBuyPriceFromItem(item) != null ? "§fBuy: §2§l$§a" + getBuyPriceFromItem(item) : "§c§oUnpurchasable");
+            builder.addLoreLine(getSellPriceFromItem(item) != null ? "§fSell: §2§l$§a" + getSellPriceFromItem(item) : "§c§oUnsellable");
             builder.addLoreLine(" ");
             builder.addLoreLine("§7§oL-Click to buy");
             builder.addLoreLine("§7§oR-Click to sell");
@@ -82,10 +85,10 @@ public class Vendor {
             ItemStack finalItem = item;
             itemsPane.addItem(new GuiItem(item, event -> {
                 event.setCancelled(true);
-                if (event.isLeftClick()) {
+                if (event.isLeftClick() && getBuyPriceFromItem(finalItem) != null) {
                     boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile);
                     if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
-                } else if (event.isRightClick()) {
+                } else if (event.isRightClick() && getSellPriceFromItem(finalItem) != null) {
                     boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile);
                     if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
                 }
@@ -108,7 +111,7 @@ public class Vendor {
         int itemsPurchased = 0;
         if (profile.getExtras().containsKey("itemsPurchased")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemsPurchased"));
         itemsPurchased++;
-        profile.getExtras().put("itemsPurchased", itemsPurchased + "");
+        profile.getExtras().put("itemsPurchased", Integer.toString(itemsPurchased));
         profile.save();
         return true;
     }
@@ -122,31 +125,28 @@ public class Vendor {
         int itemsPurchased = 0;
         if (profile.getExtras().containsKey("itemSold")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemSold"));
         itemsPurchased++;
-        profile.getExtras().put("itemSold", itemsPurchased + "");
-        profile.getExtras().put("soldLast", Machine.serialize(placeholderItem));
+        profile.getExtras().put("itemSold", Integer.toString(itemsPurchased));
+        profile.getExtras().put("soldLast", Machine.serialize(item));
         profile.save();
         return true;
     }
 
     protected Double getSellPriceFromItem(ItemStack item) {
-        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
-        if (tags.getString("sellPrice") != null) return Double.parseDouble(tags.getString("sellPrice"));
-        return 0.0;
+        VendorItem vendorItem = instance.getVendorItems().get(CustomItemUtil.getUUIDFromItemStack(item));
+        if (vendorItem != null) return vendorItem.getSellPrice();
+        return null;
     }
 
     protected Double getBuyPriceFromItem(ItemStack item) {
-        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
-        if (tags.getString("buyPrice") != null) return Double.parseDouble(tags.getString("buyPrice"));
-        return 0.0;
-    }
-
-    public static ItemStack convertToVendorReady(ItemStack item, double buyPrice, double sellPrice) {
-        return new ItemBuilder(item).addNBTTag("buyPrice", Double.toString(buyPrice), NBTTagType.STRING).addNBTTag("sellPrice", Double.toString(sellPrice), NBTTagType.STRING).addNBTTag("rawItem", Machine.serialize(item), NBTTagType.STRING).build();
+        VendorItem vendorItem = instance.getVendorItems().get(CustomItemUtil.getUUIDFromItemStack(item));
+        if (vendorItem != null) return vendorItem.getBuyPrice();
+        return null;
     }
 
     protected ItemStack getFromVendorReady(ItemStack item) {
-        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
-        return (ItemStack) Machine.deserialize(tags.getString("rawItem"));
+        VendorItem vendorItem = instance.getVendorItems().get(CustomItemUtil.getUUIDFromItemStack(item));
+        if (vendorItem != null) return vendorItem.getRawItemStack();
+        return null;
     }
 
 }

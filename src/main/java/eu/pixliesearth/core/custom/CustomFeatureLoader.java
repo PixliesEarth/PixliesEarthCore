@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import eu.pixliesearth.core.files.FileDirectory;
+import eu.pixliesearth.core.vendors.Vendor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -63,6 +64,7 @@ public class CustomFeatureLoader {
 		//loadCustomMachineRecipes(path);
 		loadQuests(path);
 		getHandler().loadCustomBlocksFromFile();
+		loadVendors(path);
 	}
 	/**
 	 * Saves everything
@@ -108,6 +110,17 @@ public class CustomFeatureLoader {
 	public void loadCustomBlock(CustomBlock customBlock) {
 		getHandler().registerBlock(customBlock);
 	}
+
+	@SneakyThrows
+	public void loadVendors(String path) {
+		for (Class<? extends Vendor> clazz : reflectBasedOnExtentionOf(path + ".vendors", Vendor.class))
+			loadVendor(clazz.getConstructor().newInstance());
+	}
+
+	public void loadVendor(Vendor vendor) {
+		handler.getVendorMap().put(vendor.getNpcName(), vendor);
+	}
+
 	/**
 	 * Uses reflection to load custom items
 	 * 
