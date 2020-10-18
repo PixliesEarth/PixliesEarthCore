@@ -337,6 +337,8 @@ public class menuNation extends SubCommand {
                         player.performCommand("n rank addpermission " + rank.getName() + " " + permission.name());
                         showRankMenu(gui, menuPane, player, rank);
                         break;
+                    default:
+                        break;
                 }
             }), x, y);
             x++;
