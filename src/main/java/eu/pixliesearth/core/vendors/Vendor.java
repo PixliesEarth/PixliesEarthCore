@@ -33,7 +33,7 @@ public class Vendor {
     public void open(Player player) {
         Profile profile = instance.getProfile(player.getUniqueId());
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
-        if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§fBuy: §2§l$§a" + getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§7§oL-Click to buy").build();
+        if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
         if (soldLast == null) return;
         Gui gui = new Gui(instance, 6, title);
 
@@ -72,11 +72,11 @@ public class Vendor {
         int y = 0;
         for (ItemStack item : items) {
             ItemBuilder builder = new ItemBuilder(item);
-            builder.addLoreLine(getBuyPriceFromItem(item) != null ? "§fBuy: §2§l$§a" + getBuyPriceFromItem(item) : "§c§oUnpurchasable");
-            builder.addLoreLine(getSellPriceFromItem(item) != null ? "§fSell: §2§l$§a" + getSellPriceFromItem(item) : "§c§oUnsellable");
+            builder.addLoreLine(getBuyPriceFromItem(item) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem(item) : "§c§oUnpurchasable");
+            builder.addLoreLine(getSellPriceFromItem(item) != null ? "§7Sell: §2§l$§a" + getSellPriceFromItem(item) : "§c§oUnsellable");
             builder.addLoreLine(" ");
-            builder.addLoreLine("§7§oL-Click to buy");
-            builder.addLoreLine("§7§oR-Click to sell");
+            builder.addLoreLine("§f§lLEFT §7Click to buy");
+            builder.addLoreLine("§f§lRIGHT §7Click to sell");
             item = builder.build();
             if (x + 1 > 7) {
                 x = 0;

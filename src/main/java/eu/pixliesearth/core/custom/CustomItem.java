@@ -33,7 +33,7 @@ public class CustomItem {
 	 * @return The {@link Material} the {@link CustomItem} uses
 	 */
 	public Material getMaterial() {
-		return null;
+		return Material.AIR;
 	}
 	/**
 	 * Extra lore like rarity is added later on! You don't have to add that yourself!
