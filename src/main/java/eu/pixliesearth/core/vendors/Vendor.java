@@ -6,10 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Material;
@@ -17,6 +14,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -27,8 +25,7 @@ public class Vendor {
 
     private String npcId;
     private String title;
-    private Map<ItemStack, Double> buyItems;
-    private Map<ItemStack, Double> sellItems;
+    private List<ItemStack> items;
 
     public void open(Player player) {
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -56,95 +53,100 @@ public class Vendor {
             ItemStack finalSoldLast = soldLast;
             outline.addItem(new GuiItem(soldLast, event -> {
                 event.setCancelled(true);
-                boolean buy = buy(finalSoldLast, profile);
+                boolean buy = buy(getFromVendorReady(finalSoldLast), finalSoldLast, profile);
                 if (buy) {
                     profile.getExtras().remove("soldLast");
                     profile.save();
+                    open(player);
                 }
                 if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
             }), 4, 5);
         }
 
-        StaticPane items = new StaticPane(1, 1, 7, 4);
+        StaticPane itemsPane = new StaticPane(1, 1, 7, 4);
 
         int x = 0;
         int y = 0;
-        for (ItemStack item : buyItems.keySet()) {
+        for (ItemStack item : items) {
             ItemBuilder builder = new ItemBuilder(item);
-            builder.addLoreLine("§fBuy: §2§l$§a" + buyItems.get(item));
-            builder.addLoreLine("§fSell: §2§l$§a" + sellItems.get(item));
+            builder.addLoreLine("§fBuy: §2§l$§a" + getBuyPriceFromItem(item));
+            builder.addLoreLine("§fSell: §2§l$§a" + getSellPriceFromItem(item));
             builder.addLoreLine(" ");
             builder.addLoreLine("§7§oL-Click to buy");
             builder.addLoreLine("§7§oR-Click to sell");
             item = builder.build();
-            NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
-            tags.addTag("buyPrice", buyItems.get(item), NBTTagType.DOUBLE);
-            tags.addTag("sellPrice", sellItems.get(item), NBTTagType.DOUBLE);
-            NBTUtil.addTagsToItem(item, tags);
             if (x + 1 > 7) {
                 x = 0;
                 y++;
             }
             ItemStack finalItem = item;
-            items.addItem(new GuiItem(item, event -> {
+            itemsPane.addItem(new GuiItem(item, event -> {
                 event.setCancelled(true);
                 if (event.isLeftClick()) {
-                    boolean buy = buy(finalItem, profile);
-                    if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
+                    boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile);
+                    if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
                 } else if (event.isRightClick()) {
-                    boolean sell = sell(finalItem, profile);
-                    if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
+                    boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile);
+                    if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
                 }
             }), x, y);
             x++;
         }
 
         gui.addPane(outline);
-        gui.addPane(items);
+        gui.addPane(itemsPane);
 
         gui.show(player);
     }
 
-    protected boolean buy(ItemStack item, Profile profile) {
+    protected boolean buy(ItemStack item, ItemStack placeholderItem, Profile profile) {
         Player player = profile.getAsPlayer();
-        double price = getBuyPriceFromItem(item);
+        double price = getBuyPriceFromItem(placeholderItem);
         boolean purchase = profile.withdrawMoney(price, title + " purchase of " + item.getI18NDisplayName());
         if (!purchase) return false;
         if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), item); else player.getInventory().addItem(item);
         int itemsPurchased = 0;
-        if (profile.getExtras().containsKey("itemsPurchased")) itemsPurchased = (int) profile.getExtras().get("itemsPurchased");
+        if (profile.getExtras().containsKey("itemsPurchased")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemsPurchased"));
         itemsPurchased++;
-        profile.getExtras().put("itemsPurchased", itemsPurchased);
+        profile.getExtras().put("itemsPurchased", itemsPurchased + "");
         profile.save();
         return true;
     }
 
-    protected boolean sell(ItemStack item, Profile profile) {
+    protected boolean sell(ItemStack item, ItemStack placeholderItem, Profile profile) {
         Player player = profile.getAsPlayer();
-        double price = getSellPriceFromItem(item);
+        double price = getSellPriceFromItem(placeholderItem);
         if (!player.getInventory().containsAtLeast(item, 1)) return false;
         Methods.removeRequiredAmount(item, player.getInventory());
         profile.depositMoney(price, title + " sale of " + item.getI18NDisplayName());
         int itemsPurchased = 0;
-        if (profile.getExtras().containsKey("itemSold")) itemsPurchased = (int) profile.getExtras().get("itemSold");
+        if (profile.getExtras().containsKey("itemSold")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemSold"));
         itemsPurchased++;
-        profile.getExtras().put("itemSold", itemsPurchased);
+        profile.getExtras().put("itemSold", itemsPurchased + "");
+        profile.getExtras().put("soldLast", Machine.serialize(placeholderItem));
         profile.save();
         return true;
     }
 
     protected Double getSellPriceFromItem(ItemStack item) {
-        if (sellItems.containsKey(item)) return sellItems.get(item);
         NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
         if (tags.getString("sellPrice") != null) return Double.parseDouble(tags.getString("sellPrice"));
         return 0.0;
     }
 
     protected Double getBuyPriceFromItem(ItemStack item) {
-        if (buyItems.containsKey(item)) return buyItems.get(item);
         NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
         if (tags.getString("buyPrice") != null) return Double.parseDouble(tags.getString("buyPrice"));
         return 0.0;
+    }
+
+    public static ItemStack convertToVendorReady(ItemStack item, double buyPrice, double sellPrice) {
+        return new ItemBuilder(item).addNBTTag("buyPrice", Double.toString(buyPrice), NBTTagType.STRING).addNBTTag("sellPrice", Double.toString(sellPrice), NBTTagType.STRING).addNBTTag("rawItem", Machine.serialize(item), NBTTagType.STRING).build();
+    }
+
+    protected ItemStack getFromVendorReady(ItemStack item) {
+        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
+        return (ItemStack) Machine.deserialize(tags.getString("rawItem"));
     }
 
 }
