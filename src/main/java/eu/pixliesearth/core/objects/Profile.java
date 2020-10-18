@@ -213,6 +213,10 @@ public class Profile {
         save();
     }
 
+    public boolean canAfford(double amount) {
+        return balance - amount > 0;
+    }
+
     public Nation getCurrentNation() {
         if (!inNation)
             return null;
