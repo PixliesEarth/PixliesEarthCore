@@ -18,7 +18,7 @@ public class BlockMissileWarhead extends CustomBlock {
 	
 	@Override
     public Material getMaterial() {
-        return Material.RED_STAINED_GLASS;
+        return Material.DISPENSER;
     }
 
     @Override
