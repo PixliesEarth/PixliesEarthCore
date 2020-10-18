@@ -365,6 +365,7 @@ public class CustomFeatureHandler {
 	public void setCustomBlockToLocation(Location location, String id) {
 		location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
 		this.locationToUUIDMap.put(location, id);
+		location.getWorld().getBlockAt(location).getState().update();
 	}
 	/**
 	 * Called when a custom block at the location has been broken
