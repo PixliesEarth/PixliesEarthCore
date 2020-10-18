@@ -23,7 +23,7 @@ public class BlockPlastic2 extends CustomBlock {
 	
 	@Override
     public Material getMaterial() {
-		return Material.WHITE_STAINED_GLASS_PANE;
+		return Material.WHITE_STAINED_GLASS;
     }
 
     @Override
