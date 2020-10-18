@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -27,6 +28,7 @@ public class CustomItemListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
+		if (!event.getHand().equals(EquipmentSlot.HAND)) return;
 		if (event.getItem()==null || event.getItem().getType().equals(Material.AIR)) return;
 		String id = NBTUtil.getTagsFromItem(event.getItem()).getString("UUID");
 		if (id==null) return;
