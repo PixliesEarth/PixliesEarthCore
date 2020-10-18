@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -102,16 +101,16 @@ public class BlockNuke extends CustomBlock {
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		if (event.isCancelled()) return true;
-		event.getPlayer().sendMessage("Nuclear bomb planted! It will explode upon recieveing a redston signal! (NOT IMPLEMENTED YET!)");
+		event.getPlayer().sendMessage("Nuclear bomb planted! Its fuse will activate upon recieveing a redston signal!");
 		return false;
 	}
 	
-	public void blowupAt(Block b) {
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-			public void run() {
-				b.setType(Material.AIR);
-				b.getLocation().getWorld().createExplosion(b.getLocation(), 200f);
-			}
-		}, 1200L);
+	@Override
+	public void onTick(Location location) {
+		if (location.getBlock().isBlockPowered()) {
+			location.getBlock().setType(Material.AIR);
+			CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(location);
+			CustomFeatureLoader.getLoader().getHandler().setCustomBlockToLocation(location, "Pixlies:Nuclear_Bomb_Autodetinating");
+		}
 	}
 }

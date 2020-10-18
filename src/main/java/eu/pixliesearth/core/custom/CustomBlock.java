@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import org.bukkit.Location;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -51,6 +52,13 @@ public class CustomBlock extends CustomItem {
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		return false;
 	}
-	
+	/**
+	 * Called every tick
+	 * 
+	 * @param location The {@link CustomBlock}'s {@link Location}
+	 */
+	public void onTick(Location location) {
+		
+	}
 	//TODO: event when interacted with
 }

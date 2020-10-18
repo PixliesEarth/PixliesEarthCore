@@ -80,6 +80,19 @@ public class CustomFeatureHandler {
 				}
 			}
 		});
+		
+		loadCustomBlockTickable();
+	}
+	
+	public void loadCustomBlockTickable() {
+		registerTickable(new Tickable() {
+
+			@Override
+			public void onTick() {
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
+					getCustomBlockFromLocation(entry.getKey()).onTick(entry.getKey());
+			}
+		});
 	}
 	/**
 	 * Gets and returns the instance of {@link JavaPlugin} saved in {@link CustomFeatureHandler#getLoader()}
