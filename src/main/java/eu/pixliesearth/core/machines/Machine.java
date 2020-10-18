@@ -1,16 +1,46 @@
 package eu.pixliesearth.core.machines;
 
+import static org.bukkit.Material.BRICK;
+import static org.bukkit.Material.CLAY;
+import static org.bukkit.Material.CLAY_BALL;
+import static org.bukkit.Material.COAL;
+import static org.bukkit.Material.CRAFTING_TABLE;
+import static org.bukkit.Material.FLOWER_POT;
+import static org.bukkit.Material.IRON_INGOT;
+import static org.bukkit.Material.OAK_PLANKS;
+import static org.bukkit.Material.STICK;
+import static org.bukkit.Material.WHEAT_SEEDS;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.gson.JsonObject;
+
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.core.machines.autocrafters.FuelableAutoCrafterMachine;
-import eu.pixliesearth.core.machines.autocrafters.compressor.Compressor;
 import eu.pixliesearth.core.machines.autocrafters.forge.bronze.BronzeForge;
 import eu.pixliesearth.core.machines.autocrafters.kiln.Forge;
 import eu.pixliesearth.core.machines.autocrafters.machinecrafter.MachineCrafter;
@@ -28,22 +58,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.*;
-
-import static org.bukkit.Material.*;
 
 @Data
 @AllArgsConstructor
@@ -249,7 +263,6 @@ public class Machine {
         POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)),
         BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
         MACHINE_CRAFTER(MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class, new ItemStack(CRAFTING_TABLE)),
-        COMPRESSOR(Compressor.item, Compressor.class, FuelableAutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Wire")).setAmount(4).build(), new ItemBuilder(Material.PISTON).setAmount(4).build(), new ItemBuilder(Material.REDSTONE_BLOCK).setAmount(4).build()),
         FARMING_WORKBENCH(FarmingWorkbench.item, FarmingWorkbench.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(OAK_PLANKS, 4), new ItemStack(WHEAT_SEEDS), new ItemStack(IRON_INGOT, 2)),
         ;
 
@@ -314,10 +327,6 @@ public class Machine {
     	FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.FORGE.getItem()).build(), Arrays.asList(new ItemStack(IRON_INGOT, 4), new ItemStack(Material.IRON_BLOCK)), Collections.singletonList(MachineType.FORGE.getItem()), 20, Era.TRIBAL),
     	POTTERY(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.POTTERY.getItem()).build(), Arrays.asList(new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)), Collections.singletonList(MachineType.POTTERY.getItem()), 20, Era.TRIBAL),
     	BRONZE_FORGE(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.BRONZE_FORGE.getItem()).build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)), Collections.singletonList(MachineType.BRONZE_FORGE.getItem()), 30, Era.TRIBAL),
-    	COMPRESSOR(MachineType.MACHINE_CRAFTER, new ItemBuilder(MachineType.COMPRESSOR.getItem()).build(), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Wire")).setAmount(4).build(), new ItemBuilder(Material.PISTON).setAmount(4).build(), new ItemBuilder(Material.REDSTONE_BLOCK).setAmount(4).build()), Collections.singletonList(MachineType.COMPRESSOR.getItem()), 30, Era.VICTORIAN),
-    	
-    	// COMPRESSOR
-    	COMPRESSOR_TIN_BLOCK(MachineType.COMPRESSOR, CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Block"), Arrays.asList(new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Ingot")).setAmount(9).build()), Collections.singletonList(CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Block")), 3, Era.VICTORIAN),
     	
     	
         ;
