@@ -9,24 +9,26 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 @Data
-@AllArgsConstructor
 public class Vendor {
 
     protected static final Main instance = Main.getInstance();
 
-    private int npcId;
+    private String npcName;
     private String title;
-    private List<ItemStack> items;
+    private ItemStack[] items;
+
+    public Vendor(String npcName, String title, ItemStack... items) {
+        this.npcName = npcName;
+        this.title = title;
+        this.items = items;
+    }
 
     public void open(Player player) {
         Profile profile = instance.getProfile(player.getUniqueId());

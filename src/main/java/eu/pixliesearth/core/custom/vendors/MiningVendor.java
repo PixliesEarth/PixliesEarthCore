@@ -3,15 +3,13 @@ package eu.pixliesearth.core.custom.vendors;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.utils.CustomItemUtil;
 
-import java.util.Arrays;
-
 
 public class MiningVendor extends Vendor {
 
     public MiningVendor() {
-        super(0, "§8§lMiner Juan", Arrays.asList(CustomItemUtil.getItemStackFromUUID("Minecraft:stone"),
+        super("§6Miner Julio", "§6Miner Julio", CustomItemUtil.getItemStackFromUUID("Minecraft:stone"),
                 CustomItemUtil.getItemStackFromUUID("Minecraft:cobblestone"),
-                CustomItemUtil.getItemStackFromUUID("Pixlies:Explosive_Pickaxe")));
+                CustomItemUtil.getItemStackFromUUID("Pixlies:Explosive_Pickaxe"));
     }
 
 }

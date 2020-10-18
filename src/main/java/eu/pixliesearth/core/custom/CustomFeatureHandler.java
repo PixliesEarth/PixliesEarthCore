@@ -39,7 +39,7 @@ public class CustomFeatureHandler {
 	private @Getter final Set<CustomRecipe> customRecipes;
 	private @Getter final Set<CustomQuest> customQuests;
 	private @Getter final Map<Material, List<BlockDrop>> dropMap;
-	private @Getter final Map<Integer, Vendor> vendorMap;
+	private @Getter final Map<String, Vendor> vendorMap;
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */

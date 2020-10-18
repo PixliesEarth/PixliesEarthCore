@@ -118,7 +118,7 @@ public class CustomFeatureLoader {
 	}
 
 	public void loadVendor(Vendor vendor) {
-		handler.getVendorMap().put(vendor.getNpcId(), vendor);
+		handler.getVendorMap().put(vendor.getNpcName(), vendor);
 	}
 
 	/**

@@ -12,8 +12,8 @@ public class VendorListener extends CustomListener {
     @SneakyThrows
     @EventHandler
     public void onNPCClick(NPCRightClickEvent event) {
-        if (!CustomFeatureLoader.getLoader().getHandler().getVendorMap().containsKey(event.getNPC().getId())) return;
-        Vendor vendor = CustomFeatureLoader.getLoader().getHandler().getVendorMap().get(event.getNPC().getId()).getClass().getConstructor().newInstance();
+        if (!CustomFeatureLoader.getLoader().getHandler().getVendorMap().containsKey(event.getNPC().getName())) return;
+        Vendor vendor = CustomFeatureLoader.getLoader().getHandler().getVendorMap().get(event.getNPC().getName()).getClass().getConstructor().newInstance();
         vendor.open(event.getClicker());
     }
 
