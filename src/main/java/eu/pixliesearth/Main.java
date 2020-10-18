@@ -377,7 +377,7 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new CommandListener(), this);
         // manager.registerEvents(new GulagDeathListener(), this);
         manager.registerEvents(new GulagStartListener(), this);
-        manager.registerEvents(new ProtectionListener(), this);
+        manager.registerEvents(new ProtectionManager(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new MachineListener(), this);
         manager.registerEvents(new FlagListener(), this);

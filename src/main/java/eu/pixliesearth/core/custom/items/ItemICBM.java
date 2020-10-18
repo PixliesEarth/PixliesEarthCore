@@ -153,20 +153,20 @@ public class ItemICBM extends CustomItem {
 			}
 		}
 		if (p.isSneaking()) {
-			p.sendMessage("§aMissile Statistics");
+			p.sendMessage("§6§lMissile Statistics");
 			if (location==null) {
-				event.getPlayer().sendMessage("§aLocation: §rNoLocationSaverFound");
-				event.getPlayer().sendMessage("§aDistanceFromTarget: §rNoLocationSaverFound");
-				event.getPlayer().sendMessage("§aHasRangeToLaunch: §rNoLocationSaverFound");
+				event.getPlayer().sendMessage("§7» §eLocation: §cNoLocationSaverFound");
+				event.getPlayer().sendMessage("§7» §eDistanceFromTarget: §cNoLocationSaverFound");
+				event.getPlayer().sendMessage("§7» §eHasRangeToLaunch: §cNoLocationSaverFound");
 			} else {
-				event.getPlayer().sendMessage("§aLocation: §r"+location.getBlockX()+"§a,§r"+location.getBlockY()+"§a,§r"+location.getBlockZ());
-				event.getPlayer().sendMessage("§aDistanceFromTarget: §r"+event.getClickedBlock().getLocation().clone().distance(location));
-				event.getPlayer().sendMessage("§aHasRangeToLaunch: §r"+(event.getClickedBlock().getLocation().clone().distance(location) < (range*100)));
+				event.getPlayer().sendMessage("§7» §eLocation: §b"+location.getBlockX()+"§e, §b"+location.getBlockY()+"§e, §b"+location.getBlockZ());
+				event.getPlayer().sendMessage("§7» §eDistanceFromTarget: §b"+event.getClickedBlock().getLocation().clone().distance(location));
+				event.getPlayer().sendMessage("§7» §eHasRangeToLaunch: §b"+(event.getClickedBlock().getLocation().clone().distance(location) < (range*100)));
 			}
-			event.getPlayer().sendMessage("§aRange: §r"+range+" hundered blocks");
-			event.getPlayer().sendMessage("§aExplosive: §r"+explosive);
-			event.getPlayer().sendMessage("§aDamage: §r"+playerdamage);
-			event.getPlayer().sendMessage("§aLaunchTime: §r"+launchtime);
+			event.getPlayer().sendMessage("§7» §eRange: §b"+range+" hundered blocks");
+			event.getPlayer().sendMessage("§7» §eExplosive: §b"+explosive);
+			event.getPlayer().sendMessage("§7» §eDamage: §b"+playerdamage);
+			event.getPlayer().sendMessage("§7» §eLaunchTime: §b"+launchtime);
 			return false;
 		} else {
 			if (!enabled) {
@@ -184,11 +184,11 @@ public class ItemICBM extends CustomItem {
 					return false;
 				}
 				makeMissileUnbreakable(event.getClickedBlock());
-				p.sendMessage("§aLaunching in "+launchtime+" seconds!");
+				p.sendMessage("§7Launching in §c"+launchtime+" §7seconds!");
 				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 					@Override 
 					public void run() {
-						p.sendMessage("§aLaunching!");
+						p.sendMessage("§c§lLaunching!");
 					}
 				}, (20*launchtime));
 				return false;

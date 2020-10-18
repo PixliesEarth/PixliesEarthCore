@@ -3,16 +3,20 @@ package eu.pixliesearth.core.custom.items;
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.listener.ProtectionListener;
-import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.core.listener.ProtectionManager;
+import eu.pixliesearth.localization.Lang;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -21,7 +25,12 @@ public class ToolExplosivePickaxe extends CustomItem {
 	public ToolExplosivePickaxe() {
 		
 	}
-	
+
+	@Override
+    public Rarity getRarity() {
+	    return Rarity.UNCOMMON;
+    }
+
 	@Override
     public Material getMaterial() {
         return Material.DIAMOND_PICKAXE;
@@ -83,93 +92,60 @@ public class ToolExplosivePickaxe extends CustomItem {
     }
     
     @Override
-    public boolean onBlockBrokeWithItem(BlockBreakEvent event) {
-    	if (event.getBlock()==null) return true;
-    	if (!ProtectionListener.canBreak(event)) return true;
-    	if (!event.getPlayer().isSneaking()) {
-	    	Block b = event.getBlock();
-	    	ArrayList<Block> blocks = new ArrayList<Block>();
-	        Block up = b.getRelative(BlockFace.UP, 1);
-	        Block down = b.getRelative(BlockFace.DOWN, 1);
-	        Block right = b.getRelative(BlockFace.EAST, 1);
-	        Block left = b.getRelative(BlockFace.WEST, 1);
-	        Block south = b.getRelative(BlockFace.SOUTH, 1);
-	        Block north = b.getRelative(BlockFace.NORTH, 1);
-	        Block downeast = down.getRelative(BlockFace.EAST, 1);
-	        Block downwest = down.getRelative(BlockFace.WEST, 1);
-	        Block downsouth = down.getRelative(BlockFace.SOUTH, 1);
-	        Block downnorth = down.getRelative(BlockFace.NORTH, 1);
-	        Block upeast = up.getRelative(BlockFace.EAST, 1);
-	        Block upwest = up.getRelative(BlockFace.WEST, 1);
-	        Block upsouth = up.getRelative(BlockFace.SOUTH, 1);
-	        Block upnorth = up.getRelative(BlockFace.NORTH, 1);
-	        Block downsoutheast = downsouth.getRelative(BlockFace.EAST, 1);
-	        Block downsouthwest = downsouth.getRelative(BlockFace.WEST, 1);
-	        Block downnorthwest = downnorth.getRelative(BlockFace.WEST, 1);
-	        Block downnortheast = downnorth.getRelative(BlockFace.EAST, 1);
-	        Block southeast = south.getRelative(BlockFace.EAST, 1);
-	        Block southwest = south.getRelative(BlockFace.WEST, 1);
-	        Block northeast = north.getRelative(BlockFace.EAST, 1);
-	        Block northwest = north.getRelative(BlockFace.WEST, 1);
-	        Block upsoutheast = upsouth.getRelative(BlockFace.EAST, 1);
-	        Block upsouthwest = upsouth.getRelative(BlockFace.WEST, 1);
-	        Block upnorthwest = upnorth.getRelative(BlockFace.WEST, 1);
-	        Block upnortheast = upnorth.getRelative(BlockFace.EAST, 1);
-	        blocks.add(b);
-	        blocks.add(up);
-	        blocks.add(down);
-	        blocks.add(right);
-	        blocks.add(left);
-	        blocks.add(south);
-	        blocks.add(north);
-	        blocks.add(downeast);
-	        blocks.add(downwest);
-	        blocks.add(downsouth);
-	        blocks.add(downnorth);
-	        blocks.add(upeast);
-	        blocks.add(upwest);
-	        blocks.add(upnorth);
-	        blocks.add(upsouth);
-	        blocks.add(downsoutheast);
-	        blocks.add(downsouthwest);
-	        blocks.add(downnorthwest);
-	        blocks.add(downnortheast);
-	        blocks.add(southeast);
-	        blocks.add(southwest);
-	        blocks.add(northeast);
-	        blocks.add(northwest);
-	        blocks.add(upsoutheast);
-	        blocks.add(upsouthwest);
-	        blocks.add(upnorthwest);
-	        blocks.add(upnortheast);
-	        int counter = 0;
-	    	for (Block block : blocks) {
-	            if (!block.getType().equals(Material.BEDROCK) || !block.getType().equals(Material.COMMAND_BLOCK) || !block.getType().equals(Material.CHAIN_COMMAND_BLOCK) || !block.getType().equals(Material.REPEATING_COMMAND_BLOCK) || !block.getType().equals(Material.WATER) || !block.getType().equals(Material.LAVA) || !block.getType().equals(Material.BARRIER) || !block.getType().equals(Material.ARMOR_STAND) || !block.getType().equals(Material.AIR) || !block.getType().equals(Material.OBSIDIAN))  {
-	            	CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(block.getLocation());
-	            	if (c==null) {
-	            		block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
-	            	} else {
-	            		block.getWorld().dropItem(b.getLocation(), CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(c.getUUID()));
-	            		CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(block.getLocation());
-	            	}
-	                counter++;
-	            }
-	        }
-	    	event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(event.getPlayer().getInventory().getItemInMainHand()).setDamage(((Damageable)event.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getDamage()-counter).build());
-    	} else {
-    		event.setCancelled(true);
-    		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getBlock().getLocation());
-    		if (c==null) {
-    			event.getBlock().breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
-    		} else {
-	    		boolean b = c.BlockBreakEvent(event);
-	    		if (!b) {
-	    			event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(c.getUUID()));
-	    			CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(event.getBlock().getLocation());
-	    		} else 
-	    			event.setCancelled(b);
-    		}
-    	}
+    public boolean onBlockBrokeWithItem(BlockBreakEvent e) {
+		Player p = e.getPlayer();
+		Block b = e.getBlock();
+
+		if (b.getType().getHardness() < 0.05) {
+			p.sendMessage(Lang.VERY_SMART.get(p));
+			return false;
+		}
+
+		b.getWorld().createExplosion(b.getLocation(), 0);
+		b.getWorld().playSound(b.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.2F, 1F);
+
+		List<Block> blocks = findBlocks(b, p);
+		breakBlocks(p, this.buildItem(), b, blocks);
     	return false;
     }
+
+	private void breakBlocks(Player p, ItemStack item, Block b, List<Block> blocks) {
+		BlockExplodeEvent blockExplodeEvent = new BlockExplodeEvent(b, blocks, 0);
+		Bukkit.getServer().getPluginManager().callEvent(blockExplodeEvent);
+
+		if (!blockExplodeEvent.isCancelled())
+			for (Block block : blockExplodeEvent.blockList()) breakBlock(item, block);
+	}
+
+	private List<Block> findBlocks(Block b, Player player) {
+		List<Block> blocks = new ArrayList<>();
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				for (int z = -1; z <= 1; z++) {
+					if (x == 0 && y == 0 && z == 0)
+						continue;
+					Block relative = b.getRelative(x, y, z);
+					if (ProtectionManager.canBreak(relative, player)) blocks.add(relative);
+				}
+			}
+		}
+		return blocks;
+	}
+
+	private boolean breakBlock(ItemStack item, Block block) {
+
+		Material material = block.getType();
+
+		block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, material);
+
+		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(block.getLocation());
+		if (c == null) {
+			block.breakNaturally(item);
+		} else {
+			block.getWorld().dropItem(block.getLocation(), CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(c.getUUID()));
+			CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(block.getLocation());
+		}
+		return true;
+	}
+
 }

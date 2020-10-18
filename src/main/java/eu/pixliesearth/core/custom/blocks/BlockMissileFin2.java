@@ -18,7 +18,7 @@ public class BlockMissileFin2 extends CustomBlock {
 	
 	@Override
     public Material getMaterial() {
-        return Material.IRON_BARS;
+        return Material.RED_STAINED_GLASS_PANE;
     }
 
     @Override

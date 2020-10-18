@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.machines;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.listener.ProtectionListener;
+import eu.pixliesearth.core.listener.ProtectionManager;
 import eu.pixliesearth.core.machines.autocrafters.AutoCrafterMachine;
 import eu.pixliesearth.utils.Methods;
 import lombok.SneakyThrows;
@@ -25,7 +25,7 @@ public class MachineListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
-        if (!ProtectionListener.canBreak(event)) return;
+        if (!ProtectionManager.canBreak(event)) return;
         if (!instance.getUtilLists().machines.containsKey(event.getBlock().getLocation())) return;
         event.setDropItems(false);
         Machine machine = instance.getUtilLists().machines.get(event.getBlock().getLocation());
@@ -36,7 +36,7 @@ public class MachineListener implements Listener {
     @EventHandler
     @SneakyThrows
     public void onPlace(BlockPlaceEvent event) {
-        if (!ProtectionListener.canPlace(event)) return;
+        if (!ProtectionManager.canPlace(event)) return;
         ItemStack item = event.getItemInHand();
         for (Machine.MachineType type : Machine.MachineType.values())
             if (item.isSimilar(type.getItem()))

@@ -18,7 +18,7 @@ public class BlockMissile extends CustomBlock {
 	
 	@Override
     public Material getMaterial() {
-        return Material.IRON_BLOCK;
+        return Material.BLACK_CONCRETE;
     }
 
     @Override

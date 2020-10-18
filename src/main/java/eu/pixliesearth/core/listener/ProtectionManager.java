@@ -7,6 +7,9 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +21,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import static org.bukkit.event.EventPriority.MONITOR;
 
-public class ProtectionListener implements Listener {
+public class ProtectionManager implements Listener {
 
     private static final Main instance = Main.getInstance();
 
@@ -36,6 +39,34 @@ public class ProtectionListener implements Listener {
         Chunk c = event.getBlock().getChunk();
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
+        Profile profile = instance.getProfile(player.getUniqueId());
+        if (nc == null) return true;
+        Nation host = nc.getCurrentNation();
+        if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
+        if (Permission.hasAccessHere(profile, nc)) return true;
+        if (!profile.isInNation()) return false;
+        Nation guest = profile.getCurrentNation();
+        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;
+        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return true;
+        return false;
+    }
+
+    public static boolean canBreak(Block block, Player player) {
+        if (player.getGameMode() != GameMode.CREATIVE
+                && (block.getType() == Material.BEDROCK
+                || block.getType() == Material.COMMAND_BLOCK
+                || block.getType() == Material.CHAIN_COMMAND_BLOCK
+                || block.getType() == Material.REPEATING_COMMAND_BLOCK
+                || block.getType() == Material.WATER
+                || block.getType() == Material.LAVA
+                || block.getType() == Material.BARRIER
+                || block.getType() == Material.ARMOR_STAND
+                || block.getType() == Material.AIR
+                || block.getType() == Material.OBSIDIAN)) return false;
+
+        if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) return true;
+        Chunk c = block.getChunk();
+        NationChunk nc = NationChunk.get(c);
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
