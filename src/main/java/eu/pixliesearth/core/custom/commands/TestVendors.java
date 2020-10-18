@@ -22,7 +22,7 @@ public class TestVendors extends CustomCommand {
 
     @Override
     public boolean execute(CommandSender commandsender, String alias, String[] args) {
-        Vendor vendor = new Vendor("NONE", "§bTest Vendor", Arrays.asList(Vendor.convertToVendorReady(CustomItemUtil.getItemStackFromUUID("Pixlies:Zulfiqar"), 69420, 42069)));
+        Vendor vendor = new Vendor(0, "§bTest Vendor", Arrays.asList(CustomItemUtil.getItemStackFromUUID("Pixlies:Zulfiqar")));
         vendor.open((Player) commandsender);
         return true;
     }

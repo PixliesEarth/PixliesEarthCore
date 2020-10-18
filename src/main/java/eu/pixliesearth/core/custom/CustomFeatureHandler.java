@@ -1,13 +1,11 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.ThreadUtils;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,11 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.utils.ThreadUtils;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 
@@ -44,6 +39,7 @@ public class CustomFeatureHandler {
 	private @Getter final Set<CustomRecipe> customRecipes;
 	private @Getter final Set<CustomQuest> customQuests;
 	private @Getter final Map<Material, List<BlockDrop>> dropMap;
+	private @Getter final Map<Integer, Vendor> vendorMap;
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */
@@ -74,6 +70,8 @@ public class CustomFeatureHandler {
 		this.dropMap = new HashMap<>();
 
 		this.customRecipes = new HashSet<CustomRecipe>();
+
+		this.vendorMap = new HashMap<>();
 
 		new ThreadUtils(new Runnable() {
 			@SneakyThrows

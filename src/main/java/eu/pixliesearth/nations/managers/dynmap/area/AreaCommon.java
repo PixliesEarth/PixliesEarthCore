@@ -1,10 +1,8 @@
 package eu.pixliesearth.nations.managers.dynmap.area;
 
 import eu.pixliesearth.nations.entities.nation.Era;
-import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.dynmap.TileFlags;
-import jodd.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

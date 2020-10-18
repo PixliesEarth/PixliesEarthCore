@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.utils.CustomItemUtil;
+import lombok.SneakyThrows;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,13 +10,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.utils.CustomItemUtil;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * 
  * @author BradBot_1

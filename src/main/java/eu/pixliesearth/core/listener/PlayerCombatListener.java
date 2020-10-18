@@ -2,7 +2,6 @@ package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.entity.Player;

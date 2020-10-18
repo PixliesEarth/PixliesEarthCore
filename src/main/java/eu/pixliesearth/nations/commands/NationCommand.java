@@ -1,20 +1,17 @@
 package eu.pixliesearth.nations.commands;
 
-import java.util.*;
-import java.util.Map.Entry;
-
+import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
+import eu.pixliesearth.utils.Methods;
+import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.utils.Methods;
-import lombok.Getter;
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 	
