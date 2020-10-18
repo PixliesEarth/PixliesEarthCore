@@ -1,15 +1,18 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomWeapon;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomWeapon;
 
 public class WeaponZulfiqar extends CustomWeapon {
 

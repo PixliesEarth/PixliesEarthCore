@@ -1,10 +1,13 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.utils.ThreadUtils;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,8 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
-import java.util.Map.Entry;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.utils.ThreadUtils;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 
 /**
  * 
@@ -366,6 +372,7 @@ public class CustomFeatureHandler {
 	 * @param location The {@link Location} of the block that has been broken
 	 */
 	public void removeCustomBlockFromLocation(Location location) {
+		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());
 		this.locationToUUIDMap.remove(location);
 	}
 	/**
