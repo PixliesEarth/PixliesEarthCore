@@ -100,12 +100,16 @@ public class ToolExplosivePickaxe extends CustomItem {
 			p.sendMessage(Lang.VERY_SMART.get(p));
 			return false;
 		}
-
-		b.getWorld().createExplosion(b.getLocation(), 0);
-		b.getWorld().playSound(b.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.2F, 1F);
-
-		List<Block> blocks = findBlocks(b, p);
-		breakBlocks(p, this.buildItem(), b, blocks);
+		
+		if (!p.isSneaking()) {
+			b.getWorld().createExplosion(b.getLocation(), 0);
+			b.getWorld().playSound(b.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.2F, 1F);
+	
+			List<Block> blocks = findBlocks(b, p);
+			breakBlocks(p, p.getInventory().getItemInMainHand(), b, blocks);
+		} else {
+			breakBlock(p.getInventory().getItemInMainHand(), b);
+		}
     	return false;
     }
 
