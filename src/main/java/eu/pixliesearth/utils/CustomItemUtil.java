@@ -19,7 +19,7 @@ public class CustomItemUtil {
 	
 	public static String getUUIDFromItemStack(ItemStack itemStack) {
 		String s = NBTUtil.getTagsFromItem(itemStack).getString("UUID");
-		if (s==null) 
+		if (s==null || s.equals("")) 
 			return MinecraftMaterial.getMinecraftMaterialFromItemStack(itemStack);
 		return s;
 	}
