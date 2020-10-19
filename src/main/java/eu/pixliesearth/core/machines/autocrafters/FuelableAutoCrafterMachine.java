@@ -3,6 +3,7 @@ package eu.pixliesearth.core.machines.autocrafters;
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.OutlinePane;
+import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import eu.pixliesearth.core.machines.cargo.InputNode;
@@ -17,10 +18,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.bukkit.Material.BLACK_STAINED_GLASS_PANE;
+import static org.bukkit.Material.HEART_OF_THE_SEA;
 
 public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
 
@@ -66,15 +70,10 @@ public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
             }
         }), 0, 0);
         gui.addPane(fuelPane);
-        StaticPane pane = new StaticPane(1, 1, 9, 4);
-        int x = 0;
-        int y = 0;
+        PaginatedPane pane = new PaginatedPane(1, 1, 7, 4);
+        List<GuiItem> guiItems = new ArrayList<>();
         for (MachineCraftable item : MachineCraftable.values()) {
             if (!item.type.equals(type)) continue;
-            if (x + 1 > 7) {
-                x = 0;
-                y++;
-            }
             ItemBuilder iconBuilder = new ItemBuilder(item.icon);
             iconBuilder.addLoreLine("§f§lLEFT §7click to open crafter");
             iconBuilder.addLoreLine("§7Time: §b" + item.seconds + " §7second(s)");
@@ -85,14 +84,32 @@ public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
                 iconBuilder.setDisplayName(item.icon.hasItemMeta() ? "§c§l" + item.icon.getItemMeta().getDisplayName() : "§c§l" + item.icon.getI18NDisplayName());
                 iconBuilder.addLoreLine("§7Era needed: §c" + item.eraNeeded.getName());
             }
-            pane.addItem(new GuiItem(iconBuilder.build(), event -> {
+            guiItems.add(new GuiItem(iconBuilder.build(), event -> {
                 event.setCancelled(true);
                 if (event.getClick() != ClickType.LEFT) return;
                 if (item.eraNeeded.canAccess(nation))
                     openItemCrafter(player, item);
-            }), x, y);
-            x++;
+            }));
         }
+        pane.populateWithGuiItems(guiItems);
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.addItem(new GuiItem(new ItemBuilder(HEART_OF_THE_SEA).setDisplayName("§b§lNext Page").build(), event -> {
+            event.setCancelled(true);
+            try {
+                pane.setPage(pane.getPage() + 1);
+                gui.addPane(pane);
+                gui.show(player);
+            } catch (Exception ignore) { }
+        }), 8, 0);
+        hotBar.addItem(new GuiItem(new ItemBuilder(HEART_OF_THE_SEA).setDisplayName("§b§lLast Page").build(), event -> {
+            event.setCancelled(true);
+            try {
+                pane.setPage(pane.getPage() - 1);
+                gui.addPane(pane);
+                gui.show(player);
+            } catch (Exception ignore) { }
+        }), 0, 0);
+        gui.addPane(hotBar);
         gui.addPane(pane);
         gui.show(player);
     }
