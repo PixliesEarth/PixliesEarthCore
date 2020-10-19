@@ -104,13 +104,15 @@ public class BlockNuke2 extends CustomBlock {
 		Block b = event.getBlock();
 		Location loc = b.getLocation();
 		event.getPlayer().sendMessage("Nuclear bomb planted! It will explode in 60 seconds!");
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+		Integer i = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 			public void run() {
 				b.setType(Material.AIR);
 				loc.getWorld().createExplosion(loc, 200f);
 				CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(event.getBlock().getLocation());
+				CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(loc);
 			}
 		}, 1200L);
+		CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(loc, i);
 		return false;
 	}
 	

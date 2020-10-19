@@ -2,6 +2,8 @@ package eu.pixliesearth.core.custom.blocks;
 
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -103,9 +105,17 @@ public class BlockNuke extends CustomBlock {
 	@Override
 	public void onTick(Location location) {
 		if (location.getBlock().isBlockPowered()) {
-			location.getBlock().setType(Material.AIR);
 			CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(location);
 			CustomFeatureLoader.getLoader().getHandler().setCustomBlockToLocation(location, "Pixlies:Nuclear_Bomb_Autodetinating");
+			Integer i = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+				public void run() {
+					location.getBlock().setType(Material.AIR);
+					location.getWorld().createExplosion(location, 200f);
+					CustomFeatureLoader.getLoader().getHandler().removeCustomBlockFromLocation(location);
+					CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(location);
+				}
+			}, 1200L);
+			CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(location, i);
 		}
 	}
 }

@@ -50,6 +50,7 @@ public class CustomFeatureHandler {
 	 */
 	private final HashMap<CustomItem, ItemStack> customItemsToItemStackMap;
 	private final HashMap<Location, String> locationToUUIDMap;
+	private final HashMap<Location, Integer> locationToEventMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -72,6 +73,7 @@ public class CustomFeatureHandler {
 		this.locationToUUIDMap = new HashMap<Location, String>();
 		this.customMachineRecipes = new HashSet<CustomMachineRecipe>();
 		this.customQuests = new HashSet<CustomQuest>();
+		this.locationToEventMap = new HashMap<Location, Integer>();
 
 		this.dropMap = new HashMap<>();
 
@@ -93,7 +95,6 @@ public class CustomFeatureHandler {
 	
 	public void loadCustomBlockTickable() {
 		registerTickable(new Tickable() {
-
 			@Override
 			public void onTick() {
 				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
@@ -182,6 +183,18 @@ public class CustomFeatureHandler {
 	@Deprecated
 	public void registerCustomMachineRecipe(CustomMachineRecipe customMachineRecipe) {
 		
+	}
+	//TODO: notes
+	public void registerLocationEvent(Location location, Integer eventid) {
+		locationToEventMap.put(location, eventid);
+	}
+	//TODO: notes
+	public Integer getLocationEvent(Location location) {
+		return locationToEventMap.get(location);
+	}
+	//TODO: notes
+	public void unregisterLocationEvent(Location location) {
+		locationToEventMap.remove(location);
 	}
 	/**
 	 * Disables a {@link Listener} based on its class
