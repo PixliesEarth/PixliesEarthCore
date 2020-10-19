@@ -147,6 +147,12 @@ public class ItemICBM extends CustomItem {
 			} else if (id.equals("Pixlies:Battery")) {
 				explosive += 6;
 				launchtime += 1;
+			} else if (id.equals("Pixlies:ICBM_Card")) {
+				NBTTags tags = NBTUtil.getTagsFromItem(itemStack);
+				range += Integer.parseInt(tags.getString("r"));
+				explosive += Integer.parseInt(tags.getString("e"));
+				launchtime += Integer.parseInt(tags.getString("l"));
+				playerdamage += Integer.parseInt(tags.getString("d"));
 			}
 			if (launchtime<5) {
 				launchtime = 5;

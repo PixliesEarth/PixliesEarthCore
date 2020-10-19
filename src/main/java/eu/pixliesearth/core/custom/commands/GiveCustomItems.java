@@ -67,14 +67,14 @@ public class GiveCustomItems extends CustomCommand {
 		return array;
 	}
 	
-	private static List<String> getOnlinePlayersAsStringList() {
+	public static List<String> getOnlinePlayersAsStringList() {
 		ArrayList<String> array = new ArrayList<String>();
 		for (Player p : Bukkit.getOnlinePlayers()) 
 			array.add(p.getDisplayName());
 		return array;
 	}
 	
-	private static List<String> getCustomItemsAsStringList() {
+	public static List<String> getCustomItemsAsStringList() {
 		ArrayList<String> array = new ArrayList<String>();
 		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
 			array.add(c.getUUID());
