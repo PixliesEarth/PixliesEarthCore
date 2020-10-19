@@ -237,14 +237,14 @@ public class Machine {
 
     public enum MachineType {
 
-        TINKER_TABLE(TinkerTable.item, TinkerTable.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.OAK_PLANKS, 16), new ItemStack(Material.IRON_INGOT, 4)),
-        INPUT_NODE(InputNode.item, InputNode.class, CargoMachine.class, MachineCrafter.item),
-        OUTPUT_NODE(OutputNode.item, OutputNode.class, CargoMachine.class, MachineCrafter.item),
-        FORGE(Forge.item, Forge.class, FuelableAutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)),
-        POTTERY(Pottery.item, Pottery.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)),
-        BRONZE_FORGE(BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
-        MACHINE_CRAFTER(MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class, new ItemStack(CRAFTING_TABLE)),
-        FARMING_WORKBENCH(FarmingWorkbench.item, FarmingWorkbench.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(OAK_PLANKS, 4), new ItemStack(WHEAT_SEEDS), new ItemStack(IRON_INGOT, 2)),
+        TINKER_TABLE("Machine:Tinker_Table", TinkerTable.item, TinkerTable.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.OAK_PLANKS, 16), new ItemStack(Material.IRON_INGOT, 4)),
+        INPUT_NODE("Machine:Input_Node", InputNode.item, InputNode.class, CargoMachine.class, MachineCrafter.item),
+        OUTPUT_NODE("Machine:Output_Node", OutputNode.item, OutputNode.class, CargoMachine.class, MachineCrafter.item),
+        FORGE("Machine:Forge", Forge.item, Forge.class, FuelableAutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.SMOOTH_STONE, 16), new ItemStack(Material.IRON_BLOCK, 2)),
+        POTTERY("Machine:Pottery", Pottery.item, Pottery.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(Material.FLOWER_POT, 4), new ItemStack(Material.IRON_INGOT, 2)),
+        BRONZE_FORGE("Machine:Bronze_Forge", BronzeForge.item, BronzeForge.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemBuilder(CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Ingot")).setAmount(4).build(), new ItemStack(Material.STONE_BRICKS, 16), new ItemStack(Material.LAVA_BUCKET)),
+        MACHINE_CRAFTER("Machine:Machine_Crafter", MachineCrafter.item, MachineCrafter.class, AutoCrafterMachine.class, new ItemStack(CRAFTING_TABLE)),
+        FARMING_WORKBENCH("Machine:Farming_Workbench", FarmingWorkbench.item, FarmingWorkbench.class, AutoCrafterMachine.class, MachineCrafter.item, new ItemStack(OAK_PLANKS, 4), new ItemStack(WHEAT_SEEDS), new ItemStack(IRON_INGOT, 2)),
         ;
 
         private @Getter final ItemStack item;
@@ -252,9 +252,11 @@ public class Machine {
         private @Getter final Class<? extends Machine> parent;
         private @Getter final ItemStack whereToCraft;
         private @Getter final ItemStack[] recipe;
+        private @Getter final String UUID;
 
-        MachineType (ItemStack item, Class<? extends Machine> clazz, Class<? extends Machine> parent, ItemStack whereToCraft, ItemStack... recipe) {
-            this.item = item;
+        MachineType (String uuid, ItemStack item, Class<? extends Machine> clazz, Class<? extends Machine> parent, ItemStack whereToCraft, ItemStack... recipe) {
+            this.UUID = uuid;
+        	this.item = item;
             this.clazz = clazz;
             this.parent = parent;
             this.whereToCraft = whereToCraft;
