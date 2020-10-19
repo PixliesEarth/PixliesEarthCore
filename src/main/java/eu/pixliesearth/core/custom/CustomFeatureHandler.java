@@ -1,11 +1,13 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.utils.ThreadUtils;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
-import java.util.Map.Entry;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 
 /**
  * 
@@ -54,6 +59,7 @@ public class CustomFeatureHandler {
 	 * 
 	 * @param cfl The {@link CustomFeatureLoader} that is trying to initiate this class
 	 */
+	@SuppressWarnings("deprecation")
 	public CustomFeatureHandler(CustomFeatureLoader cfl) {
 		setLoader(cfl);
 		this.customItems = new HashSet<CustomItem>();
@@ -72,18 +78,15 @@ public class CustomFeatureHandler {
 		this.customRecipes = new HashSet<CustomRecipe>();
 
 		this.vendorMap = new HashMap<>();
-
-		new ThreadUtils(new Runnable() {
+		
+		Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), new Runnable() {
 			@SneakyThrows
 			@Override
 			public void run() {
-				while (true) {
-					for (Tickable t : getTickables()) 
-						t.onTick();
-					Thread.sleep(50);
-				}
+				for (Tickable t : getTickables()) 
+					t.onTick();
 			}
-		});
+		}, 1L, 1L);
 		
 		loadCustomBlockTickable();
 	}
