@@ -1,17 +1,16 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import java.util.Random;
+
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerLevelChangeEvent;
+
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
-import org.bukkit.Sound;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerLevelChangeEvent;
-
-import java.util.Random;
 
 public class NationXPListener extends CustomListener {
 
