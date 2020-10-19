@@ -72,7 +72,7 @@ public class AutoCrafterMachine extends Machine {
         int y = 0;
         for (MachineCraftable item : MachineCraftable.values()) {
             if (!item.type.equals(type)) continue;
-            if (x + 1 > 8) {
+            if (x + 1 > 7) {
                 x = 0;
                 y++;
             }
@@ -98,7 +98,7 @@ public class AutoCrafterMachine extends Machine {
         gui.show(player);
     }
 
-    private void openItemCrafter(Player player, MachineCraftable item) {
+    protected void openItemCrafter(Player player, MachineCraftable item) {
         wantsToCraft = item;
         if (inventory == null) {
             String itemName = item.icon.hasItemMeta() ? item.icon.getItemMeta().getDisplayName() : item.icon.getI18NDisplayName();
@@ -117,7 +117,7 @@ public class AutoCrafterMachine extends Machine {
         player.openInventory(inventory);
     }
 
-    private void update() {
+    protected void update() {
         beforeUpdate();
         if (inventory == null) return;
         if (timer != null) {
@@ -182,7 +182,7 @@ public class AutoCrafterMachine extends Machine {
      * Used to change the colour of the progressbar panels.
      * @param p_timeToCompleteMilliseconds: Time left for the recipe to be completed.
      */
-    private void setProgressBarColourByIndex
+    protected void setProgressBarColourByIndex
     (long p_timeToCompleteMilliseconds )
     {
         // The progress bar is only 9 inventory cells long.
@@ -270,7 +270,7 @@ public class AutoCrafterMachine extends Machine {
         }
     }
 
-    private void setProgressBar(boolean matching) {
+    protected void setProgressBar(boolean matching) {
         // The time required for the recipe to be completed.
         if (timer != null && timer.getRemaining() > 0) {
             final long long_TimeToComplete = timer.getRemaining();
@@ -283,7 +283,7 @@ public class AutoCrafterMachine extends Machine {
         }
     }
 
-    private boolean recipeMatching(Inventory inv) {
+    protected boolean recipeMatching(Inventory inv) {
         List<ItemStack> items = new ArrayList<>();
         for (int i : craftSlots) {
             ItemStack itemOnSlot = inv.getItem(i);
@@ -298,7 +298,7 @@ public class AutoCrafterMachine extends Machine {
         update();
     }
 
-    private void addResult(ItemStack result) {
+    protected void addResult(ItemStack result) {
         for (int i : resultSlots) {
             if (inventory.getItem(i) != null) continue;
             inventory.setItem(i, result);
@@ -306,7 +306,7 @@ public class AutoCrafterMachine extends Machine {
         }
     }
 
-    private boolean canAddResult() {
+    protected boolean canAddResult() {
         for (int i : resultSlots)
             if (inventory.getItem(i) == null) return true;
         return false;

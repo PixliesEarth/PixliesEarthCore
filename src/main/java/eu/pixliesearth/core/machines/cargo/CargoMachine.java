@@ -8,6 +8,7 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,8 +29,8 @@ public class CargoMachine extends Machine {
         this.storage = storage;
     }
 
-    public Map<String, Object> extras() {
-        Map<String, Object> map = new HashMap<>();
+    public Map<String, String> extras() {
+        Map<String, String> map = new HashMap<>();
         JsonObject j = new JsonObject();
         for (int i = 0; i < storage.getSize(); i++) {
         	ItemStack itemStack = storage.getItem(i);
@@ -54,8 +55,9 @@ public class CargoMachine extends Machine {
         instance.getUtilLists().machines.remove(location);
         armorStand.delete();
         file.deleteFile();
+        if (storage == null) return;
         for (ItemStack item : storage.getContents())
-            if (item != null)
+            if (item.getType() != Material.AIR)
                 location.getWorld().dropItemNaturally(location, item);
     }
 

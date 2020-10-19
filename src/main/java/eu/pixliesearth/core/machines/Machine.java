@@ -66,7 +66,7 @@ public class Machine {
 
     public void open(Player player) {}
 
-    protected Map<String, Object> extras() {
+    protected Map<String, String> extras() {
         return new HashMap<>();
     }
     
@@ -123,9 +123,6 @@ public class Machine {
     	o.addProperty("class", this.getClass().getName());
     	o.addProperty("location", locationToSaveableString(location));
     	o.addProperty("type", type.name());
-    	o.addProperty("fuel", "NULL"); // Set to null as its not a fuelable autocrafter
-    	o.addProperty("energy", "NULL"); // Set to null as its not a energy machine
-    	o.addProperty("storage", "NULL"); // Set to null as its does not have a storage
     	if (wantsToCraft != null) o.addProperty("wantsToCraft", wantsToCraft.name()); else o.addProperty("wantsToCraft", "NULL");
     	o.addProperty("item", serialize(item));
     	// if (timer != null) {JsonObject json = new JsonObject();json.addProperty("expiry", timer.getExpiry());json.addProperty("ended", timer.isEnded());o.addProperty("timer", json.toString());} else o.addProperty("timer", "NULL");
@@ -134,7 +131,7 @@ public class Machine {
 
     	o.addProperty("holo-text", getTitle());
     	o.addProperty("holo-location", locationToSaveableString(armorStand.getLocation()));
-    	for (Map.Entry<String, Object> entry : extras().entrySet()) f.put(entry.getKey(), entry.getValue());
+    	for (Map.Entry<String, String> entry : extras().entrySet()) o.addProperty(entry.getKey(), entry.getValue());
     	f.saveJsonToFile(o);
     }
 
@@ -199,7 +196,7 @@ public class Machine {
 
             case FORGE:
                 holo.appendTextLine(o.get("holo-text").getAsString());
-                return new Forge(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type, o.get("fuel").getAsInt());
+                return new Forge(o.get("id").getAsString(), locationFromSaveableString(o.get("location").getAsString()), holo, timer, wantsToCraft, type, Integer.parseInt(o.get("fuel").getAsString()));
 
             case POTTERY:
                 holo.appendTextLine(o.get("holo-text").getAsString());
