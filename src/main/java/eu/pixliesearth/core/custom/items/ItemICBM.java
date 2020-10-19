@@ -1,10 +1,12 @@
 package eu.pixliesearth.core.custom.items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -88,6 +90,11 @@ public class ItemICBM extends CustomItem {
     public String getUUID() {
         return "Pixlies:ICBM_Key"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+    
+    @Override
+    public Rarity getRarity() {
+    	return Rarity.RARE;
+    }
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
@@ -98,9 +105,13 @@ public class ItemICBM extends CustomItem {
 		if (event.getClickedBlock() == null || event.getClickedBlock().getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (!isAMissile(event.getClickedBlock())) {
 			CustomBlock customBlock = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
-			if (customBlock==null || !customBlock.getUUID().equals("Pixlies:Missile_Warhead_Block_UNB"))
+			if (customBlock==null)
 				return false;
-			event.getPlayer().sendMessage("This missile is alread activated!");
+			if (customBlock.getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) {
+				event.getPlayer().sendMessage("This missile is alread activated!");
+			} else if (customBlock.getUUID().equals("Pixlies:Missile_Warhead_Block_UNB_2")) {
+				event.getPlayer().sendMessage("This missile has launched!");
+			}
 			return false;
 		}
 		Player p = event.getPlayer();
@@ -191,12 +202,15 @@ public class ItemICBM extends CustomItem {
 				}
 				makeMissileUnbreakable(event.getClickedBlock());
 				p.sendMessage("§7Launching in §c"+launchtime+" §7seconds!");
-				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+				Integer i = Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 					@Override 
 					public void run() {
 						p.sendMessage("§c§lLaunching!");
+						CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(event.getClickedBlock().getLocation());
+						launchMissile(event.getClickedBlock());
 					}
 				}, (20*launchtime));
+				CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(location, i);
 				return false;
 			}
 		}
@@ -235,6 +249,56 @@ public class ItemICBM extends CustomItem {
 		}
 		h.removeCustomBlockFromLocation(bl);
 		h.setCustomBlockToLocation(bl, "Pixlies:Missile_Warhead_Block_UNB");
+    }
+    
+    @SuppressWarnings("deprecation")
+    public void launchMissile(Block b) {
+    	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	if (h.getCustomBlockFromLocation(b.getLocation())!=null) {
+			if (h.getCustomBlockFromLocation(b.getLocation()).getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) { //Warhead UUID
+				h.removeCustomBlockFromLocation(b.getLocation());
+				h.setCustomBlockToLocation(b.getLocation(), "Pixlies:Missile_Warhead_Block_UNB_2");
+			}
+    	}
+    	Location bl = b.getLocation();
+    	
+    	final UUID id = UUID.randomUUID();
+    	addBS(id, b);
+    	
+    	Integer i = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+			
+			public void run() {
+				List<Block> blocks = getMissileBlocks(getBS(id));
+				for (Block block : blocks) {
+					CustomBlock cb = h.getCustomBlockFromLocation(block.getLocation());
+					h.removeCustomBlockFromLocation(block.getLocation());
+					Location loc = block.getLocation().clone();
+					loc.setY(loc.getY()+1);
+					h.setCustomBlockToLocation(loc, cb.getUUID());
+					if (cb.getUUID().equals("Pixlies:Missile_Warhead_Block_UNB_2")) {
+						remBS(id);
+						addBS(id, block);
+					}
+				}
+			}
+		}, 5L, 5L);
+    	CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(bl, i);
+    }
+    
+    public void onHit(Location location) {
+    	CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(location);
+    }
+    
+    public List<Block> getMissileBlocks(Block b) {
+    	List<Block> blocks = new ArrayList<Block>();
+    	blocks.add(b);
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX(), b.getLocation().getBlockY()-1, b.getLocation().getBlockZ()));
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX(), b.getLocation().getBlockY()-2, b.getLocation().getBlockZ()));
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX(), b.getLocation().getBlockY()-2, b.getLocation().getBlockZ()-1));
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX(), b.getLocation().getBlockY()-2, b.getLocation().getBlockZ()+1));
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX()-1, b.getLocation().getBlockY()-2, b.getLocation().getBlockZ()));
+    	blocks.add(b.getWorld().getBlockAt(b.getLocation().getBlockX()+1, b.getLocation().getBlockY()-2, b.getLocation().getBlockZ()));
+    	return blocks;
     }
     
     public boolean isAMissile(Block b) {
@@ -283,5 +347,19 @@ public class ItemICBM extends CustomItem {
 		Dispenser d = (Dispenser) warhead.getState();
 		if (d==null) return null;
 		return d.getInventory();
+	}
+	
+	public static HashMap<UUID, Block> bsm = new HashMap<UUID, Block>();
+	
+	public static Block getBS(UUID id) {
+		return bsm.get(id);
+	}
+	
+	public static void addBS(UUID id, Block b) {
+		bsm.put(id, b);
+	}
+	
+	public static void remBS(UUID id) {
+		bsm.remove(id);
 	}
 }
