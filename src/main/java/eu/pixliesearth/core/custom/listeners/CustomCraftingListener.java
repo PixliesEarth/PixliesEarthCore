@@ -71,7 +71,7 @@ public class CustomCraftingListener extends CustomListener {
 	}
 	
 	public CustomRecipe getCustomRecipe(Map<Integer, String> map) {
-		for (CustomRecipe customRecipe : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
+		for (CustomRecipe customRecipe : CustomFeatureLoader.getLoader().getHandler().getRecipesFromUUID("Pixlies:Crafting_Table")) {
 			int i = compare(customRecipe.getContentsList(), map, false);
 			if (i>=9)
 				return customRecipe;

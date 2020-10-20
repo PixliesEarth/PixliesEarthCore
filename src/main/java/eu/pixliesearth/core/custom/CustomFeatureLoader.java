@@ -2,24 +2,17 @@ package eu.pixliesearth.core.custom;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.CommandMap;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import eu.pixliesearth.core.files.FileDirectory;
-import eu.pixliesearth.core.machines.Machine.MachineType;
 import eu.pixliesearth.core.vendors.Vendor;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,6 +64,7 @@ public class CustomFeatureLoader {
 		loadCustomBlocks(path);
 		//loadCustomMachineRecipes(path);
 		loadQuests(path);
+		loadMachines(path);
 		getHandler().loadCustomBlocksFromFile();
 		loadVendors(path);
 	}
@@ -82,72 +76,17 @@ public class CustomFeatureLoader {
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			((CustomListener)customListener).onServerShutdown(this, getHandler());
 	}
-	
-	public void loadMachines() {
-		for (MachineType m : MachineType.values()) {
-			getHandler().registerItem(new CustomItem() {
-
-			    @Override
-			    public Material getMaterial() {
-			        return m.getItem().getType();
-			    }
-
-			    @Override
-			    public List<String> getDefaultLore() {
-			        return m.getItem().getLore();
-			    }
-
-			    @Override
-			    public String getDefaultDisplayName() {
-			        return m.getItem().getI18NDisplayName();
-			    }
-
-			    @Override
-			    public boolean isGlowing() {
-			        return false;
-			    }
-
-			    @Override
-			    public boolean isUnbreakable() {
-			        return false;
-			    }
-
-			    @Override
-			    public Map<String, Object> getDefaultNBT() {
-			        return new HashMap<String, Object>();
-			    }
-
-			    @Override
-			    public Map<Enchantment, Integer> getDefaultEnchants() {
-			        return new HashMap<Enchantment, Integer>();
-			    }
-
-			    @Override
-			    public Set<ItemFlag> getItemFlags(){
-			        return new HashSet<ItemFlag>();
-			    }
-
-			    @Override
-			    public Integer getCustomModelData() {
-			        return m.getItem().getItemMeta().getCustomModelData();
-			    }
-
-			    @Override
-			    public CreativeTabs getCreativeTab() {
-			        return CreativeTabs.NONE;
-			    }
-
-			    @Override
-			    public String getUUID() {
-			        return m.getUUID(); // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
-			    }
-
-			    @Override
-			    public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-			        return false;
-			    }
-			});
-		}
+	// TODO: notes
+	@SneakyThrows
+	public void loadMachines(String path) {
+		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) 
+			loadMachine(clazz.newInstance());
+		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) 
+			loadMachine(clazz.newInstance());
+	}
+	// TODO: notes
+	public void loadMachine(CustomMachine customMachine) {
+		getHandler().registerMachine(customMachine);
 	}
 	/**
 	 * Uses reflection to load custom recipes

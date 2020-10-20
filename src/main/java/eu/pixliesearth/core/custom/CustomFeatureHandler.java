@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,11 +15,19 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
+import eu.pixliesearth.core.files.DataFile;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -40,9 +49,9 @@ public class CustomFeatureHandler {
 	private @Getter final Set<CustomPermission> customPermissions;
 	private @Getter final Set<CustomBlock> customBlocks;
 	private @Getter final Set<Tickable> tickables;
-	private @Getter final Set<CustomMachineRecipe> customMachineRecipes;
 	private @Getter final Set<CustomRecipe> customRecipes;
 	private @Getter final Set<CustomQuest> customQuests;
+	private @Getter final Set<CustomMachine> customMachines;
 	private @Getter final Map<Material, List<BlockDrop>> dropMap;
 	private @Getter final Map<String, Vendor> vendorMap;
 	/**
@@ -51,6 +60,8 @@ public class CustomFeatureHandler {
 	private final HashMap<CustomItem, ItemStack> customItemsToItemStackMap;
 	private final HashMap<Location, String> locationToUUIDMap;
 	private final HashMap<Location, Integer> locationToEventMap;
+	private final HashMap<Location, Inventory> locationToInventoryMap;
+	private final HashMap<Location, Timer> locationToTimerMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -71,9 +82,11 @@ public class CustomFeatureHandler {
 		this.customBlocks = new HashSet<CustomBlock>();
 		this.customItemsToItemStackMap = new HashMap<CustomItem, ItemStack>();
 		this.locationToUUIDMap = new HashMap<Location, String>();
-		this.customMachineRecipes = new HashSet<CustomMachineRecipe>();
 		this.customQuests = new HashSet<CustomQuest>();
 		this.locationToEventMap = new HashMap<Location, Integer>();
+		this.customMachines = new HashSet<CustomMachine>();
+		this.locationToInventoryMap = new HashMap<Location, Inventory>();
+		this.locationToTimerMap = new HashMap<Location, Timer>();
 
 		this.dropMap = new HashMap<>();
 
@@ -91,6 +104,7 @@ public class CustomFeatureHandler {
 		}, 1L, 1L);
 		
 		loadCustomBlockTickable();
+		loadMachineTickable();
 	}
 	
 	public void loadCustomBlockTickable() {
@@ -99,6 +113,17 @@ public class CustomFeatureHandler {
 			public void onTick() {
 				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
 					getCustomBlockFromLocation(entry.getKey()).onTick(entry.getKey());
+			}
+		});
+	}
+	
+	public void loadMachineTickable() {
+		registerTickable(new Tickable() {
+			@Override
+			public void onTick() {
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
+					if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) 
+						((CustomMachine)getCustomBlockFromLocation(entry.getKey())).onTick(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
 			}
 		});
 	}
@@ -145,7 +170,15 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customBlock);
 		this.customItems.add(customBlock);
 		this.customItemsToItemStackMap.put(customBlock, customBlock.buildItem());
-		System.out.println("Registered the custom block "+customBlock.getUUID());
+		// System.out.println("Registered the custom block "+customBlock.getUUID());
+	}
+	// TODO: notes
+	public void registerMachine(CustomMachine customMachine) {
+		this.customMachines.add(customMachine);
+		this.customBlocks.add(customMachine);
+		this.customItems.add(customMachine);
+		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
+		System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
 	 * Registers the command
@@ -184,17 +217,21 @@ public class CustomFeatureHandler {
 	public void registerCustomMachineRecipe(CustomMachineRecipe customMachineRecipe) {
 		
 	}
-	//TODO: notes
+	// TODO: notes
 	public void registerLocationEvent(Location location, Integer eventid) {
 		locationToEventMap.put(location, eventid);
 	}
-	//TODO: notes
+	// TODO: notes
 	public Integer getLocationEvent(Location location) {
 		return locationToEventMap.get(location);
 	}
-	//TODO: notes
+	// TODO: notes
 	public void unregisterLocationEvent(Location location) {
 		locationToEventMap.remove(location);
+	}
+	// TODO: notes
+	public Timer getTimerFromLocation(Location location) {
+		return this.locationToTimerMap.get(location);
 	}
 	/**
 	 * Disables a {@link Listener} based on its class
@@ -347,6 +384,56 @@ public class CustomFeatureHandler {
 		}
 		f.saveJsonToFile();
 	}
+	// TODO: notes
+	public void saveMachinesToFiles() {
+		int i = 0;
+		for (Entry<Location, String> entry : this.locationToUUIDMap.entrySet()) {
+			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
+				try {
+					DataFile f = new DataFile(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/machines/", Integer.toString(i));
+					if (((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()))==null) {
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
+						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
+						f.saveDataMap(map);
+					} else {
+						Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
+						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
+						f.saveDataMap(map);
+					}
+					f.saveDataMap(((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey())));
+				} catch (IOException e) {
+					System.err.println("Unable to save the machine "+getCustomBlockFromLocation(entry.getKey()).getUUID()+" due to a IOException");
+				} finally {
+					i++;
+				}
+			}
+		}
+	}
+	// TODO: notes
+	public void loadMachinesFromFiles() {
+		FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/machines/");
+		for (FileBase f : d.getFilesInDirectory()) {
+			DataFile df = new DataFile(f.getFilePath(), f.getFileName(), f.getFileExtension());
+			try {
+				Map<String, String> map = df.loadDataMap();
+				String[] l2 = map.get("MLOCATION").split(":");
+				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
+				for (CustomMachine m : getCustomMachines())
+					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
+						Inventory i = m.getInventory();
+						CustomMachine.createHologram(m.getDefaultDisplayName(), location);
+						this.locationToInventoryMap.put(location, i);
+						m.loadFromSaveData(i, location, map);
+					}
+			} catch (IOException e) {
+				System.err.println("Unable to load a machine due to a IOException");
+			} finally {
+				df.deleteFile();
+			}
+		}
+	}
 	/**
 	 * Loads custom blocks from the save file
 	 */
@@ -356,6 +443,14 @@ public class CustomFeatureHandler {
 			String[] l2 = l.split(":");
 			this.locationToUUIDMap.put(new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3])), f.get(l));
 		}
+	}
+	// TODO: notes
+	public void registerTimer(Location location, Timer timer) {
+		this.locationToTimerMap.put(location, timer);
+	}
+	// TODO: notes
+	public void unregisterTimer(Location location) {
+		this.locationToTimerMap.remove(location);
 	}
 	/**
 	 * Gets and returns the {@link CustomBlock} at the {@link Location} provided
@@ -377,9 +472,30 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
-		location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
+		if (getCustomItemFromUUID(id) instanceof CustomMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			CustomMachine.createHologram(m.getDefaultDisplayName(), location);
+			this.locationToInventoryMap.put(location, m.getInventory());
+		} else {
+			location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
+			location.getWorld().getBlockAt(location).getState().update();
+		}
 		this.locationToUUIDMap.put(location, id);
-		location.getWorld().getBlockAt(location).getState().update();
+	}
+	// TODO: notes
+	public Inventory getInventoryFromLocation(Location location) {
+		return this.locationToInventoryMap.get(location);
+	}
+	public void setInventoryFromLocation(Location location, Inventory inventory) {
+		this.locationToInventoryMap.remove(location);
+		this.locationToInventoryMap.put(location, inventory);
+	}
+	// TODO: notes
+	public Hologram getHologramAtLocation(Location location) {
+		for (Hologram holo : HologramsAPI.getHolograms(getInstance())) 
+			if (holo.getLocation().equals(CustomMachine.holoLocation(location))) 
+				return holo;
+		return null;
 	}
 	/**
 	 * Called when a custom block at the location has been broken
@@ -389,6 +505,18 @@ public class CustomFeatureHandler {
 	public void removeCustomBlockFromLocation(Location location) {
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());
 		this.locationToUUIDMap.remove(location);
+		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
+			this.locationToInventoryMap.remove(location);
+			// TODO: Drop inventory
+		}
+	}
+	// TODO: notes
+	public Set<CustomRecipe> getRecipesFromUUID(String id) {
+		Set<CustomRecipe> set = new HashSet<CustomRecipe>();
+		for (CustomRecipe c : getCustomRecipes()) 
+			if (c.craftedInUUID().equals(id)) 
+				set.add(c);
+		return set;
 	}
 	/**
 	 * Gets and returns if a {@link CustomBlock} is at the {@link Location} provided

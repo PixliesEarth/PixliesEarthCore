@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author BradBot_1
  * 
- * <h3>The base of a custom recipe!</h3>
+ * <h3>The base of a recipe!</h3>
  * 
  */
 public class CustomRecipes {

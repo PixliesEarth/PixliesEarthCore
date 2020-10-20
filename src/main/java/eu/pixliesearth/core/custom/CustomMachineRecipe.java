@@ -13,7 +13,9 @@ import java.util.Set;
  * 
  * @apiNote TODO: notes
  *
+ * @deprecated Use {@link CustomRecipe} instead!
  */
+@Deprecated
 public class CustomMachineRecipe {
 	
 	public CustomMachineRecipe() {

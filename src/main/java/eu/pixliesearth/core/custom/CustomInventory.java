@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import org.bukkit.inventory.Inventory;
-
+@Deprecated // NEVER USED
 public class CustomInventory {
 	
 	//TODO
