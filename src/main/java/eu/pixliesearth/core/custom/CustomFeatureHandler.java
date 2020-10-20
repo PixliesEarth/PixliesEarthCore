@@ -62,6 +62,7 @@ public class CustomFeatureHandler {
 	private final HashMap<Location, Integer> locationToEventMap;
 	private final HashMap<Location, Inventory> locationToInventoryMap;
 	private final HashMap<Location, Timer> locationToTimerMap;
+	private final HashMap<Location, Hologram> locationToHologramMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -87,6 +88,7 @@ public class CustomFeatureHandler {
 		this.customMachines = new HashSet<CustomMachine>();
 		this.locationToInventoryMap = new HashMap<Location, Inventory>();
 		this.locationToTimerMap = new HashMap<Location, Timer>();
+		this.locationToHologramMap = new HashMap<Location, Hologram>();
 
 		this.dropMap = new HashMap<>();
 
@@ -474,7 +476,7 @@ public class CustomFeatureHandler {
 	public void setCustomBlockToLocation(Location location, String id) {
 		if (getCustomItemFromUUID(id) instanceof CustomMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			CustomMachine.createHologram(m.getDefaultDisplayName(), location);
+			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());
 		} else {
 			location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
@@ -506,6 +508,8 @@ public class CustomFeatureHandler {
 		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
 			getHologramAtLocation(location).delete();
 			this.locationToInventoryMap.remove(location);
+			this.locationToTimerMap.remove(location);
+			this.locationToHologramMap.remove(location);
 			// TODO: drop inventory contents
 		}
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());
