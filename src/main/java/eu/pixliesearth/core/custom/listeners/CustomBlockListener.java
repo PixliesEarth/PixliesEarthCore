@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.listeners;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
@@ -28,6 +29,7 @@ public class CustomBlockListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
+		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
 		if (event.getClickedBlock() == null) return;
 		CustomBlock id = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
 		if (id==null) return;
