@@ -494,10 +494,7 @@ public class CustomFeatureHandler {
 	}
 	// TODO: notes
 	public Hologram getHologramAtLocation(Location location) {
-		for (Hologram holo : HologramsAPI.getHolograms(getInstance())) 
-			if (holo.getLocation().distance(CustomMachine.holoLocation(location)) == 0.0)
-				return holo;
-		return null;
+		return this.locationToHologramMap.get(location);
 	}
 	/**
 	 * Called when a custom block at the location has been broken
