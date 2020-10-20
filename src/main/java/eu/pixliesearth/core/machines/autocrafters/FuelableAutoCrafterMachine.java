@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import eu.pixliesearth.core.machines.cargo.InputNode;
+import eu.pixliesearth.core.machines.cargo.OutputNode;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -64,6 +65,8 @@ public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
             boolean take = Methods.removeRequiredAmount(CustomItemUtil.getItemStackFromUUID("Pixlies:Carbon"), player.getInventory());
             if (take) {
                 fuel = 100;
+                gui.addPane(fuelPane);
+                gui.show(player);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
             } else {
                 player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
@@ -131,6 +134,67 @@ public class FuelableAutoCrafterMachine extends AutoCrafterMachine {
                                 fuel = 100;
                         }
                         break x;
+                    }
+                }
+            }
+        }
+    }
+
+    protected void update() {
+        beforeUpdate();
+        if (inventory == null) return;
+        if (fuel < 25) return;
+        if (timer != null) {
+            if (timer.getRemaining() <= 0) {
+                timer = null;
+                for (ItemStack result : wantsToCraft.results)
+                    addResult(result);
+            }
+            setProgressBar(true);
+        } else {
+            boolean matching = recipeMatching(inventory);
+            setProgressBar(matching);
+            if (matching) {
+                if (canAddResult()) {
+                    fuel =- 25;
+                    timer = new Timer(wantsToCraft.seconds * 1000);
+                    for (ItemStack ingredient : wantsToCraft.ingredients)
+                        Methods.removeRequiredAmountWithinBound(ingredient, inventory, craftSlots);
+                }
+            }
+        }
+        int radius = 1;
+        final Block block = location.getBlock();
+        boolean stop = false;
+        x:
+        for (int x = -(radius); x <= radius; x++) {
+            for (int z = -(radius); z <= radius; z++) {
+                final Block relative = block.getRelative(x, 0, z);
+                if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof InputNode) {
+                    InputNode in = (InputNode) instance.getUtilLists().machines.get(relative.getLocation());
+                    if (timer == null) {
+                        for (ItemStack ingredient : wantsToCraft.ingredients) {
+                            boolean take = in.takeItem(ingredient);
+                            if (take) {
+                                for (int i : craftSlots) {
+                                    if (inventory.getItem(i) != null) continue;
+                                    inventory.setItem(i, ingredient);
+                                    stop = true;
+                                    break x;
+                                }
+                                if (!stop) in.addItem(ingredient);
+                            }
+                        }
+                    }
+                }
+                if (instance.getUtilLists().machines.containsKey(relative.getLocation()) && instance.getUtilLists().machines.get(relative.getLocation()) instanceof OutputNode) {
+                    OutputNode out = (OutputNode) instance.getUtilLists().machines.get(relative.getLocation());
+                    for (int i : resultSlots) {
+                        if (inventory.getItem(i) == null) continue;
+                        boolean add = out.addItem(inventory.getItem(i));
+                        if (!add) break;
+                        inventory.clear(i);
+                        stop = true;
                     }
                 }
             }
