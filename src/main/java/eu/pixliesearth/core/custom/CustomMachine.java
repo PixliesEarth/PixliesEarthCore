@@ -10,6 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -115,6 +116,17 @@ public class CustomMachine extends CustomBlock {
 			addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 			addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 		}}.build();
+	}
+	/**
+	 * Called when the custom block is interacted with
+	 * 
+	 * @param event The {@link PlayerInteractEvent} that interacted with the block
+	 * @return If the event should be cancelled
+	 */
+	@Override
+	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
+		open(event.getPlayer(), event.getClickedBlock().getLocation());
+		return false;
 	}
 	/**
 	 * Sets the provided {@link Location} to a more optimal {@link Location} and returns it
