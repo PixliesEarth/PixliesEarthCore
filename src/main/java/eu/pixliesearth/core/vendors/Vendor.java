@@ -2,6 +2,7 @@ package eu.pixliesearth.core.vendors;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.machines.Machine;
@@ -14,6 +15,11 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.bukkit.Material.HEART_OF_THE_SEA;
 
 @Data
 public class Vendor {
@@ -69,10 +75,10 @@ public class Vendor {
             }), 4, 5);
         }
 
-        StaticPane itemsPane = new StaticPane(1, 1, 7, 4);
+        PaginatedPane itemsPane = new PaginatedPane(1, 1, 7, 4);
 
-        int x = 0;
-        int y = 0;
+        List<GuiItem> guiItems = new ArrayList<>();
+
         for (ItemStack item : items) {
             ItemBuilder builder = new ItemBuilder(item);
             builder.addLoreLine(getBuyPriceFromItem(item) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem(item) : "§c§oUnpurchasable");
@@ -81,12 +87,8 @@ public class Vendor {
             builder.addLoreLine("§f§lLEFT §7Click to buy");
             builder.addLoreLine("§f§lRIGHT §7Click to sell");
             item = builder.build();
-            if (x + 1 > 7) {
-                x = 0;
-                y++;
-            }
             ItemStack finalItem = item;
-            itemsPane.addItem(new GuiItem(item, event -> {
+            guiItems.add(new GuiItem(item, event -> {
                 event.setCancelled(true);
                 if (event.isLeftClick() && getBuyPriceFromItem(finalItem) != null) {
                     boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile);
@@ -97,10 +99,29 @@ public class Vendor {
                 } else {
                     player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                 }
-            }), x, y);
-            x++;
+            }));
         }
 
+        itemsPane.populateWithGuiItems(guiItems);
+
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.addItem(new GuiItem(new ItemBuilder(HEART_OF_THE_SEA).setDisplayName("§b§lNext Page").build(), event -> {
+            event.setCancelled(true);
+            try {
+                itemsPane.setPage(itemsPane.getPage() + 1);
+                gui.addPane(itemsPane);
+                gui.show(player);
+            } catch (Exception ignore) { }
+        }), 8, 0);
+        hotBar.addItem(new GuiItem(new ItemBuilder(HEART_OF_THE_SEA).setDisplayName("§b§lLast Page").build(), event -> {
+            event.setCancelled(true);
+            try {
+                itemsPane.setPage(itemsPane.getPage() - 1);
+                gui.addPane(itemsPane);
+                gui.show(player);
+            } catch (Exception ignore) { }
+        }), 0, 0);
+        gui.addPane(hotBar);
         gui.addPane(outline);
         gui.addPane(itemsPane);
 
