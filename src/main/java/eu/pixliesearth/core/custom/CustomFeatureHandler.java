@@ -503,12 +503,13 @@ public class CustomFeatureHandler {
 	 * @param location The {@link Location} of the block that has been broken
 	 */
 	public void removeCustomBlockFromLocation(Location location) {
+		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
+			getHologramAtLocation(location).delete();
+			this.locationToInventoryMap.remove(location);
+			// TODO: drop inventory contents
+		}
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());
 		this.locationToUUIDMap.remove(location);
-		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
-			this.locationToInventoryMap.remove(location);
-			// TODO: Drop inventory
-		}
 	}
 	// TODO: notes
 	public Set<CustomRecipe> getRecipesFromUUID(String id) {
