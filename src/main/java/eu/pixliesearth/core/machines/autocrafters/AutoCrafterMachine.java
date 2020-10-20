@@ -135,22 +135,21 @@ public class AutoCrafterMachine extends Machine {
         beforeUpdate();
         if (inventory == null) return;
         if (timer != null) {
-            if (timer.getRemaining() <= 0) {
+            if (timer.isEnded()) {
                 timer = null;
-                for (ItemStack result : wantsToCraft.results) {
+                for (ItemStack result : wantsToCraft.results)
                     addResult(result);
-                }
             }
             setProgressBar(true);
         } else {
             boolean matching = recipeMatching(inventory);
+            System.out.println("Recipe matching: " + matching);
             setProgressBar(matching);
             if (matching) {
                 if (canAddResult()) {
                     timer = new Timer(wantsToCraft.seconds * 1000);
-                    for (ItemStack ingredient : wantsToCraft.ingredients) {
+                    for (ItemStack ingredient : wantsToCraft.ingredients)
                         Methods.removeRequiredAmountWithinBound(ingredient, inventory, craftSlots);
-                    }
                 }
             }
         }
@@ -322,7 +321,7 @@ public class AutoCrafterMachine extends Machine {
 
     protected boolean canAddResult() {
         for (int i : resultSlots)
-            if (inventory.getItem(i) == null) return true;
+            if (inventory.getItem(i) == null || inventory.getItem(i).getType() == AIR) return true;
         return false;
     }
 

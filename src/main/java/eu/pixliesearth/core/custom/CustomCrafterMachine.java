@@ -125,6 +125,7 @@ public class CustomCrafterMachine extends CustomMachine {
 		inv.setItem(45, getRecipeBook(r));
 		return inv;
 	}
+
 	// TODO: notes
 	public static Set<ItemStack> getItemsInCraftingSection(Inventory inv) {
 		Set<ItemStack> list = new HashSet<ItemStack>();

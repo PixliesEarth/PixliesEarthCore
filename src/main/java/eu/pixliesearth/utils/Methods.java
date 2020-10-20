@@ -212,22 +212,20 @@ public class Methods {
     }
 
     public static boolean removeRequiredAmount(ItemStack item, final Inventory inventory) {
-        boolean found = false;
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack value = inventory.getItem(i);
             if (value == null) continue;
             if (!value.isSimilar(item)) continue;
             if (value.getAmount() != 0) {
-                if (value.getAmount() == item.getAmount()) inventory.clear(i);
-                else {
+                if (value.getAmount() == item.getAmount()) { inventory.clear(i);
+                } else {
                     value.setAmount(value.getAmount() - item.getAmount());
                     inventory.setItem(i, value);
-                    found = true;
                 }
-                break;
+                return true;
             }
         }
-        return found;
+        return false;
     }
 
     public static void removeRequiredAmountWithinBound(ItemStack item, final Inventory inventory, List<Integer> slots) {
