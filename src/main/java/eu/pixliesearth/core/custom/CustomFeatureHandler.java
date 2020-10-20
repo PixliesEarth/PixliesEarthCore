@@ -505,6 +505,7 @@ public class CustomFeatureHandler {
 			getHologramAtLocation(location).delete();
 			this.locationToInventoryMap.remove(location);
 			this.locationToTimerMap.remove(location);
+			getHologramAtLocation(location).delete();
 			this.locationToHologramMap.remove(location);
 			// TODO: drop inventory contents
 		}
