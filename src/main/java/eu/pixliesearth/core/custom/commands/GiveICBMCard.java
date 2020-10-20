@@ -59,6 +59,7 @@ public class GiveICBMCard extends CustomCommand {
 		tags.addTag("r", args[3], NBTTagType.STRING);
 		tags.addTag("l", args[4], NBTTagType.STRING);
 		commandsender.sendMessage("§rGave the player §a"+p.getDisplayName()+"§r a §a"+c.getDefaultDisplayName()+"§r(§a"+c.getUUID()+"§r) with the stats Explosive: §a"+args[1]+"§r, PlayerDamage: §a"+args[2]+"§r, Range: §a"+args[3]+"§r, Launchtime: §a"+args[4]);
+		p.getInventory().addItem(NBTUtil.addTagsToItem(itemStack, tags));
 		return true;
 	}
 	
