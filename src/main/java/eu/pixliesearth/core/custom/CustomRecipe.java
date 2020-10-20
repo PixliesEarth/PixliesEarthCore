@@ -51,6 +51,10 @@ public class CustomRecipe {
 		return map;
 	}
 	
+	public Long getCraftTime() {
+		return null;
+	}
+	
 	public Map<String, Integer> getAsUUIDToAmountMap() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		for (Entry<Integer, String> entry : getContentsList().entrySet()) {

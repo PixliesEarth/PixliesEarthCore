@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -55,14 +56,125 @@ public class CustomCrafterMachine extends CustomMachine {
 		if (is==null) {
 			player.openInventory(i);
 		} else if (!isUnclickable(is)) {
-			String id = CustomItemUtil.getUUIDFromItemStack(is);
-			CustomRecipe r = getRecipeFromUUID(id);
-			Inventory inv = getInventory2(r);
-			player.openInventory(inv);
-			CustomFeatureLoader.getLoader().getHandler().setInventoryFromLocation(location, inv);
+			if (is.getType().equals(Material.BARRIER)) {
+				Inventory inv = getInventory();
+				player.openInventory(inv);
+				CustomFeatureLoader.getLoader().getHandler().setInventoryFromLocation(location, inv);
+			} else {
+				String id = CustomItemUtil.getUUIDFromItemStack(is);
+				CustomRecipe r = getRecipeFromUUID(id);
+				Inventory inv = getInventory2(r);
+				player.openInventory(inv);
+				CustomFeatureLoader.getLoader().getHandler().setInventoryFromLocation(location, inv);
+			}
 		} else {
 			player.openInventory(i);
 		}
+	}
+	// TODO: notes
+	@Override
+	public void onTick(Location loc, Inventory inv, Timer timer) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
+			CustomRecipe r = getRecipeFromUUID(CustomItemUtil.getUUIDFromItemStack(inv.getItem(49)));
+			if (timer==null) { // No timer
+				if (r.getCraftTime()==null) {
+					craft(loc, inv, r);
+				} else {
+					h.registerTimer(loc, new Timer(r.getCraftTime()));
+				}
+			} else {
+				if (timer.hasExpired()) { // Timer ended
+					h.unregisterTimer(loc);
+					craft(loc, inv, r);
+				} else {
+					// Do nothing as we want to do stuff when timer has ended
+				}
+			}
+		}
+	}
+	// TODO: notes
+	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
+		Set<ItemStack> items = getItemsInCraftingSection(inv);
+		Map<String, Integer> m = new HashMap<String, Integer>();
+		for (ItemStack is : items) {
+			Integer i = m.get(CustomItemUtil.getUUIDFromItemStack(is));
+			if (i==null || i==0) {
+				m.put(CustomItemUtil.getUUIDFromItemStack(is), is.getAmount());
+			} else {
+				m.remove(CustomItemUtil.getUUIDFromItemStack(is));
+				m.put(CustomItemUtil.getUUIDFromItemStack(is), i+is.getAmount());
+			}
+		}
+		Map<String, Integer> m2 = r.getAsUUIDToAmountMap(); // Recipe map
+		Map<String, Integer> m3 = new HashMap<String, Integer>(); // Left over items
+		for (Entry<String, Integer> entry : m.entrySet()) {
+			Integer i = m2.get(entry.getKey());
+			if (i==null || i==0) {
+				return false; // Don't have the materials to craft it
+			} else {
+				if (entry.getValue()>i) return false; // Don't have the materials to craft it
+				m.remove(entry.getKey());
+				m2.remove(entry.getKey());
+				m3.put(entry.getKey(), i-entry.getValue());
+			}
+		}
+		for (Entry<String, Integer> entry : m2.entrySet()) 
+			m3.put(entry.getKey(), entry.getValue());
+		setMapToCraftSlots(loc, inv, m3); // Give extras back
+		addToResultSlots(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
+		return true;
+	}
+	
+	public void setMapToCraftSlots(Location loc, Inventory inv, Map<String, Integer> map) {
+		for (int i : craftSlots) 
+			inv.setItem(i, new ItemStack(MinecraftMaterial.AIR.getMaterial()));
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			if (entry.getValue()>64) {
+				int a = entry.getValue();
+				while (a!=0) {
+					if (entry.getValue()>64) {
+						int i2 = getNextFreeSlotInCrafting(inv);
+						if (i2==-1) 
+							loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
+						else 
+							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
+						a -= 64; // decrease the integer a by the amount given
+					} else {
+						int i2 = getNextFreeSlotInCrafting(inv);
+						if (i2==-1) 
+							loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(a).build());
+						else 
+							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(a).build());
+						a = 0;
+					}
+				}
+			} else {
+				int i2 = getNextFreeSlotInCrafting(inv);
+				if (i2==-1) 
+					loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(entry.getValue()).build());
+				else 
+					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(entry.getValue()).build());
+			}
+		}
+	}
+	
+	public int getNextFreeSlotInCrafting(Inventory inv) {
+		for (int i : craftSlots) 
+			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(Material.AIR)) 
+				return i;
+		return -1;
+	}
+	
+	public boolean addToResultSlots(Location loc, Inventory inv, ItemStack is) {
+		for (int i : resultSlots) {
+			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(Material.AIR)) {
+				inv.setItem(i, is);
+				return true;
+			}
+		}
+		loc.getWorld().dropItemNaturally(loc, is);
+		return false;
 	}
 	/**
 	 * @return The {@link CustomCrafterMachine}'s {@link Inventory}
@@ -123,6 +235,8 @@ public class CustomCrafterMachine extends CustomMachine {
 		for (int i : resultSlots)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(MinecraftMaterial.AIR.getUUID()));
 		inv.setItem(45, getRecipeBook(r));
+		inv.setItem(53, new ItemBuilder(MinecraftMaterial.BARRIER.getMaterial()).setDisplayName("§cClose").addNBTTag("EXTRA", "CLOSE", NBTTagType.STRING).build()); // Close item (back)
+		inv.setItem(49, CustomItemUtil.getItemStackFromUUID(r.getResultUUID()));
 		return inv;
 	}
 
@@ -165,10 +279,16 @@ public class CustomCrafterMachine extends CustomMachine {
 		// Main GUI select recipe
 		if (tags.getString("EXTRA")!=null) {
 			if (tags.getString("EXTRA").equalsIgnoreCase("RECIPE")) {
-				String id = CustomItemUtil.getUUIDFromItemStack(is);
-				CustomRecipe r = getRecipeFromUUID(id);
-				event.getWhoClicked().openInventory(getInventory2(r));
+				//String id = CustomItemUtil.getUUIDFromItemStack(is);
+				//CustomRecipe r = getRecipeFromUUID(id);
+				//event.getWhoClicked().openInventory(getInventory2(r));
+				event.getWhoClicked().closeInventory();
 				event.getInventory().setItem(0, is);
+				return true;
+			} else if (tags.getString("EXTRA").equalsIgnoreCase("CLOSE")) {
+				//event.getWhoClicked().openInventory(getInventory());
+				event.getWhoClicked().closeInventory();
+				event.getInventory().setItem(0, new ItemStack(Material.BARRIER));
 				return true;
 			}
 		}

@@ -424,7 +424,7 @@ public class CustomFeatureHandler {
 				for (CustomMachine m : getCustomMachines())
 					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
 						Inventory i = m.getInventory();
-						CustomMachine.createHologram(m.getDefaultDisplayName(), location);
+						this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 						this.locationToInventoryMap.put(location, i);
 						m.loadFromSaveData(i, location, map);
 					}
