@@ -77,6 +77,7 @@ public class CustomCrafterMachine extends CustomMachine {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
 			CustomRecipe r = getRecipeFromUUID(CustomItemUtil.getUUIDFromItemStack(inv.getItem(49)));
+			if (r==null) return;
 			if (timer==null) { // No timer
 				if (r.getCraftTime()==null) {
 					craft(loc, inv, r);
