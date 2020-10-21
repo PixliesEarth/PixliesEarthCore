@@ -95,14 +95,20 @@ public class CustomFeatureHandler {
 
 		this.vendorMap = new HashMap<>();
 		
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), new Runnable() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
 			@SneakyThrows
 			@Override
 			public void run() {
-				for (Tickable t : getTickables()) 
-					t.onTick();
+				Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), new Runnable() {
+					@SneakyThrows
+					@Override
+					public void run() {
+						for (Tickable t : getTickables()) 
+							t.onTick();
+					}
+				}, 1L, 1L);
 			}
-		}, 1L, 1L);
+		}, 	400L);
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
@@ -414,7 +420,7 @@ public class CustomFeatureHandler {
 	}
 	// TODO: notes
 	public void loadMachinesFromFiles() {
-		FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/machines/");
+		FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"+"/machines/");
 		for (FileBase f : d.getFilesInDirectory()) {
 			DataFile df = new DataFile(f.getFilePath(), f.getFileName(), f.getFileExtension());
 			try {
@@ -502,10 +508,14 @@ public class CustomFeatureHandler {
 	 */
 	public void removeCustomBlockFromLocation(Location location) {
 		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
-			getHologramAtLocation(location).delete();
+			Hologram h = getHologramAtLocation(location);
+			Hologram h2 = getHologramAtLocation(location);
+			if (h!=null)
+				h.delete();
+			if (h2!=null)
+				h2.delete();
 			this.locationToInventoryMap.remove(location);
 			this.locationToTimerMap.remove(location);
-			getHologramAtLocation(location).delete();
 			this.locationToHologramMap.remove(location);
 			// TODO: drop inventory contents
 		}

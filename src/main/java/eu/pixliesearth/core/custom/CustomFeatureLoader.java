@@ -46,7 +46,8 @@ public class CustomFeatureLoader {
 	 */
 	public CustomFeatureLoader(JavaPlugin plugin, String path) {
 		loader = this;
-		new FileDirectory(plugin.getDataFolder().getAbsolutePath(), "/customblocks/"); // Load file directory
+		new FileDirectory(plugin.getDataFolder().getAbsolutePath(), "/customblocks/machines/"); // Load file directories
+		//new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"+"/machines/"); // Load file directory
 		this.instance = plugin;
 		load(path);
 	}
@@ -66,6 +67,7 @@ public class CustomFeatureLoader {
 		loadQuests(path);
 		loadMachines(path);
 		getHandler().loadCustomBlocksFromFile();
+		getHandler().loadMachinesFromFiles();
 		loadVendors(path);
 	}
 	/**
@@ -73,6 +75,7 @@ public class CustomFeatureLoader {
 	 */
 	public void save() {
 		getHandler().saveCustomBlocksToFile();
+		getHandler().saveMachinesToFiles();
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			((CustomListener)customListener).onServerShutdown(this, getHandler());
 	}

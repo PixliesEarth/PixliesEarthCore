@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,7 +53,11 @@ public class CustomCrafterMachine extends CustomMachine {
 	@Override
 	public void open(Player player, Location location) {
 		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
-		ItemStack is = i.getItem(0);
+		if (i==null) {
+			player.sendMessage("This machine has no inventory!");
+			return;
+		}
+		ItemStack is = i.getItem(47);
 		if (is==null) {
 			player.openInventory(i);
 		} else if (!isUnclickable(is)) {
@@ -74,6 +79,7 @@ public class CustomCrafterMachine extends CustomMachine {
 	// TODO: notes
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
+		if (inv==null || loc==null) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
 			CustomRecipe r = getRecipeFromUUID(CustomItemUtil.getUUIDFromItemStack(inv.getItem(49)));
@@ -97,7 +103,8 @@ public class CustomCrafterMachine extends CustomMachine {
 	// TODO: notes
 	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
 		Set<ItemStack> items = getItemsInCraftingSection(inv);
-		Map<String, Integer> m = new HashMap<String, Integer>();
+		if (items == null || items.isEmpty()) return false;
+		Map<String, Integer> m = new ConcurrentHashMap<String, Integer>();
 		for (ItemStack is : items) {
 			Integer i = m.get(CustomItemUtil.getUUIDFromItemStack(is));
 			if (i==null || i==0) {
@@ -107,10 +114,13 @@ public class CustomCrafterMachine extends CustomMachine {
 				m.put(CustomItemUtil.getUUIDFromItemStack(is), i+is.getAmount());
 			}
 		}
+		if (m==null || m.isEmpty()) return false;
 		Map<String, Integer> m2 = r.getAsUUIDToAmountMap(); // Recipe map
-		Map<String, Integer> m3 = new HashMap<String, Integer>(); // Left over items
-		for (Entry<String, Integer> entry : m.entrySet()) {
-			Integer i = m2.get(entry.getKey());
+		if (m2==null || m2.isEmpty()) return false;
+		Map<String, Integer> m3 = new ConcurrentHashMap<String, Integer>(); // Left over items
+		for (Entry<String, Integer> entry : m2.entrySet()) {
+			if (!m.containsKey(entry.getKey())) return false;
+			Integer i = m.get(entry.getKey());
 			if (i==null || i==0) {
 				return false; // Don't have the materials to craft it
 			} else {
@@ -120,7 +130,7 @@ public class CustomCrafterMachine extends CustomMachine {
 				m3.put(entry.getKey(), i-entry.getValue());
 			}
 		}
-		for (Entry<String, Integer> entry : m2.entrySet()) 
+		for (Entry<String, Integer> entry : m.entrySet()) 
 			m3.put(entry.getKey(), entry.getValue());
 		setMapToCraftSlots(loc, inv, m3); // Give extras back
 		addToResultSlots(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
@@ -129,7 +139,7 @@ public class CustomCrafterMachine extends CustomMachine {
 	
 	public void setMapToCraftSlots(Location loc, Inventory inv, Map<String, Integer> map) {
 		for (int i : craftSlots) 
-			inv.setItem(i, new ItemStack(MinecraftMaterial.AIR.getMaterial()));
+			inv.clear(i);
 		for (Entry<String, Integer> entry : map.entrySet()) {
 			if (entry.getValue()>64) {
 				int a = entry.getValue();
@@ -174,7 +184,12 @@ public class CustomCrafterMachine extends CustomMachine {
 				return true;
 			}
 		}
-		loc.getWorld().dropItemNaturally(loc, is);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				loc.getWorld().dropItemNaturally(loc, is);
+			}
+		}, 1L);
 		return false;
 	}
 	/**
@@ -237,7 +252,7 @@ public class CustomCrafterMachine extends CustomMachine {
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(MinecraftMaterial.AIR.getUUID()));
 		inv.setItem(45, getRecipeBook(r));
 		inv.setItem(53, new ItemBuilder(MinecraftMaterial.BARRIER.getMaterial()).setDisplayName("§cClose").addNBTTag("EXTRA", "CLOSE", NBTTagType.STRING).build()); // Close item (back)
-		inv.setItem(49, CustomItemUtil.getItemStackFromUUID(r.getResultUUID()));
+		inv.setItem(49, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).setAmount(1).addNBTTag("EXTRA", "RECIPERESULTITEM", NBTTagType.STRING).build());
 		return inv;
 	}
 
@@ -245,7 +260,9 @@ public class CustomCrafterMachine extends CustomMachine {
 	public static Set<ItemStack> getItemsInCraftingSection(Inventory inv) {
 		Set<ItemStack> list = new HashSet<ItemStack>();
 		for (int i : craftSlots) 
-			if (inv.getItem(i)!=null || !inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+				continue;
+			else 
 				list.add(inv.getItem(i));
 		return list;
 	}
@@ -284,12 +301,14 @@ public class CustomCrafterMachine extends CustomMachine {
 				//CustomRecipe r = getRecipeFromUUID(id);
 				//event.getWhoClicked().openInventory(getInventory2(r));
 				event.getWhoClicked().closeInventory();
-				event.getInventory().setItem(0, is);
+				event.getInventory().setItem(47, is);
 				return true;
 			} else if (tags.getString("EXTRA").equalsIgnoreCase("CLOSE")) {
 				//event.getWhoClicked().openInventory(getInventory());
 				event.getWhoClicked().closeInventory();
-				event.getInventory().setItem(0, new ItemStack(Material.BARRIER));
+				event.getInventory().setItem(47, new ItemStack(Material.BARRIER));
+				return true;
+			} else if (tags.getString("EXTRA").equalsIgnoreCase("RECIPERESULTITEM")) {
 				return true;
 			}
 		}

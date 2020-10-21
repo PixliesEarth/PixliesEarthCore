@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.pixliesearth.nations.entities.nation.Era;
 
@@ -56,7 +57,7 @@ public class CustomRecipe {
 	}
 	
 	public Map<String, Integer> getAsUUIDToAmountMap() {
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Integer> map = new ConcurrentHashMap<String, Integer>();
 		for (Entry<Integer, String> entry : getContentsList().entrySet()) {
 			Integer i = map.get(entry.getValue());
 			if (i==null) {
