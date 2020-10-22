@@ -69,6 +69,7 @@ public enum Lang {
     PLAYER_ALREADY_BLOCKED(Lang.EARTH, new HashMap<>()),
     BLOCKED_PLAYER(Lang.EARTH, new HashMap<>()),
     PLAYER_BLOCKED_YOU(Lang.EARTH, new HashMap<>()),
+    PLAYER_UNBLOCKED(Lang.EARTH, new HashMap<>()),
     YOU_CANT_BLOCK_YOURSELF(Lang.EARTH, new HashMap<>()),
     NICKNAME_TURNED_OFF(Lang.EARTH, new HashMap<>()),
     CANT_NICK_LIKE_A_PLAYER(Lang.EARTH, new HashMap<>()),
