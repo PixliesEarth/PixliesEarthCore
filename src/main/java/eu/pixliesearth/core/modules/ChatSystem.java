@@ -43,7 +43,7 @@ public class ChatSystem implements Listener, Module {
             if (instance.getUtilLists().nationDisbander.containsKey(player.getUniqueId())) {
                 if (event.getMessage().equalsIgnoreCase("cancel")) {
                     event.setCancelled(true);
-                    player.sendMessage("§bNATION §8| §7Nation disband process §ccancelled§7.");
+                    player.sendMessage(Lang.NATION + " §8| §7Nation disband process §ccancelled§7.");
                     instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
                     return;
                 } else if (event.getMessage().equalsIgnoreCase("confirm")) {
@@ -54,8 +54,8 @@ public class ChatSystem implements Listener, Module {
                         Bukkit.getPluginManager().callEvent(disbandEvent);
                         if (!disbandEvent.isCancelled()) {
                             nation.remove();
-                            player.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
-                            Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
+                            player.sendMessage(Lang.NATION + " §8| §7You disbanded §b" + nation.getName());
+                            Bukkit.broadcastMessage(Lang.NATION + " §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");
                             instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
                         }
                     });

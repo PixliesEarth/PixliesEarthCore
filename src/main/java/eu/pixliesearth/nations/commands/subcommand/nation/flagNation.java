@@ -39,11 +39,7 @@ public class flagNation extends SubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = instance.getProfile(player.getUniqueId());
-            if (profile.isStaff()) {
-                if (args.length < 1) {
-                    Lang.WRONG_USAGE_NATIONS.send(player, "%USAGE%;/n flag <FLAG> [NATION]");
-                    return false;
-                }
+            if (profile.isStaff() && args.length == 2) {
                 Nation nation = Nation.getByName(args[1]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(player);

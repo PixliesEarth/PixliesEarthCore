@@ -88,6 +88,10 @@ public class joinNation extends SubCommand {
                     return false;
                 }
                 UUID targetUUID2 = Bukkit.getPlayerUniqueId(args[1]);
+                if (targetUUID2 == null) {
+                    Lang.PLAYER_DOES_NOT_EXIST.send(sender);
+                    return false;
+                }
                 Profile target2 = instance.getProfile(targetUUID2);
                 target2.getInvites().remove(nation.getNationId());
                 target2.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get(args[2])));

@@ -40,7 +40,6 @@ public class claimNation extends SubCommand {
         returner.put("one", 1);
         returner.put("here", 1);
         returner.put("fill", 1);
-        returner.put("line", 1);
         returner.put("all", 1);
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 2);
