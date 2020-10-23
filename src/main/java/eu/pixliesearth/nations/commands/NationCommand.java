@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -72,29 +73,29 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-    	
-    	List<String> array = new ArrayList<String>();
-    	
-    	if (args.length<2) {
-            array.addAll(getSubCommandAliases().keySet());
-    		Collections.sort(array);
-        	return array;
-    	} else {
-    		String arg = args[0];
-    		for (SubCommand c : getSubCommands()) {
-        		for (String s : c.aliases()) 
-        			if (s.equals(arg)) {
-        				if (c.autoCompletion() == null) 
-        					return array;
-        				for (Entry<String, Integer> entry: c.autoCompletion().entrySet()) 
-        					if (entry.getValue() == (args.length+1))
-        						array.add(entry.getKey());
-        				return array;
-        			}
-        	}
-    		array.add("?");
-    		return array;
-    	}
+        final List<String> completions = new ArrayList<>();
+
+        Map<Integer, Set<String>> argCompletions = new HashMap<>();
+
+        argCompletions.put(0, getSubCommandAliases().keySet());
+
+        if (args.length > 1) {
+            if (getSubCommandAliases().get(args[0]) == null)
+                return completions;
+            for (Map.Entry<String, Integer> entry : getSubCommandAliases().get(args[0]).autoCompletion().entrySet())
+                if (args.length == entry.getValue() + 1) {
+                    argCompletions.computeIfAbsent(entry.getValue(), k -> new HashSet<>());
+                    argCompletions.get(entry.getValue()).add(entry.getKey());
+                }
+        }
+
+        for (Map.Entry<Integer, Set<String>> entry : argCompletions.entrySet())
+            if (args.length == entry.getKey() + 1)
+                StringUtil.copyPartialMatches(args[entry.getKey()], entry.getValue(), completions);
+
+        Collections.sort(completions);
+
+        return completions;
     }
 
     public static void sendHelp(CommandSender sender, int page) {

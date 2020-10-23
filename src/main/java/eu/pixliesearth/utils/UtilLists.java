@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UtilLists {
 
@@ -102,7 +103,7 @@ public class UtilLists {
         craftingTables = new HashMap<>();
         machines = new HashMap<>();
         openMachines = new HashMap<>();
-        waitingGuns = new HashMap<>();
+        waitingGuns = new ConcurrentHashMap<>();
     }
 
 }

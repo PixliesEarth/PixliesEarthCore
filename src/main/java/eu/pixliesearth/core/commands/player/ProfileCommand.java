@@ -3,6 +3,7 @@ package eu.pixliesearth.core.commands.player;
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
@@ -64,6 +65,17 @@ public class ProfileCommand implements CommandExecutor {
                 targetProfile.getExtras().put("dynmapMarkers", (int) targetProfile.getExtras().get("dynmapMarkers") + toAdd);
                 targetProfile.save();
                 sender.sendMessage("§aDone.");
+            } else if (args[0].equalsIgnoreCase("print")) {
+                if (sender instanceof Player && !Main.getInstance().getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
+                    return false;
+                }
+                UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
+                if (targetUUID == null || !Bukkit.getOfflinePlayer(targetUUID).hasPlayedBefore()) {
+                    Lang.PLAYER_DOES_NOT_EXIST.send(sender);
+                    return false;
+                }
+                Profile targetProfile = Main.getInstance().getProfile(targetUUID);
+                sender.sendMessage(new Gson().toJson(targetProfile));
             }
         }
         return false;

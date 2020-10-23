@@ -94,6 +94,13 @@ public class NationChunk {
         return Nation.getById(c.getNationId());
     }
 
+    public static String getNationId(Chunk chunk) {
+        NationChunk c = get(chunk);
+        if (c == null)
+            return null;
+        return c.getNationId();
+    }
+
     public static Nation getNationData(String world, int x, int z) {
         NationChunk c = get(world, x, z);
         if (c == null)

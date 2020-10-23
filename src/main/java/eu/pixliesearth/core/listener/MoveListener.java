@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.Objects;
+
 public class MoveListener implements Listener {
 
     private static final Main instance = Main.getInstance();
@@ -63,10 +65,9 @@ public class MoveListener implements Listener {
                         NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
                     }
                 }
-                // CHUNK TITLES
                 Nation fn = NationChunk.getNationData(fc);
                 Nation tn = NationChunk.getNationData(tc);
-                if (fn != tn) {
+                if (!Objects.equals(fn, tn)) {
                     if (tn == null) {  // WILDERNESS
                         player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
                     } else {
