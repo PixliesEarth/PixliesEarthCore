@@ -481,7 +481,11 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
-		if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
+		if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			this.locationToInventoryMap.put(location, m.getInventory());
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
 			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());

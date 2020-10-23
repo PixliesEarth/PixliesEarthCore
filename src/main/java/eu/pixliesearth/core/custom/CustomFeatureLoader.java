@@ -86,6 +86,8 @@ public class CustomFeatureLoader {
 			loadMachine(clazz.newInstance());
 		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) 
 			loadMachine(clazz.newInstance());
+		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) 
+			loadMachine(clazz.newInstance());
 	}
 	// TODO: notes
 	public void loadMachine(CustomMachine customMachine) {
@@ -118,6 +120,8 @@ public class CustomFeatureLoader {
 	public void loadCustomBlocks(String path) {
 		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) 
 			loadCustomBlock(clazz.newInstance());
+		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) 
+			loadMachine(clazz.newInstance());
 	}
 	/**
 	 * Loads the {@link CustomBlock} provided
@@ -150,6 +154,8 @@ public class CustomFeatureLoader {
 		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class))
 			loadCustomItem(clazz.newInstance());
 		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class))
+			loadCustomItem(clazz.newInstance());
+		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class))
 			loadCustomItem(clazz.newInstance());
 	}
 
