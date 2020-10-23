@@ -105,8 +105,10 @@ public class CustomFeatureHandler {
 					@SneakyThrows
 					@Override
 					public void run() {
-						for (Tickable t : getTickables()) 
+						for (Tickable t : getTickables()) {
+							if (t==null) continue;
 							t.onTick();
+						}
 					}
 				}, 1L, 1L);
 			}
