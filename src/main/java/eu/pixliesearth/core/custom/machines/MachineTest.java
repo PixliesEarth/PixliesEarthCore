@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.CustomCrafterMachine;
+import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 
-public class MachineTest extends CustomCrafterMachine {
+public class MachineTest extends CustomEnergyCrafterMachine {
 	
 	public MachineTest() {
 		
@@ -15,7 +15,7 @@ public class MachineTest extends CustomCrafterMachine {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Test Machine";
+        return "§6Test Machine (Energy)";
     }
 
     @Override

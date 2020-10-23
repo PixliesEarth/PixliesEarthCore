@@ -22,12 +22,15 @@ public class TESTRECIPE extends CustomRecipe {
     public int getResultAmount() {
         return 1;
     }
+    
+    @Override
+    public Double getEnergyCost() {
+		return 5D;
+	}
 
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Arsenic_Bronze_Ingot");
-        map.put(1, "Pixlies:Tin_Ingot");
         map.put(2, "Pixlies:Rubber");
         return map;
     }

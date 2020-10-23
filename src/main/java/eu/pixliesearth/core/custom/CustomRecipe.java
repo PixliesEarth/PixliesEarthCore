@@ -56,6 +56,10 @@ public class CustomRecipe {
 		return null;
 	}
 	
+	public Double getEnergyCost() {
+		return null;
+	}
+	
 	public Map<String, Integer> getAsUUIDToAmountMap() {
 		Map<String, Integer> map = new ConcurrentHashMap<String, Integer>();
 		for (Entry<Integer, String> entry : getContentsList().entrySet()) {
