@@ -62,6 +62,7 @@ public class CustomFeatureHandler {
 	private final HashMap<Location, Inventory> locationToInventoryMap;
 	private final HashMap<Location, Timer> locationToTimerMap;
 	private final HashMap<Location, Hologram> locationToHologramMap;
+	private final HashMap<Location, Double> locationToPowerMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -88,6 +89,7 @@ public class CustomFeatureHandler {
 		this.locationToInventoryMap = new HashMap<Location, Inventory>();
 		this.locationToTimerMap = new HashMap<Location, Timer>();
 		this.locationToHologramMap = new HashMap<Location, Hologram>();
+		this.locationToPowerMap = new HashMap<Location, Double>();
 
 		this.dropMap = new HashMap<>();
 
@@ -398,18 +400,18 @@ public class CustomFeatureHandler {
 			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
 				try {
 					DataFile f = new DataFile(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/machines/", Integer.toString(i));
-					if (((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()))==null) {
+					if (((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()))==null) {
 						Map<String, String> map = new HashMap<String, String>();
 						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
 						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
 						f.saveDataMap(map);
 					} else {
-						Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+						Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
 						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
 						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
 						f.saveDataMap(map);
 					}
-					f.saveDataMap(((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey())));
+					f.saveDataMap(((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey())));
 				} catch (IOException e) {
 					System.err.println("Unable to save the machine "+getCustomBlockFromLocation(entry.getKey()).getUUID()+" due to a IOException");
 				} finally {
@@ -479,7 +481,12 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
-		if (getCustomItemFromUUID(id) instanceof CustomMachine) {
+		if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
+			this.locationToInventoryMap.put(location, m.getInventory());
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
 			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());
@@ -547,5 +554,22 @@ public class CustomFeatureHandler {
 	public void registerQuest(CustomQuest customQuest) {
 		customQuests.add(customQuest);
 	}
-
+	// TODO: notes
+	public Double getPowerAtLocation(Location location) {
+		return this.locationToPowerMap.get(location);
+	}
+	// TODO: notes
+	public void addPowerToLocation(Location location, double amount) {
+		Double d = getPowerAtLocation(location);
+		if (d==null) {
+			this.locationToPowerMap.put(location, amount);
+		} else {
+			this.locationToPowerMap.remove(location);
+			this.locationToPowerMap.put(location, d+amount);
+		}
+	}
+	// TODO: notes
+	public void removePowerFromLocation(Location location, double amount) {
+		addPowerToLocation(location, -amount);
+	}
 }

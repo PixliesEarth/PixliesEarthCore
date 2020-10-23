@@ -274,7 +274,7 @@ public class CustomCrafterMachine extends CustomMachine {
 	}
 	// TODO: notes
 	@Override
-	public HashMap<String, String> getSaveData(Inventory inventory, Timer timer) {
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		if (timer!=null) {
 			map.put("TIMEREX", Long.toString(timer.getExpiry()));

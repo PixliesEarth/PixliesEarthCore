@@ -69,12 +69,14 @@ public class CustomMachine extends CustomBlock {
 	public String getInventoryTitle() {
 		return getDefaultDisplayName();
 	}
-	// TODO: notes
+	/**
+	 * Called every Minecraft Tick
+	 */
 	public void onTick(Location location, Inventory inventory, Timer timer) { }
 	// TODO: notes
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) { }
 	// TODO: notes
-	public HashMap<String, String> getSaveData(Inventory inventory, Timer timer) {
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
 		return null;
 	}
 	/**
