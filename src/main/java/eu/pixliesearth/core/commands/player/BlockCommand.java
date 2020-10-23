@@ -33,7 +33,7 @@ public class BlockCommand implements CommandExecutor {
         if (profile.getBlocked().contains(targetUUID.toString())) {
             profile.getBlocked().remove(targetUUID.toString());
             profile.save();
-            player.sendMessage(Lang.EARTH + "§7You just unblocked §6" + args[0] + "§7.");
+            Lang.PLAYER_UNBLOCKED.send(player, "%PLAYER%;" + args[0]);
             return false;
         }
         profile.getBlocked().add(targetUUID.toString());
