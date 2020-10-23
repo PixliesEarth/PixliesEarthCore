@@ -30,6 +30,7 @@ public class MachineTestGenerator extends CustomGeneratorMachine {
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
 		if (inv==null) return;
+		inv.setItem(getInfoSlot(), buildInfoItem(loc));
 		if (timer==null) {
 			ItemStack fuel = inv.getItem(getInputSlot());
 			if (fuel==null || fuel.getType().equals(Material.AIR)) {
@@ -42,9 +43,9 @@ public class MachineTestGenerator extends CustomGeneratorMachine {
 			if (ci == null || !(ci instanceof CustomFuel)) return;
 			CustomFuel cf = (CustomFuel)ci;
 			CustomFeatureLoader.getLoader().getHandler().registerTimer(loc, new Timer(cf.getBurnTime()));
+			inv.setItem(getBurningSlot(), new ItemBuilder(CustomItemUtil.getItemStackFromUUID(CustomItemUtil.getUUIDFromItemStack(fuel))).addNBTTag("EXTRA", "BURNING", NBTTagType.STRING).build());
 			fuel.setAmount(fuel.getAmount()-1);
 			inv.setItem(getInputSlot(), fuel);
-			inv.setItem(getBurningSlot(), new ItemBuilder(fuel).setAmount(1).addNBTTag("EXTRA", "BURNING", NBTTagType.STRING).build());
 		} else {
 			if (timer.hasExpired()) {
 				CustomFeatureLoader.getLoader().getHandler().unregisterTimer(loc);
@@ -54,7 +55,6 @@ public class MachineTestGenerator extends CustomGeneratorMachine {
 				// Do nothing
 			}
 		}
-		inv.setItem(getInfoSlot(), buildInfoItem(loc));
 	}
 	
 	public boolean InventoryClickEvent(InventoryClickEvent event) {
@@ -62,6 +62,7 @@ public class MachineTestGenerator extends CustomGeneratorMachine {
 		String s = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
 		if (s==null) return false;
 		if (s.equalsIgnoreCase("BURNING")) return true;
+		if (isUnclickable(event.getCurrentItem())) return true;
 		return false;
 	}
 	

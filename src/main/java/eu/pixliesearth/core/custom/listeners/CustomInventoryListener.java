@@ -1,12 +1,13 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.utils.NBTUtil;
-import lombok.Getter;
-import lombok.SneakyThrows;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import lombok.Getter;
+import lombok.SneakyThrows;
 /**
  * 
  * @author BradBot_1
@@ -17,14 +18,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class CustomInventoryListener extends CustomListener {
 	
-	public static @Getter String unclickableItemUUID = "Pixlies:Inventory_UnclickableGlass";
+	public static @Getter String unclickableItemUUID = "Inventory:UnclickableGlass";
 	
 	@EventHandler
     @SneakyThrows
     public void InventoryClickEvent(InventoryClickEvent event) {
 		if (event.getCurrentItem()==null || event.getCurrentItem().getType().equals(Material.AIR)) return;
-		String id = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("UUID");
+		String id = CustomItemUtil.getUUIDFromItemStack(event.getCurrentItem());
 		if (id==null) return;
-		if (id.equals(getUnclickableItemUUID())) event.setCancelled(true);
+		if (id.equalsIgnoreCase(getUnclickableItemUUID())) event.setCancelled(true);
 	}
 }

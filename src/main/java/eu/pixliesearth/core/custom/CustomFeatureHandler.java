@@ -431,13 +431,16 @@ public class CustomFeatureHandler {
 				Map<String, String> map = df.loadDataMap();
 				String[] l2 = map.get("MLOCATION").split(":");
 				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
-				for (CustomMachine m : getCustomMachines())
+				for (CustomMachine m : getCustomMachines()) {
 					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
+						if (!(m instanceof CustomEnergyBlock)) {
+							this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
+						}
 						Inventory i = m.getInventory();
-						this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 						this.locationToInventoryMap.put(location, i);
 						m.loadFromSaveData(i, location, map);
 					}
+				}
 			} catch (IOException e) {
 				System.err.println("Unable to load a machine due to a IOException");
 			} finally {
@@ -483,7 +486,12 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
-		if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
+		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
+			this.locationToInventoryMap.put(location, m.getInventory());
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
 			this.locationToInventoryMap.put(location, m.getInventory());
 			this.locationToPowerMap.put(location, 0D);
@@ -530,6 +538,7 @@ public class CustomFeatureHandler {
 			this.locationToInventoryMap.remove(location);
 			this.locationToTimerMap.remove(location);
 			this.locationToHologramMap.remove(location);
+			this.locationToPowerMap.remove(location);
 			// TODO: drop inventory contents
 		}
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());

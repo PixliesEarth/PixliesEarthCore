@@ -52,7 +52,7 @@ public class CustomEnergyBlock extends CustomMachine {
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		Location location2 = new Location(location.getWorld(), location.getBlockX(), location.getBlockZ()+1, location.getBlockZ());
+		Location location2 = new Location(location.getWorld(), location.getBlockX(), location.getBlockY()+1, location.getBlockZ());
 		Double d = h.getPowerAtLocation(location2);
 		if (d==null || d<=0 || isFull(location)) return;
 		double amountToRemove = 1;

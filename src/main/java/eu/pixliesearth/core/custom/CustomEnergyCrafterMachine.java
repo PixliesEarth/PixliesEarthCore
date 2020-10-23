@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -54,9 +55,10 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 	
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
-		if (inv==null || loc==null) return;
+		if (loc==null) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		getEnergyFromBlockAbove(loc);
+		if (inv==null) return;
 		inv.setItem(52, buildInfoItem(loc));
 		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
 			CustomRecipe r = getRecipeFromUUID(CustomItemUtil.getUUIDFromItemStack(inv.getItem(49)));
@@ -78,14 +80,18 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 		}
 	}
 	
-	public void getEnergyFromBlockAbove(Location loc) {
+	public void getEnergyFromBlockAbove(Location location) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		Location location2 = new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockZ()+1, loc.getBlockZ());
+		Location location2 = new Location(location.getWorld(), location.getBlockX(), location.getBlockY()+1, location.getBlockZ());
 		Double d = h.getPowerAtLocation(location2);
-		if (d==null || d<=0 || getContainedPower(loc)>=getCapacity()) return;
+		if (d==null || d<=0 || isFull(location)) return;
 		double amountToRemove = 1;
 		h.removePowerFromLocation(location2, amountToRemove);
-		h.addPowerToLocation(loc, amountToRemove);
+		h.addPowerToLocation(location, amountToRemove);
+	}
+	
+	public boolean isFull(Location loc) {
+		return getContainedPower(loc)>=getCapacity();
 	}
 	
 	@Override
@@ -93,9 +99,7 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		if (r.getEnergyCost()==null) {
 			// Do nothing as it does not cost power to craft
-		} else if (getContainedPower(loc)>=r.getEnergyCost()) {
-			h.removePowerFromLocation(loc, r.getEnergyCost());
-		} else {
+		} else if (!(getContainedPower(loc)>=r.getEnergyCost())) {
 			return false;
 		}
 		Set<ItemStack> items = getItemsInCraftingSection(inv);
@@ -130,7 +134,26 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 			m3.put(entry.getKey(), entry.getValue());
 		setMapToCraftSlots(loc, inv, m3); // Give extras back
 		addToResultSlots(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
+		h.removePowerFromLocation(loc, r.getEnergyCost()); // Take energy
 		return true;
+	}
+	
+	@Override
+	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
+		if (map.get("TIMEREX")!=null && map.get("TIMEREN")!=null)
+			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
+		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
+	}
+	
+	@Override
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		if (timer!=null) {
+			map.put("TIMEREX", Long.toString(timer.getExpiry()));
+			map.put("TIMEREN", Boolean.toString(timer.isEnded()));
+		}
+		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
+		return map;
 	}
 	
 	public ItemStack buildInfoItem(Location location) {
