@@ -1,5 +1,6 @@
 package eu.pixliesearth.warsystem;
 
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +16,16 @@ public class War {
     private boolean declareAble;
     private Map<String, Timer> timers;
 
-    public void justifyWarGoal() {
+    public boolean justifyWarGoal() {
+        Nation aggressor = Nation.getById(aggressorId);
+        if (!aggressor.hasNationXP(25D))
+            return false;
+
         this.timers.put("warGoalJustification", new Timer(259_200_000));
+        return true;
     }
+
+
 
     public void tick() {
         if (!declareAble) {

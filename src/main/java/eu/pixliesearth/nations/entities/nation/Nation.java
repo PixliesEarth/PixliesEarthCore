@@ -246,6 +246,10 @@ public class Nation {
 
     public Era getCurrentEra() { return Era.valueOf(era.toUpperCase()); }
 
+    public boolean hasNationXP(double amount) {
+        return xpPoints - amount > 0;
+    }
+
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
             return NationRelation.SAME;
