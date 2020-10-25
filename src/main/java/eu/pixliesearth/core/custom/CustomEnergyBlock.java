@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -115,5 +116,11 @@ public class CustomEnergyBlock extends CustomMachine {
 				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 			}}.build();
+	}
+	
+	@Override
+	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
+		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), 0D); // Register that it has energy
+		return false;
 	}
 }

@@ -10,15 +10,15 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class BlockSolarPanel extends CustomBlock {
+public class EnergyBlockWindTurbine3 extends CustomBlock {
 	
-	public BlockSolarPanel() {
+	public EnergyBlockWindTurbine3() {
 		
 	}
 	
 	@Override
     public Material getMaterial() {
-        return Material.DAYLIGHT_DETECTOR;
+        return Material.WHITE_CONCRETE;
     }
 
     @Override
@@ -28,17 +28,17 @@ public class BlockSolarPanel extends CustomBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Solar Panel";
+        return "§6Wind Turbine (2)";
     }
 
     @Override
     public boolean isGlowing() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isUnbreakable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -63,12 +63,12 @@ public class BlockSolarPanel extends CustomBlock {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.REDSTONE;
+        return CreativeTabs.NONE;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Solar_Panel"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Machine:Wind_Turbine_HEAD"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
     @Override
@@ -78,17 +78,17 @@ public class BlockSolarPanel extends CustomBlock {
     
 	@Override
 	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean BlockBreakEvent(BlockBreakEvent event) {
-		return false;
+		return true;
 	}
 	
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
-		return false;
+		return true;
 	}
 	
 }

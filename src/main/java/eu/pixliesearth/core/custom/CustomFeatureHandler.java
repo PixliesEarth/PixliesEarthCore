@@ -594,4 +594,8 @@ public class CustomFeatureHandler {
 	public void removePowerFromLocation(Location location, double amount) {
 		addPowerToLocation(location, -amount);
 	}
+	// TODO: notes
+	public void deletePowerFromLocation(Location location) {
+		this.locationToPowerMap.remove(location);
+	}
 }
