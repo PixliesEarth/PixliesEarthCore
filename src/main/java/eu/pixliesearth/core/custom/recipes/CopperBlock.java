@@ -1,23 +1,22 @@
 package eu.pixliesearth.core.custom.recipes;
 
+import eu.pixliesearth.core.custom.CustomRecipe;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.pixliesearth.core.custom.CustomRecipe;
+
 
 public class CopperBlock extends CustomRecipe {
-
-    @Override
+    
+    public CopperBlock() {
+        
+    }
+    
     public String getResultUUID() {
         return "Pixlies:Copper_Block";
     }
-
-    @Override
-    public int getResultAmount() {
-        return 1;
-    }
-
-    @Override
+    
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Copper_Ingot");
@@ -31,5 +30,4 @@ public class CopperBlock extends CustomRecipe {
         map.put(8, "Pixlies:Copper_Ingot");
         return map;
     }
-
 }

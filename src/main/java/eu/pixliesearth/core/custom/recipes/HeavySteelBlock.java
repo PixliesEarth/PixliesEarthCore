@@ -5,19 +5,18 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HeavySteelBlock extends CustomRecipe {
 
-    @Override
+
+public class HeavySteelBlock extends CustomRecipe {
+    
+    public HeavySteelBlock() {
+        
+    }
+    
     public String getResultUUID() {
         return "Pixlies:Heavy_Steel_Block";
     }
-
-    @Override
-    public int getResultAmount() {
-        return 1;
-    }
-
-    @Override
+    
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Heavy_Steel_Ingot");
@@ -31,5 +30,4 @@ public class HeavySteelBlock extends CustomRecipe {
         map.put(8, "Pixlies:Heavy_Steel_Ingot");
         return map;
     }
-
 }

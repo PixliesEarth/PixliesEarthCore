@@ -5,19 +5,18 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DamascusSteelBlock extends CustomRecipe {
 
-    @Override
+
+public class DamascusSteelBlock extends CustomRecipe {
+    
+    public DamascusSteelBlock() {
+        
+    }
+    
     public String getResultUUID() {
         return "Pixlies:Damascus_Steel_Block";
     }
-
-    @Override
-    public int getResultAmount() {
-        return 1;
-    }
-
-    @Override
+    
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Damascus_Steel_Ingot");
@@ -31,5 +30,4 @@ public class DamascusSteelBlock extends CustomRecipe {
         map.put(8, "Pixlies:Damascus_Steel_Ingot");
         return map;
     }
-
 }

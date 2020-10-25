@@ -5,19 +5,18 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BronzeBlock extends CustomRecipe {
 
-    @Override
+
+public class BronzeBlock extends CustomRecipe {
+    
+    public BronzeBlock() {
+        
+    }
+    
     public String getResultUUID() {
         return "Pixlies:Bronze_Block";
     }
-
-    @Override
-    public int getResultAmount() {
-        return 1;
-    }
-
-    @Override
+    
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Bronze_Ingot");
@@ -31,5 +30,4 @@ public class BronzeBlock extends CustomRecipe {
         map.put(8, "Pixlies:Bronze_Ingot");
         return map;
     }
-
 }

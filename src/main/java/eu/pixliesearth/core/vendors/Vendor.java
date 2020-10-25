@@ -63,7 +63,7 @@ public class Vendor {
             outline.addItem(new GuiItem(soldLast, event -> {
                 event.setCancelled(true);
                 if (event.isLeftClick()) {
-                    boolean buy = buy(getFromVendorReady(finalSoldLast), finalSoldLast, profile);
+                    boolean buy = buy(getFromVendorReady(finalSoldLast), finalSoldLast, profile, finalSoldLast.getAmount());
                     if (buy) {
                         profile.getExtras().remove("soldLast");
                         profile.save();
@@ -86,15 +86,22 @@ public class Vendor {
             builder.addLoreLine(" ");
             builder.addLoreLine("§f§lLEFT §7Click to buy");
             builder.addLoreLine("§f§lRIGHT §7Click to sell");
+            builder.addLoreLine("§f§lSHIFT §7Click to sell/buy &b64 &7items");
             item = builder.build();
             ItemStack finalItem = item;
             guiItems.add(new GuiItem(item, event -> {
                 event.setCancelled(true);
-                if (event.isLeftClick() && getBuyPriceFromItem(finalItem) != null) {
-                    boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile);
+                if (event.isLeftClick() && event.isShiftClick() && getBuyPriceFromItem(finalItem) != null) {
+                    boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile, 64);
+                    if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);open(player); }
+                } else if (event.isRightClick() && event.isShiftClick() && getSellPriceFromItem(finalItem) != null) {
+                    boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile, 64);
+                    if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
+                } else if (event.isLeftClick() && !event.isShiftClick() && getBuyPriceFromItem(finalItem) != null) {
+                    boolean buy = buy(getFromVendorReady(finalItem), finalItem, profile, 1);
                     if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
-                } else if (event.isRightClick() && getSellPriceFromItem(finalItem) != null) {
-                    boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile);
+                } else if (event.isRightClick() && !event.isShiftClick() && getSellPriceFromItem(finalItem) != null) {
+                    boolean sell = sell(getFromVendorReady(finalItem), finalItem, profile, 1);
                     if (!sell) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1); else { player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1); open(player);}
                 } else {
                     player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
@@ -128,30 +135,32 @@ public class Vendor {
         gui.show(player);
     }
 
-    protected boolean buy(ItemStack item, ItemStack placeholderItem, Profile profile) {
+    protected boolean buy(ItemStack item, ItemStack placeholderItem, Profile profile, int amount) {
         Player player = profile.getAsPlayer();
-        double price = getBuyPriceFromItem(placeholderItem);
+        double price = getBuyPriceFromItem(placeholderItem) * amount;
         boolean purchase = profile.withdrawMoney(price, title + " purchase of " + item.getI18NDisplayName());
         if (!purchase) return false;
         if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), item); else player.getInventory().addItem(item);
         int itemsPurchased = 0;
+        item.setAmount(amount);
         if (profile.getExtras().containsKey("itemsPurchased")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemsPurchased"));
-        itemsPurchased++;
+        itemsPurchased += amount;
         profile.getExtras().put("itemsPurchased", Integer.toString(itemsPurchased));
         profile.save();
         return true;
     }
 
-    protected boolean sell(ItemStack item, ItemStack placeholderItem, Profile profile) {
+    protected boolean sell(ItemStack item, ItemStack placeholderItem, Profile profile, int amount) {
         Player player = profile.getAsPlayer();
-        double price = getSellPriceFromItem(placeholderItem);
-        if (!player.getInventory().containsAtLeast(item, 1)) return false;
+        double price = getSellPriceFromItem(placeholderItem) * amount;
+        if (!player.getInventory().containsAtLeast(item, amount)) return false;
         Methods.removeRequiredAmount(item, player.getInventory());
         profile.depositMoney(price, title + " sale of " + item.getI18NDisplayName());
-        int itemsPurchased = 0;
-        if (profile.getExtras().containsKey("itemSold")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemSold"));
-        itemsPurchased++;
-        profile.getExtras().put("itemSold", Integer.toString(itemsPurchased));
+        int itemsSold = 0;
+        item.setAmount(amount);
+        if (profile.getExtras().containsKey("itemSold")) itemsSold = Integer.parseInt((String) profile.getExtras().get("itemSold"));
+        itemsSold += amount;
+        profile.getExtras().put("itemSold", Integer.toString(itemsSold));
         profile.getExtras().put("soldLast", Machine.serialize(item));
         profile.save();
         return true;

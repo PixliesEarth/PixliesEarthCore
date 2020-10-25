@@ -3,6 +3,7 @@ package eu.pixliesearth.utils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,6 +36,10 @@ public class Methods {
 
     public static double calculateDistance(double x1, double x2, double z1, double z2) {
         return Math.sqrt(Math.pow((x2 - z1), 2) + Math.pow((z2 - x1), 2));
+    }
+
+    public static double calculateDistance(Location l1, Location l2) {
+        return l1.distanceSquared(l2);
     }
 
     public static String getTimeAsString(long duration, boolean useMilliseconds) {

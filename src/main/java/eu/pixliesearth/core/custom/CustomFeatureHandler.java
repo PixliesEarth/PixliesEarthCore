@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,13 +57,13 @@ public class CustomFeatureHandler {
 	/**
 	 *  Allows to get an item from a CustomItem instance
 	 */
-	private final HashMap<CustomItem, ItemStack> customItemsToItemStackMap;
-	private final HashMap<Location, String> locationToUUIDMap;
-	private final HashMap<Location, Integer> locationToEventMap;
-	private final HashMap<Location, Inventory> locationToInventoryMap;
-	private final HashMap<Location, Timer> locationToTimerMap;
-	private final HashMap<Location, Hologram> locationToHologramMap;
-	private final HashMap<Location, Double> locationToPowerMap;
+	private final Map<CustomItem, ItemStack> customItemsToItemStackMap;
+	private final Map<Location, String> locationToUUIDMap;
+	private final Map<Location, Integer> locationToEventMap;
+	private final Map<Location, Inventory> locationToInventoryMap;
+	private final Map<Location, Timer> locationToTimerMap;
+	private final Map<Location, Hologram> locationToHologramMap;
+	private final Map<Location, Double> locationToPowerMap;
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -81,15 +82,15 @@ public class CustomFeatureHandler {
 		this.customCommands = new HashSet<CustomCommand>();
 		this.customPermissions = new HashSet<CustomPermission>();
 		this.customBlocks = new HashSet<CustomBlock>();
-		this.customItemsToItemStackMap = new HashMap<CustomItem, ItemStack>();
-		this.locationToUUIDMap = new HashMap<Location, String>();
+		this.customItemsToItemStackMap = new ConcurrentHashMap<CustomItem, ItemStack>();
+		this.locationToUUIDMap = new ConcurrentHashMap<Location, String>();
 		this.customQuests = new HashSet<CustomQuest>();
-		this.locationToEventMap = new HashMap<Location, Integer>();
+		this.locationToEventMap = new ConcurrentHashMap<Location, Integer>();
 		this.customMachines = new HashSet<CustomMachine>();
-		this.locationToInventoryMap = new HashMap<Location, Inventory>();
-		this.locationToTimerMap = new HashMap<Location, Timer>();
-		this.locationToHologramMap = new HashMap<Location, Hologram>();
-		this.locationToPowerMap = new HashMap<Location, Double>();
+		this.locationToInventoryMap = new ConcurrentHashMap<Location, Inventory>();
+		this.locationToTimerMap = new ConcurrentHashMap<Location, Timer>();
+		this.locationToHologramMap = new ConcurrentHashMap<Location, Hologram>();
+		this.locationToPowerMap = new ConcurrentHashMap<Location, Double>();
 
 		this.dropMap = new HashMap<>();
 
@@ -122,8 +123,14 @@ public class CustomFeatureHandler {
 		registerTickable(new Tickable() {
 			@Override
 			public void onTick() {
-				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
-					getCustomBlockFromLocation(entry.getKey()).onTick(entry.getKey());
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+					CustomBlock cb = getCustomBlockFromLocation(entry.getKey());
+					if (cb == null) {
+						locationToUUIDMap.remove(entry.getKey());
+						continue;
+					}
+					cb.onTick(entry.getKey());
+				}
 			}
 		});
 	}
