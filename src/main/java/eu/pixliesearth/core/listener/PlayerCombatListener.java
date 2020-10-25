@@ -13,6 +13,7 @@ public class PlayerCombatListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
         if (!(event.getDamager() instanceof Player)) return;
         if (!(event.getEntity() instanceof Player)) return;
 

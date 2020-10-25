@@ -45,7 +45,7 @@ public class AmmoGiveCommand extends CustomCommand {
                     sender.sendMessage(Lang.GUN_DOESNT_EXIST.get(sender));
                     return false;
                 }
-                ItemStack is = PixliesAmmo.AmmoType.valueOf(args[0].toUpperCase()).getAmmo().getItem();
+                ItemStack is = PixliesAmmo.AmmoType.valueOf(args[0]).getAmmo().getItem();
                 p.getInventory().addItem(is);
                 p.sendMessage(Lang.GUN_GIVEN.get(sender).replace("%gun%", args[0].toUpperCase()));
 

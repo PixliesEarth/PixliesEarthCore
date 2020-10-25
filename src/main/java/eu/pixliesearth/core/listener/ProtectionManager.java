@@ -134,6 +134,7 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = MONITOR)
     public void onEnityInteract(PlayerInteractEntityEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
+        if (event.getRightClicked() instanceof Player) return;
         Chunk c = event.getRightClicked().getChunk();
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
