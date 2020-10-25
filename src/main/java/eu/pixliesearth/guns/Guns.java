@@ -16,8 +16,8 @@ public enum Guns {
     SLINGSHOT(Slingshot.class, 1),
     ;
 
-    private @Getter Class<? extends PixliesGun> clazz;
-    private @Getter int maxAmmo;
+    private @Getter final Class<? extends PixliesGun> clazz;
+    private @Getter final int maxAmmo;
 
     Guns(Class<? extends PixliesGun> clazz, int maxAmmo) {
         this.clazz = clazz;

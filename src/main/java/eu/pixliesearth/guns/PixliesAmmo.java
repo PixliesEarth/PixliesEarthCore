@@ -83,6 +83,15 @@ public class PixliesAmmo {
             this.ammo = ammo;
         }
 
+        public static boolean contains(String test) {
+            for (AmmoType c : values()) {
+                if (c.name().equalsIgnoreCase(test)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 
 }

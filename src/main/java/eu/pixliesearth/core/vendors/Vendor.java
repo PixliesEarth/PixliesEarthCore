@@ -86,7 +86,7 @@ public class Vendor {
             builder.addLoreLine(" ");
             builder.addLoreLine("§f§lLEFT §7Click to buy");
             builder.addLoreLine("§f§lRIGHT §7Click to sell");
-            builder.addLoreLine("§f§lSHIFT §7Click to sell/buy &b64 &7items");
+            builder.addLoreLine("§f§lSHIFT §7Click to sell/buy §b64 §7items");
             item = builder.build();
             ItemStack finalItem = item;
             guiItems.add(new GuiItem(item, event -> {
@@ -138,11 +138,11 @@ public class Vendor {
     protected boolean buy(ItemStack item, ItemStack placeholderItem, Profile profile, int amount) {
         Player player = profile.getAsPlayer();
         double price = getBuyPriceFromItem(placeholderItem) * amount;
-        boolean purchase = profile.withdrawMoney(price, title + " purchase of " + item.getI18NDisplayName());
+        boolean purchase = profile.withdrawMoney(price, title + " purchase of x" + amount + " " + item.getI18NDisplayName());
         if (!purchase) return false;
+        item.setAmount(amount);
         if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), item); else player.getInventory().addItem(item);
         int itemsPurchased = 0;
-        item.setAmount(amount);
         if (profile.getExtras().containsKey("itemsPurchased")) itemsPurchased = Integer.parseInt((String) profile.getExtras().get("itemsPurchased"));
         itemsPurchased += amount;
         profile.getExtras().put("itemsPurchased", Integer.toString(itemsPurchased));
@@ -154,10 +154,10 @@ public class Vendor {
         Player player = profile.getAsPlayer();
         double price = getSellPriceFromItem(placeholderItem) * amount;
         if (!player.getInventory().containsAtLeast(item, amount)) return false;
-        Methods.removeRequiredAmount(item, player.getInventory());
-        profile.depositMoney(price, title + " sale of " + item.getI18NDisplayName());
-        int itemsSold = 0;
         item.setAmount(amount);
+        Methods.removeRequiredAmount(item, player.getInventory());
+        profile.depositMoney(price, title + " sale of x" + amount + " " + item.getI18NDisplayName());
+        int itemsSold = 0;
         if (profile.getExtras().containsKey("itemSold")) itemsSold = Integer.parseInt((String) profile.getExtras().get("itemSold"));
         itemsSold += amount;
         profile.getExtras().put("itemSold", Integer.toString(itemsSold));
