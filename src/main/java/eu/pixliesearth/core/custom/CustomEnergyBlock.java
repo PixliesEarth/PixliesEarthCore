@@ -1,10 +1,15 @@
 package eu.pixliesearth.core.custom;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -36,13 +41,6 @@ public class CustomEnergyBlock extends CustomMachine {
 			player.openInventory(i);
 			return;
 		}
-		if (CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)==getCapacity()) {
-			player.sendMessage("full");
-		} else if (CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)<=0) {
-			player.sendMessage("empty");
-		} else if (CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)>getCapacity()) {
-			player.sendMessage("over full");
-		}
 		player.sendMessage(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)+"/"+getCapacity());
 	}
 	
@@ -59,6 +57,18 @@ public class CustomEnergyBlock extends CustomMachine {
 		double amountToRemove = 1;
 		h.removePowerFromLocation(location2, amountToRemove);
 		h.addPowerToLocation(location, amountToRemove);
+	}
+	/**
+	 * Returns all blocks around it that have an energy value (this includes machines)
+	 */
+	public Set<Block> getSurroundingEnergyCustomBlocks(Location location) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		Set<Block> set = new HashSet<Block>();
+		for (Block b : getSurroundingBlocks(location)) {
+	   		if (h.getPowerAtLocation(location)!=null)
+	   			set.add(b);
+	   	}
+		return set;
 	}
 	
 	@Deprecated
@@ -122,5 +132,17 @@ public class CustomEnergyBlock extends CustomMachine {
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), 0D); // Register that it has energy
 		return false;
+	}
+	
+	public Double getCapacity(Location location) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		CustomBlock c = h.getCustomBlockFromLocation(location);
+		if (c==null) return null;
+		try {
+			Method m = c.getClass().getDeclaredMethod("getCapacity", (Class<?>[]) null);
+			return (m==null) ? null : (Double) m.invoke(c, (Object[]) null);
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			return null;
+		}
 	}
 }
