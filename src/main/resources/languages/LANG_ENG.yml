@@ -172,7 +172,7 @@ PLAYER_UNCLAIMFILLED: "&6%PLAYER% &7unclaimed &b%CHUNKS%x &7chunks using an uncl
 UNCLAIMFILL_LIMIT_REACHED: "&7You have exceeded the unclaim-fill limit."
 RANK_ALREADY_EXISTS: "&7This rank already exists."
 RANK_CREATED: "&7You have created the rank &b%RANK%&7."
-CANT_INTERACT_TERRITORY: "&cYou can't do that here!"
+CANT_INTERACT_TERRITORY: "&c&lYou can't do that here!"
 CHANGED_PLAYERS_NATION_RANK: "&7You changed the rank of &6%PLAYER% &7to &b%RANK%&7."#
 CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY: "&7You can only edit ranks with a lower priority than yours."
 YOU_DELETED_NATION_RANK: "&7You have deleted the rank &b%RANK%&7."
