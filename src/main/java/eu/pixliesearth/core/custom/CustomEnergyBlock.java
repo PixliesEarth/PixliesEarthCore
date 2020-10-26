@@ -78,10 +78,10 @@ public class CustomEnergyBlock extends CustomMachine {
 	}
 	
 	public boolean isFull(Location loc) {
-		return getContainedPower(loc)>=getCapacity();
+		return getContainedPower(loc)>=getCapacity(loc);
 	}
 	
-	public double getContainedPower(Location location) {
+	public Double getContainedPower(Location location) {
 		return CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location);
 	}
 	
@@ -145,4 +145,37 @@ public class CustomEnergyBlock extends CustomMachine {
 			return null;
 		}
 	}
+	
+	public void takeEnergy(Location to, Location from, double amount) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		double d = h.getPowerAtLocation(from);
+		double d2 = h.getPowerAtLocation(to);
+		if (isFull(to) || (d2+amount)>=getCapacity(to)) return;
+		if (d<=0 || (d-amount)<=0) return;
+		h.removePowerFromLocation(from, amount);
+		h.addPowerToLocation(to, amount);
+	}
+	
+	public void giveEnergy(Location from, Location to, double amount) {
+		takeEnergy(to, from, amount);
+	}
+	
+	public void giveAllEnergy(Location from, Location to) {
+    	takeAllEnergy(to, from);
+    }
+	
+	public void takeAllEnergy(Location to, Location from) {
+    	if (isFull(to)) return;
+    	Double d = getContainedPower(to);
+    	Double d2 = getCapacity(to);
+    	Double d3 = getContainedPower(from);
+    	Double d4 = getCapacity(from);
+    	if (d==null || d2==null || d3==null || d4==null) return;
+    	double d5 = 0D;
+    	if ((d4-d3)>=d) 
+    		d5 += d;
+    	else 
+    		d5 += (d4-d3);
+    	takeEnergy(to, from, d5);
+    }
 }

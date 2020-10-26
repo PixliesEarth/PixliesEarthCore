@@ -16,7 +16,24 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class Methods {
-
+	
+	public static String convertEnergyDouble(double d) {
+		String s = "";
+		d = Methods.round(d, 3);
+		if (d>1000000000D) {
+			s += Double.toString(d/1000000000D)+"BW";
+		} else if (d>1000000D) {
+			s += Double.toString(d/1000000D)+"MW";
+		} else if (d>1000D) {
+			s += Double.toString(d/1000D)+"KW";
+		} else if (d>1D) {
+			s += Double.toString(d)+"W";
+		} else {
+			s += Double.toString(d);
+		}
+		return s;
+	}
+	
     public static String generateId(int length) {
         return RandomStringUtils.randomAlphanumeric(length);
     }

@@ -44,32 +44,30 @@ public class CustomEnergyCable extends CustomEnergyBlock {
 			CustomBlock c = h.getCustomBlockFromLocation(location);
 			Double d = getCapacity(b.getLocation());
 			if (d==null) continue;
-			
+			if (c instanceof CustomEnergyCable) {
+				if (isFull(location)) 
+					giveEnergy(location, b.getLocation());
+			} else {
+				giveEnergy(location, b.getLocation());
+			}
 		}
 	}
 	
 	public void takeEnergy(Location cable, Location from) {
-		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		double d = h.getPowerAtLocation(from);
-		if (d>getTransferRate()) {
-			h.removePowerFromLocation(from, getTransferRate());
-			h.addPowerToLocation(cable, getTransferRate());
+		double d = getContainedPower(from);
+		if (d>=getTransferRate()) {
+			takeEnergy(cable, from, getTransferRate());
 		} else {
-			h.removePowerFromLocation(from, d);
-			h.addPowerToLocation(cable, d);
+			takeEnergy(cable, from, d);
 		}
 	}
 	
 	public void giveEnergy(Location cable, Location to) {
-		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		Double d = getCapacity(cable);
-		if (d==null) return;
-		if (d>getTransferRate()) {
-			h.removePowerFromLocation(cable, getTransferRate());
-			h.addPowerToLocation(to, getTransferRate());
+		double d = getContainedPower(cable);
+		if (d>=getTransferRate()) {
+			giveEnergy(cable, to, getTransferRate());
 		} else {
-			h.removePowerFromLocation(cable, d);
-			h.addPowerToLocation(to, d);
+			giveEnergy(cable, to, d);
 		}
 	}
 }

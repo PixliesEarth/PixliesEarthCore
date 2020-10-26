@@ -1105,6 +1105,13 @@ public enum MinecraftMaterial {
 		return MinecraftMaterial.AIR;
 	}
 	
+	public static MinecraftMaterial getMinecraftMaterialFromMaterial(Material mat) {
+		for (MinecraftMaterial m : values())
+			if (m.getMaterial().equals(mat))
+				return m;
+		return MinecraftMaterial.AIR;
+	}
+	
 	public static String getMinecraftMaterialFromItemStack(ItemStack i) {
 		for (MinecraftMaterial m : values())
 			if (m.getMaterial().equals(i.getType()))

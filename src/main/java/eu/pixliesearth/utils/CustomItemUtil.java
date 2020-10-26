@@ -1,10 +1,13 @@
 package eu.pixliesearth.utils;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 /**
  * 
  * @author BradBot_1
@@ -42,5 +45,14 @@ public class CustomItemUtil {
 			}
 		} else 
 			return CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
+	}
+	
+	public static String getUUIDFromLocation(Location l) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		if (h.isCustomBlockAtLocation(l)) {
+			return h.getCustomBlockFromLocation(l).getUUID();
+		} else {
+			return MinecraftMaterial.getMinecraftMaterialFromMaterial(l.getBlock().getType()).getUUID();
+		}
 	}
 }

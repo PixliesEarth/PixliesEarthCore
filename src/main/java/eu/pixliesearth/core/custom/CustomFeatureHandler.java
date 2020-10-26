@@ -196,7 +196,7 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customMachine);
 		this.customItems.add(customMachine);
 		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
-		System.out.println("Registered the custom machine "+customMachine.getUUID());
+		// System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
 	 * Registers the command

@@ -2,8 +2,8 @@ package eu.pixliesearth.core.custom;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
@@ -157,7 +158,7 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 	}
 	
 	public ItemStack buildInfoItem(Location location) {
-		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).addLoreLine("§eContained: "+Double.toString(getContainedPower(location))).addLoreLine("§eCapacity: "+Double.toString(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 	
 	public double getContainedPower(Location location) {
