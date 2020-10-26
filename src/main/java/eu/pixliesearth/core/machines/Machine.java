@@ -342,16 +342,4 @@ public class Machine {
 
     }
 
-    protected void setProgressBarItems(final Inventory inventory, final long current_progress, final long required_progress) {
-        final int progress_percentage = (int)(current_progress * 100.0 / required_progress + 0.5);
-        int bar_length = 9;
-        for (int i = 0; i < bar_length; i++) {
-            if (i * progress_percentage < bar_length * required_progress) {
-                inventory.setItem(Machine.progressSlots.get(i), new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setNoName().build());
-            } else {
-                inventory.setItem(Machine.progressSlots.get(i), new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setNoName().build());
-            }
-        }
-    }
-
 }

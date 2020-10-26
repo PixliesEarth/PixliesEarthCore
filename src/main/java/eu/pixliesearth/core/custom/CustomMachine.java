@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -31,6 +32,7 @@ import eu.pixliesearth.utils.Timer;
  *
  */
 public class CustomMachine extends CustomBlock {
+
 	/**
 	 * Initialises the class
 	 */

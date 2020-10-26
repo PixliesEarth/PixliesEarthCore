@@ -1,22 +1,22 @@
 package eu.pixliesearth.core.machines;
 
 import eu.pixliesearth.Main;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.Serializable;
 
-public class MachineTask extends Thread implements Serializable {
+public class MachineTask extends Thread {
 
     private static final Main instance = Main.getInstance();
-    private static final long serialVersionUID = -4595269124932363893L;
-    private boolean tick = false;
 
     public MachineTask() {
-        start();
+        this.start();
     }
 
     @Override
     public void run() {
-        while (tick) {
+        while (true) {
             //Tick
             try {
                 for (Machine machine : instance.getUtilLists().machines.values())
@@ -24,10 +24,9 @@ public class MachineTask extends Thread implements Serializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //Thread Sleep
             try {
                 sleep(50);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -35,16 +34,10 @@ public class MachineTask extends Thread implements Serializable {
 
     public void init() {
         Machine.loadAll();
-        this.tick = true;
     }
 
     public void stopThread() {
-        this.tick = false;
-        try {
-            join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        this.stop();
     }
 
 }

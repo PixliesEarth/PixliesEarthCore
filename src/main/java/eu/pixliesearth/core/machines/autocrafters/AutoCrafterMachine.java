@@ -135,7 +135,7 @@ public class AutoCrafterMachine extends Machine {
         beforeUpdate();
         if (inventory == null) return;
         if (timer != null) {
-            if (timer.isEnded()) {
+            if (timer.getRemaining() <= 0) {
                 timer = null;
                 for (ItemStack result : wantsToCraft.results)
                     addResult(result);
@@ -143,7 +143,6 @@ public class AutoCrafterMachine extends Machine {
             setProgressBar(true);
         } else {
             boolean matching = recipeMatching(inventory);
-            System.out.println("Recipe matching: " + matching);
             setProgressBar(matching);
             if (matching) {
                 if (canAddResult()) {
@@ -191,104 +190,11 @@ public class AutoCrafterMachine extends Machine {
         }
     }
 
-    /*
-     * Used to change the colour of the progressbar panels.
-     * @param p_timeToCompleteMilliseconds: Time left for the recipe to be completed.
-     */
-    protected void setProgressBarColourByIndex
-    (long p_timeToCompleteMilliseconds )
-    {
-        // The progress bar is only 9 inventory cells long.
-        int numberOfCells = 9;
-        long timeTaken = p_timeToCompleteMilliseconds - timer.getRemaining();
-        int framesToFill = ( int )(
-                ( timeTaken ) / ( p_timeToCompleteMilliseconds / numberOfCells )
-        );
-
-        // Debug
-        Bukkit.broadcastMessage(
-                "Time Taken: " + timeTaken + " | Frames to fill: " + framesToFill
-        );
-
-        Bukkit.broadcastMessage(
-                "Time to complete: " + p_timeToCompleteMilliseconds + " | Time remaining: " + timer.getRemaining()
-        );
-
-        // Change a pane to green when framesToFill is a number from 1 to 9.
-        switch ( framesToFill )
-        {
-            case 1:
-                inventory.setItem(36,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 2:
-                inventory.setItem(37,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 3:
-                inventory.setItem(38,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 4:
-                inventory.setItem(39,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 5:
-                inventory.setItem(40,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 6:
-                inventory.setItem(41,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 7:
-                inventory.setItem(42,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 8:
-                inventory.setItem(43,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-            case 9:
-                inventory.setItem(44,
-                        new ItemBuilder(LIME_STAINED_GLASS_PANE)
-                                .setDisplayName("§3§lLeft")
-                                .addLoreLine("§b" + timer.getRemainingAsString())
-                                .build());
-                break;
-        }
-    }
-
     protected void setProgressBar(boolean matching) {
         // The time required for the recipe to be completed.
         if (timer != null && timer.getRemaining() > 0) {
-            final long long_TimeToComplete = timer.getRemaining();
-            for (@SuppressWarnings("unused") int ignored : progressSlots)
-                setProgressBarColourByIndex(long_TimeToComplete);
+            for (int i : progressSlots)
+                inventory.setItem(i, new ItemBuilder(CYAN_STAINED_GLASS_PANE).setDisplayName("§bProgress").addLoreLine("§f§l" + timer.getRemainingAsString()).build());
         } else {
             if (!matching)
                 for (int i : progressSlots)

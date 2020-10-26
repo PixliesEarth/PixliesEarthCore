@@ -11,7 +11,7 @@ public class ItemCharcoalChunk extends CustomItem {
 
     @Override
     public Material getMaterial() {
-        return Material.TRIPWIRE_HOOK;
+        return Material.CHARCOAL;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ItemCharcoalChunk extends CustomItem {
 
     @Override
     public boolean isGlowing() {
-        return false;
+        return true;
     }
 
     @Override

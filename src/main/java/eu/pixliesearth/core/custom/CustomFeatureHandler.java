@@ -440,9 +440,6 @@ public class CustomFeatureHandler {
 				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
 				for (CustomMachine m : getCustomMachines()) {
 					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
-						if (!(m instanceof CustomEnergyBlock)) {
-							this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
-						}
 						Inventory i = m.getInventory();
 						this.locationToInventoryMap.put(location, i);
 						m.loadFromSaveData(i, location, map);
@@ -495,7 +492,6 @@ public class CustomFeatureHandler {
 	public void setCustomBlockToLocation(Location location, String id) {
 		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
@@ -504,12 +500,10 @@ public class CustomFeatureHandler {
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToHologramMap.put(location, CustomMachine.createHologram(m.getDefaultDisplayName(), location));
 			this.locationToInventoryMap.put(location, m.getInventory());
 		} else {
 			location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
