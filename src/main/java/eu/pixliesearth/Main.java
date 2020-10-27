@@ -248,10 +248,10 @@ public final class Main extends JavaPlugin {
 
         nationsTop = new NTop();
         // rest = new REST();
-        machineTask = new MachineTask();
+        // machineTask = new MachineTask();
 
         // MACHINES
-        machineTask.init();
+        // machineTask.init();
 
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null)

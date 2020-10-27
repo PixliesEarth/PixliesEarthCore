@@ -280,7 +280,7 @@ public enum Lang {
     GULAG_SET_CAP(Lang.WAR, new HashMap<>());
 
     private final String PREFIX;
-    private Map<String, String> languages;
+    private @Getter Map<String, String> languages;
 
     private static @Getter final Map<String, ItemStack> items = new HashMap<>();
 
@@ -314,6 +314,11 @@ public enum Lang {
         if (sender == null)
             return false;
         sender.sendMessage(get(sender));
+        return true;
+    }
+
+    public boolean send(CommandSender sender, String langName) {
+        sender.sendMessage(PREFIX + languages.get(langName).replace("&", "§"));
         return true;
     }
 
