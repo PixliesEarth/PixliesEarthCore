@@ -58,7 +58,9 @@ public class CustomMachine extends CustomBlock {
 	 * @param location The {@link Location} of the {@link CustomMachine} that houses the {@link Inventory}
 	 */
 	public void open(Player player, Location location) {
-		player.openInventory(CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location));
+		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		if (i==null) return;
+		player.openInventory(i);
 	}
 	/**
 	 * @return The {@link CustomMachine}'s {@link Inventory}

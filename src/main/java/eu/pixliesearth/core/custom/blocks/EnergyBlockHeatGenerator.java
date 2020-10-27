@@ -1,30 +1,26 @@
-package eu.pixliesearth.core.custom.machines;
+package eu.pixliesearth.core.custom.blocks;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomGeneratorMachine;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.Timer;
 
-public class MachineHeatGenerator extends CustomGeneratorMachine {
+public class EnergyBlockHeatGenerator extends CustomEnergyBlock {
 	
-	public MachineHeatGenerator() {
+	public EnergyBlockHeatGenerator() {
 		
 	}
 	
 	public double getCapacity() {
 		return 100D;
-	}
-	
-	@Override
-	public Inventory getInventory() { 
-		return null;
 	}
 	
 	@Override
@@ -73,8 +69,8 @@ public class MachineHeatGenerator extends CustomGeneratorMachine {
 	}
 	
 	@Override
-	public String getPlayerHeadUUID() {
-		return "56a7d2195ff7674bbb12e2f7578a2a63c54a980e64744450ac6656e05a790499";
+	public Material getMaterial() {
+		return Material.REDSTONE_BLOCK;
 	}
 	
 	@Override

@@ -5,14 +5,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
@@ -23,19 +25,10 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a custom block that can store energy</h3>
  *
  */
-public abstract class CustomEnergyBlock extends CustomMachine implements Energyable {
+public abstract class CustomEnergyBlock extends CustomSavableBlock implements Energyable {
 	
 	public CustomEnergyBlock() {
 		
-	}
-	
-	@Override
-	public void open(Player player, Location location) {
-		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
-		if (i!=null) {
-			player.openInventory(i);
-			return;
-		}
 	}
 	
 	public abstract double getCapacity();
@@ -49,12 +42,6 @@ public abstract class CustomEnergyBlock extends CustomMachine implements Energya
 		double amountToRemove = 1;
 		h.removePowerFromLocation(location2, amountToRemove);
 		h.addPowerToLocation(location, amountToRemove);
-	}
-	
-	@Deprecated
-	@Override
-	public String getPlayerHeadUUID() {
-		return null;
 	}
 	
 	public boolean isFull(Location loc) {
@@ -141,5 +128,9 @@ public abstract class CustomEnergyBlock extends CustomMachine implements Energya
 	
 	public boolean giveEnergy(Location from, Location to, double amount) {
 		return takeEnergy(to, from, amount);
+	}
+	
+	public ItemStack buildInfoItem(Location location) {
+		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 }

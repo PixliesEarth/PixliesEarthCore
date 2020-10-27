@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -67,6 +68,7 @@ public class CustomFeatureHandler {
 	private final Map<Location, Timer> locationToTimerMap;
 	private final Map<Location, Hologram> locationToHologramMap;
 	private final Map<Location, Double> locationToPowerMap;
+	private final Map<Location, UUID> locationToPrivateMap; // Used to lock things to a player
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
@@ -93,6 +95,7 @@ public class CustomFeatureHandler {
 		this.locationToTimerMap = new ConcurrentHashMap<Location, Timer>();
 		this.locationToHologramMap = new ConcurrentHashMap<Location, Hologram>();
 		this.locationToPowerMap = new ConcurrentHashMap<Location, Double>();
+		this.locationToPrivateMap = new HashMap<Location, UUID>();
 
 		this.dropMap = new HashMap<>();
 
@@ -688,5 +691,17 @@ public class CustomFeatureHandler {
 	// TODO: notes
 	public void deletePowerFromLocation(Location location) {
 		this.locationToPowerMap.remove(location);
+	}
+	
+	public void registerPrivateLocation(Location location, OfflinePlayer player) {
+		this.locationToPrivateMap.put(location, player.getUniqueId());
+	}
+	
+	public void unregisterPrivateLocation(Location location) {
+		this.locationToPrivateMap.remove(location);
+	}
+	
+	public OfflinePlayer getPrivateLocation(Location location) {
+		return Bukkit.getOfflinePlayer(this.locationToPrivateMap.get(location));
 	}
 }

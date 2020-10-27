@@ -25,7 +25,7 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
     }
 	
 	public double getCapacity() {
-		return 10000D;
+		return 1000000000D;
 	}
 	
 	@Override
@@ -36,9 +36,15 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 			if (c==null) continue;
 			if (!(c instanceof Energyable)) continue;
 			if (c instanceof CustomEnergyCable) {
-				giveEnergy(location, b.getLocation(), 1D);
+				if (getContainedPower(location)>(getCapacity(b.getLocation())-getContainedPower(b.getLocation()))) {
+					giveEnergy(location, b.getLocation(), getContainedPower(location));
+				} else {
+					if (!giveEnergy(location, b.getLocation(), (getCapacity(b.getLocation())-getContainedPower(b.getLocation())))) {
+						giveEnergy(location, b.getLocation(), 1D);
+					}
+				}
 			} else {
-				takeEnergy(location, b.getLocation(), 1D);
+				takeEnergy(location, b.getLocation(), getContainedPower(b.getLocation()));
 			}
 		}
 	}
