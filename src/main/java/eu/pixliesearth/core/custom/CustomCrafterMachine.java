@@ -229,7 +229,7 @@ public class CustomCrafterMachine extends CustomMachine {
 	 */
 	public ItemStack getRecipeBook(CustomRecipe r) {
 		return new ItemBuilder(MinecraftMaterial.BOOK.getMaterial()) {{
-			addLoreLine("§b§lRecipe");
+			setDisplayName("§b§lRecipe");
 			if (r==null) {
 				addLoreLine("§c§lRecipe invalid!");
 			} else {
