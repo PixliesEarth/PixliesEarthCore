@@ -64,7 +64,7 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 	        for (int x = minX; x <= maxX; ++x) {
 	            for (int y = 0; y <= maxY; ++y) {
 	                for (int z = minZ; z <= maxZ; ++z) {
-	                    Block b = chunk.getBlock(x, y, z);
+	                    Block b = chunk.getBlock(x & 15, y, z & 15);
 	                    if (b==null || b.getType().equals(Material.AIR)) continue;
 	                    // TODO: ignore unbreakable blocks
 	        			String id = CustomItemUtil.getUUIDFromLocation(b.getLocation());
@@ -72,8 +72,13 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
 	        			if (is==null) continue;
 	        			inventory.addItem(is);
-	        			h.removeCustomBlockFromLocation(b.getLocation());
-	        			b.setType(Material.AIR);
+	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
+							@Override
+							public void run() {
+								h.removeCustomBlockFromLocation(b.getLocation());
+								b.setType(Material.AIR);
+							}
+	        			}, 1L);
 	        			h.removePowerFromLocation(location, energyPerOperation);
 	        			return;
 	                }

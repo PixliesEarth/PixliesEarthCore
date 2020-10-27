@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -72,7 +71,7 @@ public class SavablePrivateChest extends CustomSavableBlock {
     	return true;
     }
     
-    @Override
+    /**@Override
     public boolean BlockBreakEvent(BlockBreakEvent event) {
     	Location l = event.getBlock().getLocation();
     	Player p = event.getPlayer();
@@ -81,7 +80,7 @@ public class SavablePrivateChest extends CustomSavableBlock {
     	}
     	p.sendMessage("This chest is locked to the player "+CustomFeatureLoader.getLoader().getHandler().getPrivateLocation(l).getName());
     	return true;
-    }
+    } */
     
     @Override
     public boolean BlockPlaceEvent(BlockPlaceEvent event) {

@@ -640,6 +640,7 @@ public class CustomFeatureHandler {
 			this.locationToTimerMap.remove(location);
 			this.locationToHologramMap.remove(location);
 			this.locationToPowerMap.remove(location);
+			this.locationToPrivateMap.remove(location);
 			// TODO: drop inventory contents
 		}
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());

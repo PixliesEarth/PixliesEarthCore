@@ -49,7 +49,7 @@ public class EnergyBlockHydroGenerator extends CustomEnergyBlock {
 
     @Override
     public String getUUID() {
-        return "Machine:Solar_Panel"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Machine:Hydro_Generator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 	
 }

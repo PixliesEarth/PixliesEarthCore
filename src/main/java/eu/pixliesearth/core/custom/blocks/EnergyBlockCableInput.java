@@ -36,7 +36,7 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 			if (c==null) continue;
 			if (!(c instanceof Energyable)) continue;
 			if (c instanceof CustomEnergyCable) {
-				if (getContainedPower(location)>(getCapacity(b.getLocation())-getContainedPower(b.getLocation()))) {
+				if (getContainedPower(location)<(getCapacity(b.getLocation())-getContainedPower(b.getLocation()))) {
 					giveEnergy(location, b.getLocation(), getContainedPower(location));
 				} else {
 					if (!giveEnergy(location, b.getLocation(), (getCapacity(b.getLocation())-getContainedPower(b.getLocation())))) {

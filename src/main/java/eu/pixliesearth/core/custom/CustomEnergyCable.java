@@ -67,7 +67,7 @@ public abstract class CustomEnergyCable extends CustomEnergyBlock {
 	}
 	
 	public boolean giveEnergy(Location cable, Location to) {
-		double d = getContainedPower(cable);
+		double d = getContainedPower(cable); //TODO: make this check the block its giving it tos power
 		if (d>=getTransferRate()) {
 			return giveEnergy(cable, to, getTransferRate());
 		} else {
