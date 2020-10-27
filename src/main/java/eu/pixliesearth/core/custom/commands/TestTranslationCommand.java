@@ -26,13 +26,15 @@ public class TestTranslationCommand extends CustomCommand {
 
     @Override
     public boolean execute(CommandSender commandsender, String alias, String[] args) {
-        if (args.length == 0) {
-            for (Lang lang : Lang.values())
-                lang.send(commandsender);
-        } else {
-            for (Lang lang : Lang.values())
-                lang.send(commandsender, args[0]);
-        }
+        try {
+            if (args.length == 0) {
+                for (Lang lang : Lang.values())
+                    lang.send(commandsender);
+            } else {
+                for (Lang lang : Lang.values())
+                    lang.send(commandsender, args[0]);
+            }
+        } catch (Exception ignored) { }
         return true;
     }
 
