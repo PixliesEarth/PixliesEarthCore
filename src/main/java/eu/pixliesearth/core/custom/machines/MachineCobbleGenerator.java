@@ -1,5 +1,8 @@
 package eu.pixliesearth.core.custom.machines;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,8 +16,6 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
 public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
@@ -48,8 +49,43 @@ public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
 		for (int i : ints)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		inv.clear(52);
-		inv.setItem(53, new ItemBuilder(MinecraftMaterial.BARRIER.getMaterial()).setDisplayName("§cClose").addNBTTag("EXTRA", "CLOSE", NBTTagType.STRING).build()); // Close item (back)
 		return inv;
+	}
+	
+	@Override
+	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
+		if (map.get("TIMEREX")!=null && map.get("TIMEREN")!=null)
+			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
+		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
+		int i = Integer.parseInt(map.get("COBBLE"));
+		while (i!=0) {
+			if (inventory.firstEmpty()==-1) return;
+			if (i>=64) {
+				inventory.addItem(new ItemStack(Material.COBBLESTONE, 64));
+				i -= 64;
+			} else {
+				inventory.addItem(new ItemStack(Material.COBBLESTONE, 1));
+				i -= 1;
+			}
+		}
+	}
+	
+	@Override
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		if (timer!=null) {
+			map.put("TIMEREX", Long.toString(timer.getExpiry()));
+			map.put("TIMEREN", Boolean.toString(timer.isEnded()));
+		}
+		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
+		int i = 0;
+		for (ItemStack is : inventory.getContents()) {
+			if (is==null) continue;
+		    if(CustomItemUtil.getUUIDFromItemStack(is).equals(MinecraftMaterial.COBBLESTONE.getUUID()))
+		    	i += is.getAmount();
+		}
+		map.put("COBBLE", Integer.toString(i));
+		return map;
 	}
 	
 	@Override

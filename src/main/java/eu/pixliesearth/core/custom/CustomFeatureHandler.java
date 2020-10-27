@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.custom;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,18 +21,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 
-import eu.pixliesearth.core.files.DataFile;
 import eu.pixliesearth.core.files.FileBase;
-import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 
 /**
  * 
@@ -73,7 +76,6 @@ public class CustomFeatureHandler {
 	 * 
 	 * @param cfl The {@link CustomFeatureLoader} that is trying to initiate this class
 	 */
-	@SuppressWarnings("deprecation")
 	public CustomFeatureHandler(CustomFeatureLoader cfl) {
 		setLoader(cfl);
 		this.customItems = new HashSet<CustomItem>();
@@ -98,22 +100,15 @@ public class CustomFeatureHandler {
 
 		this.vendorMap = new HashMap<>();
 		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
-			@SneakyThrows
-			@Override
-			public void run() {
-				Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), new Runnable() {
-					@SneakyThrows
-					@Override
-					public void run() {
-						for (Tickable t : getTickables()) {
-							if (t==null) continue;
-							t.onTick();
-						}
-					}
-				}, 1L, 1L);
-			}
-		}, 	400L);
+		 new BukkitRunnable() {
+			 @Override
+			 public void run() {
+				 for (Tickable t : getTickables()) {
+					 if (t==null) continue;
+					 t.onTick();
+				 }
+	         }
+	     }.runTaskTimerAsynchronously(getInstance(), 1L, 1L);
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
@@ -403,8 +398,51 @@ public class CustomFeatureHandler {
 		f.saveJsonToFile();
 	}
 	// TODO: notes
+	@SuppressWarnings("unchecked")
 	public void saveMachinesToFiles() {
-		int i = 0;
+		
+		// String splitkey = ":!:!:";
+		
+		FileBase f = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "machines", ".json");
+		try {
+			f.clearFile();
+		} catch (IOException e) {
+			System.err.println("Unable to save machines as there was a problem clearing the file");
+			return;
+		}
+		JSONObject obj = new JSONObject();
+		for (Entry<Location, String> entry : this.locationToUUIDMap.entrySet()) {
+			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
+				// JSONArray a = new JSONArray();
+				JSONObject obj2 = new JSONObject();
+				Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+				if (map==null || map.isEmpty()) {
+					// do nothin
+				} else {
+					map.entrySet().forEach(e -> {
+						obj2.put(e.getKey(), e.getValue());
+					});
+					/* for (Entry<String, String> entry2 : map.entrySet()) {
+						a.add(entry2.getKey()+splitkey+entry2.getValue());
+					}*/
+				}
+				obj2.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
+				obj2.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
+				// a.add("MUUID"+splitkey+getCustomBlockFromLocation(entry.getKey()).getUUID());
+				// a.add("MLOCATION"+splitkey+entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
+				obj.put(entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ(), obj2);
+			}
+		}
+		
+		try {
+			f.writeToFile(obj.toJSONString());
+		} catch (IOException e) {
+			System.out.println("Unable to save machines due to an IO exception");
+		}
+		
+		
+		
+		/*int i = 0;
 		for (Entry<Location, String> entry : this.locationToUUIDMap.entrySet()) {
 			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
 				try {
@@ -427,11 +465,61 @@ public class CustomFeatureHandler {
 					i++;
 				}
 			}
-		}
+		}*/
 	}
 	// TODO: notes
+	@SuppressWarnings("unchecked")
 	public void loadMachinesFromFiles() {
-		FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"+"/machines/");
+		
+		// String splitkey = ":!:!:";
+		
+		try {
+			FileBase f = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "machines", ".json");
+			JSONParser parser = new JSONParser();
+			ArrayList<String> c = f.loadFileIntoArray();
+			if (c==null || c.isEmpty()) {
+				System.out.println("There is no machine data to load!");
+				return;
+			}
+			String c2 = c.get(0);
+			if (c2==null || c2.equals("")) {
+				System.out.println("There is no machine data to load!");
+				return;
+			}
+			Object o = parser.parse(f.loadFileIntoArray().get(0));
+			
+			JSONObject obj = (JSONObject) o;
+			
+			obj.keySet().forEach(key -> {
+				JSONObject obj2 = (JSONObject) obj.get(key);
+				Map<String, String> map = new HashMap<>();
+				obj2.forEach((k,v) -> map.put((String)k,(String)v));
+				/*a.forEach(value -> {
+					String s = (String) value;
+					String[] s2 = s.split(splitkey);
+					map.put(s2[0], s2[1]);
+				});*/
+				String[] l2 = map.get("MLOCATION").split(":");
+				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
+				getCustomMachines().forEach(m -> {
+					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
+						Inventory i = m.getInventory();
+						if (i!=null) 
+							this.locationToInventoryMap.put(location, i);
+						m.loadFromSaveData(i, location, map);
+						// System.err.println("[DEBUG] loaded the machine "+m.getUUID()+" with the data:");
+						// System.err.println("[DEBUG] "+map.get("MLOCATION"));
+						// System.err.println("[DEBUG] size? "+map.size());
+						// System.err.println("[DEBUG] inv? "+(i!=null));
+					}
+				});
+			});
+			
+		} catch (FileNotFoundException | ParseException e) {
+			System.out.println("Unable to load machines due to an exception");
+		}
+		
+		/*FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"+"/machines/");
 		for (FileBase f : d.getFilesInDirectory()) {
 			DataFile df = new DataFile(f.getFilePath(), f.getFileName(), f.getFileExtension());
 			try {
@@ -451,7 +539,7 @@ public class CustomFeatureHandler {
 			} finally {
 				df.deleteFile();
 			}
-		}
+		}*/
 	}
 	/**
 	 * Loads custom blocks from the save file

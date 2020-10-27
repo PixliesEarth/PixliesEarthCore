@@ -77,7 +77,8 @@ public class CustomFeatureLoader {
 		getHandler().saveCustomBlocksToFile();
 		getHandler().saveMachinesToFiles();
 		for (Listener customListener : getHandler().getCustomListeners()) 
-			((CustomListener)customListener).onServerShutdown(this, getHandler());
+			if (customListener instanceof CustomListener) 
+				((CustomListener)customListener).onServerShutdown(this, getHandler());
 	}
 	// TODO: notes
 	@SneakyThrows

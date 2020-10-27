@@ -38,7 +38,7 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
 		int y = location.getBlockY()+4; // account for the top of the wind turbine
 		if (y<60) return;
 		double amountToGive = ((y-60D)/10D);
-		if (amountToGive+getContainedPower(location)>=getCapacity()) return;
+		if (isFull(location)) return;
 		h.addPowerToLocation(location, amountToGive);
 	}
 
@@ -54,8 +54,6 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
 	
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	int y = event.getClickedBlock().getY();
-    	if (y<60) event.getPlayer().sendMessage("The windmill can't seem to catch any wind here, maybe try making it further up!");
     	return false;
     }
     
@@ -79,25 +77,37 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
     	Block b5 = w.getBlockAt(x, y+4, z);
     	if (y > 250) 
     		return true;
-    	if (!b2.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+    	if (y < 60) 
     		return true;
-    	if (!b3.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
-    		return true;
-    	if (!b4.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
-    		return true;
-    	if (!b5.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
-    		return true;
-    	h.setCustomBlockToLocation(b2.getLocation(), "Pixlies:Wind_Turbine_BODY");
-    	h.setCustomBlockToLocation(b3.getLocation(), "Pixlies:Wind_Turbine_BODY");
-    	h.setCustomBlockToLocation(b4.getLocation(), "Pixlies:Wind_Turbine_BODY");
-    	h.setCustomBlockToLocation(b5.getLocation(), "Pixlies:Wind_Turbine_HEAD");
-    	int id = Bukkit.getScheduler().scheduleAsyncRepeatingTask(h.getInstance(), new Runnable() {
-			@Override
+    	if (b2!=null) 
+    		if (!b2.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+    			return true;
+    	if (b3!=null) 
+    		if (!b3.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+    			return true;
+    	if (b4!=null) 
+    		if (!b4.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+    			return true;
+    	if (b5!=null) 
+    		if (!b5.getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+    			return true;
+    	h.setCustomBlockToLocation(new Location(w, x, y+1, z), "Machine:Wind_Turbine_BODY");
+    	h.setCustomBlockToLocation(new Location(w, x, y+2, z), "Machine:Wind_Turbine_BODY");
+    	h.setCustomBlockToLocation(new Location(w, x, y+3, z), "Machine:Wind_Turbine_BODY");
+    	h.setCustomBlockToLocation(new Location(w, x, y+4, z), "Machine:Wind_Turbine_HEAD");
+    	Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
+    		@Override
 			public void run() {
-				// TODO: make banners spin
+				b.setType(getMaterial());
+		    	int id = Bukkit.getScheduler().scheduleAsyncRepeatingTask(h.getInstance(), new Runnable() {
+					@Override
+					public void run() {
+						// TODO: make banners spin
+					}
+		    	}, 1L, 1L);
+		    	h.registerLocationEvent(loc, id);
 			}
-    	}, 1L, 1L);
-    	h.registerLocationEvent(loc, id);
+    	}, 5L);
     	return false;
     }
     
@@ -118,7 +128,8 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
     	h.removeCustomBlockFromLocation(b3.getLocation());
     	h.removeCustomBlockFromLocation(b4.getLocation());
     	h.removeCustomBlockFromLocation(b5.getLocation());
-    	int id = h.getLocationEvent(loc);
+    	Integer id = h.getLocationEvent(loc);
+    	if (id==null) return false;
     	Bukkit.getScheduler().cancelTask(id);
     	return false;
     }

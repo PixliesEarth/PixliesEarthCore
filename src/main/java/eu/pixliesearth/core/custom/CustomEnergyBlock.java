@@ -58,7 +58,9 @@ public abstract class CustomEnergyBlock extends CustomMachine implements Energya
 	}
 	
 	public boolean isFull(Location loc) {
-		return getContainedPower(loc)>=getCapacity(loc);
+		Double d = getContainedPower(loc);
+		Double d2 = getCapacity(loc);
+		return (d==null||d2==null) ? true : d>=d2; // If null send a fake true value
 	}
 	
 	public Double getContainedPower(Location location) {
@@ -127,8 +129,9 @@ public abstract class CustomEnergyBlock extends CustomMachine implements Energya
 	
 	public boolean takeEnergy(Location to, Location from, double amount) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		double d = h.getPowerAtLocation(from);
-		double d2 = h.getPowerAtLocation(to);
+		Double d = h.getPowerAtLocation(from);
+		Double d2 = h.getPowerAtLocation(to);
+		if (d==null || d2==null) return false;
 		if (isFull(to) || (d2+amount)>getCapacity(to)) return false;
 		if (d<=0 || (d-amount)<0) return false;
 		h.removePowerFromLocation(from, amount);

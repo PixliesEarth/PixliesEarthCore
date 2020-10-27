@@ -277,10 +277,10 @@ public final class Main extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onDisable() {
+    	loader.save();
         discordDisable();
-        machineTask.stopThread();
+        // machineTask.stopThread();
         dynmapKernel.onDisable();
-        loader.save();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
         for (Player player : Bukkit.getOnlinePlayers())

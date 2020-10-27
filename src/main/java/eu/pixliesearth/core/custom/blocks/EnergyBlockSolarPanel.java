@@ -29,7 +29,7 @@ public class EnergyBlockSolarPanel extends CustomEnergyBlock {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		byte byt = location.getBlock().getLightFromSky();
 		if (byt > (byte)7) {
-			if (0.1D+getContainedPower(location)>=getCapacity()) return;
+			if (isFull(location)) return;
 			h.addPowerToLocation(location, 0.1D);
 		}
 	}
