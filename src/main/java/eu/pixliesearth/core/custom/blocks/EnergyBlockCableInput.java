@@ -10,7 +10,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomEnergyCable;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomGeneratorMachine;
+import eu.pixliesearth.core.custom.Energyable;
 import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockCableInput extends CustomEnergyBlock {
@@ -24,7 +24,6 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
         return Material.YELLOW_CONCRETE;
     }
 	
-	@Override
 	public double getCapacity() {
 		return 10000D;
 	}
@@ -32,12 +31,14 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		for (Block b : getSurroundingEnergyCustomBlocks(location)) {
+		for (Block b : getSurroundingBlocks(location)) {
 			CustomBlock c = h.getCustomBlockFromLocation(b.getLocation());
+			if (c==null) continue;
+			if (!(c instanceof Energyable)) continue;
 			if (c instanceof CustomEnergyCable) {
-				giveAllEnergy(location, b.getLocation());
-			} else if (c instanceof CustomGeneratorMachine || c instanceof CustomEnergyBlock) {
-				takeAllEnergy(location, b.getLocation());
+				giveEnergy(location, b.getLocation(), 1D);
+			} else {
+				takeEnergy(location, b.getLocation(), 1D);
 			}
 		}
 	}

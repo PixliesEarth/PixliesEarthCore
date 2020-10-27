@@ -26,7 +26,7 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a machine</h3>
  *
  */
-public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
+public abstract class CustomEnergyCrafterMachine extends CustomCrafterMachine implements Energyable {
 	/**
 	 * Initialises the class
 	 */
@@ -36,9 +36,7 @@ public class CustomEnergyCrafterMachine extends CustomCrafterMachine {
 	/**
 	 * The amount of energy the machine can hold
 	 */
-	public double getCapacity() {
-		return 100D;
-	}
+	public abstract double getCapacity();
 	/**
 	 * @return The {@link CustomCrafterMachine}'s {@link Inventory}
 	 */

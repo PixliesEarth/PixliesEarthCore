@@ -24,4 +24,8 @@ public class TestEnergyBlock extends CustomEnergyBlock {
     public String getUUID() {
         return "Pixlies:Test_Energy_Block"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+    
+	public double getCapacity() {
+		return 100D;
+	}
 }

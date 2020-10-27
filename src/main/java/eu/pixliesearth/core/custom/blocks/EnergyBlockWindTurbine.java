@@ -28,7 +28,6 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
         return Material.RED_CONCRETE;
     }
 	
-	@Override
 	public double getCapacity() {
 		return 10000D;
 	}

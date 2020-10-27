@@ -16,15 +16,13 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a custom block that can store energy</h3>
  *
  */
-public class CustomEnergyCable extends CustomEnergyBlock {
+public abstract class CustomEnergyCable extends CustomEnergyBlock {
 	
 	public CustomEnergyCable() {
 		
 	}
 	
-	public double getTransferRate() {
-		return 1.0D;
-	}
+	public abstract double getTransferRate();
 	
 	@Override
 	public void open(Player player, Location location) {
@@ -38,36 +36,42 @@ public class CustomEnergyCable extends CustomEnergyBlock {
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		Set<Block> bs = getSurroundingEnergyCustomBlocks(location);
+		Set<Block> bs = getSurroundingBlocks(location);
 		if (bs.isEmpty()) return;
 		for (Block b : bs) {
-			CustomBlock c = h.getCustomBlockFromLocation(location);
+			CustomBlock c = h.getCustomBlockFromLocation(b.getLocation());
+			if (c==null) continue;
+			if (!(c instanceof Energyable)) continue;
+			if (isFull(b.getLocation())) continue;
 			Double d = getCapacity(b.getLocation());
 			if (d==null) continue;
 			if (c instanceof CustomEnergyCable) {
-				if (isFull(location)) 
-					giveEnergy(location, b.getLocation());
+				if (isFull(location)) {
+					if (timer==null) {
+						giveEnergy(location, b.getLocation());
+						h.registerTimer(location, new Timer(15L));
+					} else {
+						if (timer.hasExpired()) {
+							h.unregisterTimer(location);
+						} else {
+							// Do nothing
+						}
+					}
+				}
 			} else {
+				if (c.getUUID().equalsIgnoreCase("Machine:Cable_Input")) 
+					continue;
 				giveEnergy(location, b.getLocation());
 			}
 		}
 	}
 	
-	public void takeEnergy(Location cable, Location from) {
-		double d = getContainedPower(from);
-		if (d>=getTransferRate()) {
-			takeEnergy(cable, from, getTransferRate());
-		} else {
-			takeEnergy(cable, from, d);
-		}
-	}
-	
-	public void giveEnergy(Location cable, Location to) {
+	public boolean giveEnergy(Location cable, Location to) {
 		double d = getContainedPower(cable);
 		if (d>=getTransferRate()) {
-			giveEnergy(cable, to, getTransferRate());
+			return giveEnergy(cable, to, getTransferRate());
 		} else {
-			giveEnergy(cable, to, d);
+			return giveEnergy(cable, to, d);
 		}
 	}
 }

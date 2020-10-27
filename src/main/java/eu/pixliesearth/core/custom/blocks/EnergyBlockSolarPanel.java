@@ -20,7 +20,6 @@ public class EnergyBlockSolarPanel extends CustomEnergyBlock {
         return Material.DAYLIGHT_DETECTOR;
     }
 	
-	@Override
 	public double getCapacity() {
 		return 1000D;
 	}

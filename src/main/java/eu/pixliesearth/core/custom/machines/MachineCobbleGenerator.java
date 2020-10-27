@@ -75,4 +75,8 @@ public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
 			}
 		}
 	}
+
+	public double getCapacity() {
+		return 100D;
+	}
 }

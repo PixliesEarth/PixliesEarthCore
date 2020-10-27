@@ -1,7 +1,5 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +17,7 @@ import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.Energyable;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.Methods;
 
@@ -108,10 +107,9 @@ public class ItemEnergyInspector extends CustomItem {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		CustomBlock c = h.getCustomBlockFromLocation(location);
 		if (c==null) return null;
-		try {
-			Method m = c.getClass().getDeclaredMethod("getCapacity", (Class<?>[]) null);
-			return (m==null) ? null : (Double) m.invoke(c, (Object[]) null);
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		if (c instanceof Energyable) {
+			return ((Energyable)c).getCapacity();
+		} else {
 			return null;
 		}
 	}

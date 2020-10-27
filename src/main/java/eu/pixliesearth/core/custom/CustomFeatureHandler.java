@@ -441,7 +441,8 @@ public class CustomFeatureHandler {
 				for (CustomMachine m : getCustomMachines()) {
 					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
 						Inventory i = m.getInventory();
-						this.locationToInventoryMap.put(location, i);
+						if (i!=null) 
+							this.locationToInventoryMap.put(location, i);
 						m.loadFromSaveData(i, location, map);
 					}
 				}
@@ -492,19 +493,27 @@ public class CustomFeatureHandler {
 	public void setCustomBlockToLocation(Location location, String id) {
 		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToInventoryMap.put(location, m.getInventory());
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToInventoryMap.put(location, m.getInventory());
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToInventoryMap.put(location, m.getInventory());
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
 			this.locationToPowerMap.put(location, 0D);
 		} else if (getCustomItemFromUUID(id) instanceof CustomMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
-			this.locationToInventoryMap.put(location, m.getInventory());
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
 		} else {
 			location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
 			location.getWorld().getBlockAt(location).getState().update();

@@ -22,4 +22,8 @@ public class MachineTest extends CustomEnergyCrafterMachine {
     public String getUUID() {
         return "Machine:Test"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+
+	public double getCapacity() {
+		return 100D;
+	}
 }

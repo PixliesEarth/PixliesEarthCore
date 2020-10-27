@@ -15,12 +15,10 @@ public class EnergyCableBasic extends CustomEnergyCable {
         return Material.LIGHT_GRAY_STAINED_GLASS_PANE;
     }
 	
-	@Override
 	public double getCapacity() {
 		return 100D;
 	}
 	
-	@Override
 	public double getTransferRate() {
 		return 5D;
 	}

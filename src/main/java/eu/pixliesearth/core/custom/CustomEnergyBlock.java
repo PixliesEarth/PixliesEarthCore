@@ -1,15 +1,10 @@
 package eu.pixliesearth.core.custom;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -28,7 +23,7 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a custom block that can store energy</h3>
  *
  */
-public class CustomEnergyBlock extends CustomMachine {
+public abstract class CustomEnergyBlock extends CustomMachine implements Energyable {
 	
 	public CustomEnergyBlock() {
 		
@@ -41,12 +36,9 @@ public class CustomEnergyBlock extends CustomMachine {
 			player.openInventory(i);
 			return;
 		}
-		player.sendMessage(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)+"/"+getCapacity());
 	}
 	
-	public double getCapacity() {
-		return 100D;
-	}
+	public abstract double getCapacity();
 	
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
@@ -57,18 +49,6 @@ public class CustomEnergyBlock extends CustomMachine {
 		double amountToRemove = 1;
 		h.removePowerFromLocation(location2, amountToRemove);
 		h.addPowerToLocation(location, amountToRemove);
-	}
-	/**
-	 * Returns all blocks around it that have an energy value (this includes machines)
-	 */
-	public Set<Block> getSurroundingEnergyCustomBlocks(Location location) {
-		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		Set<Block> set = new HashSet<Block>();
-		for (Block b : getSurroundingBlocks(location)) {
-	   		if (h.getPowerAtLocation(location)!=null)
-	   			set.add(b);
-	   	}
-		return set;
 	}
 	
 	@Deprecated
@@ -138,44 +118,25 @@ public class CustomEnergyBlock extends CustomMachine {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		CustomBlock c = h.getCustomBlockFromLocation(location);
 		if (c==null) return null;
-		try {
-			Method m = c.getClass().getDeclaredMethod("getCapacity", (Class<?>[]) null);
-			return (m==null) ? null : (Double) m.invoke(c, (Object[]) null);
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		if (c instanceof Energyable) {
+			return ((Energyable)c).getCapacity();
+		} else {
 			return null;
 		}
 	}
 	
-	public void takeEnergy(Location to, Location from, double amount) {
+	public boolean takeEnergy(Location to, Location from, double amount) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		double d = h.getPowerAtLocation(from);
 		double d2 = h.getPowerAtLocation(to);
-		if (isFull(to) || (d2+amount)>=getCapacity(to)) return;
-		if (d<=0 || (d-amount)<=0) return;
+		if (isFull(to) || (d2+amount)>getCapacity(to)) return false;
+		if (d<=0 || (d-amount)<0) return false;
 		h.removePowerFromLocation(from, amount);
 		h.addPowerToLocation(to, amount);
+		return true;
 	}
 	
-	public void giveEnergy(Location from, Location to, double amount) {
-		takeEnergy(to, from, amount);
+	public boolean giveEnergy(Location from, Location to, double amount) {
+		return takeEnergy(to, from, amount);
 	}
-	
-	public void giveAllEnergy(Location from, Location to) {
-    	takeAllEnergy(to, from);
-    }
-	
-	public void takeAllEnergy(Location to, Location from) {
-    	if (isFull(to)) return;
-    	Double d = getContainedPower(to);
-    	Double d2 = getCapacity(to);
-    	Double d3 = getContainedPower(from);
-    	Double d4 = getCapacity(from);
-    	if (d==null || d2==null || d3==null || d4==null) return;
-    	double d5 = 0D;
-    	if ((d4-d3)>=d) 
-    		d5 += d;
-    	else 
-    		d5 += (d4-d3);
-    	takeEnergy(to, from, d5);
-    }
 }

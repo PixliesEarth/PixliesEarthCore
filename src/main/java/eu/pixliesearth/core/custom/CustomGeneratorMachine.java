@@ -24,7 +24,7 @@ import lombok.Getter;
  * <h3>A class to create a machine</h3>
  *
  */
-public class CustomGeneratorMachine extends CustomMachine {
+public abstract class CustomGeneratorMachine extends CustomMachine implements Energyable {
 	
 	private static @Getter int inputSlot = 10;
 	private static @Getter int burningSlot = 13;
@@ -35,12 +35,6 @@ public class CustomGeneratorMachine extends CustomMachine {
 	 */
 	public CustomGeneratorMachine() {
 		
-	}
-	/**
-	 * The amount of energy the machine can hold
-	 */
-	public double getCapacity() {
-		return 100D;
 	}
 	/**
 	 * Called every Minecraft Tick
