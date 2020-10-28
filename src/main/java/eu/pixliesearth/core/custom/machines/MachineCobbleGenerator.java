@@ -57,7 +57,7 @@ public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
 		if (map.get("TIMEREX")!=null && map.get("TIMEREN")!=null)
 			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
-		int i = Integer.parseInt(map.get("COBBLE"));
+		/* int i = Integer.parseInt(map.get("COBBLE"));
 		while (i!=0) {
 			if (inventory.firstEmpty()==-1) return;
 			if (i>=64) {
@@ -67,7 +67,7 @@ public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
 				inventory.addItem(new ItemStack(Material.COBBLESTONE, 1));
 				i -= 1;
 			}
-		}
+		} */
 	}
 	
 	@Override

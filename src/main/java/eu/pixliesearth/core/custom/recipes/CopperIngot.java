@@ -7,6 +7,10 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class CopperIngot extends CustomRecipe {
 
+	public CopperIngot() {
+		
+	}
+	
     @Override
     public String getResultUUID() {
         return "Pixlies:Copper_Ingot";

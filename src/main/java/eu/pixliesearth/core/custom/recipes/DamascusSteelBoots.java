@@ -11,11 +11,11 @@ public class DamascusSteelBoots extends CustomRecipe {
     public DamascusSteelBoots() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Damascus_Steel_Boots";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

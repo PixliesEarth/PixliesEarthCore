@@ -81,8 +81,4 @@ public abstract class CustomGeneratorMachine extends CustomMachine implements En
 		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
 		return map;
 	}
-	// TODO: notes
-	public boolean isUnclickable(ItemStack is) {
-		return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID());
-	}
 }

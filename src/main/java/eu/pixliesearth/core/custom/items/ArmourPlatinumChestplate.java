@@ -8,23 +8,24 @@ import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.CustomArmour;
 
 /**
  * @author Zenake
  */
-public class ItemUraniumChunk extends CustomItem {
-	
-    public ItemUraniumChunk() {
-        
+public class ArmourPlatinumChestplate extends CustomArmour {
+
+    public ArmourPlatinumChestplate() {
+
     }
-    
+
     @Override
     public Material getMaterial() {
-        return Material.SCUTE;
+        return Material.IRON_CHESTPLATE;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ItemUraniumChunk extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Uranium Chunk";
+        return "§7§lPlatinum Chestplate";
     }
 
     @Override
@@ -68,17 +69,33 @@ public class ItemUraniumChunk extends CustomItem {
     }
 
     @Override
-    public CreativeTabs getCreativeTab() {
-        return CreativeTabs.REDSTONE;
+    public double getArmour() {
+        return 7D;
     }
-    
+
+    @Override
+    public double getArmourToughness() {
+        return 1.0;
+    }
+
+    @Override
+    public CreativeTabs getCreativeTab() {
+        return CreativeTabs.COMBAT;
+    }
+
     @Override
     public String getUUID() {
-        return "Pixlies:Uranium_Chunk"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Platinum_Chestplate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-    
+
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+    @Override
+    public boolean EntityDamageEvent(EntityDamageEvent event) {
+        return false;
+    }
+
 }

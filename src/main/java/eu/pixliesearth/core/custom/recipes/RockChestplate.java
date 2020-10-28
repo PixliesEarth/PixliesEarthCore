@@ -11,11 +11,11 @@ public class RockChestplate extends CustomRecipe {
     public RockChestplate() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Rock_Chestplate";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:cobblestone");

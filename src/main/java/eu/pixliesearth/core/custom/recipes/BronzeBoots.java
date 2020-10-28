@@ -12,11 +12,11 @@ public class BronzeBoots extends CustomRecipe {
     public BronzeBoots() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Bronze_Boots";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

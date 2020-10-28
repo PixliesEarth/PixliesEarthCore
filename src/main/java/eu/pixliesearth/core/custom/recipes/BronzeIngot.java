@@ -6,6 +6,10 @@ import java.util.Map;
 import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class BronzeIngot extends CustomRecipe {
+	
+	public BronzeIngot() {
+		
+	}
 
     @Override
     public String getResultUUID() {

@@ -12,11 +12,11 @@ public class TungstenBlock extends CustomRecipe {
     public TungstenBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tungsten_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Tungsten_Ingot");

@@ -6,7 +6,11 @@ import java.util.Map;
 import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class ArsenicBronzeIngot extends CustomRecipe {
-
+	
+	public ArsenicBronzeIngot() {
+		
+	}
+	
     @Override
     public String getResultUUID() {
         return "Pixlies:Arsenic_Bronze_Ingot";

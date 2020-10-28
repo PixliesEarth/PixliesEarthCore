@@ -6,7 +6,11 @@ import java.util.Map;
 import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class FiredBrick extends CustomRecipe {
-
+	
+	public FiredBrick() {
+		
+	}
+	
     @Override
     public String getResultUUID() {
         return "Pixlies:Fired_Brick";

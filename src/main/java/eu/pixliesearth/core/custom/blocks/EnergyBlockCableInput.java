@@ -36,7 +36,11 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 			if (c==null) continue;
 			if (!(c instanceof Energyable)) continue;
 			if (c instanceof CustomEnergyCable) {
-				if (getContainedPower(location)<(getCapacity(b.getLocation())-getContainedPower(b.getLocation()))) {
+				Double d = getContainedPower(location);
+				Double d2 = getCapacity(b.getLocation());
+				Double d3 = getContainedPower(b.getLocation());
+				if (d==null || d2==null || d3==null) continue;
+				if (d<(d2-d3)) {
 					giveEnergy(location, b.getLocation(), getContainedPower(location));
 				} else {
 					if (!giveEnergy(location, b.getLocation(), (getCapacity(b.getLocation())-getContainedPower(b.getLocation())))) {
@@ -44,7 +48,9 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 					}
 				}
 			} else {
-				takeEnergy(location, b.getLocation(), getContainedPower(b.getLocation()));
+				Double d = getContainedPower(b.getLocation());
+				if (d==null) continue;
+				takeEnergy(location, b.getLocation(), d);
 			}
 		}
 	}

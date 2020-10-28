@@ -11,11 +11,11 @@ public class WoodenLeggings extends CustomRecipe {
     public WoodenLeggings() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Wooden_Leggings";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:oak_planks");

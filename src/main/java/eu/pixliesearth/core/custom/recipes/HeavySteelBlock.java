@@ -12,11 +12,11 @@ public class HeavySteelBlock extends CustomRecipe {
     public HeavySteelBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Heavy_Steel_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Heavy_Steel_Ingot");

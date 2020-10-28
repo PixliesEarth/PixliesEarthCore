@@ -11,11 +11,11 @@ public class Tablet extends CustomRecipe {
     public Tablet() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tablet";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:clay");

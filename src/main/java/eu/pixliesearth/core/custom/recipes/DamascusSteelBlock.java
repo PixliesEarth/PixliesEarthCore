@@ -12,11 +12,11 @@ public class DamascusSteelBlock extends CustomRecipe {
     public DamascusSteelBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Damascus_Steel_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Damascus_Steel_Ingot");

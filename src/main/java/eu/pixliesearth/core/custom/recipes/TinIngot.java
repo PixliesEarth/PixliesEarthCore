@@ -6,6 +6,10 @@ import java.util.Map;
 import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class TinIngot extends CustomRecipe {
+	
+	public TinIngot() {
+		
+	}
 
     @Override
     public String getResultUUID() {

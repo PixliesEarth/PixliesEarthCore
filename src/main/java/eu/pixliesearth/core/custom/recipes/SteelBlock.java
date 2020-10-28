@@ -12,11 +12,11 @@ public class SteelBlock extends CustomRecipe {
     public SteelBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Steel_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Steel_Ingot");

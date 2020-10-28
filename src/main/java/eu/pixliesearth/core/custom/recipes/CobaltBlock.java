@@ -12,11 +12,11 @@ public class CobaltBlock extends CustomRecipe {
     public CobaltBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Cobalt_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Cobalt_Ingot");

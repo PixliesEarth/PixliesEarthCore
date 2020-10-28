@@ -11,11 +11,11 @@ public class TinBoots extends CustomRecipe {
     public TinBoots() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tin_Boots";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

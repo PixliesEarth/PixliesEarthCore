@@ -12,11 +12,11 @@ public class TinBlock extends CustomRecipe {
     public TinBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tin_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Tin_Ingot");

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,7 +45,7 @@ public class SavablePrivateChest extends CustomSavableBlock {
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
 		if (map.get("TIMEREX")!=null && map.get("TIMEREN")!=null)
 			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
-		CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(location, Bukkit.getOfflinePlayer(UUID.fromString(map.get("OWNER"))));
+		CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(location, UUID.fromString(map.get("OWNER")));
 	}
 	
 	@Override
@@ -64,10 +63,10 @@ public class SavablePrivateChest extends CustomSavableBlock {
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
     	Player p = event.getPlayer();
     	Location l = event.getClickedBlock().getLocation();
-    	if (event.getPlayer().equals(CustomFeatureLoader.getLoader().getHandler().getPrivateLocation(l))) {
+    	if (event.getPlayer().getUniqueId().equals(CustomFeatureLoader.getLoader().getHandler().getPrivateLocation(l))) {
     		return false;
     	}
-    	p.sendMessage("This chest is locked to the player "+CustomFeatureLoader.getLoader().getHandler().getPrivateLocation(l).getName());
+    	p.sendMessage("This chest is locked!");
     	return true;
     }
     
@@ -84,8 +83,8 @@ public class SavablePrivateChest extends CustomSavableBlock {
     
     @Override
     public boolean BlockPlaceEvent(BlockPlaceEvent event) {
-    	CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(event.getBlock().getLocation(), event.getPlayer());
-    	event.getPlayer().sendMessage("You have placed a lock chest");
+    	CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(event.getBlock().getLocation(), event.getPlayer().getUniqueId());
+    	event.getPlayer().sendMessage("You have placed a private chest!");
     	return false;
     }
 }

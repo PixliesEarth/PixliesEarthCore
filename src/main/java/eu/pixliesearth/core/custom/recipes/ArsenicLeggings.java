@@ -12,11 +12,11 @@ public class ArsenicLeggings extends CustomRecipe {
     public ArsenicLeggings() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Arsenic_Leggings";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Arsenic_Ingot");

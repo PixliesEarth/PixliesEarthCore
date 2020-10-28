@@ -12,11 +12,11 @@ public class ArsenicChestplate extends CustomRecipe {
     public ArsenicChestplate() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Arsenic_Chestplate";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Arsenic_Ingot");

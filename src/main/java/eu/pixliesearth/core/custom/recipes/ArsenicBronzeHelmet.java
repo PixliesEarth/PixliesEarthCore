@@ -12,11 +12,11 @@ public class ArsenicBronzeHelmet extends CustomRecipe {
     public ArsenicBronzeHelmet() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Arsenic_Bronze_Helmet";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

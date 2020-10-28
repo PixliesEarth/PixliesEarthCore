@@ -12,11 +12,11 @@ public class LeadBlock extends CustomRecipe {
     public LeadBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Lead_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Lead_Ingot");

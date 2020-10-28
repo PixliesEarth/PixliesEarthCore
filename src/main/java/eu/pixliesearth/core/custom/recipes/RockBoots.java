@@ -11,11 +11,11 @@ public class RockBoots extends CustomRecipe {
     public RockBoots() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Rock_Boots";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

@@ -11,11 +11,11 @@ public class TinChestplate extends CustomRecipe {
     public TinChestplate() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tin_Chestplate";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Tin_Ingot");

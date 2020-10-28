@@ -12,11 +12,11 @@ public class TitaniumBlock extends CustomRecipe {
     public TitaniumBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Titanium_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Titanium_Ingot");

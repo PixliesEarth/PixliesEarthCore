@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.SkullCreator;
@@ -132,6 +134,10 @@ public class CustomMachine extends CustomBlock {
 	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
 		open(event.getPlayer(), event.getClickedBlock().getLocation());
 		return false;
+	}
+	// TODO: notes
+	public boolean isUnclickable(ItemStack is) {
+		return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID());
 	}
 	/**
 	 * Sets the provided {@link Location} to a more optimal {@link Location} and returns it

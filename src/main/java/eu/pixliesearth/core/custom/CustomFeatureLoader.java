@@ -67,7 +67,7 @@ public class CustomFeatureLoader {
 		loadQuests(path);
 		loadMachines(path);
 		getHandler().loadCustomBlocksFromFile();
-		getHandler().loadMachinesFromFiles();
+		getHandler().loadMachinesFromFile();
 		loadVendors(path);
 	}
 	/**
@@ -75,7 +75,7 @@ public class CustomFeatureLoader {
 	 */
 	public void save() {
 		getHandler().saveCustomBlocksToFile();
-		getHandler().saveMachinesToFiles();
+		getHandler().saveMachinesToFile();
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			if (customListener instanceof CustomListener) 
 				((CustomListener)customListener).onServerShutdown(this, getHandler());

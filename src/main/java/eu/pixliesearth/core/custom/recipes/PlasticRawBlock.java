@@ -5,18 +5,16 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class PlasticRawBlock extends CustomRecipe {
     
     public PlasticRawBlock() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Plastic_Raw_Block";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Plastic_Raw_Ingot");

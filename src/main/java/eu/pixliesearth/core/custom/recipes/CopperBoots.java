@@ -11,11 +11,11 @@ public class CopperBoots extends CustomRecipe {
     public CopperBoots() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Copper_Boots";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:air");

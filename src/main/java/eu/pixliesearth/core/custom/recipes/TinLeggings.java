@@ -11,11 +11,11 @@ public class TinLeggings extends CustomRecipe {
     public TinLeggings() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Tin_Leggings";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Pixlies:Tin_Ingot");

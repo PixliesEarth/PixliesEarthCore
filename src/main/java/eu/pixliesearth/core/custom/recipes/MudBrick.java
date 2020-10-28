@@ -10,11 +10,11 @@ public class MudBrick extends CustomRecipe {
     public MudBrick() {
         
     }
-    
+    @Override
     public String getResultUUID() {
         return "Pixlies:Mud_Brick";
     }
-    
+    @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:dirt");

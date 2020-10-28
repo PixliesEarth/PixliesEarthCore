@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -32,6 +31,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
 import lombok.Setter;
@@ -68,6 +68,7 @@ public class CustomFeatureHandler {
 	private final Map<Location, Timer> locationToTimerMap;
 	private final Map<Location, Hologram> locationToHologramMap;
 	private final Map<Location, Double> locationToPowerMap;
+	private final Map<Location, Double> locationToTempratureMap;
 	private final Map<Location, UUID> locationToPrivateMap; // Used to lock things to a player
 	/**
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
@@ -96,6 +97,7 @@ public class CustomFeatureHandler {
 		this.locationToHologramMap = new ConcurrentHashMap<Location, Hologram>();
 		this.locationToPowerMap = new ConcurrentHashMap<Location, Double>();
 		this.locationToPrivateMap = new HashMap<Location, UUID>();
+		this.locationToTempratureMap = new HashMap<Location, Double>();
 
 		this.dropMap = new HashMap<>();
 
@@ -103,15 +105,21 @@ public class CustomFeatureHandler {
 
 		this.vendorMap = new HashMap<>();
 		
-		 new BukkitRunnable() {
-			 @Override
-			 public void run() {
-				 for (Tickable t : getTickables()) {
-					 if (t==null) continue;
-					 t.onTick();
-				 }
-	         }
-	     }.runTaskTimerAsynchronously(getInstance(), 1L, 1L);
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				new BukkitRunnable() {
+					 @Override
+					 public void run() {
+						 for (Tickable t : getTickables()) {
+							 if (t==null) continue;
+							 t.onTick();
+						 }
+			         }
+			     }.runTaskTimerAsynchronously(getInstance(), 1L, 1L);
+			}
+		}.runTaskLater(getInstance(), 400L);
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
@@ -188,13 +196,17 @@ public class CustomFeatureHandler {
 		this.customItemsToItemStackMap.put(customBlock, customBlock.buildItem());
 		// System.out.println("Registered the custom block "+customBlock.getUUID());
 	}
-	// TODO: notes
+	/**
+	 * Registers the {@link CustomMachine} provided
+	 * 
+	 * @param customBlock The {@link CustomMachine} to register
+	 */
 	public void registerMachine(CustomMachine customMachine) {
 		this.customMachines.add(customMachine);
 		this.customBlocks.add(customMachine);
 		this.customItems.add(customMachine);
 		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
-		// System.out.println("Registered the custom machine "+customMachine.getUUID());
+		System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
 	 * Registers the command
@@ -402,7 +414,7 @@ public class CustomFeatureHandler {
 	}
 	// TODO: notes
 	@SuppressWarnings("unchecked")
-	public void saveMachinesToFiles() {
+	public void saveMachinesToFile() {
 		
 		// String splitkey = ":!:!:";
 		
@@ -433,6 +445,9 @@ public class CustomFeatureHandler {
 				obj2.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
 				// a.add("MUUID"+splitkey+getCustomBlockFromLocation(entry.getKey()).getUUID());
 				// a.add("MLOCATION"+splitkey+entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
+				if (getInventoryFromLocation(entry.getKey())!=null) {
+					obj2.put("MINV", InventoryUtils.makeInventoryToJSONObject(getInventoryFromLocation(entry.getKey())));
+				}
 				obj.put(entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ(), obj2);
 			}
 		}
@@ -472,7 +487,7 @@ public class CustomFeatureHandler {
 	}
 	// TODO: notes
 	@SuppressWarnings("unchecked")
-	public void loadMachinesFromFiles() {
+	public void loadMachinesFromFile() {
 		
 		// String splitkey = ":!:!:";
 		
@@ -496,19 +511,18 @@ public class CustomFeatureHandler {
 			obj.keySet().forEach(key -> {
 				JSONObject obj2 = (JSONObject) obj.get(key);
 				Map<String, String> map = new HashMap<>();
-				obj2.forEach((k,v) -> map.put((String)k,(String)v));
-				/*a.forEach(value -> {
-					String s = (String) value;
-					String[] s2 = s.split(splitkey);
-					map.put(s2[0], s2[1]);
-				});*/
+				obj2.forEach((k,v) -> map.put((String)k,v.toString()));
 				String[] l2 = map.get("MLOCATION").split(":");
 				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
 				getCustomMachines().forEach(m -> {
 					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
 						Inventory i = m.getInventory();
-						if (i!=null) 
+						if (i!=null) {
+							if (obj2.get("MINV")!=null) {
+								InventoryUtils.getInventoryContentsFromJSONObject((JSONObject)obj2.get("MINV"), i);
+							}
 							this.locationToInventoryMap.put(location, i);
+						}
 						m.loadFromSaveData(i, location, map);
 						// System.err.println("[DEBUG] loaded the machine "+m.getUUID()+" with the data:");
 						// System.err.println("[DEBUG] "+map.get("MLOCATION"));
@@ -641,6 +655,7 @@ public class CustomFeatureHandler {
 			this.locationToHologramMap.remove(location);
 			this.locationToPowerMap.remove(location);
 			this.locationToPrivateMap.remove(location);
+			this.locationToTempratureMap.remove(location);
 			// TODO: drop inventory contents
 		}
 		location.getBlock().setType(MinecraftMaterial.AIR.getMaterial());
@@ -693,16 +708,38 @@ public class CustomFeatureHandler {
 	public void deletePowerFromLocation(Location location) {
 		this.locationToPowerMap.remove(location);
 	}
-	
-	public void registerPrivateLocation(Location location, OfflinePlayer player) {
-		this.locationToPrivateMap.put(location, player.getUniqueId());
+	// TODO: notes
+	public void registerPrivateLocation(Location location, UUID uuid) {
+		this.locationToPrivateMap.put(location, uuid);
 	}
-	
+	// TODO: notes
 	public void unregisterPrivateLocation(Location location) {
 		this.locationToPrivateMap.remove(location);
 	}
-	
-	public OfflinePlayer getPrivateLocation(Location location) {
-		return Bukkit.getOfflinePlayer(this.locationToPrivateMap.get(location));
+	// TODO: notes
+	public UUID getPrivateLocation(Location location) {
+		return this.locationToPrivateMap.get(location);
+	}
+	// TODO: notes
+	public void addTempratureToLocation(Location location, double amount) {
+		Double d = getTempratureAtLocation(location);
+		if (d==null) {
+			this.locationToTempratureMap.put(location, amount);
+		} else {
+			this.locationToTempratureMap.remove(location);
+			this.locationToTempratureMap.put(location, d+amount);
+		}
+	}
+	// TODO: notes
+	public Double getTempratureAtLocation(Location location) {
+		return this.locationToTempratureMap.get(location);
+	}
+	// TODO: notes
+	public void removeTempratureFromLocation(Location location, double amount) {
+		addTempratureToLocation(location, -amount);
+	}
+	// TODO: notes
+	public void deleteTempratureFromLocation(Location location) {
+		this.locationToTempratureMap.remove(location);
 	}
 }

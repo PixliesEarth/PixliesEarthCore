@@ -44,7 +44,7 @@ public class EnergyBlockHydroGenerator extends CustomEnergyBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Solar Panel";
+        return "§6Hydro Generator";
     }
 
     @Override
