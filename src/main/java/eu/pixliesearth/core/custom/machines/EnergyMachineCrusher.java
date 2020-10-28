@@ -71,13 +71,13 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 		if (inv==null) return;
 		inv.setItem(43, buildInfoItem(loc));
 		if (timer==null) {
-			h.registerTimer(loc, new Timer(2500L));
+			h.registerTimer(loc, new Timer(1000L));
 			if (getContainedPower(loc)<0.5D) {
 				return; // Not enough power
 			}
 			ItemStack input = inv.getItem(19); // Input slot
 			if (input==null || input.getType().equals(Material.AIR)) {
-				inv.setItem(21, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+				// inv.setItem(21, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 				return;
 			}
 			String id = CustomItemUtil.getUUIDFromItemStack(input);
@@ -212,11 +212,6 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 				addToResult(loc, inv, table[new Random().nextInt(table.length)]);
 			}
 			input.setAmount(input.getAmount()-1);
-			if (input==null) {
-				inv.setItem(21, input);
-			} else {
-				inv.clear(21);
-			}
 			h.removePowerFromLocation(loc, 0.5D);
 		} else {
 			if (timer.hasExpired()) {
