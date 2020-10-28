@@ -68,7 +68,13 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     		return false;
     	}
 
-	    return SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
+	    try {
+            SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
+        } catch (Exception e) {
+	        sendHelp(sender, 1);
+        }
+
+	    return true;
     }
 
     @Override
