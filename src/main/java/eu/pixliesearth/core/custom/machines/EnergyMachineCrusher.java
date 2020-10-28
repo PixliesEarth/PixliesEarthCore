@@ -63,7 +63,6 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 		return inv;
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
 		if (loc==null) return;
@@ -210,6 +209,8 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Carbon")
 				};
 				addToResult(loc, inv, table[new Random().nextInt(table.length)]);
+			} else {
+				return;
 			}
 			input.setAmount(input.getAmount()-1);
 			h.removePowerFromLocation(loc, 0.5D);
