@@ -12,15 +12,15 @@ import java.util.*;
  * @author zenake#3931
  *
  */
-public class DustAluminum extends CustomItem {
+public class IngotAluminium extends CustomItem {
 	
-    public DustAluminum() {
+    public IngotAluminium() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.GUNPOWDER;
+        return Material.IRON_INGOT;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class DustAluminum extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminum Dust";
+        return "§6Aluminium Ingot";
     }
 
     @Override
@@ -65,12 +65,12 @@ public class DustAluminum extends CustomItem {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.REDSTONE;
+        return CreativeTabs.MISC;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Aluminium_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override

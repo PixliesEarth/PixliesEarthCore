@@ -1,26 +1,24 @@
-package eu.pixliesearth.core.custom.items;
+package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.CustomBlock;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class IngotAluminum extends CustomItem {
+
+public class BlockAluminium extends CustomBlock {
 	
-    public IngotAluminum() {
-
-    }
-
-    @Override
+	public BlockAluminium() {
+		
+	}
+	
+	@Override
     public Material getMaterial() {
-        return Material.IRON_INGOT;
+        return Material.IRON_BLOCK;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class IngotAluminum extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminum Ingot";
+        return "§6Aluminum Block";
     }
 
     @Override
@@ -65,16 +63,32 @@ public class IngotAluminum extends CustomItem {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.MISC;
+        return CreativeTabs.BUILDING;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Aluminium_Block"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-
+    
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-        return false;
+    	return false;
     }
+    
+	@Override
+	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
+		return false;
+	}
+
+	@Override
+	public boolean BlockBreakEvent(BlockBreakEvent event) {
+		return false;
+	}
+	
+	@Override
+	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
+		return false;
+	}
+	
 }
