@@ -1,5 +1,8 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +18,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
@@ -44,6 +48,26 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
     public String getUUID() {
         return "Machine:Nuclear_Generator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+    
+    @Override
+	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
+		if (map.get("TIMEREX")!=null && map.get("TIMEREN")!=null)
+			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
+		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
+		CustomFeatureLoader.getLoader().getHandler().addTempratureToLocation(location, Double.parseDouble(map.get("TEMP")));
+	}
+	
+	@Override
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		if (timer!=null) {
+			map.put("TIMEREX", Long.toString(timer.getExpiry()));
+			map.put("TIMEREN", Boolean.toString(timer.isEnded()));
+		}
+		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
+		map.put("TEMP", Double.toString(getTemprature(location)));
+		return map;
+	}
     
     @Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
@@ -89,7 +113,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 						inv.setItem(i, new ItemBuilder(is).addNBTTag("dmg", Integer.toString(7200)/*30 mins (30x60x4)*/, NBTTagType.STRING).build()); // TODO: make it change texture
 					}
 				} else if (id.equals("Pixlies:Nuclear_Coolant")) {
-					if (NBTUtil.getTagsFromItem(is).getString("dmg")!=null) {
+					if (NBTUtil.getTagsFromItem(is).getString("dmg")!=null && !NBTUtil.getTagsFromItem(is).getString("dmg").equalsIgnoreCase("")) {
 						NBTTags tags =  NBTUtil.getTagsFromItem(is);
 						if (d<35) {
 							// Do nothing
@@ -125,7 +149,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 							} else if (d<100) {
 								// Do nothing
 							} else if (d<250) {
-								if (Math.random()<((d/100D)+0.15D)) {
+								if (Math.random()>((d/100D)+0.15D)) {
 									Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {b.setType(Material.AIR);}}, 0L);
 									h.removeTempratureFromLocation(loc, 0.1D);
 								}
@@ -142,7 +166,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 							} else if (d<100) {
 								// Do nothing
 							} else if (d<250) {
-								if (Math.random()<((d/100D)+0.15D)) {
+								if (Math.random()>((d/100D)+0.15D)) {
 									Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {b.setType(Material.WATER);}}, 0L);
 									h.removeTempratureFromLocation(loc, 0.3D);
 								}
@@ -159,7 +183,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 							} else if (d<100) {
 								// Do nothing
 							} else if (d<250) {
-								if (Math.random()<((d/100D)+0.15D)) {
+								if (Math.random()>((d/100D)+0.15D)) {
 									Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {b.setType(Material.ICE);}}, 0L);
 									h.removeTempratureFromLocation(loc, 0.5D);
 								}
@@ -191,14 +215,20 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 					}
 				}
 			}
-			if (getTemprature(loc)>375D) {
-				loc.getWorld().createExplosion(loc, 15f);
-			} else if (getTemprature(loc)>350) {
-				loc.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 1);
-			} else if (getTemprature(loc)>300) {
-				loc.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 1);
-			} else if (getTemprature(loc)>275) {
-				loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 1);
+			double temp = getTemprature(loc);
+			if (temp < 275D) {
+				// Do nothing
+			} else if (temp < 300D) {
+				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 1); // SMOKE_NORMAL
+			} else if (temp < 350D) {
+				makeParticeAt(loc, Particle.DRIP_LAVA, 3); // CAMPFIRE_SIGNAL_SMOKE
+				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 2); // CAMPFIRE_COSY_SMOKE
+			} else if (temp < 375D) {
+				makeParticeAt(loc, Particle.DRIP_LAVA, 5); // CAMPFIRE_SIGNAL_SMOKE
+				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 5); // CAMPFIRE_SIGNAL_SMOKE
+			} else {
+				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 50);
+				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {h.removeCustomBlockFromLocation(loc);loc.getWorld().createExplosion(loc, 15f);}}, 0L);
 			}
 		} else {
 			if (timer.hasExpired()) {
@@ -207,6 +237,10 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 				// Do nothing
 			}
 		}
+    }
+    
+    public void makeParticeAt(Location loc, Particle p, int amount) {
+    	Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount);}}, 0L);
     }
     
     @Override
@@ -232,7 +266,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
     	if (d==null) {
     		CustomFeatureLoader.getLoader().getHandler().addTempratureToLocation(location, 0D);
     	}
-    	return (d==null) ? 0.0D : d;
+    	return (d==null) ? 0.0D : Methods.round(d, 3);
     }
     
     public ItemStack buildWaterItem(Location location, Inventory inv) {

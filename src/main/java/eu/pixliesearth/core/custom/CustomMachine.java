@@ -139,6 +139,15 @@ public class CustomMachine extends CustomBlock {
 	public boolean isUnclickable(ItemStack is) {
 		return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID());
 	}
+	// TODO: notes
+	public void closeForAll(Location loc) {
+		closeForAll(CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(loc));
+	}
+	// TODO: notes
+	public void closeForAll(Inventory inv) {
+		if (inv==null) return;
+		inv.getViewers().forEach(e -> e.closeInventory());
+	}
 	/**
 	 * Sets the provided {@link Location} to a more optimal {@link Location} and returns it
 	 */

@@ -1,5 +1,12 @@
 package eu.pixliesearth.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Set;
+import java.util.TreeMap;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -9,11 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
 
 public class Methods {
 	
@@ -307,5 +309,14 @@ public class Methods {
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
-
+    
+    @SuppressWarnings("unchecked")
+	public static <E> List<E> convertSetIntoList(Set<E> set) {
+    	List<E> list = new ArrayList<>();
+    	for (Object e : set) {
+    		list.add((E) e);
+    	}
+    	return list;
+    }
+    
 }

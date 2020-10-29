@@ -41,7 +41,9 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 				Double d3 = getContainedPower(b.getLocation());
 				if (d==null || d2==null || d3==null) continue;
 				if (d<(d2-d3)) {
-					giveEnergy(location, b.getLocation(), getContainedPower(location));
+					Double d4 = getContainedPower(location);
+					if (d4==null || b.getLocation()==null) continue;
+					giveEnergy(location, b.getLocation(), d);
 				} else {
 					if (!giveEnergy(location, b.getLocation(), (getCapacity(b.getLocation())-getContainedPower(b.getLocation())))) {
 						giveEnergy(location, b.getLocation(), 1D);

@@ -193,13 +193,6 @@ commands:
     description: homecommand
   invsee:
     description: insvee
-  machines:
-    description: machines
-    aliases:
-      - machinery
-      - machine
-      - sf
-      - slimefun
 
 permissions:
   # GENERAL

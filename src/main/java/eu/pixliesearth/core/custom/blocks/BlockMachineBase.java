@@ -1,28 +1,28 @@
-package eu.pixliesearth.core.custom.items;
+package eu.pixliesearth.core.custom.blocks;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.bukkit.Location;
+import eu.pixliesearth.core.custom.CustomBlock;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomFuel;
-
-public class FuelUraniumChunk extends CustomFuel {
+import java.util.*;
+/**
+ * 
+ * @author BradBot_1
+ *
+ */
+public class BlockMachineBase extends CustomBlock {
 	
-    public FuelUraniumChunk() {
-        
-    }
-    
-    @Override
+	public BlockMachineBase() {
+		
+	}
+	
+	@Override
     public Material getMaterial() {
-        return Material.SCUTE;
+        return Material.REDSTONE_BLOCK;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class FuelUraniumChunk extends CustomFuel {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Uranium Chunk";
+        return "§6Machine Block";
     }
 
     @Override
@@ -67,26 +67,32 @@ public class FuelUraniumChunk extends CustomFuel {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.REDSTONE;
+        return CreativeTabs.BUILDING;
     }
-    
+
     @Override
     public String getUUID() {
-        return "Pixlies:Uranium_Chunk"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Machine_Base"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-        return false;
+    	return false;
     }
     
-    @Override
-    public long getBurnTime() {
-		return 15L;
+	@Override
+	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
+		return false;
 	}
-    
-    @Override
-    public void onUsedAsFuel(Location location) {
-    	location.getWorld().createExplosion(location, 3.5f);
-    }
+
+	@Override
+	public boolean BlockBreakEvent(BlockBreakEvent event) {
+		return false;
+	}
+	
+	@Override
+	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
+		return false;
+	}
+	
 }

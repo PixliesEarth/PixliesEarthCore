@@ -176,7 +176,7 @@ public class CustomCrafterMachine extends CustomMachine {
 				return i;
 		return -1;
 	}
-	
+	// TODO: make this stack the same items
 	public boolean addToResultSlots(Location loc, Inventory inv, ItemStack is) {
 		for (int i : resultSlots) {
 			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(Material.AIR)) {
@@ -252,7 +252,8 @@ public class CustomCrafterMachine extends CustomMachine {
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(MinecraftMaterial.AIR.getUUID()));
 		inv.setItem(45, getRecipeBook(r));
 		inv.setItem(53, new ItemBuilder(MinecraftMaterial.BARRIER.getMaterial()).setDisplayName("§cClose").addNBTTag("EXTRA", "CLOSE", NBTTagType.STRING).build()); // Close item (back)
-		inv.setItem(49, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).setAmount(1).addNBTTag("EXTRA", "RECIPERESULTITEM", NBTTagType.STRING).build());
+		ItemStack is = CustomItemUtil.getItemStackFromUUID(r.getResultUUID());
+		inv.setItem(49, new ItemBuilder((is==null) ? CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()) : is).setAmount(1).addNBTTag("EXTRA", "RECIPERESULTITEM", NBTTagType.STRING).build());
 		return inv;
 	}
 

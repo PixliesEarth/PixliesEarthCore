@@ -1,8 +1,9 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.CustomCrafterMachine;
+import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 
-public class MachineForge extends CustomCrafterMachine { //TODO: make use fuel
+public class MachineForge extends CustomFuelableCrafterMachine { //TODO: make use fuel
 	
 	public MachineForge() {
 		
@@ -22,4 +23,9 @@ public class MachineForge extends CustomCrafterMachine { //TODO: make use fuel
     public String getUUID() {
         return "Machine:Forge"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+
+	@Override
+	public String getFuelUUID() {
+		return MinecraftMaterial.MAGMA_CREAM.getUUID();
+	}
 }

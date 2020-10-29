@@ -19,6 +19,7 @@ import eu.pixliesearth.utils.CustomItemUtil;
  */
 public class CustomFuelListener extends CustomListener {
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void FurnaceBurnEvent(FurnaceBurnEvent event) {
 		ItemStack is = event.getFuel();

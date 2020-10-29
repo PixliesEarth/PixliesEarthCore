@@ -30,6 +30,9 @@ public class CustomFuel extends CustomItem {
 	}
 	/**
 	 * Called when the item is used as fuel
+	 * 
+	 * @deprecated currently broken!
 	 */
+	@Deprecated
 	public void onUsedAsFuel(Location location) { }
 }
