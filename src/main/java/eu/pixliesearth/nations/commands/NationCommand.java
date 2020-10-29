@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.commands;
 
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
@@ -11,6 +12,8 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -71,7 +74,10 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 	    try {
             SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
         } catch (Exception e) {
-	        sendHelp(sender, 1);
+	        StringWriter sw = new StringWriter();
+	        e.printStackTrace(new PrintWriter(sw));
+	        System.out.println("§7There was a §cproblem §7with nation commands: \n§b" + sw.toString());
+	        sender.sendMessage(Lang.NATION + "§cThere was a problem with your input, check if you used the correct syntax.");
         }
 
 	    return true;
