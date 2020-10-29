@@ -1,13 +1,13 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.utils.InventoryUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
@@ -88,11 +88,11 @@ public class Nation {
     }
 
     public ItemStack getFlag() {
-        return (ItemStack) Machine.deserialize(banner);
+        return (ItemStack) InventoryUtils.deserialize(banner);
     }
 
     public void setFlag(ItemStack flag) {
-        setBanner(Machine.serialize(flag));
+        setBanner(InventoryUtils.serialize(flag));
         save();
     }
 

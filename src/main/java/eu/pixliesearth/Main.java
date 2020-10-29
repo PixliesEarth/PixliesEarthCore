@@ -14,9 +14,6 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.listener.*;
-import eu.pixliesearth.core.machines.Machine;
-import eu.pixliesearth.core.machines.MachineListener;
-import eu.pixliesearth.core.machines.MachineTask;
 import eu.pixliesearth.core.modules.ChatSystem;
 import eu.pixliesearth.core.modules.PrivateMessage;
 import eu.pixliesearth.core.modules.ShopSystem;
@@ -41,10 +38,7 @@ import eu.pixliesearth.nations.entities.nation.*;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.GulagThread;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.utils.UtilThread;
+import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,9 +64,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -96,18 +87,17 @@ public final class Main extends JavaPlugin {
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
     private @Getter @Setter boolean gulagActive = false;
-    private @Getter MachineTask machineTask;
     private @Getter LuckPerms luckPerms;
-    private @Getter Config redissonConfig;
-    private @Getter RedissonClient redissonClient;
     private @Getter Gson gson;
     private @Getter CustomFeatureLoader loader;
     private @Getter Map<String, VendorItem> vendorItems;
+    private @Getter FastConf fastConf;
 
     @Override
     public void onEnable() {
         instance = this;
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000));
         init();
     }
 
@@ -119,10 +109,6 @@ public final class Main extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-
-        redissonConfig = new Config();
-        redissonConfig.useSingleServer().setAddress("redis://127.0.0.1:6379");
-        redissonClient = Redisson.create(redissonConfig);
 
         gson = new Gson();
 
@@ -201,15 +187,6 @@ public final class Main extends JavaPlugin {
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 60, (20 * 60) * 60);
 
-        // MACHINES
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for  (Machine machine : utilLists.machines.values())
-                    machine.save();
-            }
-        }.runTaskTimerAsynchronously(this, (20 * 60) * 5, (20 * 60) * 5);
-
         NationManager.init();
 
         //BungeeCord
@@ -262,7 +239,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -270,7 +247,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
     }
 
@@ -289,8 +266,6 @@ public final class Main extends JavaPlugin {
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())
             chest.setType(Material.AIR);
-        for (Machine machine : utilLists.machines.values())
-            machine.save();
         JSONFile vendorItemsFile = new JSONFile(getDataFolder().getAbsolutePath() + "/", "vendoritems");
         vendorItemsFile.clearFile();
         for (Map.Entry<String, VendorItem> entry : vendorItems.entrySet())
@@ -354,7 +329,6 @@ public final class Main extends JavaPlugin {
         getCommand("stats").setExecutor(new StatsCommand());
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
-        getCommand("machines").setExecutor(new MachinesCommand());
     }
 
     private void registerEvents(PluginManager manager) {
@@ -379,7 +353,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionManager(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
-        manager.registerEvents(new MachineListener(), this);
         manager.registerEvents(new FlagListener(), this);
         manager.registerEvents(new CustomBlockListener(), this);
     }
@@ -389,11 +362,9 @@ public final class Main extends JavaPlugin {
      * @return A profile object of the given playerUUID
      */
     public Profile getProfile(UUID uuid) {
-/*        if (utilLists.profiles.get(uuid) == null)
-            utilLists.profiles.put(uuid, Profile.get(uuid));*/
-        if (!redissonClient.getBucket("profile:" + uuid.toString()).isExists())
-            redissonClient.getBucket("profile:" + uuid.toString()).set(gson.toJson(Profile.get(uuid)));
-        return gson.fromJson((String) redissonClient.getBucket("profile:" + uuid.toString()).get(), Profile.class);
+       if (utilLists.profiles.get(uuid) == null)
+            utilLists.profiles.put(uuid, Profile.get(uuid));
+       return utilLists.profiles.get(uuid);
     }
 
     public void discordEnable() {

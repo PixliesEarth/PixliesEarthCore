@@ -1,6 +1,6 @@
 package eu.pixliesearth.core.vendors;
 
-import eu.pixliesearth.core.machines.Machine;
+import eu.pixliesearth.utils.InventoryUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ public class VendorItem {
     private Double sellPrice;
 
     public ItemStack getRawItemStack() {
-        return (ItemStack) Machine.deserialize(rawItem);
+        return (ItemStack) InventoryUtils.deserialize(rawItem);
     }
 
 }

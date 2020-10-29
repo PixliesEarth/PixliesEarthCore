@@ -1,8 +1,8 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Boost;
+import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
 import org.bukkit.Location;
@@ -67,15 +67,13 @@ public class UtilLists {
 
     public Map<UUID, Integer> craftingTables;
 
-    public Map<Location, Machine> machines;
-
-    public Map<UUID, Machine> openMachines;
-
     public Map<UUID, Timer> waitingGuns;
+
+    public Map<UUID, Profile> profiles;
 
     public UtilLists() {
         staffMode = new HashSet<>();
-        // profiles = new HashMap<>();
+        profiles = new HashMap<>();
         tpaRequests = new HashMap<>();
         discordcodes = new HashMap<>();
         warpAdder = new HashSet<>();
@@ -101,8 +99,6 @@ public class UtilLists {
         royalGifters = new ArrayList<>();
         chatTypes = new HashMap<>();
         craftingTables = new HashMap<>();
-        machines = new HashMap<>();
-        openMachines = new HashMap<>();
         waitingGuns = new ConcurrentHashMap<>();
     }
 

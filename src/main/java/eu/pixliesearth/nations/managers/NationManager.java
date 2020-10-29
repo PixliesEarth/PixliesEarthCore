@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class NationManager {
 
-    public static NationStorage nations;
+    public static Map<String, Nation> nations;
     public static Map<String, String> names;
 
     public static void init() {
-        nations = new NationStorage();
+        nations = new HashMap<>();
         names = new HashMap<>();
         Gson gson = new Gson();
         for (Document d : Main.getNationCollection().find()) {
@@ -29,7 +29,7 @@ public class NationManager {
         }
     }
 
-    @Data
+/*    @Data
     public static class NationStorage {
 
         private static final Gson gson = new Gson();
@@ -58,6 +58,6 @@ public class NationManager {
             instance.getRedissonClient().getBucket("nation:" + id).delete();
         }
 
-    }
+    }*/
 
 }

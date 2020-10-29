@@ -143,7 +143,7 @@ public class Profile {
     }
 
     public void save() {
-        instance.getRedissonClient().getBucket("profile:" + uniqueId).set(instance.getGson().toJson(this));
+        instance.getUtilLists().profiles.put(UUID.fromString(uniqueId), this);
     }
 
     public String getDisplayName() {

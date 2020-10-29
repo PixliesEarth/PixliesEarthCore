@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.entities.chunk;
 
+import com.github.yannicklamprecht.worldborder.api.BorderAPI;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import eu.pixliesearth.Main;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Data
 @AllArgsConstructor
@@ -30,18 +32,24 @@ public class NationChunk {
     private int x;
     private int z;
 
-    public void claim() {
-        if (table.get(world).get(x, z) == null) {
-            Table<Integer, Integer, NationChunk> rst = table.get(world);
-            rst.put(x, z, this);
-            table.put(world, rst);
-            Nation nation = Nation.getById(nationId);
-            if (!nation.getChunks().contains(serialize())) {
-                nation.getChunks().add(serialize());
-                nation.save();
+    public boolean claim() {
+        try {
+            if (table.get(world).get(x, z) == null) {
+                Table<Integer, Integer, NationChunk> rst = table.get(world);
+                rst.put(x, z, this);
+                table.put(world, rst);
+                Nation nation = Nation.getById(nationId);
+                if (!nation.getChunks().contains(serialize())) {
+                    nation.getChunks().add(serialize());
+                    nation.save();
+                }
+                System.out.println("§bChunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
             }
-            System.out.println("§bChunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public void unclaim() {
@@ -109,6 +117,10 @@ public class NationChunk {
     }
 
     public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId) {
+        if (!world.equalsIgnoreCase("world") && !Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
+            player.sendMessage(Lang.NATION + "§cYou can't claim in this world.");
+            return false;
+        }
         if (get(world, x, z) != null) {
             player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
             return false;
@@ -126,7 +138,7 @@ public class NationChunk {
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, nc, changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            nc.claim();
+            boolean claim = nc.claim();
             nation.withdraw(15);
             for (Player members : nation.getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));

@@ -5,9 +5,9 @@ import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import lombok.Data;
@@ -39,7 +39,7 @@ public class Vendor {
     public void open(Player player) {
         Profile profile = instance.getProfile(player.getUniqueId());
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
-        if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) Machine.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
+        if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
         if (soldLast == null) return;
         Gui gui = new Gui(instance, 6, title);
 
@@ -161,7 +161,7 @@ public class Vendor {
         if (profile.getExtras().containsKey("itemSold")) itemsSold = Integer.parseInt((String) profile.getExtras().get("itemSold"));
         itemsSold += amount;
         profile.getExtras().put("itemSold", Integer.toString(itemsSold));
-        profile.getExtras().put("soldLast", Machine.serialize(item));
+        profile.getExtras().put("soldLast", InventoryUtils.serialize(item));
         profile.save();
         return true;
     }

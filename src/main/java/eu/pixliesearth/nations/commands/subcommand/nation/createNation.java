@@ -1,6 +1,5 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
-import eu.pixliesearth.core.machines.Machine;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.NationCreationEvent;
 import eu.pixliesearth.localization.Lang;
@@ -11,6 +10,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.dynmap.area.Colours;
+import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.Methods;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -70,7 +70,7 @@ public class createNation extends SubCommand {
         }
         final String id = Methods.generateId(7);
         final Colours dynMapColour = Colours.getRandom();
-        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), Machine.serialize(new ItemStack(Material.WHITE_BANNER)), 0, 0.0, player.getUniqueId().toString(), dynMapColour.getFill(), dynMapColour.getStroke(), System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(new ItemStack(Material.WHITE_BANNER)), 0, 0.0, player.getUniqueId().toString(), dynMapColour.getFill(), dynMapColour.getStroke(), System.currentTimeMillis()+"", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
