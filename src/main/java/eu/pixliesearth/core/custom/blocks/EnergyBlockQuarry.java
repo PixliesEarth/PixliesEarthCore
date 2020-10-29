@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -61,6 +62,32 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 	        final int maxY = location.getBlockY()-1;
 	        final int maxZ = minZ | 15;
 			
+	        
+	        for (int y = maxY; y >= 0; --y) {
+	        	for (int x = minX; x <= maxX; ++x) {
+	        		for (int z = minZ; z <= maxZ; ++z) {
+	        			Block b = chunk.getBlock(x & 15, y, z & 15);
+	                    if (b==null || b.getType().equals(Material.AIR)) continue;
+	                    // TODO: ignore unbreakable blocks
+	        			String id = CustomItemUtil.getUUIDFromLocation(b.getLocation());
+	        			if (id==null) continue;
+	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
+	        			if (is==null) continue;
+	        			inventory.addItem(is);
+	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
+							@Override
+							public void run() {
+								h.removeCustomBlockFromLocation(b.getLocation());
+								b.setType(Material.AIR);
+							}
+	        			}, 1L);
+	        			h.removePowerFromLocation(location, energyPerOperation);
+	        			return;
+	        		}
+	        	}
+	        }
+	        
+	        /*
 	        for (int x = minX; x <= maxX; ++x) {
 	            for (int y = 0; y <= maxY; ++y) {
 	                for (int z = minZ; z <= maxZ; ++z) {
@@ -84,6 +111,7 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 	                }
 	            }
 	        }
+	        */
 		} else {
 			if (timer.hasExpired()) {
 				h.unregisterTimer(location);
@@ -111,4 +139,13 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
         return "Machine:Quarry"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 	
+    public boolean InventoryClickEvent(InventoryClickEvent event) {
+    	ItemStack is = event.getCurrentItem();
+    	if (is==null) return false;
+    	String s = CustomItemUtil.getUUIDFromItemStack(is);
+    	if (s==null) return false;
+    	if (s.equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) return true;
+    	return false;
+    }
+    
 }
