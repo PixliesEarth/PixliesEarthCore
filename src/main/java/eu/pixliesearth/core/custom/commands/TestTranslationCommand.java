@@ -32,7 +32,7 @@ public class TestTranslationCommand extends CustomCommand {
                     lang.send(commandsender);
             } else {
                 for (Lang lang : Lang.values())
-                    lang.send(commandsender, args[0]);
+                    lang.sendWithlangName(commandsender, args[0]);
             }
         } catch (Exception ignored) { }
         return true;

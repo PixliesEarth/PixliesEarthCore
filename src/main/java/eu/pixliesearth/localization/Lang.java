@@ -317,7 +317,7 @@ public enum Lang {
         return true;
     }
 
-    public boolean send(CommandSender sender, String langName) {
+    public boolean sendWithlangName(CommandSender sender, String langName) {
         sender.sendMessage(PREFIX + languages.get(langName).replace("&", "§"));
         return true;
     }
