@@ -1,16 +1,21 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomBlock;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomBlock;
 
 public class BlockRubberGlass extends CustomBlock {
 	
@@ -85,20 +90,22 @@ public class BlockRubberGlass extends CustomBlock {
 
 	@Override
 	public boolean BlockBreakEvent(BlockBreakEvent event) {
-		int i = new Random().nextInt(4);
-		if (i==2) {
-			event.getPlayer().sendMessage("§aOh no! You tried to break §r"+getDefaultDisplayName()+"§a but the glass reflected your attack back at you!");
-			EntityDamageEvent event2 = new EntityDamageEvent(event.getPlayer(), DamageCause.CONTACT, 1.0);
-			event2.callEvent();
-			event.setCancelled(true);
-			return true; // Cancel event
-		}
 		return false;
 	}
 	
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		return false;
+	}
+	
+	@Override
+	public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+		return true;
+	}
+	
+	@Override
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+		return true;
 	}
 	
 }

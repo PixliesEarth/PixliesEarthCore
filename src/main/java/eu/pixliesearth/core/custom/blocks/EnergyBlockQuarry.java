@@ -5,7 +5,9 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -139,6 +141,7 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
         return "Machine:Quarry"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 	
+    @Override
     public boolean InventoryClickEvent(InventoryClickEvent event) {
     	ItemStack is = event.getCurrentItem();
     	if (is==null) return false;
@@ -147,5 +150,15 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
     	if (s.equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) return true;
     	return false;
     }
+    
+    @Override
+    public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+		return true;
+	}
+	
+    @Override
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+		return true;
+	}
     
 }

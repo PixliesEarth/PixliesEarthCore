@@ -7,7 +7,9 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -15,6 +17,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockWindTurbine extends CustomEnergyBlock {
@@ -133,4 +136,66 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
     	Bukkit.getScheduler().cancelTask(id);
     	return false;
     }
+    
+    @Override
+    public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+    	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	Block b = null;
+    	for (Block b2 : event.blockList().toArray(new Block[event.blockList().size()])){
+			if(h.isCustomBlockAtLocation(b2.getLocation())) {
+				if (CustomItemUtil.getUUIDFromLocation(b2.getLocation()).equalsIgnoreCase(getUUID())) {
+					b = b2;
+				}
+			}
+    	}
+    	if (b==null) return true;
+		Location loc = b.getLocation();
+    	World w = loc.getWorld();
+    	int x = loc.getBlockX();
+    	int y = loc.getBlockY();
+    	int z = loc.getBlockZ();
+    	Block b2 = w.getBlockAt(x, y+1, z);
+    	Block b3 = w.getBlockAt(x, y+2, z);
+    	Block b4 = w.getBlockAt(x, y+3, z);
+    	Block b5 = w.getBlockAt(x, y+4, z);
+    	h.removeCustomBlockFromLocation(b2.getLocation());
+    	h.removeCustomBlockFromLocation(b3.getLocation());
+    	h.removeCustomBlockFromLocation(b4.getLocation());
+    	h.removeCustomBlockFromLocation(b5.getLocation());
+    	Integer id = h.getLocationEvent(loc);
+    	if (id==null) return false;
+    	Bukkit.getScheduler().cancelTask(id);
+		return false;
+	}
+	
+    @Override
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+    	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	Block b = null;
+    	for (Block b2 : event.blockList().toArray(new Block[event.blockList().size()])){
+			if(h.isCustomBlockAtLocation(b2.getLocation())) {
+				if (CustomItemUtil.getUUIDFromLocation(b2.getLocation()).equalsIgnoreCase(getUUID())) {
+					b = b2;
+				}
+			}
+    	}
+    	if (b==null) return true;
+		Location loc = b.getLocation();
+    	World w = loc.getWorld();
+    	int x = loc.getBlockX();
+    	int y = loc.getBlockY();
+    	int z = loc.getBlockZ();
+    	Block b2 = w.getBlockAt(x, y+1, z);
+    	Block b3 = w.getBlockAt(x, y+2, z);
+    	Block b4 = w.getBlockAt(x, y+3, z);
+    	Block b5 = w.getBlockAt(x, y+4, z);
+    	h.removeCustomBlockFromLocation(b2.getLocation());
+    	h.removeCustomBlockFromLocation(b3.getLocation());
+    	h.removeCustomBlockFromLocation(b4.getLocation());
+    	h.removeCustomBlockFromLocation(b5.getLocation());
+    	Integer id = h.getLocationEvent(loc);
+    	if (id==null) return false;
+    	Bukkit.getScheduler().cancelTask(id);
+		return false;
+	}
 }

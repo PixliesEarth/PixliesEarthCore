@@ -1,13 +1,16 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
+import java.util.Map.Entry;
+
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Map.Entry;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 /**
  * 
  * @author BradBot_1
@@ -45,7 +48,23 @@ public class CustomArmour extends CustomItem {
 	 * @return If to cancel the event
 	 */
 	public boolean EntityDamageEvent(EntityDamageEvent event) {return false;}
-	
+	/**
+	 * Called when the player equips or unequips the armour
+	 * 
+	 * @param event The {@link InventoryClickEvent} that has occurred
+	 * @return If to cancel the event
+	 */
+	public boolean ArmourEquipEvent(InventoryClickEvent event) { return false; }
+	/**
+	 * Called when the player attacks someone while wearing the custom armour
+	 * 
+	 * @param event The {@link EntityDamageByEntityEvent} that has occurred
+	 * @return If to cancel the event
+	 */
+	public boolean EntityDamageByEntityEvent(EntityDamageByEntityEvent event) { return false; }
+	/**
+	 * @return Build the {@link CustomItem} into an {@link ItemStack} that can be used ingame
+	 */
 	@Override
 	public ItemStack buildItem() {
 		return new ItemBuilder(getMaterial()) {{
