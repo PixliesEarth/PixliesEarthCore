@@ -128,8 +128,8 @@ public class Vendor {
                 gui.show(player);
             } catch (Exception ignore) { }
         }), 0, 0);
-        gui.addPane(hotBar);
         gui.addPane(outline);
+        gui.addPane(hotBar);
         gui.addPane(itemsPane);
 
         gui.show(player);
