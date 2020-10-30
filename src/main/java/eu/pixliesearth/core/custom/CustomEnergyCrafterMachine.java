@@ -156,7 +156,7 @@ public abstract class CustomEnergyCrafterMachine extends CustomCrafterMachine im
 	}
 	
 	public ItemStack buildInfoItem(Location location) {
-		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName("§6Energy").addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 	
 	public double getContainedPower(Location location) {
