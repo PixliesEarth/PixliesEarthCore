@@ -1,10 +1,12 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.listener.ProtectionManager;
-import eu.pixliesearth.localization.Lang;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -18,11 +20,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomEnergyItem;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.listener.ProtectionManager;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.CustomItemUtil;
 
-public class ToolExplosivePickaxe extends CustomItem {
+public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
 	
-	public ToolExplosivePickaxe() {
+	public EnergyToolExplosivePickaxe() {
 		
 	}
 
@@ -45,7 +52,11 @@ public class ToolExplosivePickaxe extends CustomItem {
     public String getDefaultDisplayName() {
         return "§6Explosive Pickaxe";
     }
-
+    
+	public double getCapacity() {
+		return 100000D;
+	}
+    
     @Override
     public boolean isGlowing() {
         return false;
@@ -93,8 +104,15 @@ public class ToolExplosivePickaxe extends CustomItem {
     
     @Override
     public boolean onBlockBrokeWithItem(BlockBreakEvent e) {
+    	
+    	double energyCostPerBlock = 1000D;
+    	
 		Player p = e.getPlayer();
 		Block b = e.getBlock();
+		
+		ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
+		if (is==null) return false;
+		if (!CustomItemUtil.isItemStackACustomItem(is)) return false;
 
 		if (b.getType().getHardness() < 0.05) {
 			p.sendMessage(Lang.VERY_SMART.get(p));
@@ -102,17 +120,41 @@ public class ToolExplosivePickaxe extends CustomItem {
 		}
 		
 		if (!p.isSneaking()) {
-			b.getWorld().createExplosion(b.getLocation(), 0);
+			b.getWorld().createExplosion(b.getLocation(), 0F);
 			b.getWorld().playSound(b.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.2F, 1F);
-	
+			
+			boolean v = false;
 			List<Block> blocks = findBlocks(b, p);
-			breakBlocks(p, p.getInventory().getItemInMainHand(), b, blocks);
+			for (Block bloc : blocks) {
+				if (!(getContainedPower(is)>=energyCostPerBlock)) continue;
+				removeEnergy(is, energyCostPerBlock);
+				breakBlock(p.getInventory().getItemInMainHand(), bloc);
+				v=true;
+			}
+			if (v) {
+				BlockExplodeEvent blockExplodeEvent = new BlockExplodeEvent(b, blocks, 0);
+				blockExplodeEvent.callEvent(); // You can just use this!
+				// Bukkit.getServer().getPluginManager().callEvent(blockExplodeEvent);
+				return false;
+			} else {
+				p.sendMessage("You need to charge your explosive pickaxe for this!");
+				return true;
+			}
+			// breakBlocks(p, p.getInventory().getItemInMainHand(), b, blocks);
 		} else {
-			breakBlock(p.getInventory().getItemInMainHand(), b);
+			if (!(getContainedPower(is)>=energyCostPerBlock)) {
+				p.sendMessage("You need to charge your explosive pickaxe for this!");
+				return true;
+			} else {
+				removeEnergy(is, energyCostPerBlock);
+				breakBlock(p.getInventory().getItemInMainHand(), b);
+				return false;
+			}
 		}
-    	return false;
     }
-
+    
+    @SuppressWarnings("unused")
+	@Deprecated
 	private void breakBlocks(Player p, ItemStack item, Block b, List<Block> blocks) {
 		BlockExplodeEvent blockExplodeEvent = new BlockExplodeEvent(b, blocks, 0);
 		Bukkit.getServer().getPluginManager().callEvent(blockExplodeEvent);

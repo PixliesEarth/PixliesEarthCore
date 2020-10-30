@@ -6,8 +6,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 
 /**
  * 
@@ -51,5 +54,39 @@ public abstract class CustomEnergyItem extends CustomItem implements Energyable 
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 				addNBTTag("ENERGY", Double.toString(0), NBTTagType.STRING);
 			}}.build();
+	}
+	
+	public boolean isFull(ItemStack itemStack) {
+		Double d = getContainedPower(itemStack);
+		Double d2 = getCapacity(itemStack);
+		return (d==null||d2==null) ? true : d>=d2; // If null send a fake true value
+	}
+	
+	public ItemStack removeEnergy(ItemStack itemStack, double amount) {
+		if (getContainedPower(itemStack)<amount) return itemStack;
+		NBTTags tags = NBTUtil.getTagsFromItem(itemStack);
+		tags.addTag("ENERGY", Double.toString(Double.parseDouble(NBTUtil.getTagsFromItem(itemStack).getString("ENERGY"))-amount), NBTTagType.STRING);
+		return NBTUtil.addTagsToItem(itemStack, tags);
+	}
+	
+	public ItemStack giveEnergy(ItemStack itemStack, double amount) {
+		if (isFull(itemStack)) return itemStack;
+		NBTTags tags = NBTUtil.getTagsFromItem(itemStack);
+		tags.addTag("ENERGY", Double.toString(Double.parseDouble(NBTUtil.getTagsFromItem(itemStack).getString("ENERGY"))+amount), NBTTagType.STRING);
+		return NBTUtil.addTagsToItem(itemStack, tags);
+	}
+	
+	public Double getCapacity(ItemStack itemStack) {
+		CustomItem c = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(itemStack));
+		if (c==null) return null;
+		if (c instanceof Energyable) {
+			return ((Energyable)c).getCapacity();
+		} else {
+			return null;
+		}
+	}
+	
+	public Double getContainedPower(ItemStack itemStack) {
+		return Double.parseDouble(NBTUtil.getTagsFromItem(itemStack).getString("ENERGY"));
 	}
 }

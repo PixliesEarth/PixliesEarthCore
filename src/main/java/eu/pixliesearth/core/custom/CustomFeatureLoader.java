@@ -166,6 +166,8 @@ public class CustomFeatureLoader {
 			loadCustomItem(clazz.newInstance());
 		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class))
 			loadCustomItem(clazz.newInstance());
+		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class))
+			loadCustomItem(clazz.newInstance());
 	}
 
 	/**

@@ -13,9 +13,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 import eu.pixliesearth.utils.Timer;
 
 /**
@@ -50,8 +53,18 @@ public abstract class CustomEnergyBlock extends CustomSavableBlock implements En
 		return (d==null||d2==null) ? true : d>=d2; // If null send a fake true value
 	}
 	
+	public boolean isFull(ItemStack itemStack) {
+		Double d = getContainedPower(itemStack);
+		Double d2 = getCapacity(itemStack);
+		return (d==null||d2==null) ? true : d>=d2; // If null send a fake true value
+	}
+	
 	public Double getContainedPower(Location location) {
 		return CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location);
+	}
+	
+	public Double getContainedPower(ItemStack itemStack) {
+		return Double.parseDouble(NBTUtil.getTagsFromItem(itemStack).getString("ENERGY"));
 	}
 	
 	@Override
@@ -94,6 +107,7 @@ public abstract class CustomEnergyBlock extends CustomSavableBlock implements En
 					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
+				addNBTTag("ENERGY", Double.toString(0), NBTTagType.STRING);
 			}}.build();
 	}
 	
@@ -106,6 +120,16 @@ public abstract class CustomEnergyBlock extends CustomSavableBlock implements En
 	public Double getCapacity(Location location) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		CustomBlock c = h.getCustomBlockFromLocation(location);
+		if (c==null) return null;
+		if (c instanceof Energyable) {
+			return ((Energyable)c).getCapacity();
+		} else {
+			return null;
+		}
+	}
+	
+	public Double getCapacity(ItemStack itemStack) {
+		CustomItem c = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(itemStack));
 		if (c==null) return null;
 		if (c instanceof Energyable) {
 			return ((Energyable)c).getCapacity();
@@ -130,7 +154,24 @@ public abstract class CustomEnergyBlock extends CustomSavableBlock implements En
 		return takeEnergy(to, from, amount);
 	}
 	
+	public ItemStack takeEnergy(ItemStack to, Location from, double amount) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		Double d = h.getPowerAtLocation(from);
+		Double d2 = getContainedPower(to);
+		if (d==null || d2==null) return to;
+		if (isFull(to) || (d2+amount)>getCapacity(to)) return to;
+		if (d<=0 || (d-amount)<0) return to;
+		h.removePowerFromLocation(from, amount);
+		NBTTags tags = NBTUtil.getTagsFromItem(to);
+		tags.addTag("ENERGY", Double.toString(Double.parseDouble(NBTUtil.getTagsFromItem(to).getString("ENERGY"))+amount), NBTTagType.STRING);
+		return NBTUtil.addTagsToItem(to, tags);
+	}
+	
+	public ItemStack giveEnergy(Location from, ItemStack to, double amount) {
+		return takeEnergy(to, from, amount);
+	}
+	
 	public ItemStack buildInfoItem(Location location) {
-		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName("§6Energy").addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName("§6Energy").addLoreLine("§eContained: "+Methods.convertEnergyDouble(Methods.round(getContainedPower(location), 3))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 }

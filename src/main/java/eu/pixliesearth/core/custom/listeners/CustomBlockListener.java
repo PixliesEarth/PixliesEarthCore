@@ -44,7 +44,7 @@ public class CustomBlockListener extends CustomListener {
 	public void BlockPlaceEvent(BlockPlaceEvent event) {
 		if (!ProtectionManager.canPlace(event)) return;
 		if (event.isCancelled()) return;
-		String id = NBTUtil.getTagsFromItem(event.getItemInHand()).getString("UUID");
+		String id = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("UUID");
 		if (id==null) return;
 		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
 		if (c==null) return;
@@ -52,6 +52,10 @@ public class CustomBlockListener extends CustomListener {
 		for (CustomBlock b : CustomFeatureLoader.getLoader().getHandler().getCustomBlocks()) 
 			if (b.getUUID().equals(id)) {
 				e = b.BlockPlaceEvent(event);
+				String s = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("ENERGY");
+				if (s!=null) {
+					CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), Double.parseDouble(s));
+				}
 				break;
 			}
 		if (!e) {

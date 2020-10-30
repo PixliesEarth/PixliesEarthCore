@@ -9,7 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
@@ -17,6 +19,7 @@ import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 
 /**
@@ -50,6 +53,32 @@ public abstract class CustomEnergyCrafterMachine extends CustomCrafterMachine im
 			a(inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
 		inv.clear(52);
 		return inv;
+	}
+	
+	@Override
+	public ItemStack buildItem() {
+		return new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/"+getPlayerHeadUUID())) {{
+			setGlow(isGlowing());
+			setUnbreakable(isUnbreakable());
+			if (getDefaultDisplayName()==null) 
+					setNoName();
+			else 
+				setDisplayName(getDefaultDisplayName());
+			if (getCustomModelData()!=null) 
+				setCustomModelData(getCustomModelData());
+			for (Entry<Enchantment, Integer> entry : getDefaultEnchants().entrySet()) 
+				addEnchantment(entry.getKey(), entry.getValue());
+			if (getDefaultLore()!=null)
+				addLoreAll(getDefaultLore());
+			for (ItemFlag flag : getItemFlags()) 
+				addItemFlag(flag);
+			addLoreLine("§fRarity: "+getRarity().getName());
+			for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
+				addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
+			addNBTTag("UUID", getUUID(), NBTTagType.STRING);
+			addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
+			addNBTTag("ENERGY", Double.toString(0), NBTTagType.STRING);
+		}}.build();
 	}
 	
 	@Override
@@ -156,7 +185,7 @@ public abstract class CustomEnergyCrafterMachine extends CustomCrafterMachine im
 	}
 	
 	public ItemStack buildInfoItem(Location location) {
-		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName("§6Energy").addLoreLine("§eContained: "+Methods.convertEnergyDouble(getContainedPower(location))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder(Material.ORANGE_STAINED_GLASS_PANE).setDisplayName("§6Energy").addLoreLine("§eContained: "+Methods.convertEnergyDouble(Methods.round(getContainedPower(location), 3))).addLoreLine("§eCapacity: "+Methods.convertEnergyDouble(getCapacity())).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 	
 	public double getContainedPower(Location location) {

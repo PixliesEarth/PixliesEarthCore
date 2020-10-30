@@ -28,20 +28,28 @@ public class CustomArmourListener extends CustomListener {
 	public void EntityDamageEvent(EntityDamageEvent event) {
 		if (!(event.getEntity() instanceof Player)) return; // Not a player
 		ItemStack[] armours = ((Player)event.getEntity()).getInventory().getArmorContents();
-		for (ItemStack is : armours) 
-			if (CustomItemUtil.isItemStackACustomItem(is)) 
-				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) 
+		for (ItemStack is : armours) {
+			if (is==null) continue;
+			if (CustomItemUtil.isItemStackACustomItem(is)) {
+				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) {
 					event.setCancelled(((CustomArmour)CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is))).EntityDamageEvent(event));
+				}
+			}
+		}
 	}
 	
 	@EventHandler
 	public void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return; // Not a player
-		ItemStack[] armours = ((Player)event.getEntity()).getInventory().getArmorContents();
-		for (ItemStack is : armours) 
-			if (CustomItemUtil.isItemStackACustomItem(is)) 
-				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) 
+		ItemStack[] armours = ((Player)event.getDamager()).getInventory().getArmorContents();
+		for (ItemStack is : armours) {
+			if (is==null) continue;
+			if (CustomItemUtil.isItemStackACustomItem(is)) {
+				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) {
 					event.setCancelled(((CustomArmour)CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is))).EntityDamageByEntityEvent(event));
+				}
+			}
+		}
 	}
 	
 	@EventHandler
