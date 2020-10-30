@@ -174,6 +174,9 @@ public class rankNation extends SubCommand {
                     Lang.YOU_DELETED_NATION_RANK.send(player, "%RANK%;" + rank.getName());
                 }
                 break;
+            default:
+
+                break;
 
         }
         return false;

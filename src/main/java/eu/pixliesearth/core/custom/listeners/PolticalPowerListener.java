@@ -12,7 +12,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 
-public class NationXPListener extends CustomListener {
+public class PolticalPowerListener extends CustomListener {
 
     @EventHandler
     public void onXPChange(PlayerLevelChangeEvent event) {
@@ -22,12 +22,12 @@ public class NationXPListener extends CustomListener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) return;
         Random r = new Random();
-        double xpToAdd = Methods.round(0.5 + (1.0 - 0.5) * r.nextDouble(), 2);
+        double xpToAdd = Methods.round(0.2 + (0.6 - 0.2) * r.nextDouble(), 2);
         Nation nation = profile.getCurrentNation();
         nation.setXpPoints(nation.getXpPoints() + xpToAdd);
         nation.save();
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-        player.sendActionBar("§b+" + xpToAdd + "§3N-XP");
+        player.sendActionBar("§b+" + xpToAdd + "§3PoliticalPower");
     }
 
 }

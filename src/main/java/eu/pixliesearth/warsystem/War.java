@@ -18,7 +18,7 @@ public class War {
 
     public boolean justifyWarGoal() {
         Nation aggressor = Nation.getById(aggressorId);
-        if (!aggressor.hasNationXP(25D))
+        if (!aggressor.hasPoliticalPower(25D))
             return false;
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));

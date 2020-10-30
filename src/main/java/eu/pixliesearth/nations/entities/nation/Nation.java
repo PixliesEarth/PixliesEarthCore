@@ -246,7 +246,7 @@ public class Nation {
 
     public Era getCurrentEra() { return Era.valueOf(era.toUpperCase()); }
 
-    public boolean hasNationXP(double amount) {
+    public boolean hasPoliticalPower(double amount) {
         return xpPoints - amount > 0;
     }
 

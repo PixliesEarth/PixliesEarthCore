@@ -70,7 +70,7 @@ public class CustomQuest implements Listener {
                 setDisplayName(getName());
             if (getCustomModelData()!=null)
                 setCustomModelData(getCustomModelData());
-            addLoreLine("§f§lReward: §3" + getReward() + "§9N-XP");
+            addLoreLine("§f§lReward: §3" + getReward() + "§9PoliticalPower");
             if (getLore() != null)
                 addLoreAll(getLore());
             addNBTTag("UUID", getUUID(), NBTTagType.STRING);
