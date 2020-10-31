@@ -126,8 +126,8 @@ public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
 			boolean v = false;
 			List<Block> blocks = findBlocks(b, p);
 			for (Block bloc : blocks) {
-				if (!(getContainedPower(is)>=energyCostPerBlock)) continue;
-				removeEnergy(is, energyCostPerBlock);
+				if (!(getContainedPower(e.getPlayer().getInventory().getItemInMainHand())>=energyCostPerBlock)) continue;
+				e.getPlayer().getInventory().setItemInMainHand(removeEnergy(e.getPlayer().getInventory().getItemInMainHand(), energyCostPerBlock));
 				breakBlock(p.getInventory().getItemInMainHand(), bloc);
 				v=true;
 			}
@@ -146,7 +146,7 @@ public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
 				p.sendMessage("You need to charge your explosive pickaxe for this!");
 				return true;
 			} else {
-				removeEnergy(is, energyCostPerBlock);
+				e.getPlayer().getInventory().setItemInMainHand(removeEnergy(e.getPlayer().getInventory().getItemInMainHand(), energyCostPerBlock));
 				breakBlock(p.getInventory().getItemInMainHand(), b);
 				return false;
 			}
