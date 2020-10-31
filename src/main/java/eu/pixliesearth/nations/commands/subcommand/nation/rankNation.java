@@ -32,7 +32,6 @@ public class rankNation extends SubCommand {
         returner.put("addpermission", 1);
         returner.put("removepermission", 1);
         returner.put("set", 1);
-        returner.put("menu", 1);
         for (Permission permission : Permission.values())
             returner.put(permission.name(), 3);
         return returner;
@@ -41,6 +40,15 @@ public class rankNation extends SubCommand {
     @Override
     public boolean staff() {
         return false;
+    }
+
+    @Override
+    public String getSyntax() {
+        return "§7Create a rank: §b/n rank create §eRANK-NAME §cRANK-PREFIX §6RANK-PRIORITY (Number between 0 and 665)\n" +
+                "§7Remove a rank: §b/n rank remove §eRANK-NAME\n" +
+                "§7Set a players rank: §b/n rank set §ePLAYER §cRANK-NAME\n" +
+                "§7Add a permission to a rank: §b/n rank addpermission §ePERMISSION §cRANK-NAME\n" +
+                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME";
     }
 
     @Override
@@ -175,7 +183,7 @@ public class rankNation extends SubCommand {
                 }
                 break;
             default:
-
+                sendSyntax(sender, "rank");
                 break;
 
         }
