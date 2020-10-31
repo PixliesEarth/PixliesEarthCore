@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.custom.CustomWeapon;
+import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.custom.CustomWeapon;
-import eu.pixliesearth.utils.CustomItemUtil;
 /**
  * 
  * @author BradBot_1

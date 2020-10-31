@@ -1,12 +1,5 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.utils.CustomItemUtil;

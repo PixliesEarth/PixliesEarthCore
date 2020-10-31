@@ -1,12 +1,11 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomEnergyItem;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.listener.ProtectionManager;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -20,12 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomEnergyItem;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.listener.ProtectionManager;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.CustomItemUtil;
+import java.util.*;
 
 public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
 	
