@@ -4,6 +4,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
@@ -658,7 +659,8 @@ public class CustomFeatureHandler {
 		Set<CustomRecipe> set = new HashSet<CustomRecipe>();
 		for (CustomRecipe c : getCustomRecipes()) 
 			if (c.craftedInUUID().equals(id)) 
-				set.add(c);
+				if (CustomItemUtil.getItemStackFromUUID(id)!=null) 
+					set.add(c);
 		return set;
 	}
 	/**

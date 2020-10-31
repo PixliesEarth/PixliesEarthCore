@@ -70,7 +70,7 @@ public abstract class CustomFuelableCrafterMachine extends CustomCrafterMachine 
 		}
 	}
 	/**
-	 * @return The {@link CustomCrafterMachine}'s {@link Inventory}
+	 * @return The {@link CustomFuelableCrafterMachine}'s {@link Inventory}
 	 */
 	@Override
 	public Inventory getInventory() { 
@@ -79,7 +79,7 @@ public abstract class CustomFuelableCrafterMachine extends CustomCrafterMachine 
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		Set<CustomRecipe> rs = CustomFeatureLoader.getLoader().getHandler().getRecipesFromUUID(getUUID());
 		for (CustomRecipe r : rs)
-			a(inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
+			a(inv, new ItemBuilder((CustomItemUtil.getItemStackFromUUID(r.getResultUUID())==null) ? new ItemStack(Material.RED_STAINED_GLASS_PANE) : CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
 		inv.clear(52);
 		return inv;
 	}
