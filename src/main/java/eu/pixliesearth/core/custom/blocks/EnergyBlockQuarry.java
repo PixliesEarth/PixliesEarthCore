@@ -1,15 +1,12 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -17,6 +14,14 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockQuarry extends CustomEnergyBlock {
 	
@@ -78,6 +83,7 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
 							@Override
 							public void run() {
+								// makeParticleLine(location.clone(), b.getLocation().clone());
 								h.removeCustomBlockFromLocation(b.getLocation());
 								b.setType(Material.AIR);
 							}
@@ -160,4 +166,18 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 		return true;
 	}
     
+    public void makeParticleLine(Location from, Location to) {
+    	if (!from.getWorld().equals(to.getWorld())) return; // Cant be cross world
+    	
+        Vector vector = to.clone().toVector().subtract(from.clone().toVector());
+        
+        for (double i = 1; i <= from.distance(to); i += 0.5) {
+            vector.multiply(i);
+            from.add(vector);
+            // from.getWorld().spawnParticle(Particle.REDSTONE, from, 50, new DustOptions(Color.ORANGE, 1));
+            from.getWorld().spawnParticle(Particle.REDSTONE, from.getX(), from.getY(), from.getZ(), 1, new DustOptions(Color.ORANGE, 1));
+            from.subtract(vector);
+            vector.normalize();
+        }
+    }
 }

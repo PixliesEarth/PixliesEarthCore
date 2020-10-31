@@ -9,6 +9,7 @@ import eu.pixliesearth.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,8 +21,8 @@ public class EnergyBlockBatBox2 extends CustomEnergyBlock {
 	
 	@Override
 	public Inventory getInventory() {
-		Inventory inv = Bukkit.createInventory(null, 5*9, getInventoryTitle());
-		for (int i = 0; i < 5*9; i++)
+		Inventory inv = Bukkit.createInventory(null, 4*9, getInventoryTitle());
+		for (int i = 0; i < 4*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		inv.clear(34);
 		inv.clear(13);
@@ -37,6 +38,16 @@ public class EnergyBlockBatBox2 extends CustomEnergyBlock {
 	public double getCapacity() {
 		return 150000D;
 	}
+	
+	@Override
+    public boolean InventoryClickEvent(InventoryClickEvent event) {
+    	ItemStack is = event.getCurrentItem();
+    	if (is==null) return false;
+    	String s = CustomItemUtil.getUUIDFromItemStack(is);
+    	if (s==null) return false;
+    	if (s.equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) return true;
+    	return false;
+    }
 	
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {

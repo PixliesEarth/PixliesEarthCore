@@ -7,7 +7,7 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class DamascusSteelChestplate extends CustomRecipe {
+public class RolledIron extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class DamascusSteelChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Damascus_Steel_Chestplate";
+		return "Pixlies:Rolled_Iron";
 	}
 	/**
 	 * How many of the result to give
@@ -43,7 +43,7 @@ public class DamascusSteelChestplate extends CustomRecipe {
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.MEDIEVAL;
+		return Era.VICTORIAN;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,14 +59,8 @@ public class DamascusSteelChestplate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Damascus_Steel_Ingot");
-		map.put(1, "Pixlies:Damascus_Steel_Ingot");
-		map.put(2, "Pixlies:Damascus_Steel_Ingot");
-		map.put(3, "Pixlies:Damascus_Steel_Ingot");
-		map.put(4, "Pixlies:Damascus_Steel_Ingot");
-		map.put(5, "Pixlies:Damascus_Steel_Ingot");
-		map.put(6, "Pixlies:Damascus_Steel_Ingot");
-		map.put(7, "Pixlies:Damascus_Steel_Ingot");
+		map.put(0, "Pixlies:Iron_Ingot");
+		map.put(1, "Pixlies:Iron_Ingot");
 		return map;
 	}
 	/**

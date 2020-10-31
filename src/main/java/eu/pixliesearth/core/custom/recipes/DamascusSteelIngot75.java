@@ -7,7 +7,7 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class DamascusSteelChestplate extends CustomRecipe {
+public class DamascusSteelIngot75 extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class DamascusSteelChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Damascus_Steel_Chestplate";
+		return "Pixlies:Damascus_Steel_Ingot75";
 	}
 	/**
 	 * How many of the result to give
@@ -59,14 +59,10 @@ public class DamascusSteelChestplate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Damascus_Steel_Ingot");
-		map.put(1, "Pixlies:Damascus_Steel_Ingot");
-		map.put(2, "Pixlies:Damascus_Steel_Ingot");
-		map.put(3, "Pixlies:Damascus_Steel_Ingot");
-		map.put(4, "Pixlies:Damascus_Steel_Ingot");
-		map.put(5, "Pixlies:Damascus_Steel_Ingot");
-		map.put(6, "Pixlies:Damascus_Steel_Ingot");
-		map.put(7, "Pixlies:Damascus_Steel_Ingot");
+		map.put(0, "Pixlies:Damascus_Steel_Ingot_50");
+		map.put(1, MinecraftMaterial.IRON_INGOT.getUUID());
+		map.put(2, MinecraftMaterial.IRON_INGOT.getUUID());
+		map.put(3, MinecraftMaterial.IRON_INGOT.getUUID());
 		return map;
 	}
 	/**

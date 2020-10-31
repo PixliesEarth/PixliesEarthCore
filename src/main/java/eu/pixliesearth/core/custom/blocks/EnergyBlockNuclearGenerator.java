@@ -252,6 +252,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		for (int i : ints) 
 			inv.clear(i);
+		inv.setMaxStackSize(1);
 		return inv;
 	}
     

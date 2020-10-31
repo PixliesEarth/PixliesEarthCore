@@ -8,15 +8,15 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class ItemBattery extends CustomItem {
-	
-    public ItemBattery() {
+public class DustSilver extends CustomItem {
+
+    public DustSilver() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.FIREWORK_STAR;
+        return Material.GUNPOWDER;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ItemBattery extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Battery";
+        return "§6Silver Dust";
     }
 
     @Override
@@ -66,11 +66,12 @@ public class ItemBattery extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Battery"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Silver_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
 }

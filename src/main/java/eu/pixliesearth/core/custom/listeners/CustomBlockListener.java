@@ -43,7 +43,7 @@ public class CustomBlockListener extends CustomListener {
 			if (b.getUUID().equals(id)) {
 				e = b.BlockPlaceEvent(event);
 				String s = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("ENERGY");
-				if (s!=null) {
+				if (s!=null && !s.equalsIgnoreCase("")) {
 					CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), Double.parseDouble(s));
 				}
 				break;

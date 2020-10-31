@@ -9,6 +9,7 @@ import eu.pixliesearth.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,6 +38,16 @@ public class EnergyBlockBatBox4 extends CustomEnergyBlock {
 	public double getCapacity() {
 		return 650000D;
 	}
+	
+	@Override
+    public boolean InventoryClickEvent(InventoryClickEvent event) {
+    	ItemStack is = event.getCurrentItem();
+    	if (is==null) return false;
+    	String s = CustomItemUtil.getUUIDFromItemStack(is);
+    	if (s==null) return false;
+    	if (s.equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) return true;
+    	return false;
+    }
 	
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
