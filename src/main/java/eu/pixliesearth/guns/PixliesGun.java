@@ -61,10 +61,6 @@ public class PixliesGun {
             this.ammo -= 1;
             reloadItem(event.getItem());
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
-            float newPitch = player.getLocation().getPitch() - 4;
-            Location newLocation = player.getLocation();
-            newLocation.setPitch(newPitch);
-            player.teleport(newLocation);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
             if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;

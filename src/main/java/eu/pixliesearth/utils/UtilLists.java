@@ -5,7 +5,6 @@ import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;

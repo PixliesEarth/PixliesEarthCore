@@ -1,14 +1,9 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.*;
+import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,13 +12,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.NBTUtil;
-import eu.pixliesearth.utils.NBTUtil.NBTTags;
-import eu.pixliesearth.utils.Timer;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 

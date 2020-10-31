@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
-
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
 
 public class EnergyBlockHydroGenerator extends CustomEnergyBlock {
 	

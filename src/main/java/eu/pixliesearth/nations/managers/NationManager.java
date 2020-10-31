@@ -3,12 +3,9 @@ package eu.pixliesearth.nations.managers;
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.nations.entities.nation.Nation;
-import lombok.Data;
 import org.bson.Document;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class NationManager {

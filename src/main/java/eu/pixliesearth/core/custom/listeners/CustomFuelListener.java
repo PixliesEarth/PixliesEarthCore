@@ -1,14 +1,13 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.FurnaceBurnEvent;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomFuel;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.CustomItemUtil;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.FurnaceBurnEvent;
+import org.bukkit.inventory.ItemStack;
 /**
  * 
  * @author BradBot_1

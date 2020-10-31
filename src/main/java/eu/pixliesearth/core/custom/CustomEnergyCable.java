@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.Set;
-
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import eu.pixliesearth.utils.Timer;
+import java.util.Set;
 
 /**
  * 

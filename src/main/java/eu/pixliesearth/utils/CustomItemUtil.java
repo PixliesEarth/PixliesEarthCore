@@ -1,13 +1,12 @@
 package eu.pixliesearth.utils;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 /**
  * 
  * @author BradBot_1

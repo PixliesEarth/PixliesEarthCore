@@ -1,10 +1,11 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.utils.*;
+import lombok.SneakyThrows;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -13,16 +14,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.NBTUtil;
-import lombok.SneakyThrows;
-import net.md_5.bungee.api.ChatColor;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 /**
  * 
  * @author BradBot_1

@@ -1,11 +1,10 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.List;
-
+import eu.pixliesearth.core.custom.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import eu.pixliesearth.core.custom.CustomItem;
+import java.util.List;
 
 public class ItemCoolant extends CustomItem {
 	

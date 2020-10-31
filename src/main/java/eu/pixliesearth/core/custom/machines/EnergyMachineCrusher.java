@@ -1,14 +1,5 @@
 package eu.pixliesearth.core.custom.machines;
 
-import java.util.Random;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -16,6 +7,14 @@ import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
 
 public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 	

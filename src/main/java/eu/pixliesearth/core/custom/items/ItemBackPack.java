@@ -1,11 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.NBTUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,9 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.NBTUtil;
+import java.util.*;
 
 public class ItemBackPack extends CustomItem {
 	

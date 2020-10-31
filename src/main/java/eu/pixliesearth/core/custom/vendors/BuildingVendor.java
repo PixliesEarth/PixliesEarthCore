@@ -1,85 +1,9 @@
 package eu.pixliesearth.core.custom.vendors;
 
-import static org.bukkit.Material.ACACIA_LOG;
-import static org.bukkit.Material.ACACIA_PLANKS;
-import static org.bukkit.Material.BASALT;
-import static org.bukkit.Material.BIRCH_LOG;
-import static org.bukkit.Material.BIRCH_PLANKS;
-import static org.bukkit.Material.BLACKSTONE;
-import static org.bukkit.Material.BLACK_WOOL;
-import static org.bukkit.Material.BLUE_WOOL;
-import static org.bukkit.Material.BRICKS;
-import static org.bukkit.Material.BROWN_WOOL;
-import static org.bukkit.Material.CLAY;
-import static org.bukkit.Material.COBBLESTONE;
-import static org.bukkit.Material.CRIMSON_HYPHAE;
-import static org.bukkit.Material.CRIMSON_NYLIUM;
-import static org.bukkit.Material.CRIMSON_PLANKS;
-import static org.bukkit.Material.CYAN_WOOL;
-import static org.bukkit.Material.DARK_OAK_LOG;
-import static org.bukkit.Material.DARK_OAK_PLANKS;
-import static org.bukkit.Material.DARK_PRISMARINE;
-import static org.bukkit.Material.DIRT;
-import static org.bukkit.Material.END_STONE;
-import static org.bukkit.Material.GILDED_BLACKSTONE;
-import static org.bukkit.Material.GLASS;
-import static org.bukkit.Material.GRASS_BLOCK;
-import static org.bukkit.Material.GRAY_WOOL;
-import static org.bukkit.Material.GREEN_WOOL;
-import static org.bukkit.Material.JUNGLE_LOG;
-import static org.bukkit.Material.JUNGLE_PLANKS;
-import static org.bukkit.Material.LIGHT_BLUE_WOOL;
-import static org.bukkit.Material.LIGHT_GRAY_WOOL;
-import static org.bukkit.Material.LIME_WOOL;
-import static org.bukkit.Material.MAGENTA_WOOL;
-import static org.bukkit.Material.MAGMA_BLOCK;
-import static org.bukkit.Material.MOSSY_COBBLESTONE;
-import static org.bukkit.Material.MYCELIUM;
-import static org.bukkit.Material.NETHERRACK;
-import static org.bukkit.Material.NETHER_BRICKS;
-import static org.bukkit.Material.NETHER_WART_BLOCK;
-import static org.bukkit.Material.OAK_LOG;
-import static org.bukkit.Material.OAK_PLANKS;
-import static org.bukkit.Material.ORANGE_WOOL;
-import static org.bukkit.Material.PINK_WOOL;
-import static org.bukkit.Material.PODZOL;
-import static org.bukkit.Material.POLISHED_BASALT;
-import static org.bukkit.Material.POLISHED_BLACKSTONE;
-import static org.bukkit.Material.PRISMARINE;
-import static org.bukkit.Material.PURPLE_WOOL;
-import static org.bukkit.Material.PURPUR_BLOCK;
-import static org.bukkit.Material.QUARTZ;
-import static org.bukkit.Material.RED_SANDSTONE;
-import static org.bukkit.Material.RED_WOOL;
-import static org.bukkit.Material.SANDSTONE;
-import static org.bukkit.Material.SMOOTH_STONE;
-import static org.bukkit.Material.SOUL_SAND;
-import static org.bukkit.Material.SOUL_SOIL;
-import static org.bukkit.Material.SPONGE;
-import static org.bukkit.Material.SPRUCE_LOG;
-import static org.bukkit.Material.SPRUCE_PLANKS;
-import static org.bukkit.Material.STONE;
-import static org.bukkit.Material.STONE_BRICKS;
-import static org.bukkit.Material.STRIPPED_ACACIA_LOG;
-import static org.bukkit.Material.STRIPPED_BIRCH_LOG;
-import static org.bukkit.Material.STRIPPED_CRIMSON_HYPHAE;
-import static org.bukkit.Material.STRIPPED_DARK_OAK_LOG;
-import static org.bukkit.Material.STRIPPED_JUNGLE_LOG;
-import static org.bukkit.Material.STRIPPED_OAK_LOG;
-import static org.bukkit.Material.STRIPPED_SPRUCE_LOG;
-import static org.bukkit.Material.STRIPPED_WARPED_HYPHAE;
-import static org.bukkit.Material.TERRACOTTA;
-import static org.bukkit.Material.WARPED_HYPHAE;
-import static org.bukkit.Material.WARPED_NYLIUM;
-import static org.bukkit.Material.WARPED_PLANKS;
-import static org.bukkit.Material.WHITE_CONCRETE;
-import static org.bukkit.Material.WHITE_CONCRETE_POWDER;
-import static org.bukkit.Material.WHITE_WOOL;
-import static org.bukkit.Material.YELLOW_WOOL;
-
+import eu.pixliesearth.core.vendors.Vendor;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.vendors.Vendor;
+import static org.bukkit.Material.*;
 
 public class BuildingVendor extends Vendor {
 
@@ -91,30 +15,6 @@ public class BuildingVendor extends Vendor {
                 new ItemStack(MYCELIUM),
                 new ItemStack(CRIMSON_NYLIUM),
                 new ItemStack(WARPED_NYLIUM),
-                new ItemStack(STRIPPED_ACACIA_LOG),
-                new ItemStack(STRIPPED_BIRCH_LOG),
-                new ItemStack(STRIPPED_JUNGLE_LOG),
-                new ItemStack(STRIPPED_OAK_LOG),
-                new ItemStack(STRIPPED_SPRUCE_LOG),
-                new ItemStack(STRIPPED_DARK_OAK_LOG),
-                new ItemStack(ACACIA_PLANKS),
-                new ItemStack(BIRCH_PLANKS),
-                new ItemStack(CRIMSON_PLANKS),
-                new ItemStack(DARK_OAK_PLANKS),
-                new ItemStack(JUNGLE_PLANKS),
-                new ItemStack(OAK_PLANKS),
-                new ItemStack(SPRUCE_PLANKS),
-                new ItemStack(WARPED_PLANKS),
-                new ItemStack(ACACIA_LOG),
-                new ItemStack(BIRCH_LOG),
-                new ItemStack(JUNGLE_LOG),
-                new ItemStack(OAK_LOG),
-                new ItemStack(SPRUCE_LOG),
-                new ItemStack(DARK_OAK_LOG),
-                new ItemStack(CRIMSON_HYPHAE),
-                new ItemStack(STRIPPED_CRIMSON_HYPHAE),
-                new ItemStack(STRIPPED_WARPED_HYPHAE),
-                new ItemStack(WARPED_HYPHAE),
                 new ItemStack(SPONGE),
                 new ItemStack(SANDSTONE),
                 new ItemStack(RED_SANDSTONE),

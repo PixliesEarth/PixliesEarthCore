@@ -2,7 +2,6 @@ package eu.pixliesearth.core.custom.blocks;
 
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

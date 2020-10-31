@@ -2,6 +2,7 @@ package eu.pixliesearth.discord;
 
 import com.google.gson.GsonBuilder;
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
@@ -15,8 +16,11 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.entity.permission.Role;
 
-import java.awt.*;
+import java.awt.Color;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -98,16 +102,39 @@ public class MiniMick {
                 UUID uuid = UUID.fromString(profile.getUniqueId());
                 String name = Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid)).getName();
                 ArrayList<String> messages = new ArrayList<>();
-                messages.add(name + " has " + balance + " in their pockets.");
-                messages.add(name + "'s current balance: " + balance);
-                messages.add(name + " currently has " + balance + ", what a snob!");
-                messages.add("Only " + balance + "??? Get a load of " + name);
+                messages.add(name + " has $" + balance + " in their pockets.");
+                messages.add(name + "'s current balance: $" + balance);
+                messages.add(name + " currently has $" + balance + ", what a snob!");
+                messages.add("Only $" + balance + "??? Get a load of " + name);
                 int random = (int) (4 * Math.random());
                 event.getChannel().sendMessage(new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setDescription("**" + messages.get(random) + "**")
                         .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
                         .setTimestampToNow());
+            } else if (event.getMessageContent().equalsIgnoreCase("/history")) {
+                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
+                if (profile == null) {
+                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
+                    return;
+                }
+                List<String> lastTransActions = profile.getReceipts().subList(profile.getReceipts().size()-11, profile.getReceipts().size());
+                StringBuilder builder = new StringBuilder();
+                builder.append("```diff" + "\n");
+                final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+                for (String s : lastTransActions) {
+                    Receipt receipt = Receipt.fromString(s);
+                    if (receipt.isLost())
+                        builder.append("-$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
+                    else
+                         builder.append("+$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
+
+                }
+                builder.append("```");
+                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Your transactions | Balance: $" + profile.getBalance() + "**")
+                        .setDescription(builder.toString())
+                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
+                        .setTimestampToNow());;
             } else {
                 if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
                     if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {

@@ -161,7 +161,7 @@ public final class Main extends JavaPlugin {
                 }
                 Bukkit.getConsoleSender().sendMessage("§aDone.");
             }
-        }.runTaskTimerAsynchronously(this, (20 * 60) * 10, (20 * 60) * 10);
+        }.runTaskTimerAsynchronously(this, (20 * 60), (20 * 60));
 
         // NATION SCHEDULER
         new BukkitRunnable() {
