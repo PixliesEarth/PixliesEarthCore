@@ -8,7 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
@@ -114,6 +116,16 @@ public class BlockNuke2 extends CustomBlock {
 		}, 1200L);
 		CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(loc, i);
 		return false;
+	}
+	
+	@Override
+	public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+		return true;
+	}
+	
+	@Override
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+		return true;
 	}
 	
 }

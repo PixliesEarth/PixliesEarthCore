@@ -5,7 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
@@ -101,6 +103,14 @@ public class BlockPlastic3 extends CustomBlock {
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		return false;
+	}
+	
+	public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+		return true;
+	}
+	
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+		return true;
 	}
 	
 }

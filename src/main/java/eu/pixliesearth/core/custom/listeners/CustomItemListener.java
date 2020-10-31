@@ -1,6 +1,12 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -31,9 +37,9 @@ public class CustomItemListener extends CustomListener {
 		if (!event.getHand().equals(EquipmentSlot.HAND)) return;
 		String id = NBTUtil.getTagsFromItem(event.getItem()).getString("UUID");
 		if (id==null) return;
-		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
-			if (c.getUUID().equals(id)) 
-				event.setCancelled(c.PlayerInteractEvent(event));
+		CustomItem c = CustomItemUtil.getCustomItemFromUUID(id);
+		if (c==null) return;
+		event.setCancelled(c.PlayerInteractEvent(event));
 	}
 	
 	@EventHandler

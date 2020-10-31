@@ -1,15 +1,19 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import eu.pixliesearth.core.custom.CustomArmour;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+
+import eu.pixliesearth.core.custom.CustomArmour;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.utils.CustomItemUtil;
 /**
  * 
  * @author BradBot_1
@@ -23,24 +27,43 @@ public class CustomArmourListener extends CustomListener {
 	@EventHandler
 	public void EntityDamageEvent(EntityDamageEvent event) {
 		if (!(event.getEntity() instanceof Player)) return; // Not a player
-		ItemStack hand = ((Player)event.getEntity()).getInventory().getItemInMainHand();
-		if (hand.getType().equals(Material.AIR)) return;
-		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) {
-			if (c instanceof CustomArmour) 
-				if (isPlayerWearingCustomArmour(c.getUUID(), (Player)event.getEntity())) 
-					event.setCancelled(((CustomArmour)c).EntityDamageEvent(event));
+		ItemStack[] armours = ((Player)event.getEntity()).getInventory().getArmorContents();
+		for (ItemStack is : armours) {
+			if (is==null) continue;
+			if (CustomItemUtil.isItemStackACustomItem(is)) {
+				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) {
+					event.setCancelled(((CustomArmour)CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is))).EntityDamageEvent(event));
+				}
+			}
 		}
 	}
 	
-	public boolean isPlayerWearingCustomArmour(String id, Player p) {
-		ItemStack[] armours = p.getInventory().getArmorContents();
-		for (ItemStack i : armours) {
-			if (i == null || i.getType() == Material.AIR) continue;
-			if (!CustomItemUtil.isItemStackACustomItem(i)) 
-				continue;
-			if (CustomItemUtil.getUUIDFromItemStack(i).equals(id)) 
-				return true;
+	@EventHandler
+	public void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+		if (!(event.getDamager() instanceof Player)) return; // Not a player
+		ItemStack[] armours = ((Player)event.getDamager()).getInventory().getArmorContents();
+		for (ItemStack is : armours) {
+			if (is==null) continue;
+			if (CustomItemUtil.isItemStackACustomItem(is)) {
+				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is)) instanceof CustomArmour) {
+					event.setCancelled(((CustomArmour)CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is))).EntityDamageByEntityEvent(event));
+				}
+			}
 		}
-		return false;
+	}
+	
+	@EventHandler
+	public void InventoryClickEvent(InventoryClickEvent event) {
+		if (event.isCancelled()) return;
+		if (!(event.getWhoClicked() instanceof Player)) return;
+		if (!(event.getInventory() instanceof PlayerInventory)) return;
+		ItemStack is = event.getCurrentItem();
+		if (is==null || is.getType().equals(Material.AIR)) return;
+		if (!CustomItemUtil.isItemStackACustomItem(is)) return;
+		CustomItem c = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(is));
+		if (c==null) return;
+		if (!(c instanceof CustomArmour)) return;
+		if (!event.getSlotType().equals(SlotType.ARMOR)) return;
+		event.setCancelled(((CustomArmour)c).ArmourEquipEvent(event));
 	}
 }

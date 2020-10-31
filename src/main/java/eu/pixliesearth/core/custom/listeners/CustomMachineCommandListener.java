@@ -113,10 +113,10 @@ public class CustomMachineCommandListener extends CustomListener {
 				if (data.equalsIgnoreCase("MNEXT")) {
 					List<String> array = Methods.convertSetIntoList(getNames(CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()));
 					Collections.sort(array);
-					if (array.indexOf(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(43)))==array.size()) {
+					if (array.indexOf((CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(43)))+1)>=array.size()) {
 						openBase(event.getWhoClicked());
 					} else {
-						set2(event.getInventory(), array);
+						set(event.getInventory(), array);
 					}
 				} else if (data.equalsIgnoreCase("MBACK")) {
 					List<String> array = Methods.convertSetIntoList(getNames(CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()));

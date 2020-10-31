@@ -4,7 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashSet;
@@ -64,6 +66,24 @@ public class CustomBlock extends CustomItem {
 	 */
 	public void onTick(Location location) {
 		
+	}
+	/**
+	 * Called when a block explodes and it will break this block
+	 * 
+	 * @param event The {@link BlockExplodeEvent} that occurred
+	 * @return If the custom block should be broken
+	 */
+	public boolean BlockExplodeEvent(BlockExplodeEvent event) {
+		return false;
+	}
+	/**
+	 * Called when an entity explodes and it will break this block
+	 * 
+	 * @param event The {@link EntityExplodeEvent} that occurred
+	 * @return If the custom block should be broken
+	 */
+	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
+		return false;
 	}
 	// TODO: notes
 	public Set<Block> getSurroundingBlocks(Location location) {

@@ -16,7 +16,7 @@ public class IngotTungsten extends CustomItem {
 	
 	@Override
 	public Material getMaterial() {
-		return Material.IRON_BARS;
+		return Material.IRON_INGOT;
 	}
 
 	@Override

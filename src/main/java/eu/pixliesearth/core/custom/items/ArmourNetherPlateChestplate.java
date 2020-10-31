@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.custom.blocks;
+package eu.pixliesearth.core.custom.items;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,24 +8,24 @@ import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomArmour;
 
-public class BlockRubberGlass extends CustomBlock {
-	
-	public BlockRubberGlass() {
-		
-	}
-	
-	@Override
+/**
+ * @author Zenake
+ */
+public class ArmourNetherPlateChestplate extends CustomArmour {
+
+    public ArmourNetherPlateChestplate() {
+
+    }
+
+    @Override
     public Material getMaterial() {
-        return Material.GREEN_STAINED_GLASS;
+        return Material.NETHERITE_CHESTPLATE;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BlockRubberGlass extends CustomBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Rubber Glass Block";
+        return "§7§lNether Plate Chestplate";
     }
 
     @Override
@@ -69,43 +69,33 @@ public class BlockRubberGlass extends CustomBlock {
     }
 
     @Override
+    public double getArmour() {
+        return 7.5D;
+    }
+
+    @Override
+    public double getArmourToughness() {
+        return 1.0;
+    }
+
+    @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.BUILDING;
+        return CreativeTabs.COMBAT;
     }
 
     @Override
     public String getUUID() {
-        return "Pixlies:Rubber_Glass"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Nether_Plate_Chestplate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-    
+
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	return false;
+        return false;
     }
-    
-	@Override
-	public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
-		return false;
-	}
 
-	@Override
-	public boolean BlockBreakEvent(BlockBreakEvent event) {
-		return false;
-	}
-	
-	@Override
-	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
-		return false;
-	}
-	
-	@Override
-	public boolean BlockExplodeEvent(BlockExplodeEvent event) {
-		return true;
-	}
-	
-	@Override
-	public boolean EntityExplodeEvent(EntityExplodeEvent event) {
-		return true;
-	}
-	
+    @Override
+    public boolean EntityDamageEvent(EntityDamageEvent event) {
+        return false;
+    }
+
 }

@@ -1,6 +1,18 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import org.bukkit.block.Block;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
 import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
@@ -36,7 +48,7 @@ public class CustomBlockListener extends CustomListener {
 	public void BlockPlaceEvent(BlockPlaceEvent event) {
 		if (!ProtectionManager.canPlace(event)) return;
 		if (event.isCancelled()) return;
-		String id = NBTUtil.getTagsFromItem(event.getItemInHand()).getString("UUID");
+		String id = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("UUID");
 		if (id==null) return;
 		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
 		if (c==null) return;
@@ -44,6 +56,10 @@ public class CustomBlockListener extends CustomListener {
 		for (CustomBlock b : CustomFeatureLoader.getLoader().getHandler().getCustomBlocks()) 
 			if (b.getUUID().equals(id)) {
 				e = b.BlockPlaceEvent(event);
+				String s = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("ENERGY");
+				if (s!=null) {
+					CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), Double.parseDouble(s));
+				}
 				break;
 			}
 		if (!e) {
@@ -81,11 +97,43 @@ public class CustomBlockListener extends CustomListener {
 	
 	@EventHandler
     @SneakyThrows
-	public void BlockPistonRetracEvent(BlockPistonRetractEvent event) {
+	public void BlockPistonRetractEvent(BlockPistonRetractEvent event) {
 		if (event.getBlock()==null) return;
 		if (event.isCancelled()) return;
 		for (Block b : event.getBlocks()) 
 			if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null)
 				event.setCancelled(true);
+	}
+	
+	@EventHandler
+    public void EntityExplodeEvent(EntityExplodeEvent event) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		for (Block b : event.blockList().toArray(new Block[event.blockList().size()])){
+			if(h.isCustomBlockAtLocation(b.getLocation())){
+				boolean v = h.getCustomBlockFromLocation(b.getLocation()).EntityExplodeEvent(event);
+				if (!v) {
+					event.blockList().remove(b);
+					h.removeCustomBlockFromLocation(b.getLocation());
+				} else {
+					event.blockList().remove(b);
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+    public void BlockExplodeEvent(BlockExplodeEvent event) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		for (Block b : event.blockList().toArray(new Block[event.blockList().size()])){
+			if(h.isCustomBlockAtLocation(b.getLocation())) {
+				boolean v = h.getCustomBlockFromLocation(b.getLocation()).BlockExplodeEvent(event);
+				if (!v) {
+					event.blockList().remove(b);
+					h.removeCustomBlockFromLocation(b.getLocation());
+				} else {
+					event.blockList().remove(b);
+				}
+			}
+		}
 	}
 }
