@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.custom.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 public class MachinesCommand extends CustomCommand {
 

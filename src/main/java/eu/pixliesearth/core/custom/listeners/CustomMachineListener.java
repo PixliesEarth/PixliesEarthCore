@@ -1,12 +1,11 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.CustomMachine;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 /**
  * 
  * @author BradBot_1

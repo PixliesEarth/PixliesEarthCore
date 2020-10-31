@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class NationCommand implements CommandExecutor, TabExecutor {
 	

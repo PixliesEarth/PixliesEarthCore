@@ -1,11 +1,7 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,13 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.Energyable;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.utils.Methods;
+import java.util.*;
 
 public class ItemEnergyInspector extends CustomItem {
 	

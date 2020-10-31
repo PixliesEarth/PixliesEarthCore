@@ -1,9 +1,9 @@
 package eu.pixliesearth.core.custom.recipes;
 
+import eu.pixliesearth.core.custom.CustomRecipe;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import eu.pixliesearth.core.custom.CustomRecipe;
 
 public class ArsenicBronzeIngot extends CustomRecipe {
 	

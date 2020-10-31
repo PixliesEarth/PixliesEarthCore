@@ -1,8 +1,7 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import org.bukkit.Material;
-
 import eu.pixliesearth.core.custom.CustomEnergyCable;
+import org.bukkit.Material;
 
 public class EnergyCableIntermediate extends CustomEnergyCable {
 	

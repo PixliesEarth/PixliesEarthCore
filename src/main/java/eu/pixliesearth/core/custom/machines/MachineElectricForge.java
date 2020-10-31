@@ -1,15 +1,5 @@
 package eu.pixliesearth.core.custom.machines;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -18,6 +8,15 @@ import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: make use fuel
 	

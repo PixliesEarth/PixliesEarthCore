@@ -80,6 +80,7 @@ public class Vendor {
         List<GuiItem> guiItems = new ArrayList<>();
 
         for (ItemStack item : items) {
+            if (item == null) continue;
             ItemBuilder builder = new ItemBuilder(item);
             builder.addLoreLine(getBuyPriceFromItem(item) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem(item) : "§c§oUnpurchasable");
             builder.addLoreLine(getSellPriceFromItem(item) != null ? "§7Sell: §2§l$§a" + getSellPriceFromItem(item) : "§c§oUnsellable");
@@ -182,6 +183,10 @@ public class Vendor {
         VendorItem vendorItem = instance.getVendorItems().get(CustomItemUtil.getUUIDFromItemStack(item));
         if (vendorItem != null) return vendorItem.getRawItemStack();
         return null;
+    }
+
+    protected static ItemStack g(String uuid) {
+        return CustomItemUtil.getItemStackFromUUID(uuid);
     }
 
 }

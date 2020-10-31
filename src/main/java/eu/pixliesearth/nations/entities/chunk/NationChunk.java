@@ -1,6 +1,5 @@
 package eu.pixliesearth.nations.entities.chunk;
 
-import com.github.yannicklamprecht.worldborder.api.BorderAPI;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import eu.pixliesearth.Main;
@@ -19,7 +18,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @Data
 @AllArgsConstructor

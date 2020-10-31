@@ -1,21 +1,16 @@
 package eu.pixliesearth.core.custom.machines;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomFuel;
 import eu.pixliesearth.core.custom.CustomGeneratorMachine;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.NBTUtil;
-import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.utils.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class MachineTestGenerator extends CustomGeneratorMachine {
 	

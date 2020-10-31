@@ -1,17 +1,11 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
-
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomEnergyCable;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.Energyable;
-import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockCableInput extends CustomEnergyBlock {
 	

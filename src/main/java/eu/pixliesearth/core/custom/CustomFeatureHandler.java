@@ -1,17 +1,13 @@
 package eu.pixliesearth.core.custom;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.Timer;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,15 +22,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-
-import eu.pixliesearth.core.files.FileBase;
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.Timer;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 

@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import java.util.Random;
-
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.utils.Methods;
+import java.util.Random;
 
 public class PolticalPowerListener extends CustomListener {
 

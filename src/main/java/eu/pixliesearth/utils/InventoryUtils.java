@@ -1,7 +1,5 @@
 package eu.pixliesearth.utils;
 
-import java.io.ByteArrayInputStream;
-
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.inventory.Inventory;
@@ -10,6 +8,8 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
+import java.io.ByteArrayInputStream;
 
 public class InventoryUtils {
 	

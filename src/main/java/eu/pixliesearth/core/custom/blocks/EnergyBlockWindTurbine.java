@@ -1,5 +1,11 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,13 +18,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockWindTurbine extends CustomEnergyBlock {
 	

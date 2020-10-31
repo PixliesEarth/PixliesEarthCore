@@ -1,5 +1,11 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -11,13 +17,6 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockQuarry extends CustomEnergyBlock {
 	
