@@ -111,11 +111,7 @@ public class CustomMachineCommandListener extends CustomListener {
 				} else if (data.equalsIgnoreCase("MBACK")) {
 					List<String> array = Methods.convertSetIntoList(getNames2(CustomFeatureLoader.getLoader().getHandler().getCustomItems()));
 					Collections.sort(array);
-					if (array.indexOf(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(10)))==0) {
-						openBase(event.getWhoClicked());
-					} else {
-						set2(event.getInventory(), array);
-					}
+					set2(event.getInventory(), array);
 				} else if (data.equalsIgnoreCase("MCLOSE")) {
 					openBase(event.getWhoClicked());
 				}
@@ -133,11 +129,7 @@ public class CustomMachineCommandListener extends CustomListener {
 				} else if (data.equalsIgnoreCase("MBACK")) {
 					List<String> array = Methods.convertSetIntoList(getNames(CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()));
 					Collections.sort(array);
-					if (array.indexOf(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(10)))==0) {
-						openBase(event.getWhoClicked());
-					} else {
-						set2(event.getInventory(), array);
-					}
+					set2(event.getInventory(), array);
 				} else if (data.equalsIgnoreCase("MCLOSE")) {
 					openBase(event.getWhoClicked());
 				}
@@ -162,16 +154,23 @@ public class CustomMachineCommandListener extends CustomListener {
 					break;
 				}
 			}
-			if (i>=list.size()) return;
 			int i2 = (i==0) ? 0 : i+1;
 			for (int i3 : ints) {
-				inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(list.get(i2))));
+				try {
+					inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(list.get(i2))));
+				} catch (Exception ignore) {
+					inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID())));
+				}
 				i2++;
 			}
 		} else {
 			int i = 0;
 			for (int i2 : ints) {
-				inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(list.get(i))));
+				try {
+					inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(list.get(i))));
+				} catch (Exception ignore) {
+					inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID())));
+				}
 				i++;
 			}
 		}
@@ -191,15 +190,23 @@ public class CustomMachineCommandListener extends CustomListener {
 					break;
 				}
 			}
-			int i2 = (i==0) ? 0 : i+1;
+			int i2 = (i==0) ? 0 : i-28;
 			for (int i3 : ints) {
-				inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(list.get(i2))));
+				try {
+					inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(list.get(i2))));
+				} catch (Exception ignore) {
+					inv.setItem(i3, (CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID())));
+				}
 				i2++;
 			}
 		} else {
 			int i = 0;
 			for (int i2 : ints) {
-				inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(list.get(i))));
+				try {
+					inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(list.get(i))));
+				} catch (Exception ignore) {
+					inv.setItem(i2, (CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID())));
+				}
 				i++;
 			}
 		}

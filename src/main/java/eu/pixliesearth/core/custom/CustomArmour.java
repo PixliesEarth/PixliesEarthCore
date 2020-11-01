@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
+import java.util.Map.Entry;
+
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -9,7 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Map.Entry;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 /**
  * 
  * @author BradBot_1
@@ -83,7 +84,8 @@ public class CustomArmour extends CustomItem {
 					addItemFlag(flag);
 				setArmour(getArmour());
 				setArmourToughness(getArmourToughness());
-				addLoreLine("§fRarity: "+getRarity().getName());
+				if (!getRarity().equals(Rarity.NONE)) 
+					addLoreLine("§fRarity: "+getRarity().getName());
 				for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
 					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				addNBTTag("UUID", getUUID(), NBTTagType.STRING);

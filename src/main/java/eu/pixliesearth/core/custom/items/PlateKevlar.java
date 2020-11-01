@@ -1,26 +1,29 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomArmour;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomItem;
 
 /**
  * @author Zenake
  */
-public class ArmourNetherPlateHelmet extends CustomArmour {
-
-    public ArmourNetherPlateHelmet() {
-
+public class PlateKevlar extends CustomItem {
+    public PlateKevlar() {
+        
     }
-
+    
     @Override
     public Material getMaterial() {
-        return Material.NETHERITE_HELMET;
+        return Material.NETHERITE_SCRAP;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ArmourNetherPlateHelmet extends CustomArmour {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§7§lNether Plate Helmet";
+        return "§6Kevlar Plate";
     }
 
     @Override
@@ -64,33 +67,17 @@ public class ArmourNetherPlateHelmet extends CustomArmour {
     }
 
     @Override
-    public double getArmour() {
-        return 2.5D;
-    }
-
-    @Override
-    public double getArmourToughness() {
-        return 1.0;
-    }
-
-    @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.COMBAT;
+        return CreativeTabs.REDSTONE;
     }
-
+    
     @Override
     public String getUUID() {
-        return "Pixlies:Nether_Plate_Helmet"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Kevlar_Plate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-
+    
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
-
-    @Override
-    public boolean EntityDamageEvent(EntityDamageEvent event) {
-        return false;
-    }
-
 }

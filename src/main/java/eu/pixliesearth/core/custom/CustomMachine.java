@@ -1,9 +1,9 @@
 package eu.pixliesearth.core.custom;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -15,9 +15,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.SkullCreator;
+import eu.pixliesearth.utils.Timer;
 
 /**
  * 
@@ -111,7 +117,8 @@ public class CustomMachine extends CustomBlock {
 				addLoreAll(getDefaultLore());
 			for (ItemFlag flag : getItemFlags()) 
 				addItemFlag(flag);
-			addLoreLine("§fRarity: "+getRarity().getName());
+			if (!getRarity().equals(Rarity.NONE)) 
+				addLoreLine("§fRarity: "+getRarity().getName());
 			for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
 				addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 			addNBTTag("UUID", getUUID(), NBTTagType.STRING);
