@@ -27,11 +27,19 @@ public class bankNation extends SubCommand {
         map.put("deposit", 1);
         map.put("withdraw", 1);
         map.put("balance", 1);
+        map.put("§eAMOUNT", 2);
         for (String s : NationManager.names.keySet()) {
             map.put(s, 3);
             map.put(s, 2);
         }
         return map;
+    }
+
+    @Override
+    public String getSyntax() {
+        return "§7Show bank balance: §b/n bank §cbalance §8[§eNATION§8]\n" +
+                "§7Withdraw money from the bank: §b/n bank §cwithdraw §eAMOUNT §8[§6NATION§8]\n" +
+                "§7Deposit money into the bank: §b/n bank §cdeposit §eAMOUNT §8[§6NATION§8]";
     }
 
     @Override
@@ -198,6 +206,8 @@ public class bankNation extends SubCommand {
                     }
                 }
                 break;
+            default:
+                sendSyntax(sender, "bank");
         }
         return false;
     }

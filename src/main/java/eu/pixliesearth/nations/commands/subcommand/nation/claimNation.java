@@ -227,9 +227,18 @@ public class claimNation extends SubCommand {
                     Lang.PLAYER_CLAIM_ALLED.broadcast("%PLAYER%;" + player.getName(), "%NATION1%;" + nation1.getName(), "%NATION2%;" + nation2.getName());
                 }
                 break;
+            default:
+                sendSyntax(sender, "claim");
         }
 
         return false;
+    }
+
+    @Override
+    public String getSyntax() {
+        return "§7Claim the chunk you are in: §b/n claim §cone§8/§chere §8[§eNATION§8]\n" +
+                "§7Enable/Disable autoclaim: §b/n claim §cauto §8[§eNATION§8]\n" +
+                "§7Fill your claims: §b/n claim §cfill §8[§eNATION§8]";
     }
 
     private void floodSearch(Player player, Nation nation, int x, int z, String world, Table<Integer, Integer, NationChunk> toClaim) {

@@ -45,13 +45,19 @@ public class accessNation extends SubCommand {
     }
 
     @Override
+    public String getSyntax() {
+	    return "§7Give/Revoke a player access to the chunk you are in: §b/n access §cplayer §ePLAYER §6set§8/§6unset\n" +
+                "§7Give/Revoke a nation access to the chunk you are in: §b/n access §cnation §eNATION §6set§8/§6unset";
+    }
+
+    @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
         if (args.length < 3) {
-            Lang.WRONG_USAGE.send(sender, "%USAGE%;/access player/nation PLAYERNAME/NATIONNAME set/unset");
+            sendSyntax(sender, "access");
             return false;
         }
         Player player = (Player) sender;
