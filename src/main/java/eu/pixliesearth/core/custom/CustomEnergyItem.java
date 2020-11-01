@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.interfaces.Energyable;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;

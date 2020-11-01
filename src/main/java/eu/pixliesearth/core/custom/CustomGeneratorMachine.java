@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.interfaces.Energyable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import lombok.Getter;

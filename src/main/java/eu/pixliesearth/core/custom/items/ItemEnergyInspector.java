@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom.items;
 
 import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.core.custom.interfaces.Energyable;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Location;
 import org.bukkit.Material;

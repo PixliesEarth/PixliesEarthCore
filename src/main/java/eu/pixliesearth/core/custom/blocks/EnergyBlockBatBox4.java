@@ -3,7 +3,7 @@ package eu.pixliesearth.core.custom.blocks;
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.Energyable;
+import eu.pixliesearth.core.custom.interfaces.Energyable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import org.bukkit.Bukkit;

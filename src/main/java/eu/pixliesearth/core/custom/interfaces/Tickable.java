@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.custom;
+package eu.pixliesearth.core.custom.interfaces;
 /**
  * 
  * @author BradBot_1
@@ -8,7 +8,7 @@ package eu.pixliesearth.core.custom;
  */
 public interface Tickable {
 	/**
-	 * Called every 50
+	 * Called every tick
 	 */
 	public void onTick();
 }

@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.custom;
+package eu.pixliesearth.core.custom.interfaces;
 
 public interface Energyable {
 	

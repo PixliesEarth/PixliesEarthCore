@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.custom;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+
+import eu.pixliesearth.core.custom.interfaces.Tickable;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
