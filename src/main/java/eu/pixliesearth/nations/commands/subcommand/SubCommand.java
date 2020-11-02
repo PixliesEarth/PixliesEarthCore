@@ -34,7 +34,7 @@ public class SubCommand {
     }
 
     public void sendSyntax(CommandSender sender, String command) {
-        sender.sendMessage("§7Correct usage of §b" + command + "§7: ");
+        sender.sendMessage("§7§lCorrect usage of §b§l" + command + "§7§l: ");
         sender.sendMessage(getSyntax());
     }
 
