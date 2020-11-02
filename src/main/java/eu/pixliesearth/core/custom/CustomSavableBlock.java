@@ -1,17 +1,18 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.Timer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.Timer;
 
 /**
  * 
@@ -70,7 +71,8 @@ public class CustomSavableBlock extends CustomMachine {
 					addLoreAll(getDefaultLore());
 				for (ItemFlag flag : getItemFlags()) 
 					addItemFlag(flag);
-				addLoreLine("§fRarity: "+getRarity().getName());
+				if (!getRarity().equals(Rarity.NONE)) 
+					addLoreLine("§fRarity: "+getRarity().getName());
 				for (Entry<String, Object> entry : getDefaultNBT().entrySet()) 
 					addNBTTag(entry.getKey(), entry.getValue().toString(), NBTTagType.STRING);
 				addNBTTag("UUID", getUUID(), NBTTagType.STRING);

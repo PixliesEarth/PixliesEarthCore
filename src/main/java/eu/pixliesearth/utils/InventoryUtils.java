@@ -9,6 +9,8 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.json.simple.JSONObject;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+
 import java.io.ByteArrayInputStream;
 
 public class InventoryUtils {
@@ -16,8 +18,10 @@ public class InventoryUtils {
 	@SuppressWarnings("unchecked")
 	public static void getInventoryContentsFromJSONObject(JSONObject obj, Inventory inv) {
 		obj.keySet().forEach(k -> {
-			if (obj.get(k).equals("EMPTY")) {
+			if (obj.get(k).equals("A") || obj.get(k).equals("EMPTY")) {
 				inv.clear(Integer.parseInt((String)k));
+			} else if (obj.get(k).equals("B")) {
+				inv.setItem(Integer.parseInt((String)k), CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 			} else {
 				inv.setItem(Integer.parseInt((String)k), (ItemStack)deserialize((String)obj.get(k)));
 			}
@@ -30,7 +34,9 @@ public class InventoryUtils {
 		int i = 0;
 		for (ItemStack is : inv.getContents()) {
 			if (is==null || is.getType().equals(Material.AIR)) {
-				obj.put(Integer.toString(i), "EMPTY");
+				obj.put(Integer.toString(i), "A");
+			} else if (CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) {
+				obj.put(Integer.toString(i), "B");
 			} else {
 				obj.put(Integer.toString(i), serialize(is));
 			}

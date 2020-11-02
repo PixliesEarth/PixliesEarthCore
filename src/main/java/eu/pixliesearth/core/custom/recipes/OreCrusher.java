@@ -23,7 +23,7 @@ public class OreCrusher extends CustomRecipe {
         map.put(1, MinecraftMaterial.IRON_INGOT.getUUID());
         map.put(2, MinecraftMaterial.COBBLESTONE.getUUID());
         map.put(3, MinecraftMaterial.PISTON.getUUID());
-        map.put(4, "Pixlies:Machine_Base");
+        map.put(4, "Pixlies:Machine_Base_Energy");
         map.put(5, MinecraftMaterial.PISTON.getUUID());
         map.put(6, MinecraftMaterial.COBBLESTONE.getUUID());
         map.put(7, MinecraftMaterial.IRON_INGOT.getUUID());

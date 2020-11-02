@@ -59,6 +59,11 @@ public class ItemUnclickableGlass extends CustomItem {
     public Set<ItemFlag> getItemFlags(){
         return new HashSet<ItemFlag>();
     }
+    
+    @Override
+    public Rarity getRarity() {
+    	return Rarity.NONE;
+    }
 
     @Override
     public String getUUID() {
