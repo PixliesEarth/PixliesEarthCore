@@ -260,8 +260,8 @@ public final class Main extends JavaPlugin {
         dynmapKernel.onDisable();
         getUtilLists().awaitingGulag1.clear();
         getUtilLists().awaitingGulag2.clear();
-        for (Player player : Bukkit.getOnlinePlayers())
-            getProfile(player.getUniqueId()).backup();
+        for (Profile profile : utilLists.profiles.values())
+            profile.backup();
         for (Nation nation : NationManager.nations.values())
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())

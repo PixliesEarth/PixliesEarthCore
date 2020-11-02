@@ -13,6 +13,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class EnergyBlockManualGenerator extends CustomEnergyBlock {
 
@@ -36,8 +38,11 @@ public class EnergyBlockManualGenerator extends CustomEnergyBlock {
     }
 
     @Override
-    public void open(Player player, Location location) {
+    public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
+        if (event.getHand() != EquipmentSlot.HAND) return event.isCancelled();
+        Location location = event.getClickedBlock().getLocation();
         CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+        Player player = event.getPlayer();
         for  (Block b : getSurroundingCustomBlocks(location)) {
             CustomBlock c = h.getCustomBlockFromLocation(b.getLocation());
             if (c instanceof Energyable) {
@@ -49,9 +54,10 @@ public class EnergyBlockManualGenerator extends CustomEnergyBlock {
                 } else {
                     player.sendActionBar("§cNot enough mana");
                 }
-                return;
+                return event.isCancelled();
             }
         }
+        return event.isCancelled();
     }
 
 }
