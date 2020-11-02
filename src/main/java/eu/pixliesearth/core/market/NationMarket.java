@@ -1,2 +1,7 @@
-package eu.pixliesearth.core.bazaar;public class NationBazaar {
+package eu.pixliesearth.core.market;
+
+public class NationMarket {
+
+
+
 }

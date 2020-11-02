@@ -15,7 +15,7 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 public class K98K extends PixliesGun {
 
     public K98K(int ammo, UUID uuid) {
-        super(uuid, "§c§lKarabiner98k", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(6).setDisplayName("§c§lKarabiner98k §8| §8[§c5§7/§c5§8]").addLoreLine("§7Ammo: §3Rifle Ammo").addLoreLine("§7Origin: §cGermany").addLoreLine("§7Range: §340 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 40, ammo,5, 0.2, 800, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+        super(uuid, "§c§lKarabiner98k", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(6).setDisplayName("§c§lKarabiner98k §8| §8[§c5§7/§c5§8]").addLoreLine("§7Ammo: §3Rifle Ammo").addLoreLine("§7Origin: §cGermany").addLoreLine("§7Range: §3100 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 100, ammo,5, 0.2, 800, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
     }
 
 }

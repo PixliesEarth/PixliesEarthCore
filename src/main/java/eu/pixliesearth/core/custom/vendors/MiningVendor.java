@@ -44,7 +44,6 @@ public class MiningVendor extends Vendor {
                 g("Pixlies:Kevlar"),
                 g("Pixlies:Carbon_Fiber"),
                 g("Pixlies:Hard_Plastic"),
-                g("Pixlies:Uranium_Chunk"),
                 g("Pixlies:Solder_Dust"),
                 g("Pixlies:Zinc_Dust"),
                 g("Pixlies:Cobalt_Dust"),
