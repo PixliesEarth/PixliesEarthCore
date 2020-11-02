@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.interfaces.Recipeable;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
@@ -85,6 +87,61 @@ public class CustomMachineCommandListener extends CustomListener {
 				}
 			}
 			event.setCancelled(true);
+		} else if (event.getView().getTitle().equalsIgnoreCase(Recipeable.craftingExampleTitle)) {
+			String data = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
+			if (data==null || data.equalsIgnoreCase("")) {
+				
+			} else {
+				if (data.equalsIgnoreCase("MNEXT")) {
+					List<CustomRecipe> list = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(Recipeable.recipeItemSlot)));
+					if (list.isEmpty()) {
+						event.getWhoClicked().closeInventory();
+						event.getWhoClicked().openInventory(getErrorInventory("No recipes found for this item!"));
+					} else if (list.size()==1) {
+						CustomRecipe r = list.get(1);
+						CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
+						if (c!=null) {
+							if (c instanceof Recipeable) {
+								event.getWhoClicked().closeInventory();
+								event.getWhoClicked().openInventory(((Recipeable)c).getCraftingExample(r));
+							} else {
+								event.getWhoClicked().closeInventory();
+								event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
+							}
+						} else {
+							event.getWhoClicked().closeInventory();
+							event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
+						}
+					} else {
+						String s = NBTUtil.getTagsFromItem(event.getInventory().getItem(Recipeable.recipeItemSlot)).getString("LIST");
+						try {
+							int i = Integer.parseInt(s)+1;
+							CustomRecipe r = list.get(i);
+							CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
+							if (c!=null) {
+								if (c instanceof Recipeable) {
+									event.getWhoClicked().closeInventory();
+									event.getWhoClicked().openInventory(((Recipeable)c).getCraftingExample(r));
+								} else {
+									event.getWhoClicked().closeInventory();
+									event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
+								}
+							} else {
+								event.getWhoClicked().closeInventory();
+								event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
+							}
+						} catch (Exception e) {
+							event.getWhoClicked().closeInventory();
+							event.getWhoClicked().openInventory(getErrorInventory("Unable to parse the recipe!"));
+						}
+					}
+				} else if (data.equalsIgnoreCase("MBACK")) {
+					// TODO
+				} else if (data.equalsIgnoreCase("MCLOSE")) {
+					openBase(event.getWhoClicked());
+				}
+			}
+			event.setCancelled(true);
 		} else if (event.getView().getTitle().equalsIgnoreCase("§6Machines : ?")) { // TODO: decide what does here
 			String data = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
 			if (data==null || data.equalsIgnoreCase("")) {
@@ -120,7 +177,24 @@ public class CustomMachineCommandListener extends CustomListener {
 		} else if (event.getView().getTitle().equalsIgnoreCase("§6Machines : Recipes")) {
 			String data = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
 			if (data==null || data.equalsIgnoreCase("")) {
-				
+				String s = CustomItemUtil.getUUIDFromItemStack(event.getCurrentItem());
+				List<CustomRecipe> list = getRecipesOfUUIDInOrderedList(s);
+				if (list.isEmpty()) {
+					event.getWhoClicked().closeInventory();
+					event.getWhoClicked().openInventory(getErrorInventory("This item has no recipes!"));
+				} else {
+					CustomRecipe r = list.get(1);
+					CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
+					if (c!=null && c instanceof Recipeable) {
+						event.getWhoClicked().closeInventory();
+						Inventory inv = ((Recipeable)c).getCraftingExample(r);
+						inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(1), NBTTagType.STRING).build());
+						event.getWhoClicked().openInventory(inv);
+					} else {
+						event.getWhoClicked().closeInventory();
+						event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
+					}
+				}
 			} else {
 				if (data.equalsIgnoreCase("MNEXT")) {
 					List<String> array = Methods.convertSetIntoList(getNames(CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()));
@@ -130,6 +204,20 @@ public class CustomMachineCommandListener extends CustomListener {
 					List<String> array = Methods.convertSetIntoList(getNames(CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()));
 					Collections.sort(array);
 					set2(event.getInventory(), array);
+				} else if (data.equalsIgnoreCase("MCLOSE")) {
+					openBase(event.getWhoClicked());
+				}
+			}
+			event.setCancelled(true);
+		} else if (event.getView().getTitle().equalsIgnoreCase("§6Machines : Error")) {
+			String data = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
+			if (data==null || data.equalsIgnoreCase("")) {
+				
+			} else {
+				if (data.equalsIgnoreCase("MNEXT")) {
+					
+				} else if (data.equalsIgnoreCase("MBACK")) {
+					
 				} else if (data.equalsIgnoreCase("MCLOSE")) {
 					openBase(event.getWhoClicked());
 				}
@@ -212,6 +300,25 @@ public class CustomMachineCommandListener extends CustomListener {
 		}
 	}
 	
+	public Inventory setRecipe(CustomRecipe r) {
+		CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
+		if (c==null) return null; // TODO: open an error gui
+		if (c instanceof Recipeable) {
+			return ((Recipeable)c).getCraftingExample(r);
+		} else {
+			return getErrorInventory("Unable to get recipe gui");
+		}
+	}
+	
+	public static Inventory getErrorInventory(String info) {
+		Inventory inv = Bukkit.createInventory(null, 3*9, "§6Machines : Error");
+		for (int i = 0; i < 3*9; i++)
+			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+		inv.setItem(4, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§lAn error has occured").addLoreLine("§bInformation:").addLoreLine("§b"+info).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
+		inv.setItem(22, Recipeable.closeItem);
+		return inv;
+	}
+	
 	public CustomRecipe getRecipeFromUUID(String resultUUID) {
 		for (CustomRecipe r : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) 
 			if (ChatColor.stripColor(r.getResultUUID()).equalsIgnoreCase(resultUUID)) 
@@ -245,5 +352,34 @@ public class CustomMachineCommandListener extends CustomListener {
 			set.add(ChatColor.stripColor(c.getUUID()));
 		}
 		return set;
+	}
+	
+	public Set<CustomRecipe> getRecipesOfUUID(String id) {
+		Set<CustomRecipe> set = new HashSet<CustomRecipe>();
+		for (CustomRecipe cr : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
+			if (cr.getResultUUID().equalsIgnoreCase(id)) {
+				set.add(cr);
+			}
+		}
+		return set;
+	}
+	
+	public static List<CustomRecipe> getRecipesOfUUIDInOrderedList(String id) {
+		List<String> list = new ArrayList<>();
+		List<CustomRecipe> list2 = new ArrayList<>();
+		for (CustomRecipe cr : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
+			if (cr.getResultUUID().equalsIgnoreCase(id)) {
+				list.add(cr.getClass().getName());
+			}
+		}
+		Collections.sort(list);
+		for (String s : list) {
+			for (CustomRecipe cr : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
+				if (cr.getClass().getName().equals(s)) {
+					list2.add(cr);
+				}
+			}
+		}
+		return list2;
 	}
 }

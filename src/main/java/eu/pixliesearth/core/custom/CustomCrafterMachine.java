@@ -175,13 +175,14 @@ public class CustomCrafterMachine extends CustomMachine {
 				return true;
 			}
 		}
+		if (loc==null) return false;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 			@Override
 			public void run() {
 				loc.getWorld().dropItemNaturally(loc, is);
 			}
 		}, 1L);
-		return false;
+		return true;
 	}
 	/**
 	 * @return The {@link CustomCrafterMachine}'s {@link Inventory}

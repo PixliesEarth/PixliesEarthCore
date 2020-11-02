@@ -1,9 +1,18 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
+import java.util.Map.Entry;
 
-public class MachineForge extends CustomFuelableCrafterMachine { //TODO: make use fuel
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+
+import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+
+public class MachineForge extends CustomFuelableCrafterMachine implements Recipeable {
 	
 	public MachineForge() {
 		
@@ -27,5 +36,50 @@ public class MachineForge extends CustomFuelableCrafterMachine { //TODO: make us
 	@Override
 	public String getFuelUUID() {
 		return MinecraftMaterial.MAGMA_CREAM.getUUID();
+	}
+
+	
+	public Inventory getCraftingExample(CustomRecipe customRecipe) {
+		Inventory inv = Bukkit.createInventory(null, 6*9, craftingExampleTitle);
+		inv.setContents(getInventory2(customRecipe).getContents());
+		for (int i : craftSlots) 
+			inv.clear(i);
+		for (Entry<String, Integer> entry : customRecipe.getAsUUIDToAmountMap().entrySet()) {
+			if (entry.getValue()>64) {
+				int i = entry.getValue();
+				while (i!=0) {
+					if (i>64) {
+						int i2 = getNextFreeSlotInCrafting(inv);
+						if (i2==-1) {
+							// Do nothing (maybe add an error panel)
+						} else {
+							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
+						}
+						i -= 64;
+					} else {
+						int i2 = getNextFreeSlotInCrafting(inv);
+						if (i2==-1) {
+							// Do nothing (maybe add an error panel)
+						} else {
+							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(i).build());
+						}
+						i -= i;
+					}
+				}
+			} else {
+				int i = getNextFreeSlotInCrafting(inv);
+				if (i==-1) {
+					// Do nothing (maybe add an error panel)
+				} else {
+					inv.setItem(i, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(entry.getValue()).build());
+				}
+			}
+		}
+		addToResultSlots(null, inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
+		inv.setItem(48, backItem); // Back
+		inv.setItem(49, closeItem); // Close
+		inv.setItem(50, nextItem); // Next
+		inv.setItem(recipeItemSlot, CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+		return inv;
 	}
 }

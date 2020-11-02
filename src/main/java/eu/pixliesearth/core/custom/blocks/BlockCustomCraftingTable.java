@@ -1,16 +1,29 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomBlock;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
 
-public class BlockCustomCraftingTable extends CustomBlock {
+public class BlockCustomCraftingTable extends CustomBlock implements Recipeable {
 	
 	public BlockCustomCraftingTable() {
 		
@@ -91,6 +104,22 @@ public class BlockCustomCraftingTable extends CustomBlock {
 	@Override
 	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
 		return false;
+	}
+
+	@Override
+	public Inventory getCraftingExample(CustomRecipe customRecipe) {
+		Inventory inv = Bukkit.createInventory(null, 6*9, craftingExampleTitle);
+		int[] ints = {10,11,12,19,20,21,28,29,30};
+		for (int i = 0; i < 6*9; i++)
+			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+		for (int i : ints) // Loop threw Items Slots
+			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(customRecipe.getContentsList().get(i)));
+		inv.setItem(24, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
+		inv.setItem(48, backItem); // Back
+		inv.setItem(49, closeItem); // Close
+		inv.setItem(50, nextItem); // Next
+		inv.setItem(recipeItemSlot, CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+		return inv;
 	}
 	
 }

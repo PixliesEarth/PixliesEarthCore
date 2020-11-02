@@ -16,7 +16,7 @@ public class EnergyBlockCableInput extends CustomEnergyBlock {
 	
 	@Override
     public Material getMaterial() {
-        return Material.YELLOW_CONCRETE;
+        return Material.YELLOW_STAINED_GLASS_PANE;
     }
 	
 	public double getCapacity() {
