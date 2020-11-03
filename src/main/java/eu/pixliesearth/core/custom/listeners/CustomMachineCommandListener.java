@@ -98,12 +98,14 @@ public class CustomMachineCommandListener extends CustomListener {
 						event.getWhoClicked().closeInventory();
 						event.getWhoClicked().openInventory(getErrorInventory("No recipes found for this item!"));
 					} else if (list.size()==1) {
-						CustomRecipe r = list.get(1);
+						CustomRecipe r = list.get(0);
 						CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 						if (c!=null) {
 							if (c instanceof Recipeable) {
 								event.getWhoClicked().closeInventory();
-								event.getWhoClicked().openInventory(((Recipeable)c).getCraftingExample(r));
+								Inventory inv = ((Recipeable)c).getCraftingExample(r);
+								inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
+								event.getWhoClicked().openInventory(inv);
 							} else {
 								event.getWhoClicked().closeInventory();
 								event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
@@ -121,7 +123,9 @@ public class CustomMachineCommandListener extends CustomListener {
 							if (c!=null) {
 								if (c instanceof Recipeable) {
 									event.getWhoClicked().closeInventory();
-									event.getWhoClicked().openInventory(((Recipeable)c).getCraftingExample(r));
+									Inventory inv = ((Recipeable)c).getCraftingExample(r);
+									inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
+									event.getWhoClicked().openInventory(inv);
 								} else {
 									event.getWhoClicked().closeInventory();
 									event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
@@ -183,7 +187,7 @@ public class CustomMachineCommandListener extends CustomListener {
 					event.getWhoClicked().closeInventory();
 					event.getWhoClicked().openInventory(getErrorInventory("This item has no recipes!"));
 				} else {
-					CustomRecipe r = list.get(1);
+					CustomRecipe r = list.get(0);
 					CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 					if (c!=null && c instanceof Recipeable) {
 						event.getWhoClicked().closeInventory();

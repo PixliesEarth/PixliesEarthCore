@@ -112,8 +112,11 @@ public class BlockCustomCraftingTable extends CustomBlock implements Recipeable 
 		int[] ints = {10,11,12,19,20,21,28,29,30};
 		for (int i = 0; i < 6*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
-		for (int i : ints) // Loop threw Items Slots
-			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(customRecipe.getContentsList().get(i)));
+		int i2 = 0;
+		for (int i : ints) {// Loop threw Items Slots
+			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(customRecipe.getContentsList().get(i2)));
+			i2++;
+		}
 		inv.setItem(24, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
 		inv.setItem(48, backItem); // Back
 		inv.setItem(49, closeItem); // Close

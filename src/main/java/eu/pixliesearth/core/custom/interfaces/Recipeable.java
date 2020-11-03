@@ -26,7 +26,7 @@ public interface Recipeable {
 	
 	public static String craftingExampleTitle = "§6Machines : Recipe";
 	
-	public static int recipeItemSlot = 43;
+	public static int recipeItemSlot = 46;
 	
 	public static ItemStack backItem = new ItemBuilder(Material.ARROW).setDisplayName("§bBack").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MBACK", NBTTagType.STRING).build(); // Back
 	public static ItemStack closeItem = new ItemBuilder(Material.BARRIER).setDisplayName("§cClose").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MCLOSE", NBTTagType.STRING).build(); // Close

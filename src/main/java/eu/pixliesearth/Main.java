@@ -12,6 +12,7 @@ import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
+import eu.pixliesearth.core.custom.listeners.TabListener;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.listener.*;
 import eu.pixliesearth.core.modules.ChatSystem;
@@ -101,7 +102,8 @@ public final class Main extends JavaPlugin {
         init();
     }
 
-    private void init() {
+    @SuppressWarnings("resource")
+	private void init() {
 
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
             getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
@@ -186,6 +188,16 @@ public final class Main extends JavaPlugin {
                 }
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 60, (20 * 60) * 60);
+
+        // TABLIST UPDATER
+        new BukkitRunnable() {
+			@Override
+			public void run() {
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					TabListener.update(player);
+				}
+			}
+        }.runTaskTimerAsynchronously(this, 1L, 1L);
 
         NationManager.init();
 
@@ -273,7 +285,6 @@ public final class Main extends JavaPlugin {
         vendorItemsFile.saveJsonToFile();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void registerCommands() {
         getCommand("modules").setExecutor(new ModulesCommand());
         getCommand("chat").setExecutor(new ChatCommand());

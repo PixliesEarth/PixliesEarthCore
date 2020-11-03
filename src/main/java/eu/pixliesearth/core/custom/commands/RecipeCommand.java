@@ -48,12 +48,12 @@ public class RecipeCommand extends CustomCommand {
 		if (list.isEmpty()) {
 			commandsender.sendMessage("No recipes found for this UUID!");
 		} else {
-			CustomRecipe r = list.get(1);
+			CustomRecipe r = list.get(0);
 			CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 			if (c!=null && c instanceof Recipeable) {
 				((Player)commandsender).closeInventory();
 				Inventory inv = ((Recipeable)c).getCraftingExample(r);
-				inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(1), NBTTagType.STRING).build());
+				inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
 				((Player)commandsender).openInventory(inv);
 			} else {
 				commandsender.sendMessage("Unable to load the gui for this UUID!");
