@@ -86,7 +86,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                             builder.append("§2█");
                         } else  {
                             Nation.NationRelation rel = Nation.getRelation(profile.getNationId(), nc.getNationId());
-                            builder.append("§" + rel.colChar + "█");
+                            builder.append("§").append(rel.colChar).append("█");
                         }
                     } else {
                         if (nc == null) {
@@ -100,7 +100,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
             }
             return returnable;
         }
-        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l⚡";
+        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l★";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
                 if (instance.getUtilLists().boosts.size() > 0)
@@ -109,7 +109,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add("  §8» §6" + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
-                // returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
                 returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))

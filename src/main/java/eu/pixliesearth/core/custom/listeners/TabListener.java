@@ -15,7 +15,7 @@ import net.md_5.bungee.api.chat.TextComponent;
  * 
  * @author BradBot_1
  * 
- * <h3>Handles events for custom armours</h3>
+ * <h3>Handles events for custom TABLIST</h3>
  *
  * @apiNote TODO: notes
  */
@@ -80,9 +80,6 @@ public class TabListener extends CustomListener {
 	}
 	
 	public static int getOnline() {
-		int i = 0;
-		for (@SuppressWarnings("unused") Player p : Bukkit.getServer().getOnlinePlayers())
-			i++;
-		return i;
+		return Bukkit.getOnlinePlayers().size();
 	}
 }

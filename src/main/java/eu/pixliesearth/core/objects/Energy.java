@@ -32,12 +32,12 @@ public class Energy {
 
     public static double calculateNeeded(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 2000;
-        return Methods.calculateDistance(a, b) / 2000;
+        return Methods.calculateDistance(a, b) / 500;
     }
 
     public static double calculateTime(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 500;
-        return Methods.calculateDistance(a, b) / 500;
+        return Methods.calculateDistance(a, b) / 100;
     }
 
 }

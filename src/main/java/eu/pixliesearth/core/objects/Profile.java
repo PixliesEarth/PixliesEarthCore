@@ -1,5 +1,8 @@
 package eu.pixliesearth.core.objects;
 
+import com.github.stefvanschie.inventoryframework.Gui;
+import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
@@ -11,7 +14,9 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -312,6 +317,63 @@ public class Profile {
             Role rank = MiniMick.getApi().getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(getRank().getName())).get();
             rank.addUser(MiniMick.getApi().getUserById(discord).get());
         } catch (Exception ignored) {}
+    }
+
+    public void openLangGui() {
+        Player player = getAsPlayer();
+        Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your language");
+        StaticPane pane = new StaticPane(0, 0, 9, 3);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5e7899b4806858697e283f084d9173fe487886453774626b24bd8cfecc77b3f")).setDisplayName("§eDeutsch").build(), e -> {
+            e.setCancelled(true);
+            setLang("DE");
+            save();
+            gui.update();
+            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+        }), 0, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4cac9774da1217248532ce147f7831f67a12fdcca1cf0cb4b3848de6bc94b4")).setDisplayName("§eEnglish").build(), e -> {
+            e.setCancelled(true);
+            setLang("ENG");
+            save();
+            gui.update();
+            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+        }), 1, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/51269a067ee37e63635ca1e723b676f139dc2dbddff96bbfef99d8b35c996bc")).setDisplayName("§efrançais").build(), e -> {
+            e.setCancelled(true);
+            setLang("FR");
+            save();
+            gui.update();
+            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+        }), 2, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/32bd4521983309e0ad76c1ee29874287957ec3d96f8d889324da8c887e485ea8")).setDisplayName("§eEspañol").build(), e -> {
+            e.setCancelled(true);
+            setLang("ES");
+            save();
+            gui.update();
+            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+        }), 3, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/c23cf210edea396f2f5dfbced69848434f93404eefeabf54b23c073b090adf")).setDisplayName("§eNederlands").build(), e -> {
+            e.setCancelled(true);
+            setLang("NL");
+            save();
+            gui.update();
+            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
+        }), 4, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/7d86242b0d97ece9994660f3974d72df7b887f630a4530dadc5b1ab7c2134aec")).setDisplayName("§eSvenska").build(), e -> {
+            e.setCancelled(true);
+            setLang("SWE");
+            save();
+            gui.update();
+            Lang.LANGUAGE_CHANGED.send(player);
+        }), 5, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5cd9badf1972583b663b44b1e027255de8f275aa1e89defcf77782ba6fcc652")).setDisplayName("§eفارسی").build(), e -> {
+            e.setCancelled(true);
+            setLang("FA");
+            save();
+            gui.update();
+            Lang.LANGUAGE_CHANGED.send(player);
+        }), 6, 0);
+        gui.addPane(pane);
+        gui.show(player);
     }
 
     public static Profile getByDiscord(String discordId) {

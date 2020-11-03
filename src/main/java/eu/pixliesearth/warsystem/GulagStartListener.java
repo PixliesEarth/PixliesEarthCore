@@ -174,6 +174,7 @@ public class GulagStartListener implements Listener {
         Main.getInstance().setGulagActive(false);
 
     }
+
     @SneakyThrows
     private void setKit(Player p, Player player){
         int random = (int) (2 * Math.random());

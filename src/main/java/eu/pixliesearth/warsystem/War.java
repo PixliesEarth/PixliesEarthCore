@@ -2,30 +2,37 @@ package eu.pixliesearth.warsystem;
 
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Timer;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
 public class War {
 
-    private String aggressorId;
-    private String defenderId;
+    private String mainAggressor;
+    private List<String> aggressorIds;
+    private List<String> defenderIds;
     private boolean declareAble;
     private Map<String, Timer> timers;
 
+    public War(String mainAggressor, List<String> aggressorIds, List<String> defenderIds) {
+        this.mainAggressor = mainAggressor;
+        this.aggressorIds = aggressorIds;
+        this.defenderIds = defenderIds;
+        this.declareAble = false;
+        this.timers = new HashMap<>();
+    }
+
     public boolean justifyWarGoal() {
-        Nation aggressor = Nation.getById(aggressorId);
+        Nation aggressor = Nation.getById(mainAggressor);
         if (!aggressor.hasPoliticalPower(25D))
             return false;
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));
         return true;
     }
-
-
 
     public void tick() {
         if (!declareAble) {
