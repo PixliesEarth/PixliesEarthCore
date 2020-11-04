@@ -21,7 +21,7 @@ import net.md_5.bungee.api.chat.TextComponent;
  */
 public class TabListener extends CustomListener {
 	
-	private static Map<Player, Integer> dataMap = new HashMap<>();
+	private static final Map<Player, Integer> dataMap = new HashMap<>();
 	
 	@EventHandler
 	public void PlayerJoinEvent(PlayerJoinEvent event) {
@@ -29,9 +29,9 @@ public class TabListener extends CustomListener {
 	}
 	
 	public static void update(Player player) {
-		BaseComponent header = new TextComponent("");
+		BaseComponent header = new TextComponent("\n§x§4§e§d§e§d§b§lP§x§4§d§c§9§c§7§li§x§4§1§b§0§a§e§lx§x§3§b§a§1§9§f§ll§x§3§4§8§c§8§b§li§x§3§0§7§a§7§a§le§x§2§9§6§9§6§9§ls§x§9§c§9§c§9§c§lN§x§a§8§a§8§a§8§le§x§a§d§a§d§a§d§lt§x§b§3§b§3§b§3§lw§x§b§d§b§d§b§d§lo§x§d§4§d§4§d§4§lr§f§lk §cMaintenance§7! {newline}§8§8>> §x§4§e§d§e§d§b§lP§x§4§d§c§9§c§7§li§x§4§1§b§0§a§e§lx§x§3§b§a§1§9§f§ll§x§3§4§8§c§8§b§li§x§3§0§7§a§7§a§le§x§2§9§6§9§6§9§ls\n");
 		BaseComponent footer = new TextComponent("");
-		switch (dataMap.getOrDefault(player, 0)) {
+/*		switch (dataMap.getOrDefault(player, 0)) {
 		case 0 :
 			header.addExtra("§b§lPIXLIES");
 			break;
@@ -65,7 +65,7 @@ public class TabListener extends CustomListener {
 		case 40 :
 			header.addExtra("§b§lPIXLIES");
 			break;
-		}
+		}*/
 		if (dataMap.containsKey(player)) {
 			int i = dataMap.get(player);
 			dataMap.remove(player);
@@ -73,8 +73,8 @@ public class TabListener extends CustomListener {
 		} else {
 			dataMap.put(player, 0);
 		}
-		footer.addExtra("§aOnline: "+getOnline()+"\n");
-		footer.addExtra("§bpixlies.net");
+		footer.addExtra("\n§b§l" + getOnline() + " §7players online\n");
+		footer.addExtra("§7pixlies.net\n");
 		player.setPlayerListHeaderFooter(header, footer);
 		player.setPlayerListName(player.getDisplayName());
 	}
