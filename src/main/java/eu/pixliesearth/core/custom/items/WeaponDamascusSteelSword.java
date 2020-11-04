@@ -26,7 +26,7 @@ public class WeaponDamascusSteelSword extends CustomWeapon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "6Damascus Steel Sword";
+        return "§6Damascus Steel Sword";
     }
 
     @Override

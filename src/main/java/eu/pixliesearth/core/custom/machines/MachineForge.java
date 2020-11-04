@@ -9,6 +9,7 @@ import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 
@@ -80,6 +81,8 @@ public class MachineForge extends CustomFuelableCrafterMachine implements Recipe
 		inv.setItem(49, closeItem); // Close
 		inv.setItem(50, nextItem); // Next
 		inv.setItem(recipeItemSlot, CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+		inv.setItem(52, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+		inv.setItem(53, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		return inv;
 	}
 }

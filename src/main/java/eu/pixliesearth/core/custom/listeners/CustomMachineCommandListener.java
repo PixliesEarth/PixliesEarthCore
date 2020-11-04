@@ -105,6 +105,7 @@ public class CustomMachineCommandListener extends CustomListener {
 								event.getWhoClicked().closeInventory();
 								Inventory inv = ((Recipeable)c).getCraftingExample(r);
 								inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
+								inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 								event.getWhoClicked().openInventory(inv);
 							} else {
 								event.getWhoClicked().closeInventory();
@@ -125,6 +126,7 @@ public class CustomMachineCommandListener extends CustomListener {
 									event.getWhoClicked().closeInventory();
 									Inventory inv = ((Recipeable)c).getCraftingExample(r);
 									inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
+									inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 									event.getWhoClicked().openInventory(inv);
 								} else {
 									event.getWhoClicked().closeInventory();
@@ -193,6 +195,7 @@ public class CustomMachineCommandListener extends CustomListener {
 						event.getWhoClicked().closeInventory();
 						Inventory inv = ((Recipeable)c).getCraftingExample(r);
 						inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(1), NBTTagType.STRING).build());
+						inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 						event.getWhoClicked().openInventory(inv);
 					} else {
 						event.getWhoClicked().closeInventory();
