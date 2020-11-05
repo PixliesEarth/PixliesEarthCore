@@ -54,6 +54,7 @@ public class RecipeCommand extends CustomCommand {
 				((Player)commandsender).closeInventory();
 				Inventory inv = ((Recipeable)c).getCraftingExample(r);
 				inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
+				inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 				((Player)commandsender).openInventory(inv);
 			} else {
 				commandsender.sendMessage("Unable to load the gui for this UUID!");

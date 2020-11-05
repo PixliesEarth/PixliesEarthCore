@@ -37,7 +37,8 @@ public class EnergyBlockManualGenerator extends CustomEnergyBlock {
         return "Machine:Manual_Generator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean onBlockIsInteractedWith(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) return event.isCancelled();
         Location location = event.getClickedBlock().getLocation();
@@ -49,7 +50,7 @@ public class EnergyBlockManualGenerator extends CustomEnergyBlock {
                 Main instance = Main.getInstance();
                 Profile profile = instance.getProfile(player.getUniqueId());
                 if (Energy.take(profile, 0.05)) {
-                    h.addPowerToLocation(b.getLocation(), 0.05);
+                    h.addPowerToLocation(b.getLocation(), 5D);
                     location.getWorld().playSound(location, Sound.BLOCK_ANVIL_HIT, 1, 1);
                 } else {
                     player.sendActionBar("§cNot enough mana");

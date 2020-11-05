@@ -26,7 +26,7 @@ public class WeaponTinSword extends CustomWeapon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "6Tin Sword";
+        return "§6Tin Sword";
     }
 
     @Override

@@ -26,7 +26,7 @@ public class WeaponCopperSword extends CustomWeapon {
 
     @Override
     public String getDefaultDisplayName() {
-        return "6Copper Sword";
+        return "§6Copper Sword";
     }
 
     @Override
