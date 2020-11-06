@@ -227,7 +227,8 @@ public class CustomCrafterMachine extends CustomMachine {
 			} else {
 				Map<String, Integer> map = r.getAsUUIDToAmountMap();
 				for (Entry<String, Integer> entry : map.entrySet()) {
-					addLoreLine("§b"+Integer.toString(entry.getValue())+"x "+entry.getKey());
+					if (CustomItemUtil.getItemStackFromUUID(entry.getKey()) == null) continue;
+					addLoreLine("§b"+Integer.toString(entry.getValue())+"x " + CustomItemUtil.getItemStackFromUUID(entry.getKey()).getI18NDisplayName());
 				}
 			}
 			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING); // make item not click-able
@@ -290,15 +291,15 @@ public class CustomCrafterMachine extends CustomMachine {
 		// Main GUI select recipe
 		if (tags.getString("EXTRA")!=null) {
 			if (tags.getString("EXTRA").equalsIgnoreCase("RECIPE")) {
-				//String id = CustomItemUtil.getUUIDFromItemStack(is);
-				//CustomRecipe r = getRecipeFromUUID(id);
-				//event.getWhoClicked().openInventory(getInventory2(r));
-				event.getWhoClicked().closeInventory();
+				String id = CustomItemUtil.getUUIDFromItemStack(is);
+				CustomRecipe r = getRecipeFromUUID(id);
+				event.getWhoClicked().openInventory(getInventory2(r));
+				// event.getWhoClicked().closeInventory();
 				event.getInventory().setItem(47, is);
 				return true;
 			} else if (tags.getString("EXTRA").equalsIgnoreCase("CLOSE")) {
-				//event.getWhoClicked().openInventory(getInventory());
-				event.getWhoClicked().closeInventory();
+				event.getWhoClicked().openInventory(getInventory());
+				// event.getWhoClicked().closeInventory();
 				event.getInventory().setItem(47, new ItemStack(Material.BARRIER));
 				return true;
 			} else if (tags.getString("EXTRA").equalsIgnoreCase("RECIPERESULTITEM")) {

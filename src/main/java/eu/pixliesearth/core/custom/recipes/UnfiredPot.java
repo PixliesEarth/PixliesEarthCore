@@ -15,7 +15,7 @@ public class UnfiredPot extends CustomRecipe {
     
     @Override
     public String craftedInUUID() {
-        return "Machine:Forge";
+        return "Machine:Pottery";
     }
 
     @Override
@@ -26,9 +26,10 @@ public class UnfiredPot extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, MinecraftMaterial.CLAY.getUUID());
-        map.put(1, MinecraftMaterial.CLAY.getUUID());
-        map.put(2, MinecraftMaterial.CLAY.getUUID());
+        map.put(0, "Pixlies:Mud_Brick");
+        map.put(1, "Pixlies:Mud_Brick");
+        map.put(2, "Pixlies:Mud_Brick");
+        map.put(3, "Pixlies:Mud_Brick");
         return map;
     }
 

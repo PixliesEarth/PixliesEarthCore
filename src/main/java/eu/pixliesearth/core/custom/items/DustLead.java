@@ -7,16 +7,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
-/**
- * 
- * @author zenake#3931
- *
- */
-public class IngotAluminium extends CustomItem {
-	
-    public IngotAluminium() {
 
-    }
+public class DustLead extends CustomItem {
 
     @Override
     public Material getMaterial() {
@@ -30,7 +22,7 @@ public class IngotAluminium extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminium Ingot";
+        return "§7Lead Dust";
     }
 
     @Override
@@ -70,11 +62,12 @@ public class IngotAluminium extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Lead_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
 }

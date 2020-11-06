@@ -11,22 +11,27 @@ public class Tablet extends CustomRecipe {
     public Tablet() {
         
     }
+
+    @Override
+    public String craftedInUUID() {
+        return "Machine:Pottery";
+    }
+
     @Override
     public String getResultUUID() {
         return "Pixlies:Tablet";
     }
+
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "minecraft:clay");
         map.put(1, "minecraft:clay");
-        map.put(2, "minecraft:air");
-        map.put(3, "minecraft:clay");
+        map.put(2, "minecraft:clay");
+        map.put(3, "Pixlies:Mud_Brick");
         map.put(4, "minecraft:clay");
-        map.put(5, "minecraft:air");
+        map.put(5, "minecraft:clay");
         map.put(6, "minecraft:clay");
-        map.put(7, "minecraft:clay");
-        map.put(8, "minecraft:air");
         return map;
     }
 }

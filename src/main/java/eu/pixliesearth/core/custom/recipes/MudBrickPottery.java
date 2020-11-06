@@ -1,13 +1,13 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class HeavySteelPickaxe extends CustomRecipe {
+import java.util.HashMap;
+import java.util.Map;
+
+public class MudBrickPottery extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -19,7 +19,7 @@ public class HeavySteelPickaxe extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:Forge";
+		return "Machine:Pottery";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -29,7 +29,7 @@ public class HeavySteelPickaxe extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Heavy_Steel_Pickaxe";
+		return "Pixlies:Mud_Brick";
 	}
 	/**
 	 * How many of the result to give
@@ -43,7 +43,7 @@ public class HeavySteelPickaxe extends CustomRecipe {
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.MEDIEVAL;
+		return Era.FUTURE;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,11 +59,15 @@ public class HeavySteelPickaxe extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Heavy_Steel_Ingot");
-		map.put(1, "Pixlies:Heavy_Steel_Ingot");
-		map.put(2, MinecraftMaterial.STICK.getUUID());
-		map.put(3, MinecraftMaterial.STICK.getUUID());
-		map.put(4, "Pixlies:Heavy_Steel_Ingot");
+		map.put(0, "Minecraft:Clay");
+		map.put(1, "Minecraft:Clay");
+		map.put(2, "Minecraft:Clay");
+		map.put(3, "Minecraft:Clay");
+		map.put(0, "Minecraft:Water_Bucket");
+		map.put(5, "Minecraft:Clay");
+		map.put(6, "Minecraft:Clay");
+		map.put(7, "Minecraft:Clay");
+		map.put(8, "Minecraft:Clay");
 		return map;
 	}
 	/**

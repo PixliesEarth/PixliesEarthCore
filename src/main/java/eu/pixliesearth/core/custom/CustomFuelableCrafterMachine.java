@@ -78,8 +78,13 @@ public abstract class CustomFuelableCrafterMachine extends CustomCrafterMachine 
 		for (int i = 0; i < 6*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		Set<CustomRecipe> rs = CustomFeatureLoader.getLoader().getHandler().getRecipesFromUUID(getUUID());
-		for (CustomRecipe r : rs)
-			a(inv, new ItemBuilder((CustomItemUtil.getItemStackFromUUID(r.getResultUUID())==null) ? new ItemStack(Material.RED_STAINED_GLASS_PANE) : CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
+		for (CustomRecipe r : rs) {
+			if (CustomItemUtil.getCustomItemFromUUID(r.getResultUUID()) == null) {
+				System.out.println("§cWARNING! §b" + r.getResultUUID() + " §cDOESNT EXIST!");
+				continue;
+			}
+			a(inv, new ItemBuilder((CustomItemUtil.getItemStackFromUUID(r.getResultUUID()) == null) ? new ItemStack(Material.RED_STAINED_GLASS_PANE) : CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
+		}
 		inv.clear(52);
 		return inv;
 	}

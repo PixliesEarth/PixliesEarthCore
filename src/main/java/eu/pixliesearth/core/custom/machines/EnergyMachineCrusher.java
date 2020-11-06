@@ -145,8 +145,8 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Tin_Dust"),
 						// 1 titanium
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Titanium_Dust"),
-						// 1 colbalt
-						CustomItemUtil.getItemStackFromUUID("Pixlies:Colbalt_Dust"),
+						// 1 Cobalt
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Cobalt_Dust"),
 						// 1 platinum
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Platinum_Dust")
 				};

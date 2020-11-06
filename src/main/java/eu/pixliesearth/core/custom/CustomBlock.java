@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -98,17 +99,17 @@ public class CustomBlock extends CustomItem {
     	Block b5 = w.getBlockAt(x, y, z-1);
     	Block b6 = w.getBlockAt(x, y+1, z);
     	Block b7 = w.getBlockAt(x, y-1, z);
-    	if (b2!=null)
+    	if (b2.getType() != Material.AIR)
     		set.add(b2);
-    	if (b3!=null)
+    	if (b3.getType() != Material.AIR)
     		set.add(b3);
-    	if (b4!=null)
+    	if (b4.getType() != Material.AIR)
     		set.add(b4);
-    	if (b5!=null)
+    	if (b5.getType() != Material.AIR)
     		set.add(b5);
-    	if (b6!=null)
+    	if (b6.getType() != Material.AIR)
     		set.add(b6);
-    	if (b7!=null)
+    	if (b7.getType() != Material.AIR)
     		set.add(b7);
 		return set;
 	}

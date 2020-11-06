@@ -100,7 +100,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
             }
             return returnable;
         }
-        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6§l★";
+        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e5" + "§6★";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
                 if (instance.getUtilLists().boosts.size() > 0)

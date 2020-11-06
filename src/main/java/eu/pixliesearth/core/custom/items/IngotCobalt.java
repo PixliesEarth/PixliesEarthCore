@@ -8,15 +8,15 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class DustColbalt extends CustomItem {
+public class IngotCobalt extends CustomItem {
 	
-    public DustColbalt() {
+    public IngotCobalt() {
 
     }
 
     @Override
     public Material getMaterial() {
-        return Material.SUGAR;
+        return Material.IRON_INGOT;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class DustColbalt extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Colbalt Dust";
+        return "§6Cobalt Ingot";
     }
 
     @Override
@@ -66,7 +66,7 @@ public class DustColbalt extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Colbalt_Dust"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Cobalt_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 @Getter
 public class AssembleListener implements Listener {
 
-	private Assemble assemble;
+	private final Assemble assemble;
 
 	public AssembleListener(Assemble assemble) {
 		this.assemble = assemble;
@@ -20,24 +20,24 @@ public class AssembleListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		AssembleBoardCreateEvent createEvent = new AssembleBoardCreateEvent(event.getPlayer());
+/*		AssembleBoardCreateEvent createEvent = new AssembleBoardCreateEvent(event.getPlayer());
 
 		Bukkit.getPluginManager().callEvent(createEvent);
 		if (createEvent.isCancelled()) {
 			return;
-		}
+		}*/
 
 		getAssemble().getBoards().put(event.getPlayer().getUniqueId(), new AssembleBoard(event.getPlayer(), getAssemble()));
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		AssembleBoardDestroyEvent destroyEvent = new AssembleBoardDestroyEvent(event.getPlayer());
+/*		AssembleBoardDestroyEvent destroyEvent = new AssembleBoardDestroyEvent(event.getPlayer());
 
 		Bukkit.getPluginManager().callEvent(destroyEvent);
 		if (destroyEvent.isCancelled()) {
 			return;
-		}
+		}*/
 
 		getAssemble().getBoards().remove(event.getPlayer().getUniqueId());
 		event.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
