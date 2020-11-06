@@ -171,4 +171,11 @@ public class CustomMachine extends CustomBlock {
 		hologram.insertTextLine(0, title);
 		return hologram;
 	}
+
+	public static Hologram createHologram(ItemStack item, Location location) {
+		Hologram hologram = HologramsAPI.createHologram(CustomFeatureLoader.getLoader().getInstance(), holoLocation(location));
+		hologram.insertItemLine(0, item);
+		return hologram;
+	}
+
 }

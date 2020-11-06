@@ -298,6 +298,7 @@ public enum Lang {
     }
 
     public String get(CommandSender sender) {
+        if (languages == null) return "";
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());

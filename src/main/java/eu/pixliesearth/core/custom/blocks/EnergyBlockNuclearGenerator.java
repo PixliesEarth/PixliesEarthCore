@@ -30,7 +30,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 	
 	@Override
 	public Material getMaterial() {
-		return Material.EMERALD_BLOCK;
+		return Material.LODESTONE;
 	}
 	
 	@Override

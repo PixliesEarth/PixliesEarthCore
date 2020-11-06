@@ -31,7 +31,7 @@ public class MiniMick {
 
     public void start() {
 
-        String token = Main.getInstance().getConfig().getString("discordtoken");
+        String token = Main.getInstance().getConfig().getString("discordtoken", "TOKEN_HERE");
         if (token.equals("TOKEN_HERE")) {
             Bukkit.getConsoleSender().sendMessage("§cDiscord token is not configured. Bot will not start.");
             return;

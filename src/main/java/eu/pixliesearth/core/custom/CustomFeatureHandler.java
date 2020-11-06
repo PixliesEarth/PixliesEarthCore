@@ -194,7 +194,7 @@ public class CustomFeatureHandler {
 	/**
 	 * Registers the {@link CustomMachine} provided
 	 * 
-	 * @param customBlock The {@link CustomMachine} to register
+	 * @param customMachine The {@link CustomMachine} to register
 	 */
 	public void registerMachine(CustomMachine customMachine) {
 		this.customMachines.add(customMachine);
@@ -632,6 +632,11 @@ public class CustomFeatureHandler {
 	public Hologram getHologramAtLocation(Location location) {
 		return this.locationToHologramMap.get(location);
 	}
+
+	public void registerHologramAtLocation(Location location, Hologram hologram) {
+		this.locationToHologramMap.put(location, hologram);
+	}
+
 	/**
 	 * Called when a custom block at the location has been broken
 	 * 

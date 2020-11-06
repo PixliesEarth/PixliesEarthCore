@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.localization.Lang;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -26,15 +27,18 @@ public class TestTranslationCommand extends CustomCommand {
 
     @Override
     public boolean execute(CommandSender commandsender, String alias, String[] args) {
-        try {
-            if (args.length == 0) {
-                for (Lang lang : Lang.values())
-                    lang.send(commandsender);
-            } else {
-                for (Lang lang : Lang.values())
-                    lang.sendWithlangName(commandsender, args[0]);
+        if (args.length == 0) {
+            for (Lang lang : Lang.values()) {
+                try {
+                    commandsender.sendMessage(ChatColor.translateAlternateColorCodes('&', lang.getLanguages().get("ENG")));
+                } catch (Exception e) {
+                    System.out.println(lang.name() + " has a problem.");
+                }
             }
-        } catch (Exception ignored) { }
+        } else {
+            for (Lang lang : Lang.values())
+                lang.sendWithlangName(commandsender, args[0]);
+        }
         return true;
     }
 
