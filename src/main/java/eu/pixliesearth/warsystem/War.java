@@ -12,13 +12,15 @@ import java.util.Map;
 public class War {
 
     private String mainAggressor;
+    private String mainDefender;
     private List<String> aggressorIds;
     private List<String> defenderIds;
     private boolean declareAble;
     private Map<String, Timer> timers;
 
-    public War(String mainAggressor, List<String> aggressorIds, List<String> defenderIds) {
+    public War(String mainAggressor, String mainDefender, List<String> aggressorIds, List<String> defenderIds) {
         this.mainAggressor = mainAggressor;
+        this.mainDefender = mainDefender;
         this.aggressorIds = aggressorIds;
         this.defenderIds = defenderIds;
         this.declareAble = false;
@@ -27,7 +29,11 @@ public class War {
 
     public boolean justifyWarGoal() {
         Nation aggressor = Nation.getById(mainAggressor);
-        if (!aggressor.hasPoliticalPower(25D))
+        Nation defender = Nation.getById(mainDefender);
+        double cost = 1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20);
+        if (!aggressor.hasPoliticalPower(cost))
+            return false;
+        if (aggressor.getExtras().containsKey("WAR:" + defender.getNationId()))
             return false;
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));
