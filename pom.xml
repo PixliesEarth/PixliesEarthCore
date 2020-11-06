@@ -100,13 +100,23 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>purpur</id>
+            <url>https://repo.pl3x.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper</artifactId>
             <version>1.16.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>net.pl3x.purpur</groupId>
+            <artifactId>purpur</artifactId>
+            <version>1.16.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
