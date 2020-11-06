@@ -30,25 +30,37 @@ public class BlockGrill extends CustomSavableBlock {
         if (timer != null) {
             if (timer.hasExpired()) {
                 h.unregisterTimer(location);
-                h.getHologramAtLocation(location).clearLines();
-                inventory.setItem(0, null);
-                Bukkit.getScheduler().runTask(h.getInstance(), () -> location.getWorld().dropItemNaturally(location, Grillable.getByFrom(inventory.getItem(0)).getTo()));
+                Bukkit.getScheduler().runTask(h.getInstance(), () -> {
+                    h.getHologramAtLocation(location).clearLines();
+                    h.getHologramAtLocation(location).insertItemLine(0, Grillable.getByFrom(inventory.getItem(0)).getTo());
+                    h.getHologramAtLocation(location).insertTextLine(1, "§aCooked!");
+                });
+                // Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), () -> location.getWorld().dropItemNaturally(location, Grillable.getByFrom(inventory.getItem(0)).getTo()), 0L);
             } else {
-                makeParticeAt(location.clone(), Particle.CAMPFIRE_COSY_SMOKE, 1);
-                h.getHologramAtLocation(location).removeLine(1);
-                h.getHologramAtLocation(location).insertTextLine(1, "§b" + Methods.getTimeAsString(timer.getRemaining(), false));
+                // makeParticeAt(location.clone(), Particle.CAMPFIRE_COSY_SMOKE, 1);
+                Bukkit.getScheduler().runTask(h.getInstance(), () -> {
+                    h.getHologramAtLocation(location).removeLine(1);
+                    h.getHologramAtLocation(location).insertTextLine(1, "§b" + Methods.getTimeAsString(timer.getRemaining(), false));
+                });
             }
         }
     }
 
-    public void makeParticeAt(Location loc, Particle p, int amount) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount);}}, 0L);
+/*    public void makeParticeAt(Location loc, Particle p, int amount) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount);}, 0L);
+    }*/
+
+    @Override
+    public Inventory getInventory() {
+        return Bukkit.createInventory(null, 9, getInventoryTitle());
     }
 
     @Override
     public void open(Player player, Location location) {
+        player.closeInventory();
         CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-        if (h.getInventoryFromLocation(location).getItem(0) != null) {
+        ItemStack item = h.getInventoryFromLocation(location).getItem(0);
+        if (item == null || item.getType().equals(Material.AIR)) {
             for (Grillable g : Grillable.values())
                 if (player.getInventory().getItemInMainHand().getType().equals(g.getFrom().getType())) {
                     if (player.getInventory().getItemInMainHand().getAmount() > 1) {
@@ -56,12 +68,15 @@ public class BlockGrill extends CustomSavableBlock {
                     } else {
                         player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                     }
-                    h.getHologramAtLocation(location).insertItemLine(0, g.getFrom());
+                    h.registerHologramAtLocation(location, createHologram(g.getFrom(), location));
                     h.getHologramAtLocation(location).insertTextLine(1, "§b" + Methods.getTimeAsString(g.getTime(), false));
                     h.getInventoryFromLocation(location).setItem(0, g.getFrom());
                     h.registerTimer(location, new Timer(g.getTime()));
                     break;
                 }
+        } else {
+            player.getInventory().addItem(Grillable.getByFrom(item).getTo());
+            h.getHologramAtLocation(location).clearLines();
         }
     }
 

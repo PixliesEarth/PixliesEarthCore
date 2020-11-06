@@ -11,10 +11,10 @@ public enum Grillable {
     PORK(new ItemStack(Material.PORKCHOP), new ItemStack(Material.COOKED_PORKCHOP), 2000),
     MUTTON(new ItemStack(Material.MUTTON), new ItemStack(Material.COOKED_MUTTON), 2000),
     RABBIT(new ItemStack(Material.RABBIT), new ItemStack(Material.COOKED_RABBIT), 2000),
-    CHICKEN(new ItemStack(Material.CHICKEN), new ItemStack(Material.COOKED_CHICKEN), 2000);
+    CHICKEN(new ItemStack(Material.CHICKEN), new ItemStack(Material.COOKED_CHICKEN), 2000),
+    NULL(new ItemStack(Material.AIR), new ItemStack(Material.AIR), 0);
 
-    private @Getter
-    final ItemStack from;
+    private @Getter final ItemStack from;
     private @Getter final ItemStack to;
     private @Getter final long time;
 
@@ -28,7 +28,7 @@ public enum Grillable {
         for (Grillable g : values())
             if (CustomItemUtil.getUUIDFromItemStack(g.from).equals(CustomItemUtil.getUUIDFromItemStack(item)))
                 return g;
-        return null;
+        return NULL;
     }
 
 }
