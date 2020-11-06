@@ -32,11 +32,11 @@ public class PixliesAmmo {
         int maxSearchDistance = gun.getMaxRange();
 
         Block block = player.getTargetBlock(null, maxSearchDistance);
-        if(block != null && block.getType().isSolid())
+        if (block.getType().isSolid())
             maxSearchDistance = (int) Math.min(gun.getMaxRange(), block.getLocation().distance(location));
 
         Collection<LivingEntity> entityList = player.getWorld().getNearbyLivingEntities(location, maxSearchDistance);
-        if(entityList.isEmpty())
+        if (entityList.isEmpty())
             return null;
 
         final Vector origin = this.location.toVector();
@@ -85,7 +85,7 @@ public class PixliesAmmo {
 
         public static boolean contains(String test) {
             for (AmmoType c : values()) {
-                if (c.name().equalsIgnoreCase(test)) {
+                if (c.name().equals(test)) {
                     return true;
                 }
             }

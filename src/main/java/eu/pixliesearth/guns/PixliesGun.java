@@ -1,8 +1,8 @@
 package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
-import eu.pixliesearth.guns.guns.*;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
@@ -31,6 +31,7 @@ import static eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 @AllArgsConstructor
 public class PixliesGun {
 
+    private static final Map<String, Class<? extends PixliesGun>> guns = new HashMap<>();
     private static Main instance = Main.getInstance();
 
     private UUID uuid;
@@ -45,6 +46,8 @@ public class PixliesGun {
     private List<Action> triggers;
 
     public void trigger(final PlayerInteractEvent event) {
+        ItemStack eventItem = event.getItem();
+        if (eventItem == null) return;
         if (!triggers.contains(event.getAction())) return;
         if (instance.getUtilLists().waitingGuns.containsKey(uuid)) return;
         instance.getUtilLists().waitingGuns.put(uuid, new Timer(delay));
@@ -62,13 +65,14 @@ public class PixliesGun {
         Bukkit.getPluginManager().callEvent(shootEvent);
         if (!shootEvent.isCancelled()) {
             this.ammo -= 1;
-            reloadItem(event.getItem());
+            reloadItem(eventItem);
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
             GunFireResult result = ammo.trace(player);
             if (result == null) return;
             if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
             if (result.isHeadshot()) {
                 result.getEntity().damage(ammo.getDamage() * 2, player);
+                result.getEntity().getWorld().playSound(result.getEntity().getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
             } else {
                 result.getEntity().damage(ammo.getDamage(), player);
             }
@@ -101,30 +105,27 @@ public class PixliesGun {
         item.setItemMeta(meta);
     }
 
-    public static Map<String, Class<? extends PixliesGun>> classMap() {
-        Map<String, Class<? extends PixliesGun>> map = new HashMap<>();
-        map.put("§c§lM-16", M16.class);
-        map.put("§c§lAK-47", AK47.class);
-        map.put("§3§lUzi", Uzi.class);
-        map.put("§c§lMP5", MP5.class);
-        map.put("§c§lKarabiner98k", K98K.class);
-        map.put("§6Slingshot", Slingshot.class);
-        return map;
+    static {
+        for (Class<? extends PixliesGun> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.guns.guns", PixliesGun.class)) {
+            try {
+                guns.put(clazz.getConstructor(int.class, UUID.class).newInstance(0, UUID.randomUUID()).getName(), clazz);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static PixliesGun getByItem(ItemStack item) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        for (Map.Entry<String, Class<? extends PixliesGun>> entry : classMap().entrySet())
-            if (item.hasItemMeta() && item.getItemMeta().getDisplayName().split(" §8| ")[0].equals(entry.getKey())) {
-                int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
-                NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
-                if (tags == null) return null;
-                String uuidS = tags.getString("gunId");
-                if (uuidS == null) return null;
-                UUID uuid = UUID.fromString(uuidS);
-                if (item.getLore() == null) return null;
-                return entry.getValue().getConstructor(int.class, UUID.class).newInstance(ammo, uuid);
-            }
-        return null;
+        if (!item.hasItemMeta()) return null;
+        if (!guns.containsKey(item.getItemMeta().getDisplayName().split(" §8| ")[0])) return null;
+        int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));
+        NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
+        if (tags == null) return null;
+        String uuidS = tags.getString("gunId");
+        if (uuidS == null) return null;
+        UUID uuid = UUID.fromString(uuidS);
+        if (item.getLore() == null) return null;
+        return guns.get(item.getItemMeta().getDisplayName().split(" §8| ")[0]).getConstructor(int.class, UUID.class).newInstance(ammo, uuid);
     }
 
 }
