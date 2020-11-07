@@ -18,7 +18,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.interfaces.IRecipeable;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
@@ -87,13 +87,13 @@ public class CustomMachineCommandListener extends CustomListener {
 				}
 			}
 			event.setCancelled(true);
-		} else if (event.getView().getTitle().equalsIgnoreCase(Recipeable.craftingExampleTitle)) {
+		} else if (event.getView().getTitle().equalsIgnoreCase(IRecipeable.craftingExampleTitle)) {
 			String data = NBTUtil.getTagsFromItem(event.getCurrentItem()).getString("EXTRA");
 			if (data==null || data.equalsIgnoreCase("")) {
 				
 			} else {
 				if (data.equalsIgnoreCase("MNEXT")) {
-					List<CustomRecipe> list = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(Recipeable.recipeItemSlot)));
+					List<CustomRecipe> list = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(IRecipeable.recipeItemSlot)));
 					if (list.isEmpty()) {
 						event.getWhoClicked().closeInventory();
 						event.getWhoClicked().openInventory(getErrorInventory("No recipes found for this item!"));
@@ -101,11 +101,11 @@ public class CustomMachineCommandListener extends CustomListener {
 						CustomRecipe r = list.get(0);
 						CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 						if (c!=null) {
-							if (c instanceof Recipeable) {
+							if (c instanceof IRecipeable) {
 								event.getWhoClicked().closeInventory();
-								Inventory inv = ((Recipeable)c).getCraftingExample(r);
-								inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
-								inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
+								Inventory inv = ((IRecipeable)c).getCraftingExample(r);
+								inv.setItem(IRecipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
+								inv.setItem(IRecipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 								event.getWhoClicked().openInventory(inv);
 							} else {
 								event.getWhoClicked().closeInventory();
@@ -116,17 +116,17 @@ public class CustomMachineCommandListener extends CustomListener {
 							event.getWhoClicked().openInventory(getErrorInventory("Unable to get recipe gui"));
 						}
 					} else {
-						String s = NBTUtil.getTagsFromItem(event.getInventory().getItem(Recipeable.recipeItemSlot)).getString("LIST");
+						String s = NBTUtil.getTagsFromItem(event.getInventory().getItem(IRecipeable.recipeItemSlot)).getString("LIST");
 						try {
 							int i = Integer.parseInt(s)+1;
 							CustomRecipe r = list.get(i);
 							CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 							if (c!=null) {
-								if (c instanceof Recipeable) {
+								if (c instanceof IRecipeable) {
 									event.getWhoClicked().closeInventory();
-									Inventory inv = ((Recipeable)c).getCraftingExample(r);
-									inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
-									inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
+									Inventory inv = ((IRecipeable)c).getCraftingExample(r);
+									inv.setItem(IRecipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
+									inv.setItem(IRecipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 									event.getWhoClicked().openInventory(inv);
 								} else {
 									event.getWhoClicked().closeInventory();
@@ -191,11 +191,11 @@ public class CustomMachineCommandListener extends CustomListener {
 				} else {
 					CustomRecipe r = list.get(0);
 					CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
-					if (c!=null && c instanceof Recipeable) {
+					if (c!=null && c instanceof IRecipeable) {
 						event.getWhoClicked().closeInventory();
-						Inventory inv = ((Recipeable)c).getCraftingExample(r);
-						inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(1), NBTTagType.STRING).build());
-						inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
+						Inventory inv = ((IRecipeable)c).getCraftingExample(r);
+						inv.setItem(IRecipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(1), NBTTagType.STRING).build());
+						inv.setItem(IRecipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 						event.getWhoClicked().openInventory(inv);
 					} else {
 						event.getWhoClicked().closeInventory();
@@ -310,8 +310,8 @@ public class CustomMachineCommandListener extends CustomListener {
 	public Inventory setRecipe(CustomRecipe r) {
 		CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
 		if (c==null) return null; // TODO: open an error gui
-		if (c instanceof Recipeable) {
-			return ((Recipeable)c).getCraftingExample(r);
+		if (c instanceof IRecipeable) {
+			return ((IRecipeable)c).getCraftingExample(r);
 		} else {
 			return getErrorInventory("Unable to get recipe gui");
 		}
@@ -322,7 +322,7 @@ public class CustomMachineCommandListener extends CustomListener {
 		for (int i = 0; i < 3*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		inv.setItem(4, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§lAn error has occured").addLoreLine("§bInformation:").addLoreLine("§b"+info).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
-		inv.setItem(22, Recipeable.closeItem);
+		inv.setItem(22, IRecipeable.closeItem);
 		return inv;
 	}
 	

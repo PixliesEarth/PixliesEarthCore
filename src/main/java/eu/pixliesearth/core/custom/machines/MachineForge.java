@@ -8,12 +8,12 @@ import org.bukkit.inventory.Inventory;
 import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.interfaces.IRecipeable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 
-public class MachineForge extends CustomFuelableCrafterMachine implements Recipeable {
+public class MachineForge extends CustomFuelableCrafterMachine implements IRecipeable {
 	
 	public MachineForge() {
 		
@@ -42,7 +42,7 @@ public class MachineForge extends CustomFuelableCrafterMachine implements Recipe
 	
 	public Inventory getCraftingExample(CustomRecipe customRecipe) {
 		Inventory inv = Bukkit.createInventory(null, 6*9, craftingExampleTitle);
-		inv.setContents(getInventory2(customRecipe).getContents());
+		inv.setContents(getInventory2(customRecipe, 1).getContents());
 		for (int i : craftSlots) 
 			inv.clear(i);
 		for (Entry<String, Integer> entry : customRecipe.getAsUUIDToAmountMap().entrySet()) {
@@ -76,7 +76,7 @@ public class MachineForge extends CustomFuelableCrafterMachine implements Recipe
 				}
 			}
 		}
-		addToResultSlots(null, inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
+		addToResult(null, inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
 		inv.setItem(48, backItem); // Back
 		inv.setItem(49, closeItem); // Close
 		inv.setItem(50, nextItem); // Next

@@ -13,7 +13,7 @@ import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.interfaces.IRecipeable;
 import eu.pixliesearth.core.custom.listeners.CustomMachineCommandListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -50,11 +50,11 @@ public class RecipeCommand extends CustomCommand {
 		} else {
 			CustomRecipe r = list.get(0);
 			CustomItem c = CustomItemUtil.getCustomItemFromUUID(r.craftedInUUID());
-			if (c!=null && c instanceof Recipeable) {
+			if (c!=null && c instanceof IRecipeable) {
 				((Player)commandsender).closeInventory();
-				Inventory inv = ((Recipeable)c).getCraftingExample(r);
-				inv.setItem(Recipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
-				inv.setItem(Recipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
+				Inventory inv = ((IRecipeable)c).getCraftingExample(r);
+				inv.setItem(IRecipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
+				inv.setItem(IRecipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 				((Player)commandsender).openInventory(inv);
 			} else {
 				commandsender.sendMessage("Unable to load the gui for this UUID!");

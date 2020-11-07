@@ -18,12 +18,12 @@ import org.bukkit.inventory.ItemFlag;
 
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.interfaces.Recipeable;
+import eu.pixliesearth.core.custom.interfaces.IRecipeable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 
-public class BlockCustomCraftingTable extends CustomBlock implements Recipeable {
+public class BlockCustomCraftingTable extends CustomBlock implements IRecipeable {
 	
 	public BlockCustomCraftingTable() {
 		

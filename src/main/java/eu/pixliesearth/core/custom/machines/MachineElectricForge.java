@@ -1,22 +1,15 @@
 package eu.pixliesearth.core.custom.machines;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.bukkit.Location;
+
+import eu.pixliesearth.core.custom.CustomCrafterMachine;
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: make use fuel
 	
@@ -43,58 +36,41 @@ public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: m
 	public double getCapacity() {
 		return 150000D;
 	}
-	
+	/**
+	 * Called to check if the item can be crafted
+	 * 
+	 * @param location The {@link CustomCrafterMachine} {@link Location}
+	 * @param customRecipe The current {@link CustomRecipe}
+	 * @return If the crafting can go ahead
+	 */
 	@Override
-	public Inventory getInventory() { 
-		Inventory inv = Bukkit.createInventory(null, 6*9, getInventoryTitle());
-		for (int i = 0; i < 6*9; i++)
-			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
-		Set<CustomRecipe> rs = CustomFeatureLoader.getLoader().getHandler().getRecipesFromUUID("Machine:Forge");
-		for (CustomRecipe r : rs)
-			a(inv, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).build());
-		inv.clear(52);
-		return inv;
+	public boolean hasCost(Location location, CustomRecipe customRecipe) {
+		return getContainedPower(location)>=150D;
+	}
+	/**
+	 * Called to take the cost of the crafting
+	 * 
+	 * @param location The {@link CustomCrafterMachine} {@link Location}
+	 * @param customRecipe The current {@link CustomRecipe}
+	 */
+	@Override
+	public void takeCost(Location location, CustomRecipe customRecipe) {
+		CustomFeatureLoader.getLoader().getHandler().removePowerFromLocation(location, 150D);
 	}
 	
+	// HACKY STUFF TO GET IT LOAD FORGES RECIPES
+	
 	@Override
-	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
-		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		if (!(getContainedPower(loc)>=150D)) {
-			return false;
+	public List<List<CustomRecipe>> getRecipes() {
+		List<String> list = new ArrayList<>();
+		List<List<CustomRecipe>> list2 = new ArrayList<>();
+		for (CustomRecipe cr : CustomFeatureLoader.getLoader().getHandler().getRecipesFromUUID("Machine:Forge")) {
+			list.add(cr.getResultUUID());
 		}
-		Set<ItemStack> items = getItemsInCraftingSection(inv);
-		if (items == null || items.isEmpty()) return false;
-		Map<String, Integer> m = new ConcurrentHashMap<String, Integer>();
-		for (ItemStack is : items) {
-			Integer i = m.get(CustomItemUtil.getUUIDFromItemStack(is));
-			if (i==null || i==0) {
-				m.put(CustomItemUtil.getUUIDFromItemStack(is), is.getAmount());
-			} else {
-				m.remove(CustomItemUtil.getUUIDFromItemStack(is));
-				m.put(CustomItemUtil.getUUIDFromItemStack(is), i+is.getAmount());
-			}
+		Collections.sort(list);
+		for (String s : list) {
+			list2.add(getRecipesOfUUIDInOrderedList(s));
 		}
-		if (m==null || m.isEmpty()) return false;
-		Map<String, Integer> m2 = r.getAsUUIDToAmountMap(); // Recipe map
-		if (m2==null || m2.isEmpty()) return false;
-		Map<String, Integer> m3 = new ConcurrentHashMap<String, Integer>(); // Left over items
-		for (Entry<String, Integer> entry : m2.entrySet()) {
-			if (!m.containsKey(entry.getKey())) return false;
-			Integer i = m.get(entry.getKey());
-			if (i==null || i==0) {
-				return false; // Don't have the materials to craft it
-			} else {
-				if (entry.getValue()>i) return false; // Don't have the materials to craft it
-				m.remove(entry.getKey());
-				m2.remove(entry.getKey());
-				m3.put(entry.getKey(), i-entry.getValue());
-			}
-		}
-		for (Entry<String, Integer> entry : m.entrySet()) 
-			m3.put(entry.getKey(), entry.getValue());
-		setMapToCraftSlots(loc, inv, m3); // Give extras back
-		addToResultSlots(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
-		h.removePowerFromLocation(loc, 150D); // Take energy
-		return true;
+		return list2;
 	}
 }

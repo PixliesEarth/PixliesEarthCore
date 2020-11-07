@@ -1,11 +1,17 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.nations.entities.nation.Era;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.bukkit.inventory.ItemStack;
 
 /**
  * 
@@ -51,11 +57,21 @@ public class CustomRecipe {
 		map.put(8, null);
 		return map;
 	}
-	
+	/**
+	 * How long in ms the crafting process should take
+	 * 
+	 * @apiNote If null it will default to zero
+	 */
 	public Long getCraftTime() {
 		return null;
 	}
-	
+	/**
+	 * The cost of the crafting process in terms of watts
+	 * 
+	 * @apiNote If null it will default to zero
+	 * 
+	 * @apiNote Will only charge energy if in an energy machine
+	 */
 	public Double getEnergyCost() {
 		return null;
 	}
@@ -72,5 +88,17 @@ public class CustomRecipe {
 			}
 		}
 		return map;
+	}
+	
+	public ItemStack getRecipeBook() {
+		return new ItemBuilder(MinecraftMaterial.BOOK.getMaterial()) {{
+			setDisplayName("§b§lRecipe");
+			Map<String, Integer> map = getAsUUIDToAmountMap();
+			for (Entry<String, Integer> entry : map.entrySet()) {
+				if (CustomItemUtil.getItemStackFromUUID(entry.getKey()) == null) continue;
+				addLoreLine("§b"+Integer.toString(entry.getValue())+"x " + CustomItemUtil.getItemStackFromUUID(entry.getKey()).getI18NDisplayName());
+			}
+			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING); // make item not click-able
+		}}.build();
 	}
 }

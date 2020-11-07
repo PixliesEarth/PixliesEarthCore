@@ -146,8 +146,13 @@ public class CustomMachine extends CustomBlock {
 	}
 	// TODO: notes
 	public void closeForAll(Inventory inv) {
-		if (inv==null) return;
-		inv.getViewers().forEach(e -> e.closeInventory());
+		try {
+			if (inv==null) return;
+			if (inv.getViewers().isEmpty()) return;
+			inv.getViewers().forEach(e -> {
+				if (e!=null) e.closeInventory();
+			});
+		} catch (Exception ignore) {}
 	}
 	/**
 	 * Sets the provided {@link Location} to a more optimal {@link Location} and returns it
