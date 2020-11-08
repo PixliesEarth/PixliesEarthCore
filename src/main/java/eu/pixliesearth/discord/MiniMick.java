@@ -4,14 +4,19 @@ import com.google.gson.GsonBuilder;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.nation.Ideology;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.entity.permission.Role;
@@ -26,8 +31,8 @@ import java.util.UUID;
 
 public class MiniMick {
 
-    private static @Getter
-    DiscordApi api;
+    private static @Getter DiscordApi api;
+    private @Getter TextChannel chatChannel;
 
     public void start() {
 
@@ -39,6 +44,8 @@ public class MiniMick {
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
+
+        chatChannel = api.getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get();
 
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().startsWith("/link")) {
@@ -118,7 +125,7 @@ public class MiniMick {
                     event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
                     return;
                 }
-                List<String> lastTransActions = profile.getReceipts().subList(profile.getReceipts().size()-11, profile.getReceipts().size());
+                List<String> lastTransActions = profile.getReceipts().subList(profile.getReceipts().size() - 11, profile.getReceipts().size());
                 StringBuilder builder = new StringBuilder();
                 builder.append("```diff" + "\n");
                 final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
@@ -127,21 +134,47 @@ public class MiniMick {
                     if (receipt.isLost())
                         builder.append("-$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
                     else
-                         builder.append("+$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
+                        builder.append("+$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
 
                 }
                 builder.append("```");
                 event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Your transactions | Balance: $" + profile.getBalance() + "**")
                         .setDescription(builder.toString())
                         .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
-                        .setTimestampToNow());;
+                        .setTimestampToNow());
+                ;
+            } else if (event.getMessageContent().startsWith("/nation")) {
+                String[] split = event.getMessageContent().split(" ");
+                if (split.length == 2) {
+                    Nation nation = Nation.getByName(split[1]);
+                    if (nation == null) {
+                        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, this nation does not exist, please be aware that this action is case-sensitive.");
+                        return;
+                    }
+                    event.getChannel().sendMessage(new EmbedBuilder() {
+                        {
+                            setColor(hexToColor(nation.getDynmapFill()));
+                            setTitle("**" + nation.getName() + "**");
+                            setDescription("*" + nation.getDescription() + "*");
+                            addInlineField("Wiki article", nation.getExtras().containsKey("wikiUrl") ? nation.getExtras().get("wikiUrl").toString() : "N/A");
+                            addInlineField("Members", nation.getMembers().size() + "");
+                            addInlineField("Leader", nation.getLeaderName());
+                            addInlineField("Ideology", WordUtils.capitalize(nation.getIdeology().toLowerCase().replace("_", " ")));
+                            addInlineField("Religion", StringUtils.capitalize(nation.getReligion().toLowerCase()));
+                            addInlineField("Era", nation.getCurrentEra().getName());
+                            addInlineField("Balance", "$" + nation.getMoney());
+                            addInlineField("GDP", "$" + nation.getGDP());
+                            addInlineField("Territory", nation.getChunks().size() + "");
+                            setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());
+                        }});
+                }
             } else {
-                if (event.getChannel().equals(event.getServer().get().getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get()) && event.getMessageAuthor().isRegularUser()) {
+                if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
                     if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
                         String roleColour = "#{#00ffff}";
                         if (event.getMessageAuthor().getRoleColor().isPresent()) {
                             Color col = event.getMessageAuthor().getRoleColor().get();
-                            roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getBlue(), col.getGreen());
+                            roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getGreen(), col.getBlue());
                         }
                         Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
                     }
@@ -149,6 +182,30 @@ public class MiniMick {
             }
         });
 
+    }
+
+    static final Color hexToColor( String value )
+    {
+        String digits;
+        if ( value.startsWith( "#" ) )
+        {
+            digits = value.substring( 1, Math.min( value.length( ), 7 ) );
+        }
+        else
+        {
+            digits = value;
+        }
+        String hstr = "0x" + digits;
+        Color c;
+        try
+        {
+            c = Color.decode( hstr );
+        }
+        catch ( NumberFormatException nfe )
+        {
+            c = null;
+        }
+        return c;
     }
 
 }

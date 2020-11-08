@@ -1,10 +1,10 @@
 package eu.pixliesearth;
 
 import com.google.gson.Gson;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
 import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
@@ -78,6 +78,7 @@ public final class Main extends JavaPlugin {
     private static @Getter Main instance;
     private static @Getter MongoCollection<Document> playerCollection;
     private static @Getter MongoCollection<Document> nationCollection;
+    private static @Getter MongoCollection<Document> warCollection;
     private static @Getter VaultAPI economy;
     private static @Getter Assemble assemble = null;
     private static @Getter Scoreboard emptyScoreboard;
@@ -93,6 +94,7 @@ public final class Main extends JavaPlugin {
     private @Getter CustomFeatureLoader loader;
     private @Getter Map<String, VendorItem> vendorItems;
     private @Getter FastConf fastConf;
+    private @Getter MiniMick miniMick;
 
     @Override
     public void onEnable() {
@@ -131,6 +133,10 @@ public final class Main extends JavaPlugin {
         MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
         playerCollection = mongoDatabase.getCollection("users");
         nationCollection = mongoDatabase.getCollection("nations");
+        warCollection = mongoDatabase.getCollection("wars");
+
+        MongoCursor<Document> cursor = warCollection.find().iterator();
+        while (cursor.hasNext()) utilLists.wars.put(cursor.next().getString("id"), gson.fromJson(cursor.next().getString("json"), War.class));
 
         economy = new VaultAPI();
         getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);
@@ -204,7 +210,8 @@ public final class Main extends JavaPlugin {
         //BungeeCord
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        new MiniMick().start();
+        miniMick = new MiniMick();
+        miniMick.start();
 
         assemble = new Assemble(this, new ScoreboardAdapter());
 

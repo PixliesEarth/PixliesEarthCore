@@ -102,6 +102,12 @@ public class Nation {
         return this;
     }
 
+    public String getLeaderName() {
+        if (leader.equals("NONE"))
+            return "Server";
+        return Bukkit.getOfflinePlayer(UUID.fromString(leader)).getName();
+    }
+
     public void remove() {
         for (String member : members)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();

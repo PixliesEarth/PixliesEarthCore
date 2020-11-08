@@ -22,7 +22,10 @@ public enum Permission {
     DESCRIPTION,
     NAME,
     CHANGE_LEADERSHIP,
-    SET_FLAG
+    SET_FLAG,
+    DECLARE_WAR,
+    JUSTIFY_WAR_GOAL,
+    SET_WIKI_LINK
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
