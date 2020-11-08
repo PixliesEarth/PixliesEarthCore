@@ -29,7 +29,7 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a custom block that can store energy</h3>
  *
  */
-public abstract class CustomEnergyBlock extends CustomSavableBlock implements Energyable {
+public abstract class CustomEnergyBlock extends CustomSaveableBlock implements Energyable {
 	
 	public CustomEnergyBlock() {
 		

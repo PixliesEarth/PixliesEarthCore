@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.custom.blocks;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomSavableBlock;
+import eu.pixliesearth.core.custom.CustomSaveableBlock;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SavableChunkLoader extends CustomSavableBlock {
+public class SavableChunkLoader extends CustomSaveableBlock {
 	
 	public SavableChunkLoader() {
 		

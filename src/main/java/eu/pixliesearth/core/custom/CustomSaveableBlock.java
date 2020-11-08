@@ -21,9 +21,9 @@ import eu.pixliesearth.utils.Timer;
  * <h3>A class to create a custom block that can store extra data</h3>
  *
  */
-public class CustomSavableBlock extends CustomMachine {
+public class CustomSaveableBlock extends CustomMachine {
 	
-	public CustomSavableBlock() {
+	public CustomSaveableBlock() {
 		
 	}
 	

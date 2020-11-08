@@ -28,7 +28,7 @@ public class RecipeCommand extends CustomCommand {
 	
 	@Override
 	public String getName() {
-		return "getrecipe";
+		return "viewrecipe";
 	}
 	
 	@Override
@@ -53,6 +53,10 @@ public class RecipeCommand extends CustomCommand {
 			if (c!=null && c instanceof IRecipeable) {
 				((Player)commandsender).closeInventory();
 				Inventory inv = ((IRecipeable)c).getCraftingExample(r);
+				if (inv==null) {
+					commandsender.sendMessage("Unable to load the gui for this UUID! It returns null.");
+					return false;
+				}
 				inv.setItem(IRecipeable.recipeItemSlot, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID())).addNBTTag("LIST", Integer.toString(0), NBTTagType.STRING).build());
 				inv.setItem(IRecipeable.cratinInItemSlot, CustomItemUtil.getItemStackFromUUID(r.craftedInUUID()));
 				((Player)commandsender).openInventory(inv);

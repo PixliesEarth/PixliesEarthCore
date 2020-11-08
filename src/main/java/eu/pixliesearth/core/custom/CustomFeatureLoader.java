@@ -128,7 +128,7 @@ public class CustomFeatureLoader {
 			loadMachine(clazz.newInstance());
 		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) 
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomSavableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSavableBlock.class)) 
+		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) 
 			loadMachine(clazz.newInstance());
 	}
 	/**

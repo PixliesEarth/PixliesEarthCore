@@ -96,7 +96,7 @@ public class CustomRecipe {
 			Map<String, Integer> map = getAsUUIDToAmountMap();
 			for (Entry<String, Integer> entry : map.entrySet()) {
 				if (CustomItemUtil.getItemStackFromUUID(entry.getKey()) == null) continue;
-				addLoreLine("§b"+Integer.toString(entry.getValue())+"x " + CustomItemUtil.getItemStackFromUUID(entry.getKey()).getI18NDisplayName());
+				addLoreLine("§b"+Integer.toString(entry.getValue())+"x " + entry.getKey());
 			}
 			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING); // make item not click-able
 		}}.build();

@@ -104,7 +104,7 @@ public class CustomCrafterMachine extends CustomMachine {
 		if (inv==null || loc==null) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
-			CustomRecipe r = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(inv.getItem(53))).get(Integer.parseInt(NBTUtil.getTagsFromItem(inv.getItem(53)).getString("LIST")));
+			CustomRecipe r = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(inv.getItem(53))).get(Integer.parseInt(NBTUtil.getTagsFromItem(inv.getItem(53)).getString("RECIPE")));
 			if (r==null) return;
 			if (timer==null) { // No timer
 				if (r.getCraftTime()==null) {
@@ -195,19 +195,23 @@ public class CustomCrafterMachine extends CustomMachine {
 			int i = 0;
 			for (int i2 : ints) {
 				try {
-					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
-				} catch (Exception ignore) {}
+					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).build());
+				} catch (Exception ignore) {
+					inv.setItem(i2, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+				}
 				i++;
 			}
 		} else {
-			ItemStack is = inv.getItem(44);
+			ItemStack is = inv.getItem(43);
 			if (is==null || is.getType().equals(Material.AIR)) return;
 			if (Constants.getExtraData(is).equalsIgnoreCase("RECIPE")) {
 				int i = Integer.parseInt(NBTUtil.getTagsFromItem(is).getString("RECIPE"))+1;
 				for (int i2 : ints) {
 					try {
-						inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
-					} catch (Exception ignore) {}
+						inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).build());
+					} catch (Exception ignore) {
+						inv.setItem(i2, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+					}
 					i++;
 				}
 			}
@@ -226,8 +230,10 @@ public class CustomCrafterMachine extends CustomMachine {
 			int i = 0;
 			for (int i2 : ints) {
 				try {
-					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
-				} catch (Exception ignore) {}
+					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).build());
+				} catch (Exception ignore) {
+					inv.setItem(i2, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+				}
 				i++;
 			}
 		} else {
@@ -237,8 +243,10 @@ public class CustomCrafterMachine extends CustomMachine {
 				int i = Integer.parseInt(NBTUtil.getTagsFromItem(is).getString("RECIPE"))-28;
 				for (int i2 : ints) {
 					try {
-						inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("LIST", Integer.toString(i), NBTTagType.STRING).build());
-					} catch (Exception ignore) {}
+						inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(rll.get(i).get(0).getResultUUID())).addNBTTag("EXTRA", "RECIPE", NBTTagType.STRING).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).build());
+					} catch (Exception ignore) {
+						inv.setItem(i2, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+					}
 					i++;
 				}
 			}
@@ -257,11 +265,12 @@ public class CustomCrafterMachine extends CustomMachine {
 		
 		for (List<CustomRecipe> rl : rll) {
 			if (rl.get(0).getResultUUID().equalsIgnoreCase(CustomItemUtil.getUUIDFromItemStack(is))) {
-				String s = NBTUtil.getTagsFromItem(is).getString("LIST");
+				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
 				if (s==null || s.equalsIgnoreCase("")) {
 					continue;
 				} else {
 					Integer i = Integer.parseInt(s)+1;
+					if (i>=rl.size()) return; // Out of bounds
 					List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
 					for (int i2 : craftSlots) 
@@ -293,11 +302,12 @@ public class CustomCrafterMachine extends CustomMachine {
 		
 		for (List<CustomRecipe> rl : rll) {
 			if (rl.get(0).getResultUUID().equalsIgnoreCase(CustomItemUtil.getUUIDFromItemStack(is))) {
-				String s = NBTUtil.getTagsFromItem(is).getString("LIST");
+				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
 				if (s==null || s.equalsIgnoreCase("")) {
 					continue;
 				} else {
 					Integer i = Integer.parseInt(s)-1;
+					if (i<0) return; // Out of bounds
 					List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
 					for (int i2 : craftSlots) 
@@ -329,11 +339,12 @@ public class CustomCrafterMachine extends CustomMachine {
 		inv.setItem(53, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(r.getResultUUID()))
 				.setAmount(1)
 				.addNBTTag("EXTRA", "MCRAFTING", NBTTagType.STRING)
-				.addNBTTag("LIST", Integer.toString(listValue), NBTTagType.STRING)
+				.addNBTTag("RECIPE", Integer.toString(listValue), NBTTagType.STRING)
 				.build());
 		inv.setItem(49, Constants.closeItem.clone());
 		inv.setItem(48, Constants.backItem.clone());
 		inv.setItem(50, Constants.nextItem.clone());
+		inv.setItem(45, r.getRecipeBook());
 		return inv;
 	}
 	/**
@@ -344,63 +355,38 @@ public class CustomCrafterMachine extends CustomMachine {
 	 */
 	@Override
 	public boolean InventoryClickEvent(InventoryClickEvent event) {
-		if (event.isCancelled()) {
-			event.getWhoClicked().sendMessage("a");
-			return true;
-		}
 		ItemStack is = event.getCurrentItem();
-		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) {
-			event.getWhoClicked().sendMessage("b");
-			return false;
-		}
-		event.getWhoClicked().sendMessage("c");
-		if (!Constants.hasExtraData(is)) {
-			event.getWhoClicked().sendMessage("d");
-			return false;
-		}
+		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {
-			event.getWhoClicked().sendMessage("e");
 			closeForAll(event.getInventory());
 			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemStack(Material.BARRIER));
 			return true;
 		} else if (Constants.getExtraData(is).equalsIgnoreCase("MRECIPE")) {
-			event.getWhoClicked().sendMessage("f");
 			closeForAll(event.getInventory());
 			event.getInventory().setItem(Constants.getGUIDataSlot, is);
 			return true;
 		}
-		event.getWhoClicked().sendMessage("g");
 		ItemStack is2 = event.getInventory().getItem(53);
 		if (Constants.getExtraData(is2).equalsIgnoreCase("MCRAFTING")) {
-			event.getWhoClicked().sendMessage("h");
 			// Crafting Recipe gui
 			if (Constants.isNextItem(is)) {
-				event.getWhoClicked().sendMessage("i");
 				set3(event.getInventory());
 			} else if (Constants.isBackItem(is)) {
-				event.getWhoClicked().sendMessage("j");
 				set4(event.getInventory());
 			}
 		} else {
-			event.getWhoClicked().sendMessage("k");
 			// Recipe selector gui
 			if (Constants.isNextItem(is)) {
-				event.getWhoClicked().sendMessage("l");
 				set(event.getInventory());
 			} else if (Constants.isBackItem(is)) {
-				event.getWhoClicked().sendMessage("m");
 				set2(event.getInventory());
 			} else if (Constants.getExtraData(is).equalsIgnoreCase("RECIPE")) {
-				event.getWhoClicked().sendMessage("n");
 				closeForAll(event.getInventory());
 				event.getInventory().setItem(Constants.getGUIDataSlot, is);
 			}
 		}
-		event.getWhoClicked().sendMessage("o");
-		if (isUnclickable(is)) {
-			event.getWhoClicked().sendMessage("p");
-			return true;
-		}
+		if (isUnclickable(is)) return true;
+		if (!Constants.hasExtraData(is)) return false;
 		return true;
 	}
 	
