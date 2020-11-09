@@ -47,7 +47,7 @@ public class wikiNation extends SubCommand {
             return false;
         }
         Nation nation = profile.getCurrentNation();
-        nation.getExtras().put("wikUrl", args[0]);
+        nation.getExtras().put("wikiUrl", args[0]);
         nation.save();
         sender.sendMessage(Lang.NATION + "§7Successfully changed wiki link.");
         return true;

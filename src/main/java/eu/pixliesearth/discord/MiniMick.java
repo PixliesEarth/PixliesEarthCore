@@ -160,7 +160,7 @@ public class MiniMick {
                             addInlineField("Members", nation.getMembers().size() + "");
                             addInlineField("Leader", nation.getLeaderName());
                             addInlineField("Ideology", WordUtils.capitalize(nation.getIdeology().toLowerCase().replace("_", " ")));
-                            addInlineField("Religion", StringUtils.capitalize(nation.getReligion().toLowerCase()));
+                            addInlineField("Religion", WordUtils.capitalize(nation.getReligion().toLowerCase().replace("_", " ")));
                             addInlineField("Era", nation.getCurrentEra().getName());
                             addInlineField("Balance", "$" + nation.getMoney());
                             addInlineField("GDP", "$" + nation.getGDP());
