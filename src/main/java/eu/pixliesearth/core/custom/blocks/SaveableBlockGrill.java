@@ -145,16 +145,19 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
     	Inventory inv = h.getInventoryFromLocation(location);
         if (player.isSneaking()) {
         	// Take items
-        	if (inv.getItem(8)!=null && inv.getItem(8).getType().equals(Material.AIR)) {
+        	if (inv.getItem(8)==null || inv.getItem(8).getType().equals(Material.AIR)) {
         		// Not doing anything
-        		for (ItemStack is : inv.getContents()) {
-        			Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-        				@Override
-        				public void run() {
-        					location.getWorld().dropItemNaturally(location, is);
+        		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+        			@Override
+        			public void run() {
+        				for (int i = 0; i < 8; i++) {
+        					if (inv.getItem(i)!=null) {
+	        					location.getWorld().dropItemNaturally(location, inv.getItem(i));
+	        					inv.clear(i);
+	        				}
         				}
-        			}, 1L);
-        		}
+        			}
+        		}, 1L);
         	} else {
         		// Cooking
         		player.sendMessage("The contents are being cooked! You cannot take them out!");
