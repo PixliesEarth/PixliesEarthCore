@@ -104,22 +104,24 @@ public class CustomCrafterMachine extends CustomMachine {
 		if (inv==null || loc==null) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		if (inv.getItem(0)==null || !isUnclickable(inv.getItem(0))) {
-			CustomRecipe r = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(inv.getItem(53))).get(Integer.parseInt(NBTUtil.getTagsFromItem(inv.getItem(53)).getString("RECIPE")));
-			if (r==null) return;
-			if (timer==null) { // No timer
-				if (r.getCraftTime()==null) {
-					craft(loc, inv, r);
+			try {
+				CustomRecipe r = getRecipesOfUUIDInOrderedList(CustomItemUtil.getUUIDFromItemStack(inv.getItem(53))).get(Integer.parseInt(NBTUtil.getTagsFromItem(inv.getItem(53)).getString("RECIPE")));
+				if (r==null) return;
+				if (timer==null) { // No timer
+					if (r.getCraftTime()==null) {
+						craft(loc, inv, r);
+					} else {
+						h.registerTimer(loc, new Timer(r.getCraftTime()));
+					}
 				} else {
-					h.registerTimer(loc, new Timer(r.getCraftTime()));
+					if (timer.hasExpired()) { // Timer ended
+						h.unregisterTimer(loc);
+						craft(loc, inv, r);
+					} else {
+						// Do nothing as we want to do stuff when timer has ended
+					}
 				}
-			} else {
-				if (timer.hasExpired()) { // Timer ended
-					h.unregisterTimer(loc);
-					craft(loc, inv, r);
-				} else {
-					// Do nothing as we want to do stuff when timer has ended
-				}
-			}
+			} catch (Exception ignore) { return; }
 		}
 	}
 	/**
@@ -277,7 +279,7 @@ public class CustomCrafterMachine extends CustomMachine {
 						list.add(inv.getItem(i2));
 					for (int i2 : resultSlots) 
 						list2.add(inv.getItem(i2));
-					inv.setContents(getInventory2(rl.get(i), i+1).getContents());
+					inv.setContents(getInventory2(rl.get(i), i).getContents());
 					int i3 = 0;
 					for (int i2 : craftSlots) 
 						inv.setItem(i2, list.get(i3));
@@ -314,7 +316,7 @@ public class CustomCrafterMachine extends CustomMachine {
 						list.add(inv.getItem(i2));
 					for (int i2 : resultSlots) 
 						list2.add(inv.getItem(i2));
-					inv.setContents(getInventory2(rl.get(i), i+1).getContents());
+					inv.setContents(getInventory2(rl.get(i), i).getContents());
 					int i3 = 0;
 					for (int i2 : craftSlots) 
 						inv.setItem(i2, list.get(i3));

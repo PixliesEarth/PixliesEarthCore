@@ -17,15 +17,15 @@ public class PlasticRawBlock extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Plastic_Raw_Ingot");
-        map.put(1, "Pixlies:Plastic_Raw_Ingot");
-        map.put(2, "Pixlies:Plastic_Raw_Ingot");
-        map.put(3, "Pixlies:Plastic_Raw_Ingot");
-        map.put(4, "Pixlies:Plastic_Raw_Ingot");
-        map.put(5, "Pixlies:Plastic_Raw_Ingot");
-        map.put(6, "Pixlies:Plastic_Raw_Ingot");
-        map.put(7, "Pixlies:Plastic_Raw_Ingot");
-        map.put(8, "Pixlies:Plastic_Raw_Ingot");
+        map.put(0, "Pixlies:Plastic_Raw");
+        map.put(1, "Pixlies:Plastic_Raw");
+        map.put(2, "Pixlies:Plastic_Raw");
+        map.put(3, "Pixlies:Plastic_Raw");
+        map.put(4, "Pixlies:Plastic_Raw");
+        map.put(5, "Pixlies:Plastic_Raw");
+        map.put(6, "Pixlies:Plastic_Raw");
+        map.put(7, "Pixlies:Plastic_Raw");
+        map.put(8, "Pixlies:Plastic_Raw");
         return map;
     }
 }

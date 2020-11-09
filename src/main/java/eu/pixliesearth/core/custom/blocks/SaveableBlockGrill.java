@@ -2,12 +2,14 @@ package eu.pixliesearth.core.custom.blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -81,6 +83,8 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
         		h.unregisterTimer(location);
         	} else {
         		// Do nothing
+        		if (Math.random()<=0.35D) 
+        			makeParticeAt(location, Particle.CAMPFIRE_COSY_SMOKE, 1);
         	}
         }
         /*if (timer != null) {
@@ -197,12 +201,44 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
             h.getHologramAtLocation(location).clearLines();
         }*/
     }
+    
+    public void makeParticeAt(Location loc, Particle p, int amount) {
+    	Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+    		@Override
+    		public void run() {
+    			loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount, 0D, 0.75D, 0D, 0.05D);
+    		}
+    	}, 0L);
+    }
 
 	@Override
 	public Inventory getCraftingExample(CustomRecipe customRecipe) {
 		Inventory inv = Bukkit.createInventory(null, 6*9, craftingExampleTitle);
-		// TODO: Make a recipe gui
-		inv.setItem(22, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cError!").addLoreLine("§bThis gui has not been created yet!").addLoreLine("§b-bb1").build());
+		for (int i = 0; i < 6*9; i++) 
+			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+		int[] ints = {10,11,12,13,19,20,21,22,28,29,30,31};
+		for (Entry<String, Integer> entry : customRecipe.getAsUUIDToAmountMap().entrySet()) {
+			for (int i2 : ints) {
+				if (inv.getItem(i2)==null || inv.getItem(i2).getType().equals(Material.AIR) || CustomItemUtil.getUUIDFromItemStack(inv.getItem(i2)).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) {
+					int i = entry.getValue();
+					if (i>64) {
+						while (i!=0) {
+							if (i>64) {
+								inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
+								i -= 64;
+							} else {
+								inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(i).build());
+								i = 0;
+							}
+						}
+					} else {
+						inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(i).build());
+					}
+					break;
+				}
+			}
+		}
+		inv.setItem(24, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID())).setAmount(customRecipe.getResultAmount()).build());
 		inv.setItem(48, backItem); // Back
 		inv.setItem(49, closeItem); // Close
 		inv.setItem(50, nextItem); // Next

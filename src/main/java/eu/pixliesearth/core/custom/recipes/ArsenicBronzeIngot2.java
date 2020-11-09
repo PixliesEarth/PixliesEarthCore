@@ -5,9 +5,9 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArsenicBronzeIngot extends CustomRecipe {
+public class ArsenicBronzeIngot2 extends CustomRecipe {
 	
-	public ArsenicBronzeIngot() {
+	public ArsenicBronzeIngot2() {
 		
 	}
 	
@@ -29,8 +29,7 @@ public class ArsenicBronzeIngot extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Arsenic_Dust");
-        map.put(1, "Pixlies:Copper_Dust");
+        map.put(0, "Pixlies:Arsenic_Bronze_Dust");
         return map;
     }
 
