@@ -25,6 +25,7 @@ public class War {
     private List<String> aggressorIds;
     private List<String> defenderIds;
     private boolean declareAble;
+    private boolean running;
     private Map<String, Timer> timers;
 
     public War(String mainAggressor, String mainDefender, List<String> aggressorIds, List<String> defenderIds) {
@@ -34,6 +35,7 @@ public class War {
         this.aggressorIds = aggressorIds;
         this.defenderIds = defenderIds;
         this.declareAble = false;
+        this.running = false;
         this.timers = new HashMap<>();
     }
 
@@ -59,6 +61,16 @@ public class War {
         return true;
     }
 
+    public boolean declare() {
+        if (!declareAble) return false;
+        this.running = true;
+        return true;
+    }
+
+    public void handleKill(Profile killed, Profile killer, boolean KillerIsAttacker) {
+        //TODO handleKill
+    }
+
     public void tick() {
         if (!declareAble) {
             if (this.timers.containsKey("warGoalJustification")) {
@@ -68,6 +80,10 @@ public class War {
                 }
             }
         }
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     public static War getById(String id) {

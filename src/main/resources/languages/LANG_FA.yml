@@ -13,9 +13,9 @@ ONLY_PLAYERS_EXEC: "§cاین فرمان فقت برایه بازیکن ها ا�
 UNALLOWED_CHARS_IN_ARGS: "&7شخصیت های معتبر در ارگومنت."
 WRONG_USAGE: "&c&lاستفاده اشتباه! &e%USAGE%"
 CHAT_MUTED: "&6%PLAYER%&7 چت را ساکت کرد."
-CHAT_UNMUTED: "&7The chat has been unmuted by &6%PLAYER%&7."
-CHAT_IS_MUTED_ATM: "&7The chat is muted at the moment."
-CHAT_COOLDOWN: "&7You have to wait &3%COOLDOWN% &7to be able to chat again."
+CHAT_UNMUTED: "&7چت را باز کرد &6%PLAYER%&7."
+CHAT_IS_MUTED_ATM: "&7چت فعلا بسته است."
+CHAT_COOLDOWN: "&7لطفا &3%COOLDOWN% &7 وایسا تا بتوانی چت بکنی."
 PROFILE_LOADED: "&7Your profile has been &aloaded&7. &8(&7%TIME%&8)"
 LANGUAGE_CHANGED: "&7You changed your language to &bENGLISH&7."
 CHANGED_SCOREBOARDTYPE: "&7You changed your scoreboard-type to &b%TYPE%&7."
