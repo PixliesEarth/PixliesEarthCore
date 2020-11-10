@@ -9,7 +9,6 @@ import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -127,13 +126,6 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
 				return;
 			}
 		}
-	}
-	
-	@Override
-	public boolean BlockPlaceEvent(BlockPlaceEvent event) {
-		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), 0D); // Register that it has energy
-		event.getPlayer().sendMessage("This is not complete and you may experiance issues!");
-		return false;
 	}
 
     @Override

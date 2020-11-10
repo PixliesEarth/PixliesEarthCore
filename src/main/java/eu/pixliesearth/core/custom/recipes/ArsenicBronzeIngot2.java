@@ -1,20 +1,24 @@
 package eu.pixliesearth.core.custom.recipes;
 
+import eu.pixliesearth.core.custom.CustomRecipe;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.pixliesearth.core.custom.CustomRecipe;
-
-public class UnfiredPot extends CustomRecipe {
-
+public class ArsenicBronzeIngot2 extends CustomRecipe {
+	
+	public ArsenicBronzeIngot2() {
+		
+	}
+	
     @Override
     public String getResultUUID() {
-        return "Pixlies:Unfired_Pot";
+        return "Pixlies:Arsenic_Bronze_Ingot";
     }
     
     @Override
     public String craftedInUUID() {
-        return "Machine:Pottery";
+        return "Machine:Forge";
     }
 
     @Override
@@ -25,10 +29,7 @@ public class UnfiredPot extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Mud_Brick");
-        map.put(1, "Pixlies:Mud_Brick");
-        map.put(2, "Pixlies:Mud_Brick");
-        map.put(3, "Pixlies:Mud_Brick");
+        map.put(0, "Pixlies:Arsenic_Bronze_Dust");
         return map;
     }
 

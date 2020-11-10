@@ -29,9 +29,8 @@ public class ArsenicBronzeIngot extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-       // map.put(0, MinecraftMaterial.OAK_PLANKS.getUUID());
-        map.put(0, "Pixlies:Arsenic_Ingot");
-        map.put(0, "Pixlies:Copper_Dust");
+        map.put(0, "Pixlies:Arsenic_Dust");
+        map.put(1, "Pixlies:Copper_Dust");
         return map;
     }
 
