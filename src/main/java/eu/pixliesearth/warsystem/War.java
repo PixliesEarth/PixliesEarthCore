@@ -44,7 +44,7 @@ public class War {
         double cost = 1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20);
         if (!aggressor.hasPoliticalPower(cost))
             return false;
-        if (aggressor.getExtras().containsKey("WAR:" + defender.getNationId()))
+        if (aggressor.getExtras().containsKey("WAR:" + mainDefender))
             return false;
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));
@@ -55,6 +55,7 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + aggressor.getName() + "** just started justifying a war-goal against your nation. This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + ".");
+        aggressor.getExtras().put("WAR:" + mainDefender, id);
         return true;
     }
 
