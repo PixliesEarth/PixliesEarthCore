@@ -6,8 +6,10 @@ import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
@@ -24,15 +26,14 @@ import org.javacord.api.entity.permission.Role;
 import java.awt.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 public class MiniMick {
 
     private static @Getter DiscordApi api;
     private @Getter TextChannel chatChannel;
+    private static final @Getter Map<String, DiscordCommand> commands = new HashMap<>();
 
     public void start() {
 
@@ -47,127 +48,12 @@ public class MiniMick {
 
         chatChannel = api.getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get();
 
-        api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().startsWith("/link")) {
-                String[] split = event.getMessageContent().split(" ");
-                event.deleteMessage();
-                if (split.length == 1) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, you have to give me a code so I can verify your account.");
-                    return;
-                }
-                Document user = new Document("discord", event.getMessageAuthor().getIdAsString());
-                Document found = Main.getPlayerCollection().find(user).first();
-                if (found != null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, this discord account is already linked to an in-game account.");
-                    return;
-                }
-                if (Main.getInstance().getUtilLists().discordcodes.containsKey(split[1])) {
-                    Profile profile = Main.getInstance().getProfile(Main.getInstance().getUtilLists().discordcodes.get(split[1]));
-                    profile.setDiscord(event.getMessageAuthor().getIdAsString());
-                    profile.backup();
-                    event.getServer().get().addRoleToUser(event.getMessageAuthor().asUser().get(), event.getServer().get().getRoleById("709463355529887854").get());
-                    Main.getInstance().getUtilLists().discordcodes.remove(split[1]);
-                    Role rank = api.getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(profile.getRank().getName())).get();
-                    rank.addUser(event.getMessageAuthor().asUser().get());
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
-                } else {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, that code is invalid.");
-                }
-            } else if (event.getMessageContent().equalsIgnoreCase("/unlink")) {
-                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
-                if (profile == null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your discord and ingame accounts are not linked!");
-                    return;
-                }
-                profile.setDiscord("NONE");
-                profile.save();
-                profile.backup();
-                event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, you just unlinked your discord & ingame accounts.");
-            } else if (event.getMessageContent().equalsIgnoreCase("/givemydata")) {
-                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
-                if (profile == null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored about you in our database.");
-                    return;
-                }
-                event.getMessageAuthor().asUser().get().openPrivateChannel().join().sendMessage("**This is the data we currently have in our database:**\n```json\n" + new GsonBuilder().setPrettyPrinting().create().toJson(profile) + "\n```");
-            } else if (event.getMessageContent().equalsIgnoreCase("/setigchat")) {
-                if (!event.getServer().get().hasPermission(event.getMessageAuthor().asUser().get(), PermissionType.ADMINISTRATOR)) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, Insufficient permissions.");
-                    return;
-                }
-                Main.getInstance().getConfig().set("chatchannel", event.getChannel().getIdAsString());
-                Main.getInstance().saveConfig();
-                Main.getInstance().reloadConfig();
-                event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, successfully set the chat-channel.");
-            } else if (event.getMessageContent().equalsIgnoreCase("/bal")) {
-                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
-                if (profile == null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
-                    return;
-                }
-                double balance = profile.getBalance();
-                UUID uuid = UUID.fromString(profile.getUniqueId());
-                String name = Objects.requireNonNull(Bukkit.getOfflinePlayer(uuid)).getName();
-                ArrayList<String> messages = new ArrayList<>();
-                messages.add(name + " has $" + balance + " in their pockets.");
-                messages.add(name + "'s current balance: $" + balance);
-                messages.add(name + " currently has $" + balance + ", what a snob!");
-                messages.add("Only $" + balance + "??? Get a load of " + name);
-                int random = (int) (4 * Math.random());
-                event.getChannel().sendMessage(new EmbedBuilder()
-                        .setColor(Color.GREEN)
-                        .setDescription("**" + messages.get(random) + "**")
-                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
-                        .setTimestampToNow());
-            } else if (event.getMessageContent().equalsIgnoreCase("/history")) {
-                Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
-                if (profile == null) {
-                    event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
-                    return;
-                }
-                List<String> lastTransActions = profile.getReceipts().subList(profile.getReceipts().size() - 11, profile.getReceipts().size());
-                StringBuilder builder = new StringBuilder();
-                builder.append("```diff" + "\n");
-                final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
-                for (String s : lastTransActions) {
-                    Receipt receipt = Receipt.fromString(s);
-                    if (receipt.isLost())
-                        builder.append("-$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
-                    else
-                        builder.append("+$").append(receipt.getAmount()).append(" | ").append(ChatColor.stripColor(receipt.getReason())).append(" @ ").append(sdf.format(new Timestamp(receipt.getTime()))).append("\n");
+        DiscordCommand.loadAll();
 
-                }
-                builder.append("```");
-                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Your transactions | Balance: $" + profile.getBalance() + "**")
-                        .setDescription(builder.toString())
-                        .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
-                        .setTimestampToNow());
-                ;
-            } else if (event.getMessageContent().startsWith("/nation")) {
-                String[] split = event.getMessageContent().split(" ");
-                if (split.length == 2) {
-                    Nation nation = Nation.getByName(split[1]);
-                    if (nation == null) {
-                        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, this nation does not exist, please be aware that this action is case-sensitive.");
-                        return;
-                    }
-                    event.getChannel().sendMessage(new EmbedBuilder() {
-                        {
-                            setColor(hexToColor(nation.getDynmapFill()));
-                            setTitle("**" + nation.getName() + "**");
-                            setDescription("*" + nation.getDescription() + "*");
-                            addInlineField("Wiki article", nation.getExtras().containsKey("wikiUrl") ? nation.getExtras().get("wikiUrl").toString() : "N/A");
-                            addInlineField("Members", nation.getMembers().size() + "");
-                            addInlineField("Leader", nation.getLeaderName());
-                            addInlineField("Ideology", WordUtils.capitalize(nation.getIdeology().toLowerCase().replace("_", " ")));
-                            addInlineField("Religion", WordUtils.capitalize(nation.getReligion().toLowerCase().replace("_", " ")));
-                            addInlineField("Era", nation.getCurrentEra().getName());
-                            addInlineField("Balance", "$" + nation.getMoney());
-                            addInlineField("GDP", "$" + nation.getGDP());
-                            addInlineField("Territory", nation.getChunks().size() + "");
-                            setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());
-                        }});
-                }
+        api.addMessageCreateListener(event -> {
+            String[] split = event.getMessageContent().split(" ");
+            if (split[0].startsWith("/") && commands.containsKey(split[0].replace("/", ""))) {
+                commands.get(split[0].replace("/", "")).run(event);
             } else {
                 if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
                     if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {

@@ -3,13 +3,11 @@ package eu.pixliesearth.core.custom.blocks;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -84,7 +82,7 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
         	} else {
         		// Do nothing
         		if (Math.random()<=0.35D) 
-        			makeParticeAt(location, Particle.CAMPFIRE_COSY_SMOKE, 1);
+        			makeAnimationAt(location, Effect.SMOKE, 1);
         	}
         }
         /*if (timer != null) {
@@ -204,10 +202,22 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
     	Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
     		@Override
     		public void run() {
-    			loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount, 0D, 0.75D, 0D, 0.05D);
+    			Random random = new Random();
+    			// loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount, 0D, 0.75D, 0D, 0.05D);
+				loc.getWorld().spawnParticle(p, loc, amount, 0.0D, 0.005D, 0.0D);
+				// loc.getWorld().spawnParticle(p, loc, amount);
     		}
     	}, 0L);
     }
+
+	public void makeAnimationAt(Location loc, Effect p, int amount) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				loc.getWorld().playEffect(loc, p, amount);
+			}
+		}, 0L);
+	}
 
 	@Override
 	public Inventory getCraftingExample(CustomRecipe customRecipe) {

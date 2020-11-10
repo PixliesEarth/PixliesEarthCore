@@ -9,6 +9,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -107,7 +108,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                returnable.add("  §8» §6" + player.getDisplayName());
+                returnable.add("  §8» " + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()));
                 returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
                 returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);

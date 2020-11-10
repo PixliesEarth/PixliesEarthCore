@@ -41,6 +41,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -95,6 +96,7 @@ public final class Main extends JavaPlugin {
     private @Getter Map<String, VendorItem> vendorItems;
     private @Getter FastConf fastConf;
     private @Getter MiniMick miniMick;
+    private @Getter @Setter War currentWar;
 
     @Override
     public void onEnable() {

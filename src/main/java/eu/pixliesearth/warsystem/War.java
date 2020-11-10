@@ -6,6 +6,7 @@ import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class War {
 
     private static final Main instance = Main.getInstance();
@@ -22,18 +24,18 @@ public class War {
     private String id;
     private String mainAggressor;
     private String mainDefender;
-    private List<String> aggressorIds;
-    private List<String> defenderIds;
+    private List<UUID> aggressors;
+    private List<UUID> defenders;
     private boolean declareAble;
     private boolean running;
     private Map<String, Timer> timers;
 
-    public War(String mainAggressor, String mainDefender, List<String> aggressorIds, List<String> defenderIds) {
+    public War(String mainAggressor, String mainDefender, List<UUID> aggressors, List<UUID> defenders) {
         this.id = Methods.generateId(7);
         this.mainAggressor = mainAggressor;
         this.mainDefender = mainDefender;
-        this.aggressorIds = aggressorIds;
-        this.defenderIds = defenderIds;
+        this.aggressors = aggressors;
+        this.defenders = defenders;
         this.declareAble = false;
         this.running = false;
         this.timers = new HashMap<>();
@@ -68,6 +70,9 @@ public class War {
     }
 
     public void handleKill(Profile killed, Profile killer, boolean KillerIsAttacker) {
+        if (!running) return;
+        
+
         //TODO handleKill
     }
 
@@ -84,6 +89,10 @@ public class War {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public void addPlayer(Profile profile, boolean aggressor) {
+        if (aggressor) aggressors.add(UUID.fromString(profile.getUniqueId())); else defenders.add(UUID.fromString(profile.getUniqueId()));
     }
 
     public static War getById(String id) {
