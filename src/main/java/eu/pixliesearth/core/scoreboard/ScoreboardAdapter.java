@@ -108,7 +108,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                returnable.add("  §8» " + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()));
+                returnable.add("  §8» " + c + player.getDisplayName());
                 returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
                 returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);

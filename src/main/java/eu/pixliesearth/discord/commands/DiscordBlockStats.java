@@ -45,7 +45,7 @@ public class DiscordBlockStats extends DiscordCommand {
             world = Bukkit.getWorld("world_the_end");
         else if (Bukkit.getWorld(s[4]) != null)
             world = Bukkit.getWorld(s[4]);
-        Location loc = new Location(world, Integer.parseUnsignedInt(s[1]), Integer.parseUnsignedInt(s[2]), Integer.parseUnsignedInt(s[3]));
+        Location loc = new Location(world, Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
         CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
         event.getChannel().sendMessage(
                 new EmbedBuilder()

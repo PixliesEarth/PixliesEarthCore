@@ -40,11 +40,12 @@ public class DiscordRecipe extends DiscordCommand {
         builder.setTitle(split[1]);
         builder.setThumbnail(getImage(CustomItemUtil.getItemStackFromUUID(split[1]).getType()));
         if (recipe != null) {
-            int i = 0;
-            for (String s : recipe.getAsUUIDToAmountMap().keySet()) {
-                if (s.equalsIgnoreCase("Minecraft:Air")) continue;
-                builder.addInlineField("Slot " + i, recipe.getAsUUIDToAmountMap().get(s) + "x " + s);
-                i++;
+            if (recipe.craftedInUUID().equalsIgnoreCase("Pixlies:Crafting_Table")) {
+                for (int i = 0; i < 9; i++)
+                    builder.addInlineField("Slot " + i, recipe.getContentsList().get(i));
+            } else {
+                for (String s : recipe.getAsUUIDToAmountMap().keySet())
+                    builder.addInlineField(s, recipe.getAsUUIDToAmountMap().get(s) + "x");
             }
             builder.setDescription("Crafted in: " + recipe.craftedInUUID());
         } else
