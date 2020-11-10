@@ -158,15 +158,13 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
         	} else {
         		// Cooking
         		player.sendMessage("The contents are being cooked! You cannot take them out!");
-        		return;
-        	}
+			}
         } else {
         	// Add items
         	if (inv.firstEmpty()==-1 || inv.firstEmpty()>=9) {
         		// Full
         		player.sendMessage("Its too full to add anything else!");
-        		return;
-        	} else {
+			} else {
         		// Has room
         		inv.addItem(player.getInventory().getItemInMainHand().asOne());
         		player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount()-1);
