@@ -90,7 +90,7 @@ public abstract class CustomCommand {
 					}
 				} catch (Exception ignore) { continue; /*goto the next loop*/}
 			}
-			if (!sender.hasPermission(c.getPermission())) {
+			if (c.getPermission()!=null && !sender.hasPermission(c.getPermission())) {
 				Lang.NO_PERMISSIONS.send(sender);
 			}
 			if (c.isPlayerOnlyCommand()) {
