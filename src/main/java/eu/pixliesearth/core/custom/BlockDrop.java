@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 @Data
 @AllArgsConstructor
+@Deprecated
 public class BlockDrop {
 
     private ItemStack toDrop;

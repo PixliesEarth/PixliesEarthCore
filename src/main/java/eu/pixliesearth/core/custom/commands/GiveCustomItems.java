@@ -1,16 +1,18 @@
 package eu.pixliesearth.core.custom.commands;
 
-import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
 
 public class GiveCustomItems extends CustomCommand {
 	
@@ -19,12 +21,12 @@ public class GiveCustomItems extends CustomCommand {
 	}
 	
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "cigive";
 	}
 	
 	@Override
-	public String getDescription() {
+	public String getCommandDescription() {
 		return "Gives a custom item based on the input";
 	}
 	
@@ -34,50 +36,52 @@ public class GiveCustomItems extends CustomCommand {
 	}
 	
 	@Override
-	public boolean execute(CommandSender commandsender, String alias, String[] args) {
-		if (args.length<2) {
-			commandsender.sendMessage("Please enter a valid amount of arguments");
+	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
+		if (parameters.length<2) {
+			commandSender.sendMessage("Please enter a valid amount of arguments");
 			return false;
 		}
-		Player p = Bukkit.getPlayer(args[0]);
-		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(args[1]);
+		Player p = Bukkit.getPlayer(parameters[0]);
+		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(parameters[1]);
 		if (p==null) {
-			commandsender.sendMessage("Please enter a valid player");
+			commandSender.sendMessage("Please enter a valid player");
 			return false;
 		}
 		if (c==null) {
-			commandsender.sendMessage("Please enter a valid customitem UUID");
+			commandSender.sendMessage("Please enter a valid customitem UUID");
 			return false;
 		}
 		CustomFeatureLoader.getLoader().getHandler().giveCustomItem(p, c.getClass());
-		commandsender.sendMessage("§rGave the player §a"+p.getDisplayName()+"§r the custom item §a"+c.getDefaultDisplayName()+"§r(§a"+c.getUUID()+"§r)");
+		commandSender.sendMessage("§rGave the player §a"+p.getDisplayName()+"§r the custom item §a"+c.getDefaultDisplayName()+"§r(§a"+c.getUUID()+"§r)");
 		return true;
 	}
 	
 	@Override
-	public List<String> tabComplete(CommandSender commandsender, String alias, String[] args) {
-		List<String> array = new ArrayList<String>();
+	public ITabable[] getParams() {
+		return new ITabable[] {new TabablePlayer(), new TabableCustomItems()};
+	}
+	
+	private static class TabableCustomItems implements ITabable {
 		
-		if (args.length<2) {
-			StringUtil.copyPartialMatches(args[0], getOnlinePlayersAsStringList(), array);
-		} else if (args.length<3) {
-			StringUtil.copyPartialMatches(args[1], getCustomItemsAsStringList(), array);
+		public static List<String> getCustomItemsAsStringList() {
+			ArrayList<String> array = new ArrayList<String>();
+			for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
+				array.add(c.getUUID());
+			return array;
 		}
-		Collections.sort(array);
-		return array;
-	}
-	
-	public static List<String> getOnlinePlayersAsStringList() {
-		ArrayList<String> array = new ArrayList<String>();
-		for (Player p : Bukkit.getOnlinePlayers()) 
-			array.add(p.getDisplayName());
-		return array;
-	}
-	
-	public static List<String> getCustomItemsAsStringList() {
-		ArrayList<String> array = new ArrayList<String>();
-		for (CustomItem c : CustomFeatureLoader.getLoader().getHandler().getCustomItems()) 
-			array.add(c.getUUID());
-		return array;
+		
+		@Override
+		public List<String> getTabable(CommandSender commandSender, String[] params) {
+			List<String> list = new ArrayList<>();
+			StringUtil.copyPartialMatches(params[params.length-1], getCustomItemsAsStringList(), list);
+			Collections.sort(list);
+			return list;
+		}
+
+		@Override
+		public String getTabableName() {
+			return "UUID";
+		}
+		
 	}
 }

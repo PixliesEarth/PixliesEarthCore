@@ -1,22 +1,21 @@
 package eu.pixliesearth.core.custom.commands;
 
-import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.localization.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
+import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+import eu.pixliesearth.localization.Lang;
 
 public class TestTranslationCommand extends CustomCommand {
 
     @Override
-    public String getName() {
+    public String getCommandName() {
         return "translations";
     }
 
     @Override
-    public String getDescription() {
+    public String getCommandDescription() {
         return "Sends translations to sender";
     }
 
@@ -24,30 +23,27 @@ public class TestTranslationCommand extends CustomCommand {
     public String getPermission() {
         return "net.pixlies.translations";
     }
-
+    
     @Override
-    public boolean execute(CommandSender commandsender, String alias, String[] args) {
-        if (args.length == 0) {
+    public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
+    	if (parameters.length == 0) {
             for (Lang lang : Lang.values()) {
                 try {
-                    commandsender.sendMessage(ChatColor.translateAlternateColorCodes('&', lang.getLanguages().get("ENG")));
+                	commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', lang.getLanguages().get("ENG")));
                 } catch (Exception e) {
                     System.out.println(lang.name() + " has a problem.");
                 }
             }
         } else {
             for (Lang lang : Lang.values())
-                lang.sendWithlangName(commandsender, args[0]);
+                lang.sendWithlangName(commandSender, parameters[0]);
         }
         return true;
     }
-
+    
     @Override
-    public List<String> tabComplete(CommandSender commandsender, String alias, String[] args) {
-        List<String> array = new ArrayList<String>();
-        if (args.length == 1)
-            array.addAll(Lang.PLAYER.getLanguages().keySet());
-        return array;
+    public ITabable[] getParams() {
+    	return new ITabable[] {new TabablePlayer()};
     }
 
 }

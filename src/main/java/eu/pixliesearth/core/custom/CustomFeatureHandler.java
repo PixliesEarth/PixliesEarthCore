@@ -51,7 +51,7 @@ public class CustomFeatureHandler {
 	private @Getter final Set<CustomRecipe> customRecipes;
 	private @Getter final Set<CustomQuest> customQuests;
 	private @Getter final Set<CustomMachine> customMachines;
-	private @Getter final Map<Material, List<BlockDrop>> dropMap;
+	@Deprecated private @Getter final Map<Material, List<BlockDrop>> dropMap;
 	private @Getter final Map<String, Vendor> vendorMap;
 	/**
 	 *  Allows to get an item from a CustomItem instance
@@ -210,7 +210,7 @@ public class CustomFeatureHandler {
 	 */
 	public void registerCommand(CustomCommand customCommand) {
 		this.customCommands.add(customCommand);
-		System.out.println("Registered the command "+customCommand.getName());
+		System.out.println("Registered the command "+customCommand.getCommandName());
 	}
 	/**
 	 * Adds a {@link Tickable} to be called every 1000ms

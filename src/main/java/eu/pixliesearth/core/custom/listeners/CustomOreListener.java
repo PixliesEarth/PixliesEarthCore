@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.List;
 import java.util.Random;
 
+@Deprecated
 public class CustomOreListener extends CustomListener {
 
     @EventHandler

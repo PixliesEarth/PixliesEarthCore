@@ -3,11 +3,14 @@ package eu.pixliesearth.core.custom.blocks;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -202,7 +205,7 @@ public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeab
     	Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
     		@Override
     		public void run() {
-    			Random random = new Random();
+    			// Random random = new Random();
     			// loc.getWorld().spawnParticle(p, loc.getX(), loc.getY(), loc.getZ(), amount, 0D, 0.75D, 0D, 0.05D);
 				loc.getWorld().spawnParticle(p, loc, amount, 0.0D, 0.005D, 0.0D);
 				// loc.getWorld().spawnParticle(p, loc, amount);

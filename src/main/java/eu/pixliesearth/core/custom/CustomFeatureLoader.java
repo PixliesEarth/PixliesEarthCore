@@ -1,21 +1,23 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.files.FileDirectory;
-import eu.pixliesearth.core.vendors.Vendor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import eu.pixliesearth.core.custom.CustomCommand.RegisterableCommand;
+import eu.pixliesearth.core.files.FileDirectory;
+import eu.pixliesearth.core.vendors.Vendor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 /**
  * 
  * @author BradBot_1
@@ -174,6 +176,7 @@ public class CustomFeatureLoader {
 	 * 
 	 * @param c The custom item to load
 	 */
+	@SuppressWarnings("deprecation")
 	public void loadCustomItem(CustomItem c) {
 		getHandler().registerItem(c);
 		if (c.getDropFromBlock() == null) return;
@@ -251,15 +254,12 @@ public class CustomFeatureLoader {
 	 * @param c The {@link CustomCommand} to be loaded
 	 */
 	public void loadCommand(CustomCommand c) {
-		System.out.println("Registering command " + c.getName());
+		System.out.println("Registering command " + c.getCommandName());
 		try {
 			Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             bukkitCommandMap.setAccessible(true);
             CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-            commandMap.register(c.getName(), c.getAsRegisterableCommand());
-            for (String alias : c.getAliases()) {
-            	commandMap.register(alias, c.getAsRegisterableCommand());
-            }
+            commandMap.register(this.getInstance().getName(), new RegisterableCommand(c));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

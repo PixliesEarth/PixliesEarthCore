@@ -1,9 +1,9 @@
 package eu.pixliesearth.core.custom.commands;
 
-import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.localization.Lang;
-import lombok.SneakyThrows;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,31 +11,36 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+import eu.pixliesearth.guns.PixliesAmmo;
+import eu.pixliesearth.localization.Lang;
 
 public class AmmoGiveCommand extends CustomCommand {
+	
+	@Override
+	public String getCommandName() {
+		return "ammogive";
+	}
 
-    @Override
-    public String getName() {
-        return "ammogive";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Gives ammo item based on the input";
-    }
+	@Override
+	public String getCommandDescription() {
+		return "Gives ammo item based on the input";
+	}
 
     @Override
     public String getPermission() {
         return "net.pixlies.ammogive";
     }
-
-    @SneakyThrows
+    
     @Override
-    public boolean execute(CommandSender sender, String s, String[] args) {
-        if (sender instanceof Player) {
+    public boolean isPlayerOnlyCommand() {
+    	return false;
+    }
+
+    @Override
+    public boolean onExecuted(CommandSender sender, String aliasUsed, String[] args, boolean ranByPlayer) {
+    	if (sender instanceof Player) {
             Player p = (Player) sender;
             if (args.length == 0) {
                 p.sendMessage(Lang.WRONG_USAGE.get(sender).replace("%USAGE%", "/ammogive <gun/ammo> [player]"));
@@ -87,22 +92,13 @@ public class AmmoGiveCommand extends CustomCommand {
         }
         return false;
     }
-
-    private List<String> getAmmoNames() {
-        List<String> returner = new ArrayList<>();
-        for (PixliesAmmo.AmmoType g : PixliesAmmo.AmmoType.values())
-            returner.add(g.name());
-        return returner;
-    }
-
-    private List<String> onlineplayerNames() {
-        List<String> returner = new ArrayList<>();
-        for (Player p : Bukkit.getOnlinePlayers())
-            returner.add(p.getName());
-        return returner;
-    }
-
+    
     @Override
+    public ITabable[] getParams() { 
+    	return new ITabable[] {new TabableAmmoTypes(), new TabablePlayer()};
+    }
+
+    /**@Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 
         final List<String> completions = new ArrayList<>();
@@ -116,6 +112,30 @@ public class AmmoGiveCommand extends CustomCommand {
         Collections.sort(completions);
 
         return completions;
+    }*/
+    
+    private static class TabableAmmoTypes implements ITabable {
+    	
+    	private List<String> getAmmoNames() {
+            List<String> returner = new ArrayList<>();
+            for (PixliesAmmo.AmmoType g : PixliesAmmo.AmmoType.values())
+                returner.add(g.name());
+            return returner;
+        }
+    	
+		@Override
+		public List<String> getTabable(CommandSender commandSender, String[] params) {
+			final List<String> completions = new ArrayList<>();
+			StringUtil.copyPartialMatches(params[params.length-1], getAmmoNames(), completions);
+			Collections.sort(completions);
+			return completions;
+		}
+    	
+		@Override
+		public String getTabableName() {
+			return "ammotype";
+		}
+		
     }
 
 }

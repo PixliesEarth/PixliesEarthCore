@@ -1,44 +1,83 @@
 package eu.pixliesearth.core.custom;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+
 /**
  * 
  * @author BradBot_1
  * 
- * <h3>This class is not done yet!</h3>
- *
- * @deprecated Not completed
- * 
- * TODO: notes
  */
-@Deprecated
-public class CustomSubCommand {
-	
+public abstract class CustomSubCommand {
+	/**
+	 * Initialises the class
+	 */
 	public CustomSubCommand() {
 		
 	}
 	
-	public String getName() {
-		return null;
+	public abstract String getCommandName();
+	
+	public abstract String getCommandUsage();
+	
+	public Set<String> getCommandAliases() { return null; }
+	
+	public String getPermission() { return null; }
+	
+	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
+		commandSender.sendMessage("You have performed the command "+aliasUsed);
+		return true;
 	}
 	
-	public String getDescription() {
-		return null;
-	}
+	public ITabable[] getParams() { return null; }
 	
-	public String getUsage() {
-		return null;
+	public static class TabableSubCommand implements ITabable {
+		
+		CustomSubCommand[] subCommands;
+		
+		public TabableSubCommand(CustomSubCommand... subCommands) {
+			this.subCommands = subCommands;
+		}
+		
+		public CustomSubCommand getCustomSubCommandFromName(String name) {
+			for (CustomSubCommand subCommand : subCommands) {
+				if (subCommand.getCommandName().equalsIgnoreCase(name)) {
+					return subCommand;
+				} else {
+					if (subCommand.getCommandAliases()==null || subCommand.getCommandAliases().isEmpty()) continue;
+					for (String s : subCommand.getCommandAliases()) {
+						if (s.equalsIgnoreCase(name)) {
+							return subCommand;
+						}
+					}
+				}
+			}
+			return null;
+		}
+		
+		@Override
+		public List<String> getTabable(CommandSender commandSender, String[] params) {
+			List<String> list = new ArrayList<>();
+			for (CustomSubCommand subCommand : subCommands) {
+				list.add(subCommand.getCommandName());
+				if (subCommand.getCommandAliases()!=null) {
+					for (String s : subCommand.getCommandAliases()) {
+						list.add(s);
+					}
+				}
+			}
+			return list;
+		}
+
+		@Override
+		public String getTabableName() {
+			return "subcommand";
+		}
+
 	}
-	
-	public ArrayList<String> getAliases() {
-		return new ArrayList<String>();
-	}
-	
-	public CustomCommand getParentCommand() {
-		return null;
-	}
-	
-	public boolean execute(CommandSender sender, String alias, String[] args) {return false;}
 }

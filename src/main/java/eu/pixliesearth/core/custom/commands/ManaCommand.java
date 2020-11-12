@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
@@ -13,31 +14,41 @@ public class ManaCommand extends CustomCommand {
 
 
     @Override
-    public String getName() {
+    public String getCommandName() {
         return "mana";
     }
-
+    
+    @Override
+    public String getCommandDescription() {
+    	return "Gives the inputted player the mana provided";
+    }
+    
     @Override
     public String getPermission() {
         return "net.pixlies.mana";
     }
-
+    
     @Override
-    public boolean execute(CommandSender commandsender, String alias, String[] args) {
-        if (args.length != 2) {
-            Lang.WRONG_USAGE.send(commandsender, "%USAGE%;/mana [PLAYER] [MANA]");
+    public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
+    	if (parameters.length != 2) {
+            Lang.WRONG_USAGE.send(commandSender, "%USAGE%;/mana [PLAYER] [MANA]");
             return false;
         }
-        UUID target = Bukkit.getPlayerUniqueId(args[0]);
+        UUID target = Bukkit.getPlayerUniqueId(parameters[0]);
         if (target == null) {
-            Lang.PLAYER_DOES_NOT_EXIST.send(commandsender);
+            Lang.PLAYER_DOES_NOT_EXIST.send(commandSender);
             return false;
         }
         Profile targetProfile = Main.getInstance().getProfile(target);
-        targetProfile.setEnergy(Double.parseDouble(args[1]));
+        targetProfile.setEnergy(Double.parseDouble(parameters[1]));
         targetProfile.save();
-        commandsender.sendMessage("§7Set mana.");
+        commandSender.sendMessage("§7Set mana.");
         return true;
     }
-
+    
+    @Override
+    public ITabable[] getParams() {
+    	return new ITabable[] {new TabablePlayer(), new TabableString("Amount")};
+    }
+    
 }
