@@ -63,10 +63,25 @@ public class War {
         return true;
     }
 
+    @SneakyThrows
     public boolean declare() {
         if (!declareAble) return false;
-        this.running = true;
+        this.timers.put("gracePeriod", new Timer(600_000));
+        StringBuilder mentionsBuilder = new StringBuilder();
+        for (String s : Nation.getById(this.mainDefender).getMembers()) {
+            Profile profile = instance.getProfile(UUID.fromString(s));
+            if (profile.discordIsSynced())
+                mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
+        }
+        if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
         return true;
+    }
+
+    @SneakyThrows
+    public void start() {
+        this.timers.remove("gracePeriod");
+        this.running = true;
+        broadCast(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
     }
 
     public void handleKill(Profile killed, Profile killer, boolean KillerIsAttacker) {
@@ -99,6 +114,17 @@ public class War {
         if (instance.getUtilLists().wars.containsKey(id))
             return instance.getUtilLists().wars.get(id);
         return null;
+    }
+
+    @SneakyThrows
+    public void broadCast(Nation n1, String message) {
+        StringBuilder mentionsBuilder = new StringBuilder();
+        for (String s : n1.getMembers()) {
+            Profile profile = instance.getProfile(UUID.fromString(s));
+            if (profile.discordIsSynced())
+                mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
+        }
+        if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + message + ".");
     }
 
 }
