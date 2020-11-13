@@ -161,14 +161,14 @@ public class CustomFeatureHandler {
 	 */
 	public void registerListener(Listener listener) {
 		this.customListeners.add(listener);
-		System.out.println("Registered the listener "+listener.getClass().getName());
+		// System.out.println("Registered the listener "+listener.getClass().getName());
 	}
 	/**
 	 * 
 	 */
 	public void registerRecipe(CustomRecipe customRecipe) {
 		this.customRecipes.add(customRecipe);
-		System.out.println("Registered the recipe "+customRecipe.getResultUUID());
+		// System.out.println("Registered the recipe "+customRecipe.getResultUUID());
 	}
 	/**
 	 * Adds a {@link CustomItem} to {@link CustomFeatureHandler#customItems}
@@ -178,7 +178,7 @@ public class CustomFeatureHandler {
 	public void registerItem(CustomItem customitem) {
 		this.customItems.add(customitem);
 		this.customItemsToItemStackMap.put(customitem, customitem.buildItem());
-		System.out.println("Registered the item "+customitem.getUUID());
+		// System.out.println("Registered the item "+customitem.getUUID());
 	}
 	/**
 	 * Registers the {@link CustomBlock} provided
@@ -201,7 +201,7 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customMachine);
 		this.customItems.add(customMachine);
 		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
-		System.out.println("Registered the custom machine "+customMachine.getUUID());
+		// System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
 	 * Registers the command
@@ -210,7 +210,7 @@ public class CustomFeatureHandler {
 	 */
 	public void registerCommand(CustomCommand customCommand) {
 		this.customCommands.add(customCommand);
-		System.out.println("Registered the command "+customCommand.getCommandName());
+		// System.out.println("Registered the command "+customCommand.getCommandName());
 	}
 	/**
 	 * Adds a {@link Tickable} to be called every 1000ms
@@ -219,7 +219,7 @@ public class CustomFeatureHandler {
 	 */
 	public void registerTickable(Tickable tickable) {
 		this.tickables.add(tickable);
-		System.out.println("Registered the tickable "+tickable.getClass().getName());
+		// System.out.println("Registered the tickable "+tickable.getClass().getName());
 	}
 	/**
 	 * Registers the {@link CustomPermission} provided
@@ -228,7 +228,7 @@ public class CustomFeatureHandler {
 	 */
 	public void registerPermission(CustomPermission customPermission) {
 		this.customPermissions.add(customPermission);
-		System.out.println("Registered the permission "+customPermission.getName());
+		// System.out.println("Registered the permission "+customPermission.getName());
 	}
 	/**
 	 * Registers the {@link CustomMachineRecipe} provided

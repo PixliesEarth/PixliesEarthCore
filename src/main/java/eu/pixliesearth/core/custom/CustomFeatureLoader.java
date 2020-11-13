@@ -84,16 +84,28 @@ public class CustomFeatureLoader {
 	// TODO: notes
 	@SneakyThrows
 	public void loadMachines(String path) {
-		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) 
+		int i = 0;
+		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) 
+			i++;
+		}
+		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) 
+			i++;
+		}
+		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomEnergyCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomEnergyCrafterMachine.class)) 
+			i++;
+		}
+		for (Class<? extends CustomEnergyCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomEnergyCrafterMachine.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomFuelableCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomFuelableCrafterMachine.class)) 
+			i++;
+		}
+		for (Class<? extends CustomFuelableCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomFuelableCrafterMachine.class)) {
 			loadMachine(clazz.newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom machines.");
 	}
 	// TODO: notes
 	public void loadMachine(CustomMachine customMachine) {
@@ -106,8 +118,12 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCustomRecipes(String path) {
-		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes", CustomRecipe.class)) 
+		int i = 0;
+		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes", CustomRecipe.class)) {
 			loadCustomRecipe(clazz.newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom recipes.");
 	}
 	/**
 	 * Registers the inputed {@link CustomRecipe}
@@ -124,14 +140,24 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCustomBlocks(String path) {
-		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) 
+		int i = 0;
+		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) {
 			loadCustomBlock(clazz.newInstance());
-		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) 
+			i++;
+		}
+		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) 
+			i++;
+		}
+		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) {
 			loadMachine(clazz.newInstance());
-		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) 
+			i++;
+		}
+		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) {
 			loadMachine(clazz.newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom blocks.");
 	}
 	/**
 	 * Loads the {@link CustomBlock} provided
@@ -144,8 +170,12 @@ public class CustomFeatureLoader {
 
 	@SneakyThrows
 	public void loadVendors(String path) {
-		for (Class<? extends Vendor> clazz : reflectBasedOnExtentionOf(path + ".vendors", Vendor.class))
+		int i = 0;
+		for (Class<? extends Vendor> clazz : reflectBasedOnExtentionOf(path + ".vendors", Vendor.class)) {
 			loadVendor(clazz.getConstructor().newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom vendors.");
 	}
 
 	public void loadVendor(Vendor vendor) {
@@ -159,16 +189,28 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCustomItems(String path) {
-		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class))
+		int i = 0;
+		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) {
 			loadCustomItem(clazz.getConstructor().newInstance());
-		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class))
+			i++;
+		}
+		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class)) {
 			loadCustomItem(clazz.newInstance());
-		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class))
+			i++;
+		}
+		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class)) {
 			loadCustomItem(clazz.newInstance());
-		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class))
+			i++;
+		}
+		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class)) {
 			loadCustomItem(clazz.newInstance());
-		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class))
+			i++;
+		}
+		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class)) {
 			loadCustomItem(clazz.newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom items.");
 	}
 
 	/**
@@ -224,8 +266,12 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadListeners(String path) {
-		for (Class<?> clazz : reflectBasedOnExtentionOf(path+".listeners", CustomListener.class)) 
+		int i = 0;
+		for (Class<?> clazz : reflectBasedOnExtentionOf(path+".listeners", CustomListener.class)) {
 			loadListener((Listener) clazz.newInstance());
+			i++;
+		}
+		System.out.println("§7Loaded §b" + i + "§7 custom listeners.");
 	}
 	/**
 	 * Registers the provided listener
@@ -243,10 +289,12 @@ public class CustomFeatureLoader {
 	 */
 	@SneakyThrows
 	public void loadCommands(String path) {
+		int i = 0;
 		for (Class<? extends CustomCommand> clazz : reflectBasedOnExtentionOf(path+".commands", CustomCommand.class)) {
-			System.out.println("found " + clazz.getName());
 			loadCommand(clazz.getConstructor().newInstance());
+			i++;
 		}
+		System.out.println("§7Loaded §b" + i + "§7 custom commands.");
 	}
 	/**
 	 * Loads the {@link CustomCommand} that is provided
@@ -254,7 +302,6 @@ public class CustomFeatureLoader {
 	 * @param c The {@link CustomCommand} to be loaded
 	 */
 	public void loadCommand(CustomCommand c) {
-		System.out.println("Registering command " + c.getCommandName());
 		try {
 			Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             bukkitCommandMap.setAccessible(true);
