@@ -2,14 +2,13 @@ package eu.pixliesearth.core.custom.blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +31,7 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 	// VARIABLES
 	
 	public boolean enabled = true;
-	public long timePerRefresh = 60555;
+	public long timePerRefresh = 5255l; // 60555l
 	public double energyCostPerOperation = 12500D;
 	
 	// Default Stuff
@@ -102,6 +101,7 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 		}
 	}
 	
+	/*@Deprecated
 	public Map<String, Integer> getDanger(World w, int chunkX, int chunkZ) {
 		Map<String, Integer> map = new ConcurrentHashMap<>();
 		map.put("Pixlies:Missile_Warhead_Block", 0);
@@ -158,6 +158,31 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
         }
         
 		return map;
+	}*/
+	
+	public Map<String, Integer> getDanger(World w, int chunkX, int chunkZ) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		Map<String, Integer> map = new ConcurrentHashMap<>();
+		map.put("Pixlies:Missile_Warhead_Block", h.getLocationsOfCustomBlockInChunk("Pixlies:Missile_Warhead_Block", w.getChunkAt(chunkZ)).size());
+		map.put("Pixlies:Missile_Warhead_Block_UNB", h.getLocationsOfCustomBlockInChunk("Pixlies:Missile_Warhead_Block_UNB", w.getChunkAt(chunkX, chunkZ)).size());
+		map.put("Pixlies:Missile_Warhead_Block_UNB_2", h.getLocationsOfCustomBlockInChunk("Pixlies:Missile_Warhead_Block_UNB_2", w.getChunkAt(chunkX, chunkZ)).size());
+		return map;
+	}
+	
+	
+	// Not needed anymore
+	@Deprecated
+	public int method(String id, World w, int chunkX, int chunkZ) {
+		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		Set<Location> set = h.getLocationsOfCustomBlock(id);
+		int i = 0;
+		for (Location location : set) {
+			if (location.getWorld().getUID().equals(w.getUID())) continue;
+			if (!(location.getChunk().getX()==chunkX) || !(location.getChunk().getZ()==chunkZ)) continue;
+			i += 1;
+		}
+		// System.out.println("*-----*\n"+id+" "+i+"\n"+w.getName()+","+chunkX+","+chunkZ+"\n*-----*");
+		return i;
 	}
 	
 	@SuppressWarnings("deprecation")

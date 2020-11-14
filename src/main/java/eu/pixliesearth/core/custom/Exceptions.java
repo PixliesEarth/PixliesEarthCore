@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
  * @apiNote Don't call this unless you need to, used to show issues that occur with more specific information
  *
  */
+@Deprecated
 public class Exceptions {
 	/**
 	 * 

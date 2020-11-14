@@ -38,6 +38,9 @@ public class ItemICBM extends CustomItem {
     public ItemICBM() {
 
     }
+    
+    public boolean enabled = true;
+    public boolean Dynmap = false;
 
     @Override
     public Material getMaterial() {
@@ -101,9 +104,6 @@ public class ItemICBM extends CustomItem {
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	
-    	boolean enabled = true;
-    	
     	if (event.getPlayer().getInventory().getItemInMainHand()==null) return false;
 		if (event.getClickedBlock() == null || event.getClickedBlock().getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (!isAMissile(event.getClickedBlock())) {
@@ -261,7 +261,7 @@ public class ItemICBM extends CustomItem {
     @SuppressWarnings("deprecation")
     public void launchMissile(Location start, Location end, int ex, int pd, Player p) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-    	boolean isInDynmapEnabledWorld = false; // TODO: dynmap
+    	boolean isInDynmapEnabledWorld = (!Dynmap) ? false : true; // TODO: dynmap
     	if (h.getCustomBlockFromLocation(start)!=null) {
 			if (h.getCustomBlockFromLocation(start).getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) { //Warhead UUID
 				h.removeCustomBlockFromLocation(start);
@@ -379,6 +379,7 @@ public class ItemICBM extends CustomItem {
     public void setMissile(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	World w = l.getWorld();
+    	if (l.getY()==250D) return;
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()+1), "Pixlies:Missile_Fin_UNB");
@@ -390,6 +391,7 @@ public class ItemICBM extends CustomItem {
     
     public void setMissile2(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	l.setY(l.getY()-4);
     	World w = l.getWorld();
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
