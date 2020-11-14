@@ -18,11 +18,7 @@ public class WarListener extends CustomListener {
         Profile killerProfile = instance.getProfile(killer.getUniqueId());
         if (!killedProfile.isInNation() || !killerProfile.isInNation()) return;
         if (killedProfile.getNationId().equals(killerProfile.getNationId())) return;
-        if (killedProfile.getCurrentNation().getExtras().containsKey("WAR:" + killerProfile.getNationId())) {
-            War.getById((String) killedProfile.getCurrentNation().getExtras().get("WAR:" + killerProfile.getNationId())).handleKill(killedProfile, killerProfile, false);
-        } else if (killerProfile.getCurrentNation().getExtras().containsKey("WAR:" + killedProfile.getNationId())) {
-            War.getById((String) killerProfile.getCurrentNation().getExtras().get("WAR:" + killedProfile.getNationId())).handleKill(killedProfile, killerProfile, true);
-        }
+
     }
 
 }

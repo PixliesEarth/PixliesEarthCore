@@ -8,6 +8,7 @@ import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
 import eu.pixliesearth.warsystem.War;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -73,6 +74,10 @@ public class UtilLists {
 
     public Map<String, War> wars;
 
+    public List<UUID> inGulag;
+
+    public List<UUID> bannedInWar;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -103,6 +108,8 @@ public class UtilLists {
         craftingTables = new HashMap<>();
         waitingGuns = new ConcurrentHashMap<>();
         wars = new ConcurrentHashMap<>();
+        inGulag = new ArrayList<>();
+        bannedInWar = new ArrayList<>();
     }
 
 }

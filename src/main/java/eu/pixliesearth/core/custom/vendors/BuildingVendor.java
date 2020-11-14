@@ -57,9 +57,6 @@ public class BuildingVendor extends Vendor {
                 new ItemStack(BLACKSTONE),
                 new ItemStack(POLISHED_BLACKSTONE),
                 new ItemStack(GILDED_BLACKSTONE),
-                new ItemStack(COBBLESTONE),
-                new ItemStack(STONE),
-                new ItemStack(SMOOTH_STONE),
                 new ItemStack(MOSSY_COBBLESTONE)
                 );
     }

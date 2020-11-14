@@ -41,6 +41,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.*;
+import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -97,6 +98,9 @@ public final class Main extends JavaPlugin {
     private @Getter FastConf fastConf;
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
+    private @Getter UtilThread utilThread;
+    //TODO LOAD GULAG
+    private @Getter Gulag gulag;
 
     @Override
     public void onEnable() {
@@ -238,7 +242,8 @@ public final class Main extends JavaPlugin {
 
         discordEnable();
 
-        new UtilThread().start();
+        utilThread = new UtilThread();
+        utilThread.start();
         new GulagThread().start();
 
         dynmapKernel = new DynmapEngine();

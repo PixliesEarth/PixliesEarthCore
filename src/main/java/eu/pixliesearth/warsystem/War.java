@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,18 +23,16 @@ public class War {
     private String id;
     private String mainAggressor;
     private String mainDefender;
-    private List<UUID> aggressors;
-    private List<UUID> defenders;
+    private Map<UUID, WarParticipant> players;
     private boolean declareAble;
     private boolean running;
     private Map<String, Timer> timers;
 
-    public War(String mainAggressor, String mainDefender, List<UUID> aggressors, List<UUID> defenders) {
+    public War(String mainAggressor, String mainDefender) {
         this.id = Methods.generateId(7);
         this.mainAggressor = mainAggressor;
         this.mainDefender = mainDefender;
-        this.aggressors = aggressors;
-        this.defenders = defenders;
+        this.players = new HashMap<>();
         this.declareAble = false;
         this.running = false;
         this.timers = new HashMap<>();
@@ -81,13 +78,18 @@ public class War {
     public void start() {
         this.timers.remove("gracePeriod");
         this.running = true;
-        broadCast(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
+        broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
     }
 
-    public void handleKill(Profile killed, Profile killer, boolean KillerIsAttacker) {
+    public void handleKill(Profile killed, Profile killer) {
         if (!running) return;
-        
-
+        if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
+            killed.getAsPlayer().banPlayer("§7You are §cbanned §7until the war is over.");
+            instance.getUtilLists().inGulag.remove(killed.getUUID());
+            instance.getUtilLists().bannedInWar.add(killed.getUUID());
+            return;
+        }
+        instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
         //TODO handleKill
     }
 
@@ -99,6 +101,9 @@ public class War {
                     this.timers.remove("warGoalJustification");
                 }
             }
+            if (this.timers.containsKey("gracePeriod"))
+                if (this.timers.get("gracePeriod").hasExpired())
+                    start();
         }
     }
 
@@ -106,8 +111,8 @@ public class War {
         return running;
     }
 
-    public void addPlayer(Profile profile, boolean aggressor) {
-        if (aggressor) aggressors.add(UUID.fromString(profile.getUniqueId())); else defenders.add(UUID.fromString(profile.getUniqueId()));
+    public void addPlayer(Profile profile, WarParticipant participant) {
+        players.put(profile.getUUID(), participant);
     }
 
     public static War getById(String id) {
@@ -117,7 +122,7 @@ public class War {
     }
 
     @SneakyThrows
-    public void broadCast(Nation n1, String message) {
+    public void broadcastDiscord(Nation n1, String message) {
         StringBuilder mentionsBuilder = new StringBuilder();
         for (String s : n1.getMembers()) {
             Profile profile = instance.getProfile(UUID.fromString(s));
