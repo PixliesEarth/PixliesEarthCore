@@ -12,9 +12,9 @@ import org.bukkit.inventory.Inventory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SavableChunkLoader extends CustomSaveableBlock {
+public class SavableBlockChunkLoader extends CustomSaveableBlock {
 	
-	public SavableChunkLoader() {
+	public SavableBlockChunkLoader() {
 		
 	}
 	

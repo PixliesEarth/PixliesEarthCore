@@ -12,6 +12,7 @@ import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -742,5 +743,27 @@ public class CustomFeatureHandler {
 	// TODO: notes
 	public void deleteTempratureFromLocation(Location location) {
 		this.locationToTempratureMap.remove(location);
+	}
+	// TODO: notes
+	public Set<Location> getLocationsOfCustomBlock(String UUID) {
+		Set<Location> set = new HashSet<>();
+		for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+			if (entry.getValue().equals(UUID)) {
+				set.add(entry.getKey());
+			}
+		}
+		return set;
+	}
+	// TODO: notes
+	public Set<Location> getLocationsOfCustomBlockInChunk(String UUID, Chunk chunk) {
+		Set<Location> set = new HashSet<>();
+		for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+			if (entry.getValue().equals(UUID)) {
+				if (entry.getKey().getWorld().getUID().equals(chunk.getWorld().getUID()) && entry.getKey().getChunk().getX()==chunk.getX() && entry.getKey().getChunk().getZ()==chunk.getZ()) {
+					set.add(entry.getKey());
+				}
+			}
+		}
+		return set;
 	}
 }

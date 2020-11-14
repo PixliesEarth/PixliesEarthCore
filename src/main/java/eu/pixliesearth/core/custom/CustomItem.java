@@ -155,6 +155,7 @@ public class CustomItem {
 	/**
 	 * @return If the block gets broken then this Item drops
 	 */
+	@Deprecated
 	public BlockDrop getDropFromBlock() {
 		return null;
 	}

@@ -81,6 +81,7 @@ public class ItemICBMLocationHolder extends CustomItem {
 			tags.addTag("x", Integer.toString(l.getBlockX()), NBTTagType.STRING);
 			tags.addTag("y", Integer.toString(l.getBlockY()), NBTTagType.STRING);
 			tags.addTag("z", Integer.toString(l.getBlockZ()), NBTTagType.STRING);
+			tags.addTag("w", l.getWorld().getUID().toString());
 			event.getPlayer().getInventory().setItemInMainHand(NBTUtil.addTagsToItem(event.getPlayer().getInventory().getItemInMainHand(), tags));
 			event.getPlayer().sendMessage("§7Set the location to §b"+l.getBlockX()+"§7, §b"+l.getBlockY()+"§7, §b"+l.getBlockZ());
 			return false;

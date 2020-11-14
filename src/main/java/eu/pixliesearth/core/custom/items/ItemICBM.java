@@ -1,9 +1,13 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.*;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.NBTUtil;
-import eu.pixliesearth.utils.NBTUtil.NBTTags;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,14 +20,27 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+import org.dynmap.markers.Marker;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.DynmapUtil;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 
 public class ItemICBM extends CustomItem {
 	
     public ItemICBM() {
 
     }
+    
+    public boolean enabled = true;
+    public boolean Dynmap = false;
 
     @Override
     public Material getMaterial() {
@@ -87,9 +104,6 @@ public class ItemICBM extends CustomItem {
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	
-    	boolean enabled = true;
-    	
     	if (event.getPlayer().getInventory().getItemInMainHand()==null) return false;
 		if (event.getClickedBlock() == null || event.getClickedBlock().getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (!isAMissile(event.getClickedBlock())) {
@@ -225,12 +239,12 @@ public class ItemICBM extends CustomItem {
 		h.removeCustomBlockFromLocation(b5.getLocation());
 		h.removeCustomBlockFromLocation(b6.getLocation());
 		h.removeCustomBlockFromLocation(b7.getLocation());
-		h.setCustomBlockToLocation(b2.getLocation(), "Pixlies:Missile_Block_UNB");
-		h.setCustomBlockToLocation(b3.getLocation(), "Pixlies:Missile_Block_UNB");
 		h.setCustomBlockToLocation(b4.getLocation(), "Pixlies:Missile_Fin_UNB");
 		h.setCustomBlockToLocation(b5.getLocation(), "Pixlies:Missile_Fin_UNB");
 		h.setCustomBlockToLocation(b6.getLocation(), "Pixlies:Missile_Fin_UNB");
 		h.setCustomBlockToLocation(b7.getLocation(), "Pixlies:Missile_Fin_UNB");
+		h.setCustomBlockToLocation(b2.getLocation(), "Pixlies:Missile_Block_UNB");
+		h.setCustomBlockToLocation(b3.getLocation(), "Pixlies:Missile_Block_UNB");
 		Inventory inv = getWarHeadInventory(b);
 		inv.clear();
 		/*for (int i = 0; i < 9; i++) {
@@ -247,6 +261,7 @@ public class ItemICBM extends CustomItem {
     @SuppressWarnings("deprecation")
     public void launchMissile(Location start, Location end, int ex, int pd, Player p) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	boolean isInDynmapEnabledWorld = (!Dynmap) ? false : true; // TODO: dynmap
     	if (h.getCustomBlockFromLocation(start)!=null) {
 			if (h.getCustomBlockFromLocation(start).getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) { //Warhead UUID
 				h.removeCustomBlockFromLocation(start);
@@ -255,7 +270,7 @@ public class ItemICBM extends CustomItem {
     	}
     	final UUID id = UUID.randomUUID();
     	addBS(id, start);
-    	
+    	final Marker marker = (isInDynmapEnabledWorld) ? DynmapUtil.getDynmapMissile().addMissileAt(start, ex, pd, end) : null;
     	Integer i = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 			public void run() {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
@@ -267,32 +282,75 @@ public class ItemICBM extends CustomItem {
 						l.setY(l.getY()+1D);
 						setMissile(l);
 						if (l.getY()-3>=256) {
-							p.sendMessage("left");
 							Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 							CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
-							p.sendMessage("left2");
+							if (isInDynmapEnabledWorld) {
+								Bukkit.getScheduler().scheduleAsyncDelayedTask(h.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										Location loc = start.clone();
+										Location loc2 = end.clone();
+										Vector v = loc.toVector().subtract(loc2.toVector()).divide(new Vector(10, 1, 10));
+										Vector vn = v.normalize();
+										boolean b = true;
+										int i2 = 0;
+										long l = (long) ((start.distance(end)*2l)/10);
+										while (b) {
+											i2++;
+											if (i2 >= loc.distanceSquared(loc2)) {
+												marker.deleteMarker();
+												b=false;
+											} else {
+												loc.add(vn);
+												marker.setLocation(marker.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+												try {
+													Thread.sleep(l);
+												} catch (InterruptedException ingore) {}
+											}
+										}
+										/*for (int i = 0; i <= loc.distance(loc2); i += 0.5) {
+											if (i == loc.distance(loc2)) {
+												marker.deleteMarker();
+											} else {
+												loc.add(vn);
+												marker.setLocation(marker.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+												try {
+													Thread.sleep(250l);
+												} catch (InterruptedException ingore) {}
+											}
+										}*/
+									}
+								}, 1l);
+							}
 							Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 								@Override
 								public void run() {
-									p.sendMessage("timer done");
 									final UUID id2 = UUID.randomUUID();
-									addBS(id2, new Location(end.getWorld(), end.getX(), 60, end.getZ()));
+									addBS(id2, new Location(end.getWorld(), end.getX(), 256, end.getZ()));
+									final Marker marker2 = (isInDynmapEnabledWorld) ? DynmapUtil.getDynmapMissile().addMissileAt(end, ex, pd, end) : null;
 									Integer i2 = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 										@Override
 										public void run() {
 											Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 												@Override
 												public void run() {
-													Location l3 = getBS(id2).clone();
+													Location l3 = (getBS(id2)==null) ? end.clone() : getBS(id2).clone();
 													remBS(id2);
 													Location l4 = new Location(l3.getWorld(), l3.getX(), l3.getY()-1, l3.getZ());
-													p.sendMessage("Dropping down at "+l3.getX()+" "+(l3.getY()-1)+" "+l3.getZ());
 													remMissile2(l3.clone());
 													if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
-														p.sendMessage("boom");
 														l4.createExplosion((float)ex, true);
 														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
+														if (isInDynmapEnabledWorld) {
+															Bukkit.getScheduler().scheduleAsyncDelayedTask(h.getInstance(), new Runnable() {
+																@Override
+																public void run() {
+																	marker.deleteMarker();
+																	marker2.deleteMarker();
+																}
+															}, 1l);
+														}
 													} else {
 														setMissile2(l4.clone());
 														addBS(id2, l4);
@@ -321,25 +379,27 @@ public class ItemICBM extends CustomItem {
     public void setMissile(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	World w = l.getWorld();
+    	if (l.getY()==250D) return;
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-1, l.getZ()), "Pixlies:Missile_Block_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()), "Pixlies:Missile_Block_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()+1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()-1, l.getY()-2, l.getZ()), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()+1, l.getY()-2, l.getZ()), "Pixlies:Missile_Fin_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-1, l.getZ()), "Pixlies:Missile_Block_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()), "Pixlies:Missile_Block_UNB");
     }
     
     public void setMissile2(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	l.setY(l.getY()-4);
     	World w = l.getWorld();
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+1, l.getZ()), "Pixlies:Missile_Block_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()), "Pixlies:Missile_Block_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()+1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()-1, l.getY()+2, l.getZ()), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()+1, l.getY()+2, l.getZ()), "Pixlies:Missile_Fin_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+1, l.getZ()), "Pixlies:Missile_Block_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()), "Pixlies:Missile_Block_UNB");
     }
     
     public void remMissile(Location l) {

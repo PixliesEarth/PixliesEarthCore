@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 public class CustomItemUtil {
 	
 	public static String getUUIDFromItemStack(ItemStack itemStack) {
+		if (itemStack==null || itemStack.getType().equals(Material.AIR)) 
+			return MinecraftMaterial.AIR.getUUID();
 		String s = NBTUtil.getTagsFromItem(itemStack).getString("UUID");
 		if (s==null || s.equals("")) 
 			return MinecraftMaterial.getMinecraftMaterialFromItemStack(itemStack);
