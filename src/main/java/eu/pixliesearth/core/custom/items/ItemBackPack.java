@@ -49,11 +49,12 @@ public class ItemBackPack extends CustomItem {
     @SuppressWarnings("unchecked")
 	@Override
     public Map<String, Object> getDefaultNBT() {
-        return new HashMap<String, Object>(){/** * */private static final long serialVersionUID = -8592045097249581373L; {
+        return new HashMap<String, Object>(){private static final long serialVersionUID = -8592045097249581373L; {
         	JSONObject obj = new JSONObject();
         	for (int i = 0; i < 27; i++) 
-        		obj.put(Integer.toString(i), "EMPTY");
+        		obj.put(Integer.toString(i), "A");
         	put("CONTENTS", obj.toString());
+        	put("NoneStackable", UUID.randomUUID().toString()); // Makes it non-stackable
 		}};
     }
 
