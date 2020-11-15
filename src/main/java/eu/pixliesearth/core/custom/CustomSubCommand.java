@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import eu.pixliesearth.Main;
 import org.bukkit.command.CommandSender;
 
 import eu.pixliesearth.core.custom.interfaces.ITabable;
@@ -20,6 +21,8 @@ public abstract class CustomSubCommand {
 	public CustomSubCommand() {
 		
 	}
+
+	protected static final Main instance = Main.getInstance();
 	
 	public abstract String getCommandName();
 	

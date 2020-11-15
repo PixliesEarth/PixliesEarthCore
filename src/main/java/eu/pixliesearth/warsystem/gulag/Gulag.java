@@ -1,11 +1,12 @@
 package eu.pixliesearth.warsystem.gulag;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.WarParticipant;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -17,20 +18,21 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class Gulag {
 
     private static final Main instance = Main.getInstance();
 
-    private Location spectatorLocation;
-    private Location fighterOne;
-    private Location fighterTwo;
+    private String spectatorLocation;
+    private String fighterOne;
+    private String fighterTwo;
     private Map<WarParticipant.WarSide, List<UUID>> players;
     private List<UUID> fighting;
     private Map<String, Timer> timers;
 
     public void addPlayer(Player player, WarParticipant.WarSide side) {
         if (fighting.contains(player.getUniqueId())) return;
-        player.teleport(spectatorLocation);
+        player.teleport(Methods.locationFromSaveableString(spectatorLocation));
         players.get(side).add(player.getUniqueId());
         player.sendTitle("§b§lWelcome", "§7to the §cgulag", 20, 20 * 3, 20);
         instance.getUtilLists().inGulag.add(player.getUniqueId());
@@ -41,8 +43,8 @@ public class Gulag {
         Player aggressor = Bukkit.getPlayer(players.get(WarParticipant.WarSide.AGGRESSOR).get(0));
         if (defender == null) return;
         if (aggressor == null) return;
-        defender.teleport(fighterOne);
-        aggressor.teleport(fighterTwo);
+        defender.teleport(Methods.locationFromSaveableString(fighterOne));
+        aggressor.teleport(Methods.locationFromSaveableString(fighterTwo));
         players.get(WarParticipant.WarSide.AGGRESSOR).remove(aggressor.getUniqueId());
         players.get(WarParticipant.WarSide.DEFENDER).remove(defender.getUniqueId());
         timers.put("gulagStart", new Timer(5000));

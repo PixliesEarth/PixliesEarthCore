@@ -100,7 +100,7 @@ public final class Main extends JavaPlugin {
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
     //TODO LOAD GULAG
-    private @Getter Gulag gulag;
+    private @Getter @Setter Gulag gulag;
 
     @Override
     public void onEnable() {
@@ -160,6 +160,15 @@ public final class Main extends JavaPlugin {
 
         dynmapCfg = new FileManager(this, "dynmap", getDataFolder().getAbsolutePath());
         dynmapCfg.save();
+
+        if (!getConfig().contains("gulag")) {
+            gulag = new Gulag("", "", "", new HashMap<>(), new ArrayList<>(), new HashMap<>());
+            getConfig().set("gulag", gson.toJson(gulag));
+            saveConfig();
+            reloadConfig();
+        } else {
+            gulag = getConfig().getObject("gulag", Gulag.class);
+        }
 
         saveDefaultConfig();
 

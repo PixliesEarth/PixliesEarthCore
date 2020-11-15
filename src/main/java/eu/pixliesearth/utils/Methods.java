@@ -2,6 +2,7 @@ package eu.pixliesearth.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +31,15 @@ public class Methods {
 		}
 		return s;
 	}
+
+    public static String locationToSaveableString(Location l) {
+        return l.getWorld().getUID().toString().concat(":").concat(Double.toString(l.getX())).concat(":").concat(Double.toString(l.getY())).concat(":").concat(Double.toString(l.getZ())).concat(":").concat(Float.toString(l.getYaw())).concat(":").concat(Float.toString(l.getPitch()));
+    }
+
+    public static Location locationFromSaveableString(String s) {
+        String[] a = s.split(":");
+        return new Location(Bukkit.getWorld(UUID.fromString(a[0])), Double.parseDouble(a[1]), Double.parseDouble(a[2]), Double.parseDouble(a[3]), Float.parseFloat(a[4]), Float.parseFloat(a[5]));
+    }
 	
     public static String generateId(int length) {
         return RandomStringUtils.randomAlphanumeric(length);
