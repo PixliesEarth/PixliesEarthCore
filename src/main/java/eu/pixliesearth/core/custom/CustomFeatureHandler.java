@@ -592,6 +592,7 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
+		if (location.getBlockY()>=256) return;
 		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
 			Inventory i = m.getInventory();
