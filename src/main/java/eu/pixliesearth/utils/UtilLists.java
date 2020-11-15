@@ -78,6 +78,8 @@ public class UtilLists {
 
     public List<UUID> bannedInWar;
 
+    public Map<UUID, War> playersInWar;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -110,6 +112,7 @@ public class UtilLists {
         wars = new ConcurrentHashMap<>();
         inGulag = new ArrayList<>();
         bannedInWar = new ArrayList<>();
+        playersInWar = new HashMap<>();
     }
 
 }

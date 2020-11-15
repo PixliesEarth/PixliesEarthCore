@@ -7,8 +7,12 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
+import org.javacord.api.entity.message.embed.Embed;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +28,7 @@ public class War {
     private String mainAggressor;
     private String mainDefender;
     private Map<UUID, WarParticipant> players;
+    private Map<WarParticipant.WarSide, Integer> left;
     private boolean declareAble;
     private boolean running;
     private Map<String, Timer> timers;
@@ -33,6 +38,7 @@ public class War {
         this.mainAggressor = mainAggressor;
         this.mainDefender = mainDefender;
         this.players = new HashMap<>();
+        left = new HashMap<>();
         this.declareAble = false;
         this.running = false;
         this.timers = new HashMap<>();
@@ -57,6 +63,7 @@ public class War {
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + aggressor.getName() + "** just started justifying a war-goal against your nation. This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + ".");
         aggressor.getExtras().put("WAR:" + mainDefender, id);
+        aggressor.save();
         return true;
     }
 
@@ -76,21 +83,56 @@ public class War {
 
     @SneakyThrows
     public void start() {
+        Nation aggressor = Nation.getById(mainAggressor);
+        aggressor.getExtras().remove("WAR:" + mainDefender);
+        aggressor.save();
         this.timers.remove("gracePeriod");
         this.running = true;
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
     }
 
-    public void handleKill(Profile killed, Profile killer) {
+    @SneakyThrows
+    public void stop(WarParticipant.WarSide winner) {
+        Nation winnerNation;
+        Nation loserNation;
+        switch (winner) {
+            case AGGRESSOR:
+                winnerNation = Nation.getById(mainAggressor);
+                loserNation = Nation.getById(mainDefender);
+                break;
+            case DEFENDER:
+                winnerNation = Nation.getById(mainDefender);
+                loserNation = Nation.getById(mainAggressor);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + winner);
+        }
+        for (UUID uuid : instance.getUtilLists().bannedInWar) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "unban " + Bukkit.getOfflinePlayer(uuid).getName());
+            Profile profile = instance.getProfile(uuid);
+            if (profile.discordIsSynced())
+                MiniMick.getApi().getUserById(profile.getDiscord()).get().openPrivateChannel().get().sendMessage("§7Since the war is over, you have been unbanned. Thank you for playing on PixliesNet!");
+        }
+        broadcastDiscord(new EmbedBuilder().setTitle("War ended!").setDescription(winnerNation.getName() + "just won a war against " + loserNation.getName()));
+    }
+
+    public void handleKill(Profile killed) {
         if (!running) return;
+        if (left.get(players.get(killed.getUUID()).getSide()) - 1 == 0) {
+            stop(WarParticipant.WarSide.getOpposite(players.get(killed.getUUID()).getSide()));
+            return;
+        }
         if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
-            killed.getAsPlayer().banPlayer("§7You are §cbanned §7until the war is over.");
+            for (UUID uuid : instance.getUtilLists().bannedInWar)
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
             instance.getUtilLists().inGulag.remove(killed.getUUID());
             instance.getUtilLists().bannedInWar.add(killed.getUUID());
+            players.remove(killed.getUUID());
+            left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
             return;
         }
         instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
-        //TODO handleKill
+
     }
 
     public void tick() {
@@ -113,6 +155,8 @@ public class War {
 
     public void addPlayer(Profile profile, WarParticipant participant) {
         players.put(profile.getUUID(), participant);
+        instance.getUtilLists().playersInWar.put(profile.getUUID(), this);
+        left.put(participant.getSide(), left.get(participant.getSide()) + 1);
     }
 
     public static War getById(String id) {
@@ -130,6 +174,16 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + message + ".");
+    }
+
+    @SneakyThrows
+    public void broadcastDiscord(String message) {
+        instance.getMiniMick().getChatChannel().sendMessage(message);
+    }
+
+    @SneakyThrows
+    public void broadcastDiscord(EmbedBuilder message) {
+        instance.getMiniMick().getChatChannel().sendMessage(message);
     }
 
 }

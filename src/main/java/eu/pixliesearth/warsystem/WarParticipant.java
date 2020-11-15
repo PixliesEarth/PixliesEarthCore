@@ -13,7 +13,17 @@ public class WarParticipant {
     public enum WarSide {
 
         DEFENDER,
-        AGGRESSOR
+        AGGRESSOR;
+
+        public static WarSide getOpposite(WarSide side) {
+            switch (side) {
+                case DEFENDER:
+                    return AGGRESSOR;
+                case AGGRESSOR:
+                    return DEFENDER;
+            }
+            return DEFENDER;
+        }
 
     }
 
