@@ -222,7 +222,9 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 5); // CAMPFIRE_SIGNAL_SMOKE
 			} else {
 				makeParticeAt(loc, Particle.CAMPFIRE_COSY_SMOKE, 50);
-				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {h.removeCustomBlockFromLocation(loc);loc.getWorld().createExplosion(loc, 15f);}}, 0L);
+				ExplosionCalculator calc = new ExplosionCalculator(loc, 15, true);
+				calc.explode(true);
+				// Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() { @Override public void run() {h.removeCustomBlockFromLocation(loc);loc.getWorld().createExplosion(loc, 15f);}}, 0L);
 			}
 		} else {
 			if (timer.hasExpired()) {

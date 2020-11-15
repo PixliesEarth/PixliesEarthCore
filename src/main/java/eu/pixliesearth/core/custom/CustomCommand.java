@@ -92,6 +92,7 @@ public abstract class CustomCommand {
 			}
 			if (c.getPermission()!=null && !sender.hasPermission(c.getPermission())) {
 				Lang.NO_PERMISSIONS.send(sender);
+				return false;
 			}
 			if (c.isPlayerOnlyCommand()) {
 				if ((sender instanceof Player)) {
