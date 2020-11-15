@@ -141,7 +141,7 @@ public class DynmapEngine {
     }
 
     public int scheduleSyncDelayedTask(final Runnable run) {
-        return factions.getServer().getScheduler().runTaskLaterAsynchronously(factions, run, 0).getTaskId();
+        return factions.getServer().getScheduler().runTaskLaterAsynchronously(factions, run, 20).getTaskId();
     }
 
     public void requestUpdatePlayerSet(final String factionUUID) {

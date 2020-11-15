@@ -26,6 +26,7 @@ public class GulagThread extends Thread {
     private static final Main instance = Main.getInstance();
 
     private void tick() {
+        if (instance.getCurrentWar() == null) return;
         if (!instance.getGulag().getFighting().isEmpty()) return;
         if (instance.getGulag().getPlayers().size() < 2) return;
         instance.getGulag().placeFighters();
