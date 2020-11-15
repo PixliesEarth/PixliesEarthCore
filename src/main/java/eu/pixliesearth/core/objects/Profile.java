@@ -245,6 +245,10 @@ public class Profile {
         save();
     }
 
+    public UUID getUUID() {
+        return UUID.fromString(uniqueId);
+    }
+
     public void removeForeignPermission(Nation host, Permission permission) {
         extras.remove("PERMISSION:" + host.getNationId() + ":" + permission.name());
         host.getExtras().remove("FOREIGN-PM:PLAYER:" + uniqueId + ":" + permission.name());

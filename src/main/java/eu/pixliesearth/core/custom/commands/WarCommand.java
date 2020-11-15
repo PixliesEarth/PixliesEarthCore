@@ -56,7 +56,7 @@ public class WarCommand extends CustomCommand {
             Lang.NATION_DOESNT_EXIST.send(commandSender);
             return false;
         }
-        War war = new War(aggressor.getNationId(), defender.getNationId(), new ArrayList<>(), new ArrayList<>());
+        War war = new War(aggressor.getNationId(), defender.getNationId());
         boolean justify = war.justifyWarGoal();
         if (!justify) {
         	commandSender.sendMessage(Lang.WAR + "§cWar-goal justification failed. This could be either because you don't have enough PoliticalPower to justify a war-goal, or that you are already justifying a war-goal against this nation.");

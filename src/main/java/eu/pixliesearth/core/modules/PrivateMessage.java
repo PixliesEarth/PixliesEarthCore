@@ -9,6 +9,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PrivateMessage implements CommandExecutor, Module {
 
     @Override
@@ -54,6 +56,9 @@ public class PrivateMessage implements CommandExecutor, Module {
         receiver.sendMessage(receiverFormat);
         sender.sendMessage(senderFormat);
         String senderName = sender instanceof Player ? sender.getName() : "§c§lCONSOLE";
+        for (UUID uuid : instance.getUtilLists().staffMode)
+            if (Bukkit.getPlayer(uuid) != null)
+                Bukkit.getPlayer(uuid).sendMessage("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
         System.out.println("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
         return false;
     }
