@@ -137,11 +137,11 @@ public class DynmapEngine {
     }
 
     public int scheduleSyncDelayedTask(final Runnable run, final long period) {
-        return factionAPI.getServer().getScheduler().scheduleSyncDelayedTask(factions, run, period);
+        return factionAPI.getServer().getScheduler().runTaskLaterAsynchronously(factions, run, period).getTaskId();
     }
 
     public int scheduleSyncDelayedTask(final Runnable run) {
-        return factions.getServer().getScheduler().scheduleSyncDelayedTask(factions, run);
+        return factions.getServer().getScheduler().runTaskLaterAsynchronously(factions, run, 0).getTaskId();
     }
 
     public void requestUpdatePlayerSet(final String factionUUID) {

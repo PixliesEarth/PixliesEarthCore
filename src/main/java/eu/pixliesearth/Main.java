@@ -90,7 +90,6 @@ public final class Main extends JavaPlugin {
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
-    private @Getter @Setter boolean gulagActive = false;
     private @Getter LuckPerms luckPerms;
     private @Getter Gson gson;
     private @Getter CustomFeatureLoader loader;
@@ -99,7 +98,6 @@ public final class Main extends JavaPlugin {
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
-    //TODO LOAD GULAG
     private @Getter @Setter Gulag gulag;
 
     @Override
@@ -355,11 +353,8 @@ public final class Main extends JavaPlugin {
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
         getCommand("realname").setExecutor(new RealNameCommand());
-        getCommand("skipgulag").setExecutor(new GulagSkipCommand());
         getCommand("smite").setExecutor(new SmiteCommand());
         getCommand("premium").setExecutor(new PremiumCommand());
-        getCommand("gulagsetspawn").setExecutor(new GulagSetSpawn());
-        getCommand("gulagsetspawn").setTabCompleter(new GulagSetSpawnTab());
         getCommand("stats").setExecutor(new StatsCommand());
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
@@ -382,9 +377,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new MapClickListener(), this);
         manager.registerEvents(new settlementsCommand(), this);
         manager.registerEvents(new PlayerLoginListener(), this);
-        manager.registerEvents(new CommandListener(), this);
-        // manager.registerEvents(new GulagDeathListener(), this);
-        manager.registerEvents(new GulagStartListener(), this);
         manager.registerEvents(new ProtectionManager(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new FlagListener(), this);

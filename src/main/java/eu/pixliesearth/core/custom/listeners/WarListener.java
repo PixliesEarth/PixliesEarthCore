@@ -16,8 +16,11 @@ public class WarListener extends CustomListener {
     public void onDeath(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() == null) return;
         Player killed = event.getEntity();
-        if (instance.getUtilLists().inGulag.contains(killed.getUniqueId())) return;
         Player killer = killed.getKiller();
+        if (instance.getUtilLists().inGulag.contains(killed.getUniqueId())) {
+            instance.getGulag().handleKill(killer, killed);
+            return;
+        }
         if (!instance.getUtilLists().playersInWar.containsKey(killed.getUniqueId()) || !instance.getUtilLists().playersInWar.containsKey(killer.getUniqueId())) return;
         if (instance.getUtilLists().playersInWar.get(killed.getUniqueId()).getPlayers().get(killed.getUniqueId()).getSide()
                 .equals(instance.getUtilLists().playersInWar.get(killer.getUniqueId()).getPlayers().get(killer.getUniqueId()).getSide())) return;

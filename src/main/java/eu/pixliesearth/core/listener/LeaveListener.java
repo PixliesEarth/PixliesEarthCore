@@ -3,7 +3,6 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
-import eu.pixliesearth.warsystem.GulagStartListener;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,7 +24,8 @@ public class LeaveListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
 
         Player player = event.getPlayer();
-        if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId()) || Main.getInstance().getUtilLists().awaitingGulag2.contains(player.getUniqueId())){
+        //TODO Do something lmao
+/*        if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId()) || Main.getInstance().getUtilLists().awaitingGulag2.contains(player.getUniqueId())){
             Date date = new Date(System.currentTimeMillis()+60*60*1000*24);
             if(!player.hasPermission("gulag.bypass.ban")) {
                 player.banPlayer("Trying to avoid gulag", date, "The gulag");
@@ -42,7 +42,7 @@ public class LeaveListener implements Listener {
             }else{
                 GulagStartListener.fightOver(player, Bukkit.getPlayer(getKeyByValue(Main.getInstance().getUtilLists().fightingGulag, player.getUniqueId())));
             }
-        }
+        }*/
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
         if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))

@@ -123,8 +123,7 @@ public class War {
             return;
         }
         if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
-            for (UUID uuid : instance.getUtilLists().bannedInWar)
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
             instance.getUtilLists().inGulag.remove(killed.getUUID());
             instance.getUtilLists().bannedInWar.add(killed.getUUID());
             players.remove(killed.getUUID());
@@ -132,7 +131,6 @@ public class War {
             return;
         }
         instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
-
     }
 
     public void tick() {

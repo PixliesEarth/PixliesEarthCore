@@ -39,10 +39,12 @@ public class Gulag {
     }
 
     public void placeFighters() {
-        Player defender = Bukkit.getPlayer(players.get(WarParticipant.WarSide.DEFENDER).get(0));
-        Player aggressor = Bukkit.getPlayer(players.get(WarParticipant.WarSide.AGGRESSOR).get(0));
+        final Player defender = Bukkit.getPlayer(players.get(WarParticipant.WarSide.DEFENDER).get(0));
+        final Player aggressor = Bukkit.getPlayer(players.get(WarParticipant.WarSide.AGGRESSOR).get(0));
         if (defender == null) return;
         if (aggressor == null) return;
+        fighting.add(defender.getUniqueId());
+        fighting.add(aggressor.getUniqueId());
         defender.teleport(Methods.locationFromSaveableString(fighterOne));
         aggressor.teleport(Methods.locationFromSaveableString(fighterTwo));
         players.get(WarParticipant.WarSide.AGGRESSOR).remove(aggressor.getUniqueId());
@@ -54,16 +56,51 @@ public class Gulag {
         new BukkitRunnable() {
             @Override
             public void run() {
-                bar.setTitle("§7Starting in §b§l" + timers.get("gulagStart").getRemainingAsString());
-                bar.setProgress(timers.get("gulagStart").getRemaining() / timers.get("gulagStart").getExpiry());
                 if (timers.get("gulagStart").hasExpired()) {
                     defender.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     aggressor.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     timers.remove("gulagStart");
+                    startGulag(aggressor, defender);
                     cancel();
+                    return;
                 }
+                bar.setTitle("§7Starting in §b§l" + timers.get("gulagStart").getRemainingAsString());
+                bar.setProgress(timers.get("gulagStart").getRemaining() / timers.get("gulagStart").getExpiry());
             }
         }.runTaskTimerAsynchronously(instance, 0, 20);
+    }
+
+    public void startGulag(Player aggressor, Player defender) {
+        timers.put("gulagCooldown", new Timer(120_000));
+        BossBar bar = Bukkit.createBossBar("§b" + timers.get("gulagCooldown").getRemainingAsString() + " until end", BarColor.RED, BarStyle.SEGMENTED_20);
+        bar.addPlayer(aggressor);
+        bar.addPlayer(defender);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!timers.containsKey("gulagCooldown")) {
+                    cancel();
+                    return;
+                }
+                if (timers.get("gulagCooldown").hasExpired()) {
+                    if (defender.getHealth() > aggressor.getHealth()) {
+                        handleKill(defender, aggressor);
+                    } else {
+                        handleKill(aggressor, defender);
+                    }
+                    return;
+                }
+                bar.setTitle("§b" + timers.get("gulagCooldown").getRemainingAsString() + " until end");
+                bar.setProgress(timers.get("gulagCooldown").getRemaining() / timers.get("gulagCooldown").getExpiry());
+            }
+        }.runTaskTimerAsynchronously(instance, 0, 20);
+    }
+
+    public void handleKill(Player winner, Player loser) {
+        timers.remove("gulagCooldown");
+        winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
+        fighting.clear();
+        instance.getCurrentWar().handleKill(instance.getProfile(loser.getUniqueId()));
     }
 
 }

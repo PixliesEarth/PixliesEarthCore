@@ -25,7 +25,7 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public String getCommandDescription() {
-    	return "";
+    	return "War command";
     }
     
     @Override
@@ -61,6 +61,8 @@ public class WarCommand extends CustomCommand {
         if (!justify) {
         	commandSender.sendMessage(Lang.WAR + "§cWar-goal justification failed. This could be either because you don't have enough PoliticalPower to justify a war-goal, or that you are already justifying a war-goal against this nation.");
             return false;
+        } else {
+            commandSender.sendMessage(Lang.WAR + "§7War-goal justification §asuccessful§7. It takes §b" + war.getTimers().get("warGoalJustification").getRemainingAsString() + " §7to be justified.");
         }
         return true;
     }
@@ -69,28 +71,6 @@ public class WarCommand extends CustomCommand {
     public ITabable[] getParams() {
     	return new ITabable[] {new TabableNation()};
     }
-
-    /**@Override
-    public List<String> tabComplete(CommandSender commandsender, String alias, String[] args) {
-        final List<String> completions = new ArrayList<>();
-
-        Map<Integer, Set<String>> argCompletions = new HashMap<>();
-
-        argCompletions.put(0, NationManager.names.keySet());
-
-        if (args.length > 1) {
-            if (NationManager.names.get(args[0]) == null)
-                return completions;
-        }
-
-        for (Map.Entry<Integer, Set<String>> entry : argCompletions.entrySet())
-            if (args.length == entry.getKey() + 1)
-                StringUtil.copyPartialMatches(args[entry.getKey()], entry.getValue(), completions);
-
-        Collections.sort(completions);
-
-        return completions;
-    }*/
     
     private static class TabableNation implements ITabable {
 
