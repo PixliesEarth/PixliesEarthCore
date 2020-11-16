@@ -297,6 +297,8 @@ public final class Main extends JavaPlugin {
             nation.backup();
         for (Block chest : utilLists.deathChests.keySet())
             chest.setType(Material.AIR);
+        for (War war : utilLists.wars.values())
+            war.backup();
         JSONFile vendorItemsFile = new JSONFile(getDataFolder().getAbsolutePath() + "/", "vendoritems");
         vendorItemsFile.clearFile();
         for (Map.Entry<String, VendorItem> entry : vendorItems.entrySet())

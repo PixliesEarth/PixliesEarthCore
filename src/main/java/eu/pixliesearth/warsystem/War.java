@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.javacord.api.entity.message.embed.Embed;
@@ -65,6 +66,7 @@ public class War {
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + aggressor.getName() + "** just started justifying a war-goal against your nation. This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + ".");
         aggressor.getExtras().put("WAR:" + mainDefender, id);
         aggressor.save();
+        instance.getUtilLists().wars.put(id, this);
         return true;
     }
 
@@ -194,5 +196,15 @@ public class War {
     public void broadcastDiscord(EmbedBuilder message) {
         instance.getMiniMick().getChatChannel().sendMessage(message);
     }
+
+    public void backup() {
+        Document war = new Document("id", id);
+        Document found = Main.getNationCollection().find(war).first();
+        war.append("id", id);
+        war.append("json", instance.getGson().toJson(this));
+        if (found != null) {
+            Main.getNationCollection().deleteOne(found);
+        }
+        Main.getNationCollection().insertOne(war);}
 
 }
