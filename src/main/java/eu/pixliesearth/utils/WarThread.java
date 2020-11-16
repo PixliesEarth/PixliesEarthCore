@@ -1,9 +1,10 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.warsystem.War;
 import org.bukkit.Bukkit;
 
-public class GulagThread extends Thread {
+public class WarThread extends Thread {
 
     @Override
     public void run() {
@@ -16,7 +17,7 @@ public class GulagThread extends Thread {
             }
             //Thread Sleep
            try {
-                sleep(1000);
+                sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -26,6 +27,8 @@ public class GulagThread extends Thread {
     private static final Main instance = Main.getInstance();
 
     private void tick() {
+        for (War war : instance.getUtilLists().wars.values())
+            war.tick();
         if (instance.getCurrentWar() == null) return;
         if (!instance.getGulag().getFighting().isEmpty()) return;
         if (instance.getGulag().getPlayers().size() < 2) return;

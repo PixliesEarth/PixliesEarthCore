@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
@@ -78,6 +79,10 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
+        for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER));
+        for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR));
         return true;
     }
 
@@ -154,6 +159,12 @@ public class War {
     public void addPlayer(Profile profile, WarParticipant participant) {
         players.put(profile.getUUID(), participant);
         instance.getUtilLists().playersInWar.put(profile.getUUID(), this);
+        left.put(participant.getSide(), left.get(participant.getSide()) + 1);
+    }
+
+    public void addPlayer(Player player, WarParticipant participant) {
+        players.put(player.getUniqueId(), participant);
+        instance.getUtilLists().playersInWar.put(player.getUniqueId(), this);
         left.put(participant.getSide(), left.get(participant.getSide()) + 1);
     }
 

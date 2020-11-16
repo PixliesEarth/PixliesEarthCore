@@ -227,7 +227,7 @@ public class ExplosionCalculator {
 				}
 			}
 			
-		}, 1l);
+		}, 1L);
 	}
 	
 }

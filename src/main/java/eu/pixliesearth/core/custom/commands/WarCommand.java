@@ -2,6 +2,8 @@ package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.war.JustifyWarGoalCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -35,44 +37,15 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-    	if (parameters.length != 1) {
-            Lang.WRONG_USAGE_NATIONS.send(commandSender, "%USAGE%;/war <NATION>");
-            return false;
-        }
-        Main instance = Main.getInstance();
-        Player player = (Player) commandSender;
-        Profile profile = instance.getProfile(player.getUniqueId());
-        if (!profile.isInNation()) {
-            Lang.NOT_IN_A_NATION.send(commandSender);
-            return false;
-        }
-        if (!Permission.hasNationPermission(profile, Permission.JUSTIFY_WAR_GOAL)) {
-            Lang.NO_PERMISSIONS.send(commandSender);
-            return false;
-        }
-        Nation aggressor = profile.getCurrentNation();
-        Nation defender = Nation.getByName(parameters[0]);
-        if (defender == null) {
-            Lang.NATION_DOESNT_EXIST.send(commandSender);
-            return false;
-        }
-        War war = new War(aggressor.getNationId(), defender.getNationId());
-        boolean justify = war.justifyWarGoal();
-        if (!justify) {
-        	commandSender.sendMessage(Lang.WAR + "§cWar-goal justification failed. This could be either because you don't have enough PoliticalPower to justify a war-goal, or that you are already justifying a war-goal against this nation.");
-            return false;
-        } else {
-            commandSender.sendMessage(Lang.WAR + "§7War-goal justification §asuccessful§7. It takes §b" + war.getTimers().get("warGoalJustification").getRemainingAsString() + " §7to be justified.");
-        }
         return true;
     }
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new TabableNation()};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand())};
     }
     
-    private static class TabableNation implements ITabable {
+    public static class TabableNation implements ITabable {
 
 		@Override
 		public List<String> getTabable(CommandSender commandSender, String[] params) {

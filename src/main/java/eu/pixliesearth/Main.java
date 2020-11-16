@@ -1,7 +1,6 @@
 package eu.pixliesearth;
 
 import com.google.gson.Gson;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.*;
@@ -42,7 +41,6 @@ import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.warsystem.*;
 import eu.pixliesearth.warsystem.gulag.Gulag;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -251,7 +249,7 @@ public final class Main extends JavaPlugin {
 
         utilThread = new UtilThread();
         utilThread.start();
-        new GulagThread().start();
+        new WarThread().start();
 
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
