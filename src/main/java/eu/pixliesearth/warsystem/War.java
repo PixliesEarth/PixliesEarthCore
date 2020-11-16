@@ -16,9 +16,7 @@ import org.bukkit.entity.Player;
 import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -81,10 +79,6 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
-        for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER));
-        for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR));
         return true;
     }
 
@@ -95,6 +89,10 @@ public class War {
         aggressor.save();
         this.timers.remove("gracePeriod");
         this.running = true;
+        for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER));
+        for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR));
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
     }
 
@@ -174,6 +172,14 @@ public class War {
         if (instance.getUtilLists().wars.containsKey(id))
             return instance.getUtilLists().wars.get(id);
         return null;
+    }
+    
+    public static List<War> getWars(Nation nation) {
+        List<War> returner = new ArrayList<>();
+        for (War war : instance.getUtilLists().wars.values())
+            if (war.getMainAggressor().equals(nation.getNationId()))
+                returner.add(war);
+        return returner;
     }
 
     @SneakyThrows
