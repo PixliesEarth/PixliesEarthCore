@@ -66,10 +66,12 @@ public class InvitePlayerCommand extends CustomSubCommand {
             return false;
         }
         if (targetProfile.getNationId().equals(profile.getNationId())) {
-            war.addPlayer(target, new WarParticipant(targetProfile.getNationId(), war.getPlayers().get(player.getUniqueId()).getSide()));
+            war.addPlayer(target, new WarParticipant(targetProfile.getNationId(), war.getPlayers().get(player.getUniqueId()).getSide(), war.getId()));
             war.broadcastInGame(Lang.WAR + "§6" + player.getName() + " §7just invited" + target.getName() + " to the war.");
         } else {
-            //TODO Foreign players
+            instance.getUtilLists().invitationsToWar.put(target.getUniqueId(), new WarParticipant(targetProfile.getNationId(), war.getPlayers().get(player.getUniqueId()).getSide(), war.getId()));
+            player.sendMessage(Lang.WAR + "§7Invitation sent.");
+            target.sendMessage(Lang.WAR + "§6" + player.getName() + " §7just invited you to the §b" + Nation.getById(war.getMainAggressor()).getName() + "§7-§b" + Nation.getById(war.getMainDefender()).getName() + " §7war. /war accept");
         }
         return true;
     }

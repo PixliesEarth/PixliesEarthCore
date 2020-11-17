@@ -37,6 +37,7 @@ public class ProtectionManager implements Listener {
     public static boolean canBreak(BlockBreakEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
         Chunk c = event.getBlock().getChunk();
+        if (c == null) return true;
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -66,6 +67,7 @@ public class ProtectionManager implements Listener {
 
         if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) return true;
         Chunk c = block.getChunk();
+        if (c == null) return true;
         NationChunk nc = NationChunk.get(c);
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;

@@ -6,6 +6,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
 import eu.pixliesearth.warsystem.War;
+import eu.pixliesearth.warsystem.WarParticipant;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public class UtilLists {
 
     public Map<UUID, War> playersInWar;
 
-    public Map<UUID, War> invitationsToWar;
+    public Map<UUID, WarParticipant> invitationsToWar;
 
     public UtilLists() {
         staffMode = new HashSet<>();

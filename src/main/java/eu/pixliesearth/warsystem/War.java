@@ -90,9 +90,9 @@ public class War {
         this.timers.remove("gracePeriod");
         this.running = true;
         for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER));
+            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER, id));
         for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR));
+            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
     }
 

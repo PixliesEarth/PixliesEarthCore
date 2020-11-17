@@ -3,6 +3,9 @@ package eu.pixliesearth.core.custom.commands;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.war.AcceptCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.war.DeclareWarGoalCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.war.InvitePlayerCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.war.JustifyWarGoalCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
@@ -42,7 +45,7 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand())};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand())};
     }
     
     public static class TabableNation implements ITabable {

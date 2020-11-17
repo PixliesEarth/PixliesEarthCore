@@ -9,6 +9,7 @@ public class WarParticipant {
 
     private String nationId;
     private WarSide side;
+    private String war;
 
     public enum WarSide {
 
