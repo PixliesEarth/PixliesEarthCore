@@ -118,6 +118,7 @@ public class War {
             if (profile.discordIsSynced())
                 MiniMick.getApi().getUserById(profile.getDiscord()).get().openPrivateChannel().get().sendMessage("§7Since the war is over, you have been unbanned. Thank you for playing on PixliesNet!");
         }
+        instance.getUtilLists().playersInWar.clear();
         broadcastDiscord(new EmbedBuilder().setTitle("War ended!").setDescription(winnerNation.getName() + "just won a war against " + loserNation.getName()));
     }
 
@@ -201,6 +202,11 @@ public class War {
     @SneakyThrows
     public void broadcastDiscord(EmbedBuilder message) {
         instance.getMiniMick().getChatChannel().sendMessage(message);
+    }
+
+    public void broadcastInGame(String message) {
+        for (UUID uuid : players.keySet())
+            Bukkit.getPlayer(uuid).sendMessage(message);
     }
 
     public void backup() {

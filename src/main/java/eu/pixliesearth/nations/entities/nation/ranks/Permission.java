@@ -25,7 +25,8 @@ public enum Permission {
     SET_FLAG,
     DECLARE_WAR,
     JUSTIFY_WAR_GOAL,
-    SET_WIKI_LINK
+    SET_WIKI_LINK,
+    MANAGE_WAR,
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
