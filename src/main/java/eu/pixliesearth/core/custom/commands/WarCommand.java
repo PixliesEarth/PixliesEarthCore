@@ -45,7 +45,8 @@ public class WarCommand extends CustomCommand {
     public boolean isPlayerOnlyCommand() {
     	return true;
     }
-    
+
+    //TODO include funi haybale
     @Override
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
         Player player = (Player) commandSender;
