@@ -1,16 +1,22 @@
 package eu.pixliesearth.core.custom;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
-import eu.pixliesearth.core.custom.interfaces.Tickable;
-import eu.pixliesearth.core.files.FileBase;
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.Timer;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -22,15 +28,23 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+
+import eu.pixliesearth.core.custom.interfaces.Tickable;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.Timer;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 
@@ -407,7 +421,76 @@ public class CustomFeatureHandler {
 			f.put(l.getWorld().getUID().toString()+":"+l.getX()+":"+l.getY()+":"+l.getZ(), c.getValue());
 		}
 		f.saveJsonToFile();
+		saveCustomBlocksToFileOptimised(); // Test it
 	}
+	
+	// TEST SAVING SYSTEM
+	
+	@SuppressWarnings("deprecation")
+	public void saveCustomBlocksToFileOptimised() {
+		System.out.println("Saving CustomBlocks to file!");
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblockstest", ".txt");
+					fb.clearFile();
+					getAllBlocksAsSaveableData().saveData(fb);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}, 1l);
+	}
+	
+	public SaveableData getAllBlocksAsSaveableData() {
+		return new SaveableData(locationToUUIDMap);
+	}
+	
+	public static class SaveableData implements Serializable {
+		
+		private static final transient long serialVersionUID = -5255946918144816399L;
+		
+		private final @Getter Map<Location, String> map;
+		
+		public SaveableData(Map<Location, String> map) {
+			HashMap<Location, String> newmap = new HashMap<Location, String>();
+			map.forEach((k,v) -> newmap.put(k, v)); // Clone the map
+			this.map = newmap;
+		}
+		
+		public boolean saveData(FileBase fileBase) {
+	        return saveData(fileBase.getFileConstruct());
+	    }
+		
+		public boolean saveData(String filePath) {
+	        try {
+	            BukkitObjectOutputStream out = new BukkitObjectOutputStream(new GZIPOutputStream(new FileOutputStream(filePath)));
+	            out.writeObject(this);
+	            out.close();
+	            return true;
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+		
+		public static SaveableData loadData(String filePath) {
+	        try {
+	            BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(filePath)));
+	            SaveableData data = (SaveableData) in.readObject();
+	            in.close();
+	            return data;
+	        } catch (ClassNotFoundException | IOException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+		
+	}
+	
 	// TODO: notes
 	@SuppressWarnings("unchecked")
 	public void saveMachinesToFile() {
@@ -592,7 +675,7 @@ public class CustomFeatureHandler {
 	 * @param id The {@link CustomBlock}'s UUID
 	 */
 	public void setCustomBlockToLocation(Location location, String id) {
-		if (location.getBlockY()>=256) return;
+		if (location.getBlockY()>256) return;
 		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
 			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
 			Inventory i = m.getInventory();
@@ -622,6 +705,44 @@ public class CustomFeatureHandler {
 		}
 		this.locationToUUIDMap.put(location, id);
 	}
+	/**
+	 * Sets the {@link CustomBlock} at the {@link Location} provided
+	 * 
+	 * @param location The {@link Location} of the block
+	 * @param id The {@link CustomBlock}'s UUID
+	 */
+	public void setCustomBlockToLocation(Location location, String id, boolean place) {
+		if (place) {
+			setCustomBlockToLocation(location, id);
+			return;
+		}
+		if (location.getBlockY()>256) return;
+		if (getCustomItemFromUUID(id) instanceof CustomEnergyCrafterMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomEnergyBlock) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomGeneratorMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
+			this.locationToPowerMap.put(location, 0D);
+		} else if (getCustomItemFromUUID(id) instanceof CustomMachine) {
+			CustomMachine m = (CustomMachine) getCustomItemFromUUID(id);
+			Inventory i = m.getInventory();
+			if (i!=null) 
+				this.locationToInventoryMap.put(location, i);
+		}
+		this.locationToUUIDMap.put(location, id);
+	}
 	// TODO: notes
 	public Inventory getInventoryFromLocation(Location location) {
 		return this.locationToInventoryMap.get(location);
@@ -645,7 +766,9 @@ public class CustomFeatureHandler {
 	 * @param location The {@link Location} of the block that has been broken
 	 */
 	public void removeCustomBlockFromLocation(Location location) {
-		if (getCustomBlockFromLocation(location) instanceof CustomMachine) {
+		CustomBlock cb = getCustomBlockFromLocation(location);
+		if (cb==null) return;
+		if (cb instanceof CustomMachine) {
 			Hologram h = getHologramAtLocation(location);
 			Hologram h2 = getHologramAtLocation(location);
 			if (h!=null)

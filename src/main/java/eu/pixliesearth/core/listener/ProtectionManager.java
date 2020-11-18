@@ -27,11 +27,13 @@ public class ProtectionManager implements Listener {
 
     @EventHandler(priority = MONITOR)
     public void onBreak(BlockBreakEvent event) {
-        boolean canBreak = canBreak(event);
-        Player player = event.getPlayer();
-        if (canBreak) return;
-        player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-        event.setCancelled(true);
+    	try {
+	        boolean canBreak = canBreak(event);
+	        Player player = event.getPlayer();
+	        if (canBreak) return;
+	        player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
+	        event.setCancelled(true);
+    	} catch (Exception ingore) {}
     }
 
     public static boolean canBreak(BlockBreakEvent event) {
@@ -83,17 +85,20 @@ public class ProtectionManager implements Listener {
 
     @EventHandler(priority = MONITOR)
     public void onPlace(BlockPlaceEvent event) {
-        boolean canPlace = canPlace(event);
-        Player player = event.getPlayer();
-        if (canPlace) return;
-        player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-        event.setCancelled(true);
+    	try {
+	        boolean canPlace = canPlace(event);
+	        Player player = event.getPlayer();
+	        if (canPlace) return;
+	        player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
+	        event.setCancelled(true);
+    	} catch (Exception ingore) {}
     }
 
     public static boolean canPlace(BlockPlaceEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
         Chunk c = event.getBlock().getChunk();
         NationChunk nc = NationChunk.get(c);
+        if (event.getPlayer()==null) return true;
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;

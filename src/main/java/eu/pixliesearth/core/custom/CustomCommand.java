@@ -77,6 +77,16 @@ public abstract class CustomCommand {
 			this.c = c;
 		}
 		
+		// Index is a 0 based index
+		public String[] removeBefore(String[] params, int index) {
+			List<String> strings = new ArrayList<>();
+			for (int i = 0; i < params.length; i++) {
+				if (i<=index) continue;
+				strings.add(params[i]);
+			}
+			return strings.toArray(new String[strings.size()]);
+		}
+		
 		@Override
 		public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 			for (int i = 0; i < args.length; i++) {
@@ -84,7 +94,7 @@ public abstract class CustomCommand {
 					ITabable t = c.getParams()[i];
 					if (t instanceof TabableSubCommand) {
 						TabableSubCommand ts = (TabableSubCommand) t;
-						return ts.getCustomSubCommandFromName(args[i]).onExecuted(sender, commandLabel, args, (sender instanceof Player));
+						return ts.getCustomSubCommandFromName(args[i]).onExecuted(sender, commandLabel, removeBefore(args, i), (sender instanceof Player));
 					} else {
 						continue;
 					}

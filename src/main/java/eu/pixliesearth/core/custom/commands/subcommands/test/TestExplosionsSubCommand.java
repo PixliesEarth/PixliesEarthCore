@@ -27,7 +27,7 @@ public class TestExplosionsSubCommand extends CustomSubCommand {
 	
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-		ExplosionCalculator calc = new ExplosionCalculator(((Player) commandSender).getLocation(), Integer.parseUnsignedInt(parameters[1]), false);
+		ExplosionCalculator calc = new ExplosionCalculator(((Player) commandSender).getLocation(), Integer.parseUnsignedInt(parameters[0]), false);
 		calc.explode(true);
 		return true;
 	}

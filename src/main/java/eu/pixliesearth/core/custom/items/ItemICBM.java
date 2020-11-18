@@ -326,6 +326,7 @@ public class ItemICBM extends CustomItem {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 								@Override
 								public void run() {
+									p.sendMessage("Landing at designated target!");
 									final UUID id2 = UUID.randomUUID();
 									addBS(id2, new Location(end.getWorld(), end.getX(), 256, end.getZ()));
 									final Marker marker2 = (isInDynmapEnabledWorld) ? DynmapUtil.getDynmapMissile().addMissileAt(end, ex, pd, end) : null;
@@ -335,7 +336,7 @@ public class ItemICBM extends CustomItem {
 											Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 												@Override
 												public void run() {
-													Location l3 = (getBS(id2)==null) ? end.clone() : getBS(id2).clone();
+													Location l3 = (getBS(id2)==null) ? new Location(end.getWorld(), end.getX(), 256, end.getZ()) : getBS(id2).clone();
 													remBS(id2);
 													Location l4 = new Location(l3.getWorld(), l3.getX(), l3.getY()-1, l3.getZ());
 													remMissile2(l3.clone());

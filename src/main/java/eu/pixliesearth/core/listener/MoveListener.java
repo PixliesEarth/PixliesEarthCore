@@ -22,70 +22,72 @@ public class MoveListener implements Listener {
     
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
-            Player player = event.getPlayer();
-            Profile profile = instance.getProfile(player.getUniqueId());
-
-            if (profile.getTimers().containsKey("Teleport")) {
-                profile.getTimers().remove("Teleport");
-                profile.save();
-                event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
-            }
-            if (instance.getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
-                instance.getUtilLists().afk.remove(event.getPlayer().getUniqueId());
-                Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
-            }
-
-            // CHUNK TO CHUNK MOVEMENTS
-            Chunk fc = event.getFrom().getChunk();
-            Chunk tc = event.getTo().getChunk();
-            if (fc != tc) {
-                // CLAIM/UNCLAIM AUTOS
-                if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
-                    if (Nation.getById(instance.getUtilLists().claimAuto.get(player.getUniqueId())) == null)
-                        instance.getUtilLists().claimAuto.remove(player.getUniqueId());
-                    if (NationChunk.get(tc) != null) {
-                        player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
-                    } else {
-                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().claimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.CLAIM_AUTO_OTHER;
-                        NationChunk.claim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType, instance.getUtilLists().claimAuto.get(player.getUniqueId()));
-                    }
-                } else if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
-                    if (profile.getCurrentNation() == null)
-                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-                    NationChunk nc = NationChunk.get(tc);
-                    boolean allowed = false;
-                    if (nc == null) allowed = true;
-                    if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
-                    if (profile.getNationId().equals(nc.getNationId())) allowed = true;
-                    if (!allowed) {
-                        Lang.CHUNK_NOT_YOURS.send(player);
-                    } else {
-                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
-                        NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
-                    }
-                }
-                Nation fn = NationChunk.getNationData(fc);
-                Nation tn = NationChunk.getNationData(tc);
-                if (!Objects.equals(fn, tn)) {
-                    if (tn == null) {  // WILDERNESS
-                        player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
-                    } else {
-                        if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
-                            player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-                        } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
-                            player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
-                        } else if (tn.getNationId().equals("warzone")) { // WARZONE
-                            player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
-                        } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
-                            player.sendTitle("§d§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-                        } else { // ANY OTHER NATION
-                            player.sendTitle("§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-                        }
-                    }
-                }
-            }
-        }
+    	try {
+	        if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
+	            Player player = event.getPlayer();
+	            Profile profile = instance.getProfile(player.getUniqueId());
+	
+	            if (profile.getTimers().containsKey("Teleport")) {
+	                profile.getTimers().remove("Teleport");
+	                profile.save();
+	                event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
+	            }
+	            if (instance.getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
+	                instance.getUtilLists().afk.remove(event.getPlayer().getUniqueId());
+	                Bukkit.broadcastMessage("§8Player §7" + event.getPlayer().getDisplayName() + " §8is §aback§8.");
+	            }
+	
+	            // CHUNK TO CHUNK MOVEMENTS
+	            Chunk fc = event.getFrom().getChunk();
+	            Chunk tc = event.getTo().getChunk();
+	            if (fc != tc) {
+	                // CLAIM/UNCLAIM AUTOS
+	                if (instance.getUtilLists().claimAuto.containsKey(player.getUniqueId())) {
+	                    if (Nation.getById(instance.getUtilLists().claimAuto.get(player.getUniqueId())) == null)
+	                        instance.getUtilLists().claimAuto.remove(player.getUniqueId());
+	                    if (NationChunk.get(tc) != null) {
+	                        player.sendMessage(Lang.ALREADY_CLAIMED.get(player));
+	                    } else {
+	                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().claimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.CLAIM_AUTO_OTHER;
+	                        NationChunk.claim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType, instance.getUtilLists().claimAuto.get(player.getUniqueId()));
+	                    }
+	                } else if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
+	                    if (profile.getCurrentNation() == null)
+	                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
+	                    NationChunk nc = NationChunk.get(tc);
+	                    boolean allowed = false;
+	                    if (nc == null) allowed = true;
+	                    if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
+	                    if (profile.getNationId().equals(nc.getNationId())) allowed = true;
+	                    if (!allowed) {
+	                        Lang.CHUNK_NOT_YOURS.send(player);
+	                    } else {
+	                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
+	                        NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
+	                    }
+	                }
+	                Nation fn = NationChunk.getNationData(fc);
+	                Nation tn = NationChunk.getNationData(tc);
+	                if (!Objects.equals(fn, tn)) {
+	                    if (tn == null) {  // WILDERNESS
+	                        player.sendTitle("§c§l" + Lang.WILDERNESS.get(player), Lang.WILDERNESS_SUBTITLE.get(player), 20, 20 * 2, 20);
+	                    } else {
+	                        if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
+	                            player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+	                        } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
+	                            player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+	                        } else if (tn.getNationId().equals("warzone")) { // WARZONE
+	                            player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+	                        } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
+	                            player.sendTitle("§d§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+	                        } else { // ANY OTHER NATION
+	                            player.sendTitle("§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+	                        }
+	                    }
+	                }
+	            }
+	        }
+    	} catch (Exception ignore) {}
     }
 
     @EventHandler
