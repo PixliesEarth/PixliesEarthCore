@@ -44,6 +44,10 @@ public class War {
         this.timers = new HashMap<>();
     }
 
+    public String getTimeUntilDeclarable() {
+        return Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false);
+    }
+
     @SneakyThrows
     public boolean justifyWarGoal() {
         Nation aggressor = Nation.getById(mainAggressor);
@@ -214,9 +218,17 @@ public class War {
         Document found = Main.getNationCollection().find(war).first();
         war.append("id", id);
         war.append("json", instance.getGson().toJson(this));
-        if (found != null) {
+        if (found != null)
             Main.getNationCollection().deleteOne(found);
-        }
-        Main.getNationCollection().insertOne(war);}
+        Main.getNationCollection().insertOne(war);
+    }
+
+    public Nation getDefenderInstance() {
+        return Nation.getById(mainDefender);
+    }
+
+    public Nation getAggressorInstance() {
+        return Nation.getById(mainAggressor);
+    }
 
 }

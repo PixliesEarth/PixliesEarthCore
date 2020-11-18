@@ -299,6 +299,14 @@ public class Profile {
         }, cooldown * 20);
     }
 
+    public void setTimer(String name, long duration) {
+        this.timers.put(name, new Timer(duration).toMap());
+    }
+
+    public void addTimer(String name, Timer timer) {
+        this.timers.put(name, timer.toMap());
+    }
+
     public boolean isStaff() {
         return instance.getUtilLists().staffMode.contains(UUID.fromString(uniqueId));
     }

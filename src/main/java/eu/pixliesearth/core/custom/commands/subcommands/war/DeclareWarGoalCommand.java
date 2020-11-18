@@ -51,7 +51,11 @@ public class DeclareWarGoalCommand extends CustomSubCommand {
             player.sendMessage(Lang.WAR + "§cThis war does not exist.");
             return false;
         }
-        war.declare();
+        boolean declare = war.declare();
+        if (!declare) {
+            player.sendMessage(Lang.WAR + "§cWar is not declarable yet.");
+            return false;
+        }
         profile.getCurrentNation().broadcastMembers(Lang.WAR + "§6" + player.getName() + " §7just declared a war against §b" + Nation.getById(war.getMainDefender()).getName() + "§7! It will start in §b10 minutes§7.");
         return true;
     }

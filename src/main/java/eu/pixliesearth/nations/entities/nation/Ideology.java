@@ -1,6 +1,8 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 
 public enum Ideology {
@@ -20,6 +22,10 @@ public enum Ideology {
     Ideology(char colour, Material material) {
         this.colour = colour;
         this.material = material;
+    }
+
+    public String getDisplayName() {
+        return "§" + colour + WordUtils.capitalize(name().toLowerCase().replace("_", " "));
     }
 
 }

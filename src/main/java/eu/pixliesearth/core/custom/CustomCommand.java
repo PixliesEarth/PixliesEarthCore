@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import eu.pixliesearth.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
@@ -26,6 +27,9 @@ import net.md_5.bungee.api.ChatColor;
  * 
  */
 public abstract class CustomCommand {
+
+	protected static final Main instance = Main.getInstance();
+
 	/**
 	 * Initialises the class
 	 */
