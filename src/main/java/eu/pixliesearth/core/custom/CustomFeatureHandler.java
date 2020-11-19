@@ -91,6 +91,7 @@ public class CustomFeatureHandler {
 	 */
 	public CustomFeatureHandler(CustomFeatureLoader cfl) {
 		setLoader(cfl);
+		new CustomLiquidHandler(cfl, this);
 		this.customItems = new HashSet<CustomItem>();
 		this.customListeners = new HashSet<Listener>();
 		this.tickables = new HashSet<Tickable>();
@@ -426,23 +427,15 @@ public class CustomFeatureHandler {
 	
 	// TEST SAVING SYSTEM
 	
-	@SuppressWarnings("deprecation")
 	public void saveCustomBlocksToFileOptimised() {
 		System.out.println("Saving CustomBlocks to file!");
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(getInstance(), new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblockstest", ".txt");
-					fb.clearFile();
-					getAllBlocksAsSaveableData().saveData(fb);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-		}, 1l);
+		try {
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblockstest", ".txt");
+			fb.clearFile();
+			getAllBlocksAsSaveableData().saveData(fb);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public SaveableData getAllBlocksAsSaveableData() {

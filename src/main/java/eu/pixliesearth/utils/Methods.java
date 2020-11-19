@@ -31,6 +31,23 @@ public class Methods {
 		}
 		return s;
 	}
+	
+	public static String convertLiquidDouble(double d) {
+		String s = "";
+		d = Methods.round(d, 3);
+		if (d>=1000000000D) {
+			s += d / 1000000000D +"TB";
+		} else if (d>=1000000D) {
+			s += d / 1000000D +"KB";
+		} else if (d>=1000D) {
+			s += d / 1000D +"B";
+		} else if (d>=1D) {
+			s += d +"MB";
+		} else {
+			s += Double.toString(d);
+		}
+		return s;
+	}
 
     public static String locationToSaveableString(Location l) {
         return l.getWorld().getUID().toString().concat(":").concat(Double.toString(l.getX())).concat(":").concat(Double.toString(l.getY())).concat(":").concat(Double.toString(l.getZ())).concat(":").concat(Float.toString(l.getYaw())).concat(":").concat(Float.toString(l.getPitch()));
