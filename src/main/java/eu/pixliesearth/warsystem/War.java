@@ -67,6 +67,7 @@ public class War {
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + aggressor.getName() + "** just started justifying a war-goal against your nation. This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + ".");
         aggressor.getExtras().put("WAR:" + mainDefender, id);
+        aggressor.setXpPoints(aggressor.getXpPoints() - cost);
         aggressor.save();
         instance.getUtilLists().wars.put(id, this);
         return true;
@@ -98,6 +99,15 @@ public class War {
         for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
             addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
+    }
+
+    @SneakyThrows
+    public void cancel() {
+        Nation aggressor = getAggressorInstance();
+        aggressor.getExtras().remove("WAR:" + mainDefender);
+        aggressor.save();
+        instance.getUtilLists().wars.remove(this.getId());
+        broadcastDiscord(getDefenderInstance(), "**" + getAggressorInstance().getName() + "** just cancelled their war justification against you.");
     }
 
     @SneakyThrows
@@ -215,12 +225,11 @@ public class War {
 
     public void backup() {
         Document war = new Document("id", id);
-        Document found = Main.getNationCollection().find(war).first();
-        war.append("id", id);
+        Document found = Main.getWarCollection().find(war).first();
         war.append("json", instance.getGson().toJson(this));
         if (found != null)
-            Main.getNationCollection().deleteOne(found);
-        Main.getNationCollection().insertOne(war);
+            Main.getWarCollection().deleteOne(found);
+        Main.getWarCollection().insertOne(war);
     }
 
     public Nation getDefenderInstance() {

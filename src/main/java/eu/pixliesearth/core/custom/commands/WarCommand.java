@@ -6,10 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.war.AcceptCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.war.DeclareWarGoalCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.war.InvitePlayerCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.war.JustifyWarGoalCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.war.*;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -24,6 +21,8 @@ import eu.pixliesearth.warsystem.War;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.StringUtil;
 
 import java.util.*;
@@ -64,15 +63,23 @@ public class WarCommand extends CustomCommand {
         List<GuiItem> guiItems = new ArrayList<>();
         for (War war : War.getWars(nation)) {
             guiItems.add(new GuiItem(new ItemBuilder(war.getDefenderInstance().getFlag()) {{
-                    setDisplayName(war.getDefenderInstance().getName());
+                    setDisplayName("§c§l" + war.getDefenderInstance().getName());
                     addLoreLine("§7War-ID: §c" + war.getId());
                     addLoreLine("§7Declarable: " + (war.isDeclareAble() ? "§aYes" : "§cNo"));
                     if (!war.isDeclareAble())
                         addLoreLine("§7Declarable in: §c" + war.getTimeUntilDeclarable());
+                    addLoreLine(" ");
+                    addLoreLine("§f§lLEFT §7click to §a§ldeclare");
+                    addLoreLine("§f§lRIGHT §7click to §c§ldelete");
             }}.build(), event -> {
                 event.setCancelled(true);
-                if (war.isDeclareAble()) {
-                    ((Player) event.getWhoClicked()).performCommand("war declare " + war.getId());
+                if (event.getClick().equals(ClickType.LEFT)) {
+                    if (war.isDeclareAble()) {
+                        ((Player) event.getWhoClicked()).performCommand("war declare " + war.getId());
+                        profile.getAsPlayer().closeInventory();
+                    }
+                } else if (event.getClick().equals(ClickType.RIGHT)) {
+                    ((Player)event.getWhoClicked()).performCommand("war canceljustification " + war.getId());
                     profile.getAsPlayer().closeInventory();
                 }
             }));
@@ -97,6 +104,7 @@ public class WarCommand extends CustomCommand {
         for (Nation n : NationManager.nations.values()) {
             if (n.getNationId().equals(nation.getNationId())) continue;
             if (Nation.getRelation(nation.getNationId(), n.getNationId()) == Nation.NationRelation.ALLY) continue;
+            if (n.getLeaderName().equalsIgnoreCase("Server")) continue;
             guiItems.add(new GuiItem(new ItemBuilder(n.getFlag()){{
                 setDisplayName("§c" + n.getName());
                 addLoreLine("§7Leader: §c" + n.getLeaderName());
@@ -134,7 +142,7 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand())};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand())};
     }
     
     public static class TabableNation implements ITabable {

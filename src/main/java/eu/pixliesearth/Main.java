@@ -10,6 +10,7 @@ import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.commands.player.*;
 import eu.pixliesearth.core.commands.util.*;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.commands.WarCommand;
 import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
 import eu.pixliesearth.core.custom.listeners.TabListener;
 import eu.pixliesearth.core.files.JSONFile;
@@ -44,8 +45,6 @@ import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.coreprotect.CoreProtect;
-import net.coreprotect.CoreProtectAPI;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import org.bson.Document;
@@ -105,6 +104,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
+        loader.loadCommand(new WarCommand());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000));
         init();
     }
@@ -140,8 +140,8 @@ public final class Main extends JavaPlugin {
         nationCollection = mongoDatabase.getCollection("nations");
         warCollection = mongoDatabase.getCollection("wars");
 
-        MongoCursor<Document> cursor = warCollection.find().iterator();
-        while (cursor.hasNext()) utilLists.wars.put(cursor.next().getString("id"), gson.fromJson(cursor.next().getString("json"), War.class));
+        for (Document doc : warCollection.find())
+            utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
 
         economy = new VaultAPI();
         getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);
@@ -218,6 +218,15 @@ public final class Main extends JavaPlugin {
 				}
 			}
         }.runTaskTimerAsynchronously(this, 1L, 1L);
+
+        // WAR UPDATER
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (War war : utilLists.wars.values())
+                    war.backup();
+            }
+        }.runTaskTimerAsynchronously(this, 0L, (20 * 60) * 5);
 
         NationManager.init();
 
