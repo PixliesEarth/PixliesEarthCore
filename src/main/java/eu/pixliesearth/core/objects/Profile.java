@@ -177,6 +177,7 @@ public class Profile {
         this.nationId = "NONE";
         this.inNation = false;
         save();
+        instance.getUtilLists().inspectors.remove(getUUID());
         for (Player p : nation.getOnlineMemberSet())
             p.sendMessage(Lang.PLAYER_LEFT_NATION.get(p).replace("%PLAYER%", getAsOfflinePlayer().getName()));
         return true;

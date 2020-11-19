@@ -27,6 +27,7 @@ public enum Permission {
     JUSTIFY_WAR_GOAL,
     SET_WIKI_LINK,
     MANAGE_WAR,
+    INSPECT
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
