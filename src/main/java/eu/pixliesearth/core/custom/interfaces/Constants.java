@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.interfaces;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,6 +10,9 @@ import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
 
 public interface Constants {
+	
+	public static final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+	public static final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 	
 	public static ItemStack backItem = new ItemBuilder(Material.ARROW)
 			.setDisplayName("§bBack")
