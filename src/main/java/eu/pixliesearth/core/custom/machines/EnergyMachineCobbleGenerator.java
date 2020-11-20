@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MachineCobbleGenerator extends CustomEnergyCrafterMachine {
+public class EnergyMachineCobbleGenerator extends CustomEnergyCrafterMachine {
 	
-	public MachineCobbleGenerator() {
+	public EnergyMachineCobbleGenerator() {
 		
 	}
 	

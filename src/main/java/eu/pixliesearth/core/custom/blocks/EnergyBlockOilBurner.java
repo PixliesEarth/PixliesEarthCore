@@ -32,15 +32,13 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 		
 	}
 	
-	private static final String oilID = "Pixlies:Oil";
-	
 	public double getCapacity() {
 		return 1000000D;
 	}
 	
 	@Override
-	public Map<String, Integer> getLiquidCapacities() {
-		return new HashMap<String, Integer>(){private static final long serialVersionUID = 4369338094535742708L;{
+	public ConcurrentHashMap<String, Integer> getLiquidCapacities() {
+		return new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 4369338094535742708L;{
 			put(waterID, 50000);
 			put(oilID, 50000);
 		}};
@@ -112,7 +110,7 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 			CustomLiquidHandler l = CustomLiquidHandler.getCustomLiquidHandler();
 			try {
 				ItemStack oil = inv.getItem(20);
-				if (oil!=null && isBucketFormOf(oil, oilID)) {
+				if (oil!=null && ILiquidable.isBucketFormOf(oil, oilID)) {
 					if (l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)<getLiquidCapacities().get(oilID)) { // Not full
 						l.addLiquidTo(loc, oilID, 1000);
 						inv.setItem(20, new ItemStack(Material.BUCKET, 1));
@@ -121,7 +119,7 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 			} catch (Exception ingore) {}
 			try {
 				ItemStack water = inv.getItem(24);
-				if (water!=null && isBucketFormOf(water, waterID)) {
+				if (water!=null && ILiquidable.isBucketFormOf(water, waterID)) {
 					if (l.getLiquidContentsAtAtBasedOnUUID(loc, waterID)<getLiquidCapacities().get(waterID)) { // Not full
 						l.addLiquidTo(loc, waterID, 1000);
 						inv.setItem(24, new ItemStack(Material.BUCKET, 1));
@@ -204,16 +202,12 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 					h.removeTempratureFromLocation(loc, temp);
 				} else {
 					l.removeLiquidFrom(loc, waterID, 1);
-					h.removeTempratureFromLocation(loc, 0.05D);
+					h.removeTempratureFromLocation(loc, 0.25D);
 				}
 			}
 		} catch (Exception ignore) {
 			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(loc, getLiquidCapacities().keySet()); // Give default values
 		}
-    }
-    
-    public boolean isBucketFormOf(ItemStack is, String UUID) {
-    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(UUID+"_bucket");
     }
     
     @Override

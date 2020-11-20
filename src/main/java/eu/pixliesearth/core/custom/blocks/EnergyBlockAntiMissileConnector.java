@@ -113,51 +113,27 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
 		}
     }
     
-    @SuppressWarnings("deprecation")
 	public void defendAgainst(Location location, Location missile) {
-    	Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+    	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	Block b = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-1, missile.getBlockZ());
+		Block b2 = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-2, missile.getBlockZ());
+		Material m = (b==null) ? Material.AIR : b.getType();
+		Material m2 = (b2==null) ? Material.AIR : b2.getType();
+		CustomBlock cb = h.getCustomBlockFromLocation(new Location(missile.getWorld(), missile.getBlockX(), missile.getBlockY()+1, missile.getBlockZ()));
+		if (cb==null || !(cb instanceof BlockMissile)) return;
+		b.setType(Material.GLASS);
+		b2.setType(Material.GLASS);
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
-				CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		    	if (getContainedPower(location)>=energyCostPerOperation) {
-		    		Block b = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-1, missile.getBlockZ());
-		    		Block b2 = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-2, missile.getBlockZ());
-		    		Material m = (b==null) ? Material.AIR : b.getType();
-		    		Material m2 = (b2==null) ? Material.AIR : b2.getType();
-		    		
-		    		CustomBlock cb = h.getCustomBlockFromLocation(new Location(missile.getWorld(), missile.getBlockX(), missile.getBlockY()+1, missile.getBlockZ()));
-		    		if (cb==null || !(cb instanceof BlockMissile)) return;
-		    		
-		    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-
-						@Override
-						public void run() {
-							
-							b.setType(Material.GLASS);
-				    		b2.setType(Material.GLASS);
-				    		
-				    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-
-								@Override
-								public void run() {
-									
-									b.setType(m);
-						    		b2.setType(m2);
-						    		
-								}
-								
-				    		}, 5l);
-				    		
-						}
-						
-		    		}, 0l);
-		    		
-		    		h.removePowerFromLocation(location, energyCostPerOperation);
-		    	}
+				
+				b.setType(m);
+	    		b2.setType(m2);
+	    		
 			}
-    		
-    	}, 1l);
+			
+		}, 5l);
     }
 	
 }
