@@ -693,11 +693,11 @@ public class CustomFeatureHandler {
 			if (i!=null) 
 				this.locationToInventoryMap.put(location, i);
 		} else {
-			location.getWorld().getBlockAt(location).setType(getCustomItemFromUUID(id).getMaterial());
-			location.getWorld().getBlockAt(location).getState().update();
+			location.getBlock().setType(getCustomItemFromUUID(id).getMaterial());
+			location.getBlock().getState().update();
 		}
 		this.locationToUUIDMap.put(location, id);
-		location.getBlock().setType(getCustomItemFromUUID(id).getMaterial());
+		// location.getBlock().setType(getCustomItemFromUUID(id).getMaterial());
 	}
 	/**
 	 * Sets the {@link CustomBlock} at the {@link Location} provided
