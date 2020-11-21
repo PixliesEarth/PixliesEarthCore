@@ -473,27 +473,25 @@ public class ItemICBM extends CustomItem {
     public void setMissile(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	World w = l.getWorld();
-    	if (l.getY()==250D) return;
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-1, l.getZ()), "Pixlies:Missile_Block_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()), "Pixlies:Missile_Block_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()+1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()-1, l.getY()-2, l.getZ()), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()+1, l.getY()-2, l.getZ()), "Pixlies:Missile_Fin_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-1, l.getZ()), "Pixlies:Missile_Block_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()-2, l.getZ()), "Pixlies:Missile_Block_UNB");
     }
     
     public void setMissile2(Location l) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-    	l.setY(l.getY()-4);
     	World w = l.getWorld();
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY(), l.getZ()), "Pixlies:Missile_Warhead_Block_UNB_2");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+1, l.getZ()), "Pixlies:Missile_Block_UNB");
+    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()), "Pixlies:Missile_Block_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()-1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()+1), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()-1, l.getY()+2, l.getZ()), "Pixlies:Missile_Fin_UNB");
     	h.setCustomBlockToLocation(new Location(w, l.getX()+1, l.getY()+2, l.getZ()), "Pixlies:Missile_Fin_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+1, l.getZ()), "Pixlies:Missile_Block_UNB");
-    	h.setCustomBlockToLocation(new Location(w, l.getX(), l.getY()+2, l.getZ()), "Pixlies:Missile_Block_UNB");
     }
     
     public void remMissile(Location l) {
