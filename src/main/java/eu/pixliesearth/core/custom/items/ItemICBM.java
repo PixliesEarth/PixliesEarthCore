@@ -288,7 +288,7 @@ public class ItemICBM extends CustomItem {
 								public void run() {
 									p.sendMessage("timer done");
 									final UUID id2 = UUID.randomUUID();
-									addBS(id2, new Location(end.getWorld(), end.getX(), 60, end.getZ()));
+									addBS(id2, new Location(end.getWorld(), end.getX(), 256, end.getZ()));
 									Integer i2 = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 										@Override
 										public void run() {
@@ -298,10 +298,10 @@ public class ItemICBM extends CustomItem {
 													Location l3 = getBS(id2).clone();
 													remBS(id2);
 													Location l4 = new Location(l3.getWorld(), l3.getX(), l3.getY()-1, l3.getZ());
-													p.sendMessage("Dropping down at "+l3.getX()+" "+(l3.getY()-1)+" "+l3.getZ());
+													// p.sendMessage("Dropping down at "+l3.getX()+" "+(l3.getY()-1)+" "+l3.getZ());
 													remMissile2(l3.clone());
 													if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
-														p.sendMessage("boom");
+														// p.sendMessage("boom");
 														//l4.createExplosion((float)ex, true);
 														ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
 														calc.explode(true);

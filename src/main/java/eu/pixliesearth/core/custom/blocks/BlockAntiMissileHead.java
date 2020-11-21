@@ -22,6 +22,6 @@ public class BlockAntiMissileHead extends CustomBlock {
 
     @Override
     public String getUUID() {
-        return "Pixlies:Anti-Missile Head"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:AntiMissile_Head"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 }
