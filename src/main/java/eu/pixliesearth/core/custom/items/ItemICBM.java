@@ -351,7 +351,7 @@ public class ItemICBM extends CustomItem {
 																	p.sendMessage("[Debug] Landed at "+l4.getBlockX()+", "+l4.getBlockY()+", "+l4.getBlockZ());
 																}
 																ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
-																calc.explode(true);
+																//calc.explode(true);
 																if (p.getGameMode().equals(GameMode.CREATIVE)) {
 																	p.sendMessage("[Debug] Exploded "+calc.getExplodeLocations().size()+" blocks");
 																}
