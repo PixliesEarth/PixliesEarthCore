@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -21,8 +20,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
-import org.dynmap.markers.Marker;
 
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
@@ -30,8 +27,6 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.DynmapUtil;
-import eu.pixliesearth.utils.ExplosionCalculator;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
 
@@ -263,6 +258,72 @@ public class ItemICBM extends CustomItem {
     @SuppressWarnings("deprecation")
     public void launchMissile(Location start, Location end, int ex, int pd, Player p) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	if (h.getCustomBlockFromLocation(start)!=null) {
+			if (h.getCustomBlockFromLocation(start).getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) { //Warhead UUID
+				h.removeCustomBlockFromLocation(start);
+				h.setCustomBlockToLocation(start, "Pixlies:Missile_Warhead_Block_UNB_2");
+			}
+    	}
+    	final UUID id = UUID.randomUUID();
+    	addBS(id, start);
+    	
+    	Integer i = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+			public void run() {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+					@Override
+					public void run() {
+						Location l = getBS(id).clone();
+						remMissile(l);
+						remBS(id);
+						l.setY(l.getY()+1D);
+						setMissile(l);
+						if (l.getY()-3>=256) {
+							p.sendMessage("left");
+							Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
+							CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
+							p.sendMessage("left2");
+							Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+								@Override
+								public void run() {
+									p.sendMessage("timer done");
+									final UUID id2 = UUID.randomUUID();
+									addBS(id2, new Location(end.getWorld(), end.getX(), 60, end.getZ()));
+									Integer i2 = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+										@Override
+										public void run() {
+											Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+												@Override
+												public void run() {
+													Location l3 = getBS(id2).clone();
+													remBS(id2);
+													Location l4 = new Location(l3.getWorld(), l3.getX(), l3.getY()-1, l3.getZ());
+													p.sendMessage("Dropping down at "+l3.getX()+" "+(l3.getY()-1)+" "+l3.getZ());
+													remMissile2(l3.clone());
+													if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
+														p.sendMessage("boom");
+														l4.createExplosion((float)ex, true);
+														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
+														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
+													} else {
+														setMissile2(l4.clone());
+														addBS(id2, l4);
+													}
+												}
+											}, 1l);
+										}
+									}, 5L, 5L);
+									CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(start, i2);
+								}
+							}, ((long)(start.distance(end)*2l))); // 1 second per 10 blocks
+						} else {
+							addBS(id, l);
+						}
+					}
+				}, 1l);
+			}
+		}, 5L, 5L);
+    	CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(start, i);
+    	/**CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	boolean isInDynmapEnabledWorld = (!Dynmap) ? false : true; // TODO: dynmap
     	if (h.getCustomBlockFromLocation(start)!=null) {
 			if (h.getCustomBlockFromLocation(start).getUUID().equals("Pixlies:Missile_Warhead_Block_UNB")) { //Warhead UUID
@@ -320,7 +381,7 @@ public class ItemICBM extends CustomItem {
 													Thread.sleep(250l);
 												} catch (InterruptedException ingore) {}
 											}
-										}*/
+										}
 									}
 								}, 1l);
 							}
@@ -351,7 +412,7 @@ public class ItemICBM extends CustomItem {
 																	p.sendMessage("[Debug] Landed at "+l4.getBlockX()+", "+l4.getBlockY()+", "+l4.getBlockZ());
 																}
 																ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
-																//calc.explode(true);
+																calc.explode(true);
 																if (p.getGameMode().equals(GameMode.CREATIVE)) {
 																	p.sendMessage("[Debug] Exploded "+calc.getExplodeLocations().size()+" blocks");
 																}
@@ -387,7 +448,7 @@ public class ItemICBM extends CustomItem {
 													} else {
 														setMissile2(l4.clone());
 														addBS(id2, l4.clone());
-													}*/
+													}
 												}
 											}, 1l);
 										}
@@ -402,7 +463,7 @@ public class ItemICBM extends CustomItem {
 				}, 1l);
 			}
 		}, 5L, 5L);
-    	CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(start, i);
+    	CustomFeatureLoader.getLoader().getHandler().registerLocationEvent(start, i);*/
     }
     
     public void onHit(Location location) {
