@@ -27,6 +27,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ExplosionCalculator;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
 
@@ -301,7 +302,9 @@ public class ItemICBM extends CustomItem {
 													remMissile2(l3.clone());
 													if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
 														p.sendMessage("boom");
-														l4.createExplosion((float)ex, true);
+														//l4.createExplosion((float)ex, true);
+														ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
+														calc.explode(true);
 														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
 													} else {
