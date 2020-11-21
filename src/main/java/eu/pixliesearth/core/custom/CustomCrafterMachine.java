@@ -357,6 +357,11 @@ public class CustomCrafterMachine extends CustomMachine {
 	 */
 	@Override
 	public boolean InventoryClickEvent(InventoryClickEvent event) {
+		try { // Cool code to stop invalid inventory sizes sending their inventory click event to this gui
+			event.getInventory().getItem(53);
+		} catch (Exception e) {
+			return true;
+		}
 		ItemStack is = event.getCurrentItem();
 		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {

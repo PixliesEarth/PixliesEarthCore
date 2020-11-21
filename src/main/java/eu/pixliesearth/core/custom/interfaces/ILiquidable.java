@@ -24,10 +24,7 @@ public interface ILiquidable {
 	public static final String oilID = "Pixlies:Oil";
 	
 	public static boolean isBucketFormOf(ItemStack is, String UUID) {
-		if (UUID.equalsIgnoreCase(getLiquidBondedUUID(hydrogenID, getLiquidBondedUUID(hydrogenID, oxygenID)))) {
-			UUID = waterID;
-		}
-    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(UUID+"_bucket");
+    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(convertID(UUID)+"_bucket");
     }
 	
 	public static boolean areLiquidsEqual(String id, String id2) {

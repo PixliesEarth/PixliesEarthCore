@@ -697,6 +697,7 @@ public class CustomFeatureHandler {
 			location.getWorld().getBlockAt(location).getState().update();
 		}
 		this.locationToUUIDMap.put(location, id);
+		location.getBlock().setType(getCustomItemFromUUID(id).getMaterial());
 	}
 	/**
 	 * Sets the {@link CustomBlock} at the {@link Location} provided
