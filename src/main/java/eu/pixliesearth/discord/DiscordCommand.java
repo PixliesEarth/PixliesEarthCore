@@ -5,6 +5,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.javacord.api.DiscordApi;
+import org.javacord.api.entity.message.MessageAuthor;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.awt.*;
@@ -49,6 +50,10 @@ public abstract class DiscordCommand {
             for (String s : cmd.alias)
                 MiniMick.getCommands().put(s, cmd);
         }
+    }
+
+    public void reply(MessageCreateEvent event, String message) {
+        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + ">, " + message);
     }
 
 }

@@ -53,6 +53,10 @@ public class WarCommand extends CustomCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
+        if (instance.getCurrentWar() != null) {
+            player.sendMessage(Lang.WAR +  "§7There is already a war happening at the moment.");
+            return false;
+        }
         if (!Permission.hasNationPermission(profile, Permission.MANAGE_WAR)) {
             Lang.NO_PERMISSIONS.send(player);
             return false;

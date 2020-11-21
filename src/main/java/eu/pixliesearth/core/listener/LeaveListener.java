@@ -83,6 +83,8 @@ public class LeaveListener implements Listener {
                 }
         }
 
+        Main.getInstance().getUtilLists().playersInWar.remove(player.getUniqueId());
+
         profile.getTimers().clear();
 
         if (player.getKiller() != null) {

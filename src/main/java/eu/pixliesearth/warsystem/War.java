@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.SneakyThrows;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
@@ -32,6 +33,7 @@ public class War {
     private Map<WarParticipant.WarSide, Integer> left;
     private boolean declareAble;
     private boolean running;
+    private boolean declared;
     private Map<String, Timer> timers;
 
     public War(String mainAggressor, String mainDefender) {
@@ -42,6 +44,7 @@ public class War {
         left = new HashMap<>();
         this.declareAble = false;
         this.running = false;
+        this.declared = false;
         this.timers = new HashMap<>();
     }
 
@@ -77,6 +80,13 @@ public class War {
     @SneakyThrows
     public boolean declare() {
         if (!declareAble) return false;
+        boolean isOn = false;
+        for (Player player : getDefenderInstance().getOnlineMemberSet())
+            if (Permission.hasNationPermission(instance.getProfile(player.getUniqueId()), Permission.DECLARE_WAR)) {
+                isOn = true;
+                break;
+            }
+        if (!isOn) return false;
         this.timers.put("gracePeriod", new Timer(600_000));
         StringBuilder mentionsBuilder = new StringBuilder();
         for (String s : Nation.getById(this.mainDefender).getMembers()) {
@@ -85,6 +95,8 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
+        declared = true;
+        instance.setCurrentWar(this);
         return true;
     }
 
@@ -135,6 +147,7 @@ public class War {
         }
         instance.getUtilLists().playersInWar.clear();
         broadcastDiscord(new EmbedBuilder().setTitle("War ended!").setDescription(winnerNation.getName() + "just won a war against " + loserNation.getName()));
+        instance.setCurrentWar(null);
     }
 
     public void handleKill(Profile killed) {
@@ -161,6 +174,7 @@ public class War {
                     makeDeclarable();
                 }
             }
+        } else {
             if (this.timers.containsKey("gracePeriod"))
                 if (this.timers.get("gracePeriod").hasExpired())
                     start();
@@ -207,7 +221,8 @@ public class War {
         List<War> returner = new ArrayList<>();
         for (War war : instance.getUtilLists().wars.values())
             if (war.getMainAggressor().equals(nation.getNationId()))
-                returner.add(war);
+                if (!war.isDeclared())
+                    returner.add(war);
         return returner;
     }
 

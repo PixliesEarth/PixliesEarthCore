@@ -37,7 +37,7 @@ public class SkipJustificationCommand extends CustomSubCommand {
 
     @Override
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-        if (ranByPlayer && instance.getProfile(((Player)commandSender).getUniqueId()).isStaff()) {
+        if (ranByPlayer && !instance.getProfile(((Player)commandSender).getUniqueId()).isStaff()) {
             Lang.NO_PERMISSIONS.send(commandSender);
             return false;
         }

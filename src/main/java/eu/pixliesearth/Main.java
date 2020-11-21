@@ -166,7 +166,7 @@ public final class Main extends JavaPlugin {
             saveConfig();
             reloadConfig();
         } else {
-            gulag = getConfig().getObject("gulag", Gulag.class);
+            gulag = gson.fromJson(getConfig().getString("gulag"), Gulag.class);
         }
 
         saveDefaultConfig();
