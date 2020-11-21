@@ -4,6 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
@@ -157,13 +158,24 @@ public class War {
         if (!declareAble) {
             if (this.timers.containsKey("warGoalJustification")) {
                 if (this.timers.get("warGoalJustification").hasExpired()) {
-                    this.declareAble = true;
-                    this.timers.remove("warGoalJustification");
+                    makeDeclarable();
                 }
             }
             if (this.timers.containsKey("gracePeriod"))
                 if (this.timers.get("gracePeriod").hasExpired())
                     start();
+        }
+    }
+
+    @SneakyThrows
+    public void makeDeclarable() {
+        this.declareAble = true;
+        this.timers.remove("warGoalJustification");
+        for (String s : getAggressorInstance().getMembers()) {
+            Profile profile = instance.getProfile(UUID.fromString(s));
+            if (!profile.discordIsSynced()) continue;
+            if (!Permission.hasNationPermission(profile, Permission.DECLARE_WAR)) continue;
+            MiniMick.getApi().getUserById(profile.getDiscord()).get().openPrivateChannel().get().sendMessage("**Congrats!** Your war-goal against **" + getDefenderInstance().getName() + "** has just been justified! You may now declare the war.");
         }
     }
 

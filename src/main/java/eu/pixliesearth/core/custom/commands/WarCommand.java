@@ -142,7 +142,7 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand())};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand(), new SkipJustificationCommand())};
     }
     
     public static class TabableNation implements ITabable {

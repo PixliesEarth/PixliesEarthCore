@@ -71,7 +71,7 @@ public class JustifyWarGoalCommand extends CustomSubCommand {
             commandSender.sendMessage(Lang.WAR + "§cWar-goal justification failed. This could be either because you don't have enough PoliticalPower to justify a war-goal, or that you are already justifying a war-goal against this nation.");
             return false;
         } else {
-            commandSender.sendMessage(Lang.WAR + "§7War-goal justification §asuccessful§7. It takes §b" + war.getTimeUntilDeclarable() + " §7to be justified.");
+            commandSender.sendMessage(Lang.WAR + "§7War-goal justification §asuccessful§7.");
         }
         return true;
     }

@@ -14,6 +14,7 @@ public enum Ideology {
     MONARCHY('6', Material.YELLOW_STAINED_GLASS_PANE),
     DICTATORSHIP('5', Material.PURPLE_STAINED_GLASS_PANE),
     NON_ALIGNED('7', Material.GRAY_STAINED_GLASS_PANE),
+    FASCISM('9', Material.BLUE_STAINED_GLASS_PANE),
     ;
 
     private final @Getter char colour;
