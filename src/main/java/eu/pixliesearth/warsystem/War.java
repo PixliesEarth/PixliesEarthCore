@@ -123,6 +123,14 @@ public class War {
         broadcastDiscord(getDefenderInstance(), "**" + getAggressorInstance().getName() + "** just cancelled their war justification against you.");
     }
 
+    public WarParticipant.WarSide getCurrentWinner() {
+        if (left.get(WarParticipant.WarSide.AGGRESSOR) > left.get(WarParticipant.WarSide.DEFENDER)) {
+            return WarParticipant.WarSide.AGGRESSOR;
+        } else {
+            return WarParticipant.WarSide.DEFENDER;
+        }
+    }
+
     @SneakyThrows
     public void stop(WarParticipant.WarSide winner) {
         Nation winnerNation;
@@ -148,6 +156,14 @@ public class War {
         instance.getUtilLists().playersInWar.clear();
         broadcastDiscord(new EmbedBuilder().setTitle("War ended!").setDescription(winnerNation.getName() + "just won a war against " + loserNation.getName()));
         instance.setCurrentWar(null);
+    }
+
+    public void handleLeave(Profile left) {
+        if (!running) return;
+        if (this.left.get(players.get(left.getUUID()).getSide()) - 1 == 0) {
+            stop(WarParticipant.WarSide.getOpposite(players.get(left.getUUID()).getSide()));
+        }
+        players.remove(left.getUUID());
     }
 
     public void handleKill(Profile killed) {

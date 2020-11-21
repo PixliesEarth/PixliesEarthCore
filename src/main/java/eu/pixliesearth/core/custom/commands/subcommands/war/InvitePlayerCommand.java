@@ -46,8 +46,8 @@ public class InvitePlayerCommand extends CustomSubCommand {
             Lang.NO_PERMISSIONS.send(player);
             return false;
         }
-        War war = instance.getUtilLists().playersInWar.get(player.getUniqueId());
-        if (war == null) {
+        War war = instance.getCurrentWar();
+        if (war == null || !war.getDefenderInstance().getMembers().contains(player.getUniqueId().toString()) && !war.getAggressorInstance().getMembers().contains(player.getUniqueId().toString())) {
             player.sendMessage(Lang.WAR + "§cYou are not in a war.");
             return false;
         }
