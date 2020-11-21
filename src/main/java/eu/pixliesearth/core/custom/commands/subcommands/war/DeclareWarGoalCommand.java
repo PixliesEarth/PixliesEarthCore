@@ -42,6 +42,10 @@ public class DeclareWarGoalCommand extends CustomSubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
+        if (instance.getCurrentWar() != null) {
+            player.sendMessage(Lang.WAR +  "§7There is already a war happening at the moment.");
+            return false;
+        }
         if (!Permission.hasNationPermission(profile, Permission.DECLARE_WAR)) {
             Lang.NO_PERMISSIONS.send(player);
             return false;
@@ -53,7 +57,7 @@ public class DeclareWarGoalCommand extends CustomSubCommand {
         }
         boolean declare = war.declare();
         if (!declare) {
-            player.sendMessage(Lang.WAR + "§cWar is not declarable yet.");
+            player.sendMessage(Lang.WAR + "§cWar is not declarable yet or there is no member of the defender online which has the permission DECLARE_WAR.");
             return false;
         }
         profile.getCurrentNation().broadcastMembers(Lang.WAR + "§6" + player.getName() + " §7just declared a war against §b" + Nation.getById(war.getMainDefender()).getName() + "§7! It will start in §b10 minutes§7.");
