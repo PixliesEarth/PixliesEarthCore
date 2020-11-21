@@ -46,8 +46,12 @@ public class SkipJustificationCommand extends CustomSubCommand {
             commandSender.sendMessage("§7This war does not exist.");
             return false;
         }
-        war.makeDeclarable();
-        commandSender.sendMessage(Lang.WAR + "War-justification time skipped.");
+        boolean d = war.makeDeclarable();
+        if (d) {
+            commandSender.sendMessage(Lang.WAR + "§aWar-justification time skipped.");
+        } else {
+            commandSender.sendMessage(Lang.WAR + "§7This war is already declarable.");
+        }
         return true;
     }
 

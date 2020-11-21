@@ -9,6 +9,7 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.warsystem.War;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -64,8 +65,17 @@ public class ScoreboardAdapter implements AssembleAdapter {
         List<String> returnable = new ArrayList<>();
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
+        if (profile.isInWar()) {
+            War war = instance.getCurrentWar();
+            returnable.add(Lang.WAR.replace(" §8|", "") + "§7players left");
+            returnable.add("§a§lYour side");
+            returnable.add("  §8» §7" + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide()));
+            returnable.add("§c§lOpponent");
+            returnable.add("  §8» §7" + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide().getOpposite()));
+            return returnable;
+        }
         if (Main.getInstance().getUtilLists().scoreboardMaps.contains(player.getUniqueId())) {
-            returnable.add("§bClaim-map");
+            returnable.add(c + "Claim-map");
             final int height = 3;
             final int width = 3;
 
