@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -326,7 +327,7 @@ public class ItemICBM extends CustomItem {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 								@Override
 								public void run() {
-									p.sendMessage("Landing at designated target!");
+									p.sendMessage("Dropping towards the designated target!");
 									final UUID id2 = UUID.randomUUID();
 									addBS(id2, new Location(end.getWorld(), end.getX(), 256, end.getZ()));
 									final Marker marker2 = (isInDynmapEnabledWorld) ? DynmapUtil.getDynmapMissile().addMissileAt(end, ex, pd, end) : null;
@@ -342,22 +343,24 @@ public class ItemICBM extends CustomItem {
 													remMissile2(l3.clone());
 													if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
 														// l4.createExplosion((float)ex, true);
+														p.sendMessage("Landed at designated target!");
+														if (p.getGameMode().equals(GameMode.CREATIVE)) {
+															p.sendMessage("[Debug] Landed at "+l4.getBlockX()+", "+l4.getBlockY()+", "+l4.getBlockZ());
+														}
 														ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
 														calc.explode(true);
+														if (p.getGameMode().equals(GameMode.CREATIVE)) {
+															p.sendMessage("[Debug] Exploded "+calc.getExplodeLocations().size()+" blocks");
+														}
 														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
 														if (isInDynmapEnabledWorld) {
-															Bukkit.getScheduler().scheduleAsyncDelayedTask(h.getInstance(), new Runnable() {
-																@Override
-																public void run() {
-																	marker.deleteMarker();
-																	marker2.deleteMarker();
-																}
-															}, 1l);
+																marker.deleteMarker();
+																marker2.deleteMarker();
 														}
 													} else {
 														setMissile2(l4.clone());
-														addBS(id2, l4);
+														addBS(id2, l4.clone());
 													}
 												}
 											}, 1l);

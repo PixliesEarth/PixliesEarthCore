@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.mozilla.javascript.ImporterTopLevel;
 
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
