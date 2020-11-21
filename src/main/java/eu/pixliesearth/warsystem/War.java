@@ -168,7 +168,8 @@ public class War {
     }
 
     @SneakyThrows
-    public void makeDeclarable() {
+    public boolean makeDeclarable() {
+        if (this.isDeclareAble()) return false;
         this.declareAble = true;
         this.timers.remove("warGoalJustification");
         for (String s : getAggressorInstance().getMembers()) {
@@ -177,6 +178,7 @@ public class War {
             if (!Permission.hasNationPermission(profile, Permission.DECLARE_WAR)) continue;
             MiniMick.getApi().getUserById(profile.getDiscord()).get().openPrivateChannel().get().sendMessage("**Congrats!** Your war-goal against **" + getDefenderInstance().getName() + "** has just been justified! You may now declare the war.");
         }
+        return true;
     }
 
     public boolean isRunning() {

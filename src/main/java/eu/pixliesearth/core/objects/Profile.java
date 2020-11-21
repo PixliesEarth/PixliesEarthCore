@@ -191,6 +191,8 @@ public class Profile {
         return nationRank.equalsIgnoreCase("leader");
     }
 
+    public boolean isInWar() { return instance.getUtilLists().playersInWar.containsKey(this.getUUID()); }
+
     public void removeFromNation() {
         if (!isInNation()) return;
         this.inNation = false;

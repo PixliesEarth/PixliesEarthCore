@@ -26,6 +26,16 @@ public class WarParticipant {
             return DEFENDER;
         }
 
+        public WarSide getOpposite() {
+            switch (this) {
+                case DEFENDER:
+                    return AGGRESSOR;
+                case AGGRESSOR:
+                    return DEFENDER;
+            }
+            return DEFENDER;
+        }
+
     }
 
 }

@@ -290,7 +290,7 @@ public enum Lang {
     public static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
     public static final String GUNS = "§aGUNS §8| ";
     public static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";
-    public static final String WAR = "§4WAR §8| ";
+    public static final String WAR = "§x§f§f§2§b§2§bW§x§e§b§2§1§2§1A§x§d§9§1§a§1§aR §8| ";
 
     Lang(String PREFIX, Map<String, String> languages) {
         this.PREFIX = PREFIX;
