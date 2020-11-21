@@ -366,7 +366,7 @@ public class ItemICBM extends CustomItem {
 																addBS(id2, l4.clone());
 															}
 														}
-													}, 2l);
+													}, 4l);
 													/*if (l4.getBlock()!=null && !l4.getBlock().getType().equals(Material.AIR) && !l4.getBlock().getType().equals(Material.WATER) && !l4.getBlock().getType().equals(Material.LAVA)) {
 														// l4.createExplosion((float)ex, true);
 														p.sendMessage("Landed at designated target!");
