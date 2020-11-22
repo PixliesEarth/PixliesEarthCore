@@ -23,8 +23,8 @@ public interface ILiquidable {
 	public static final String carbonID = "Pixlies:Carbon";
 	public static final String oilID = "Pixlies:Oil";
 	
-	public static boolean isBucketFormOf(ItemStack is, String UUID) {
-    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(convertID(UUID)+"_bucket");
+	public static boolean isBucketFormOf(ItemStack is, String UUID, boolean convert) {
+    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? convertID(UUID) : UUID+"_bucket");
     }
 	
 	public static boolean areLiquidsEqual(String id, String id2) {

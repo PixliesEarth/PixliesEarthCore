@@ -57,7 +57,6 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
         return "Pixlies:AntiMissile_Connector"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
-    @SuppressWarnings("deprecation")
 	@Override
     public void onTick(Location location, Inventory inventory, Timer timer) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
@@ -71,7 +70,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
         	CustomBlock cb = h.getCustomBlockFromLocation(radarl);
         	if (cb!=null && cb instanceof EnergyBlockICBMRadar) {
         		Inventory inv = h.getInventoryFromLocation(radarl);
-        		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 
 					@Override
 					public void run() {
@@ -114,6 +113,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
     }
     
 	public void defendAgainst(Location location, Location missile) {
+		if (location==null || missile==null) return;
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	Block b = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-1, missile.getBlockZ());
 		Block b2 = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-2, missile.getBlockZ());

@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
@@ -21,7 +23,6 @@ import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
@@ -31,6 +32,9 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 		
 	}
 	
+	long timePerAction = 200L;
+	double energyCost = 50D;
+	
 	@Override
 	public String getPlayerHeadUUID() {
 		return "8cbca012f67e54de9aee72ff424e056c2ae58de5eacc949ab2bcd9683cec";
@@ -38,13 +42,23 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Electrolyser";
+        return "§6Water Electrolyser";
     }
 
     @Override
     public String getUUID() {
-        return "Machine:Electrolyser"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Machine:Electrolyser_Water"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+    
+    @Override
+	public void open(Player player, Location location) {
+		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		if (i==null) {
+			player.sendMessage("This machine has no inventory!");
+		} else {
+			player.openInventory(i);
+		}
+	}
     
 	@Override
 	public Inventory getInventory() { 
@@ -59,10 +73,42 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 	public void onTick(Location loc, Inventory inv, Timer timer) {
 		if (loc==null) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+		CustomLiquidHandler l = CustomLiquidHandler.getCustomLiquidHandler();
 		if (inv==null) return;
 		inv.setItem(43, buildInfoItem(loc));
 		if (timer==null) {
-			h.registerTimer(loc, new Timer(200L)); // One fifth of a second
+			h.registerTimer(loc, new Timer(timePerAction)); // One fifth of a second
+			if (getContainedPower(loc)<energyCost) return;
+			ItemStack is = inv.getItem(20);
+			if (is!=null && ILiquidable.isBucketFormOf(is, waterID, false)) {
+				inv.setItem(20, new ItemStack(Material.BUCKET));
+				l.addLiquidTo(loc, waterID, 1000);
+			}
+			inv.setItem(21, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE) {{
+					setDisplayName("§bInput Information");
+					addLoreLine("§3ID: "+ILiquidable.convertID(waterID)+" / "+waterID);
+					addLoreLine("§3Amount: "+l.getLiquidContentsAtAtBasedOnUUID(loc, waterID));
+					addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+			}}.build());
+			inv.setItem(23, new ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE) {{
+					setDisplayName("§bHydrogen");
+					addLoreLine("§3ID: "+hydrogenID);
+					addLoreLine("§3Amount: "+l.getLiquidContentsAtAtBasedOnUUID(loc, hydrogenID));
+					addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+			}}.build());
+			inv.setItem(25, new ItemBuilder(Material.PINK_STAINED_GLASS_PANE) {{
+					setDisplayName("§bOxygen");
+					addLoreLine("§3ID: "+oxygenID);
+					addLoreLine("§3Amount: "+l.getLiquidContentsAtAtBasedOnUUID(loc, oxygenID));
+					addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+			}}.build());
+			if (l.getLiquidContentsAtAtBasedOnUUID(loc, waterID)>0) {
+				for (String s : ILiquidable.getLiquidContents(waterID)) {
+					l.addLiquidTo(loc, s, 1);
+				}
+				l.removeLiquidFrom(loc, waterID, 1);
+				h.removePowerFromLocation(loc, energyCost);
+			}
 		} else {
 			if (timer.hasExpired()) {
 				h.unregisterTimer(loc);
@@ -72,23 +118,16 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 		}
 	}
 	
-	public ItemStack buildWaterItem(Location location) {
-		return new ItemBuilder(Material.LIME_STAINED_GLASS_PANE)
-				.setDisplayName("§bInput Information")
-				.addLoreLine("§3"+1+": "+Methods.convertLiquidDouble(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAtAtBasedOnUUID(location, waterID)))
-				.addLoreLine("§fRight-click to empty")
-				.addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING)
-				.build();
-    }
-	
-	public String getInput(Location location) {
-		return null;
+	@Override
+	public boolean InventoryClickEvent(InventoryClickEvent event) {
+		if (event.getCurrentItem()==null || event.getCurrentItem().getType().equals(Material.AIR)) return false;
+		if (isUnclickable(event.getCurrentItem())) return true;
+		return false;
 	}
 	
 	@Override
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
-		CustomFeatureLoader.getLoader().getHandler().addTempratureToLocation(location, Double.parseDouble(map.get("TEMP")));
 		try {
 			JSONObject obj = (JSONObject) new JSONParser().parse(map.get("LIQUID"));
 			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 2953303923607067655L;{

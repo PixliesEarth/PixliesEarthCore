@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Location;
 
+import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import lombok.Getter;
 
 public class CustomLiquidHandler {
@@ -25,22 +26,22 @@ public class CustomLiquidHandler {
 	}
 	
 	public void registerLiquidContents(Location location, ConcurrentHashMap<String, Integer> contents) {
-		this.contentsMap.put(location, contents);
+		this.contentsMap.put(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 8250574931729995255L;{contents.forEach((s, v) -> put(ILiquidable.convertID(s), v));}});
 	}
 	
 	public void registerLiquidContents(Location location, Set<String> contents) {
-		this.contentsMap.put(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 8250574931729995255L;{contents.forEach((s) -> put(s, 0));}});
+		this.contentsMap.put(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 8250574931729995255L;{contents.forEach((s) -> put(ILiquidable.convertID(s), 0));}});
 	}
 	
 	public boolean addLiquidTo(Location location, String liquid, int amount) {
 		if (!this.contentsMap.containsKey(location)) return false;
-		this.contentsMap.get(location).put(liquid, this.contentsMap.get(location).get(liquid)+amount);
+		this.contentsMap.get(location).put(ILiquidable.convertID(liquid), this.contentsMap.get(location).get(ILiquidable.convertID(liquid))+amount);
 		return true;
 	}
 	
 	public boolean removeLiquidFrom(Location location, String liquid, int amount) {
 		if (!this.contentsMap.containsKey(location)) return false;
-		this.contentsMap.get(location).put(liquid, this.contentsMap.get(location).get(liquid)-amount);
+		this.contentsMap.get(location).put(ILiquidable.convertID(liquid), this.contentsMap.get(location).get(ILiquidable.convertID(liquid))-amount);
 		return true;
 	}
 	
@@ -50,7 +51,7 @@ public class CustomLiquidHandler {
 	
 	public Integer getLiquidContentsAtAtBasedOnUUID(Location location, String UUID) {
 		try {
-			return this.contentsMap.get(location).get(UUID);
+			return this.contentsMap.get(location).get(ILiquidable.convertID(UUID));
 		} catch (Exception e) {
 			return null;
 		}

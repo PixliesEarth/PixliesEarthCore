@@ -179,14 +179,26 @@ public class ItemBuilder {
     }
     
     public ItemBuilder setArmour(double amount) {
-        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD);
+        AttributeModifier modifier2 = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.CHEST);
+        AttributeModifier modifier3 = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.LEGS);
+        AttributeModifier modifier4 = new AttributeModifier(UUID.randomUUID(), "generic.armor", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.FEET);
         meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier2);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier3);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier4);
         item.setItemMeta(meta);
         return this;
     }
     public ItemBuilder setArmourToughness(double amount) {
-        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+        AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD);
+        AttributeModifier modifier2 = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.CHEST);
+        AttributeModifier modifier3 = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.LEGS);
+        AttributeModifier modifier4 = new AttributeModifier(UUID.randomUUID(), "generic.armor_toughness", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.FEET);
         meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, modifier);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, modifier2);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, modifier3);
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, modifier4);
         item.setItemMeta(meta);
         return this;
     }

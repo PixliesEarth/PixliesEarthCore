@@ -110,7 +110,7 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 			CustomLiquidHandler l = CustomLiquidHandler.getCustomLiquidHandler();
 			try {
 				ItemStack oil = inv.getItem(20);
-				if (oil!=null && ILiquidable.isBucketFormOf(oil, oilID)) {
+				if (oil!=null && ILiquidable.isBucketFormOf(oil, oilID, false)) {
 					if (l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)<getLiquidCapacities().get(oilID)) { // Not full
 						l.addLiquidTo(loc, oilID, 1000);
 						inv.setItem(20, new ItemStack(Material.BUCKET, 1));
@@ -119,7 +119,7 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
 			} catch (Exception ingore) {}
 			try {
 				ItemStack water = inv.getItem(24);
-				if (water!=null && ILiquidable.isBucketFormOf(water, waterID)) {
+				if (water!=null && ILiquidable.isBucketFormOf(water, waterID, false)) {
 					if (l.getLiquidContentsAtAtBasedOnUUID(loc, waterID)<getLiquidCapacities().get(waterID)) { // Not full
 						l.addLiquidTo(loc, waterID, 1000);
 						inv.setItem(24, new ItemStack(Material.BUCKET, 1));
