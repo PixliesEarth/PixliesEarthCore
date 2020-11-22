@@ -22,7 +22,6 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.StringUtil;
 
 import java.util.*;
@@ -44,7 +43,6 @@ public class WarCommand extends CustomCommand {
     	return true;
     }
 
-    //TODO include funi haybale
     @Override
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
         Player player = (Player) commandSender;
@@ -92,7 +90,7 @@ public class WarCommand extends CustomCommand {
         gui.addPane(wars);
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
         hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.NETHER_STAR).setDisplayName("§b§lJustify war-goal").build(), event -> {
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.HAY_BLOCK).setDisplayName("§b§lJustify war-goal").build(), event -> {
             event.setCancelled(true);
             openJustificationGui(profile, nation, gui);
         }), 4, 0);
