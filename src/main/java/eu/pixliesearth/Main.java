@@ -105,7 +105,7 @@ public final class Main extends JavaPlugin {
         instance = this;
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         loader.loadCommand(new WarCommand());
-        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000));
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000), getConfig().getLocation("spawn-location", getServer().getWorld("world").getSpawnLocation()));
         init();
     }
 
@@ -344,8 +344,8 @@ public final class Main extends JavaPlugin {
         getCommand("pay").setExecutor(new PayCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
-        getCommand("tpa").setExecutor(new TpaCommand());
-        getCommand("tpaccept").setExecutor(new TpacceptCommand());
+        // getCommand("tpa").setExecutor(new TpaCommand());
+        // getCommand("tpaccept").setExecutor(new TpacceptCommand());
         getCommand("skull").setExecutor(new SkullCommand());
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
         getCommand("craft").setExecutor(new CraftCommand());

@@ -15,6 +15,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -71,10 +73,12 @@ public class PixliesGun {
             if (result == null) return;
             if (result.getEntity() instanceof Player && ((Player) result.getEntity()).getGameMode() != GameMode.SURVIVAL && ((Player) result.getEntity()).getGameMode() != GameMode.ADVENTURE) return;
             if (result.isHeadshot()) {
-                result.getEntity().damage(ammo.getDamage() * 2, player);
+                result.getEntity().setLastDamageCause(new EntityDamageByEntityEvent(player, result.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, ammo.getDamage()));
+                result.getEntity().setHealth(result.getEntity().getHealth() - (ammo.getDamage() * 2));
                 result.getEntity().getWorld().playSound(result.getEntity().getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
             } else {
-                result.getEntity().damage(ammo.getDamage(), player);
+                result.getEntity().setLastDamageCause(new EntityDamageByEntityEvent(player, result.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, ammo.getDamage()));
+                result.getEntity().setHealth(result.getEntity().getHealth() - ammo.getDamage());
             }
             result.getPositionLocation().getWorld().spawnParticle(Particle.REDSTONE, result.getPositionLocation(), 5, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 15));
         }
