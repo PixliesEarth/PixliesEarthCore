@@ -24,25 +24,6 @@ public class LeaveListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
 
         Player player = event.getPlayer();
-        //TODO Do something lmao
-/*        if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId()) || Main.getInstance().getUtilLists().awaitingGulag2.contains(player.getUniqueId())){
-            Date date = new Date(System.currentTimeMillis()+60*60*1000*24);
-            if(!player.hasPermission("gulag.bypass.ban")) {
-                player.banPlayer("Trying to avoid gulag", date, "The gulag");
-            }
-            if(Main.getInstance().getUtilLists().awaitingGulag1.contains(player.getUniqueId())){
-                Main.getInstance().getUtilLists().awaitingGulag1.remove(player.getUniqueId());
-            }else{
-                Main.getInstance().getUtilLists().awaitingGulag2.remove(player.getUniqueId());
-            }
-        }
-        if(Main.getInstance().getUtilLists().fightingGulag.containsKey(player.getUniqueId()) || Main.getInstance().getUtilLists().fightingGulag.containsValue(player.getUniqueId())){
-            if(Main.getInstance().getUtilLists().fightingGulag.containsKey(player.getUniqueId())){
-                GulagStartListener.fightOver(player, Bukkit.getPlayer(Main.getInstance().getUtilLists().fightingGulag.get(player.getUniqueId())));
-            }else{
-                GulagStartListener.fightOver(player, Bukkit.getPlayer(getKeyByValue(Main.getInstance().getUtilLists().fightingGulag, player.getUniqueId())));
-            }
-        }*/
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
         if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))

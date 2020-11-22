@@ -16,6 +16,7 @@ public enum Religion {
     ORTHODOX('8', Material.GRAY_STAINED_GLASS_PANE),
     JUDAISM('3', Material.LIGHT_BLUE_STAINED_GLASS_PANE),
     ATHEISM('f', Material.WHITE_STAINED_GLASS_PANE),
+    ZOROASTRIANISM('6', Material.ORANGE_STAINED_GLASS_PANE),
     ;
 
     private @Getter final char colour;

@@ -84,7 +84,6 @@ public class PixliesAmmo implements Constants {
     }
 
     public ItemStack getItem() {
-        //TODO: Actual AMMO ITEMS
         return new ItemStack(Material.STICK);
     }
 

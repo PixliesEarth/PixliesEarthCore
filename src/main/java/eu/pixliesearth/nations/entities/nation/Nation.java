@@ -245,7 +245,6 @@ public class Nation {
         save();
     }
 
-    //TODO OTHER FORMULA?
     public int getPoints() {
         return (int) (members.size() * money);
     }

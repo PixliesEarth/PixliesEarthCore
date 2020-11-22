@@ -58,7 +58,6 @@ public class listNation extends SubCommand {
         for (Nation nation : Nations.subList(start, end)) {
             if (nation.getNationId().equals("safezone") || nation.getNationId().equals("warzone"))
                 continue;
-            //TODO HoverEvent flag
             TextComponent comp = new TextComponent("§7* §b" + nation.getName() + " §8- §2§l$§a" + nation.getMoney() + " §8- §a☺ " + nation.getMembers().size());
             lines.add(comp);
         }
