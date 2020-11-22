@@ -160,18 +160,12 @@ public class War {
 
     public void handleLeave(Profile left) {
         if (!running) return;
-        if (this.left.get(players.get(left.getUUID()).getSide()) - 1 == 0) {
-            stop(WarParticipant.WarSide.getOpposite(players.get(left.getUUID()).getSide()));
-        }
+        this.left.put(players.get(left.getUUID()).getSide(), this.left.get(players.get(left.getUUID()).getSide()) - 1);
         players.remove(left.getUUID());
     }
 
     public void handleKill(Profile killed) {
         if (!running) return;
-        if (left.get(players.get(killed.getUUID()).getSide()) - 1 == 0) {
-            stop(WarParticipant.WarSide.getOpposite(players.get(killed.getUUID()).getSide()));
-            return;
-        }
         if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
             instance.getUtilLists().inGulag.remove(killed.getUUID());
@@ -185,15 +179,18 @@ public class War {
 
     public void tick() {
         if (!declareAble) {
-            if (this.timers.containsKey("warGoalJustification")) {
-                if (this.timers.get("warGoalJustification").hasExpired()) {
+            if (this.timers.containsKey("warGoalJustification"))
+                if (this.timers.get("warGoalJustification").hasExpired())
                     makeDeclarable();
-                }
-            }
         } else {
             if (this.timers.containsKey("gracePeriod"))
                 if (this.timers.get("gracePeriod").hasExpired())
                     start();
+            if (this.left.get(WarParticipant.WarSide.DEFENDER) <= 0) {
+                stop(WarParticipant.WarSide.AGGRESSOR);
+            } else if (this.left.get(WarParticipant.WarSide.AGGRESSOR) <= 0) {
+                stop(WarParticipant.WarSide.DEFENDER);
+            }
         }
     }
 

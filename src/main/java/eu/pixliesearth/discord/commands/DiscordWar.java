@@ -26,18 +26,18 @@ public class DiscordWar extends DiscordCommand {
         if (war.getTimers().containsKey("gracePeriod")) {
             embed.setDescription("Grace-period: " + war.getTimers().get("gracePeriod").getRemainingAsString());
             embed.addInlineField("Attacker", war.getAggressorInstance().getName());
-            embed.addInlineField("-----", "-----");
+            embed.addInlineField("    ", "    ");
             embed.addInlineField("Defender", war.getDefenderInstance().getName());
             event.getChannel().sendMessage(embed);
             return;
         }
 
         embed.addInlineField("Attacker", war.getAggressorInstance().getName());
-        embed.addInlineField("-----", "-----");
+        embed.addInlineField("    ", "    ");
         embed.addInlineField("Defender", war.getDefenderInstance().getName());
 
         embed.addInlineField("Fighters left", war.getLeft().get(WarParticipant.WarSide.AGGRESSOR)+"");
-        embed.addInlineField("-----", "-----");
+        embed.addInlineField("    ", "    ");
         embed.addInlineField("Fighters left", war.getLeft().get(WarParticipant.WarSide.DEFENDER)+"");
 
         embed.addInlineField("GULAG", "INFO");
