@@ -11,6 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class MachinesCommand extends CustomCommand {
 
 	public MachinesCommand() {
@@ -20,6 +23,14 @@ public class MachinesCommand extends CustomCommand {
 	@Override
 	public String getCommandName() {
 		return "machines";
+	}
+
+	@Override
+	public Set<String> getCommandAliases() {
+		Set<String> returner = new HashSet<>();
+		returner.add("items");
+		returner.add("recipes");
+		return returner;
 	}
 	
 	@Override
