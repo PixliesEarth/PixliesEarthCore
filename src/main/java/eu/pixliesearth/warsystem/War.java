@@ -100,8 +100,15 @@ public class War {
         return true;
     }
 
+    public boolean skipGrace() {
+        if (!this.timers.containsKey("gracePeriod")) return false;
+        start();
+        return true;
+    }
+
     @SneakyThrows
     public void start() {
+        Main.getWarCollection().findOneAndDelete(new Document("id", id));
         Nation aggressor = Nation.getById(mainAggressor);
         aggressor.getExtras().remove("WAR:" + mainDefender);
         aggressor.save();
@@ -120,6 +127,7 @@ public class War {
         aggressor.getExtras().remove("WAR:" + mainDefender);
         aggressor.save();
         instance.getUtilLists().wars.remove(this.getId());
+        Main.getWarCollection().findOneAndDelete(new Document("id", id));
         broadcastDiscord(getDefenderInstance(), "**" + getAggressorInstance().getName() + "** just cancelled their war justification against you.");
     }
 
@@ -186,10 +194,12 @@ public class War {
             if (this.timers.containsKey("gracePeriod"))
                 if (this.timers.get("gracePeriod").hasExpired())
                     start();
-            if (this.left.get(WarParticipant.WarSide.DEFENDER) <= 0) {
-                stop(WarParticipant.WarSide.AGGRESSOR);
-            } else if (this.left.get(WarParticipant.WarSide.AGGRESSOR) <= 0) {
-                stop(WarParticipant.WarSide.DEFENDER);
+            if (running) {
+                if (this.left.get(WarParticipant.WarSide.DEFENDER) <= 0) {
+                    stop(WarParticipant.WarSide.AGGRESSOR);
+                } else if (this.left.get(WarParticipant.WarSide.AGGRESSOR) <= 0) {
+                    stop(WarParticipant.WarSide.DEFENDER);
+                }
             }
         }
     }
