@@ -51,6 +51,10 @@ public class InvitePlayerCommand extends CustomSubCommand {
             player.sendMessage(Lang.WAR + "§cYou are not in a war.");
             return false;
         }
+        if (war.isRunning()) {
+            player.sendMessage(Lang.WAR + "§7The war has already started.");
+            return false;
+        }
         Player target = Bukkit.getPlayer(parameters[0]);
         if (target == null) {
             player.sendMessage(Lang.WAR + "§7This player is not online.");

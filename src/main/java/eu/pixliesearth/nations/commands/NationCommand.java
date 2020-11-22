@@ -74,10 +74,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 	    try {
             SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
         } catch (Exception e) {
-/*	        StringWriter sw = new StringWriter();
-	        e.printStackTrace(new PrintWriter(sw));
-	        System.out.println("§7There was a §cproblem §7with nation commands: \n§b" + sw.toString());
-	        sender.sendMessage(Lang.NATION + "§cThere was a problem with your input, check if you used the correct syntax.");*/
             getSubCommandAliases().get(strings[0].toLowerCase()).sendSyntax(sender, strings[0]);
         }
 

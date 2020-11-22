@@ -29,6 +29,7 @@ public class JoinListener implements Listener {
         event.setJoinMessage("§8[§a§l+§8] §7" + player.getName());
 
         if (!player.hasPlayedBefore()) {
+            player.teleport(instance.getFastConf().getSpawnLocation());
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             profile.openLangGui();

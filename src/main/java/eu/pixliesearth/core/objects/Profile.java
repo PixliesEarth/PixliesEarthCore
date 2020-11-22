@@ -302,6 +302,36 @@ public class Profile {
         }, cooldown * 20);
     }
 
+    public void teleport(Location location, String locationName, double manaNeeded, long cooldown) {
+        Player player = getAsPlayer();
+        if (isStaff()) {
+            player.teleport(location);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+            return;
+        }
+        if (manaNeeded > energy) {
+            player.sendMessage(Lang.NOT_ENOUGH_ENERGY.get(player));
+            return;
+        }
+        if (cooldown < 1.0)
+            cooldown = (long) 1.0;
+        Timer timer = new Timer(cooldown * 1000);
+        timers.put("Teleport", timer.toMap());
+        save();
+        player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", locationName).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
+        Bukkit.getScheduler().runTaskLater(instance, () -> {
+            if (timers.containsKey("Teleport")) {
+                timers.remove("Teleport");
+                save();
+                player.teleport(location);
+                Energy.take(instance.getProfile(player.getUniqueId()), manaNeeded);
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+            }
+        }, cooldown * 20);
+    }
+
     public void setTimer(String name, long duration) {
         this.timers.put(name, new Timer(duration).toMap());
     }

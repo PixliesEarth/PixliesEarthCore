@@ -51,6 +51,10 @@ public class JustifyWarGoalCommand extends CustomSubCommand {
         Main instance = Main.getInstance();
         Player player = (Player) commandSender;
         Profile profile = instance.getProfile(player.getUniqueId());
+        if (profile.isInWar()) {
+            player.sendMessage(Lang.WAR + "§7You are already in a war.");
+            return false;
+        }
         if (!profile.isInNation()) {
             Lang.NOT_IN_A_NATION.send(commandSender);
             return false;
