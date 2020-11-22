@@ -274,6 +274,7 @@ public class ItemICBM extends CustomItem {
 					@Override
 					public void run() {
 						Location l = getBS(id).clone();
+						if (l==null) Bukkit.getScheduler().cancelTask(h.getLocationEvent(start));
 						remMissile(l);
 						remBS(id);
 						l.setY(l.getY()+1D);

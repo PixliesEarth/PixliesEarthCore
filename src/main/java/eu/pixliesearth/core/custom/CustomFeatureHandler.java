@@ -156,9 +156,21 @@ public class CustomFeatureHandler {
 		registerTickable(new Tickable() {
 			@Override
 			public void onTick() {
-				for (Entry<Location, String> entry : locationToUUIDMap.entrySet())
-					if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) 
-						((CustomMachine)getCustomBlockFromLocation(entry.getKey())).onTick(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+					if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
+						if (getInventoryFromLocation(entry.getKey())==null) {
+							Inventory inv = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getInventory();
+							if (inv!=null) {
+								setInventoryFromLocation(entry.getKey(), inv);
+							}
+						}
+						try {
+							((CustomMachine)getCustomBlockFromLocation(entry.getKey())).onTick(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+						} catch (Exception ignore) {
+							
+						}
+					}
+				}
 			}
 		});
 	}

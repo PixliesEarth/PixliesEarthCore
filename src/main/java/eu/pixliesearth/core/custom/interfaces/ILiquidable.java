@@ -3,6 +3,8 @@ package eu.pixliesearth.core.custom.interfaces;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.inventory.ItemStack;
@@ -22,9 +24,10 @@ public interface ILiquidable {
 	public static final String oxygenID = "Pixlies:Oxygen";
 	public static final String carbonID = "Pixlies:Carbon";
 	public static final String oilID = "Pixlies:Oil";
+	public static final String heliumID = "Pixlies:Helium";
 	
 	public static boolean isBucketFormOf(ItemStack is, String UUID, boolean convert) {
-    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? convertID(UUID) : UUID+"_bucket");
+    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? convertID(UUID)+"_bucket" : UUID+"_bucket") || CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? "Canister_"+convertID(UUID) : "Canister_"+UUID);
     }
 	
 	public static boolean areLiquidsEqual(String id, String id2) {
@@ -146,4 +149,29 @@ public interface ILiquidable {
 	public static String convertID(String id) {
         return (id.equalsIgnoreCase(waterID)) ? getLiquidBondedUUID(hydrogenID, getLiquidBondedUUID(hydrogenID, oxygenID)) : ((id.equalsIgnoreCase(oilID)) ? ("Pixlies:Carbon_Hydrogen"+4) : (id.equals("") ? "null" : id));
     }
+	
+	public default String turnLiquidContentsIntoSavableString(Map<String, Integer> map) {
+		String s = "[";
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			s += ("<"+entry.getKey()+";"+Integer.toString(entry.getValue())+">");
+		}
+		return (s.equals("[") ? "[]" : s+"]");
+	}
+	
+	public default ConcurrentHashMap<String, Integer> turnSavableStringIntoLiquidContents(String data) {
+		if (data.equals("[]")) {
+	        return new ConcurrentHashMap<>();
+	    } else if (!data.startsWith("[<")) {
+	    	return new ConcurrentHashMap<>();
+	    } else {
+	        data = data.substring(2, (data.length()-2));
+	        ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+	        String[] s = data.split("><");
+	        for (String s2 : s){
+	            String[] s3 = s2.split(";");
+	            map.put(s3[0], Integer.parseInt(s3[1]));
+	        }
+	        return map;
+	    }
+	}
 }
