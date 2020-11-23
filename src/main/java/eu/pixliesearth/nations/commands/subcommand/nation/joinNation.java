@@ -95,6 +95,7 @@ public class joinNation extends SubCommand {
                 Profile target2 = instance.getProfile(targetUUID2);
                 target2.getInvites().remove(nation.getNationId());
                 target2.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get(args[2])));
+                target2.save();
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", target2.getAsOfflinePlayer().getName()));
                 break;

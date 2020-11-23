@@ -27,6 +27,7 @@ public class DiscordStats extends DiscordCommand {
                 }
                 UUID uuid = Bukkit.getPlayerUniqueId(split[1]);
                 Profile profile = Main.getInstance().getProfile(uuid);
+                String marriagePartner = profile.getMarriagePartner().equalsIgnoreCase("NONE") ? "Not married." : Bukkit.getOfflinePlayer(UUID.fromString(profile.getMarriagePartner())).getName();
                 event.getChannel().sendMessage(
                         new EmbedBuilder()
                                 .setTitle("**" + profile.getAsOfflinePlayer().getName() + "**")
@@ -36,6 +37,9 @@ public class DiscordStats extends DiscordCommand {
                                 .addInlineField("Mana", profile.getEnergy() + "")
                                 .addInlineField("Nickname", profile.getNickname())
                                 .addInlineField("Boosts", profile.getBoosts() + "")
+                                .addInlineField("Discord synced", profile.discordIsSynced() + "")
+                                .addInlineField("Nation rank", profile.getNationRank())
+                                .addInlineField("Married to", marriagePartner)
                                 .setImage("https://minotar.net/avatar/" + profile.getAsOfflinePlayer().getName())
                                 .setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar())
                 );
