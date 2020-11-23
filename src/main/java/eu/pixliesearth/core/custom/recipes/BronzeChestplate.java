@@ -12,10 +12,12 @@ public class BronzeChestplate extends CustomRecipe {
     public BronzeChestplate() {
         
     }
+
     @Override
     public String getResultUUID() {
         return "Pixlies:Bronze_Chestplate";
     }
+
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();

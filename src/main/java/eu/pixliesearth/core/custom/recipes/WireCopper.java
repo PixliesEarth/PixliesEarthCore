@@ -47,15 +47,15 @@ public class WireCopper extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, null);
+        map.put(0, "minecraft:air");
         map.put(1, "Pixlies:Copper_Dust");
-        map.put(2, null);
+        map.put(2, "minecraft:air");
         map.put(3, "Pixlies:Copper_Dust");
         map.put(4, "Pixlies:Copper_Ingot");
         map.put(5, "Pixlies:Copper_Dust");
-        map.put(6, null);
+        map.put(6, "minecraft:air");
         map.put(7, "Pixlies:Copper_Dust");
-        map.put(8, null);
+        map.put(8, "minecraft:air");
         return map;
     }
 

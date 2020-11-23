@@ -16,6 +16,7 @@ public class BronzeHelmet extends CustomRecipe {
     public String getResultUUID() {
         return "Pixlies:Bronze_Helmet";
     }
+
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();

@@ -10,20 +10,6 @@ import java.util.Map;
 public class CableBasic extends CustomRecipe {
 
 	/**
-	 * The UUID of what machine the recipe should be crafted in. These are:
-	 * 
-	 * <p>CustomCraftingTable = Pixlies:Crafting_Table</p>
-	 * <p>Forge = Machine:Forge</p>
-	 * <p>TinkerTable = Machine:TinkerTable</p>
-	 * <p>FarmingWorkbench = Machine:FarmingWorkBench</p>
-	 * <p>Pottery = Machine:Pottery</p>
-	 */
-	@Override
-	public String craftedInUUID() {
-		return "Pixlies:Crafting_Table";
-	}
-
-	/**
 	 * The UUID of the item to give when crafted
 	 * 
 	 * <p>For minecraft items reference the {@link MinecraftMaterial} Enum like this:
@@ -48,15 +34,15 @@ public class CableBasic extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, null);
+		map.put(0, "minecraft:air");
 		map.put(1, "Pixlies:Rubber");
-		map.put(2, null);
+		map.put(2, "minecraft:air");
 		map.put(3, "Pixlies:Rubber");
 		map.put(4, "Pixlies:Copper_Wire");
 		map.put(5, "Pixlies:Rubber");
-		map.put(6, null);
+		map.put(6, "minecraft:air");
 		map.put(7, "Pixlies:Rubber");
-		map.put(8, null);
+		map.put(8, "minecraft:air");
 		return map;
 	}
 	
