@@ -2,6 +2,7 @@ package eu.pixliesearth.discord.commands;
 
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.DiscordCommand;
+import eu.pixliesearth.localization.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -41,6 +42,8 @@ public class DiscordPay extends DiscordCommand {
         if (transaction) {
             target.depositMoney(amount, "payment from " + profile.getAsOfflinePlayer().getName());
             reply(event, "successfully paid " + op.getName() + " $" + amount + ".");
+            if (op.isOnline())
+                Lang.RECEIVED_MONEY_FROM_PLAYER.send(op.getPlayer(), "%TARGET%;" + profile.getAsOfflinePlayer().getName(), "%AMOUNT%;" + amount);
         } else {
             reply(event, "you don't have enough money for that action. /bal");
         }

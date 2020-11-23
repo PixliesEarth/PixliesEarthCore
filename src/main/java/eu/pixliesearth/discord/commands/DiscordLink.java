@@ -33,7 +33,7 @@ public class DiscordLink extends DiscordCommand {
             profile.backup();
             event.getServer().get().addRoleToUser(event.getMessageAuthor().asUser().get(), event.getServer().get().getRoleById("709463355529887854").get());
             Main.getInstance().getUtilLists().discordcodes.remove(split[1]);
-            Role rank = api.getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(profile.getRank().getName())).get();
+            Role rank = api.getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.getGroupRoleMap().get(profile.getRank().getName())).get();
             rank.addUser(event.getMessageAuthor().asUser().get());
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, your account successfully got verified.");
         } else {

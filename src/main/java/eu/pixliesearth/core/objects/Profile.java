@@ -359,7 +359,7 @@ public class Profile {
     public void syncDiscordAndIngameRoles() {
         if (!discordIsSynced()) return;
         try {
-            Role rank = MiniMick.getApi().getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.groupRoleMap().get(getRank().getName())).get();
+            Role rank = MiniMick.getApi().getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.getGroupRoleMap().get(getRank().getName())).get();
             rank.addUser(MiniMick.getApi().getUserById(discord).get());
         } catch (Exception ignored) {}
     }
