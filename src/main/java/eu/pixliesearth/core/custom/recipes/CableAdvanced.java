@@ -39,7 +39,7 @@ public class CableAdvanced extends CustomRecipe {
 		map.put(1, "Pixlies:Rubber");
 		map.put(2, "Pixlies:Rubber");
 		map.put(3, "Pixlies:Silver_Ingot");
-		map.put(4, "Machine:Cable_Advanced");
+		map.put(4, "Machine:Cable_Basic");
 		map.put(5, "Pixlies:Silver_Ingot");
 		map.put(6, "Pixlies:Rubber");
 		map.put(7, "Pixlies:Rubber");

@@ -69,9 +69,7 @@ public abstract class CustomSubCommand {
 			for (CustomSubCommand subCommand : subCommands) {
 				list.add(subCommand.getCommandName());
 				if (subCommand.getCommandAliases()!=null) {
-					for (String s : subCommand.getCommandAliases()) {
-						list.add(s);
-					}
+					list.addAll(subCommand.getCommandAliases());
 				}
 			}
 			return list;
