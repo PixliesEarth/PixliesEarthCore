@@ -60,7 +60,7 @@ public class ArmourArsenicChestplate extends CustomArmour {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 4;
     }
 
     @Override

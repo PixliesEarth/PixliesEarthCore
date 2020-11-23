@@ -57,7 +57,7 @@ public class WeaponZulfiqar extends CustomWeapon {
 
     @Override
     public Integer getCustomModelData() {
-        return 330;
+        return 2;
     }
 
     @Override

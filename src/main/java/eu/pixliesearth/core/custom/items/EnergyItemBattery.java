@@ -22,7 +22,7 @@ public class EnergyItemBattery extends CustomEnergyItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 4;
     }
 
     @Override

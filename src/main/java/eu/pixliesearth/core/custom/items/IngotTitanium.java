@@ -60,7 +60,7 @@ public class IngotTitanium extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 7;
     }
 
     @Override

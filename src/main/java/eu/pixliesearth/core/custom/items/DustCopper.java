@@ -55,7 +55,7 @@ public class DustCopper extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 5;
     }
 
     @Override
