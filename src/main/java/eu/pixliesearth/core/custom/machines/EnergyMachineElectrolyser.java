@@ -11,9 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
@@ -32,8 +29,8 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 		
 	}
 	
-	long timePerAction = 200L;
-	double energyCost = 50D;
+	public long timePerAction = 200L;
+	public double energyCost = 50D;
 	
 	@Override
 	public String getPlayerHeadUUID() {
@@ -128,32 +125,14 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 	@Override
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
-		try {
-			JSONObject obj = (JSONObject) new JSONParser().parse(map.get("LIQUID"));
-			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 2953303923607067655L;{
-				for (Object key : obj.keySet()) {
-					try {
-						put((String) key, Integer.parseInt((String) obj.get(obj)));
-					} catch (Exception e) {
-						put((String) key, 0);
-					}
-				}
-			}});
-		} catch (ParseException e) {
-			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, getLiquidCapacities().keySet());
-		}
+		CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, turnSavableStringIntoLiquidContents(map.get("LIQUID")));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
-		JSONObject obj = new JSONObject();
-		obj.put(waterID, Integer.toString(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAtAtBasedOnUUID(location, waterID)));
-		obj.put(hydrogenID, Integer.toString(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAtAtBasedOnUUID(location, hydrogenID)));
-		obj.put(oxygenID, Integer.toString(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAtAtBasedOnUUID(location, oxygenID)));
-		map.put("LIQUID", obj.toJSONString());
+		map.put("LIQUID", turnLiquidContentsIntoSavableString(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAt(location)));
 		return map;
 	}
 	

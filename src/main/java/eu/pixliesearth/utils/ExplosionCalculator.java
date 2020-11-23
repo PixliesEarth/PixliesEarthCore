@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockExplodeEvent;
 
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -58,6 +59,7 @@ public class ExplosionCalculator {
 	private @Getter List<Location> explodeLocations = new ArrayList<>();
 	private @Getter float explosiveValue = -1F;
 	private @Getter @Setter String deathReason = "just exploded!";
+	private @Getter BlockExplodeEvent event;
 	
 	/**
 	 * 
@@ -198,6 +200,21 @@ public class ExplosionCalculator {
 		explodeLocations = list;
 	}
 	
+	public void buildEvent() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getHandler().getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				event = new BlockExplodeEvent(center.getBlock(), new ArrayList<Block>() {private static final long serialVersionUID = -1136583698471659219L;{
+					for (Location l : explodeLocations) {
+						add(l.getBlock());
+					}
+				}}, (isVaporise()) ? 0f : 0.5f);
+			}
+			
+		}, 1l);
+	}
+	
 	public void explode(boolean fire) {
 		if (!isReady()) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
@@ -208,6 +225,11 @@ public class ExplosionCalculator {
 				if (!checkedForAir) {
 					checkForAir();
 				}
+				if (event==null) {
+					buildEvent();
+				}
+				event.callEvent();
+				if (event.isCancelled()) return;
 				for (Location l : explodeLocations) {
 					if (l==null || l.getBlock()==null|| l.getBlock().getType().equals(Material.AIR)) continue;
 					if (h.isCustomBlockAtLocation(l)) {
