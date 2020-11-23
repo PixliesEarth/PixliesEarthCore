@@ -67,16 +67,32 @@ public class CustomFeatureLoader {
 		//loadCustomMachineRecipes(path);
 		loadQuests(path);
 		loadMachines(path);
-		getHandler().loadCustomBlocksFromFile();
-		getHandler().loadMachinesFromFile();
+		try {
+			getHandler().loadCustomBlocksFromFileOptimised();
+		} catch (Exception e) {
+			System.out.println("Failed to load custom blocks");
+		}
+		try {
+			getHandler().loadMachinesFromFileOptimised();
+		} catch (Exception e) {
+			System.out.println("Failed to load custom machines data");
+		}
 		loadVendors(path);
 	}
 	/**
 	 * Saves everything
 	 */
 	public void save() {
-		getHandler().saveCustomBlocksToFile();
-		getHandler().saveMachinesToFile();
+		try {
+			getHandler().saveCustomBlocksToFileOptimised();
+		} catch (Exception e) {
+			System.out.println("Failed to save custom blocks");
+		}
+		try {
+			getHandler().saveMachinesToFileOptimised();
+		} catch (Exception e) {
+			System.out.println("Failed to save custom machines data");
+		}
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			if (customListener instanceof CustomListener) 
 				((CustomListener)customListener).onServerShutdown(this, getHandler());

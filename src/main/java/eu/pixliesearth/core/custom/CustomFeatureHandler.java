@@ -1,11 +1,6 @@
 package eu.pixliesearth.core.custom;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,11 +20,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 
@@ -120,6 +107,7 @@ public class CustomFeatureHandler {
 
 			@Override
 			public void run() {
+				System.out.println("Machine tickable enabled!");
 				new BukkitRunnable() {
 					 @Override
 					 public void run() {
@@ -425,6 +413,7 @@ public class CustomFeatureHandler {
 	/**
 	 * Saves custom blocks to the save file
 	 */
+	@Deprecated
 	public void saveCustomBlocksToFile() {
 		JSONFile f = new JSONFile(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblocks"); // getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"
 		f.deleteFile();
@@ -434,7 +423,6 @@ public class CustomFeatureHandler {
 			f.put(l.getWorld().getUID().toString()+":"+l.getX()+":"+l.getY()+":"+l.getZ(), c.getValue());
 		}
 		f.saveJsonToFile();
-		saveCustomBlocksToFileOptimised(); // Test it
 	}
 	
 	// TEST SAVING SYSTEM
@@ -442,214 +430,73 @@ public class CustomFeatureHandler {
 	public void saveCustomBlocksToFileOptimised() {
 		System.out.println("Saving CustomBlocks to file!");
 		try {
-			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblockstest", ".txt");
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customBlocks", ".txt");
 			fb.clearFile();
-			getAllBlocksAsSaveableData().saveData(fb);
+			fb.writeToFile(InventoryUtils.serialize(locationToUUIDMap));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public SaveableData getAllBlocksAsSaveableData() {
-		return new SaveableData(locationToUUIDMap);
-	}
-	
-	public static class SaveableData implements Serializable {
-		
-		private static final transient long serialVersionUID = -5255946918144816399L;
-		
-		private final @Getter Map<Location, String> map;
-		
-		public SaveableData(Map<Location, String> map) {
-			HashMap<Location, String> newmap = new HashMap<Location, String>();
-			map.forEach((k,v) -> newmap.put(k, v)); // Clone the map
-			this.map = newmap;
-		}
-		
-		public boolean saveData(FileBase fileBase) {
-	        return saveData(fileBase.getFileConstruct());
-	    }
-		
-		public boolean saveData(String filePath) {
-	        try {
-	            BukkitObjectOutputStream out = new BukkitObjectOutputStream(new GZIPOutputStream(new FileOutputStream(filePath)));
-	            out.writeObject(this);
-	            out.close();
-	            return true;
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
-		
-		public static SaveableData loadData(String filePath) {
-	        try {
-	            BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(filePath)));
-	            SaveableData data = (SaveableData) in.readObject();
-	            in.close();
-	            return data;
-	        } catch (ClassNotFoundException | IOException e) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	    }
-		
-	}
-	
-	// TODO: notes
-	@SuppressWarnings("unchecked")
-	public void saveMachinesToFile() {
-		
-		// String splitkey = ":!:!:";
-		
-		FileBase f = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "machines", ".json");
+	public void saveMachinesToFileOptimised() {
+		System.out.println("Saving CustomMachines data to file!");
 		try {
-			f.clearFile();
-		} catch (IOException e) {
-			System.err.println("Unable to save machines as there was a problem clearing the file");
-			return;
-		}
-		JSONObject obj = new JSONObject();
-		for (Entry<Location, String> entry : this.locationToUUIDMap.entrySet()) {
-			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
-				// JSONArray a = new JSONArray();
-				JSONObject obj2 = new JSONObject();
-				Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
-				if (map==null || map.isEmpty()) {
-					// do nothin
-				} else {
-					map.entrySet().forEach(e -> {
-						obj2.put(e.getKey(), e.getValue());
-					});
-					/* for (Entry<String, String> entry2 : map.entrySet()) {
-						a.add(entry2.getKey()+splitkey+entry2.getValue());
-					}*/
-				}
-				obj2.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
-				obj2.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
-				// a.add("MUUID"+splitkey+getCustomBlockFromLocation(entry.getKey()).getUUID());
-				// a.add("MLOCATION"+splitkey+entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
-				if (getInventoryFromLocation(entry.getKey())!=null) {
-					obj2.put("MINV", InventoryUtils.makeInventoryToJSONObject(getInventoryFromLocation(entry.getKey())));
-				}
-				obj.put(entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ(), obj2);
-			}
-		}
-		
-		try {
-			f.writeToFile(obj.toJSONString());
-		} catch (IOException e) {
-			System.out.println("Unable to save machines due to an IO exception");
-		}
-		
-		
-		
-		/*int i = 0;
-		for (Entry<Location, String> entry : this.locationToUUIDMap.entrySet()) {
-			if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
-				try {
-					DataFile f = new DataFile(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/machines/", Integer.toString(i));
-					if (((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()))==null) {
-						Map<String, String> map = new HashMap<String, String>();
-						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
-						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
-						f.saveDataMap(map);
-					} else {
-						Map<String, String> map = ((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
-						map.put("MUUID", getCustomBlockFromLocation(entry.getKey()).getUUID());
-						map.put("MLOCATION", entry.getKey().getWorld().getUID().toString()+":"+entry.getKey().getX()+":"+entry.getKey().getY()+":"+entry.getKey().getZ());
-						f.saveDataMap(map);
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customMachines", ".txt");
+			fb.clearFile();
+			Map<Location, String> map = new HashMap<Location, String>();
+			for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+				if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
+					Map<String, String> map2 = ((CustomMachine) getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+					if (map2==null) {
+						map2 = new HashMap<String, String>();
 					}
-					f.saveDataMap(((CustomMachine)getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey())));
-				} catch (IOException e) {
-					System.err.println("Unable to save the machine "+getCustomBlockFromLocation(entry.getKey()).getUUID()+" due to a IOException");
-				} finally {
-					i++;
+					map2.put("MID", entry.getValue());
+					Inventory inv = getInventoryFromLocation(entry.getKey());
+					if (inv!=null) {
+						map2.put("MINV", InventoryUtils.makeInventoryToString(inv));
+					}
+					map.put(entry.getKey(), InventoryUtils.serialize(map2));
 				}
 			}
-		}*/
+			fb.writeToFile(InventoryUtils.serialize(map));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	// TODO: notes
+	
 	@SuppressWarnings("unchecked")
-	public void loadMachinesFromFile() {
-		
-		// String splitkey = ":!:!:";
-		
+	public void loadMachinesFromFileOptimised() {
 		try {
-			FileBase f = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "machines", ".json");
-			JSONParser parser = new JSONParser();
-			ArrayList<String> c = f.loadFileIntoArray();
-			if (c==null || c.isEmpty()) {
-				System.out.println("There is no machine data to load!");
-				return;
-			}
-			String c2 = c.get(0);
-			if (c2==null || c2.equals("")) {
-				System.out.println("There is no machine data to load!");
-				return;
-			}
-			Object o = parser.parse(f.loadFileIntoArray().get(0));
-			
-			JSONObject obj = (JSONObject) o;
-			
-			obj.keySet().forEach(key -> {
-				JSONObject obj2 = (JSONObject) obj.get(key);
-				Map<String, String> map = new HashMap<>();
-				obj2.forEach((k,v) -> map.put((String)k,v.toString()));
-				String[] l2 = map.get("MLOCATION").split(":");
-				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
-				getCustomMachines().forEach(m -> {
-					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
-						Inventory i = m.getInventory();
-						if (i!=null) {
-							if (obj2.get("MINV")!=null) {
-								InventoryUtils.getInventoryContentsFromJSONObject((JSONObject)obj2.get("MINV"), i);
-							}
-							this.locationToInventoryMap.put(location, i);
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customMachines", ".txt");
+			Map<Location, String> map = (Map<Location, String>) InventoryUtils.deserialize(String.join("", fb.loadFileIntoArray()));
+			for (Entry<Location, String> entry : map.entrySet()) {
+				Map<String, String> map2 = (Map<String, String>) InventoryUtils.deserialize(entry.getValue());
+				CustomItem ci = getCustomItemFromUUID(map2.get("MID"));
+				if (entry.getValue()==null) System.out.println("Machine data is null");
+				if (ci instanceof CustomMachine) {
+					Inventory inv = ((CustomMachine) ci).getInventory();
+					((CustomMachine) ci).loadFromSaveData(inv, entry.getKey(), map2);
+					if (inv!=null) {
+						String data2 = map2.get("MINV");
+						if (data2!=null) {
+							InventoryUtils.setInventoryContentsFromString(data2, inv);
 						}
-						m.loadFromSaveData(i, location, map);
-						// System.err.println("[DEBUG] loaded the machine "+m.getUUID()+" with the data:");
-						// System.err.println("[DEBUG] "+map.get("MLOCATION"));
-						// System.err.println("[DEBUG] size? "+map.size());
-						// System.err.println("[DEBUG] inv? "+(i!=null));
-					}
-				});
-			});
-			
-		} catch (FileNotFoundException | ParseException e) {
-			System.out.println("Unable to load machines due to an exception");
-		}
-		
-		/*FileDirectory d = new FileDirectory(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/"+"/machines/");
-		for (FileBase f : d.getFilesInDirectory()) {
-			DataFile df = new DataFile(f.getFilePath(), f.getFileName(), f.getFileExtension());
-			try {
-				Map<String, String> map = df.loadDataMap();
-				String[] l2 = map.get("MLOCATION").split(":");
-				Location location = new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3]));
-				for (CustomMachine m : getCustomMachines()) {
-					if (m.getUUID().equalsIgnoreCase(map.get("MUUID"))) {
-						Inventory i = m.getInventory();
-						if (i!=null) 
-							this.locationToInventoryMap.put(location, i);
-						m.loadFromSaveData(i, location, map);
+						locationToInventoryMap.put(entry.getKey(), inv);
 					}
 				}
-			} catch (IOException e) {
-				System.err.println("Unable to load a machine due to a IOException");
-			} finally {
-				df.deleteFile();
 			}
-		}*/
+		} catch (Exception e) {
+			System.out.println("Error loading machines");
+		}
 	}
-	/**
-	 * Loads custom blocks from the save file
-	 */
-	public void loadCustomBlocksFromFile() {
-		JSONFile f = new JSONFile(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customblocks");
-		for (String l : f.keySet()) {
-			String[] l2 = l.split(":");
-			this.locationToUUIDMap.put(new Location(Bukkit.getWorld(UUID.fromString(l2[0])), Double.parseDouble(l2[1]), Double.parseDouble(l2[2]), Double.parseDouble(l2[3])), f.get(l));
+	
+	@SuppressWarnings("unchecked")
+	public void loadCustomBlocksFromFileOptimised() {
+		FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customBlocks", ".txt");
+		try {
+			this.locationToUUIDMap.putAll((Map<Location, String>) InventoryUtils.deserialize(String.join("", fb.loadFileIntoArray())));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 	// TODO: notes

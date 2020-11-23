@@ -42,7 +42,7 @@ public class EnergyBlockNuclearGenerator2 extends CustomEnergyBlock implements I
 	
 	@Override
 	public Material getMaterial() {
-		return Material.BEACON;
+		return Material.SHROOMLIGHT;
 	}
 	
 	@Override

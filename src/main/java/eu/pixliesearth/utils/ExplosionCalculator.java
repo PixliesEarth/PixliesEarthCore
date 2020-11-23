@@ -199,22 +199,6 @@ public class ExplosionCalculator {
 		}
 		explodeLocations = list;
 	}
-	
-	public void buildEvent() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getHandler().getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				event = new BlockExplodeEvent(center.getBlock(), new ArrayList<Block>() {private static final long serialVersionUID = -1136583698471659219L;{
-					for (Location l : explodeLocations) {
-						add(l.getBlock());
-					}
-				}}, (isVaporise()) ? 0f : 0.5f);
-			}
-			
-		}, 1l);
-	}
-	
 	public void explode(boolean fire) {
 		if (!isReady()) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
@@ -225,9 +209,11 @@ public class ExplosionCalculator {
 				if (!checkedForAir) {
 					checkForAir();
 				}
-				if (event==null) {
-					buildEvent();
-				}
+				BlockExplodeEvent event = new BlockExplodeEvent(center.getBlock(), new ArrayList<Block>() {private static final long serialVersionUID = -1136583698471659219L;{
+					for (Location l : explodeLocations) {
+						add(l.getBlock());
+					}
+				}}, (isVaporise()) ? 0f : 0.5f);
 				event.callEvent();
 				if (event.isCancelled()) return;
 				for (Location l : explodeLocations) {

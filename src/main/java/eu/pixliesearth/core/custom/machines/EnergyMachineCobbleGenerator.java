@@ -72,7 +72,8 @@ public class EnergyMachineCobbleGenerator extends CustomEnergyCrafterMachine {
 			map.put("TIMEREX", Long.toString(timer.getExpiry()));
 			map.put("TIMEREN", Boolean.toString(timer.isEnded()));
 		}
-		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
+		Double energy = CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location);
+		map.put("ENERGY", Double.toString((energy==null) ? 0 : energy));
 		int i = 0;
 		for (ItemStack is : inventory.getContents()) {
 			if (is==null) continue;

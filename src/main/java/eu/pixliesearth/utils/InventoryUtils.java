@@ -1,5 +1,7 @@
 package eu.pixliesearth.utils;
 
+import java.io.ByteArrayInputStream;
+
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.inventory.Inventory;
@@ -11,9 +13,60 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 
-import java.io.ByteArrayInputStream;
-
 public class InventoryUtils {
+	
+	public static String makeInventoryToString(Inventory inv) {
+		return itemStackArrayToBase64(inv.getContents());
+	}
+	
+	public static void setInventoryContentsFromString(String data, Inventory inv) {
+		try {
+            ItemStack[] isl = itemStackArrayFromBase64(data);
+            for (int i = 0; i < isl.length; i++) {
+            	inv.setItem(i, isl[i]);
+            }
+        } catch (Exception ignore) {}
+	}
+	
+	
+	private static String itemStackArrayToBase64(ItemStack[] items) {
+    	try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
+            
+            // Write the size of the inventory
+            dataOutput.writeInt(items.length);
+            
+            // Save every element in the list
+            for (int i = 0; i < items.length; i++) {
+                dataOutput.writeObject(items[i]);
+            }
+            
+            // Serialize that array
+            dataOutput.close();
+            return Base64Coder.encodeLines(outputStream.toByteArray());
+        } catch (Exception e) {
+            return "";
+        }
+    }
+	
+	private static ItemStack[] itemStackArrayFromBase64(String data) {
+    	try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
+            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
+            ItemStack[] items = new ItemStack[dataInput.readInt()];
+    
+            // Read the serialized inventory
+            for (int i = 0; i < items.length; i++) {
+            	items[i] = (ItemStack) dataInput.readObject();
+            }
+            
+            dataInput.close();
+            return items;
+        } catch (Exception ignore) {
+            return new ItemStack[0];
+        }
+    }
 	
 	@SuppressWarnings("unchecked")
 	public static void getInventoryContentsFromJSONObject(JSONObject obj, Inventory inv) {
