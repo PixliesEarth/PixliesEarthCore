@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -161,5 +162,11 @@ public class EnergyBlockNuclearGenerator2 extends CustomEnergyBlock implements I
 				if (b.getType().equals(Material.WATER) || b.getType().equals(Material.ICE) || b.getType().equals(Material.FROSTED_ICE) || b.getType().equals(Material.BLUE_ICE))
 					i++;
 		return new ItemBuilder(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setDisplayName("§bCooling Information").addLoreLine("§3Surrounding water sources: "+Integer.toString(i)).addLoreLine("§3Coolants: "+"?"/*TODO: make coolant*/).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+    }
+    
+    @Override
+    public boolean BlockPlaceEvent(BlockPlaceEvent event) {
+    	CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(event.getBlock().getLocation(), getLiquidCapacities().keySet());
+    	return super.BlockPlaceEvent(event);
     }
 }
