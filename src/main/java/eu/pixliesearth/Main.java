@@ -163,12 +163,13 @@ public final class Main extends JavaPlugin {
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
     private @Getter @Setter Gulag gulag;
+    private @Getter final boolean warEnabled = true;
 
     @Override
     public void onEnable() {
         instance = this;
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
-        loader.loadCommand(new WarCommand());
+        if (warEnabled) loader.loadCommand(new WarCommand());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000), getConfig().getLocation("spawn-location", getServer().getWorld("world").getSpawnLocation()));
         init();
     }
@@ -324,7 +325,7 @@ public final class Main extends JavaPlugin {
 
         utilThread = new UtilThread();
         utilThread.start();
-        new WarThread().start();
+        if (warEnabled) new WarThread().start();
 
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
