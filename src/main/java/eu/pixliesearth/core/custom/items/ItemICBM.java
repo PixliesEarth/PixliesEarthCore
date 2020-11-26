@@ -26,6 +26,7 @@ import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ExplosionCalculator;
 import eu.pixliesearth.utils.NBTUtil;
@@ -130,7 +131,23 @@ public class ItemICBM extends CustomItem {
 			if (id.equals("Pixlies:ICBM_Location_Holder")) {
 				NBTTags tags = NBTUtil.getTagsFromItem(itemStack);
 				location = new Location(event.getPlayer().getWorld(), Integer.parseInt(tags.getString("x")), Integer.parseInt(tags.getString("y")), Integer.parseInt(tags.getString("z")));
-			} else if (id.equals("Pixlies:Fuel_Rod")) {
+			} else if (id.equals("Pixlies:ICBM_Card")) {
+				NBTTags tags = NBTUtil.getTagsFromItem(itemStack);
+				range += Integer.parseInt(tags.getString("r"));
+				explosive += Integer.parseInt(tags.getString("e"));
+				launchtime += Integer.parseInt(tags.getString("l"));
+				playerdamage += Integer.parseInt(tags.getString("d"));
+			} else { 
+				CustomItem ci = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
+				if (ci instanceof IMissileFuel) {
+					IMissileFuel m = (IMissileFuel) ci;
+					range += m.getMissileRangeValue();
+					explosive += m.getMissileExplosiveValue();
+					launchtime += m.getMissileLaunchTimeValue();
+					playerdamage += m.getMissilePlayerDamageValue();
+				}
+			}
+				/**if (id.equals("Pixlies:Fuel_Rod")) {
 				range += 5;
 				explosive += 1;
 				launchtime -= 3;
@@ -165,7 +182,7 @@ public class ItemICBM extends CustomItem {
 				explosive += Integer.parseInt(tags.getString("e"));
 				launchtime += Integer.parseInt(tags.getString("l"));
 				playerdamage += Integer.parseInt(tags.getString("d"));
-			}
+			} */
 			if (launchtime<5) {
 				launchtime = 5;
 			}
