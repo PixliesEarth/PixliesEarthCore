@@ -7,7 +7,7 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class CableUltimate extends CustomRecipe {
+public class RemoteInteractor extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class CableUltimate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Machine:Cable_Ultimate";
+		return "Pixlies:Remote_Interactor";
 	}
 	/**
 	 * How many of the result to give
@@ -59,15 +59,15 @@ public class CableUltimate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:gold_ingot");
-		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Ultimate");
-		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Machine:Cable_Advanced");
-		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Ultimate");
-		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:Aluminum_Ingot");
+		map.put(0, "Minecraft:ender_pearl");
+		map.put(1, "Minecraft:ender_eye");
+		map.put(2, "Minecraft:ender_pearl");
+		map.put(3, "Minecraft:ender_eye");
+		map.put(4, "Pixlies:Capacitor_Ultimate");
+		map.put(5, "Minecraft:ender_eye");
+		map.put(6, "Minecraft:ender_pearl");
+		map.put(7, "Minecraft:ender_eye");
+		map.put(8, "Minecraft:ender_pearl");
 		return map;
 	}
 	/**

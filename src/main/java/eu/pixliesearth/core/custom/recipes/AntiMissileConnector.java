@@ -1,13 +1,13 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class CableUltimate extends CustomRecipe {
+import java.util.HashMap;
+import java.util.Map;
+
+public class AntiMissileConnector extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class CableUltimate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Machine:Cable_Ultimate";
+		return "Pixlies:AntiMissile_Connector";
 	}
 	/**
 	 * How many of the result to give
@@ -59,15 +59,15 @@ public class CableUltimate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:gold_ingot");
-		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Ultimate");
-		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Machine:Cable_Advanced");
-		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Ultimate");
-		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:Aluminum_Ingot");
+		map.put(0, "Pixlies:Aluminium_Block");
+		map.put(1, "Pixlies:Capacitor_Ultimate");
+		map.put(2, "Pixlies:Copper_Block");
+		map.put(3, "Pixlies:Capacitor_Ultimate");
+		map.put(4, "Pixlies:Machine_Base_Energy");
+		map.put(5, "Pixlies:Capacitor_Ultimate");
+		map.put(6, "Pixlies:Circuit_Board");
+		map.put(7, "Pixlies:Capacitor_Ultimate");
+		map.put(8, "Minecraft:gold_block");
 		return map;
 	}
 	/**

@@ -57,14 +57,15 @@ public class InventoryUtils {
             ItemStack[] items = new ItemStack[dataInput.readInt()];
     
             // Read the serialized inventory
-            int i = 0;
+            /*int i = 0;
             while(dataInput.available() > 0) {
             	items[i] = (ItemStack) dataInput.readObject();
             	i++;
-            }
-            /*for (int i = 0; i < items.length; i++) {
-            	items[i] = (ItemStack) dataInput.readObject();
             }*/
+            
+            for (int i = 0; i < items.length; i++) {
+            	items[i] = (ItemStack) dataInput.readObject();
+            }
             
             dataInput.close();
             return items;

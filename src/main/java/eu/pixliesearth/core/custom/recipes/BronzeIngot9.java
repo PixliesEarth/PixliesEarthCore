@@ -1,13 +1,13 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class CableUltimate extends CustomRecipe {
+import java.util.HashMap;
+import java.util.Map;
+
+public class BronzeIngot9 extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,14 +29,14 @@ public class CableUltimate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Machine:Cable_Ultimate";
+		return "Pixlies:Bronze_Ingot";
 	}
 	/**
 	 * How many of the result to give
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 9;
 	}
 	/**
 	 * The era required to craft the item
@@ -59,15 +59,15 @@ public class CableUltimate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:gold_ingot");
-		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Ultimate");
-		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Machine:Cable_Advanced");
-		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Ultimate");
-		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:Aluminum_Ingot");
+		map.put(0, "Minecraft:air");
+		map.put(1, "Minecraft:air");
+		map.put(2, "Minecraft:air");
+		map.put(3, "Minecraft:air");
+		map.put(4, "Pixlies:Bronze_Block");
+		map.put(5, "Minecraft:air");
+		map.put(6, "Minecraft:air");
+		map.put(7, "Minecraft:air");
+		map.put(8, "Minecraft:air");
 		return map;
 	}
 	/**

@@ -127,7 +127,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
 	public void defendAgainst(Location location, Location missile) {
 		if (location==null || missile==null) return;
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-    	h.removeCustomBlockFromLocation(new Location(location.getWorld(), location.getX(), location.getY(), location.getZ()));
+    	h.removeCustomBlockFromLocation(new Location(location.getWorld(), location.getX(), location.getY()+1D, location.getZ()));
     	h.setCustomBlockToLocation(new Location(missile.getWorld(), missile.getX(), missile.getY()-1D, missile.getZ()), h.getCustomItemFromClass(BlockAntiMissileHead.class).getUUID(), true);
     }
 	
