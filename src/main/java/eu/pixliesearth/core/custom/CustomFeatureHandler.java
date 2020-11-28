@@ -29,6 +29,8 @@ import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 import lombok.Getter;
 import lombok.Setter;
@@ -354,7 +356,7 @@ public class CustomFeatureHandler {
 	 * @return The {@link ItemStack} of the {@link CustomItem}
 	 */
 	public ItemStack getItemStackFromCustomItem(CustomItem customItem) {
-		return this.customItemsToItemStackMap.get(customItem).clone();
+		return (customItem.isUnstackable()) ? new ItemBuilder(customItem.buildItem().clone()).addNBTTag("UNSTACKABLE", UUID.randomUUID().toString(), NBTTagType.STRING).build() : this.customItemsToItemStackMap.get(customItem).clone();
 	}
 	/**
 	 * Inputs {@link CustomFeatureHandler#getCustomItemFromItemStack(ItemStack)} into {@link CustomFeatureHandler#getClassFromCustomItem(CustomItem)} and returns the result

@@ -2,22 +2,18 @@ package eu.pixliesearth.core.custom.items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -57,7 +53,7 @@ public class EnergyItemRemoteInteractor extends CustomEnergyItem {
     @Override
     public List<String> getDefaultLore() {
         return new ArrayList<String>() {private static final long serialVersionUID = -3234274418406689465L;{
-        	add("§3Bound to: §bNone");
+        	add("§3Shift Right-Click to open the inventory!");
         	}};
     }
 
@@ -90,18 +86,12 @@ public class EnergyItemRemoteInteractor extends CustomEnergyItem {
         		else 
         			obj.put(Integer.toString(i), s);
         	put("CONTENTS", obj.toString());
-        	put("NoneStackable", UUID.randomUUID().toString()); // Makes it non-stackable
 		}};
     }
-
+    
     @Override
-    public Map<Enchantment, Integer> getDefaultEnchants() {
-        return new HashMap<Enchantment, Integer>();
-    }
-
-    @Override
-    public Set<ItemFlag> getItemFlags(){
-        return new HashSet<ItemFlag>();
+    public boolean isUnstackable() {
+    	return true;
     }
 
     @Override

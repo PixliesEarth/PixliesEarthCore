@@ -28,7 +28,9 @@ public class ItemBackPack extends CustomItem {
 
     @Override
     public List<String> getDefaultLore() {
-        return null;
+        return new ArrayList<String>() {private static final long serialVersionUID = -3234274418406689465L;{
+        	add("§3Shift Right-Click to open the inventory!");
+        	}};
     }
 
     @Override
@@ -54,8 +56,12 @@ public class ItemBackPack extends CustomItem {
         	for (int i = 0; i < 27; i++) 
         		obj.put(Integer.toString(i), "A");
         	put("CONTENTS", obj.toString());
-        	put("NoneStackable", UUID.randomUUID().toString()); // Makes it non-stackable
 		}};
+    }
+    
+    @Override
+    public boolean isUnstackable() {
+    	return true;
     }
 
     @Override
