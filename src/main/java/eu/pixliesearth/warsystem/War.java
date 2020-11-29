@@ -52,11 +52,15 @@ public class War {
         return Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false);
     }
 
+    public static double getCost(Nation aggressor, Nation defender) {
+        return 1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20);
+    }
+
     @SneakyThrows
     public boolean justifyWarGoal() {
         Nation aggressor = Nation.getById(mainAggressor);
         Nation defender = Nation.getById(mainDefender);
-        double cost = 1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20);
+        double cost = getCost(aggressor, defender);
         if (!aggressor.hasPoliticalPower(cost))
             return false;
         if (aggressor.getExtras().containsKey("WAR:" + mainDefender))
@@ -170,6 +174,7 @@ public class War {
         if (!running) return;
         this.left.put(players.get(left.getUUID()).getSide(), this.left.get(players.get(left.getUUID()).getSide()) - 1);
         players.remove(left.getUUID());
+        instance.getGulag().handleLeave(left.getAsPlayer());
     }
 
     public void handleKill(Profile killed) {
