@@ -2,10 +2,7 @@ package eu.pixliesearth.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -13,17 +10,19 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+import static org.bukkit.Sound.*;
+
 public class Methods {
 	
 	public static String convertEnergyDouble(double d) {
 		String s = "";
 		d = Methods.round(d, 3);
 		if (d>=1000000000D) {
-			s += d / 1000000000D +"BW";
+			s += d / 1000000000D +"bW";
 		} else if (d>=1000000D) {
 			s += d / 1000000D +"MW";
 		} else if (d>=1000D) {
-			s += d / 1000D +"KW";
+			s += d / 1000D +"kW";
 		} else if (d>=1D) {
 			s += d +"W";
 		} else {
@@ -38,7 +37,7 @@ public class Methods {
 		if (d>=1000000000D) {
 			s += d / 1000000000D +"TB";
 		} else if (d>=1000000D) {
-			s += d / 1000000D +"KB";
+			s += d / 1000000D +"kB";
 		} else if (d>=1000D) {
 			s += d / 1000D +"B";
 		} else if (d>=1D) {
@@ -64,6 +63,14 @@ public class Methods {
 
     public static String getIp(Player player) {
         return player.getAddress().toString().substring(1).split(":")[0];
+    }
+
+    public static List<Sound> soundsForPing() {
+	    List<Sound> sounds = new ArrayList<>();
+	    for (Sound sound : Sound.values())
+	        if (sound.name().startsWith("BLOCK_NOTE_BLOCK_"))
+	            sounds.add(sound);
+	    return sounds;
     }
 
     public static String chat(String s) {

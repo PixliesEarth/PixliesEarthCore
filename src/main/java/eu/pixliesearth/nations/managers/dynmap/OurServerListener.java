@@ -31,15 +31,6 @@ public class OurServerListener implements Listener {
         }
     }
 
-/*    @EventHandler(priority= EventPriority.MONITOR)
-    public void onFPlayerJoin(EventFactionsMembershipChange event) {
-        if(event.isCancelled())
-            return;
-        if (kernel.isPlayersets()) {
-            kernel.requestUpdatePlayerSet(event.getNewFaction().getId());
-        }
-    }*/
-
     @EventHandler(priority=EventPriority.MONITOR)
     public void onNationCreation(NationCreationEvent event) {
         if(event.isCancelled()) {
