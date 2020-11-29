@@ -4,6 +4,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,9 +28,11 @@ public class infoNation extends SubCommand {
     @Override
     public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
-        returner.put(ChatColor.AQUA + "NATION", 1);
+        for (String s : NationManager.names.keySet())
+            returner.put(s, 1);
         returner.put("player", 1);
-        returner.put(ChatColor.GOLD + "PLAYER", 2);
+        for (Player player : Bukkit.getOnlinePlayers())
+            returner.put(player.getName(), 2);
         return returner;
     }
 

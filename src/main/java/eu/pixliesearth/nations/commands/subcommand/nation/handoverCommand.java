@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -25,8 +26,10 @@ public class handoverCommand extends SubCommand {
     @Override
     public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
-        returner.put(ChatColor.GOLD + "PLAYER", 1);
-        returner.put(ChatColor.AQUA + "NATION", 2);
+        for (Player player : Bukkit.getOnlinePlayers())
+            returner.put(player.getName(), 1);
+        for (String s : NationManager.names.keySet())
+            returner.put(s, 2);
         return returner;
     }
 
