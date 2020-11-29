@@ -29,7 +29,7 @@ public class ItemBackPack extends CustomItem {
     @Override
     public List<String> getDefaultLore() {
         return new ArrayList<String>() {private static final long serialVersionUID = -3234274418406689465L;{
-        	add("§3Shift Right-Click to open the inventory!");
+        	add("§3Right-Click to open the inventory!");
         	}};
     }
 

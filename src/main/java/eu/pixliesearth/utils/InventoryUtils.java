@@ -20,12 +20,12 @@ public class InventoryUtils {
 	}
 	
 	public static void setInventoryContentsFromString(String data, Inventory inv) {
-		try {
-            ItemStack[] isl = itemStackArrayFromBase64(data);
-            for (int i = 0; i < isl.length; i++) {
-            	inv.setItem(i, isl[i]);
-            }
-        } catch (Exception ignore) {}
+		ItemStack[] isl = itemStackArrayFromBase64(data);
+		for (int i = 0; i < isl.length; i++) {
+			try {
+				inv.setItem(i, isl[i]);
+			} catch (Exception ignore) {}
+        }
 	}
 	
 	
@@ -46,6 +46,7 @@ public class InventoryUtils {
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
         } catch (Exception e) {
+        	e.printStackTrace();
             return "";
         }
     }
