@@ -162,6 +162,7 @@ public final class Main extends JavaPlugin {
     private @Getter UtilThread utilThread;
     private @Getter @Setter Gulag gulag;
     private @Getter final boolean warEnabled = true;
+    private @Getter final long uptime = System.currentTimeMillis();
 
     @Override
     public void onEnable() {
