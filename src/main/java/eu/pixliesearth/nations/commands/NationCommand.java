@@ -1,10 +1,12 @@
 package eu.pixliesearth.nations.commands;
 
+import eu.pixliesearth.events.NationCommandExecuteEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -72,7 +74,9 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     	}
 
 	    try {
-            SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
+            NationCommandExecuteEvent event = new NationCommandExecuteEvent(sender, SubCommandAliases.get(strings[0].toLowerCase()));
+            Bukkit.getPluginManager().callEvent(event);
+            if (!event.isCancelled()) SubCommandAliases.get(strings[0].toLowerCase()).execute(sender, args);
         } catch (Exception e) {
             getSubCommandAliases().get(strings[0].toLowerCase()).sendSyntax(sender, strings[0]);
         }

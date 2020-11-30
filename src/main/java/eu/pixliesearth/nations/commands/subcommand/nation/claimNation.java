@@ -78,8 +78,12 @@ public class claimNation extends SubCommand {
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
-                    claimFill(player, profile.getCurrentNation(), toClaim);
-                    player.sendMessage(System.currentTimeMillis() - start + "ms");
+                    TerritoryChangeEvent event = new TerritoryChangeEvent(player, toClaim.values(), TerritoryChangeEvent.ChangeType.CLAIM_FILL_SELF);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        claimFill(player, profile.getCurrentNation(), toClaim);
+                        player.sendMessage(System.currentTimeMillis() - start + "ms");
+                    }
                 } else if (args[0].contains(";")) {
                     int x = Integer.parseInt(args[0].split(";")[0]);
                     int z = Integer.parseInt(args[0].split(";")[1]);
@@ -119,7 +123,11 @@ public class claimNation extends SubCommand {
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, nation, c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
-                    claimFill(player, nation, toClaim);
+                    TerritoryChangeEvent event = new TerritoryChangeEvent(player, toClaim.values(), TerritoryChangeEvent.ChangeType.CLAIM_FILL_OTHER);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (!event.isCancelled()) {
+                        claimFill(player, nation, toClaim);
+                    }
                 } /*else if (args[0].equalsIgnoreCase("line")) {
                     long start = System.currentTimeMillis();
                     if (!profile.isInNation()) {
