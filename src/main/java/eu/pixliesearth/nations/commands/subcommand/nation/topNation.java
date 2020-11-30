@@ -50,7 +50,7 @@ public class topNation extends SubCommand {
             ChatColor rankColor = rank < 4 ? ChatColor.GREEN : ChatColor.AQUA;
             sender.sendMessage(rankColor + "" + rank + " §8. §b" + prof.getName() + " §7- §a" + prof.getPoints() + "P");
         }
-        sender.sendMessage("§c(§4§l!§c) This list get's updated every 5 minutes §c(§4§l!§c)");
+        sender.sendMessage("§c(§4§l!§c) This list gets updated every 5 minutes §c(§4§l!§c)");
         return false;
     }
 

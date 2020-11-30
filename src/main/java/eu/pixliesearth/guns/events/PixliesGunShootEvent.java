@@ -24,7 +24,7 @@ public class PixliesGunShootEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers(){
-        return ShootEvent.handlers;
+        return handlers;
     }
 
     public static HandlerList getHandlerList(){
