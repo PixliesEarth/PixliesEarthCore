@@ -46,6 +46,12 @@ public class ProfileCommand implements CommandExecutor {
                 event.setCancelled(true);
                 getScoreboardGui(profile, player).show(player);
             }), 3, 1);
+
+            // NOTIFICATION SOUND
+            pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4ceeb77d4d25724a9caf2c7cdf2d88399b1417c6b9ff5213659b653be4376e3")).setDisplayName("§b§oNotification sound").build(), event -> {
+                event.setCancelled(true);
+                profile.openPingSoundGui();
+            }), 5, 1);
             menu.addPane(pane);
             menu.show(player);
         } else {

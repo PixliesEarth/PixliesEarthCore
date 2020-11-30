@@ -2,6 +2,7 @@ package eu.pixliesearth.core.objects;
 
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
 import eu.pixliesearth.Main;
@@ -362,6 +363,23 @@ public class Profile {
             Role rank = MiniMick.getApi().getServerById("589958750866112512").get().getRoleById(DiscordIngameRank.getGroupRoleMap().get(getRank().getName())).get();
             rank.addUser(MiniMick.getApi().getUserById(discord).get());
         } catch (Exception ignored) {}
+    }
+
+    public void openPingSoundGui() {
+        Player player = getAsPlayer();
+        Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your ping sound");
+        PaginatedPane pane = new PaginatedPane(0, 0, 9, 3);
+        List<GuiItem> guiItems = new ArrayList<>();
+        for (Sound sound : Methods.soundsForPing())
+            guiItems.add(new GuiItem(new ItemBuilder(Material.NOTE_BLOCK).setDisplayName("§b" + sound.name()).build(), event -> {
+                event.setCancelled(true);
+                setMessageSound(sound.name());
+                gui.update();
+                player.sendMessage(Lang.EARTH + "§7You just changed your notification sound to §b" + sound.name() + "§7.");
+            }));
+        pane.populateWithGuiItems(guiItems);
+        gui.addPane(pane);
+        gui.show(getAsPlayer());
     }
 
     public void openLangGui() {
