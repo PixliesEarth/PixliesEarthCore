@@ -3,7 +3,6 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,9 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,9 +22,7 @@ public class LeaveListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.setLastAt(new SimpleLocation(player.getLocation()).parseString());
-        if (Main.getInstance().getUtilLists().afk.contains(player.getUniqueId()))
-            Main.getInstance().getUtilLists().afk.remove(player.getUniqueId());
-        event.setQuitMessage(PlaceholderAPI.setPlaceholders(player, "§8[§c§l-§8] %vault_prefix%" + player.getName()));
+        event.setQuitMessage("§8[§c§l-§8] §7" + player.getName());
 
 
         //VANISH
@@ -48,6 +42,7 @@ public class LeaveListener implements Listener {
         }
 
         if (profile.getTimers().containsKey("§c§lCombat")) {
+            if (player.getLastDamageCause() == null) return;
             Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
             chestLoc.getBlock().setType(Material.CHEST);
             Main.getInstance().getUtilLists().deathChests.put(chestLoc.getBlock(), player.getInventory().getContents());
@@ -76,17 +71,6 @@ public class LeaveListener implements Listener {
         }
 
         profile.backup();
-/*
-        //Discord Leaves
-        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage(ChatColor.stripColor("<:arrowleft:716793452494454825> **" + PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName()) + "** left the server!"));*/
-    }
-    public static UUID getKeyByValue(Map<UUID, UUID> map, UUID value) {
-        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
-            if (Objects.equals(value, entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
     }
 
 }

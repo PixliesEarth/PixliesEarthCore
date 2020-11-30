@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.blocks;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,6 +15,7 @@ import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Timer;
 import net.md_5.bungee.api.ChatColor;
 
@@ -63,7 +65,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
     	if (timer==null) {
     		Location headl = new Location(location.getWorld(), location.getX(), location.getY()+1, location.getZ()); // TODO
     		if (h.getCustomBlockFromLocation(headl)==null || !(h.getCustomBlockFromLocation(headl) instanceof BlockAntiMissileHead)) {
-    			h.registerTimer(location, new Timer(500l));
+    			h.registerTimer(location, new Timer(timePerCheck));
     			return;
     		}
         	Location radarl = new Location(location.getWorld(), location.getX(), location.getY()-1, location.getZ());
@@ -80,7 +82,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
         		}, 1l);
         		h.registerTimer(location, new Timer(timePerCheck));
         	} else {
-        		h.registerTimer(location, new Timer(500l));
+        		h.registerTimer(location, new Timer(timePerCheck));
         	}
     	} else {
     		if (timer.hasExpired()) {
@@ -92,48 +94,41 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
     }
     
     public Location getWhereToDefendFromInventory(Inventory inv, World world) {
+    	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	for (ItemStack is : inv.getContents()) {
-    		int i = getDangerFromInfoItem(is);
-    		if (i>0) {
+    		if (is.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
     			String[] s = ChatColor.stripColor(is.getDisplayName()).split(", ");// "§b" + chunkX + "§8, §b" + chunkZ
-    			world.getChunkAt(Integer.parseUnsignedInt(s[0]), Integer.parseUnsignedInt(s[1]));
-    			
-    		} else 
-    			continue;
+    			Chunk c = world.getChunkAt((s[0].contains("-") ? -Integer.parseUnsignedInt(s[0].replaceAll("-", "")) : Integer.parseUnsignedInt(s[0])), (s[1].contains("-") ? -Integer.parseUnsignedInt(s[1].replaceAll("-", "")) : Integer.parseUnsignedInt(s[1])));
+    			final int minX = c.getX() << 4;
+    	        final int minZ = c.getZ() << 4;
+    	        final int maxX = minX | 15;
+    	        final int maxY = 245;
+    	        final int maxZ = minZ | 15;
+    			for (int y = maxY; y >= 0; --y) {
+    	        	for (int x = minX; x <= maxX; ++x) {
+    	        		for (int z = minZ; z <= maxZ; ++z) {
+    	        			Block b = c.getBlock(x & 15, y, z & 15);
+    	        			CustomBlock cb = h.getCustomBlockFromLocation(b.getLocation());
+    	        			if (cb!=null && cb instanceof BlockMissileWarhead3) {
+    	        				try {
+	    	        				if (CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromLocation(c.getBlock(x & 15, y+1, z & 15).getLocation())) instanceof BlockMissile2) {
+	    	        					return b.getLocation();
+	    	        				}
+    	        				} catch (Exception ingore) {/* Ignore */}
+    	        			}
+    	        		}
+    	        	}
+    			}
+    		}
     	}
     	return null;
-    }
-    
-    public int getDangerFromInfoItem(ItemStack is) {
-    	try {
-    		return Integer.parseUnsignedInt(ChatColor.stripColor(is.getLore().get(3)).replaceAll("Launched Missiles: ", ""));
-		} catch (Exception e) {
-			return 0;
-		}
     }
     
 	public void defendAgainst(Location location, Location missile) {
 		if (location==null || missile==null) return;
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-    	Block b = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-1, missile.getBlockZ());
-		Block b2 = missile.getWorld().getBlockAt(missile.getBlockX(), missile.getBlockY()-2, missile.getBlockZ());
-		Material m = (b==null) ? Material.AIR : b.getType();
-		Material m2 = (b2==null) ? Material.AIR : b2.getType();
-		CustomBlock cb = h.getCustomBlockFromLocation(new Location(missile.getWorld(), missile.getBlockX(), missile.getBlockY()+1, missile.getBlockZ()));
-		if (cb==null || !(cb instanceof BlockMissile)) return;
-		b.setType(Material.GLASS);
-		b2.setType(Material.GLASS);
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-
-			@Override
-			public void run() {
-				
-				b.setType(m);
-	    		b2.setType(m2);
-	    		
-			}
-			
-		}, 5l);
+    	h.removeCustomBlockFromLocation(new Location(location.getWorld(), location.getX(), location.getY()+1D, location.getZ()));
+    	h.setCustomBlockToLocation(new Location(missile.getWorld(), missile.getX(), missile.getY()-1D, missile.getZ()), h.getCustomItemFromClass(BlockAntiMissileHead.class).getUUID(), true);
     }
 	
 }

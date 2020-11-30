@@ -41,6 +41,8 @@ public class Gulag {
     public void placeFighters() {
         final Player defender = Bukkit.getPlayer(players.get(WarParticipant.WarSide.DEFENDER).get(0));
         final Player aggressor = Bukkit.getPlayer(players.get(WarParticipant.WarSide.AGGRESSOR).get(0));
+        players.get(WarParticipant.WarSide.DEFENDER).remove(0);
+        players.get(WarParticipant.WarSide.AGGRESSOR).remove(0);
         if (defender == null) return;
         if (aggressor == null) return;
         fighting.add(defender.getUniqueId());
@@ -101,6 +103,19 @@ public class Gulag {
         winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
         fighting.clear();
         instance.getCurrentWar().handleKill(instance.getProfile(loser.getUniqueId()));
+    }
+
+    public void handleLeave(Player left) {
+        if (!fighting.contains(left.getUniqueId()))
+            return;
+        timers.remove("gulagCooldown");
+        Player winner = null;
+        for (UUID uuid : fighting)
+            if (!uuid.equals(left.getUniqueId()))
+                winner = Bukkit.getPlayer(uuid);
+        if (winner == null) return;
+        winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
+        fighting.clear();
     }
 
 }

@@ -65,8 +65,6 @@ import eu.pixliesearth.core.commands.player.StatsCommand;
 import eu.pixliesearth.core.commands.player.SudoCommand;
 import eu.pixliesearth.core.commands.player.SuicideCommand;
 import eu.pixliesearth.core.commands.player.TpHereCommand;
-import eu.pixliesearth.core.commands.player.TpaCommand;
-import eu.pixliesearth.core.commands.player.TpacceptCommand;
 import eu.pixliesearth.core.commands.player.VanishCommand;
 import eu.pixliesearth.core.commands.player.WalkSpeedCommand;
 import eu.pixliesearth.core.commands.player.WoohooCommand;
@@ -130,7 +128,7 @@ import eu.pixliesearth.utils.FileManager;
 import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.utils.UtilThread;
-import eu.pixliesearth.utils.WarThread;
+import eu.pixliesearth.warsystem.WarThread;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Getter;
@@ -318,6 +316,7 @@ public final class Main extends JavaPlugin {
         saveResource("languages/LANG_nl.yml", true);
         saveResource("languages/LANG_SWE.yml", true);
         saveResource("languages/LANG_FA.yml", true);
+        saveResource("languages/LANG_PT.yml", true);
 
         Lang.init();
 

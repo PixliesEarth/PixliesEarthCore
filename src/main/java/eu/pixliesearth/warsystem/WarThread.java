@@ -1,4 +1,4 @@
-package eu.pixliesearth.utils;
+package eu.pixliesearth.warsystem;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.warsystem.War;

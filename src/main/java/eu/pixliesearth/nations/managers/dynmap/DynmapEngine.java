@@ -171,7 +171,7 @@ public class DynmapEngine {
     /**
      * Handle specific Nation on specific world
      */
-    private void handleFactionOnWorld(String factionName, Nation fact, String world, LinkedList<NationBlock> blocks, Map<String, AreaMarker> newmap) {
+    private void handleNationOnWorld(String factionName, Nation fact, String world, LinkedList<NationBlock> blocks, Map<String, AreaMarker> newmap) {
         int poly_index = 0; /* Index of polygon for given Nation */
 
         /* Build popup */
@@ -361,7 +361,7 @@ public class DynmapEngine {
 
             /* Loop through each world that Nation has blocks on */
             for (Map.Entry<String, LinkedList<NationBlock>> worldblocks : factblocks.getBlocks().entrySet()) {
-                handleFactionOnWorld(factname, nation, worldblocks.getKey(), worldblocks.getValue(), newmap);
+                handleNationOnWorld(factname, nation, worldblocks.getKey(), worldblocks.getValue(), newmap);
             }
             factblocks.clear();
 

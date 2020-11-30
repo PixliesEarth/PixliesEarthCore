@@ -119,6 +119,16 @@ public class CustomItem {
 		return Rarity.COMMON;
 	}
 	/**
+	 * If the {@link CustomItem} cannot be stacked
+	 * 
+	 * @apiNote This cannot make an unstackable item stackable!
+	 * 
+	 * @return If the {@link CustomItem} cannot be stacked
+	 */
+	public boolean isUnstackable() {
+		return false;
+	}
+	/**
 	 * Called when a block is broken with the custom item
 	 * 
 	 * @param event The {@link BlockBreakEvent} that occurred

@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
 import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -8,7 +10,7 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class ItemEnergyCore2 extends CustomItem {
+public class ItemEnergyCore2 extends CustomItem implements IMissileFuel {
 	
     public ItemEnergyCore2() {
 
@@ -73,4 +75,24 @@ public class ItemEnergyCore2 extends CustomItem {
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+	@Override
+	public int getMissileExplosiveValue() {
+		return 4;
+	}
+
+	@Override
+	public int getMissileRangeValue() {
+		return 20;
+	}
+
+	@Override
+	public int getMissilePlayerDamageValue() {
+		return 5;
+	}
+
+	@Override
+	public int getMissileLaunchTimeValue() {
+		return -15;
+	}
 }

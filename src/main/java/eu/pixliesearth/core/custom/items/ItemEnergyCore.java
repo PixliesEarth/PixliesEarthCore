@@ -1,14 +1,21 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
 
-public class ItemEnergyCore extends CustomItem {
+public class ItemEnergyCore extends CustomItem implements IMissileFuel {
 	
     public ItemEnergyCore() {
 
@@ -75,4 +82,24 @@ public class ItemEnergyCore extends CustomItem {
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+	@Override
+	public int getMissileExplosiveValue() {
+		return 9;
+	}
+
+	@Override
+	public int getMissileRangeValue() {
+		return 12;
+	}
+
+	@Override
+	public int getMissilePlayerDamageValue() {
+		return 35;
+	}
+
+	@Override
+	public int getMissileLaunchTimeValue() {
+		return 15;
+	}
 }

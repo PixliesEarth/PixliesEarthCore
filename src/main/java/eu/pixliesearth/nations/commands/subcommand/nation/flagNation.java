@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationFlag;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,7 +26,8 @@ public class flagNation extends SubCommand {
         Map<String, Integer> map = new HashMap<>();
         for (NationFlag flag : NationFlag.values())
             map.put(flag.name(), 1);
-        map.put(ChatColor.AQUA + "NATION", 2);
+        for (String s : NationManager.names.keySet())
+            map.put(ChatColor.AQUA + s, 2);
         return map;
     }
 

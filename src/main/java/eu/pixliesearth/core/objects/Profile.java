@@ -417,6 +417,13 @@ public class Profile {
             gui.update();
             Lang.LANGUAGE_CHANGED.send(player);
         }), 6, 0);
+        pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/ebd51f4693af174e6fe1979233d23a40bb987398e3891665fafd2ba567b5a53a")).setDisplayName("§ePortuguês").build(), e -> {
+            e.setCancelled(true);
+            setLang("PT");
+            save();
+            gui.update();
+            Lang.LANGUAGE_CHANGED.send(player);
+        }), 7, 0);
         gui.addPane(pane);
         gui.show(player);
     }

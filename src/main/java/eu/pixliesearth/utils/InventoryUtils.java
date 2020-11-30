@@ -20,12 +20,12 @@ public class InventoryUtils {
 	}
 	
 	public static void setInventoryContentsFromString(String data, Inventory inv) {
-		try {
-            ItemStack[] isl = itemStackArrayFromBase64(data);
-            for (int i = 0; i < isl.length; i++) {
-            	inv.setItem(i, isl[i]);
-            }
-        } catch (Exception ignore) {}
+		ItemStack[] isl = itemStackArrayFromBase64(data);
+		for (int i = 0; i < isl.length; i++) {
+			try {
+				inv.setItem(i, isl[i]);
+			} catch (Exception ignore) {}
+        }
 	}
 	
 	
@@ -46,6 +46,7 @@ public class InventoryUtils {
             dataOutput.close();
             return Base64Coder.encodeLines(outputStream.toByteArray());
         } catch (Exception e) {
+        	e.printStackTrace();
             return "";
         }
     }
@@ -57,14 +58,15 @@ public class InventoryUtils {
             ItemStack[] items = new ItemStack[dataInput.readInt()];
     
             // Read the serialized inventory
-            int i = 0;
+            /*int i = 0;
             while(dataInput.available() > 0) {
             	items[i] = (ItemStack) dataInput.readObject();
             	i++;
-            }
-            /*for (int i = 0; i < items.length; i++) {
-            	items[i] = (ItemStack) dataInput.readObject();
             }*/
+            
+            for (int i = 0; i < items.length; i++) {
+            	items[i] = (ItemStack) dataInput.readObject();
+            }
             
             dataInput.close();
             return items;

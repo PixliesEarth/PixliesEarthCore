@@ -1,6 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
 import eu.pixliesearth.core.custom.CustomFuel;
+import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -8,7 +10,7 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class FuelFuelRod extends CustomFuel {
+public class FuelFuelRod extends CustomFuel implements IMissileFuel {
 	
     public FuelFuelRod() {
 
@@ -78,4 +80,24 @@ public class FuelFuelRod extends CustomFuel {
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
         return false;
     }
+
+	@Override
+	public int getMissileExplosiveValue() {
+		return 1;
+	}
+
+	@Override
+	public int getMissileRangeValue() {
+		return 5;
+	}
+
+	@Override
+	public int getMissilePlayerDamageValue() {
+		return 0;
+	}
+
+	@Override
+	public int getMissileLaunchTimeValue() {
+		return -3;
+	}
 }
