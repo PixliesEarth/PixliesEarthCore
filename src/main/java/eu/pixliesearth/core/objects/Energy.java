@@ -20,8 +20,8 @@ public class Energy {
     }
 
     public static void add(Profile profile, double amount) {
-        if (profile.getEnergy() + amount > 5D) {
-            profile.setEnergy(5);
+        if (profile.getEnergy() + amount > 10D) {
+            profile.setEnergy(10);
         } else {
             profile.setEnergy(profile.getEnergy() + amount);
         }

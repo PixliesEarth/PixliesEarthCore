@@ -44,8 +44,8 @@ public class JoinListener implements Listener {
             }
         }
 
-        if (profile.getEnergy() > 5D)
-            profile.setEnergy(5D);
+        if (profile.getEnergy() > 10D)
+            profile.setEnergy(10D);
 
         profile.getTimers().clear();
         if (profile.getNickname().length() > 0 && !profile.getNickname().equalsIgnoreCase("NONE"))
