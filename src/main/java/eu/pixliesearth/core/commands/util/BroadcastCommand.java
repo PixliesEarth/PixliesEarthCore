@@ -40,7 +40,7 @@ public class BroadcastCommand implements CommandExecutor {
     }
 
     public static void broadcastDiscord(String message, CommandSender sender) {
-        MiniMick.getApi().getServerTextChannelById("712819947579113512").get().sendMessage(new EmbedBuilder()
+        MiniMick.getApi().getTextChannelById("783409314118369280").get().sendMessage(new EmbedBuilder()
                 .setTitle("BROADCAST")
                 .setDescription(ChatColor.stripColor(message))
                 .setFooter("MiniMick powered by PixliesEarth", "https://minotar.net/avatar/" + sender.getName())
