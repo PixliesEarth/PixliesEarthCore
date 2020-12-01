@@ -36,7 +36,7 @@ public class PlasticRaw extends CustomRecipe {
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 10;
 	}
 	/**
 	 * The era required to craft the item
@@ -59,15 +59,15 @@ public class PlasticRaw extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:air");
-		map.put(1, "Minecraft:air");
-		map.put(2, "Minecraft:air");
-		map.put(3, "Minecraft:air");
-		map.put(4, "Pixlies:Oil_Bucket");
-		map.put(5, "Minecraft:air");
-		map.put(6, "Minecraft:air");
-		map.put(7, "Minecraft:air");
-		map.put(8, "Minecraft:air");
+		map.put(0, MinecraftMaterial.AIR.getUUID());
+		map.put(1, MinecraftMaterial.AIR.getUUID());
+		map.put(2, MinecraftMaterial.AIR.getUUID());
+		map.put(3, MinecraftMaterial.AIR.getUUID());
+		map.put(4, "Pixlies:Canister_Oil");
+		map.put(5, MinecraftMaterial.AIR.getUUID());
+		map.put(6, MinecraftMaterial.AIR.getUUID());
+		map.put(7, MinecraftMaterial.AIR.getUUID());
+		map.put(8, MinecraftMaterial.AIR.getUUID());
 		return map;
 	}
 	/**
