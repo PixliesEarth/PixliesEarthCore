@@ -87,6 +87,7 @@ public class CustomCraftingListener extends CustomListener {
 			if (debug) System.out.println("[DEBUG] Map["+i+"]  - "+s+";");
 			String s2 = map2.get(i);
 			if (debug) System.out.println("[DEBUG] Map2["+i+"] - "+s2+";");
+			if (s==null || s2==null) continue;
 			if (s.equalsIgnoreCase(s2)) {
 				res += 1;
 				if (debug) System.out.println("[DEBUG] Values are the same");
