@@ -31,6 +31,11 @@ public class FuelUraniumChunk extends CustomFuel {
     }
 
     @Override
+    public boolean isUnstackable() {
+    	return true;
+    }
+    
+    @Override
     public boolean isGlowing() {
         return false;
     }
