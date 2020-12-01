@@ -22,6 +22,7 @@ import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.luckperms.api.model.group.Group;
+import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -377,7 +378,7 @@ public class Profile {
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 3);
         List<GuiItem> guiItems = new ArrayList<>();
         for (Sound sound : Methods.soundsForPing())
-            guiItems.add(new GuiItem(new ItemBuilder(Material.NOTE_BLOCK).setDisplayName("§b" + sound.name()).addLoreLine(" ").addLoreLine("§f§lLEFT §7§oto select").addLoreLine("§f§lRIGHT §7§oto play sound").build(), event -> {
+            guiItems.add(new GuiItem(new ItemBuilder(Material.NOTE_BLOCK).setDisplayName("§b" + WordUtils.capitalize(sound.name().replace("BLOCK_NOTE_", "NOTE_").toLowerCase().replace("_", " "))).addLoreLine(" ").addLoreLine("§f§lLEFT §7§oto select").addLoreLine("§f§lRIGHT §7§oto play sound").build(), event -> {
                 event.setCancelled(true);
                 if (event.isLeftClick()) {
                     setMessageSound(sound.name());
