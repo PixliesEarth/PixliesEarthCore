@@ -21,7 +21,12 @@ public class ItemCoolant extends CustomItem {
     public List<String> getDefaultLore() {
         return null;
     }
-
+    
+    @Override
+    public boolean isUnstackable() {
+    	return true;
+    }
+    
     @Override
     public String getDefaultDisplayName() {
         return "§6Nuclear Coolant";

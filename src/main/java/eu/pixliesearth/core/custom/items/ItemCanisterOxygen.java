@@ -38,4 +38,9 @@ public class ItemCanisterOxygen extends CustomItem {
 	public boolean PlayerInteractEvent(PlayerInteractEvent event) {
 		return true;
 	}
+	
+	@Override
+    public boolean isUnstackable() {
+    	return true;
+    }
 }
