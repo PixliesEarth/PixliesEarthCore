@@ -22,8 +22,8 @@ public class BackupCommand implements CommandExecutor {
         }
         switch (args.length) {
             case 0:
-                Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), this::backupProfiles);
-                Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskAsynchronously(instance, this::backupProfiles);
+                Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {
                     sender.sendMessage("§7Backing up all nations in the database...");
                     for (Nation nation : NationManager.nations.values())
                         nation.backup();
@@ -32,14 +32,14 @@ public class BackupCommand implements CommandExecutor {
                 break;
             case 1:
                 if (args[0].equalsIgnoreCase("nations")) {
-                    Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+                    Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {
                         sender.sendMessage("§7Backing up all nations in the database...");
                         for (Nation nation : NationManager.nations.values())
                             nation.backup();
                         sender.sendMessage("§aDone.");
                     });
                 } else if (args[0].equalsIgnoreCase("profiles")) {
-                    Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), this::backupProfiles);
+                    Bukkit.getScheduler().runTaskAsynchronously(instance, this::backupProfiles);
                 }
                 break;
         }
