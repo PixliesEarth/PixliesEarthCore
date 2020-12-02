@@ -371,6 +371,7 @@ public class Profile {
                 event.setCancelled(true);
                 if (event.isLeftClick()) {
                     setMessageSound(sound.name());
+                    save();
                     gui.update();
                     player.sendMessage(Lang.EARTH + "§7You just changed your notification sound to §b" + sound.name() + "§7.");
                 } else if (event.isRightClick()) {
