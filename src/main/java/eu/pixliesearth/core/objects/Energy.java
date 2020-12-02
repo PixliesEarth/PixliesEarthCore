@@ -43,12 +43,12 @@ public class Energy {
         		done = true;
         	}
         }
-        return cost;
+        return Methods.round(cost, 2);
     }
 
     public static double calculateTime(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 500;
-        return Methods.calculateDistance(a, b) / 200;
+        return Methods.calculateDistanceSquared(a, b) / 40_000;
     }
 
 }

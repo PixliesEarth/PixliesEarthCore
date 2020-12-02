@@ -44,6 +44,8 @@ public class UtilLists {
 
     public Map<UUID, String> chatQueue;
 
+    public Map<String, String> dynmapQueue;
+
     public DiscordWebhook webhook;
 
     public Map<Boost.BoostType, Boost> boosts;
@@ -103,6 +105,7 @@ public class UtilLists {
         reloading = new ArrayList<>();
         deathChests = new HashMap<>();
         chatQueue = new HashMap<>();
+        dynmapQueue = new HashMap<>();
         webhook = new DiscordWebhook(Main.getInstance().getConfig().getString("webhook"));
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();

@@ -64,6 +64,10 @@ public class NationCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] strings) {
+        if (strings.length == 0) {
+            sendHelp(sender, 1);
+            return false;
+        }
         List<String> list = new ArrayList<>(Arrays.asList(strings));
         list.remove(strings[0]);
         String[] args = list.toArray(new String[0]);

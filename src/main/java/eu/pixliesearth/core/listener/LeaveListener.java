@@ -73,7 +73,7 @@ public class LeaveListener implements Listener {
         }
 
         profile.backup();
-        Main.getInstance().getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.RED));
+        Main.getInstance().getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.RED).setTitle(" "));
     }
 
 }

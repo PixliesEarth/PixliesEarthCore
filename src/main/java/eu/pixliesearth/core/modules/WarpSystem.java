@@ -5,6 +5,7 @@ import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.interfaces.Module;
+import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
@@ -45,7 +46,7 @@ public class WarpSystem implements CommandExecutor, Module {
                 StaticPane toolbar = new StaticPane(0, 3, 9, 1);
                 List<GuiItem> items = new ArrayList<>();
                 for (Warp warp : Warp.getWarps())
-                    items.add(new GuiItem(new ItemBuilder(warp.getItem()).setDisplayName(warp.getName()).build(), event -> {
+                    items.add(new GuiItem(new ItemBuilder(warp.getItem()).setDisplayName("§b§l" + warp.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), warp.getLocation()) + "§6Mana").build(), event -> {
                         event.setCancelled(true);
                         player.closeInventory();
                         warp.teleport(player);

@@ -60,6 +60,16 @@ public class UtilThread extends Thread {
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
         }
 
+        for (Map.Entry<String, String> entry : Main.getInstance().getUtilLists().dynmapQueue.entrySet()) {
+            DiscordMessage dm = new DiscordMessage.Builder()
+                    .withUsername(entry.getKey() + " @ pixlies.net/map")
+                    .withContent(ChatColor.stripColor(entry.getValue().replace("@", "").replace("discord.gg", "").replace("discord.com", "")))
+                    .withAvatarURL("https://freeiconshop.com/wp-content/uploads/edd/location-map-flat.png")
+                    .build();
+            Main.getInstance().getUtilLists().webhook.sendMessage(dm);
+            Main.getInstance().getUtilLists().dynmapQueue.remove(entry.getKey());
+        }
+
         Iterator<EmbedBuilder> iterator = Main.getInstance().getUtilLists().embedsToSend.listIterator();
         while (iterator.hasNext()) {
             Main.getInstance().getMiniMick().getChatChannel().sendMessage(iterator.next());
