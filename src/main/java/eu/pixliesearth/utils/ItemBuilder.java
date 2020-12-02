@@ -30,6 +30,12 @@ public class ItemBuilder {
         this.meta = this.item.getItemMeta();
         this.lore = this.meta.getLore() == null ? new ArrayList<>() : meta.getLore();
     }
+    
+    public ItemBuilder(String uuid) {
+        this.item = CustomItemUtil.getItemStackFromUUID(uuid);
+        this.meta = this.item.getItemMeta();
+        this.lore = this.meta.getLore() == null ? new ArrayList<>() : meta.getLore();
+    }
 
     public ItemBuilder(Material mat, int amount) {
         item = new ItemStack(mat, amount);

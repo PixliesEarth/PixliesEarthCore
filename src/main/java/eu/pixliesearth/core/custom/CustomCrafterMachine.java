@@ -265,15 +265,18 @@ public class CustomCrafterMachine extends CustomMachine {
 		
 		if (is==null || is.getType().equals(Material.AIR)) return;
 		
+		String id = CustomItemUtil.getUUIDFromItemStack(is);
+		
 		for (List<CustomRecipe> rl : rll) {
-			if (rl.get(0).getResultUUID().equalsIgnoreCase(CustomItemUtil.getUUIDFromItemStack(is))) {
+			if (rl.get(0).getResultUUID().equalsIgnoreCase(id)) {
 				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
 				if (s==null || s.equalsIgnoreCase("")) {
 					continue;
 				} else {
 					Integer i = Integer.parseInt(s)+1;
 					if (i>=rl.size()) return; // Out of bounds
-					List<ItemStack> list = new ArrayList<>();
+					inv.setItem(53, new ItemBuilder(id).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).addNBTTag("EXTRA", "MCRAFTING", NBTTagType.STRING).build());
+					/*List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
 					for (int i2 : craftSlots) 
 						list.add(inv.getItem(i2));
@@ -285,7 +288,7 @@ public class CustomCrafterMachine extends CustomMachine {
 						inv.setItem(i2, list.get(i3));
 					i3 = 0;
 					for (int i2 : resultSlots) 
-						inv.setItem(i2, list2.get(i3));
+						inv.setItem(i2, list2.get(i3));*/
 				}
 				break;
 			}
@@ -302,15 +305,18 @@ public class CustomCrafterMachine extends CustomMachine {
 		
 		if (is==null || is.getType().equals(Material.AIR)) return;
 		
+		String id = CustomItemUtil.getUUIDFromItemStack(is);
+		
 		for (List<CustomRecipe> rl : rll) {
-			if (rl.get(0).getResultUUID().equalsIgnoreCase(CustomItemUtil.getUUIDFromItemStack(is))) {
+			if (rl.get(0).getResultUUID().equalsIgnoreCase(id)) {
 				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
 				if (s==null || s.equalsIgnoreCase("")) {
 					continue;
 				} else {
 					Integer i = Integer.parseInt(s)-1;
 					if (i<0) return; // Out of bounds
-					List<ItemStack> list = new ArrayList<>();
+					inv.setItem(53, new ItemBuilder(id).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).addNBTTag("EXTRA", "MCRAFTING", NBTTagType.STRING).build());
+					/*List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
 					for (int i2 : craftSlots) 
 						list.add(inv.getItem(i2));
@@ -322,7 +328,7 @@ public class CustomCrafterMachine extends CustomMachine {
 						inv.setItem(i2, list.get(i3));
 					i3 = 0;
 					for (int i2 : resultSlots) 
-						inv.setItem(i2, list2.get(i3));
+						inv.setItem(i2, list2.get(i3));*/
 				}
 				break;
 			}
