@@ -43,7 +43,7 @@ public class neutralNation extends SubCommand {
             return false;
         }
         Nation nation = profile.getCurrentNation();
-        Nation target = Nation.getByName(args[1]);
+        Nation target = Nation.getByName(args[0]);
         if (target == null) {
             Lang.NATION_DOESNT_EXIST.send(player);
             return false;
