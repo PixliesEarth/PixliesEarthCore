@@ -32,9 +32,18 @@ public class Energy {
 
     public static double calculateNeeded(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 2000;
-        double needed = Methods.calculateDistanceSquared(a, b) / 4_000_000;
-        if (needed < 0.2) needed = 0.2;
-        return needed;
+        double needed = Methods.calculateDistanceSquared(a, b);
+        double cost = 0.05;
+        boolean done = false;
+        while (!done) {
+        	if (needed>1_000_000) {
+        		cost += 0.05;
+        		needed /= 1_000_000;
+        	} else {
+        		done = true;
+        	}
+        }
+        return cost;
     }
 
     public static double calculateTime(Location a, Location b) {
