@@ -5,11 +5,11 @@ import lombok.Getter;
 public enum Era {
 
     TRIBAL("Tribal", 1, 10, 0),
-    ANCIENT("Ancient", 2, 20, 15),
-    MEDIEVAL("Medieval", 3, 75, 40),
-    VICTORIAN("Victorian", 4, 150, 75),
-    MODERN("Modern", 5, 175, 150),
-    FUTURE("Future", 6, 200, 300),
+    ANCIENT("Ancient", 2, 25, 10),
+    MEDIEVAL("Medieval", 3, 75, 25),
+    VICTORIAN("Victorian", 4, 150, 50),
+    MODERN("Modern", 5, 200, 100),
+    FUTURE("Future", 6, 250, 300),
     ;
 
     private @Getter final String name;
