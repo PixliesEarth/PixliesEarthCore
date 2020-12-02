@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import com.google.gson.Gson;
+import eu.pixliesearth.core.objects.Energy;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.localization.Lang;
@@ -63,7 +64,7 @@ public class settlementsCommand extends SubCommand implements Listener {
                     inventory.setItem(j, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
                 for (String s : nation.getSettlements().values()) {
                     Settlement st = new Gson().fromJson(s, Settlement.class);
-                    inventory.setItem(i, new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7§oClick me to teleport...").build());
+                    inventory.setItem(i, new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
                     i++;
                 }
                 player.openInventory(inventory);

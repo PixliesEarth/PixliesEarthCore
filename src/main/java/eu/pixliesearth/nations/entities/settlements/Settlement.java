@@ -23,4 +23,8 @@ public class Settlement {
         profile.teleport(location, name);
     }
 
+    public Location getAsBukkitLocation() {
+        return SimpleLocation.fromString(getLocation()).toLocation();
+    }
+
 }

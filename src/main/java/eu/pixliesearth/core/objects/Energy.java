@@ -48,7 +48,10 @@ public class Energy {
 
     public static double calculateTime(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 500;
-        return Methods.calculateDistanceSquared(a, b) / 40_000;
+        double needed = Methods.calculateDistanceSquared(a, b) / 1_500_000;
+        if (needed < 1.0)
+            needed = 1.0;
+        return needed;
     }
 
 }
