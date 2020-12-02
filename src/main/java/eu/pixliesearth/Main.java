@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import com.google.common.base.Stopwatch;
 import net.citizensnpcs.api.CitizensAPI;
+import org.apache.commons.lang.time.StopWatch;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -163,11 +165,7 @@ public final class Main extends JavaPlugin {
     private @Getter UtilThread utilThread;
     private @Getter @Setter Gulag gulag;
     private @Getter final boolean warEnabled = true;
-    private final long serverStarted = System.currentTimeMillis();
-
-    public long getUptime() {
-        return System.currentTimeMillis() - serverStarted;
-    }
+    private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
 
     @Override
     public void onEnable() {

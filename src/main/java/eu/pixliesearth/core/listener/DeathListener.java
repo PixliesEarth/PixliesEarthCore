@@ -14,6 +14,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,8 +37,10 @@ public class DeathListener implements Listener {
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.getTimers().remove("§c§lCombat");
-        if (player.getKiller() != null) {
-            Profile killer = Main.getInstance().getProfile(player.getKiller().getUniqueId());
+
+        EntityDamageEvent damageEvent = player.getLastDamageCause();
+        if (damageEvent instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) damageEvent).getDamager() instanceof Player) {
+            Profile killer = Main.getInstance().getProfile(damageEvent.getEntity().getUniqueId());
             killer.getTimers().remove("§c§lCombat");
             int randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
             profile.setElo(profile.getElo() - randomNum);

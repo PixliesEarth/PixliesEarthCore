@@ -3,12 +3,15 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
+import java.awt.*;
 import java.util.UUID;
 
 public class JoinListener implements Listener {
@@ -33,6 +36,7 @@ public class JoinListener implements Listener {
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             profile.openLangGui();
+            profile.addTimer("Free TP", new Timer(Timer.DAY));
         }
 
         if (!instance.getUtilLists().vanishList.isEmpty()) {
@@ -54,7 +58,7 @@ public class JoinListener implements Listener {
         profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));
-        player.sendTitle("§bPlease Wait", "§7We are applying our custom server textures on you!", 20, 20 * 3, 20);
+        instance.getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.GREEN));
     }
 
 }

@@ -11,6 +11,11 @@ public class Timer {
     private final long expiry;
     private boolean ended;
 
+    public static final long SECOND = 1000;
+    public static final long MINUTE = SECOND * 60;
+    public static final long HOUR = MINUTE * 60;
+    public static final long DAY = HOUR * 24;
+
     public Timer(Map<String, String> map) {
         this.expiry = Long.parseLong(map.get("expiry"));
         this.ended = Boolean.parseBoolean(map.get("ended"));
