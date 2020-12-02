@@ -96,6 +96,10 @@ public class Methods {
         return (Math.sqrt((l2.getX() - l1.getX()) * (l2.getX() - l1.getX()) + (l2.getZ() - l1.getZ()) * (l2.getZ() - l1.getZ())));
     }
 
+    public static double calculateDistanceSquared(Location l1, Location l2) {
+	    return (l2.getX() - l1.getX()) * (l2.getX() - l1.getX()) + (l2.getZ() - l1.getZ()) * (l2.getZ() - l1.getZ());
+    }
+
     public static String getTimeAsString(long duration, boolean useMilliseconds) {
         long r = (duration / 100);
         long sec = r / 10;
