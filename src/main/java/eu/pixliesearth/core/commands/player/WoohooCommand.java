@@ -24,6 +24,10 @@ public class WoohooCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        if (profile.getTimers().containsKey("WooHoo")) {
+            player.sendMessage(Lang.EARTH + "§7You are on a WooHoo cooldown.");
+            return false;
+        }
         if (!profile.isMarried()) {
             player.sendMessage(Lang.YOU_ARE_NOT_MARRIED.get(player));
             return false;
@@ -36,6 +40,7 @@ public class WoohooCommand implements CommandExecutor {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("%PLAYER1%", player.getName());
         placeholders.put("%PLAYER2%", target.getName());
+        profile.setTimer("WooHoo", 1000 * 30);
         Lang.PLAYERS_HAD_SEX.broadcast(placeholders);
         return false;
     }
