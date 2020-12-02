@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ChatSystem implements Listener, Module {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         // CHAT INPUTS
         if (config.getBoolean("modules.chatsystem.enabled")) {
@@ -45,7 +45,6 @@ public class ChatSystem implements Listener, Module {
                     event.setCancelled(true);
                     player.sendMessage(Lang.NATION + " §8| §7Nation disband process §ccancelled§7.");
                     instance.getUtilLists().nationDisbander.remove(player.getUniqueId());
-                    return;
                 } else if (event.getMessage().equalsIgnoreCase("confirm")) {
                     event.setCancelled(true);
                     Bukkit.getScheduler().runTask(instance, () -> {
@@ -60,6 +59,7 @@ public class ChatSystem implements Listener, Module {
                         }
                     });
                 }
+                return;
             }
 
             if (instance.getUtilLists().dynmapSetters.contains(player.getUniqueId())) {
@@ -79,6 +79,7 @@ public class ChatSystem implements Listener, Module {
                     profile.getExtras().put("dynmapMarkers", (int) profile.getExtras().get("dynmapMarkers") - 1);
                     profile.save();
                 }
+                return;
             }
 
             if (instance.getUtilLists().royalGifters.contains(player.getUniqueId())) {
@@ -92,12 +93,13 @@ public class ChatSystem implements Listener, Module {
                         Lang.PLAYER_DOES_NOT_EXIST.send(player);
                         return;
                     }
-                    Bukkit.getScheduler().runTask(instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + event.getMessage().split(" ")[0] + " parent addtemp royal 6d"));
+                    Bukkit.getScheduler().runTask(instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + event.getMessage().split(" ")[0] + " parent addtemp amethyst 6d"));
                     profile.getExtras().put("giftedRoyal", true);
                     profile.save();
                     instance.getUtilLists().royalGifters.remove(player.getUniqueId());
                     player.sendMessage("§7You have successfully gifted your royal.");
                 }
+                return;
             }
 
             if (instance.getUtilLists().chatTypes.containsKey(player.getUniqueId())) {
@@ -130,6 +132,7 @@ public class ChatSystem implements Listener, Module {
                        default :
                     	    break;
                     }
+                    return;
                 }
             }
 
@@ -207,10 +210,7 @@ public class ChatSystem implements Listener, Module {
                         player.sendActionBar("§aYou may now chat again.");
                     }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);
                 }
-            } else {
-                event.setCancelled(true);
             }
-            event.setMessage(" ");
         }
     }
 

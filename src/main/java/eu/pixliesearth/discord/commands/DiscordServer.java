@@ -6,33 +6,33 @@ import org.bukkit.Bukkit;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
+import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class DiscordServer extends DiscordCommand {
 
     public DiscordServer() {
-        super("server", "serverinfo");
+        super("server", "serverinfo", "earth");
     }
 
     @Override
     public void run(MessageCreateEvent event) {
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("PixliesNet");
+        embed.setTitle("PixliesNet - Earth");
+        embed.setColor(Color.CYAN);
         embed.setThumbnail(event.getServer().get().getIcon().get());
-        embed.setDescription("Think different, think new.");
         embed.addInlineField("Players", Bukkit.getOnlinePlayers().size()+"");
         embed.addInlineField("TPS", Methods.round(Bukkit.getTPS()[0], 2)+"");
         Runtime runtime = Runtime.getRuntime();
         System.gc();
         embed.addInlineField("Ram usage", (runtime.totalMemory() - runtime.freeMemory()) / 1048576L +  " MB / " + runtime.totalMemory() / 1048576L + " MB");
 
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTimeInMillis(instance.getUptime());
-        int hours = calendar.get(Calendar.HOUR);
-        int minutes = calendar.get(Calendar.MINUTE);
-        int seconds = calendar.get(Calendar.SECOND);
+        long hours = instance.getServerStopWatch().elapsed(TimeUnit.HOURS);
+        long minutes = instance.getServerStopWatch().elapsed(TimeUnit.MINUTES);
+        long seconds = instance.getServerStopWatch().elapsed(TimeUnit.SECONDS);
 
         embed.addInlineField("Uptime", hours + " hours, " + minutes + " minutes, and " + seconds + " seconds");
         embed.setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());

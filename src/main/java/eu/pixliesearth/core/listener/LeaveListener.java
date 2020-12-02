@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
+import java.awt.*;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -71,6 +73,7 @@ public class LeaveListener implements Listener {
         }
 
         profile.backup();
+        Main.getInstance().getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.RED));
     }
 
 }

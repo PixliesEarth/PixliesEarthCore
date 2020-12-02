@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.NumberConversions;
 
 import java.util.*;
 
@@ -83,15 +84,16 @@ public class Methods {
     }
 
     public static double calculateDistance(double x1, double x2, double z1, double z2) {
-        return Math.sqrt(Math.pow((x2 - z1), 2) + Math.pow((z2 - x1), 2));
+        return (Math.sqrt((x2-x1)*(x2-x1) + (z2-z1)*(z2-z1)));
     }
 
     public static double calculateDistance(Location l1, Location l2) {
-	    if (l1.getWorld().getUID().equals(l2.getWorld().getUID())) {
-            return l1.distanceSquared(l2);
+/*	    if (l1.getWorld().getUID().equals(l2.getWorld().getUID())) {
+	        return NumberConversions.square(l1.getX() - l2.getX()) + NumberConversions.square(l1.getZ() - l2.getZ());
         } else {
 	        return 500;
-        }
+        }*/
+        return (Math.sqrt((l2.getX() - l1.getX()) * (l2.getX() - l1.getX()) + (l2.getZ() - l1.getZ()) * (l2.getZ() - l1.getZ())));
     }
 
     public static String getTimeAsString(long duration, boolean useMilliseconds) {

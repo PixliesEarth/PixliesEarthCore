@@ -2,12 +2,14 @@ package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
 import eu.pixliesearth.localization.Lang;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,6 +58,12 @@ public class UtilThread extends Thread {
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
+        }
+
+        Iterator<EmbedBuilder> iterator = Main.getInstance().getUtilLists().embedsToSend.listIterator();
+        while (iterator.hasNext()) {
+            Main.getInstance().getMiniMick().getChatChannel().sendMessage(iterator.next());
+            iterator.remove();
         }
 
         for (Map.Entry<Boost.BoostType, Boost> entry : Main.getInstance().getUtilLists().boosts.entrySet()) {

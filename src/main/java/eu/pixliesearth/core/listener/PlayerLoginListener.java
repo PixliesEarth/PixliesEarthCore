@@ -12,11 +12,11 @@ public class PlayerLoginListener implements Listener {
             if (event.getPlayer().hasPermission("earth.bypass.fullkick")) {
                 event.allow();
             }
-        } /*else if (event.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
+        } else if (event.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
             if (event.getPlayer().hasPermission("earth.bypass.whitelist")) {
                 event.allow();
             }
-        }*/
+        }
     }
 
 }

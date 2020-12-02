@@ -6,6 +6,7 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
@@ -52,18 +53,12 @@ public class MoveListener implements Listener {
 	                        NationChunk.claim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType, instance.getUtilLists().claimAuto.get(player.getUniqueId()));
 	                    }
 	                } else if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
-	                    if (profile.getCurrentNation() == null)
-	                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-	                    NationChunk nc = NationChunk.get(tc);
-	                    boolean allowed = false;
-	                    if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
-	                    if (nc != null && profile.getNationId().equals(nc.getNationId())) allowed = true;
-	                    if (!allowed) {
-	                        Lang.CHUNK_NOT_YOURS.send(player);
+	                    if (!NationManager.nations.containsKey(instance.getUtilLists().unclaimAuto.get(player.getUniqueId()))) {
+							instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
 	                    } else {
-	                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
-	                        NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
-	                    }
+							TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
+							NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
+						}
 	                }
 	                Nation fn = NationChunk.getNationData(fc);
 	                Nation tn = NationChunk.getNationData(tc);

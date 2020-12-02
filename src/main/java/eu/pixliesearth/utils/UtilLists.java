@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -85,6 +86,8 @@ public class UtilLists {
 
     public List<UUID> inspectors;
 
+    public List<EmbedBuilder> embedsToSend;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -120,6 +123,7 @@ public class UtilLists {
         playersInWar = new HashMap<>();
         invitationsToWar = new HashMap<>();
         inspectors = new ArrayList<>();
+        embedsToSend = new ArrayList<>();
     }
 
 }
