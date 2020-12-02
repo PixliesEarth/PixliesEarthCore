@@ -125,7 +125,7 @@ WARZONE_SUBTITLE: "&7Iedereen kan je hier aanvallen!"
 PLAYER_CHANGED_DESCRIPTION: "&6%PLAYER% &7heeft net de beschrijving van uw land veranderd
   in &b%DESC%&7."
 YOU_CANT_MARRY_YOURSELF: "&7Je kunt niet met jezelf trouwen."
-YOU_ARE_MARRIED_WITH: "&8Je bent getrouwd met:"
+YOU_ARE_MARRIED_WITH: "&7Je bent getrouwd met:"
 CANT_MARRY_RELATED: "&7Je kunt niet trouwen met iemand met wie je al verwant bent....
   Dat is incest!"
 PLAYERS_HAD_SEX: "&6&o%PLAYER1% &7&oen&6&o%PLAYER2% &7&ohebben net seks gehad...."

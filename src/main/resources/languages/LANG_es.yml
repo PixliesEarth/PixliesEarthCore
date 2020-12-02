@@ -125,7 +125,7 @@ WARZONE_SUBTITLE: "&7¡Todo el mundo te puede atacar aquí!"
 PLAYER_CHANGED_DESCRIPTION: "&6%PLAYER% &7ha cambiado la descripción de tu nación
   a &b%DESC%&7."
 YOU_CANT_MARRY_YOURSELF: "&7No te puedes casar contigo mismo."
-YOU_ARE_MARRIED_WITH: "&8Estas casado con:"
+YOU_ARE_MARRIED_WITH: "&7Estas casado con:"
 CANT_MARRY_RELATED: "&7No puedes casarte con alguien de tu familia... Eso seria...
   INCESTO!"
 PLAYERS_HAD_SEX: "&6&o%PLAYER1% &7&oy&6&o%PLAYER2% &7&oacaban de tener sexo..."

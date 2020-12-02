@@ -83,6 +83,7 @@ public class infoNation extends SubCommand {
     }
 
     public static void sendNationInfo(Nation nation, CommandSender sender) {
+        sender.sendMessage(" ");
         sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
         sender.sendMessage("§7GDP: §2§l$§a" + nation.getGDP());
@@ -106,6 +107,7 @@ public class infoNation extends SubCommand {
         }
         sender.sendMessage("§7Allies: " + allyJoiner.toString());
         sender.sendMessage("§7Members: " + memberJoiner.toString());
+        sender.sendMessage(" ");
     }
 
 }
