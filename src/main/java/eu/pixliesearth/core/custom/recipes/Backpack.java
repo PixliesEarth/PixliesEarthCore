@@ -1,10 +1,10 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -15,7 +15,7 @@ public class Backpack extends CustomRecipe {
     }
     @Override
     public String getResultUUID() {
-        return "Machine:Backpack";
+        return "Pixlies:Backpack";
     }
     @Override
     public Map<Integer, String> getContentsList() {

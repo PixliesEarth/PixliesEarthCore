@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.common.base.Stopwatch;
+import eu.pixliesearth.utils.*;
 import net.citizensnpcs.api.CitizensAPI;
 import org.apache.commons.lang.time.StopWatch;
 import org.bson.Document;
@@ -126,11 +127,6 @@ import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
-import eu.pixliesearth.utils.FastConf;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.utils.UtilThread;
 import eu.pixliesearth.warsystem.WarThread;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.gulag.Gulag;
@@ -263,6 +259,21 @@ public final class Main extends JavaPlugin {
                 System.out.println("§aSaved all nations in the database.");
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 16, (20 * 60) * 15);
+
+        // PP SCHEDULER
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : getServer().getOnlinePlayers()) {
+                    if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
+                    Profile profile = getProfile(player.getUniqueId());
+                    if (!profile.isInNation()) continue;
+                    Nation nation = profile.getCurrentNation();
+                    nation.setXpPoints(nation.getXpPoints() + 0.25);
+                    player.sendActionBar("§a+0.25 §7Political-Power");
+                }
+            }
+        }.runTaskTimerAsynchronously(this, Timer.DAY, Timer.DAY);
 
         // ENERGY SCHEDULER
         new BukkitRunnable() {

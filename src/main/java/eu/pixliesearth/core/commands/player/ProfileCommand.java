@@ -38,7 +38,7 @@ public class ProfileCommand implements CommandExecutor {
             // LANGUAGE
             pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4d48e75ff55cb57533c7b904be887a374925f93832f7ae16b7923987e970")).setDisplayName("§b§o" + Lang.LANGUAGE.get(player)).build(), event -> {
                 event.setCancelled(true);
-                getLangGui(player, profile).show(player);
+                profile.openLangGui();
             }), 1, 1);
 
             // SCOREBOARD
@@ -85,62 +85,6 @@ public class ProfileCommand implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    private Gui getLangGui(Player player, Profile profile) {
-        Gui langgui = new Gui(Main.getInstance(), 3, "§b"+ Lang.CHOOSE_LANG.get(player));
-        StaticPane langpane = new StaticPane(0, 0, 9, 3);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5e7899b4806858697e283f084d9173fe487886453774626b24bd8cfecc77b3f")).setDisplayName("§eDeutsch").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("DE");
-            profile.save();
-            langgui.update();
-            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
-        }), 0, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4cac9774da1217248532ce147f7831f67a12fdcca1cf0cb4b3848de6bc94b4")).setDisplayName("§eEnglish").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("ENG");
-            profile.save();
-            langgui.update();
-            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
-        }), 1, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/51269a067ee37e63635ca1e723b676f139dc2dbddff96bbfef99d8b35c996bc")).setDisplayName("§efrançais").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("FR");
-            profile.save();
-            langgui.update();
-            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
-        }), 2, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/32bd4521983309e0ad76c1ee29874287957ec3d96f8d889324da8c887e485ea8")).setDisplayName("§eEspañol").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("ES");
-            profile.save();
-            langgui.update();
-            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
-        }), 3, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/c23cf210edea396f2f5dfbced69848434f93404eefeabf54b23c073b090adf")).setDisplayName("§eNederlands").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("NL");
-            profile.save();
-            langgui.update();
-            player.sendMessage(Lang.LANGUAGE_CHANGED.get(player));
-        }), 4, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/7d86242b0d97ece9994660f3974d72df7b887f630a4530dadc5b1ab7c2134aec")).setDisplayName("§eSvenska").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("SWE");
-            profile.save();
-            langgui.update();
-            Lang.LANGUAGE_CHANGED.send(player);
-        }), 5, 0);
-        langpane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5cd9badf1972583b663b44b1e027255de8f275aa1e89defcf77782ba6fcc652")).setDisplayName("§eفارسی").build(), e -> {
-            e.setCancelled(true);
-            profile.setLang("FA");
-            profile.save();
-            langgui.update();
-            Lang.LANGUAGE_CHANGED.send(player);
-        }), 6, 0);
-        langgui.addPane(langpane);
-        return langgui;
     }
 
     private Gui getScoreboardGui(Profile profile, Player player) {

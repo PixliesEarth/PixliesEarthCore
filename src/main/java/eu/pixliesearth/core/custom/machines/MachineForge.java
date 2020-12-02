@@ -36,7 +36,7 @@ public class MachineForge extends CustomFuelableCrafterMachine implements IRecip
 
 	@Override
 	public String getFuelUUID() {
-		return MinecraftMaterial.MAGMA_CREAM.getUUID();
+		return MinecraftMaterial.COAL_BLOCK.getUUID();
 	}
 
 	

@@ -1,5 +1,6 @@
 package eu.pixliesearth.utils;
 
+import eu.pixliesearth.Main;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
@@ -313,6 +314,14 @@ public class Methods {
         for (int i = 0; i < s.toCharArray().length; i++)
             builder.append("*");
         return builder.toString();
+    }
+
+    public static String replaceBadWords(String s) {
+        String end = s;
+        for (String s1 : Main.getInstance().getConfig().getStringList("modules.chatsystem.blacklist"))
+            if (end.contains(s1))
+                end = end.replace(s1, Methods.replaceBadWord(s1));
+        return end;
     }
 
     private static final NavigableMap<Long, String> suffixes = new TreeMap<>();

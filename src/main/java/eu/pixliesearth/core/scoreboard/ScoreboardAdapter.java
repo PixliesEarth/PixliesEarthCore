@@ -128,7 +128,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
                     returnable.add("  §8» §b" + nation.getName());
-                    returnable.add("  §8» §7Online: §a" + nation.getOnlineMembers());
+                    returnable.add("  §8» §7Pol-Pow: §b" + nation.getXpPoints());
                     returnable.add("  §8» §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0)
@@ -148,7 +148,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♚ §8| §b" + nation.getName());
-                    returnable.add(c + "☺ §8| §a" + nation.getOnlineMembers());
+                    returnable.add(c + "P §8| §b" + nation.getXpPoints());
                     returnable.add(c + "☗ §8| §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0) {

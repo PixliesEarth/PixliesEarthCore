@@ -62,7 +62,8 @@ public class MiniMick {
                             Color col = event.getMessageAuthor().getRoleColor().get();
                             roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getGreen(), col.getBlue());
                         }
-                        Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + event.getReadableMessageContent());
+                        String message = event.getReadableMessageContent();
+                        Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + message);
                     }
                 }
             }
