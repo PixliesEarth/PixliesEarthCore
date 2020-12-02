@@ -210,6 +210,7 @@ public class ChatSystem implements Listener, Module {
             } else {
                 event.setCancelled(true);
             }
+            event.setMessage(" ");
         }
     }
 

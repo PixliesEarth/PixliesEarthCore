@@ -8,6 +8,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.Methods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
@@ -46,6 +47,7 @@ public class Nation {
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
+    public double getXpPoints() { return Methods.round(xpPoints, 2); }
 
     public Nation create() {
         ranks.put("admin", Rank.ADMIN().toMap());

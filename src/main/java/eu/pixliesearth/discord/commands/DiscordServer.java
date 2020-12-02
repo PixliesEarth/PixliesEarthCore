@@ -8,6 +8,7 @@ import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.function.Function;
 
 public class DiscordServer extends DiscordCommand {
 

@@ -11,9 +11,9 @@ public class AFKListener extends CustomListener {
     public void handleAFK(PlayerAFKEvent event) {
         event.setShouldKick(false);
         if (event.isGoingAfk()) {
-            event.setBroadcastMsg(Lang.EARTH + "§6" + event.getPlayer().getDisplayName() + " §7is now AFK.");
+            event.setBroadcastMsg("§a§lEARTH §8| §6" + event.getPlayer().getDisplayName() + " §7is now AFK.");
         } else {
-            event.setBroadcastMsg(Lang.EARTH + "§6" + event.getPlayer().getDisplayName() + " §7is back.");
+            event.setBroadcastMsg("§a§lEARTH §8| §6" + event.getPlayer().getDisplayName() + " §7is back.");
         }
     }
 
