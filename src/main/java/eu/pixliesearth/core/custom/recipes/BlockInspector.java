@@ -23,9 +23,9 @@ public class BlockInspector extends CustomRecipe {
         map.put(0, "Pixlies:Steel_Ingot");
         map.put(1, "Pixlies:Platinum_Ingot");
         map.put(2, "Pixlies:Steel_Ingot");
-        map.put(3, "Pixlies:Steel_Block");
+        map.put(3, "Pixlies:Steel_Ingot");
         map.put(4, MinecraftMaterial.NETHERITE_SCRAP.getUUID());
-        map.put(5, "Pixlies:Steel_Block");
+        map.put(5, "Pixlies:Steel_Ingot");
         map.put(6, "Pixlies:Steel_Ingot");
         map.put(7, "Pixlies:Platinum_Ingot");
         map.put(8, "Pixlies:Steel_Ingot");

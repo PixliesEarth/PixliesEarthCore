@@ -22,7 +22,8 @@ public class JohnTheVendor extends Vendor {
                 new ItemStack(DISPENSER),
                 g("Pixlies:Explosive_Pickaxe"),
                 g("Pixlies:Uranium_Chunk"),
-                new ItemStack(GOLD_INGOT)
+                new ItemStack(GOLD_INGOT),
+                new ItemStack(COOKED_BEEF)
                 );
     }
 

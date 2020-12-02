@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.nations.entities.nation.Era;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlasticRaw extends CustomRecipe {
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+
+public class CableInput extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,21 +28,14 @@ public class PlasticRaw extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Plastic_Raw";
+		return "Machine:Cable_Input";
 	}
 	/**
 	 * How many of the result to give
 	 */
 	@Override
 	public int getResultAmount() {
-		return 10;
-	}
-	/**
-	 * The era required to craft the item
-	 */
-	@Override
-	public Era getEraNeeded() {
-		return Era.TRIBAL;
+		return 1;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -60,13 +52,13 @@ public class PlasticRaw extends CustomRecipe {
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, MinecraftMaterial.AIR.getUUID());
-		map.put(1, MinecraftMaterial.AIR.getUUID());
+		map.put(1, "Pixlies:Rubber");
 		map.put(2, MinecraftMaterial.AIR.getUUID());
-		map.put(3, MinecraftMaterial.AIR.getUUID());
-		map.put(4, "Pixlies:Canister_Oil");
-		map.put(5, MinecraftMaterial.AIR.getUUID());
+		map.put(3, "Pixlies:Rubber");
+		map.put(4, "Pixlies:Copper_Wire");
+		map.put(5, "Pixlies:Rubber");
 		map.put(6, MinecraftMaterial.AIR.getUUID());
-		map.put(7, MinecraftMaterial.AIR.getUUID());
+		map.put(7, "Pixlies:Rubber");
 		map.put(8, MinecraftMaterial.AIR.getUUID());
 		return map;
 	}

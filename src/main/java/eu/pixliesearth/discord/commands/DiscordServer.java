@@ -19,8 +19,8 @@ public class DiscordServer extends DiscordCommand {
     @Override
     public void run(MessageCreateEvent event) {
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setThumbnail(event.getServer().get().getIcon().get());
         embed.setTitle("PixliesNet");
+        embed.setThumbnail(event.getServer().get().getIcon().get());
         embed.setDescription("Think different, think new.");
         embed.addInlineField("Players", Bukkit.getOnlinePlayers().size()+"");
         embed.addInlineField("TPS", Methods.round(Bukkit.getTPS()[0], 2)+"");
@@ -30,12 +30,13 @@ public class DiscordServer extends DiscordCommand {
 
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTimeInMillis(instance.getUptime());
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int hours = calendar.get(Calendar.HOUR);
         int minutes = calendar.get(Calendar.MINUTE);
         int seconds = calendar.get(Calendar.SECOND);
 
         embed.addInlineField("Uptime", hours + " hours, " + minutes + " minutes, and " + seconds + " seconds");
         embed.setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());
+        event.getChannel().sendMessage(embed);
     }
 
 }

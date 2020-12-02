@@ -27,7 +27,11 @@ public interface ILiquidable {
 	public static final String heliumID = "Pixlies:Helium";
 	
 	public static boolean isBucketFormOf(ItemStack is, String UUID, boolean convert) {
-    	return CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? convertID(UUID)+"_bucket" : UUID+"_bucket") || CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase((convert) ? "Canister_"+convertID(UUID) : "Canister_"+UUID);
+		String id = (convert) ? convertID(UUID) : UUID;
+		boolean isBucket = CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(id+"_bucket");
+		String[] s = id.split(":");
+		boolean isCanist = CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(s[0]+"Canister_"+s[1]);
+    	return (isBucket || isCanist);
     }
 	
 	public static boolean areLiquidsEqual(String id, String id2) {

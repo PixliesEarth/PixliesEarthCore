@@ -22,6 +22,7 @@ import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.luckperms.api.model.group.Group;
+import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -280,6 +281,12 @@ public class Profile {
 
     public void teleport(Location location, String locationName) {
         Player player = getAsPlayer();
+        if (isStaff()) {
+            player.teleport(location);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+            return;
+        }
         if (Energy.calculateNeeded(player.getLocation(), location) > energy) {
             player.sendMessage(Lang.NOT_ENOUGH_ENERGY.get(player));
             return;
@@ -371,11 +378,15 @@ public class Profile {
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 3);
         List<GuiItem> guiItems = new ArrayList<>();
         for (Sound sound : Methods.soundsForPing())
-            guiItems.add(new GuiItem(new ItemBuilder(Material.NOTE_BLOCK).setDisplayName("§b" + sound.name()).build(), event -> {
+            guiItems.add(new GuiItem(new ItemBuilder(Material.NOTE_BLOCK).setDisplayName("§b" + WordUtils.capitalize(sound.name().replace("BLOCK_NOTE_", "NOTE_").toLowerCase().replace("_", " "))).addLoreLine(" ").addLoreLine("§f§lLEFT §7§oto select").addLoreLine("§f§lRIGHT §7§oto play sound").build(), event -> {
                 event.setCancelled(true);
-                setMessageSound(sound.name());
-                gui.update();
-                player.sendMessage(Lang.EARTH + "§7You just changed your notification sound to §b" + sound.name() + "§7.");
+                if (event.isLeftClick()) {
+                    setMessageSound(sound.name());
+                    gui.update();
+                    player.sendMessage(Lang.EARTH + "§7You just changed your notification sound to §b" + sound.name() + "§7.");
+                } else if (event.isRightClick()) {
+                    player.playSound(player.getLocation(), sound, 1, 1);
+                }
             }));
         pane.populateWithGuiItems(guiItems);
         gui.addPane(pane);

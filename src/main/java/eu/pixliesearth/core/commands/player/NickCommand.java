@@ -32,7 +32,7 @@ public class NickCommand implements CommandExecutor {
                     player.setDisplayName(player.getName());
                     return false;
                 }
-                if (getPlayer(args[0]).hasPlayedBefore()) {
+                if (Bukkit.getOfflinePlayerIfCached(args[0]) != null) {
                     Lang.CANT_NICK_LIKE_A_PLAYER.send(player);
                     return false;
                 }

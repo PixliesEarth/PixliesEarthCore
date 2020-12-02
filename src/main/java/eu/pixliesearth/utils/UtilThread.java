@@ -46,12 +46,7 @@ public class UtilThread extends Thread {
     private void tick() {
 
         // GUN DELAYS
-        Iterator<Map.Entry<UUID, Timer>> it = Main.getInstance().getUtilLists().waitingGuns.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<UUID, Timer> item = it.next();
-            if (item.getValue().getRemaining() <= 0)
-                it.remove();
-        }
+        Main.getInstance().getUtilLists().waitingGuns.entrySet().removeIf(item -> item.getValue().getRemaining() <= 0);
 
         for (Map.Entry<UUID, String> entry : Main.getInstance().getUtilLists().chatQueue.entrySet()) {
             DiscordMessage dm = new DiscordMessage.Builder()

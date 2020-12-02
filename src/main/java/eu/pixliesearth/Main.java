@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import net.citizensnpcs.api.CitizensAPI;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -245,6 +246,7 @@ public final class Main extends JavaPlugin {
             public void run() {
                 Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
                 for (Player player : getServer().getOnlinePlayers()) {
+                    if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
                     Profile profile = getProfile(player.getUniqueId());
                     profile.syncDiscordAndIngameRoles();
                     profile.backup();
@@ -271,10 +273,10 @@ public final class Main extends JavaPlugin {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (player.isAfk()) continue;
                     Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 1D);
+                    Energy.add(profile, 0.1);
                 }
             }
-        }.runTaskTimerAsynchronously(this, (20 * 60) * 60, (20 * 60) * 60);
+        }.runTaskTimerAsynchronously(this, (20 * 60) * 5, (20 * 60) * 5);
 
         // TABLIST UPDATER
         new BukkitRunnable() {
@@ -350,7 +352,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -358,7 +360,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
     }
 

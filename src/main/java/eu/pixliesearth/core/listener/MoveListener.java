@@ -56,9 +56,8 @@ public class MoveListener implements Listener {
 	                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
 	                    NationChunk nc = NationChunk.get(tc);
 	                    boolean allowed = false;
-	                    if (nc == null) allowed = true;
 	                    if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
-	                    if (profile.getNationId().equals(nc.getNationId())) allowed = true;
+	                    if (nc != null && profile.getNationId().equals(nc.getNationId())) allowed = true;
 	                    if (!allowed) {
 	                        Lang.CHUNK_NOT_YOURS.send(player);
 	                    } else {

@@ -88,7 +88,7 @@ public class Methods {
 
     public static double calculateDistance(Location l1, Location l2) {
 	    if (l1.getWorld().getUID().equals(l2.getWorld().getUID())) {
-            return l1.distance(l2);
+            return l1.distanceSquared(l2);
         } else {
 	        return 500;
         }

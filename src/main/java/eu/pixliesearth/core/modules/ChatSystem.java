@@ -207,6 +207,8 @@ public class ChatSystem implements Listener, Module {
                         player.sendActionBar("§aYou may now chat again.");
                     }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);
                 }
+            } else {
+                event.setCancelled(true);
             }
         }
     }
