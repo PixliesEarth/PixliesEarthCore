@@ -18,6 +18,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class ProfileCommand implements CommandExecutor {
 
             Gui menu = new Gui(Main.getInstance(), 3, "§e§l" + Lang.YOUR_PROFILE.get(player));
             StaticPane pane = new StaticPane(0, 0, 9, 3);
+            pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
             // LANGUAGE
             pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/4d48e75ff55cb57533c7b904be887a374925f93832f7ae16b7923987e970")).setDisplayName("§b§o" + Lang.LANGUAGE.get(player)).build(), event -> {
                 event.setCancelled(true);
