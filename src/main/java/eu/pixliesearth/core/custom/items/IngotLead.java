@@ -20,7 +20,7 @@ public class IngotLead extends CustomItem {
 
     @Override
     public Material getMaterial() {
-        return Material.IRON_INGOT;
+        return Material.GUNPOWDER;
     }
 
     @Override

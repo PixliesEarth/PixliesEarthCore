@@ -15,20 +15,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import static org.bukkit.event.EventPriority.MONITOR;
+import static org.bukkit.event.EventPriority.HIGHEST;
+import static org.bukkit.event.EventPriority.NORMAL;
 
 public class ProtectionManager implements Listener {
 
     private static final Main instance = Main.getInstance();
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
     public void onBreak(BlockBreakEvent event) {
     	try {
 	        boolean canBreak = canBreak(event);
@@ -39,7 +38,7 @@ public class ProtectionManager implements Listener {
     	} catch (Exception ingore) {}
     }
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
     public void onBlockDamage(BlockDamageEvent event) {
         try {
             boolean canBreak = canBreak(event);
@@ -53,7 +52,6 @@ public class ProtectionManager implements Listener {
     public static boolean canBreak(BlockBreakEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
         Chunk c = event.getBlock().getChunk();
-        if (c == null) return true;
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -64,14 +62,12 @@ public class ProtectionManager implements Listener {
         if (!profile.isInNation()) return false;
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;
-        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return true;
-        return false;
+        return Permission.hasForeignPermission(guest, Permission.BUILD, host);
     }
 
     public static boolean canBreak(BlockDamageEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
         Chunk c = event.getBlock().getChunk();
-        if (c == null) return true;
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -82,8 +78,7 @@ public class ProtectionManager implements Listener {
         if (!profile.isInNation()) return false;
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;
-        if (Permission.hasForeignPermission(guest, Permission.BUILD, host)) return true;
-        return false;
+        return Permission.hasForeignPermission(guest, Permission.BUILD, host);
     }
 
     public static boolean canBreak(Block block, Player player) {
@@ -101,7 +96,6 @@ public class ProtectionManager implements Listener {
 
         if (instance.getUtilLists().staffMode.contains(player.getUniqueId())) return true;
         Chunk c = block.getChunk();
-        if (c == null) return true;
         NationChunk nc = NationChunk.get(c);
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
@@ -115,7 +109,7 @@ public class ProtectionManager implements Listener {
         return false;
     }
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
     public void onPlace(BlockPlaceEvent event) {
     	try {
 	        boolean canPlace = canPlace(event);
@@ -130,7 +124,6 @@ public class ProtectionManager implements Listener {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
         Chunk c = event.getBlock().getChunk();
         NationChunk nc = NationChunk.get(c);
-        if (event.getPlayer()==null) return true;
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
@@ -144,12 +137,11 @@ public class ProtectionManager implements Listener {
         return false;
     }
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
-        if (event.getClickedBlock() == null) return;
         Chunk c = event.getClickedBlock().getChunk();
-        if (!event.getClickedBlock().getType().isInteractable()) return;
+        // if (!event.getClickedBlock().getType().isInteractable()) return;
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
@@ -170,7 +162,53 @@ public class ProtectionManager implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
+    public void onBlockFromTo(BlockFromToEvent event) {
+        if (event.getBlock().isLiquid()) {
+            if (event.getToBlock().isEmpty()) {
+                NationChunk from = NationChunk.get(event.getBlock().getChunk());
+                NationChunk to = NationChunk.get(event.getToBlock().getChunk());
+                if (to == null) return;
+                if (from == null) {
+                    event.setCancelled(true);
+                    return;
+                }
+                if (to.getNationId().equals(from.getNationId())) return;
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(priority = HIGHEST)
+    public void onPistonExtend(BlockPistonExtendEvent event) {
+        NationChunk from = NationChunk.get(event.getBlock().getChunk());
+        NationChunk to = NationChunk.get(event.getBlock().getRelative(event.getDirection(),  event.getLength() + 1).getChunk());
+        if (to == null) return;
+        if (from == null) {
+            event.setCancelled(true);
+            return;
+        }
+        if (to.getNationId().equals(from.getNationId())) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler(priority = HIGHEST)
+    public void onPistonExtend(BlockPistonRetractEvent event) {
+        if (!event.isSticky()) return;
+        NationChunk from = NationChunk.get(event.getBlock().getChunk());
+        NationChunk to = NationChunk.get(event.getRetractLocation().getChunk());
+        if (to == null) return;
+        if (from == null) {
+            event.setCancelled(true);
+            return;
+        }
+        if (to.getNationId().equals(from.getNationId())) return;
+        event.setCancelled(true);
+    }
+
+
+
+    @EventHandler(priority = HIGHEST)
     public void onEnityInteract(PlayerInteractEntityEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
         if (event.getRightClicked() instanceof Player) return;
@@ -195,7 +233,7 @@ public class ProtectionManager implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = MONITOR)
+    @EventHandler(priority = HIGHEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Monster) return;
         if (event.getDamager() instanceof Player) {
