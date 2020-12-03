@@ -135,6 +135,11 @@ public class CustomItem {
 	 * @return If the event should be cancelled
 	 */
 	public boolean onBlockBrokeWithItem(BlockBreakEvent event) { return false; }
+
+	public Category getCategory() {
+		return Category.OTHER;
+	}
+
 	/**
 	 * @return Build the {@link CustomItem} into an {@link ItemStack} that can be used ingame
 	 */
@@ -279,4 +284,22 @@ public class CustomItem {
 			return Rarity.NONE;
 		}
 	}
+
+	public enum Category {
+
+		OTHER("Pixlies:Category_OTHER", "§eOther", MinecraftMaterial.COMMAND_BLOCK.getUUID())
+		;
+
+		@Getter String UUID;
+		@Getter String name;
+		@Getter String icon;
+
+		Category(String UUID, String name, String icon) {
+			this.UUID = UUID;
+			this.name = name;
+			this.icon = icon;
+		}
+
+	}
+
 }
