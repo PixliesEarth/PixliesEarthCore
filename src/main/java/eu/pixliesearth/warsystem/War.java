@@ -118,6 +118,8 @@ public class War {
         aggressor.save();
         this.timers.remove("gracePeriod");
         this.running = true;
+        left.put(WarParticipant.WarSide.DEFENDER, 0);
+        left.put(WarParticipant.WarSide.AGGRESSOR, 0);
         for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
             addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER, id));
         for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
@@ -145,6 +147,7 @@ public class War {
 
     @SneakyThrows
     public void stop(WarParticipant.WarSide winner) {
+        this.running = false;
         Nation winnerNation;
         Nation loserNation;
         switch (winner) {

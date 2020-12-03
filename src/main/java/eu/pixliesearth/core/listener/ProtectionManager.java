@@ -140,6 +140,7 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
+        if (event.getClickedBlock() == null) return;
         Chunk c = event.getClickedBlock().getChunk();
         // if (!event.getClickedBlock().getType().isInteractable()) return;
         NationChunk nc = NationChunk.get(c);
@@ -242,6 +243,8 @@ public class ProtectionManager implements Listener {
             NationChunk nc = NationChunk.get(c);
             Player player = (Player) event.getDamager();
             Profile profile = instance.getProfile(player.getUniqueId());
+            if (profile.isInWar() && event.getEntity() instanceof Player && instance.getProfile(event.getEntity().getUniqueId()).isInWar())
+                return;
             if (nc == null) return;
             Nation host = nc.getCurrentNation();
             if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
@@ -264,6 +267,8 @@ public class ProtectionManager implements Listener {
             Chunk c = event.getEntity().getChunk();
             NationChunk nc = NationChunk.get(c);
             Profile profile = instance.getProfile(player.getUniqueId());
+            if (profile.isInWar() && event.getEntity() instanceof Player && instance.getProfile(event.getEntity().getUniqueId()).isInWar())
+                return;
             if (nc == null) return;
             Nation host = nc.getCurrentNation();
             if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
