@@ -4,6 +4,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -28,6 +29,10 @@ public class xpNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
+        if ( sender instanceof Player && !instance.getProfile(((Player)sender).getUniqueId()).isStaff()) {
+            Lang.NO_PERMISSIONS.send(sender);
+            return false;
+        }
         if (args.length != 2) {
             Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%;/n setnxp NATION AMOUNT");
             return false;

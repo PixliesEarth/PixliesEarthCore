@@ -58,7 +58,7 @@ public class JoinListener implements Listener {
         profile.save();
         long needed = System.currentTimeMillis() - started;
         player.sendMessage(Lang.PROFILE_LOADED.get(player).replace("%TIME%", needed + "ms"));
-        instance.getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.GREEN).setTitle(" "));
+        // instance.getUtilLists().embedsToSend.add(new EmbedBuilder().setAuthor(player.getName(), "pixlies.net", "https://minotar/avatar/" + player.getName()).setColor(Color.GREEN).setTitle(" "));
     }
 
 }

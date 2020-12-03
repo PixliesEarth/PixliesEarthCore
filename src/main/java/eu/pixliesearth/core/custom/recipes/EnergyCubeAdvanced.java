@@ -23,7 +23,7 @@ public class EnergyCubeAdvanced extends CustomRecipe {
         map.put(1, "Pixlies:Capacitor_Advanced");
         map.put(2, "Pixlies:Circuit_Board");
         map.put(3, "Pixlies:Capacitor_Advanced");
-        map.put(4, "Machine:Energy_Cube_Intermidate");
+        map.put(4, "Machine:Energy_Cube_Intermediate");
         map.put(5, "Pixlies:Capacitor_Advanced");
         map.put(6, "Pixlies:Circuit_Board");
         map.put(7, "Pixlies:Capacitor_Advanced");

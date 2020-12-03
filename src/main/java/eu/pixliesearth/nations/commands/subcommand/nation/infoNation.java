@@ -95,8 +95,8 @@ public class infoNation extends SubCommand {
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {
             UUID uuid = UUID.fromString(s);
-            OfflinePlayer member = Bukkit.getPlayer(uuid);
-            if (member == null) continue;
+            OfflinePlayer member = Bukkit.getOfflinePlayer(uuid);
+            if (!member.hasPlayedBefore()) continue;
             if (member.isOnline()) memberJoiner.add("§a" + member.getName()); else memberJoiner.add("§7" + member.getName());
         }
         StringJoiner allyJoiner = new StringJoiner("§8, ");

@@ -22,9 +22,9 @@ public class WindTurbine extends CustomRecipe {
         map.put(0, "Pixlies:Steel_Block");
         map.put(1, "Pixlies:Copper_Wire");
         map.put(2, "Pixlies:Steel_Block");
-        map.put(3, "Pixlies:Energy_Cube_Advanced");
+        map.put(3, "Machine:Energy_Cube_Advanced");
         map.put(4, "Pixlies:Circuit_Board");
-        map.put(5, "Pixlies:Energy_Cube_Advanced");
+        map.put(5, "Machine:Energy_Cube_Advanced");
         map.put(6, "Pixlies:Steel_Block");
         map.put(7, "Pixlies:Copper_Wire");
         map.put(8, "Pixlies:Steel_Block");

@@ -33,19 +33,19 @@ import static eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 @AllArgsConstructor
 public class PixliesGun {
 
-    private static final Map<String, Class<? extends PixliesGun>> guns = new HashMap<>();
-    private static Main instance = Main.getInstance();
+    protected static final Map<String, Class<? extends PixliesGun>> guns = new HashMap<>();
+    protected static Main instance = Main.getInstance();
 
-    private UUID uuid;
-    private String name;
-    private ItemStack item;
-    private AmmoType ammoType;
-    private int maxRange;
-    private int ammo;
-    private int maxAmmo;
-    private double accuracy;
-    private long delay;
-    private List<Action> triggers;
+    protected UUID uuid;
+    protected String name;
+    protected ItemStack item;
+    protected AmmoType ammoType;
+    protected int maxRange;
+    protected int ammo;
+    protected int maxAmmo;
+    protected double accuracy;
+    protected long delay;
+    protected List<Action> triggers;
 
     public void trigger(final PlayerInteractEvent event) {
         ItemStack eventItem = event.getItem();

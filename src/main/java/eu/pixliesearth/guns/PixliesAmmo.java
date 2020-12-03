@@ -2,6 +2,7 @@ package eu.pixliesearth.guns;
 
 import java.util.Collection;
 
+import eu.pixliesearth.guns.ammo.*;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,10 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import eu.pixliesearth.core.custom.interfaces.Constants;
-import eu.pixliesearth.guns.ammo.Ammo762x51mm;
-import eu.pixliesearth.guns.ammo.CobbleStoneAmmo;
-import eu.pixliesearth.guns.ammo.NineMMAmmo;
-import eu.pixliesearth.guns.ammo.RifleAmmo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -76,6 +73,7 @@ public class PixliesAmmo implements Constants {
         NINEMM(new NineMMAmmo(null, null)),
         NATO762x51(new Ammo762x51mm(null, null)),
         COBBLESTONE(new CobbleStoneAmmo(null, null)),
+        ROCKET(new RocketAmmo(null, null)),
         ;
 
         private final PixliesAmmo ammo;

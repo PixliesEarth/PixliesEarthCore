@@ -33,11 +33,11 @@ public class Energy {
     public static double calculateNeeded(Location a, Location b) {
         // return Methods.calculateDistance(a.getBlockX(), b.getBlockX(), a.getBlockZ(), b.getBlockZ()) / 2000;
         double needed = Methods.calculateDistanceSquared(a, b);
-        double cost = 0.05;
+        double cost = 0.5;
         boolean done = false;
         while (!done) {
         	if (needed>1_000_000) {
-        		cost += 0.05;
+        		cost += 0.5;
         		needed /= 1_000_000;
         	} else {
         		done = true;
