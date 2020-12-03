@@ -29,4 +29,9 @@ public class ZincIngot1 extends CustomRecipe {
         return map;
     }
 
+    @Override
+    public Long getCraftTime() {
+        return 4000L;
+    }
+
 }

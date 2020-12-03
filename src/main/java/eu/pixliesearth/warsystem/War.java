@@ -104,6 +104,10 @@ public class War {
         return true;
     }
 
+    public void remove() {
+        Main.getWarCollection().findOneAndDelete(new Document("id", id));
+    }
+
     public boolean skipGrace() {
         if (!this.timers.containsKey("gracePeriod")) return false;
         start();
