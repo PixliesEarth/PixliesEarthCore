@@ -59,7 +59,7 @@ public class AluminumIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Aluminum_Dust");
+		map.put(0, "Pixlies:Aluminium_Dust");
 		return map;
 	}
 	/**
