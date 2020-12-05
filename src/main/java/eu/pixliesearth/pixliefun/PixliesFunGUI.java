@@ -51,6 +51,7 @@ public class PixliesFunGUI {
     }
 
     private void renderMainMenu() {
+        gui.setTitle("§b§lPixliesFun");
         gui.getPanes().clear();
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
@@ -127,7 +128,7 @@ public class PixliesFunGUI {
         PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
         List<GuiItem> ingredients = new ArrayList<>();
         for (String s : recipe.getContentsList().values()) {
-            ItemStack ingredient = getItem(s);
+            ItemStack ingredient = s == null ? new ItemStack(Material.AIR) : getItem(s);
             ingredients.add(new GuiItem(ingredient, e -> {
                 e.setCancelled(true);
                 try {
@@ -149,13 +150,13 @@ public class PixliesFunGUI {
             try {
                 renderRecipe(i, page + 1);
             } catch (Exception ignore) {}
-        }), 3, 0);
+        }), 5, 0);
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lLast").build(), event -> {
             event.setCancelled(true);
             try {
                 renderRecipe(i, page - 1);
             } catch (Exception ignore) {}
-        }), 5, 0);
+        }), 3, 0);
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
             event.setCancelled(true);
             renderMainMenu();
