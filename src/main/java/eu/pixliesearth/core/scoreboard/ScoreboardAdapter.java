@@ -11,6 +11,7 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.War;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -122,8 +123,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
                 returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);
-                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add(c + "§lStaff§aenabled");
+                    returnable.add(c + "§lTPS§a" + Bukkit.getTPS()[0]);
+                }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
