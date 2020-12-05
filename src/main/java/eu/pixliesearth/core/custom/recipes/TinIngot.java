@@ -33,5 +33,9 @@ public class TinIngot extends CustomRecipe {
         map.put(0, "Pixlies:Tin_Dust");
         return map;
     }
+    @Override
+    public Long getCraftTime() {
+        return 4000L;
+    }
 
 }

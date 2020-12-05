@@ -33,5 +33,9 @@ public class CopperIngot extends CustomRecipe {
         map.put(0, "Pixlies:Copper_Dust");
         return map;
     }
+    @Override
+    public Long getCraftTime() {
+        return 4000L;
+    }
 
 }
