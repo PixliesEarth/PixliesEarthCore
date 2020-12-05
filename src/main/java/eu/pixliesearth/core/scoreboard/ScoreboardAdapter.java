@@ -68,7 +68,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
         if (profile.isInWar()) {
             War war = instance.getCurrentWar();
-            returnable.add(Lang.WAR.replace(" §8|", "") + "§7players left");
+            returnable.add("§c§lWAR §7players left");
             returnable.add("§a§lYour side");
             returnable.add("  §8» §7" + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide()));
             returnable.add("§c§lOpponent");

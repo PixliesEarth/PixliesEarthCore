@@ -57,6 +57,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
+        if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
         if (!profile.isInNation()) return false;
@@ -73,6 +74,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
+        if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
         if (!profile.isInNation()) return false;
@@ -128,6 +130,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
+        if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
         if (!profile.isInNation()) return false;
@@ -156,6 +159,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
+        if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
         if (!profile.isInNation()) return false;
