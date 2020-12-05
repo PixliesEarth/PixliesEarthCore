@@ -73,6 +73,14 @@
 
     <repositories>
         <repository>
+         <id>BB1NBT</id>
+         <url>https://github.com/BradBot1/NBTManager</url>
+        </repository>
+        <repository>
+         <id>BB1PMD</id>
+         <url>https://github.com/BradBot1/BukkitPersistentMetaData</url>
+        </repository>
+        <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
@@ -253,6 +261,16 @@
             <groupId>com.github.Trigary</groupId>
             <artifactId>AdvancementCreator</artifactId>
             <version>v2.0</version>
+        </dependency>
+        <dependency>
+         <groupId>BB1</groupId>
+         <artifactId>NBTManager</artifactId>
+         <version>1.0.0</version>
+        </dependency>
+        <dependency>
+         <groupId>BB1</groupId>
+         <artifactId>PersistentMetaData</artifactId>
+         <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
