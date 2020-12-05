@@ -139,28 +139,30 @@ public class ProtectionManager implements Listener {
 
     @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
-        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return;
-        if (event.getClickedBlock() == null) return;
+        boolean can = canInteract(event);
+        if (!can) {
+            event.setCancelled(true);
+            event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
+        }
+    }
+
+    public static boolean canInteract(PlayerInteractEvent event) {
+        if (instance.getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
+        if (event.getClickedBlock() == null) return true;
         Chunk c = event.getClickedBlock().getChunk();
-        // if (!event.getClickedBlock().getType().isInteractable()) return;
+        // if (!event.getClickedBlock().getType().isInteractable()) return true true true;
         NationChunk nc = NationChunk.get(c);
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
-        if (nc == null) return;
+        if (nc == null) return true;
         Nation host = nc.getCurrentNation();
-        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
-        if (Permission.hasAccessHere(profile, nc)) return;
-        if (!profile.isInNation()) {
-            player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-            event.setCancelled(true);
-            return;
-        }
+        if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return true;
+        if (Permission.hasAccessHere(profile, nc)) return true;
+        if (!profile.isInNation()) return false;
         Nation guest = profile.getCurrentNation();
-        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return;
-        if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return;
-
-        player.sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(player));
-        event.setCancelled(true);
+        if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return true;
+        if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return true;
+        return false;
     }
 
     @EventHandler(priority = HIGHEST)

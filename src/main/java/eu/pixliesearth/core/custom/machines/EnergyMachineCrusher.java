@@ -153,7 +153,10 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Platinum_Dust"),
 						// 2 lead
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Lead_Dust"),
-						CustomItemUtil.getItemStackFromUUID("Pixlies:Lead_Dust")
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Lead_Dust"),
+						// 2 silver
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Silver_Dust"),
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Silver_Dust")
 				};
 				addToResult(loc, inv, table[new Random().nextInt(table.length)]);
 			} else if (id.equalsIgnoreCase(MinecraftMaterial.GOLD_ORE.getUUID())) {

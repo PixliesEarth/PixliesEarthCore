@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.*;
 import eu.pixliesearth.core.listener.ProtectionManager;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.NBTUtil;
 import lombok.SneakyThrows;
 import org.bukkit.block.Block;
@@ -23,6 +24,11 @@ public class CustomBlockListener extends CustomListener {
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+		if (!ProtectionManager.canInteract(event)) {
+			event.setCancelled(true);
+			event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
+			return;
+		}
 		if (event.getClickedBlock() == null) return;
 		CustomBlock id = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
 		if (id==null) return;
