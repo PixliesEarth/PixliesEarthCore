@@ -287,15 +287,13 @@ public class CustomItem {
 
 	public enum Category {
 
-		OTHER("Pixlies:Category_OTHER", "§eOther", MinecraftMaterial.COMMAND_BLOCK.getUUID())
+		OTHER("§eOther", MinecraftMaterial.COMMAND_BLOCK.getUUID())
 		;
 
-		@Getter String UUID;
 		@Getter String name;
 		@Getter String icon;
 
-		Category(String UUID, String name, String icon) {
-			this.UUID = UUID;
+		Category(String name, String icon) {
 			this.name = name;
 			this.icon = icon;
 		}
