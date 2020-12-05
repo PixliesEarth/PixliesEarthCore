@@ -52,6 +52,7 @@ public class ChatSystem implements Listener, Module {
                         NationDisbandEvent disbandEvent = new NationDisbandEvent(player, nation);
                         Bukkit.getPluginManager().callEvent(disbandEvent);
                         if (!disbandEvent.isCancelled()) {
+                            profile.depositMoney(nation.getMoney(), "Nation disband of " + nation.getName());
                             nation.remove();
                             player.sendMessage(Lang.NATION + " §8| §7You disbanded §b" + nation.getName());
                             Bukkit.broadcastMessage(Lang.NATION + " §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + player.getName() + "§7.");

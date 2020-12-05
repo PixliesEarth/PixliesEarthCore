@@ -73,6 +73,9 @@ public class CustomFeatureHandler {
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
 	private @Getter @Setter CustomFeatureLoader loader;
+
+	private @Getter final Map<CustomItem.Category, List<String>> categoriesForItems;
+
 	/**
 	 * Initiates a new {@link CustomFeatureHandler} based of the {@link CustomFeatureLoader} provided
 	 * 
@@ -98,6 +101,8 @@ public class CustomFeatureHandler {
 		this.locationToPowerMap = new ConcurrentHashMap<Location, Double>();
 		this.locationToPrivateMap = new HashMap<Location, UUID>();
 		this.locationToTempratureMap = new HashMap<Location, Double>();
+
+		categoriesForItems = new HashMap<>();
 
 		this.dropMap = new HashMap<>();
 

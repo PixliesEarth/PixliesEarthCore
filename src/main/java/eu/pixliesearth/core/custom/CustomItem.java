@@ -135,11 +135,6 @@ public class CustomItem {
 	 * @return If the event should be cancelled
 	 */
 	public boolean onBlockBrokeWithItem(BlockBreakEvent event) { return false; }
-
-	public Category getCategory() {
-		return Category.OTHER;
-	}
-
 	/**
 	 * @return Build the {@link CustomItem} into an {@link ItemStack} that can be used ingame
 	 */
@@ -287,7 +282,11 @@ public class CustomItem {
 
 	public enum Category {
 
-		OTHER("§eOther", MinecraftMaterial.COMMAND_BLOCK.getUUID())
+		ITEMS("§bItems", "Pixlies:Backpack"),
+		MACHINES("§6Machines", "Machine:Pottery"),
+		WEAPONS("§cWeapons", "Pixlies:Zulfiqar"),
+		BLOCKS("§eBlocks", "Pixlies:Silver_Block"),
+		ARMOR("§3Armors", "Pixlies:Aluminium_Chestplate"),
 		;
 
 		@Getter String name;
