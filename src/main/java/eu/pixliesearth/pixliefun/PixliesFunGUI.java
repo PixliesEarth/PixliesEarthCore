@@ -117,6 +117,8 @@ public class PixliesFunGUI {
         if (recipes.get(getId(i)).size() < page - 1) return;
         if (page < 0) return;
 
+        gui.setTitle(i.getDisplayName());
+
         CustomRecipe recipe = recipes.get(getId(i)).get(page);
 
         gui.getPanes().clear();

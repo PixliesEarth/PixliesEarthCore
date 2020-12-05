@@ -31,6 +31,9 @@ public class MachinesCommand extends CustomCommand {
 		Set<String> returner = new HashSet<>();
 		returner.add("items");
 		returner.add("recipes");
+		returner.add("pixliefun");
+		returner.add("pixliesfun");
+		returner.add("sf");
 		return returner;
 	}
 	
