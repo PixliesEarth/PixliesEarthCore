@@ -27,16 +27,7 @@ import java.util.Map;
 @Data
 public class PixliesFunGUI {
 
-    private static final Map<String, List<CustomRecipe>> recipes;
-
-    static {
-        recipes = new HashMap<>();
-        for (CustomRecipe r : CustomFeatureLoader.getLoader().getHandler().getCustomRecipes()) {
-            recipes.putIfAbsent(r.getResultUUID(), new ArrayList<>());
-            recipes.get(r.getResultUUID()).add(r);
-        }
-    }
-
+    public static final Map<String, List<CustomRecipe>> recipes = new HashMap<>();
 
     private Player player;
     private Gui gui;

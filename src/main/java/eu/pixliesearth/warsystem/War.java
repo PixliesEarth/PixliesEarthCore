@@ -67,13 +67,8 @@ public class War {
             return false;
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));
-        StringBuilder mentionsBuilder = new StringBuilder();
-        for (String s : defender.getMembers()) {
-            Profile profile = instance.getProfile(UUID.fromString(s));
-            if (profile.discordIsSynced())
-                mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
-        }
-        if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + aggressor.getName() + "** just started justifying a war-goal against your nation. This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + ".");
+
+        instance.getMiniMick().getChatChannel().sendMessage(new EmbedBuilder().setTitle("**" + aggressor.getName() + "** just started justifying a war-goal against **" + getDefenderInstance().getName() + "**.").setDescription("This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + "."));
         aggressor.getExtras().put("WAR:" + mainDefender, id);
         aggressor.setXpPoints(aggressor.getXpPoints() - cost);
         aggressor.save();
@@ -99,6 +94,7 @@ public class War {
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
+        instance.getMiniMick().getChatChannel().sendMessage(new EmbedBuilder().setTitle("**" + getAggressorInstance().getName() + "** just declared war on **" + getDefenderInstance().getName() + "**.").setDescription("The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + "."));
         declared = true;
         instance.setCurrentWar(this);
         return true;

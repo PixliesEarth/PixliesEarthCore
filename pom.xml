@@ -263,14 +263,14 @@
             <version>v2.0</version>
         </dependency>
         <dependency>
-         <groupId>BB1</groupId>
-         <artifactId>NBTManager</artifactId>
-         <version>1.0.0</version>
+            <groupId>com.github.BradBot1</groupId>
+            <artifactId>NBTManager</artifactId>
+            <version>master-37f9f94cbb-1</version>
         </dependency>
         <dependency>
-         <groupId>BB1</groupId>
-         <artifactId>PersistentMetaData</artifactId>
-         <version>1.0.0</version>
+            <groupId>com.github.BradBot1</groupId>
+            <artifactId>BukkitPersistentMetaData</artifactId>
+            <version>-1845985d4a-1</version>
         </dependency>
     </dependencies>
 </project>

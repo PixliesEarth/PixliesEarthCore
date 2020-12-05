@@ -28,6 +28,12 @@ public class WarCommandListener extends CustomListener {
         Player player = (Player) event.getSender();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInWar()) return;
+        if (event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand ||
+        event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.chatNation ||
+        event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.bankNation ||
+        event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.infoNation ||
+        event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.mapNation ||
+        event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.topNation) return;
         event.setCancelled(true);
         player.sendMessage(Lang.WAR + "§7You cant use nation commands in war.");
     }

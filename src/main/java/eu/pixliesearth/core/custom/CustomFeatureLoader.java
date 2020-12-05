@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
@@ -158,6 +159,8 @@ public class CustomFeatureLoader {
 	 */
 	public void loadCustomRecipe(CustomRecipe customRecipe) {
 		getHandler().registerRecipe(customRecipe);
+		PixliesFunGUI.recipes.putIfAbsent(customRecipe.getResultUUID(), new ArrayList<>());
+		PixliesFunGUI.recipes.get(customRecipe.getResultUUID()).add(customRecipe);
 	}
 	/**
 	 * Uses reflection to load custom blocks
