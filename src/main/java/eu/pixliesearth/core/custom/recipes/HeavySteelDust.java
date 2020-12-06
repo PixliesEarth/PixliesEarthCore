@@ -7,7 +7,7 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class AluminumIngot extends CustomRecipe {
+public class HeavySteelDust extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Aluminum_Ingot";
+		return "Pixlies:Heavy_Steel_Dust";
 	}
 	/**
 	 * How many of the result to give
@@ -43,7 +43,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.MODERN;
+		return Era.MEDIEVAL;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,7 +59,8 @@ public class AluminumIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Aluminium_Dust");
+		map.put(0, "Pixlies:Carbon_Kevlar_Ingot");
+		map.put(0, "Pixlies:Steel_Dust");
 		return map;
 	}
 	/**

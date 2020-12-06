@@ -7,7 +7,7 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.nations.entities.nation.Era;
 
-public class AluminumIngot extends CustomRecipe {
+public class EmptyCanister extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -19,7 +19,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:Forge";
+		return "Machine:Crafting_Table";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -29,7 +29,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Aluminum_Ingot";
+		return "Minecraft:Empty_Canister";
 	}
 	/**
 	 * How many of the result to give
@@ -59,7 +59,15 @@ public class AluminumIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Aluminium_Dust");
+		map.put(0, "Pixlies:Aluminum_Ingot");
+		map.put(1, "Pixlies:Heavy_Steel_Ingot");
+		map.put(2, "Pixlies:Aluminum_Ingot");
+		map.put(3, "Pixlies:Tin_Ingot");
+		map.put(4, MinecraftMaterial.BUCKET.getUUID());
+		map.put(5, "Pixlies:Tin_Ingot");
+		map.put(6, "Pixlies:Aluminum_Ingot");
+		map.put(7, "Pixlies:Tin_Ingot");
+		map.put(8, "Pixlies:Aluminum_Ingot");
 		return map;
 	}
 	/**
