@@ -216,6 +216,11 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Carbon")
 				};
 				addToResult(loc, inv, table[new Random().nextInt(table.length)]);
+			} else if(id.equalsIgnoreCase(MinecraftMaterial.ROTTEN_FLESH.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.WHEAT.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.POTATO.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.CARROT.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.PUMPKIN.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.PUMPKIN_PIE.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.BREAD.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.MELON.getUUID()) || id.equalsIgnoreCase(MinecraftMaterial.MELON_SLICE.getUUID())) {
+				ItemStack[] table = {
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Biofuel")
+				};
+				addToResult(loc, inv, table[new Random().nextInt(table.length)]);
 			} else {
 				return;
 			}
