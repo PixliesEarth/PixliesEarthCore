@@ -7,6 +7,7 @@ import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.WarParticipant;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -90,6 +91,8 @@ public class UtilLists {
 
     public List<EmbedBuilder> embedsToSend;
 
+    public Map<UUID, Location> lastLocation;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -127,6 +130,7 @@ public class UtilLists {
         invitationsToWar = new HashMap<>();
         inspectors = new ArrayList<>();
         embedsToSend = new ArrayList<>();
+        lastLocation = new HashMap<>();
     }
 
 }
