@@ -33,7 +33,6 @@ public class Gulag {
 
     public void addPlayer(Player player, WarParticipant.WarSide side) {
         if (fighting.contains(player.getUniqueId())) return;
-        player.teleport(Methods.locationFromSaveableString(spectatorLocation));
         players.putIfAbsent(side, new ArrayList<>());
         players.get(side).add(player.getUniqueId());
         player.sendTitle("§b§lWelcome", "§7to the §cgulag", 20, 20 * 3, 20);

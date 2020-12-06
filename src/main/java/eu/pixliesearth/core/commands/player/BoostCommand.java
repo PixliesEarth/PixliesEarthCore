@@ -47,6 +47,8 @@ public class BoostCommand implements CommandExecutor {
                         }
                         instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_EXP, new DoubleExpBoost());
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double-EXP");
+                        profile.setBoosts(profile.getBoosts() - 2);
+                        profile.save();
                         BroadcastCommand.broadcastDiscord(ChatColor.stripColor(Lang.PLAYER_BOOSTED.getRaw("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Double ore-drop")), player);
                     }
                 }), 2, 1);
@@ -61,6 +63,8 @@ public class BoostCommand implements CommandExecutor {
                         }
                         instance.getUtilLists().boosts.put(Boost.BoostType.DOUBLE_DROP, new DoubleDropBoost());
                         Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Double ore-drop");
+                        profile.setBoosts(profile.getBoosts() - 2);
+                        profile.save();
                         BroadcastCommand.broadcastDiscord(ChatColor.stripColor(Lang.PLAYER_BOOSTED.getRaw("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Double ore-drop")), player);
                     }
                 }), 4, 1);
