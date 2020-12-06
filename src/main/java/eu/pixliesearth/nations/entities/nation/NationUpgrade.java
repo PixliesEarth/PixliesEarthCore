@@ -10,7 +10,7 @@ import java.util.function.BiConsumer;
 @Getter
 public enum NationUpgrade {
 
-    ONE_MORE_SETTLEMENT("&b&lMore settlements", Material.MAGENTA_BED, Era.ANCIENT, 5, (nation, player) -> {
+    ONE_MORE_SETTLEMENT("§b§lMore settlements", Material.MAGENTA_BED, Era.ANCIENT, 5, (nation, player) -> {
         if (Integer.parseInt(nation.getExtras().get("settlements").toString()) == 3) {
             nation.setXpPoints(5 + nation.getXpPoints());
             player.sendMessage(Lang.NATION + "§7You have reached the maximum settlements you can purchase.");

@@ -45,6 +45,19 @@ public class unclaimNation extends SubCommand {
         if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
+        if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+            player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
+            return false;
+        }
+        if (args[0].equalsIgnoreCase("auto")) {
+            if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
+                instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
+                player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
+            } else {
+                instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
+                player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
+            }
+        }
         Chunk c = player.getLocation().getChunk();
         NationChunk nc = NationChunk.get(c);
         if (nc == null) {
@@ -53,19 +66,6 @@ public class unclaimNation extends SubCommand {
         }
         switch (args.length) {
             case 1:
-                if (!profile.isInNation() && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
-                    return false;
-                }
-                if (args[0].equalsIgnoreCase("auto")) {
-                    if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
-                        instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-                        player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
-                    } else {
-                        instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
-                        player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
-                    }
-                }
                 if (!args[0].equalsIgnoreCase("auto") && !Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                     Lang.NO_PERMISSIONS.send(sender);
                     return false;
