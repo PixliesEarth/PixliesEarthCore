@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+
 /**
  * 
  * @author BradBot_1
@@ -27,4 +29,10 @@ public class CustomInventoryListener extends CustomListener {
 		if (id==null) return;
 		if (id.equalsIgnoreCase(getUnclickableItemUUID())) event.setCancelled(true);
 	}
+
+	@EventHandler
+	public void onSwap(InventoryMoveItemEvent event) {
+		if (CustomItemUtil.getUUIDFromItemStack(event.getItem()).equalsIgnoreCase("Pixlies:Backpack")) event.setCancelled(true);
+	}
+
 }
