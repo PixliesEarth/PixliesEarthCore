@@ -64,11 +64,11 @@ public class unclaimNation extends SubCommand {
                 if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
                     NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
                 } else if (args[0].equalsIgnoreCase("auto")) {
-                    if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
+                    if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
                         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                         player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
                     } else {
-                        instance.getUtilLists().unclaimAuto.put(player.getUniqueId(), nc.getNationId());
+                        instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
                         player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
                     }
                 } else if (args[0].equalsIgnoreCase("fill")) {

@@ -17,6 +17,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -147,6 +148,7 @@ public class NationChunk {
 
     public static boolean unclaim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType) {
         NationChunk nc = get(world, x, z);
+        if (nc == null) return false;
         boolean allowed = false;
         if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
@@ -155,7 +157,7 @@ public class NationChunk {
             Lang.CHUNK_NOT_YOURS.send(player);
             return false;
         }
-        TerritoryChangeEvent event = new TerritoryChangeEvent(player, Arrays.asList(nc), changeType);
+        TerritoryChangeEvent event = new TerritoryChangeEvent(player, Collections.singletonList(nc), changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             Nation.getById(nc.getNationId()).deposit(15);

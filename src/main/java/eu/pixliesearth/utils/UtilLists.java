@@ -37,7 +37,7 @@ public class UtilLists {
 
     public Map<UUID, String> claimAuto;
 
-    public Map<UUID, String> unclaimAuto;
+    public List<UUID> unclaimAuto;
 
     public List<UUID> reloading;
 
@@ -104,7 +104,7 @@ public class UtilLists {
         vanishList = new ArrayList<>();
         ammos = new HashMap<>();
         claimAuto = new HashMap<>();
-        unclaimAuto = new HashMap<>();
+        unclaimAuto = new ArrayList<>();
         reloading = new ArrayList<>();
         deathChests = new HashMap<>();
         chatQueue = new ConcurrentHashMap<>();

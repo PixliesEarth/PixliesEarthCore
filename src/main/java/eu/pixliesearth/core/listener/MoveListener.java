@@ -52,11 +52,12 @@ public class MoveListener implements Listener {
 	                        TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().claimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.CLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.CLAIM_AUTO_OTHER;
 	                        NationChunk.claim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType, instance.getUtilLists().claimAuto.get(player.getUniqueId()));
 	                    }
-	                } else if (instance.getUtilLists().unclaimAuto.containsKey(player.getUniqueId())) {
-	                    if (!NationManager.nations.containsKey(instance.getUtilLists().unclaimAuto.get(player.getUniqueId()))) {
-							instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-	                    } else {
-							TerritoryChangeEvent.ChangeType changeType = instance.getUtilLists().unclaimAuto.get(player.getUniqueId()).equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
+	                } else if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
+	                	NationChunk nc = NationChunk.get(tc);
+	                	if (nc == null) {
+	                		Lang.CHUNK_NOT_YOURS.send(player);
+						} else {
+							TerritoryChangeEvent.ChangeType changeType = nc.getNationId().equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
 							NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
 						}
 	                }

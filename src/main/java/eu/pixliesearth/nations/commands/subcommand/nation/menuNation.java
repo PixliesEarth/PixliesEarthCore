@@ -11,6 +11,7 @@ import eu.pixliesearth.nations.entities.nation.*;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.SkullCreator;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -234,9 +235,7 @@ public class menuNation extends SubCommand {
                     menu.addItem(new GuiItem(new ItemBuilder(Material.CHARCOAL).setDisplayName("§cAlready on highest Era").build(), event -> event.setCancelled(true)), 8, 4);
                 }
 
-                menu.addItem(new GuiItem(new ItemBuilder(Material.WHEAT).setDisplayName("§eAgriculture").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.AGRICULTURE, menu);}), 2, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.DIAMOND_SWORD).setDisplayName("§4Military").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.MILITARY, menu);}), 4, 2);
-                menu.addItem(new GuiItem(new ItemBuilder(Material.FURNACE).setDisplayName("§6Industry").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, NationUpgrade.UpgradeType.INDUSTRY, menu);}), 6, 2);
+                menu.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/9cdb8f43656c06c4e8683e2e6341b4479f157f48082fea4aff09b37ca3c6995b")).setDisplayName("§bUpgrades").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, menu);}), 4, 2);
                 break;
         }
         gui.addPane(menu);
@@ -262,7 +261,7 @@ public class menuNation extends SubCommand {
         }
     }
 
-    private void showUpgradeGui(Gui gui, Player player, NationUpgrade.UpgradeType type, StaticPane menuPane) {
+    private void showUpgradeGui(Gui gui, Player player, StaticPane menuPane) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         gui.addPane(menuPane);
@@ -271,7 +270,6 @@ public class menuNation extends SubCommand {
         PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4);
         List<GuiItem> upgradeItems = new ArrayList<>();
         for (NationUpgrade upgrade : NationUpgrade.values()) {
-            if (upgrade.getType() != type) continue;
             upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
                 event.setCancelled(true);
                 player.closeInventory();
