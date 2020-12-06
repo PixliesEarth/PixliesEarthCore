@@ -157,6 +157,7 @@ public class CustomItem {
 				addNBTTag("RARITY", getRarity().getUUID(), NBTTagType.STRING);
 			}}.build();
 	}
+
 	/**
 	 * @return If the block gets broken then this Item drops
 	 */

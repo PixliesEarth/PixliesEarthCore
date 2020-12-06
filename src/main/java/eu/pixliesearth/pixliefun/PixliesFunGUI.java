@@ -1,18 +1,14 @@
 package eu.pixliesearth.pixliefun;
 
-import com.bb1.NBTManager;
-import com.bb1.interfaces.NBTTags;
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.core.custom.*;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.SkullCreator;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -73,13 +69,9 @@ public class PixliesFunGUI {
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
-            NBTTags tags = NBTManager.getNBTFromItemStack(i);
-            tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
-            i = NBTManager.applyNBTToItemStack(i, tags);
-            ItemStack finalI = i;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
                 event.setCancelled(true);
-                renderRecipe(finalI, 0);
+                renderRecipe(i, 0);
             }));
         }
         entriesPane.populateWithGuiItems(entries);
@@ -131,16 +123,10 @@ public class PixliesFunGUI {
         for (String s : recipe.getContentsList().values()) {
             ItemStack ingredient = s == null ? new ItemStack(Material.AIR) : getItem(s);
             // If Item is not null, apply unclickable UUID to it
-            if (ingredient.getType() != Material.AIR) {
-                NBTTags tags = NBTManager.getNBTFromItemStack(ingredient);
-                tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
-                ingredient = NBTManager.applyNBTToItemStack(ingredient, tags);
-            }
-            ItemStack finalIngredient = ingredient;
             ingredients.add(new GuiItem(ingredient, e -> {
                 e.setCancelled(true);
                 try {
-                    renderRecipe(finalIngredient, 0);
+                    renderRecipe(ingredient, 0);
                 } catch (Exception ignore) {}
             }));
         }
@@ -149,11 +135,7 @@ public class PixliesFunGUI {
         gui.addPane(recipePane);
 
         StaticPane result = new StaticPane(7, 2, 1, 1);
-        ItemStack finalResult = getItem(recipe.getResultUUID());
-        NBTTags tags = NBTManager.getNBTFromItemStack(finalResult);
-        tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
-        finalResult = NBTManager.applyNBTToItemStack(finalResult, tags);
-        result.addItem(new GuiItem(finalResult, e -> e.setCancelled(true)), 0, 0);
+        result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> e.setCancelled(true)), 0, 0);
         gui.addPane(result);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
@@ -188,7 +170,18 @@ public class PixliesFunGUI {
     }
 
     private ItemStack getItem(String s) {
-        return CustomItemUtil.getItemStackFromUUID(s);
+        CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
+        CustomItem item = handler.getCustomItemFromUUID(s);
+        if (item == null) {
+            MinecraftMaterial mcMat = MinecraftMaterial.getMinecraftMaterialFromUUID(s);
+            return new ItemStack(mcMat.getMaterial());
+        }
+        if (item.getMaterial().equals(Material.PLAYER_HEAD) && item instanceof CustomMachine) {
+            CustomMachine itemMachine = (CustomMachine) item;
+            return new ItemBuilder(SkullCreator.itemFromUrl(itemMachine.getPlayerHeadUUID())).setCustomModelData(item.getCustomModelData()).setDisplayName(item.getDefaultDisplayName()).build();
+        }
+        return new ItemBuilder(item.getMaterial()).setCustomModelData(item.getCustomModelData()).setDisplayName(item.getDefaultDisplayName()).build();
+        // return CustomItemUtil.getItemStackFromUUID(s);
     }
 
 }
