@@ -225,7 +225,7 @@ public final class Main extends JavaPlugin {
                     if (player.isAfk()) continue;
                     Profile profile = getProfile(player.getUniqueId());
                     if (profile.isInNation()) {
-                        Energy.add(profile, 0.1 * profile.getCurrentNation().getCurrentEra().getNumber());
+                        Energy.add(profile, Methods.round(0.1 * profile.getCurrentNation().getCurrentEra().getNumber(), 2));
                     } else {
                         Energy.add(profile, 0.1);
                     }
