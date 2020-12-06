@@ -199,6 +199,7 @@ public class Nation {
         for (String s : chunks1)
             NationChunk.fromString(s.replace(this.getNationId(), nation.getNationId())).claim();
         nation.deposit(this.getMoney());
+        nation.setXpPoints(nation.getXpPoints() + this.getXpPoints());
         nation.save();
         this.remove();
     }
