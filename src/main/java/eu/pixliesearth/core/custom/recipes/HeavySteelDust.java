@@ -60,7 +60,7 @@ public class HeavySteelDust extends CustomRecipe {
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, "Pixlies:Carbon_Kevlar_Ingot");
-		map.put(0, "Pixlies:Steel_Dust");
+		map.put(1, "Pixlies:Steel_Dust");
 		return map;
 	}
 	/**
