@@ -57,7 +57,7 @@ public class unclaimNation extends SubCommand {
                     player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                     return false;
                 }
-                if (!Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                if (!args[0].equalsIgnoreCase("auto") && !Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
                     Lang.NO_PERMISSIONS.send(sender);
                     return false;
                 }

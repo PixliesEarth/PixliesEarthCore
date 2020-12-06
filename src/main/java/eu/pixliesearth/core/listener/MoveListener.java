@@ -58,7 +58,7 @@ public class MoveListener implements Listener {
 	                		Lang.CHUNK_NOT_YOURS.send(player);
 						} else {
 							TerritoryChangeEvent.ChangeType changeType = nc.getNationId().equals(profile.getNationId()) ? TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF : TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER;
-							NationChunk.unclaim(player, tc.getWorld().getName(), tc.getX(), tc.getZ(), changeType);
+							NationChunk.unclaim(player, nc.getWorld(), nc.getX(), nc.getZ(), changeType);
 						}
 	                }
 	                Nation fn = NationChunk.getNationData(fc);

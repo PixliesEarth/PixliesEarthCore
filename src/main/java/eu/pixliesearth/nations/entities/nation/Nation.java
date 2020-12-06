@@ -221,7 +221,7 @@ public class Nation {
 
     public boolean withdraw(double amount) {
         if (amount > money) return false;
-        money = money + amount;
+        money = money - amount;
         return true;
     }
 
