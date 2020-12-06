@@ -1,9 +1,9 @@
 package eu.pixliesearth.core.custom.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+import eu.pixliesearth.guns.PixliesAmmo;
+import eu.pixliesearth.localization.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,10 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 
-import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.core.custom.interfaces.ITabable;
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.localization.Lang;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AmmoGiveCommand extends CustomCommand {
 	

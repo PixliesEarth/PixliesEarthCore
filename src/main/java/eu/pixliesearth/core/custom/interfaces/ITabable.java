@@ -1,8 +1,8 @@
 package eu.pixliesearth.core.custom.interfaces;
 
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
 
 public interface ITabable {
 	

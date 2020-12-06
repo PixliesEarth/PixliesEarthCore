@@ -1,11 +1,10 @@
 package eu.pixliesearth.core.custom.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.localization.Lang;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 public class TestTranslationCommand extends CustomCommand {
 

@@ -1,7 +1,6 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import lombok.Getter;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 

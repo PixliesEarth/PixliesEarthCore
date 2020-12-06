@@ -1,10 +1,10 @@
 package eu.pixliesearth.core.custom.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CableBasic extends CustomRecipe {
 	/**

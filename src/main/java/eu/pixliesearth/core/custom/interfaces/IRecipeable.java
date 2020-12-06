@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom.interfaces;
 
+import eu.pixliesearth.core.custom.CustomRecipe;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import eu.pixliesearth.core.custom.CustomRecipe;
 /**
  * 
  * @author BradBot_1

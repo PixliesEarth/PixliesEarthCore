@@ -1,33 +1,18 @@
 package eu.pixliesearth.discord;
 
-import com.google.gson.GsonBuilder;
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.modules.economy.Receipt;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.nation.Ideology;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-import org.javacord.api.entity.permission.PermissionType;
-import org.javacord.api.entity.permission.Role;
 
 import java.awt.*;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MiniMick {
 

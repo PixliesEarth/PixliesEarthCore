@@ -1,7 +1,6 @@
 package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.guns.guns.*;
 import eu.pixliesearth.utils.Methods;

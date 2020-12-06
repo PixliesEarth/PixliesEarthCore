@@ -8,14 +8,11 @@ import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.util.*;

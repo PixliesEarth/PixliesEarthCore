@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+import org.bukkit.command.CommandSender;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import eu.pixliesearth.Main;
-import org.bukkit.command.CommandSender;
-
-import eu.pixliesearth.core.custom.interfaces.ITabable;
 
 /**
  * 

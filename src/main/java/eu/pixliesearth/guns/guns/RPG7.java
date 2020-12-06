@@ -1,6 +1,5 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.GunFireResult;
 import eu.pixliesearth.guns.PixliesAmmo;
 import eu.pixliesearth.guns.PixliesGun;
 import eu.pixliesearth.guns.RPGFireResult;
@@ -8,10 +7,10 @@ import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 

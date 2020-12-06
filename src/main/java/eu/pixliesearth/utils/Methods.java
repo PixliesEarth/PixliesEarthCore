@@ -8,11 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.NumberConversions;
 
 import java.util.*;
-
-import static org.bukkit.Sound.*;
 
 public class Methods {
 	

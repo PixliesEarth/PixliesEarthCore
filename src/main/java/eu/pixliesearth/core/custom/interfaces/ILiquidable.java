@@ -1,16 +1,15 @@
 package eu.pixliesearth.core.custom.interfaces;
 
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.utils.CustomItemUtil;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.inventory.ItemStack;
-
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.utils.CustomItemUtil;
 
 public interface ILiquidable {
 	

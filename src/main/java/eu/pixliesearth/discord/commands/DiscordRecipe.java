@@ -6,13 +6,11 @@ import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.listeners.CustomMachineCommandListener;
 import eu.pixliesearth.discord.DiscordCommand;
 import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Methods;
 import org.bukkit.Material;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.List;
-import java.util.Set;
 
 public class DiscordRecipe extends DiscordCommand {
 

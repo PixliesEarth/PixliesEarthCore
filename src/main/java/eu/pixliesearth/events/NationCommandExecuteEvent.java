@@ -1,15 +1,11 @@
 package eu.pixliesearth.events;
 
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import java.util.Collection;
 
 public class NationCommandExecuteEvent extends Event implements Cancellable {
 

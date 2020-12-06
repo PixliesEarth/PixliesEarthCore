@@ -1,7 +1,6 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.localization.Lang;
 import net.pl3x.purpur.event.PlayerAFKEvent;
 import org.bukkit.event.EventHandler;
 

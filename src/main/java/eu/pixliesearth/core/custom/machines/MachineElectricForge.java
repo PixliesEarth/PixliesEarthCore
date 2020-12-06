@@ -1,15 +1,14 @@
 package eu.pixliesearth.core.custom.machines;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.bukkit.Location;
-
 import eu.pixliesearth.core.custom.CustomCrafterMachine;
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomRecipe;
+import org.bukkit.Location;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: make use fuel
 	

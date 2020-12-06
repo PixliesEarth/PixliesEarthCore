@@ -10,7 +10,6 @@ import eu.pixliesearth.warsystem.WarParticipant;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 

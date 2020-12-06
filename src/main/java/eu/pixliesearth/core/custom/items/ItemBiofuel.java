@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
+import eu.pixliesearth.core.custom.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import eu.pixliesearth.core.custom.CustomItem;
 
 public class ItemBiofuel extends CustomItem {
 	

@@ -1,8 +1,11 @@
 package eu.pixliesearth.guns;
 
-import java.util.Collection;
-
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.guns.ammo.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import net.minecraft.server.v1_16_R3.AxisAlignedBB;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,11 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import eu.pixliesearth.core.custom.interfaces.Constants;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import net.minecraft.server.v1_16_R3.AxisAlignedBB;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor

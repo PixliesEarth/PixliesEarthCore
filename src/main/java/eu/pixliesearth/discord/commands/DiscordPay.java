@@ -3,7 +3,6 @@ package eu.pixliesearth.discord.commands;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.DiscordCommand;
 import eu.pixliesearth.localization.Lang;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

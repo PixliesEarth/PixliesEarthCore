@@ -1,15 +1,14 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import eu.pixliesearth.core.custom.CustomListener;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import eu.pixliesearth.core.custom.CustomListener;
-import me.clip.placeholderapi.PlaceholderAPI;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * 
  * @author BradBot_1

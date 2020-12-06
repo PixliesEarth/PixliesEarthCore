@@ -2,7 +2,6 @@ package eu.pixliesearth.utils;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
-import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordMessage;
 import eu.pixliesearth.localization.Lang;
 import lombok.AllArgsConstructor;

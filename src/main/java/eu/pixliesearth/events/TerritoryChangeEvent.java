@@ -8,7 +8,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.Collection;
-import java.util.List;
 
 public class TerritoryChangeEvent extends Event implements Cancellable {
 

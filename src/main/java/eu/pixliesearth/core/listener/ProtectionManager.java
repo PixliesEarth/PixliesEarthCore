@@ -21,7 +21,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import static org.bukkit.event.EventPriority.HIGHEST;
-import static org.bukkit.event.EventPriority.NORMAL;
 
 public class ProtectionManager implements Listener {
 

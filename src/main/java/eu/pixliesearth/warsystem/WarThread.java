@@ -1,8 +1,6 @@
 package eu.pixliesearth.warsystem;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.warsystem.War;
-import org.bukkit.Bukkit;
 
 public class WarThread extends Thread {
 

@@ -1,5 +1,7 @@
 package eu.pixliesearth.pixliefun;
 
+import com.bb1.NBTManager;
+import com.bb1.interfaces.NBTTags;
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
@@ -8,6 +10,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import lombok.Data;
@@ -70,9 +73,13 @@ public class PixliesFunGUI {
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
+            NBTTags tags = NBTManager.getNBTFromItemStack(i);
+            tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
+            i = NBTManager.applyNBTToItemStack(i, tags);
+            ItemStack finalI = i;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
                 event.setCancelled(true);
-                renderRecipe(i, 0);
+                renderRecipe(finalI, 0);
             }));
         }
         entriesPane.populateWithGuiItems(entries);
@@ -120,20 +127,33 @@ public class PixliesFunGUI {
 
         PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
         List<GuiItem> ingredients = new ArrayList<>();
+        // Loop through all ingredients and set them to their slots
         for (String s : recipe.getContentsList().values()) {
             ItemStack ingredient = s == null ? new ItemStack(Material.AIR) : getItem(s);
+            // If Item is not null, apply unclickable UUID to it
+            if (ingredient.getType() != Material.AIR) {
+                NBTTags tags = NBTManager.getNBTFromItemStack(ingredient);
+                tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
+                ingredient = NBTManager.applyNBTToItemStack(ingredient, tags);
+            }
+            ItemStack finalIngredient = ingredient;
             ingredients.add(new GuiItem(ingredient, e -> {
                 e.setCancelled(true);
                 try {
-                    renderRecipe(ingredient, 0);
+                    renderRecipe(finalIngredient, 0);
                 } catch (Exception ignore) {}
             }));
         }
+        // Add all ingredients to the pane
         recipePane.populateWithGuiItems(ingredients);
         gui.addPane(recipePane);
 
         StaticPane result = new StaticPane(7, 2, 1, 1);
-        result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> e.setCancelled(true)), 0, 0);
+        ItemStack finalResult = getItem(recipe.getResultUUID());
+        NBTTags tags = NBTManager.getNBTFromItemStack(finalResult);
+        tags.addTag("UUID", CustomInventoryListener.getUnclickableItemUUID());
+        finalResult = NBTManager.applyNBTToItemStack(finalResult, tags);
+        result.addItem(new GuiItem(finalResult, e -> e.setCancelled(true)), 0, 0);
         gui.addPane(result);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);

@@ -8,9 +8,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
-import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.warsystem.War;
-import eu.pixliesearth.warsystem.gulag.Gulag;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

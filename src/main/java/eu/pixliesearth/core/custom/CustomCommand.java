@@ -1,22 +1,21 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomSubCommand.TabableSubCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Methods;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import eu.pixliesearth.core.custom.CustomSubCommand.TabableSubCommand;
-import eu.pixliesearth.core.custom.interfaces.ITabable;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.Methods;
-import net.md_5.bungee.api.ChatColor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 

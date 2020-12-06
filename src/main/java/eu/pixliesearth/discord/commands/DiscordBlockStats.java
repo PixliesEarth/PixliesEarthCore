@@ -2,7 +2,6 @@ package eu.pixliesearth.discord.commands;
 
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.discord.DiscordCommand;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Methods;
@@ -11,8 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 

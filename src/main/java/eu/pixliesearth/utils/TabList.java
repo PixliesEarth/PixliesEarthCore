@@ -1,9 +1,8 @@
 package eu.pixliesearth.utils;
 
-import org.bukkit.entity.Player;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.entity.Player;
 
 public class TabList {
 	

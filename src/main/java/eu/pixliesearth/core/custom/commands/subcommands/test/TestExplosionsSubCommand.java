@@ -1,12 +1,11 @@
 package eu.pixliesearth.core.custom.commands.subcommands.test;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import eu.pixliesearth.core.custom.CustomCommand.TabableString;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.utils.ExplosionCalculator;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class TestExplosionsSubCommand extends CustomSubCommand {
 

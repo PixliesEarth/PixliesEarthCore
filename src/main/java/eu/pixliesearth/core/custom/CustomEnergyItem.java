@@ -1,17 +1,16 @@
 package eu.pixliesearth.core.custom;
 
-import java.util.Map.Entry;
-
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.interfaces.Energyable;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Map.Entry;
 
 /**
  * 

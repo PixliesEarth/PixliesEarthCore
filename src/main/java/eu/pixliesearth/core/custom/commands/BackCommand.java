@@ -33,7 +33,7 @@ public class BackCommand extends CustomCommand {
             return false;
         }
         Profile profile = instance.getProfile(player.getUniqueId());
-        profile.teleport(loc, "last location");
+        profile.teleport(loc, "your last location");
         return true;
     }
 

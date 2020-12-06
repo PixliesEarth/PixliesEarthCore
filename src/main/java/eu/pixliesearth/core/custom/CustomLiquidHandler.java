@@ -1,13 +1,12 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.interfaces.ILiquidable;
+import lombok.Getter;
+import org.bukkit.Location;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Location;
-
-import eu.pixliesearth.core.custom.interfaces.ILiquidable;
-import lombok.Getter;
 
 public class CustomLiquidHandler {
 	

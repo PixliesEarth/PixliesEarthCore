@@ -1,8 +1,6 @@
 package eu.pixliesearth.utils;
 
-import java.io.InputStream;
-import java.util.Collections;
-
+import eu.pixliesearth.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.dynmap.DynmapAPI;
@@ -11,7 +9,8 @@ import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
 import org.dynmap.markers.MarkerSet;
 
-import eu.pixliesearth.Main;
+import java.io.InputStream;
+import java.util.Collections;
 
 public class DynmapUtil {
 	
