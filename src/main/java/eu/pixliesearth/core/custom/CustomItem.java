@@ -283,8 +283,10 @@ public class CustomItem {
 	public enum Category {
 
 		ITEMS("§bItems", "Pixlies:Backpack"),
+		MATERIAL("§9Materials", "Pixlies:Titanium_Dust"),
 		MACHINES("§6Machines", "Machine:Pottery"),
 		WEAPONS("§cWeapons", "Pixlies:Zulfiqar"),
+		TOOLS("§eTools", "Pixlies:Explosive_Pickaxe"),
 		BLOCKS("§eBlocks", "Pixlies:Silver_Block"),
 		ARMOR("§3Armors", "Pixlies:Aluminium_Chestplate"),
 		;

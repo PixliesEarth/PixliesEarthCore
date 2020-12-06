@@ -229,8 +229,16 @@ public class CustomFeatureLoader {
 		int i = 0;
 		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) {
 			loadCustomItem(clazz.getConstructor().newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.ITEMS).add(clazz.newInstance().getUUID());
+			if (clazz.getConstructor().newInstance().getUUID().contains("_Pickaxe") || clazz.getConstructor().newInstance().getUUID().contains("_Axe") || clazz.getConstructor().newInstance().getUUID().contains("_Shovel") || clazz.getConstructor().newInstance().getUUID().contains("_Hoe")) {
+				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.TOOLS, new ArrayList<>());
+				handler.getCategoriesForItems().get(CustomItem.Category.TOOLS).add(clazz.newInstance().getUUID());
+			} else if (clazz.getConstructor().newInstance().getUUID().contains("_Dust") || clazz.getConstructor().newInstance().getUUID().contains("_Ingot") || clazz.getConstructor().newInstance().getUUID().contains("_Chunk") || clazz.getConstructor().newInstance().getUUID().contains("_Plastic")) {
+				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MATERIAL, new ArrayList<>());
+				handler.getCategoriesForItems().get(CustomItem.Category.MATERIAL).add(clazz.newInstance().getUUID());
+			}else {
+				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
+				handler.getCategoriesForItems().get(CustomItem.Category.ITEMS).add(clazz.newInstance().getUUID());
+			}
 			i++;
 		}
 		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class)) {

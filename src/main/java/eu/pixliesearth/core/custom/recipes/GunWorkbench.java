@@ -14,7 +14,7 @@ public class GunWorkbench extends CustomRecipe {
     }
     @Override
     public String getResultUUID() {
-        return "Machine:Gun_Workbench";
+        return "Machine:GunWorkbench";
     }
     @Override
     public Map<Integer, String> getContentsList() {
