@@ -104,8 +104,8 @@ public class UtilLists {
         unclaimAuto = new HashMap<>();
         reloading = new ArrayList<>();
         deathChests = new HashMap<>();
-        chatQueue = new HashMap<>();
-        dynmapQueue = new HashMap<>();
+        chatQueue = new ConcurrentHashMap<>();
+        dynmapQueue = new ConcurrentHashMap<>();
         webhook = new DiscordWebhook(Main.getInstance().getConfig().getString("webhook"));
         boosts = new HashMap<>();
         scoreboardMaps = new ArrayList<>();
