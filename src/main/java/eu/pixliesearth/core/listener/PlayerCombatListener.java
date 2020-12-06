@@ -3,6 +3,7 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -25,6 +26,9 @@ public class PlayerCombatListener implements Listener {
 
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
+
+            if (dProfile.getNationId().equals(tProfile.getNationId()) && dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
+
             startCombatTimer(tProfile, dProfile);
         } else if (event.getDamager() instanceof Player) {
             Player damager = (Player) event.getDamager();
@@ -32,6 +36,9 @@ public class PlayerCombatListener implements Listener {
 
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
+
+            if (dProfile.getNationId().equals(tProfile.getNationId()) && dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
+
             startCombatTimer(tProfile, dProfile);
         }
     }

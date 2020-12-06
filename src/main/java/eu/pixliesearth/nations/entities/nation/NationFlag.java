@@ -13,6 +13,7 @@ public enum NationFlag {
     PERMANENT(true),
     PEACEFUL(true),
     INF_POWER(true),
+    FRIENDLY_FIRE(false),
     ;
 
     private final boolean requiresStaff;
