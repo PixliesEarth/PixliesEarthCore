@@ -3,6 +3,7 @@ package eu.pixliesearth.guns.guns;
 import eu.pixliesearth.guns.GunFireResult;
 import eu.pixliesearth.guns.PixliesAmmo;
 import eu.pixliesearth.guns.PixliesGun;
+import eu.pixliesearth.guns.RPGFireResult;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
@@ -48,11 +49,9 @@ public class RPG7 extends PixliesGun {
             this.ammo -= 1;
             reloadItem(eventItem);
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
-            GunFireResult result = ammo.trace(player);
+            RPGFireResult result = ammo.traceRPG(player);
             if (result == null) return;
-            Bukkit.getScheduler().runTaskLaterAsynchronously(instance, () -> {
-                result.getPositionLocation().createExplosion(2F, true);
-            }, 40L);
+            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(2F, true), 40L);
         }
     }
 

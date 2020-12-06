@@ -3,6 +3,7 @@ package eu.pixliesearth.guns;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
+import eu.pixliesearth.guns.guns.*;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
@@ -109,17 +110,18 @@ public class PixliesGun {
         item.setItemMeta(meta);
     }
 
-    static {
-        for (Class<? extends PixliesGun> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.guns.guns", PixliesGun.class)) {
-            try {
-                guns.put(clazz.getConstructor(int.class, UUID.class).newInstance(0, UUID.randomUUID()).getName(), clazz);
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        }
+    public static void loadGuns() {
+        guns.put(new AK47(0, UUID.randomUUID()).getName(), AK47.class);
+        guns.put(new K98K(0, UUID.randomUUID()).getName(), K98K.class);
+        guns.put(new M16(0, UUID.randomUUID()).getName(), M16.class);
+        guns.put(new MP5(0, UUID.randomUUID()).getName(), MP5.class);
+        guns.put(new RPG7(0, UUID.randomUUID()).getName(), RPG7.class);
+        guns.put(new Slingshot(0, UUID.randomUUID()).getName(), Slingshot.class);
+        guns.put(new Uzi(0, UUID.randomUUID()).getName(), Uzi.class);
     }
 
     public static PixliesGun getByItem(ItemStack item) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if (guns.isEmpty()) loadGuns();
         if (!item.hasItemMeta()) return null;
         if (!guns.containsKey(item.getItemMeta().getDisplayName().split(" §8| ")[0])) return null;
         int ammo = Integer.parseInt(StringUtils.substringBetween(item.getItemMeta().getDisplayName(), "[§c", "§8]").split("§7/")[0].replace("§c", ""));

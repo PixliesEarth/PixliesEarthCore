@@ -58,6 +58,40 @@ public class PixliesAmmo implements Constants {
         return null;
     }
 
+    public RPGFireResult traceRPG(Player player) {
+        int maxSearchDistance = gun.getMaxRange();
+
+        Block block = player.getTargetBlock(null, maxSearchDistance);
+        if (block.getType().isSolid())
+            maxSearchDistance = (int) Math.min(gun.getMaxRange(), block.getLocation().distance(location));
+
+        Collection<LivingEntity> entityList = player.getWorld().getNearbyLivingEntities(location, maxSearchDistance);
+        if (entityList.isEmpty())
+            return null;
+
+        final Vector origin = this.location.toVector();
+        player.getWorld().playEffect(player.getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
+        for(double distance = 0.0; distance <= maxSearchDistance; distance += gun.getAccuracy()) {
+            Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
+            Location positionLocation = position.toLocation(player.getWorld());
+
+            if (positionLocation.getBlock().getType() != Material.AIR && positionLocation.getBlock().getType() != Material.WATER && positionLocation.getBlock().getType() != Material.LAVA)
+                return new RPGFireResult(positionLocation);
+
+            AxisAlignedBB locationBoundingBox = new AxisAlignedBB(position.getX(), position.getY(), position.getZ(), position.getX(), position.getY(), position.getZ());
+            for(LivingEntity entity : entityList) {
+                if(entity == null || entity.isDead() || entity.getEntityId() == player.getEntityId())
+                    continue;
+
+                AxisAlignedBB entityBoundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
+                if(entityBoundingBox.intersects(locationBoundingBox))
+                    return new RPGFireResult(positionLocation);
+            }
+        }
+
+        return null;
+    }
+
     public PixliesAmmo createNewOne(Location location, PixliesGun gun) {
         return new PixliesAmmo(location, gun, 0);
     }
