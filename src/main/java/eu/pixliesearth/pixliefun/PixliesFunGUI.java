@@ -63,6 +63,11 @@ public class PixliesFunGUI {
 
     private void renderCategoryMenu(CustomItem.Category category) {
         gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| " + category.getName());
+
+        StaticPane background = new StaticPane(0, 0, 9, 6);
+        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        gui.addPane(background);
+
         PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
