@@ -153,10 +153,10 @@ public class NationChunk {
         boolean allowed = false;
         if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) allowed = true;
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF) && profile.isInNation() && Permission.hasNationPermission(profile, Permission.UNCLAIM)) allowed = true;
-        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_OTHER) && profile.isInNation() && Permission.hasForeignPermission(profile, Permission.UNCLAIM, Nation.getById(nc.getNationId()))) allowed = true;
-        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF) && profile.isInNation() && Permission.hasNationPermission(profile, Permission.UNCLAIM)) allowed = true;
-        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER) && profile.isInNation() && Permission.hasForeignPermission(profile, Permission.UNCLAIM, Nation.getById(nc.getNationId()))) allowed = true;
+        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF) && profile.isInNation() && Permission.hasNationPermission(profile, Permission.UNCLAIM) && profile.getNationId().equals(nc.getNationId())) allowed = true;
+        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_OTHER) && profile.isInNation() && Permission.hasForeignPermission(profile, Permission.UNCLAIM, Nation.getById(nc.getNationId())) && !profile.getNationId().equals(nc.getNationId())) allowed = true;
+        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_SELF) && profile.isInNation() && Permission.hasNationPermission(profile, Permission.UNCLAIM) && profile.getNationId().equals(nc.getNationId())) allowed = true;
+        if (changeType.equals(TerritoryChangeEvent.ChangeType.UNCLAIM_AUTO_OTHER) && profile.isInNation() && Permission.hasForeignPermission(profile, Permission.UNCLAIM, Nation.getById(nc.getNationId())) && !profile.getNationId().equals(nc.getNationId())) allowed = true;
         if (!allowed) {
             Lang.CHUNK_NOT_YOURS.send(player);
             return false;
