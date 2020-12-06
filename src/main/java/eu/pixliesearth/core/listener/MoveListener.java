@@ -87,6 +87,7 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
+        Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), event.getFrom());
         if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
             Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
             Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());

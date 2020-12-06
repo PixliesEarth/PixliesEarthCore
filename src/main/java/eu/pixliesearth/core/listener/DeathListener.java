@@ -54,6 +54,7 @@ public class DeathListener implements Listener {
         Bukkit.broadcast(comp);
         e.setDeathMessage("");
         profile.save();
+        Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), player.getLocation());
     }
 
 }
