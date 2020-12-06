@@ -67,7 +67,7 @@ public class IronNugget2 extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 4000L;
+		return 1500L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none
