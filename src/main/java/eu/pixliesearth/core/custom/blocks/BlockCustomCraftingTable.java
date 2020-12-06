@@ -1,12 +1,11 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.interfaces.IRecipeable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,12 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.interfaces.IRecipeable;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
+import java.util.*;
 
 public class BlockCustomCraftingTable extends CustomBlock implements IRecipeable {
 	

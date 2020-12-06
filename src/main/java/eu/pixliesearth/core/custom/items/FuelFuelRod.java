@@ -2,7 +2,6 @@ package eu.pixliesearth.core.custom.items;
 
 import eu.pixliesearth.core.custom.CustomFuel;
 import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
-
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;

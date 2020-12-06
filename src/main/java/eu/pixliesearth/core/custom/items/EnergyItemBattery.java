@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
-import org.bukkit.Material;
-
 import eu.pixliesearth.core.custom.CustomEnergyItem;
 import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
+import org.bukkit.Material;
 
 public class EnergyItemBattery extends CustomEnergyItem implements IMissileFuel {
 	

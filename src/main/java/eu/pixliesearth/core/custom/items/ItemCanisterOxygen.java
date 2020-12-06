@@ -1,10 +1,9 @@
 package eu.pixliesearth.core.custom.items;
 
-import org.bukkit.Material;
-import org.bukkit.event.player.PlayerInteractEvent;
-
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.interfaces.ILiquidable;
+import org.bukkit.Material;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ItemCanisterOxygen extends CustomItem {
 	

@@ -1,16 +1,5 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
@@ -18,6 +7,12 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Timer;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
 	

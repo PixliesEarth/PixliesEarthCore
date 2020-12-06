@@ -1,13 +1,11 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
+import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ExplosionCalculator;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,16 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ExplosionCalculator;
-import eu.pixliesearth.utils.NBTUtil;
-import eu.pixliesearth.utils.NBTUtil.NBTTags;
+import java.util.*;
 
 public class ItemICBM extends CustomItem {
 	

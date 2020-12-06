@@ -1,18 +1,5 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -21,6 +8,18 @@ import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 	

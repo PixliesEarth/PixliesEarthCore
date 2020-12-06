@@ -1,9 +1,12 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomLiquidHandler;
+import eu.pixliesearth.core.custom.interfaces.ILiquidable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,17 +17,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomLiquidHandler;
-import eu.pixliesearth.core.custom.interfaces.ILiquidable;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.Timer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidable {
 	

@@ -1,8 +1,7 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import org.bukkit.Material;
-
 import eu.pixliesearth.core.custom.CustomBlock;
+import org.bukkit.Material;
 
 public class BlockAntiMissileHead extends CustomBlock {
 	

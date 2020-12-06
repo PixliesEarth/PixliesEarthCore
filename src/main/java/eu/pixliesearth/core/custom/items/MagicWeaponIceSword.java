@@ -1,11 +1,9 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomWeapon;
+import eu.pixliesearth.core.objects.Energy;
+import eu.pixliesearth.core.objects.Profile;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,10 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.util.Vector;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomWeapon;
-import eu.pixliesearth.core.objects.Energy;
-import eu.pixliesearth.core.objects.Profile;
+import java.util.*;
 
 public class MagicWeaponIceSword extends CustomWeapon {
 

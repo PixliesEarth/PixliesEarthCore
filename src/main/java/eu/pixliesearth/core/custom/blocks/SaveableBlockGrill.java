@@ -1,20 +1,5 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomRecipe;
@@ -24,6 +9,16 @@ import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
+import org.bukkit.*;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SaveableBlockGrill extends CustomSaveableBlock implements IRecipeable {
 

@@ -1,11 +1,9 @@
 package eu.pixliesearth.core.custom.items;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import eu.pixliesearth.core.custom.CustomEnergyItem;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.*;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,15 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.pixliesearth.core.custom.CustomEnergyItem;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.NBTUtil;
-import eu.pixliesearth.utils.NBTUtil.NBTTags;
+import java.util.*;
 
 public class EnergyItemRemoteInteractor extends CustomEnergyItem {
 	

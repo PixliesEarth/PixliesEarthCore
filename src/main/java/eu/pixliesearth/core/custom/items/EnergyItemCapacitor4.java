@@ -1,8 +1,7 @@
 package eu.pixliesearth.core.custom.items;
 
-import org.bukkit.Material;
-
 import eu.pixliesearth.core.custom.CustomEnergyItem;
+import org.bukkit.Material;
 
 public class EnergyItemCapacitor4 extends CustomEnergyItem {
 	

@@ -1,7 +1,5 @@
 package eu.pixliesearth.lib.io.github.thatkawaiisam.assemble;
 
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
-import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.events.AssembleBoardDestroyEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
