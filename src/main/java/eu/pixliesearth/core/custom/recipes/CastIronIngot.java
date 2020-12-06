@@ -59,7 +59,8 @@ public class CastIronIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Cast_Iron_Dust");
+		map.put(0, "Pixlies:Iron_Dust");
+		map.put(1, "Pixlies:Iron_Dust");
 		return map;
 	}
 	/**
