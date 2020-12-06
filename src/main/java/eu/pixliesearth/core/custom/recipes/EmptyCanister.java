@@ -29,7 +29,7 @@ public class EmptyCanister extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Minecraft:Empty_Canister";
+		return "Pixlies:Canister";
 	}
 	/**
 	 * How many of the result to give
