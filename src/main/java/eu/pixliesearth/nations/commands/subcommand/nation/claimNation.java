@@ -74,7 +74,6 @@ public class claimNation extends SubCommand {
                         player.sendMessage(Lang.AUTOCLAIM_ENABLED.get(player));
                     }
                 } else if (args[0].equalsIgnoreCase("fill")) {
-                    long start = System.currentTimeMillis();
                     instance.getUtilLists().claimFill.add(player.getUniqueId());
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
@@ -82,7 +81,6 @@ public class claimNation extends SubCommand {
                     Bukkit.getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         claimFill(player, profile.getCurrentNation(), toClaim);
-                        player.sendMessage(System.currentTimeMillis() - start + "ms");
                     }
                 } else if (args[0].contains(";")) {
                     int x = Integer.parseInt(args[0].split(";")[0]);
