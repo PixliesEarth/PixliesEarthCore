@@ -121,7 +121,7 @@ public class War {
             addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER, id));
         for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
             addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
-        broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor) + "** just started.");
+        broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor).getName() + "** just started.");
     }
 
     @SneakyThrows

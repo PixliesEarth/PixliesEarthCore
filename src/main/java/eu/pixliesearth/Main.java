@@ -224,7 +224,11 @@ public final class Main extends JavaPlugin {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (player.isAfk()) continue;
                     Profile profile = getProfile(player.getUniqueId());
-                    Energy.add(profile, 0.1);
+                    if (profile.isInNation()) {
+                        Energy.add(profile, 0.1 * profile.getCurrentNation().getCurrentEra().getNumber());
+                    } else {
+                        Energy.add(profile, 0.1);
+                    }
                 }
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 5, (20 * 60) * 5);

@@ -41,7 +41,7 @@ public class PixliesFunGUI {
     }
 
     private void renderMainMenu() {
-        gui.setTitle("§b§lPixliesFun");
+        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun");
         gui.getPanes().clear();
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
@@ -62,8 +62,7 @@ public class PixliesFunGUI {
     }
 
     private void renderCategoryMenu(CustomItem.Category category) {
-        gui.setTitle("§b§lPixliesFun §8| " + category.getName());
-
+        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| " + category.getName());
         PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
@@ -103,66 +102,71 @@ public class PixliesFunGUI {
     }
 
     private void renderRecipe(ItemStack i, int page) {
-        if (!recipes.containsKey(getId(i))) return;
-        if (recipes.get(getId(i)).size() < page - 1) return;
-        if (page < 0) return;
+        try {
+            if (!recipes.containsKey(getId(i))) return;
+            if (recipes.get(getId(i)).size() < page - 1) return;
+            if (page < 0) return;
 
-        gui.setTitle(i.getDisplayName());
+            gui = new Gui(Main.getInstance(), 6, "§b§lRecipe");
 
-        CustomRecipe recipe = recipes.get(getId(i)).get(page);
+            CustomRecipe recipe = recipes.get(getId(i)).get(page);
 
-        gui.getPanes().clear();
+            gui.getPanes().clear();
 
-        StaticPane background = new StaticPane(0, 0, 9, 6);
-        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
-        gui.addPane(background);
+            StaticPane background = new StaticPane(0, 0, 9, 6);
+            background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+            gui.addPane(background);
 
-        PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
-        List<GuiItem> ingredients = new ArrayList<>();
-        // Loop through all ingredients and set them to their slots
-        for (String s : recipe.getContentsList().values()) {
-            ItemStack ingredient = s == null ? new ItemStack(Material.AIR) : getItem(s);
-            // If Item is not null, apply unclickable UUID to it
-            ingredients.add(new GuiItem(ingredient, e -> {
-                e.setCancelled(true);
+            PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
+            List<GuiItem> ingredients = new ArrayList<>();
+            // Loop through all ingredients and set them to their slots
+            for (String s : recipe.getContentsList().values()) {
+                ItemStack ingredient = s == null ? new ItemStack(Material.AIR) : getItem(s);
+                // If Item is not null, apply unclickable UUID to it
+                ingredients.add(new GuiItem(ingredient, e -> {
+                    e.setCancelled(true);
+                    try {
+                        renderRecipe(ingredient, 0);
+                    } catch (Exception ignore) {
+                    }
+                }));
+            }
+            // Add all ingredients to the pane
+            recipePane.populateWithGuiItems(ingredients);
+            gui.addPane(recipePane);
+
+            StaticPane result = new StaticPane(7, 2, 1, 1);
+            result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> e.setCancelled(true)), 0, 0);
+            gui.addPane(result);
+
+            StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+            hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> e.setCancelled(true)), 2, 0);
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lNext").build(), event -> {
+                event.setCancelled(true);
                 try {
-                    renderRecipe(ingredient, 0);
-                } catch (Exception ignore) {}
-            }));
-        }
-        // Add all ingredients to the pane
-        recipePane.populateWithGuiItems(ingredients);
-        gui.addPane(recipePane);
+                    renderRecipe(i, page + 1);
+                } catch (Exception ignore) {
+                }
+            }), 5, 0);
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lLast").build(), event -> {
+                event.setCancelled(true);
+                try {
+                    renderRecipe(i, page - 1);
+                } catch (Exception ignore) {
+                }
+            }), 3, 0);
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
+                event.setCancelled(true);
+                renderMainMenu();
+            }), 4, 0);
+            long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
+                event.setCancelled(true);
+            }), 6, 0);
+            gui.addPane(hotBar);
 
-        StaticPane result = new StaticPane(7, 2, 1, 1);
-        result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> e.setCancelled(true)), 0, 0);
-        gui.addPane(result);
-
-        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
-        hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> e.setCancelled(true)), 2, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lNext").build(), event -> {
-            event.setCancelled(true);
-            try {
-                renderRecipe(i, page + 1);
-            } catch (Exception ignore) {}
-        }), 5, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lLast").build(), event -> {
-            event.setCancelled(true);
-            try {
-                renderRecipe(i, page - 1);
-            } catch (Exception ignore) {}
-        }), 3, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
-            event.setCancelled(true);
-            renderMainMenu();
-        }), 4, 0);
-        long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
-            event.setCancelled(true);
-        }), 6, 0);
-        gui.addPane(hotBar);
-
-        gui.show(player);
+            gui.show(player);
+        } catch (Exception ignored) { }
     }
 
     private String getId(ItemStack i) {
@@ -170,18 +174,7 @@ public class PixliesFunGUI {
     }
 
     private ItemStack getItem(String s) {
-        CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
-        CustomItem item = handler.getCustomItemFromUUID(s);
-        if (item == null) {
-            MinecraftMaterial mcMat = MinecraftMaterial.getMinecraftMaterialFromUUID(s);
-            return new ItemStack(mcMat.getMaterial());
-        }
-        if (item.getMaterial().equals(Material.PLAYER_HEAD) && item instanceof CustomMachine) {
-            CustomMachine itemMachine = (CustomMachine) item;
-            return new ItemBuilder(SkullCreator.itemFromUrl(itemMachine.getPlayerHeadUUID())).setCustomModelData(item.getCustomModelData()).setDisplayName(item.getDefaultDisplayName()).build();
-        }
-        return new ItemBuilder(item.getMaterial()).setCustomModelData(item.getCustomModelData()).setDisplayName(item.getDefaultDisplayName()).build();
-        // return CustomItemUtil.getItemStackFromUUID(s);
+        return CustomItemUtil.getItemStackFromUUID(s);
     }
 
 }

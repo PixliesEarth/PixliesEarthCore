@@ -21,7 +21,7 @@ public class PolticalPowerListener extends CustomListener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) return;
         Random r = new Random();
-        double xpToAdd = Methods.round(0.05 + (0.3 - 0.05) * r.nextDouble(), 2);
+        double xpToAdd = Methods.round(0.1 + (0.3 - 0.1) * r.nextDouble(), 2);
         Nation nation = profile.getCurrentNation();
         nation.setXpPoints(nation.getXpPoints() + xpToAdd);
         nation.save();
