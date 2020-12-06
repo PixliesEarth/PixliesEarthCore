@@ -193,6 +193,8 @@ commands:
     description: homecommand
   invsee:
     description: insvee
+  cringe:
+    description: cringe!
 
 permissions:
   # GENERAL

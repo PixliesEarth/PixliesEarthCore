@@ -396,6 +396,7 @@ public final class Main extends JavaPlugin {
         getCommand("stats").setExecutor(new StatsCommand());
         getCommand("home").setExecutor(new HomeCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
+        getCommand("cringe").setExecutor(new CringeCommand());
     }
 
     private void registerEvents(PluginManager manager) {
