@@ -125,7 +125,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add(c + "§lStaff§aenabled");
-                    returnable.add(c + "§lTPS§a" + Bukkit.getTPS()[0]);
+                    returnable.add(c + "§lTPS§a" + Methods.round(Bukkit.getTPS()[0], 2));
                 }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
