@@ -297,15 +297,19 @@ public class menuNation extends SubCommand {
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cBack").build(), event -> {
             event.setCancelled(true);
             if (pagePane.getPage() > 1 && pagePane.getPages() > 1) {
-                pagePane.setPage(pagePane.getPage() - 1);
-                gui.update();
+                try {
+                    pagePane.setPage(pagePane.getPage() - 1);
+                    gui.update();
+                } catch (Exception ignore) {}
             }
         }), 0, 0);
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§aNext").build(), event -> {
             event.setCancelled(true);
             if (pagePane.getPage() < pagePane.getPages()) {
-                pagePane.setPage(pagePane.getPage() + 1);
-                gui.update();
+                try {
+                    pagePane.setPage(pagePane.getPage() + 1);
+                    gui.update();
+                } catch (Exception ignore) {}
             }
         }), 8, 0);
         gui.addPane(controlBar);

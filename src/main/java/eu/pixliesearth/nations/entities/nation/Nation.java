@@ -173,6 +173,36 @@ public class Nation {
         return oplayers;
     }
 
+    public void merge(Nation nation) {
+        final Main instance = Main.getInstance();
+
+        for (Map.Entry<String, Map<String, Object>> entry : ranks.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase("leader")) continue;
+            if (entry.getKey().equalsIgnoreCase("admin")) continue;
+            if (entry.getKey().equalsIgnoreCase("member")) continue;
+            if (entry.getKey().equalsIgnoreCase("newbie")) continue;
+            nation.getRanks().put(entry.getKey(), entry.getValue());
+        }
+        for (String member : members) {
+            Profile profile = instance.getProfile(UUID.fromString(member));
+            if (profile.isLeader()) {
+                profile.leaveNation();
+                profile.addToNation(nation.getNationId(), Rank.ADMIN());
+                continue;
+            }
+            final Rank rank = profile.getCurrentNationRank();
+            profile.leaveNation();
+            profile.addToNation(nation.getNationId(), rank);
+        }
+        final List<String> chunks1 = new ArrayList<>(this.getChunks());
+        this.unclaimAll();
+        for (String s : chunks1)
+            NationChunk.fromString(s.replace(this.getNationId(), nation.getNationId())).claim();
+        nation.deposit(this.getMoney());
+        nation.save();
+        this.remove();
+    }
+
     public Rank getRankByPriority(int priority) {
         for (Map.Entry<String, Map<String, Object>> entry : ranks.entrySet()) {
             Rank r = Rank.get(entry.getValue());

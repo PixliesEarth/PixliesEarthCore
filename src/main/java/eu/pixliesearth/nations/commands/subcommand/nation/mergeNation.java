@@ -53,7 +53,20 @@ public class mergeNation extends SubCommand {
             Lang.NATION_DOESNT_EXIST.send(player);
             return false;
         }
-
+        if (targetNation.getNationId().equalsIgnoreCase(profile.getNationId())) {
+            Lang.BOTH_PLAYERS_IN_THE_SAME_NATION.send(sender);
+            return false;
+        }
+        if (profile.getCurrentNation().getExtras().containsKey("mergeRequest:" + targetNation.getNationId())) {
+            profile.getCurrentNation().broadcastMembers(Lang.NATION + "§6" + player.getName() + " §7just merged your nation with §b" + targetNation.getName());
+            targetNation.broadcastMembers(Lang.NATION + "§6" + player.getName() + " §7just merged your nation with §b" + targetNation.getName());
+            profile.getCurrentNation().merge(targetNation);
+            return false;
+        }
+        targetNation.getExtras().put("mergeRequest:" + profile.getNationId(), "request");
+        targetNation.save();
+        targetNation.broadcastMembers(Lang.NATION + "§b" + profile.getCurrentNation().getName() + " §7just sent you a merge-request. §e/n merge " + profile.getCurrentNation().getName());
+        profile.getCurrentNation().broadcastMembers(Lang.NATION + "§7Your nation just sent a merge-request to §b" + targetNation.getName());
         return true;
     }
 
