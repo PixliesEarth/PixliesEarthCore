@@ -27,7 +27,7 @@ public class PlayerCombatListener implements Listener {
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
 
-            if (dProfile.getNationId().equals(tProfile.getNationId()) && dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
+            if (dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
 
             startCombatTimer(tProfile, dProfile);
         } else if (event.getDamager() instanceof Player) {
@@ -37,7 +37,7 @@ public class PlayerCombatListener implements Listener {
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
 
-            if (dProfile.getNationId().equals(tProfile.getNationId()) && dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
+            if (dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) return;
 
             startCombatTimer(tProfile, dProfile);
         }
