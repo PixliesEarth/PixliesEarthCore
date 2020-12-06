@@ -13,8 +13,7 @@ import hu.trigary.advancementcreator.Advancement;
 import hu.trigary.advancementcreator.AdvancementFactory;
 import hu.trigary.advancementcreator.shared.ItemObject;
 import hu.trigary.advancementcreator.shared.LocationObject;
-import hu.trigary.advancementcreator.trigger.LocationTrigger;
-import hu.trigary.advancementcreator.trigger.RecipeUnlockedTrigger;
+import hu.trigary.advancementcreator.trigger.*;
 import net.citizensnpcs.api.CitizensAPI;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.time.StopWatch;
@@ -379,13 +378,6 @@ public final class Main extends JavaPlugin {
             flag.setItemMeta(meta);
             new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
-
-/*
-        AdvancementFactory advancementFactory = new AdvancementFactory(this, true, false);
-
-        // Advancement testAdvancement = new Advancement(new NamespacedKey(this, "pixlies/root"), new ItemObject().setItem(Material.PLAYER_HEAD), new TextComponent("Welcome!"), new TextComponent("Join the server"));
-        Advancement testAdvancement = advancementFactory.getRoot("pixlies/root", "Business is booming", "Find the vendor", Material.GOLD_INGOT, "block/hay_block").setFrame(Advancement.Frame.TASK).addTrigger("find", new LocationTrigger());
-*/
 
     }
 

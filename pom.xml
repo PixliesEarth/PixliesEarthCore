@@ -258,11 +258,6 @@
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.github.Trigary</groupId>
-            <artifactId>AdvancementCreator</artifactId>
-            <version>v2.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.BradBot1</groupId>
             <artifactId>NBTManager</artifactId>
             <version>master-37f9f94cbb-1</version>
