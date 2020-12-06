@@ -92,6 +92,8 @@ public class UtilLists {
 
     public Map<UUID, Location> lastLocation;
 
+    public Map<UUID, UUID> lastMessageSender;
+
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -130,6 +132,7 @@ public class UtilLists {
         inspectors = new ArrayList<>();
         embedsToSend = new ArrayList<>();
         lastLocation = new HashMap<>();
+        lastMessageSender = new HashMap<>();
     }
 
 }

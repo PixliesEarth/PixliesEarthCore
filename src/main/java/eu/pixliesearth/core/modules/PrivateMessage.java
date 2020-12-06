@@ -59,6 +59,8 @@ public class PrivateMessage implements CommandExecutor, Module {
         for (UUID uuid : instance.getUtilLists().staffMode)
             if (Bukkit.getPlayer(uuid) != null)
                 Bukkit.getPlayer(uuid).sendMessage("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
+        if (sender instanceof Player)
+            instance.getUtilLists().lastMessageSender.put(receiver.getUniqueId(), ((Player)sender).getUniqueId());
         System.out.println("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
         return false;
     }
