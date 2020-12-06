@@ -57,13 +57,7 @@ public class unclaimNation extends SubCommand {
                     player.sendMessage(Lang.NOT_IN_A_NATION.get(sender));
                     return false;
                 }
-                if (!args[0].equalsIgnoreCase("auto") && !Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    Lang.NO_PERMISSIONS.send(sender);
-                    return false;
-                }
-                if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
-                    NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
-                } else if (args[0].equalsIgnoreCase("auto")) {
+                if (args[0].equalsIgnoreCase("auto")) {
                     if (instance.getUtilLists().unclaimAuto.contains(player.getUniqueId())) {
                         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
                         player.sendMessage(Lang.AUTOUNCLAIM_DISABLED.get(player));
@@ -71,6 +65,13 @@ public class unclaimNation extends SubCommand {
                         instance.getUtilLists().unclaimAuto.add(player.getUniqueId());
                         player.sendMessage(Lang.AUTOUNCLAIM_ENABLED.get(player));
                     }
+                }
+                if (!args[0].equalsIgnoreCase("auto") && !Permission.hasNationPermission(profile, Permission.UNCLAIM) && !instance.getUtilLists().staffMode.contains(player.getUniqueId())) {
+                    Lang.NO_PERMISSIONS.send(sender);
+                    return false;
+                }
+                if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
+                    NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
                 } else if (args[0].equalsIgnoreCase("fill")) {
                     long start = System.currentTimeMillis();
                     instance.getUtilLists().unclaimFill.add(player.getUniqueId());
