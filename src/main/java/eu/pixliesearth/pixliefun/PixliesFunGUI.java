@@ -154,7 +154,8 @@ public class PixliesFunGUI {
             event.setCancelled(true);
             renderMainMenu();
         }), 4, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (recipe.getCraftTime() / 1000) + "s").build(), event -> {
+        long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
             event.setCancelled(true);
         }), 6, 0);
         gui.addPane(hotBar);

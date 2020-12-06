@@ -12,10 +12,12 @@ public class GunWorkbench extends CustomRecipe {
     public GunWorkbench() {
         
     }
+
     @Override
     public String getResultUUID() {
         return "Machine:Gun_Workbench";
     }
+
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<>();
@@ -30,4 +32,5 @@ public class GunWorkbench extends CustomRecipe {
         map.put(8, "Pixlies:Aluminum_Ingot");
         return map;
     }
+
 }
