@@ -18,11 +18,11 @@ public class WaterElectrolyser extends CustomRecipe {
         map.put(0, "Pixlies:Steel_Ingot");
         map.put(1, "Pixlies:Circuit_Board");
         map.put(2, "Pixlies:Steel_Ingot");
-        map.put(3, "Pixlies:Empty_Canister");
+        map.put(3, "Pixlies:Canister");
         map.put(4, "Pixlies:Machine_Base_Energy");
-        map.put(5, "Pixlies:Empty_Canister");
+        map.put(5, "Pixlies:Canister");
         map.put(6, "Pixlies:Steel_Ingot");
-        map.put(7, "Pixlies:Empty_Canister");
+        map.put(7, "Pixlies:Canister");
         map.put(8, "Pixlies:Steel_Ingot");
         return map;
     }
