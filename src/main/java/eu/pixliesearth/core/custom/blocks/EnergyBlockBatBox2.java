@@ -86,12 +86,12 @@ public class EnergyBlockBatBox2 extends CustomEnergyBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Intermidate Charger";
+        return "§6Intermediate Charger";
     }
 
     @Override
     public String getUUID() {
-        return "Machine:Charger_Intermidate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Machine:Charger_Intermediate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
 }

@@ -59,9 +59,9 @@ public class PlantIncubator extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:glowstone_dust");
+		map.put(0, "Minecraft:Glowstone_Dust");
 		map.put(1, "Pixlies:Rubber_Glass");
-		map.put(2, "minecraft:glowstone_dust");
+		map.put(2, "Minecraft:Glowstone_Dust");
 		map.put(3, "Pixlies:Rubber_Glass");
 		map.put(4, "Pixlies:Machine_Base_Energy");
 		map.put(5, "Pixlies:Rubber_Glass");

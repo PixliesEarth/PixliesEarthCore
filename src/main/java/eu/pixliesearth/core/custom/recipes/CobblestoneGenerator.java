@@ -60,13 +60,13 @@ public class CobblestoneGenerator extends CustomRecipe {
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, "Pixlies:Titanium_Ingot");
-		map.put(1, "Minecraft:stone_pickaxe");
+		map.put(1, MinecraftMaterial.STONE_PICKAXE.getUUID());
 		map.put(2, "Pixlies:Titanium_Ingot");
-		map.put(3, "Minecraft:water_bucket");
+		map.put(3, MinecraftMaterial.WATER_BUCKET.getUUID());
 		map.put(4, "Pixlies:Circuit_Board");
-		map.put(5, "Minecraft:lava_bucket");
+		map.put(5, MinecraftMaterial.LAVA_BUCKET.getUUID());
 		map.put(6, "Pixlies:Titanium_Ingot");
-		map.put(7, "Minecraft:stone_pickaxe");
+		map.put(7, MinecraftMaterial.STONE_PICKAXE.getUUID());
 		map.put(8, "Pixlies:Titanium_Ingot");
 		return map;
 	}

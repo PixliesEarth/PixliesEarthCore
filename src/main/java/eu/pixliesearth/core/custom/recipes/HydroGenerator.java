@@ -24,7 +24,7 @@ public class HydroGenerator extends CustomRecipe {
         map.put(1, "Pixlies:Circuit_Board");
         map.put(2, "Pixlies:Steel_Block");
         map.put(3, MinecraftMaterial.WATER_BUCKET.getUUID());
-        map.put(4, "Pixlies:Energy_Cube_Intermediate");
+        map.put(4, "Machine:Energy_Cube_Intermediate");
         map.put(5, MinecraftMaterial.WATER_BUCKET.getUUID());
         map.put(6, "Pixlies:Steel_Block");
         map.put(7, "Pixlies:Circuit_Board");
