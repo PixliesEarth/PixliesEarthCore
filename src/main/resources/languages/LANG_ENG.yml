@@ -228,3 +228,4 @@ NOT_ENOUGH_XP_POINTS: "&7Your nation does not have enough Research-Points for th
 NATION_REACHED_NEW_ERA: "&7Your nation has reached a new Era!"
 PLAYER_REMOVED_X: "&6%PLAYER% &7has removed the &b%X% %Y%&7."
 PLAYER_ADDED_X: "&6%PLAYER% &7has added the &b%X% %Y%&7."
+CRINGED: "&6%PLAYER% &7just cringed!"

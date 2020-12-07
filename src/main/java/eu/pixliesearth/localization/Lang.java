@@ -89,6 +89,7 @@ public enum Lang {
     HOME_REMOVED(Lang.EARTH, new HashMap<>()),
     PLAYER_REMOVED_X(Lang.EARTH, new HashMap<>()),
     PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
+    CRINGED(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
