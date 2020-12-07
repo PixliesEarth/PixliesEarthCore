@@ -361,11 +361,13 @@ public class CustomCrafterMachine extends CustomMachine {
 		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {
 			closeForAll(event.getInventory());
-			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemStack(Material.BARRIER));
+			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemBuilder(Material.BARRIER).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
+			event.setCancelled(true);
 			return true;
 		} else if (Constants.getExtraData(is).equalsIgnoreCase("MRECIPE")) {
 			closeForAll(event.getInventory());
 			event.getInventory().setItem(Constants.getGUIDataSlot, is);
+			event.setCancelled(true);
 			return true;
 		}
 		ItemStack is2 = event.getInventory().getItem(53);
@@ -373,8 +375,10 @@ public class CustomCrafterMachine extends CustomMachine {
 			// Crafting Recipe gui
 			if (Constants.isNextItem(is)) {
 				set3(event.getInventory());
+				event.setCancelled(true);
 			} else if (Constants.isBackItem(is)) {
 				set4(event.getInventory());
+				event.setCancelled(true);
 			}
 		} else {
 			// Recipe selector gui
@@ -386,8 +390,12 @@ public class CustomCrafterMachine extends CustomMachine {
 				closeForAll(event.getInventory());
 				event.getInventory().setItem(Constants.getGUIDataSlot, is);
 			}
+			event.setCancelled(true);
 		}
-		if (isUnclickable(is)) return true;
+		if (isUnclickable(is)) {
+			event.setCancelled(true);
+			return true;
+		}
 		if (!Constants.hasExtraData(is)) return false;
 		return true;
 	}
