@@ -15,7 +15,7 @@ public class TinkerTable extends CustomRecipe {
     
     @Override
     public String getResultUUID() {
-        return "Machine:Tinker_Table";
+        return "Machine:TinkerTable";
     }
     
     @Override
