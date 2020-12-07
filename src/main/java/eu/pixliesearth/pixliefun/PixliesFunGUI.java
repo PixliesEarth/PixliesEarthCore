@@ -48,6 +48,10 @@ public class PixliesFunGUI {
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
+        StaticPane background2 = new StaticPane(1, 1, 7, 4);
+        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        gui.addPane(background2);
+
         PaginatedPane categories = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> categoryItems = new ArrayList<>();
         for (CustomItem.Category category : CustomItem.Category.values()) {
@@ -67,6 +71,10 @@ public class PixliesFunGUI {
         StaticPane background = new StaticPane(0, 0, 9, 6);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
+
+        StaticPane background2 = new StaticPane(1, 1, 7, 4);
+        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        gui.addPane(background2);
 
         PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> entries = new ArrayList<>();
