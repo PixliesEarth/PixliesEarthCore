@@ -361,7 +361,7 @@ public class CustomCrafterMachine extends CustomMachine {
 		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {
 			closeForAll(event.getInventory());
-			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemStack(Material.BARRIER));
+			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemBuilder(Material.BARRIER).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 			return true;
 		} else if (Constants.getExtraData(is).equalsIgnoreCase("MRECIPE")) {
 			closeForAll(event.getInventory());
