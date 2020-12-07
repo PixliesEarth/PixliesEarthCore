@@ -49,9 +49,7 @@ public class PlayerCombatListener implements Listener {
         }
     }
 
-    public void startCombatTimer(Profile tProfile, Profile dProfile) {
-        if (dProfile.isInNation() && tProfile.isInNation() && (dProfile.getNationId().equals(tProfile.getNationId()) || Nation.getRelation(dProfile.getNationId(), tProfile.getNationId()) == Nation.NationRelation.ALLY)) return;
-
+    public static void startCombatTimer(Profile tProfile, Profile dProfile) {
         Timer timer = new Timer(60 * 1000);
         dProfile.getTimers().put("§c§lCombat", timer.toMap());
         tProfile.getTimers().put("§c§lCombat", timer.toMap());
