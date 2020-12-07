@@ -260,7 +260,7 @@
         <dependency>
             <groupId>com.github.BradBot1</groupId>
             <artifactId>NBTManager</artifactId>
-            <version>master-37f9f94cbb-1</version>
+            <version>e8e8436245</version>
         </dependency>
         <dependency>
             <groupId>com.github.BradBot1</groupId>
