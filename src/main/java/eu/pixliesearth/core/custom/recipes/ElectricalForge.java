@@ -14,7 +14,7 @@ public class ElectricalForge extends CustomRecipe {
     }
     @Override
     public String getResultUUID() {
-        return "Machine:Forge_Electrical";
+        return "Machine:Forge_Electric";
     }
     @Override
     public Map<Integer, String> getContentsList() {
