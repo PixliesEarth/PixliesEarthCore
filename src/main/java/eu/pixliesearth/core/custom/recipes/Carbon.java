@@ -8,9 +8,9 @@ import java.util.Map;
 
 
 
-public class CarbonChunk extends CustomRecipe {
+public class Carbon extends CustomRecipe {
     //@Override
-    public CarbonChunk() {
+    public Carbon() {
         
     }
     @Override
@@ -24,7 +24,7 @@ public class CarbonChunk extends CustomRecipe {
         map.put(1, MinecraftMaterial.GLASS.getUUID());
         map.put(2, MinecraftMaterial.COAL_BLOCK.getUUID());
         map.put(3, MinecraftMaterial.GLASS.getUUID());
-        map.put(4, "Pixlies:Charcoal_Chunk");
+        map.put(4, "Pixlies:CharcoalChunk");
         map.put(5, MinecraftMaterial.GLASS.getUUID());
         map.put(6, MinecraftMaterial.COAL_BLOCK.getUUID());
         map.put(7, MinecraftMaterial.GLASS.getUUID());
