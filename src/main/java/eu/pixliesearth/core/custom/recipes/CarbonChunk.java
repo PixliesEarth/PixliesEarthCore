@@ -15,7 +15,7 @@ public class CarbonChunk extends CustomRecipe {
     }
     @Override
     public String getResultUUID() {
-        return "Pixlies:Carbon_Chunk";
+        return "Pixlies:Carbon";
     }
     @Override
     public Map<Integer, String> getContentsList() {
