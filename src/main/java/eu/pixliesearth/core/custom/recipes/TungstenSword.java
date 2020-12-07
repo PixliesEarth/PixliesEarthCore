@@ -19,7 +19,7 @@ public class TungstenSword extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Pixlies:Crafting_Table";
+		return "Machine:Forge";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -59,15 +59,9 @@ public class TungstenSword extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:air");
+		map.put(0, "Pixlies:Tungsten_Ingot");
 		map.put(1, "Pixlies:Tungsten_Ingot");
-		map.put(2, "Minecraft:air");
-		map.put(3, "Minecraft:air");
-		map.put(4, "Pixlies:Tungsten_Ingot");
-		map.put(5, "Minecraft:air");
-		map.put(6, "Minecraft:air");
-		map.put(7, "Minecraft:stick");
-		map.put(8, "Minecraft:air");
+		map.put(2, MinecraftMaterial.STICK.getUUID());
 		return map;
 	}
 	/**
@@ -75,7 +69,7 @@ public class TungstenSword extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 2000L;
+		return 4000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none
