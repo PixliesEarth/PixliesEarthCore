@@ -65,7 +65,7 @@
     <orderEntry type="library" name="Maven: com.github.yannicklamprecht.WorldBorderAPI:API:1.163.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.gitlab.ruany:LiteBansAPI:0.3.4" level="project" />
     <orderEntry type="library" name="Maven: com.flowpowered:flow-nbt:1.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.github.BradBot1:NBTManager:master-37f9f94cbb-1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.BradBot1:NBTManager:e8e8436245" level="project" />
     <orderEntry type="library" name="Maven: com.github.BradBot1:BukkitPersistentMetaData:-1845985d4a-1" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.Objects;
@@ -89,9 +90,21 @@ public class MoveListener implements Listener {
         Player player = event.getPlayer();
         Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), event.getFrom());
         if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
+        	if (instance.getProfile(player.getUniqueId()).isInWar() && !instance.getProfile(player.getUniqueId()).isStaff() && !event.getTo().getWorld().getName().equals(instance.getFastConf().getSpawnLocation().getWorld().getName())) event.setCancelled(true);
             Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
             Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
         }
     }
+
+	@EventHandler
+	public void onPortal(PlayerPortalEvent event) {
+		Player player = event.getPlayer();
+		Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), event.getFrom());
+		if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
+			if (instance.getProfile(player.getUniqueId()).isInWar() && !instance.getProfile(player.getUniqueId()).isStaff() && !event.getTo().getWorld().getName().equals(instance.getFastConf().getSpawnLocation().getWorld().getName())) event.setCancelled(true);
+			Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
+			Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
+		}
+	}
 
 }

@@ -63,6 +63,7 @@ public class Gulag {
                     defender.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     aggressor.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     timers.remove("gulagStart");
+                    //TODO KITS
                     startGulag(aggressor, defender);
                     cancel();
                     return;

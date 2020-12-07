@@ -84,7 +84,7 @@ public class flagNation extends SubCommand {
                     return false;
                 }
                 NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
-                if (flag.isRequiresStaff()) {
+                if (flag.isRequiresStaff() && !profile.isStaff()) {
                     Lang.NO_PERMISSIONS.send(player);
                     return false;
                 }
