@@ -3,6 +3,7 @@ package eu.pixliesearth.warsystem;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.Methods;
@@ -65,7 +66,14 @@ public class War {
 
         this.timers.put("warGoalJustification", new Timer(259_200_000));
 
+        if (!getDefenderInstance().getLeader().equalsIgnoreCase("NONE")) {
+            Profile profile = instance.getProfile(UUID.fromString(getDefenderInstance().getLeader()));
+            if (profile.discordIsSynced()) {
+                instance.getMiniMick().getChatChannel().sendMessage("<@" + profile.getDiscord() + ">, **" + getAggressorInstance().getName() + "** just started justifying a war-goal against you.");
+            }
+        }
         instance.getMiniMick().getChatChannel().sendMessage(new EmbedBuilder().setTitle("**" + aggressor.getName() + "** just started justifying a war-goal against **" + getDefenderInstance().getName() + "**.").setDescription("This will take " + Methods.getTimeAsString(timers.get("warGoalJustification").getRemaining(), false) + "."));
+        getDefenderInstance().broadcastMembers(Lang.WAR + "§b" + getAggressorInstance().getName() + " §7just started justifying a war-goal against you.");
         aggressor.getExtras().put("WAR:" + mainDefender, id);
         aggressor.setXpPoints(aggressor.getXpPoints() - cost);
         aggressor.save();
@@ -92,6 +100,7 @@ public class War {
         }
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
         instance.getMiniMick().getChatChannel().sendMessage(new EmbedBuilder().setTitle("**" + getAggressorInstance().getName() + "** just declared war on **" + getDefenderInstance().getName() + "**.").setDescription("The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + "."));
+        getDefenderInstance().broadcastMembers(Lang.WAR + "§b" + getAggressorInstance().getName() + " §7just declared a war on you.");
         declared = true;
         instance.setCurrentWar(this);
         return true;
@@ -122,6 +131,7 @@ public class War {
         for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
             addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor).getName() + "** just started.");
+        Bukkit.broadcastMessage(Lang.WAR + "§7The war between §b" + getDefenderInstance().getName() + " §7& §b" + getAggressorInstance().getName() + " §7has just started.");
     }
 
     @SneakyThrows
