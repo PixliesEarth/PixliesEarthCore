@@ -50,7 +50,7 @@ public class RPG7 extends PixliesGun {
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
             RPGFireResult result = ammo.traceRPG(player);
             if (result == null) return;
-            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(2F, true), 40L);
+            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(5F, true), 40L);
         }
     }
 

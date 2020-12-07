@@ -14,10 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 /**
  * 
  * @author BradBot_1
@@ -78,6 +76,8 @@ public class CustomFeatureLoader {
 			System.out.println("Failed to load custom machines data");
 		}
 		loadVendors(path);
+		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
+			handler.getCategoriesForItems().get(category).sort(Comparator.comparing(String::toString));
 	}
 	/**
 	 * Saves everything
