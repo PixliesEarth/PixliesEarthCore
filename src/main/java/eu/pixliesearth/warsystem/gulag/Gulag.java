@@ -7,10 +7,13 @@ import eu.pixliesearth.warsystem.WarParticipant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -63,7 +66,8 @@ public class Gulag {
                     defender.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     aggressor.sendTitle("§c§lFIGHT!", "§7The gulag has started", 20, 20 * 3, 20);
                     timers.remove("gulagStart");
-                    //TODO KITS
+                    setKit(defender);
+                    setKit(aggressor);
                     startGulag(aggressor, defender);
                     cancel();
                     return;
@@ -101,6 +105,8 @@ public class Gulag {
     }
 
     public void handleKill(Player winner, Player loser) {
+        winner.teleport(instance.getFastConf().getSpawnLocation());
+        winner.getInventory().clear();
         timers.remove("gulagCooldown");
         winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
         fighting.clear();
@@ -118,6 +124,15 @@ public class Gulag {
         if (winner == null) return;
         winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
         fighting.clear();
+    }
+
+    public void setKit(Player player) {
+        player.getInventory().setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+        player.getInventory().setItem(1, new ItemStack(Material.GOLDEN_APPLE));
+        player.getInventory().setItem(2, new ItemStack(Material.DIAMOND_HELMET));
+        player.getInventory().setItem(3, new ItemStack(Material.DIAMOND_CHESTPLATE));
+        player.getInventory().setItem(4, new ItemStack(Material.IRON_LEGGINGS));
+        player.getInventory().setItem(5, new ItemStack(Material.IRON_BOOTS));
     }
 
 }
