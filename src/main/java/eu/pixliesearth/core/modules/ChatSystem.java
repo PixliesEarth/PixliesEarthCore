@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ChatSystem implements Listener, Module {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         // CHAT INPUTS
         if (config.getBoolean("modules.chatsystem.enabled")) {
