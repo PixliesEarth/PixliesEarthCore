@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.managers.dynmap.area;
 
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.managers.dynmap.TileFlags;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -82,7 +83,8 @@ public class AreaCommon {
 
         formattedWindow = formattedWindow.replace("%members%", res.toString());
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
-        formattedWindow = formattedWindow.replace("%era%", Era.getByName(nation.getEra()).getName());
+        formattedWindow = formattedWindow.replace("%era%", StringUtils.capitalize(nation.getCurrentEra().getName()).replace("_", " "));
+        formattedWindow = formattedWindow.replace("%religion%", ChatColor.stripColor(Religion.valueOf(nation.getReligion()).getDisplayName()));
         formattedWindow = formattedWindow.replace("%ideology%", StringUtils.capitalize(nation.getIdeology().replace("_", " ")));
         
         return formattedWindow;

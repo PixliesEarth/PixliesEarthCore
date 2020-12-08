@@ -26,6 +26,10 @@ public class CringeCommand implements CommandExecutor {
         }else if(!(commandSender instanceof Player)){
             name = "Console";
         }
+        if (name == null) {
+            commandSender.sendMessage(Lang.EARTH + "§7You are on a cringe cooldown.");
+            return false;
+        }
         Bukkit.broadcastMessage("§6" + name + " §7just cringed!");
         return false;
     }

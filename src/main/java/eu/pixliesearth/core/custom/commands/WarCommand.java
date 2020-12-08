@@ -18,6 +18,7 @@ import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.warsystem.War;
+import eu.pixliesearth.warsystem.WarParticipant;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -54,7 +55,18 @@ public class WarCommand extends CustomCommand {
             return false;
         }
         if (instance.getCurrentWar() != null) {
-            player.sendMessage(Lang.WAR +  "§7There is already a war happening at the moment.");
+            War war = instance.getCurrentWar();
+            player.sendMessage("  ");
+            player.sendMessage(Methods.getCenteredMessage("§c" + war.getAggressorInstance().getName() + " §8- §c" + war.getDefenderInstance().getName()));
+            if (war.getTimers().containsKey("gracePeriod")) {
+                player.sendMessage(Methods.getCenteredMessage("§7Grace period"));
+                player.sendMessage(Methods.getCenteredMessage("§b" + war.getTimers().get("gracePeriod").getRemainingAsString()));
+            } else {
+
+            }
+            player.sendMessage(Methods.getCenteredMessage("37Players left"));
+            player.sendMessage(Methods.getCenteredMessage("§c" + war.getLeft().get(WarParticipant.WarSide.AGGRESSOR) + " §8- §c" + war.getLeft().get(WarParticipant.WarSide.DEFENDER)));
+            player.sendMessage("  ");
             return false;
         }
         if (!Permission.hasNationPermission(profile, Permission.MANAGE_WAR)) {
@@ -146,7 +158,7 @@ public class WarCommand extends CustomCommand {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand(), new SkipJustificationCommand(), new SkipGraceCommand())};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand(), new SkipJustificationCommand(), new SkipGraceCommand(), new StopCommand())};
     }
     
     public static class TabableNation implements ITabable {

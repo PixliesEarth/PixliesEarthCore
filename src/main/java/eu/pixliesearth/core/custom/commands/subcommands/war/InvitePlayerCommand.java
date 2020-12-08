@@ -51,7 +51,7 @@ public class InvitePlayerCommand extends CustomSubCommand {
             player.sendMessage(Lang.WAR + "§cYou are not in a war.");
             return false;
         }
-        if (war.isRunning()) {
+        if (war.isRunning() && !war.getTimers().containsKey("gracePeriod")) {
             player.sendMessage(Lang.WAR + "§7The war has already started.");
             return false;
         }

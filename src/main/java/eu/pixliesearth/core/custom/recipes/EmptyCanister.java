@@ -19,7 +19,7 @@ public class EmptyCanister extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:Crafting_Table";
+		return "Pixlies:Crafting_Table";
 	}
 	/**
 	 * The UUID of the item to give when crafted
