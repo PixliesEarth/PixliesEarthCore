@@ -69,10 +69,11 @@ public class PixliesAmmo implements Constants {
             return null;
 
         final Vector origin = this.location.toVector();
+        Location positionLocation = null;
         player.getWorld().playEffect(player.getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
         for(double distance = 0.0; distance <= maxSearchDistance; distance += gun.getAccuracy()) {
             Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
-            Location positionLocation = position.toLocation(player.getWorld());
+            positionLocation = position.toLocation(player.getWorld());
 
             if (positionLocation.getBlock().getType() != Material.AIR && positionLocation.getBlock().getType() != Material.WATER && positionLocation.getBlock().getType() != Material.LAVA)
                 return new RPGFireResult(positionLocation);
@@ -88,7 +89,7 @@ public class PixliesAmmo implements Constants {
             }
         }
 
-        return null;
+        return new RPGFireResult(positionLocation);
     }
 
     public PixliesAmmo createNewOne(Location location, PixliesGun gun) {

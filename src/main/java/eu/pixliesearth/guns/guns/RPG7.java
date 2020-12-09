@@ -23,7 +23,7 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 public class RPG7 extends PixliesGun {
 
     public RPG7(int ammo, UUID uuid) {
-        super(uuid, "§6RPG-7", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(15).setDisplayName("§6RPG-7 §8| §8[§c1§7/§c1§8]").addLoreLine("§7Ammo: §3Rocket").addLoreLine("§7Origin: §bUSA").addLoreLine("§7Range: §3100 blocks").addLoreLine("§7Accuracy: §30.1").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.ROCKET, 100, ammo,1, 0.1, 1500, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+        super(uuid, "§6RPG-7", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(15).setDisplayName("§6RPG-7 §8| §8[§c1§7/§c1§8]").addLoreLine("§7Ammo: §3Rocket").addLoreLine("§7Origin: §bUSA").addLoreLine("§7Range: §3100 blocks").addLoreLine("§7Accuracy: §30.1").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.ROCKET, 100, ammo,1, 1, 1500, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
     }
 
     public void trigger(final PlayerInteractEvent event) {
@@ -50,7 +50,7 @@ public class RPG7 extends PixliesGun {
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
             RPGFireResult result = ammo.traceRPG(player);
             if (result == null) return;
-            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(5F, true), 40L);
+            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(3F, true), 40L);
         }
     }
 
