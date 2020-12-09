@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.entities.chunk;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
@@ -9,6 +10,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
+import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.nations.managers.NationManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,6 +62,14 @@ public class NationChunk {
             if (nation.getChunks().contains(serialize())) {
                 nation.getChunks().remove(serialize());
                 nation.save();
+            }
+            for (Map.Entry<String, String> s : nation.getSettlements().entrySet()) {
+                Settlement settlement = new Gson().fromJson(s.getValue(), Settlement.class);
+                try {
+                    if (NationChunk.get(settlement.getAsBukkitLocation().getChunk()).equals(this))
+                        nation.getSettlements().remove(s.getKey());
+                    nation.save();
+                } catch (Exception ignored) {}
             }
             rst.remove(x, z);
             table.put(world, rst);
