@@ -355,8 +355,8 @@ public final class Main extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpSystem());
         getCommand("nation").setExecutor(new NationCommand());
         getCommand("backup").setExecutor(new BackupCommand());
-        getCommand("economy").setExecutor(new EconomySystem());
-        getCommand("balance").setExecutor(new BalanceCommand());
+/*        getCommand("economy").setExecutor(new EconomySystem());
+        getCommand("balance").setExecutor(new BalanceCommand());*/
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
@@ -367,7 +367,7 @@ public final class Main extends JavaPlugin {
         getCommand("flyspeed").setExecutor(new FlySpeedCommand());
         getCommand("fly").setExecutor(new FlyCommand());
         getCommand("suicide").setExecutor(new SuicideCommand());
-        getCommand("pay").setExecutor(new PayCommand());
+        // getCommand("pay").setExecutor(new PayCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
         // getCommand("tpa").setExecutor(new TpaCommand());
@@ -378,7 +378,7 @@ public final class Main extends JavaPlugin {
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("gungive").setExecutor(new GunGiveCommand());
         getCommand("gungive").setTabCompleter(new GunGiveCommand());
-        getCommand("shop").setExecutor(new ShopSystem());
+        // getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
         getCommand("marry").setExecutor(new MarryCommand());

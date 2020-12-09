@@ -75,7 +75,7 @@ public class CustomFeatureLoader {
 		} catch (Exception e) {
 			System.out.println("Failed to load custom machines data");
 		}
-		loadVendors(path);
+		// loadVendors(path);
 		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
 			handler.getCategoriesForItems().get(category).sort(Comparator.comparing(String::toString));
 	}

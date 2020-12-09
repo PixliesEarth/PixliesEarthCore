@@ -19,7 +19,7 @@ public class DiscordBal extends DiscordCommand {
 
     @Override
     public void run(MessageCreateEvent event) {
-        Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
+/*        Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
         if (profile == null) {
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getIdAsString() + ">, we don't have any data stored from you in our database.");
             return;
@@ -37,7 +37,7 @@ public class DiscordBal extends DiscordCommand {
                 .setColor(Color.GREEN)
                 .setDescription("**" + messages.get(random) + "**")
                 .setFooter("MiniMick powered by PixliesEarth", event.getServer().get().getIcon().get().getUrl().toString())
-                .setTimestampToNow());
+                .setTimestampToNow());*/
     }
 
 }

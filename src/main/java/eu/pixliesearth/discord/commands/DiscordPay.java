@@ -16,7 +16,7 @@ public class DiscordPay extends DiscordCommand {
 
     @Override
     public void run(MessageCreateEvent event) {
-        Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
+/*        Profile profile = Profile.getByDiscord(event.getMessageAuthor().getIdAsString());
         if (profile == null) {
             reply(event, "you don't have your discord and ingame account linked.");
             return;
@@ -45,7 +45,7 @@ public class DiscordPay extends DiscordCommand {
                 Lang.RECEIVED_MONEY_FROM_PLAYER.send(op.getPlayer(), "%TARGET%;" + profile.getAsOfflinePlayer().getName(), "%AMOUNT%;" + amount);
         } else {
             reply(event, "you don't have enough money for that action. /bal");
-        }
+        }*/
 
     }
 
