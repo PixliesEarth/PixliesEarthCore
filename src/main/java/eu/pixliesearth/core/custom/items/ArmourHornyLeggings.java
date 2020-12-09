@@ -25,7 +25,9 @@ public class ArmourHornyLeggings extends CustomArmour {
 
     @Override
     public List<String> getDefaultLore() {
-        return null;
+        return new ArrayList<String>() {private static final long serialVersionUID = -3234274418406689465L;{
+            add("§4g§ca§6c§eh§2i§aB§bA§3S§1S");
+        }};
     }
 
     @Override
