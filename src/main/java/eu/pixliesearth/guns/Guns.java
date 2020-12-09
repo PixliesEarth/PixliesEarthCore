@@ -15,6 +15,7 @@ public enum Guns {
     MP5(eu.pixliesearth.guns.guns.MP5.class, 15),
     SLINGSHOT(Slingshot.class, 1),
     RPG7(eu.pixliesearth.guns.guns.RPG7.class, 1),
+    M1911(eu.pixliesearth.guns.guns.M1911.class, 5)
     ;
 
     private @Getter final Class<? extends PixliesGun> clazz;

@@ -117,6 +117,7 @@ public class PixliesGun {
         guns.put(new RPG7(0, UUID.randomUUID()).getName(), RPG7.class);
         guns.put(new Slingshot(0, UUID.randomUUID()).getName(), Slingshot.class);
         guns.put(new Uzi(0, UUID.randomUUID()).getName(), Uzi.class);
+        guns.put(new M1911(0, UUID.randomUUID()).getName(), M1911.class);
     }
 
     public static PixliesGun getByItem(ItemStack item) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
