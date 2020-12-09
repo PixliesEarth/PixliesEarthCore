@@ -59,8 +59,8 @@ public class RolledIron extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Iron_Ingot");
-		map.put(1, "Pixlies:Iron_Ingot");
+		map.put(0, MinecraftMaterial.IRON_INGOT.getUUID());
+		map.put(1, MinecraftMaterial.IRON_INGOT.getUUID());
 		return map;
 	}
 	/**

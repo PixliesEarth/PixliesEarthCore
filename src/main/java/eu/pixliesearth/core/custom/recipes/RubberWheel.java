@@ -63,7 +63,7 @@ public class RubberWheel extends CustomRecipe {
 		map.put(1, "Pixlies:Rubber");
 		map.put(2, "Pixlies:Rubber");
 		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Minecraft:air");
+		map.put(4, MinecraftMaterial.AIR.getUUID());
 		map.put(5, "Pixlies:Rubber");
 		map.put(6, "Pixlies:Rubber");
 		map.put(7, "Pixlies:Rubber");
