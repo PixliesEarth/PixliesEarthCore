@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetherPlateChestplate extends CustomRecipe {
+public class HeavySteelIngot9 extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -19,7 +19,7 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:Forge";
+		return "Pixlies:Crafting_Table";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -29,21 +29,21 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Nether_Plate_Chestplate";
+		return "Pixlies:Heavy_Steel_Ingot";
 	}
 	/**
 	 * How many of the result to give
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 9;
 	}
 	/**
 	 * The era required to craft the item
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.TRIBAL;
+		return Era.MEDIEVAL;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,14 +59,15 @@ public class NetherPlateChestplate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Nether_Plate");
-		map.put(1, "Pixlies:Nether_Plate");
-		map.put(2, "Pixlies:Nether_Plate");
-		map.put(3, "Pixlies:Nether_Plate");
-		map.put(4, "Pixlies:Nether_Plate");
-		map.put(5, "Pixlies:Nether_Plate");
-		map.put(6, "Pixlies:Nether_Plate");
-		map.put(7, "Pixlies:Nether_Plate");
+		map.put(0, MinecraftMaterial.AIR.getUUID());
+		map.put(1, MinecraftMaterial.AIR.getUUID());
+		map.put(2, MinecraftMaterial.AIR.getUUID());
+		map.put(3, MinecraftMaterial.AIR.getUUID());
+		map.put(4, "Pixlies:Heavy_Steel_Block");
+		map.put(5, MinecraftMaterial.AIR.getUUID());
+		map.put(6, MinecraftMaterial.AIR.getUUID());
+		map.put(7, MinecraftMaterial.AIR.getUUID());
+		map.put(8, MinecraftMaterial.AIR.getUUID());
 		return map;
 	}
 	/**

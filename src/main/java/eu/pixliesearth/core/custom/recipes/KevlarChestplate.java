@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetherPlateChestplate extends CustomRecipe {
+public class KevlarChestplate extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Nether_Plate_Chestplate";
+		return "Pixlies:Kevlar_Chestplate";
 	}
 	/**
 	 * How many of the result to give
@@ -43,7 +43,7 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.TRIBAL;
+		return Era.FUTURE;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,14 +59,14 @@ public class NetherPlateChestplate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Nether_Plate");
-		map.put(1, "Pixlies:Nether_Plate");
-		map.put(2, "Pixlies:Nether_Plate");
-		map.put(3, "Pixlies:Nether_Plate");
-		map.put(4, "Pixlies:Nether_Plate");
-		map.put(5, "Pixlies:Nether_Plate");
-		map.put(6, "Pixlies:Nether_Plate");
-		map.put(7, "Pixlies:Nether_Plate");
+		map.put(0, "Pixlies:Kevlar_Plate");
+		map.put(1, "Pixlies:Kevlar_Plate");
+		map.put(2, "Pixlies:Kevlar_Plate");
+		map.put(3, "Pixlies:Kevlar_Plate");
+		map.put(4, "Pixlies:Kevlar_Plate");
+		map.put(5, "Pixlies:Kevlar_Plate");
+		map.put(6, "Pixlies:Kevlar_Plate");
+		map.put(7, "Pixlies:Kevlar_Plate");
 		return map;
 	}
 	/**

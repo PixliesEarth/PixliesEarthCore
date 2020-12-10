@@ -19,7 +19,7 @@ public class PlatinumChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Pixlies:Crafting_Table";
+		return "Machine:Forge";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -60,14 +60,13 @@ public class PlatinumChestplate extends CustomRecipe {
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, "Pixlies:Platinum_Ingot");
-		map.put(1, "Minecraft:air");
+		map.put(1, "Pixlies:Platinum_Ingot");
 		map.put(2, "Pixlies:Platinum_Ingot");
 		map.put(3, "Pixlies:Platinum_Ingot");
 		map.put(4, "Pixlies:Platinum_Ingot");
 		map.put(5, "Pixlies:Platinum_Ingot");
 		map.put(6, "Pixlies:Platinum_Ingot");
 		map.put(7, "Pixlies:Platinum_Ingot");
-		map.put(8, "Pixlies:Platinum_Ingot");
 		return map;
 	}
 	/**
@@ -75,7 +74,7 @@ public class PlatinumChestplate extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 2000L;
+		return 4000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none

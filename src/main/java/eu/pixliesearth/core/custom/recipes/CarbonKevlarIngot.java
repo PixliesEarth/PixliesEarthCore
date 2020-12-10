@@ -30,7 +30,7 @@ public class CarbonKevlarIngot extends CustomRecipe {
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
        // map.put(0, MinecraftMaterial.OAK_PLANKS.getUUID());
-        map.put(0, "Pixlies:Carbon_Chunk");
+        map.put(0, "Pixlies:Carbon");
         map.put(1, "Pixlies:Kevlar_Plate");
         return map;
     }

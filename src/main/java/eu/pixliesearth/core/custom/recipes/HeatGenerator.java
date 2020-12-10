@@ -19,7 +19,7 @@ public class HeatGenerator extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Energy_Cube_Advanced");
+        map.put(0, "Machine:Energy_Cube_Advanced");
         map.put(1, "Pixlies:Platinum_Block");
         map.put(2, "Pixlies:Copper_Wire");
         map.put(3, "Pixlies:Platinum_Block");
@@ -27,7 +27,7 @@ public class HeatGenerator extends CustomRecipe {
         map.put(5, "Pixlies:Platinum_Block");
         map.put(6, "Pixlies:Copper_Wire");
         map.put(7, "Pixlies:Platinum_Block");
-        map.put(8, "Pixlies:Energy_Cube_Advanced");
+        map.put(8, "Machine:Energy_Cube_Advanced");
         return map;
     }
     @Override

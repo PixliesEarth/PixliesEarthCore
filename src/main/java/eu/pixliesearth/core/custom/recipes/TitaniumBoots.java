@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetherPlateChestplate extends CustomRecipe {
+public class TitaniumBoots extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Nether_Plate_Chestplate";
+		return "Pixlies:Titanium_Boots";
 	}
 	/**
 	 * How many of the result to give
@@ -59,14 +59,10 @@ public class NetherPlateChestplate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Nether_Plate");
-		map.put(1, "Pixlies:Nether_Plate");
-		map.put(2, "Pixlies:Nether_Plate");
-		map.put(3, "Pixlies:Nether_Plate");
-		map.put(4, "Pixlies:Nether_Plate");
-		map.put(5, "Pixlies:Nether_Plate");
-		map.put(6, "Pixlies:Nether_Plate");
-		map.put(7, "Pixlies:Nether_Plate");
+		map.put(0, "Pixlies:Titanium_Ingot");
+		map.put(1, "Pixlies:Titanium_Ingot");
+		map.put(2, "Pixlies:Titanium_Ingot");
+		map.put(3, "Pixlies:Titanium_Ingot");
 		return map;
 	}
 	/**
@@ -74,7 +70,7 @@ public class NetherPlateChestplate extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 4000L;
+		return 2000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none

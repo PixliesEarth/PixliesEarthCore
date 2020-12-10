@@ -24,7 +24,7 @@ public class NuclearGenerator extends CustomRecipe {
         map.put(1, MinecraftMaterial.NETHER_STAR.getUUID());
         map.put(2, "Pixlies:Titanium_Block");
         map.put(3, MinecraftMaterial.NETHERITE_INGOT.getUUID());
-        map.put(4, "Pixlies:Energy_Cube");
+        map.put(4, "Machine:Energy_Cube_Ultimate");
         map.put(5, MinecraftMaterial.NETHERITE_INGOT.getUUID());
         map.put(6, "Pixlies:Cobalt_Block");
         map.put(7, MinecraftMaterial.NETHER_STAR.getUUID());

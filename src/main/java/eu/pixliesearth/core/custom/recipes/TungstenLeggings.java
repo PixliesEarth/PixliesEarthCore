@@ -19,7 +19,7 @@ public class TungstenLeggings extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Pixlies:Crafting_Table";
+		return "Machine:Forge";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -63,11 +63,9 @@ public class TungstenLeggings extends CustomRecipe {
 		map.put(1, "Pixlies:Tungsten_Ingot");
 		map.put(2, "Pixlies:Tungsten_Ingot");
 		map.put(3, "Pixlies:Tungsten_Ingot");
-		map.put(4, "Minecraft:air");
+		map.put(4, "Pixlies:Tungsten_Ingot");
 		map.put(5, "Pixlies:Tungsten_Ingot");
 		map.put(6, "Pixlies:Tungsten_Ingot");
-		map.put(7, "Minecraft:air");
-		map.put(8, "Pixlies:Tungsten_Ingot");
 		return map;
 	}
 	/**
@@ -75,7 +73,7 @@ public class TungstenLeggings extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 2000L;
+		return 4000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none

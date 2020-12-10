@@ -19,7 +19,7 @@ public class NetherPlateLeggings extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Pixlies:Crafting_Table";
+		return "Machine:Forge";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -63,11 +63,9 @@ public class NetherPlateLeggings extends CustomRecipe {
 		map.put(1, "Pixlies:Nether_Plate");
 		map.put(2, "Pixlies:Nether_Plate");
 		map.put(3, "Pixlies:Nether_Plate");
-		map.put(4, "Minecraft:air");
+		map.put(4, "Pixlies:Nether_Plate");
 		map.put(5, "Pixlies:Nether_Plate");
 		map.put(6, "Pixlies:Nether_Plate");
-		map.put(7, "Minecraft:air");
-		map.put(8, "Pixlies:Nether_Plate");
 		return map;
 	}
 	/**
@@ -75,7 +73,7 @@ public class NetherPlateLeggings extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 2000L;
+		return 4000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none
