@@ -80,6 +80,7 @@ public class CustomCrafterMachine extends CustomMachine {
 								ItemStack is = i.getItem(slot);
 								if (is!=null && !is.getType().equals(Material.AIR)) 
 									player.getLocation().getWorld().dropItemNaturally(player.getLocation(), is);
+								i.clear(slot);
 							}
 						}
 						
