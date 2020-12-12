@@ -56,7 +56,7 @@ public class IngotTungsten extends CustomItem {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 4;
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class IngotPlatinum extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 2;
     }
 
     @Override

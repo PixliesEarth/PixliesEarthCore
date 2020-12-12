@@ -21,7 +21,7 @@ public class EnergyItemCapacitor4 extends CustomEnergyItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 4;
     }
 
     @Override
