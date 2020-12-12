@@ -51,8 +51,10 @@ public class Gulag {
         if (aggressor == null) return;
         fighting.add(defender.getUniqueId());
         fighting.add(aggressor.getUniqueId());
-        defender.teleport(Methods.locationFromSaveableString(fighterOne));
-        aggressor.teleport(Methods.locationFromSaveableString(fighterTwo));
+        Bukkit.getScheduler().runTask(instance, () -> {
+            defender.teleport(Methods.locationFromSaveableString(fighterOne));
+            aggressor.teleport(Methods.locationFromSaveableString(fighterTwo));
+        });
         players.get(WarParticipant.WarSide.AGGRESSOR).remove(aggressor.getUniqueId());
         players.get(WarParticipant.WarSide.DEFENDER).remove(defender.getUniqueId());
         timers.put("gulagStart", new Timer(5000));
@@ -110,6 +112,7 @@ public class Gulag {
         timers.remove("gulagCooldown");
         winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
         fighting.clear();
+        instance.getCurrentWar().getLeft().put(instance.getCurrentWar().getPlayers().get(winner.getUniqueId()).getSide(), instance.getCurrentWar().getLeft().get(instance.getCurrentWar().getPlayers().get(winner.getUniqueId()).getSide()) + 1);
         instance.getCurrentWar().handleKill(instance.getProfile(loser.getUniqueId()));
     }
 

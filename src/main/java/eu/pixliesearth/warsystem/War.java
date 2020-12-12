@@ -114,6 +114,7 @@ public class War {
     }
 
     public void remove() {
+        instance.getUtilLists().wars.remove(this.getId());
         Main.getWarCollection().findOneAndDelete(new Document("id", id));
     }
 
@@ -182,6 +183,7 @@ public class War {
         Nation aggressor = getAggressorInstance();
         aggressor.getExtras().remove("WAR:" + mainDefender);
         aggressor.save();
+        instance.getUtilLists().wars.remove(this.getId());
     }
 
     public void handleLeave(Profile left) {
@@ -201,6 +203,7 @@ public class War {
             left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
             return;
         }
+        left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
         instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
     }
 
