@@ -63,7 +63,8 @@ public class NationChunk {
                 nation.getChunks().remove(serialize());
                 nation.save();
             }
-            for (Map.Entry<String, String> s : nation.getSettlements().entrySet()) {
+            Map<String, String> settlements = new HashMap<>(nation.getSettlements());
+            for (Map.Entry<String, String> s : settlements.entrySet()) {
                 Settlement settlement = new Gson().fromJson(s.getValue(), Settlement.class);
                 try {
                     if (NationChunk.get(settlement.getAsBukkitLocation().getChunk()).equals(this))
