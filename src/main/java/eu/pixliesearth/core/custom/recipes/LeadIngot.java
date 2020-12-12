@@ -28,7 +28,7 @@ public class LeadIngot extends CustomRecipe {
 	 * <code>MinecraftMaterial.DIRT.getUUID();</code></p>
 	 */
 	@Override
-	public String getResultUUID() {
+	public String aluminium
 		return "Pixlies:Lead_Ingot";
 	}
 	/**

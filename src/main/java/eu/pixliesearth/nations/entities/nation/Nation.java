@@ -113,7 +113,8 @@ public class Nation {
     }
 
     public void remove() {
-        for (String member : members)
+        List<String> memberList = new ArrayList<>(members);
+        for (String member : memberList)
             Main.getInstance().getProfile(UUID.fromString(member)).removeFromNation();
         Iterator<String> iter = chunks.iterator();
         while(iter.hasNext()) {

@@ -29,7 +29,7 @@ public class MP5 extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return null;
+		return MinecraftMaterial.ACACIA_BOAT.getUUID();
 	}
 	/**
 	 * How many of the result to give

@@ -19,7 +19,7 @@ public class AK74 extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:GunWorkbench";
+		return MinecraftMaterial.ACACIA_BOAT.getUUID();
 	}
 	/**
 	 * The UUID of the item to give when crafted
