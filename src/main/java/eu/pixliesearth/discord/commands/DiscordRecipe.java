@@ -1,16 +1,15 @@
 package eu.pixliesearth.discord.commands;
 
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomRecipe;
-import eu.pixliesearth.core.custom.listeners.CustomMachineCommandListener;
-import eu.pixliesearth.discord.DiscordCommand;
-import eu.pixliesearth.utils.CustomItemUtil;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
-import java.util.List;
+import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.listeners.CustomMachineCommandListener;
+import eu.pixliesearth.discord.DiscordCommand;
+import eu.pixliesearth.utils.CustomItemUtil;
 
 public class DiscordRecipe extends DiscordCommand {
 
@@ -25,7 +24,6 @@ public class DiscordRecipe extends DiscordCommand {
             event.getChannel().sendMessage("Wrong Usage! /recipe ITEM");
             return;
         }
-        CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
         if (CustomItemUtil.getItemStackFromUUID(split[1]) == null) {
             event.getChannel().sendMessage("This item does not exist.");
             return;
@@ -60,8 +58,9 @@ public class DiscordRecipe extends DiscordCommand {
                 return "https://minecraftitemids.com/item/64/water_bucket.png";
             case LAVA:
                 return "https://minecraftitemids.com/item/64/lava_bucket.png";
+			default:
+				return "https://minecraftitemids.com/item/64/" + material + ".png";
         }
-        return "https://minecraftitemids.com/item/64/" + material + ".png";
     }
 
 }

@@ -1,18 +1,18 @@
 package eu.pixliesearth.nations.managers.dynmap.area;
 
-import eu.pixliesearth.nations.entities.nation.Era;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.entities.nation.Religion;
-import eu.pixliesearth.nations.managers.dynmap.TileFlags;
+import java.util.ArrayDeque;
+import java.util.Map;
+import java.util.UUID;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerIcon;
 
-import java.util.ArrayDeque;
-import java.util.Map;
-import java.util.UUID;
+import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.Religion;
+import eu.pixliesearth.nations.managers.dynmap.TileFlags;
 
 public class AreaCommon {
 

@@ -1,16 +1,15 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.nations.commands.subcommand.SubCommand;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.entities.nation.NationCurrency;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 
 public class currencyNation extends SubCommand {
 
@@ -43,8 +42,8 @@ public class currencyNation extends SubCommand {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
         }
-        Nation nation = profile.getCurrentNation();
-        NationCurrency currency = new NationCurrency(args[0], args[1], args[2], Double.parseDouble(args[3]), 0);
+        // Nation nation = profile.getCurrentNation();
+        // NationCurrency currency = new NationCurrency(args[0], args[1], args[2], Double.parseDouble(args[3]), 0);
 
         return true;
     }

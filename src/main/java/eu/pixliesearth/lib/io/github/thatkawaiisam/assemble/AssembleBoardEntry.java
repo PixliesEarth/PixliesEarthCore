@@ -1,5 +1,6 @@
 package eu.pixliesearth.lib.io.github.thatkawaiisam.assemble;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Score;
@@ -11,7 +12,7 @@ public class AssembleBoardEntry {
 	private final AssembleBoard board;
 	@Setter private String text, identifier;
 	private Team team;
-	private int position;
+	private @Getter int position;
 
 	public AssembleBoardEntry(AssembleBoard board, String text, int position) {
 		this.board = board;

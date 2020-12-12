@@ -67,8 +67,9 @@ public class DiscordBlockStats extends DiscordCommand {
                 return "https://minecraftitemids.com/item/64/water_bucket.png";
             case LAVA:
                 return "https://minecraftitemids.com/item/64/lava_bucket.png";
+			default:
+				return "https://minecraftitemids.com/item/64/" + material + ".png";
         }
-        return "https://minecraftitemids.com/item/64/" + material + ".png";
     }
 
 }

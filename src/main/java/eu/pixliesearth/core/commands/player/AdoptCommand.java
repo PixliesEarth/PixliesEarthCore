@@ -17,7 +17,8 @@ import java.util.UUID;
 
 public class AdoptCommand implements CommandExecutor {
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);

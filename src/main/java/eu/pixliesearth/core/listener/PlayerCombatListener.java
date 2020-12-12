@@ -1,16 +1,16 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.nations.entities.nation.Nation;
-import eu.pixliesearth.nations.entities.nation.NationFlag;
-import eu.pixliesearth.utils.Timer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
+import eu.pixliesearth.utils.Timer;
 
 public class PlayerCombatListener implements Listener {
 

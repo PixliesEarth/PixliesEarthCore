@@ -1,12 +1,8 @@
 package eu.pixliesearth.discord.commands;
 
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.discord.DiscordCommand;
-import eu.pixliesearth.localization.Lang;
-import org.apache.commons.lang.math.NumberUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.javacord.api.event.message.MessageCreateEvent;
+
+import eu.pixliesearth.discord.DiscordCommand;
 
 public class DiscordPay extends DiscordCommand {
 

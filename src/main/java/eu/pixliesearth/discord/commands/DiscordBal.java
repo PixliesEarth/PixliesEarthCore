@@ -1,15 +1,8 @@
 package eu.pixliesearth.discord.commands;
 
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.discord.DiscordCommand;
-import org.bukkit.Bukkit;
-import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.UUID;
+import eu.pixliesearth.discord.DiscordCommand;
 
 public class DiscordBal extends DiscordCommand {
 

@@ -1,16 +1,16 @@
 package eu.pixliesearth.utils;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Base64;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Base64;
-import java.util.UUID;
 
 /**
  * A library for the Bukkit API to create player skulls
@@ -131,7 +131,8 @@ public class SkullCreator {
      * @param base64 The base64 string containing the texture
      * @return The head with a custom texture
      */
-    public static ItemStack itemWithBase64(ItemStack item, String base64) {
+    @SuppressWarnings("deprecation")
+	public static ItemStack itemWithBase64(ItemStack item, String base64) {
         notNull(item, "item");
         notNull(base64, "base64");
 
@@ -236,7 +237,7 @@ public class SkullCreator {
         if (newerApi()) {
             return new ItemStack(Material.valueOf("PLAYER_HEAD"));
         } else {
-            return new ItemStack(Material.valueOf("SKULL_ITEM"), 1, (byte) 3);
+            return new ItemStack(Material.PLAYER_HEAD, 1);
         }
     }
 

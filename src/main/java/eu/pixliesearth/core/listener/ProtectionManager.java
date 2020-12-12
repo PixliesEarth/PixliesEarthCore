@@ -188,7 +188,7 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onPistonExtend(BlockPistonExtendEvent event) {
         NationChunk from = NationChunk.get(event.getBlock().getChunk());
-        NationChunk to = NationChunk.get(event.getBlock().getRelative(event.getDirection(),  event.getLength() + 1).getChunk());
+        NationChunk to = NationChunk.get(event.getBlock().getRelative(event.getDirection(),  event.getBlocks().size() + 1).getChunk());
         if (to == null) return;
         if (from == null) {
             event.setCancelled(true);
@@ -202,7 +202,8 @@ public class ProtectionManager implements Listener {
     public void onPistonExtend(BlockPistonRetractEvent event) {
         if (!event.isSticky()) return;
         NationChunk from = NationChunk.get(event.getBlock().getChunk());
-        NationChunk to = NationChunk.get(event.getRetractLocation().getChunk());
+        @SuppressWarnings("deprecation")
+		NationChunk to = NationChunk.get(event.getRetractLocation().getChunk());
         if (to == null) return;
         if (from == null) {
             event.setCancelled(true);

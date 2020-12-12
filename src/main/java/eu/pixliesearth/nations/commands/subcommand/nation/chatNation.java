@@ -54,6 +54,8 @@ public class chatNation extends SubCommand {
                             instance.getUtilLists().chatTypes.remove(player.getUniqueId());
                             Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§aPublic");
                             break;
+					default:
+						break;
                     }
                 } else {
                     instance.getUtilLists().chatTypes.put(player.getUniqueId(), ChatType.NATION);

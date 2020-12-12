@@ -17,8 +17,9 @@ public class Rank {
     private double priority;
     private List<String> permissions;
 
-    public static Rank get(Map<String, Object> map) {
-        return new Rank((String) map.get("name"), (String) map.get("prefix"), (double) map.get("priority"),(List<String>) map.get("permissions"));
+    @SuppressWarnings("unchecked")
+	public static Rank get(Map<String, Object> map) {
+        return new Rank((String) map.get("name"), (String) map.get("prefix"), (double) map.get("priority"), (List<String>) map.get("permissions"));
     }
 
     public Map<String, Object> toMap() {

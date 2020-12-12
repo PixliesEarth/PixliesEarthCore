@@ -1,6 +1,16 @@
 package eu.pixliesearth.warsystem;
 
-import com.lmax.disruptor.AggregateEventHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
+
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
@@ -12,12 +22,6 @@ import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
-import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-
-import java.util.*;
 
 @Data
 @AllArgsConstructor

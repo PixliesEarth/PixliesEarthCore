@@ -51,6 +51,7 @@ public class inviteNation extends SubCommand {
             return false;
         }
         Profile target = instance.getProfile(targetUUID);
+        if (target == null) return false;
         if (target.isInNation()) {
             Lang.INVITE_PLAYER_ALREADY_IN_NATION.send(sender);
             return false;
@@ -63,7 +64,6 @@ public class inviteNation extends SubCommand {
                     Lang.NOT_IN_A_NATION.send(player);
                     return false;
                 }
-                if (target == null) return false;
                 if (target.getInvites().contains(profile.getNationId())) {
                     player.sendMessage(Lang.PLAYER_ALREADY_INVITED.get(sender));
                     return false;
