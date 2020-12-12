@@ -1,9 +1,12 @@
 package eu.pixliesearth.utils;
 
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import lombok.Getter;
-import lombok.Setter;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,10 +14,11 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockExplodeEvent;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ExplosionCalculator {
 	
@@ -54,11 +58,19 @@ public class ExplosionCalculator {
 	private final int radiusSQ;
 	protected @Getter boolean ready;
 	protected @Getter boolean vaporise;
-	private @Getter boolean checkedForAir = false;
 	private @Getter List<Location> explodeLocations = new ArrayList<>();
 	private @Getter float explosiveValue = -1F;
 	private @Getter @Setter String deathReason = "just exploded!";
 	private @Getter BlockExplodeEvent event;
+	private @Getter Set<String> unbreakableBlocks = new HashSet<String>() {private static final long serialVersionUID = -4787416152795144246L;{
+		add(MinecraftMaterial.BEDROCK.getUUID());
+		add(MinecraftMaterial.BARRIER.getUUID());
+		add(MinecraftMaterial.COMMAND_BLOCK.getUUID());
+		add(MinecraftMaterial.CHAIN_COMMAND_BLOCK.getUUID());
+		add(MinecraftMaterial.REPEATING_COMMAND_BLOCK.getUUID());
+		add(MinecraftMaterial.STRUCTURE_BLOCK.getUUID());
+		add(MinecraftMaterial.STRUCTURE_VOID.getUUID());
+	}};
 	
 	/**
 	 * 
@@ -113,25 +125,15 @@ public class ExplosionCalculator {
 					for(int z = bz - radius; z <= bz + radius; z++) {
 						double distanceSQ = ((bx-x) * (bx-x) + ((bz-z) * (bz-z)) + ((by-y) * (by-y)));
 						if(distanceSQ < radiusSQ) {
-							if (async) {
-								explodeLocations.add(new Location(this.world, x, y, z));
-							} else {
-								Location location2 = new Location(this.world, x, y, z);
-		                    	Block block = location2.getBlock();
-		                    	if (block!=null && !block.getType().equals(Material.AIR)) {
-		                    		explodeLocations.add(location2);
-		                    	}
-		                    }
+							explodeLocations.add(new Location(this.world, x, y, z));
 						}
 					}
 				}
 			}
-			this.checkedForAir = !async;
 			this.ready = true;
 			return true;
 		} else {
 			if (async) {
-				this.checkedForAir = false;
 				this.ready = false;
 				throw new RuntimeException("ExplosionUtil#ExplosionCalculator#update() cannot be called asynchronously when it has an explosion value");
 			} else {
@@ -181,18 +183,17 @@ public class ExplosionCalculator {
 						}
 					}
 				}
-				this.checkedForAir = true;
 				this.ready = true;
 				return true;
 			}
 		}
 	}
 	
-	public void checkForAir() {
+	public void checkForIllegalBlocks() {
 		List<Location> list = new ArrayList<>();
 		for (Location l : explodeLocations) {
 			Block block = l.getBlock();
-            if (block!=null && !block.getType().equals(Material.AIR)) {
+            if (block!=null && !block.getType().equals(Material.AIR) && !getUnbreakableBlocks().contains(CustomItemUtil.getUUIDFromLocation(l))) {
             	list.add(l);
             }
 		}
@@ -205,9 +206,7 @@ public class ExplosionCalculator {
 
 			@Override
 			public void run() {
-				if (!checkedForAir) {
-					checkForAir();
-				}
+				checkForIllegalBlocks();
 				BlockExplodeEvent event = new BlockExplodeEvent(center.getBlock(), new ArrayList<Block>() {private static final long serialVersionUID = -1136583698471659219L;{
 					for (Location l : explodeLocations) {
 						add(l.getBlock());
@@ -215,7 +214,8 @@ public class ExplosionCalculator {
 				}}, (isVaporise()) ? 0f : 0.5f);
 				event.callEvent();
 				if (event.isCancelled()) return;
-				for (Location l : explodeLocations) {
+				for (Block b : event.blockList()) {
+					Location l = b.getLocation();
 					if (l==null || l.getBlock()==null|| l.getBlock().getType().equals(Material.AIR)) continue;
 					if (h.isCustomBlockAtLocation(l)) {
 						h.removeCustomBlockFromLocation(l); 
