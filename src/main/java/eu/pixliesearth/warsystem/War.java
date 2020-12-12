@@ -1,5 +1,6 @@
 package eu.pixliesearth.warsystem;
 
+import com.lmax.disruptor.AggregateEventHandler;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
@@ -214,9 +215,9 @@ public class War {
                     start();
             if (running) {
                 if (this.left.get(WarParticipant.WarSide.DEFENDER) <= 0) {
-                    stop(WarParticipant.WarSide.AGGRESSOR);
+                    Bukkit.getScheduler().runTask(instance, () -> stop(WarParticipant.WarSide.AGGRESSOR));
                 } else if (this.left.get(WarParticipant.WarSide.AGGRESSOR) <= 0) {
-                    stop(WarParticipant.WarSide.DEFENDER);
+                    Bukkit.getScheduler().runTask(instance, () -> stop(WarParticipant.WarSide.DEFENDER));
                 }
             }
         }
