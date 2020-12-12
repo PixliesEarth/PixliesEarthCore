@@ -1,16 +1,22 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
 	
@@ -32,10 +38,25 @@ public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
 		Inventory inv = Bukkit.createInventory(null, 3*9, getInventoryTitle());
 		for (int i = 0; i < 3*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
-		inv.setMaxStackSize(1);
-		inv.clear(25);
+		// inv.setMaxStackSize(1);
 		inv.clear(13); // Seed slot
 		return inv;
+	}
+	
+	@Override
+	public boolean InventoryClickEvent(InventoryClickEvent event) {
+		if (event.getRawSlot()==13) {
+			ItemStack itemStack = event.getInventory().getItem(13);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) return super.InventoryClickEvent(event);
+			if (itemStack.getAmount()>1) {
+				ItemStack itemStack2 = itemStack.clone();
+				itemStack2.setAmount(itemStack.getAmount()-1);
+				event.getWhoClicked().setItemOnCursor(itemStack2);
+				itemStack.setAmount(1);
+				event.getInventory().setItem(13, itemStack);
+			}
+		}
+		return super.InventoryClickEvent(event);
 	}
 	
 	@Override
