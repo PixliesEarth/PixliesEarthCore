@@ -20,9 +20,9 @@ public class PlayerCombatListener implements Listener {
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!(event.getEntity() instanceof Player)) return;
+        Player target = (Player) event.getEntity();
         if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof Player) {
             Player damager = (Player) ((Projectile) event.getDamager()).getShooter();
-            Player target = (Player) event.getEntity();
 
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
@@ -35,7 +35,6 @@ public class PlayerCombatListener implements Listener {
             startCombatTimer(tProfile, dProfile);
         } else if (event.getDamager() instanceof Player) {
             Player damager = (Player) event.getDamager();
-            Player target = (Player) event.getEntity();
 
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());

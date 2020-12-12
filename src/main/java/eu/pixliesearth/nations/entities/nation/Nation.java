@@ -183,7 +183,8 @@ public class Nation {
             if (entry.getKey().equalsIgnoreCase("newbie")) continue;
             nation.getRanks().put(entry.getKey(), entry.getValue());
         }
-        for (String member : members) {
+        List<String> newMembers = new ArrayList<>(members);
+        for (String member : newMembers) {
             Profile profile = instance.getProfile(UUID.fromString(member));
             if (profile.isLeader()) {
                 profile.leaveNation();

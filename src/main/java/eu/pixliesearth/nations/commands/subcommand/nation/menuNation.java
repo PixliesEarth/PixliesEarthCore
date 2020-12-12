@@ -214,7 +214,7 @@ public class menuNation extends SubCommand {
                         y++;
                         x = 0;
                     }
-                    ItemStack item = nation.getFlags().contains(flag.name()) ? new ItemBuilder(Material.LIME_BANNER).setDisplayName("§a§l" + flag.name()).addLoreLine("§7§oClick to toggle").build() : new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§l" + flag.name()).addLoreLine("§7§oClick to toggle").build();
+                    ItemStack item = nation.getFlags().contains(flag.name()) ? new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§a§l" + flag.name()).addLoreLine("§7§oClick to toggle").build() : new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§c§l" + flag.name()).addLoreLine("§7§oClick to toggle").build();
                     menu.addItem(new GuiItem(item, event -> {
                         event.setCancelled(true);
                         player.performCommand("n flag " + flag.name());
