@@ -149,7 +149,7 @@ public class NationChunk {
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, Arrays.asList(nc), changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            boolean claim = nc.claim();
+            // boolean claim = nc.claim();
             // nation.withdraw(15);
             for (Player members : nation.getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));

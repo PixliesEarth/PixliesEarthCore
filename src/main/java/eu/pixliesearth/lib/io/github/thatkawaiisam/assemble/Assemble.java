@@ -69,6 +69,7 @@ public class Assemble {
 		this.thread = new AssembleThread(this);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void cleanup() {
 		if (this.thread != null) {
 			this.thread.stop();

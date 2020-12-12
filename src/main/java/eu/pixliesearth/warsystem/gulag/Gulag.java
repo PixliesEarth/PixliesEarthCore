@@ -1,25 +1,25 @@
 package eu.pixliesearth.warsystem.gulag;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.warsystem.WarParticipant;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.warsystem.WarParticipant;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor

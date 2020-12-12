@@ -43,6 +43,7 @@ public class AssembleBoard {
 	public Objective getObjective() {
 		Scoreboard scoreboard = getScoreboard();
 		if (scoreboard.getObjective("Assemble") == null) {
+			@SuppressWarnings("deprecation")
 			Objective objective = scoreboard.registerNewObjective("Assemble", "dummy");
 			objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 			objective.setDisplayName(getAssemble().getAdapter().getTitle(Bukkit.getPlayer(getUuid())));

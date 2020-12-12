@@ -1,9 +1,11 @@
 package eu.pixliesearth.lib.net.ranktw.DiscordWebHooks;
 
-import com.github.kevinsawicki.http.HttpRequest;
-import com.google.gson.Gson;
-import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.connection.Response;
-import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.connection.WebhookException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,12 +18,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.github.kevinsawicki.http.HttpRequest;
+import com.google.gson.Gson;
 
+import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.connection.Response;
+import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.connection.WebhookException;
+
+@SuppressWarnings({ "deprecation", "resource" })
 public class DiscordWebhook {
     private static final Gson gson = new Gson();
     private String webhook;
@@ -51,7 +54,8 @@ public class DiscordWebhook {
             }
         }).start();
     }
-    public void sendMessage(File... files) {
+    
+	public void sendMessage(File... files) {
         new Thread(() -> {
             FileInputStream fis = null;
             try {

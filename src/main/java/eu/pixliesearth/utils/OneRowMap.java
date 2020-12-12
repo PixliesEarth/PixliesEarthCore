@@ -14,7 +14,7 @@ public class OneRowMap extends BasicDBObject {
     public static final String KEY = "Key";
     public static final String VALUE = "Value";
 
-    private Object Key, Value;
+    @SuppressWarnings("unused") private Object Key, Value;
 
     public OneRowMap(Object Key, Object Value) {
         this.Key = Key;
