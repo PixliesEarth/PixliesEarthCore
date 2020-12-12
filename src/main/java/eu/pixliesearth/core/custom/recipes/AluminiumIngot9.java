@@ -9,10 +9,6 @@ import java.util.Map;
 
 
 public class AluminiumIngot9 extends CustomRecipe {
-    //@Override
-    public aluminiumIngot9() {
-        
-    }
     @Override
     public String getResultUUID() {
         return "Pixlies:aluminium_Ingot";
