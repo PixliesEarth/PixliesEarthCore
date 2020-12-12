@@ -1,8 +1,11 @@
 package eu.pixliesearth.nations.entities.nation.ranks;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public enum Permission {
 
@@ -29,6 +32,13 @@ public enum Permission {
     MANAGE_WAR,
     INSPECT
     ;
+
+    public boolean hasPermission(CommandSender sender) {
+        if (!(sender instanceof Player)) return true;
+        Profile profile = Main.getInstance().getProfile(((Player) sender).getUniqueId());
+        if (profile.isStaff()) return true;
+        return hasNationPermission(profile, this);
+    }
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
         if (profile.isStaff()) return true;
