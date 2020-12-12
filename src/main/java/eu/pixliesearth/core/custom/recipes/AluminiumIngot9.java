@@ -8,14 +8,14 @@ import java.util.Map;
 
 
 
-public class AluminumIngot9 extends CustomRecipe {
+public class AluminiumIngot9 extends CustomRecipe {
     //@Override
-    public AluminumIngot9() {
+    public aluminiumIngot9() {
         
     }
     @Override
     public String getResultUUID() {
-        return "Pixlies:Aluminum_Ingot";
+        return "Pixlies:aluminium_Ingot";
     }
     @Override
     public Map<Integer, String> getContentsList() {

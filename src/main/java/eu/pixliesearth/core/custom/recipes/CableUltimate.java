@@ -67,7 +67,7 @@ public class CableUltimate extends CustomRecipe {
 		map.put(5, "Pixlies:Rubber");
 		map.put(6, "Pixlies:Capacitor_Ultimate");
 		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:Aluminum_Ingot");
+		map.put(8, "Pixlies:aluminium_Ingot");
 		return map;
 	}
 	/**

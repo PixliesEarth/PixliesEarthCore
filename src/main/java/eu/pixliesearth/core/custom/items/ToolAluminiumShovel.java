@@ -11,8 +11,8 @@ import java.util.*;
 /**
  * @author Zenake
  */
-public class ToolAluminumShovel extends CustomItem {
-    public ToolAluminumShovel() {
+public class ToolAluminiumShovel extends CustomItem {
+    public ToolAluminiumShovel() {
         
     }
     
@@ -28,7 +28,7 @@ public class ToolAluminumShovel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminum Shovel";
+        return "§6aluminium Shovel";
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ToolAluminumShovel extends CustomItem {
     
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Shovel"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:aluminium_Shovel"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
     @Override

@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AluminumIngot extends CustomRecipe {
+public class AluminiumPickaxe extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -19,7 +19,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return "Machine:Forge";
+		return "Pixlies:Crafting_Table";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -29,7 +29,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Aluminum_Ingot";
+		return "Pixlies:aluminium_Pickaxe";
 	}
 	/**
 	 * How many of the result to give
@@ -43,7 +43,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public Era getEraNeeded() {
-		return Era.MODERN;
+		return Era.TRIBAL;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -59,7 +59,15 @@ public class AluminumIngot extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Aluminium_Dust");
+		map.put(0, "Pixlies:aluminium_Ingot");
+		map.put(1, "Pixlies:aluminium_Ingot");
+		map.put(2, "Pixlies:aluminium_Ingot");
+		map.put(3, "Minecraft:air");
+		map.put(4, "Minecraft:stick");
+		map.put(5, "Minecraft:air");
+		map.put(6, "Minecraft:air");
+		map.put(7, "Minecraft:stick");
+		map.put(8, "Minecraft:air");
 		return map;
 	}
 	/**
@@ -67,7 +75,7 @@ public class AluminumIngot extends CustomRecipe {
 	 */
 	@Override
 	public Long getCraftTime() {
-		return 4000L;
+		return 2000L;
 	}
 	/**
 	 * How much energy this crafting process should take up, set to null if none

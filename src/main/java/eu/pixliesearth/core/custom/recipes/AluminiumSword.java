@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AluminumSword extends CustomRecipe {
+public class AluminiumSword extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -29,7 +29,7 @@ public class AluminumSword extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:Aluminum_Sword";
+		return "Pixlies:aluminium_Sword";
 	}
 	/**
 	 * How many of the result to give
@@ -59,8 +59,8 @@ public class AluminumSword extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Aluminum_Ingot");
-		map.put(1, "Pixlies:Aluminum_Ingot");
+		map.put(0, "Pixlies:aluminium_Ingot");
+		map.put(1, "Pixlies:aluminium_Ingot");
 		map.put(2, MinecraftMaterial.STICK.getUUID());
 		return map;
 	}

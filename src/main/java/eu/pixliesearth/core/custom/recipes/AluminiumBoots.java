@@ -62,12 +62,12 @@ public class AluminiumBoots extends CustomRecipe {
 		map.put(0, "Minecraft:air");
 		map.put(1, "Minecraft:air");
 		map.put(2, "Minecraft:air");
-		map.put(3, "Pixlies:Aluminum_Ingot");
+		map.put(3, "Pixlies:aluminium_Ingot");
 		map.put(4, "Minecraft:air");
-		map.put(5, "Pixlies:Aluminum_Ingot");
-		map.put(6, "Pixlies:Aluminum_Ingot");
+		map.put(5, "Pixlies:aluminium_Ingot");
+		map.put(6, "Pixlies:aluminium_Ingot");
 		map.put(7, "Minecraft:air");
-		map.put(8, "Pixlies:Aluminum_Ingot");
+		map.put(8, "Pixlies:aluminium_Ingot");
 		return map;
 	}
 	/**

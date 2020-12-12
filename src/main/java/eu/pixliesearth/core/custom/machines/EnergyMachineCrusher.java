@@ -116,7 +116,7 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Iron_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Iron_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Iron_Dust"),
-						// 7 aluminum
+						// 7 aluminium
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Aluminium_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Aluminium_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Aluminium_Dust"),

@@ -11,14 +11,14 @@ import java.util.*;
 /**
  * @author Zenake
  */
-public class ToolAluminumHoe extends CustomItem {
-    public ToolAluminumHoe() {
+public class ToolAluminiumPickaxe extends CustomItem {
+    public ToolAluminiumPickaxe() {
         
     }
     
     @Override
     public Material getMaterial() {
-        return Material.IRON_HOE;
+        return Material.IRON_PICKAXE;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ToolAluminumHoe extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6Aluminum Hoe";
+        return "§6aluminium Pickaxe";
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ToolAluminumHoe extends CustomItem {
     
     @Override
     public String getUUID() {
-        return "Pixlies:Aluminum_Hoe"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:aluminium_Pickaxe"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
     @Override
