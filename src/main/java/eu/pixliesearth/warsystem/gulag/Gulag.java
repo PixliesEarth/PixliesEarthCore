@@ -75,7 +75,7 @@ public class Gulag {
                 bar.setTitle("§7Starting in §b§l" + timers.get("gulagStart").getRemainingAsString());
                 bar.setProgress(timers.get("gulagStart").getRemaining() / timers.get("gulagStart").getExpiry());
             }
-        }.runTaskTimerAsynchronously(instance, 0, 20);
+        }.runTaskTimer(instance, 0, 20);
     }
 
     public void startGulag(Player aggressor, Player defender) {
@@ -101,7 +101,7 @@ public class Gulag {
                 bar.setTitle("§b" + timers.get("gulagCooldown").getRemainingAsString() + " until end");
                 bar.setProgress(timers.get("gulagCooldown").getRemaining() / timers.get("gulagCooldown").getExpiry());
             }
-        }.runTaskTimerAsynchronously(instance, 0, 20);
+        }.runTaskTimer(instance, 0, 20);
     }
 
     public void handleKill(Player winner, Player loser) {

@@ -61,10 +61,8 @@ public class WarCommand extends CustomCommand {
             if (war.getTimers().containsKey("gracePeriod")) {
                 player.sendMessage(Methods.getCenteredMessage("§7Grace period"));
                 player.sendMessage(Methods.getCenteredMessage("§b" + war.getTimers().get("gracePeriod").getRemainingAsString()));
-            } else {
-
             }
-            player.sendMessage(Methods.getCenteredMessage("37Players left"));
+            player.sendMessage(Methods.getCenteredMessage("§7Players left"));
             player.sendMessage(Methods.getCenteredMessage("§c" + war.getLeft().get(WarParticipant.WarSide.AGGRESSOR) + " §8- §c" + war.getLeft().get(WarParticipant.WarSide.DEFENDER)));
             player.sendMessage("  ");
             return false;

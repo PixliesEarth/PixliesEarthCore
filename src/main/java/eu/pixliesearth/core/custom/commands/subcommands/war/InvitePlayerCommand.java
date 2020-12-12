@@ -32,10 +32,6 @@ public class InvitePlayerCommand extends CustomSubCommand {
 
     @Override
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-        if (!ranByPlayer) {
-            Lang.ONLY_PLAYERS_EXEC.send(commandSender);
-            return false;
-        }
         Player player = (Player) commandSender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {

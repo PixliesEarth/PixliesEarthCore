@@ -31,6 +31,7 @@ public enum Permission {
     ;
 
     public static boolean hasNationPermission(Profile profile, Permission permission) {
+        if (profile.isStaff()) return true;
         if (!profile.isInNation()) return false;
         if (profile.isLeader()) return true;
         Nation nation = profile.getCurrentNation();
@@ -39,6 +40,7 @@ public enum Permission {
     }
 
     public static boolean hasForeignPermission(Profile profile, Permission permission, Nation host) {
+        if (profile.isStaff()) return true;
         if (profile.getNationId().equals(host.getNationId()))
             return hasNationPermission(profile, permission);
         if (profile.getExtras().containsKey("PERMISSION:" + host.getNationId() + ":" + permission.name())) return true;

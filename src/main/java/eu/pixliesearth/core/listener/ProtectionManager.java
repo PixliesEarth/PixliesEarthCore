@@ -240,6 +240,13 @@ public class ProtectionManager implements Listener {
     }
 
     @EventHandler(priority = HIGHEST)
+    public void onExplosion(BlockExplodeEvent event) {
+        NationChunk nc = NationChunk.get(event.getBlock().getChunk());
+        if (nc == null) return;
+        if (nc.getCurrentNation().getLeader().equalsIgnoreCase("NONE")) event.setCancelled(true);
+    }
+
+    @EventHandler(priority = HIGHEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Monster) return;
         if (event.getDamager() instanceof Player) {

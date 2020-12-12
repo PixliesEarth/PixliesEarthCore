@@ -98,6 +98,12 @@ public class War {
             if (profile.discordIsSynced())
                 mentionsBuilder.append(MiniMick.getApi().getUserById(profile.getDiscord()).get().getMentionTag()).append(", ");
         }
+        left.put(WarParticipant.WarSide.DEFENDER, 0);
+        left.put(WarParticipant.WarSide.AGGRESSOR, 0);
+        for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER, id));
+        for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
+            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
         if (mentionsBuilder.length() > 0) instance.getMiniMick().getChatChannel().sendMessage("Hey! " + mentionsBuilder.toString() + "**" + Nation.getById(mainAggressor).getName() + "** just declared a war against your nation. The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + ".");
         instance.getMiniMick().getChatChannel().sendMessage(new EmbedBuilder().setTitle("**" + getAggressorInstance().getName() + "** just declared war on **" + getDefenderInstance().getName() + "**.").setDescription("The grace period will take " + Methods.getTimeAsString(timers.get("gracePeriod").getRemaining(), false) + "."));
         getDefenderInstance().broadcastMembers(Lang.WAR + "§b" + getAggressorInstance().getName() + " §7just declared a war on you.");
@@ -124,12 +130,6 @@ public class War {
         aggressor.save();
         this.timers.remove("gracePeriod");
         this.running = true;
-        left.put(WarParticipant.WarSide.DEFENDER, 0);
-        left.put(WarParticipant.WarSide.AGGRESSOR, 0);
-        for (Player player : Nation.getById(this.mainDefender).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainDefender, WarParticipant.WarSide.DEFENDER, id));
-        for (Player player : Nation.getById(this.mainAggressor).getOnlineMemberSet())
-            addPlayer(player, new WarParticipant(this.mainAggressor, WarParticipant.WarSide.AGGRESSOR, id));
         broadcastDiscord(Nation.getById(mainDefender), "the war between you and **" + Nation.getById(mainAggressor).getName() + "** just started.");
         Bukkit.broadcastMessage(Lang.WAR + "§7The war between §b" + getDefenderInstance().getName() + " §7& §b" + getAggressorInstance().getName() + " §7has just started.");
     }
@@ -178,6 +178,9 @@ public class War {
         instance.getUtilLists().playersInWar.clear();
         broadcastDiscord(new EmbedBuilder().setTitle("War ended!").setDescription(winnerNation.getName() + "just won a war against " + loserNation.getName()));
         instance.setCurrentWar(null);
+        Nation aggressor = getAggressorInstance();
+        aggressor.getExtras().remove("WAR:" + mainDefender);
+        aggressor.save();
     }
 
     public void handleLeave(Profile left) {
