@@ -275,7 +275,7 @@ public class claimNation extends SubCommand {
         if (toClaim.size() > 0) {
             int claimed = 0;
             for (NationChunk chunk : toClaim.values()) {
-                if (nation.getMoney() < claimed * 15) break;
+                // if (nation.getMoney() < claimed * 15) break;
                 chunk.claim();
                 claimed++;
             }
