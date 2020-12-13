@@ -1,23 +1,36 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
 import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.utils.NBTUtil.NBTTags;
 
 public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implements IRedstoneable {
 
 	public final int locationSaverSlot = 12;
     public final int itemSlot = 14;
     public final int energySlot = 13;
+    public final double energyPerAction = 1000D;
 
 	@Override
 	public Material getMaterial() {
@@ -72,8 +85,34 @@ public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implemen
 	@Override
 	public void onRecievedRedstoneSignal(Location location, int strength, BlockRedstoneEvent event) {
 		if (strength>5) {
-			
+			CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+			if (getContainedPower(location)>=energyPerAction) {
+				NBTTags tags = NBTUtil.getTagsFromItem(h.getInventoryFromLocation(location).getItem(locationSaverSlot));
+    			Location l = new Location(Bukkit.getWorld(UUID.fromString(tags.getString("w"))), Integer.parseInt(tags.getString("x")), Integer.parseInt(tags.getString("y")), Integer.parseInt(tags.getString("z")));
+				Event event2 = new PlayerInteractEvent(Bukkit.getOfflinePlayer(h.getPrivateLocation(location)).getPlayer(), Action.RIGHT_CLICK_BLOCK, h.getInventoryFromLocation(location).getItem(itemSlot), l.getBlock(), BlockFace.UP);
+	    		event2.callEvent();
+				h.removePowerFromLocation(location, energyPerAction);
+			}
 		}
+	}
+	
+	@Override
+	public HashMap<String, String> getSaveData(Location location, Inventory inventory, Timer timer) {
+		HashMap<String, String> map = super.getSaveData(location, inventory, timer);
+		map.put("locked", CustomFeatureLoader.getLoader().getHandler().getPrivateLocation(location).toString());
+		return map;
+	}
+	
+	@Override
+	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
+		super.loadFromSaveData(inventory, location, map);
+		CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(location, UUID.fromString(map.get("locked")));
+	}
+	
+	@Override
+	public boolean BlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
+		CustomFeatureLoader.getLoader().getHandler().registerPrivateLocation(event.getBlock().getLocation(), event.getPlayer().getUniqueId());
+		return super.BlockPlaceEvent(event);
 	}
 
 	@Override
