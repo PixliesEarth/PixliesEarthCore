@@ -28,7 +28,7 @@ public class StatsCommand implements CommandExecutor {
         Profile profile = Main.getInstance().getProfile(uuid);
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10" + "§6§l⚡";
         sender.sendMessage(PlaceholderAPI.setPlaceholders(profile.getAsOfflinePlayer(), "%vault_prefix%" + profile.getDisplayName()));
-        sender.sendMessage("  §8» §2§l$§a" + profile.getBalance());
+        // sender.sendMessage("  §8» §2§l$§a" + profile.getBalance());
         sender.sendMessage("  §8» §c" + profile.getElo() + "§4§l✦");
         sender.sendMessage("  §8» §e" + energy);
         return false;

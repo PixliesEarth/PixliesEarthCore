@@ -85,8 +85,8 @@ public class infoNation extends SubCommand {
         sender.sendMessage(" ");
         sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
-        sender.sendMessage("§7GDP: §2§l$§a" + nation.getGDP());
-        sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
+        // sender.sendMessage("§7GDP: §2§l$§a" + nation.getGDP());
+        // sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
         sender.sendMessage("§7Era: §b" + nation.getEra());
         String leader = nation.getLeader().equals("NONE") ? "SERVER" : Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName();
         sender.sendMessage("§7Leader: §6" + leader);
