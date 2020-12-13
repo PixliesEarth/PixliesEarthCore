@@ -16,7 +16,7 @@ public class PlayerCombatListener implements Listener {
 
     private static final Main instance = Main.getInstance();
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority=EventPriority.HIGH)
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!(event.getEntity() instanceof Player)) return;
@@ -27,7 +27,7 @@ public class PlayerCombatListener implements Listener {
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
 
-            if (dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) {
+            if (dProfile.isInNation() && tProfile.isInNation() && dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) {
                 event.setCancelled(true);
                 return;
             }
@@ -39,7 +39,7 @@ public class PlayerCombatListener implements Listener {
             Profile dProfile = instance.getProfile(damager.getUniqueId());
             Profile tProfile = instance.getProfile(target.getUniqueId());
 
-            if (dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) {
+            if (dProfile.isInNation() && tProfile.isInNation() && dProfile.getNationId().equals(tProfile.getNationId()) && !dProfile.getCurrentNation().getFlags().contains(NationFlag.FRIENDLY_FIRE.name())) {
                 event.setCancelled(true);
                 return;
             }

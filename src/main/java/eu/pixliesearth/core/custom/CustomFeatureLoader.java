@@ -63,7 +63,7 @@ public class CustomFeatureLoader {
 		loadPermissions(path);
 		loadCustomBlocks(path);
 		//loadCustomMachineRecipes(path);
-		loadQuests(path);
+		//loadQuests(path);
 		loadMachines(path);
 		try {
 			getHandler().loadCustomBlocksFromFileOptimised();
