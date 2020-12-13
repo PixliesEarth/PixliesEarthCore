@@ -25,6 +25,7 @@ public class CustomArmourListener extends CustomListener {
 	
 	@EventHandler
 	public void EntityDamageEvent(EntityDamageEvent event) {
+		if (event.isCancelled()) return;
 		if (!(event.getEntity() instanceof Player)) return; // Not a player
 		ItemStack[] armours = ((Player)event.getEntity()).getInventory().getArmorContents();
 		for (ItemStack is : armours) {
@@ -39,6 +40,7 @@ public class CustomArmourListener extends CustomListener {
 	
 	@EventHandler
 	public void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+		if (event.isCancelled()) return;
 		if (!(event.getDamager() instanceof Player)) return; // Not a player
 		ItemStack[] armours = ((Player)event.getDamager()).getInventory().getArmorContents();
 		for (ItemStack is : armours) {

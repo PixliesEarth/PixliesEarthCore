@@ -19,6 +19,7 @@ public class CustomWeaponListener extends CustomListener {
 	
 	@EventHandler
 	public void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+		if (event.isCancelled()) return;
 		if (!(event.getDamager() instanceof Player)) return; // Not a player
 		if (((Player) event.getDamager()).getInventory().getItemInMainHand()==null || ((Player) event.getDamager()).getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
 		if (CustomItemUtil.isItemStackACustomItem(((Player) event.getDamager()).getInventory().getItemInMainHand())) 
