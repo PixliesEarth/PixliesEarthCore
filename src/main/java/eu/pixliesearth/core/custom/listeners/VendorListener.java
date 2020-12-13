@@ -1,11 +1,6 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.vendors.Vendor;
-import lombok.SneakyThrows;
-import net.citizensnpcs.api.event.NPCRightClickEvent;
-import org.bukkit.event.EventHandler;
 
 public class VendorListener extends CustomListener {
 

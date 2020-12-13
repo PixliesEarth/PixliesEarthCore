@@ -134,7 +134,7 @@ import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.citizensnpcs.api.CitizensAPI;
+// import net.citizensnpcs.api.CitizensAPI;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 
@@ -242,7 +242,7 @@ public final class Main extends JavaPlugin {
             public void run() {
                 Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
+                    // if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
                     Profile profile = getProfile(player.getUniqueId());
                     profile.syncDiscordAndIngameRoles();
                     profile.backup();
@@ -267,7 +267,7 @@ public final class Main extends JavaPlugin {
             @Override
             public void run() {
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
+                    // if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
                     Profile profile = getProfile(player.getUniqueId());
                     if (!profile.isInNation()) continue;
                     Nation nation = profile.getCurrentNation();
