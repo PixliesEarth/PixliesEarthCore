@@ -63,7 +63,7 @@ public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implemen
 	@Override
 	public boolean InventoryClickEvent(org.bukkit.event.inventory.InventoryClickEvent event) {
 		String id = CustomItemUtil.getUUIDFromItemStack(event.getCurrentItem());
-		if (id==null) {
+		if (id==null || id.equals("") || id.equals(CustomInventoryListener.getUnclickableItemUUID())) {
 			return true;
 		} else {
 			String id2 = CustomItemUtil.getUUIDFromItemStack(event.getInventory().getItem(12));
