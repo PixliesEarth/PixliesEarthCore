@@ -7,7 +7,7 @@ import eu.pixliesearth.nations.entities.nation.Era;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AK74 extends CustomRecipe {
+public class AK47 extends CustomRecipe {
 	/**
 	 * The UUID of what machine the recipe should be crafted in. These are:
 	 * 
@@ -19,7 +19,7 @@ public class AK74 extends CustomRecipe {
 	 */
 	@Override
 	public String craftedInUUID() {
-		return MinecraftMaterial.ACACIA_BOAT.getUUID();
+		return "Machine:GunWorkbench";
 	}
 	/**
 	 * The UUID of the item to give when crafted
@@ -29,7 +29,7 @@ public class AK74 extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return null;
+		return MinecraftMaterial.ACACIA_BOAT.getUUID();
 	}
 	/**
 	 * How many of the result to give
