@@ -97,6 +97,7 @@ public class NationChunk {
     }
 
     public static NationChunk get(Chunk chunk) {
+        if (chunk == null) return null;
         if (!table.get(chunk.getWorld().getName()).contains(chunk.getX(), chunk.getZ()))
             return null;
         return table.get(chunk.getWorld().getName()).get(chunk.getX(), chunk.getZ());
