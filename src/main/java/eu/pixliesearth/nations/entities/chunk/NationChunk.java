@@ -98,6 +98,7 @@ public class NationChunk {
 
     public static NationChunk get(Chunk chunk) {
         if (chunk == null) return null;
+        table.putIfAbsent(chunk.getWorld().getName(), HashBasedTable.create());
         if (!table.get(chunk.getWorld().getName()).contains(chunk.getX(), chunk.getZ()))
             return null;
         return table.get(chunk.getWorld().getName()).get(chunk.getX(), chunk.getZ());

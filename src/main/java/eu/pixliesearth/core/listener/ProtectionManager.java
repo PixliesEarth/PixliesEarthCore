@@ -243,8 +243,9 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onExplosion(BlockExplodeEvent event) {
         for (Block block : event.blockList()) {
+            if (!block.getChunk().isLoaded()) block.getChunk().load();
             NationChunk nc = NationChunk.get(block.getChunk());
-            if (nc == null) return;
+            if (nc == null) continue;
             if (nc.getCurrentNation().getLeader().equalsIgnoreCase("NONE")) {
                 event.setCancelled(true);
                 break;

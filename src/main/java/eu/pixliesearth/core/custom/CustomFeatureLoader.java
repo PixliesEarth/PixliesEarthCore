@@ -102,33 +102,23 @@ public class CustomFeatureLoader {
 	public void loadMachines(String path) {
 		int i = 0;
 		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.MACHINES).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.MACHINES).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.MACHINES).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomEnergyCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomEnergyCrafterMachine.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.MACHINES).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomFuelableCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomFuelableCrafterMachine.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.MACHINES).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom machines.");
@@ -146,7 +136,7 @@ public class CustomFeatureLoader {
 	public void loadCustomRecipes(String path) {
 		int i = 0;
 		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes", CustomRecipe.class)) {
-			loadCustomRecipe(clazz.newInstance());
+			loadCustomRecipe(clazz.getConstructor().newInstance());
 			i++;
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom recipes.");
@@ -170,27 +160,19 @@ public class CustomFeatureLoader {
 	public void loadCustomBlocks(String path) {
 		int i = 0;
 		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) {
-			loadCustomBlock(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.BLOCKS).add(clazz.newInstance().getUUID());
+			loadCustomBlock(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.BLOCKS).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.BLOCKS).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) {
-			loadMachine(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.BLOCKS).add(clazz.newInstance().getUUID());
+			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom blocks.");
@@ -228,40 +210,22 @@ public class CustomFeatureLoader {
 		int i = 0;
 		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) {
 			loadCustomItem(clazz.getConstructor().newInstance());
-			if (clazz.getConstructor().newInstance().getUUID().contains("_Pickaxe") || clazz.getConstructor().newInstance().getUUID().contains("_Axe") || clazz.getConstructor().newInstance().getUUID().contains("_Shovel") || clazz.getConstructor().newInstance().getUUID().contains("_Hoe")) {
-				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.TOOLS, new ArrayList<>());
-				handler.getCategoriesForItems().get(CustomItem.Category.TOOLS).add(clazz.newInstance().getUUID());
-			} else if (clazz.getConstructor().newInstance().getUUID().contains("_Dust") || clazz.getConstructor().newInstance().getUUID().contains("_Ingot") || clazz.getConstructor().newInstance().getUUID().contains("Plastic_") || clazz.getConstructor().newInstance().getUUID().contains("Chunk")) {
-				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.MATERIAL, new ArrayList<>());
-				handler.getCategoriesForItems().get(CustomItem.Category.MATERIAL).add(clazz.newInstance().getUUID());
-			}else {
-				handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
-				handler.getCategoriesForItems().get(CustomItem.Category.ITEMS).add(clazz.newInstance().getUUID());
-			}
 			i++;
 		}
 		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class)) {
 			loadCustomItem(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ARMOR, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.ARMOR).add(clazz.newInstance().getUUID());
 			i++;
 		}
 		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class)) {
 			loadCustomItem(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.WEAPONS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.WEAPONS).add(clazz.newInstance().getUUID());
 			i++;
 		}
 		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class)) {
 			loadCustomItem(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.ITEMS).add(clazz.newInstance().getUUID());
 			i++;
 		}
 		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class)) {
 			loadCustomItem(clazz.newInstance());
-			handler.getCategoriesForItems().putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
-			handler.getCategoriesForItems().get(CustomItem.Category.ITEMS).add(clazz.newInstance().getUUID());
 			i++;
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom items.");

@@ -191,6 +191,22 @@ public class CustomFeatureHandler {
 	public void registerItem(CustomItem customitem) {
 		this.customItems.add(customitem);
 		this.customItemsToItemStackMap.put(customitem, customitem.buildItem());
+		if (customitem.getUUID().contains("_Pickaxe") || customitem.getUUID().contains("_Axe") || customitem.getUUID().contains("_Shovel") || customitem.getUUID().contains("_Hoe")) {
+			categoriesForItems.putIfAbsent(CustomItem.Category.TOOLS, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.TOOLS).add(customitem.getUUID());
+		} else if (customitem.getUUID().contains("_Dust") || customitem.getUUID().contains("_Ingot") || customitem.getUUID().contains("Plastic_") || customitem.getUUID().contains("Chunk")) {
+			categoriesForItems.putIfAbsent(CustomItem.Category.MATERIAL, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.MATERIAL).add(customitem.getUUID());
+		} else if (customitem instanceof CustomWeapon) {
+			categoriesForItems.putIfAbsent(CustomItem.Category.WEAPONS, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.WEAPONS).add(customitem.getUUID());
+		} else if (customitem instanceof CustomArmour) {
+			categoriesForItems.putIfAbsent(CustomItem.Category.ARMOR, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.ARMOR).add(customitem.getUUID());
+		} else {
+			categoriesForItems.putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.ITEMS).add(customitem.getUUID());
+		}
 		// System.out.println("Registered the item "+customitem.getUUID());
 	}
 	/**
@@ -202,6 +218,8 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customBlock);
 		this.customItems.add(customBlock);
 		this.customItemsToItemStackMap.put(customBlock, customBlock.buildItem());
+		categoriesForItems.putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
+		categoriesForItems.get(CustomItem.Category.BLOCKS).add(customBlock.getUUID());
 		// System.out.println("Registered the custom block "+customBlock.getUUID());
 	}
 	/**
@@ -214,6 +232,8 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customMachine);
 		this.customItems.add(customMachine);
 		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
+		categoriesForItems.putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
+		categoriesForItems.get(CustomItem.Category.BLOCKS).add(customMachine.getUUID());
 		// System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
