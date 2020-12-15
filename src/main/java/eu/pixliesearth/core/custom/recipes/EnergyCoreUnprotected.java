@@ -10,7 +10,7 @@ public class EnergyCoreUnprotected extends CustomRecipe {
 
     @Override
     public String getResultUUID() {
-        return "Pixlies:Energy_Core_Unrotected";
+        return "Pixlies:Energy_Core_Unprotected";
     }
 
     @Override
