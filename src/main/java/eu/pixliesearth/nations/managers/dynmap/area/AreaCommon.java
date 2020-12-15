@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.UUID;
 
+import eu.pixliesearth.nations.entities.nation.Ideology;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -85,7 +86,7 @@ public class AreaCommon {
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
         formattedWindow = formattedWindow.replace("%era%", StringUtils.capitalize(nation.getCurrentEra().getName()).replace("_", " "));
         formattedWindow = formattedWindow.replace("%religion%", ChatColor.stripColor(Religion.valueOf(nation.getReligion()).getDisplayName()));
-        formattedWindow = formattedWindow.replace("%ideology%", StringUtils.capitalize(nation.getIdeology().replace("_", " ")));
+        formattedWindow = formattedWindow.replace("%ideology%", ChatColor.stripColor(Ideology.valueOf(nation.getIdeology()).getDisplayName()));
         
         return formattedWindow;
     }
