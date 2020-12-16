@@ -29,7 +29,7 @@ public class AK47 extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return MinecraftMaterial.ACACIA_BOAT.getUUID();
+		return "Gun:AK-47";
 	}
 	/**
 	 * How many of the result to give

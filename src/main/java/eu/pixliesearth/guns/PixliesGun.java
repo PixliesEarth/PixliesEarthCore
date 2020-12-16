@@ -1,6 +1,9 @@
 package eu.pixliesearth.guns;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.guns.guns.*;
 import eu.pixliesearth.utils.Methods;
@@ -8,11 +11,9 @@ import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -118,6 +119,53 @@ public class PixliesGun {
         guns.put(new Slingshot(0, UUID.randomUUID()).getName(), Slingshot.class);
         guns.put(new Uzi(0, UUID.randomUUID()).getName(), Uzi.class);
         guns.put(new M1911(0, UUID.randomUUID()).getName(), M1911.class);
+        CustomFeatureLoader loader = CustomFeatureLoader.getLoader();
+        for (String s : guns.keySet()) {
+            loader.loadCustomItem(new CustomItem(){
+
+                @SneakyThrows
+                private PixliesGun gun() {
+                    return guns.get(s).getConstructor(UUID.class, int.class).newInstance(UUID.randomUUID(), 0);
+                }
+
+                @Override
+                public String getUUID() {
+                    return ChatColor.stripColor("Gun:" + s);
+                }
+
+                @SneakyThrows
+                @Override
+                public ItemStack buildItem() {
+                    return guns.get(s).getConstructor(UUID.class, int.class).newInstance(UUID.randomUUID(), 0).getItem();
+                }
+
+                @Override
+                public Material getMaterial() {
+                    return gun().getItem().getType();
+                }
+
+                @Override
+                public String getDefaultDisplayName() {
+                    return gun().getItem().getDisplayName();
+                }
+
+                @Override
+                public List<String> getDefaultLore() {
+                    return gun().getItem().getLore();
+                }
+
+                @Override
+                public Integer getCustomModelData() {
+                    return gun().getItem().getCustomModelData();
+                }
+
+                @Override
+                public boolean isUnstackable() {
+                    return true;
+                }
+
+            });
+        }
     }
 
     public static PixliesGun getByItem(ItemStack item) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {

@@ -29,7 +29,7 @@ public class UZI extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return MinecraftMaterial.ACACIA_BOAT.getUUID();
+		return "Gun:Uzi";
 	}
 	/**
 	 * How many of the result to give
