@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import eu.pixliesearth.guns.PixliesGun;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -377,6 +378,8 @@ public final class Main extends JavaPlugin {
             flag.setItemMeta(meta);
             new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
+
+        PixliesGun.loadGuns();
 
     }
 

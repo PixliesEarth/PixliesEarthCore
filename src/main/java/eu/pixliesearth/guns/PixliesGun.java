@@ -125,7 +125,7 @@ public class PixliesGun {
 
                 @SneakyThrows
                 private PixliesGun gun() {
-                    return guns.get(s).getConstructor(UUID.class, int.class).newInstance(UUID.randomUUID(), 0);
+                    return guns.get(s).getConstructor(int.class, UUID.class).newInstance(0, UUID.randomUUID());
                 }
 
                 @Override
@@ -136,7 +136,7 @@ public class PixliesGun {
                 @SneakyThrows
                 @Override
                 public ItemStack buildItem() {
-                    return guns.get(s).getConstructor(UUID.class, int.class).newInstance(UUID.randomUUID(), 0).getItem();
+                    return guns.get(s).getConstructor(int.class, UUID.class).newInstance(0, UUID.randomUUID()).getItem();
                 }
 
                 @Override
