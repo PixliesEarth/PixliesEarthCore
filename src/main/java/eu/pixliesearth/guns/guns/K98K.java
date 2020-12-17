@@ -1,21 +1,53 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import org.bukkit.Material;
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
-import java.util.Arrays;
-import java.util.UUID;
+public class K98K extends CustomGun {
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
-
-public class K98K extends PixliesGun {
-
-    public K98K(int ammo, UUID uuid) {
-        super(uuid, "§c§lKarabiner98k", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(6).setDisplayName("§c§lKarabiner98k §8| §8[§c5§7/§c5§8]").addLoreLine("§7Ammo: §3Rifle Ammo").addLoreLine("§7Origin: §cGermany").addLoreLine("§7Range: §3100 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 100, ammo,5, 0.2, 800, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+    @Override
+    public String getDefaultDisplayName() {
+    	return "§c§lKarabiner98k";
     }
+
+    @Override
+	public Integer getCustomModelData() {
+		return 6;
+	}
+
+	@Override
+	public String getUUID() {
+		return "Gun:Karabiner98k";
+	}
+
+	@Override
+	public int getMaxAmmo() {
+		return 5;
+	}
+
+	@Override
+	public int getRange() {
+		return 100;
+	}
+
+	@Override
+	public double getAccuracy() {
+		return 0.04;
+	}
+
+	@Override
+	public int getDelayToReload() {
+		return 2;
+	}
+
+	@Override
+	public AmmoType getAmmoType() {
+		return AmmoType.RIFLE_AMMO;
+	}
+
+	@Override
+	public String getOrigin() {
+		return "Germany";
+	}
 
 }

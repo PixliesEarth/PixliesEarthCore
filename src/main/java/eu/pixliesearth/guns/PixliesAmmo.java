@@ -23,15 +23,15 @@ import java.util.Collection;
 public class PixliesAmmo implements Constants {
 	
     private Location location;
-    private PixliesGun gun;
+    private CustomGun gun;
     private double damage;
 
     public GunFireResult trace(Player player) {
-        int maxSearchDistance = gun.getMaxRange();
+        int maxSearchDistance = gun.getRange();
 
         Block block = player.getTargetBlock(null, maxSearchDistance);
         if (block.getType().isSolid())
-            maxSearchDistance = (int) Math.min(gun.getMaxRange(), block.getLocation().distance(location));
+            maxSearchDistance = (int) Math.min(gun.getRange(), block.getLocation().distance(location));
 
         Collection<LivingEntity> entityList = player.getWorld().getNearbyLivingEntities(location, maxSearchDistance);
         if (entityList.isEmpty())
@@ -58,11 +58,11 @@ public class PixliesAmmo implements Constants {
     }
 
     public RPGFireResult traceRPG(Player player) {
-        int maxSearchDistance = gun.getMaxRange();
+        int maxSearchDistance = gun.getRange();
 
         Block block = player.getTargetBlock(null, maxSearchDistance);
         if (block.getType().isSolid())
-            maxSearchDistance = (int) Math.min(gun.getMaxRange(), block.getLocation().distance(location));
+            maxSearchDistance = (int) Math.min(gun.getRange(), block.getLocation().distance(location));
 
         Collection<LivingEntity> entityList = player.getWorld().getNearbyLivingEntities(location, maxSearchDistance);
         if (entityList.isEmpty())
@@ -92,7 +92,7 @@ public class PixliesAmmo implements Constants {
         return new RPGFireResult(positionLocation);
     }
 
-    public PixliesAmmo createNewOne(Location location, PixliesGun gun) {
+    public PixliesAmmo createNewOne(Location location, CustomGun gun) {
         return new PixliesAmmo(location, gun, 0);
     }
 

@@ -1,21 +1,60 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Material;
 
-import java.util.Arrays;
-import java.util.UUID;
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
+public class M16 extends CustomGun {
 
-public class M16 extends PixliesGun {
-
-    public M16(int ammo, UUID uuid) {
-        super(uuid, "§c§lM-16", new ItemBuilder(Material.WOODEN_AXE).setCustomModelData(6).setDisplayName("§c§lM-16 §8| §8[§c30§7/§c30§8]").addLoreLine("§7Ammo: §3RifleAmmo").addLoreLine("§7Origin: §bUSA").addLoreLine("§7Range: §360 blocks").addLoreLine("§7Accuracy: §30.1").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 60, ammo,30, 0.1, 400, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+    @Override
+    public Material getMaterial() {
+    	return Material.WOODEN_AXE;
     }
+
+    @Override
+    public String getDefaultDisplayName() {
+    	return "§c§lM-16";
+    }
+
+    @Override
+	public Integer getCustomModelData() {
+		return 6;
+	}
+
+	@Override
+	public String getUUID() {
+		return "Gun:M-16";
+	}
+
+	@Override
+	public int getMaxAmmo() {
+		return 30;
+	}
+
+	@Override
+	public int getRange() {
+		return 60;
+	}
+
+	@Override
+	public double getAccuracy() {
+		return 0.1;
+	}
+
+	@Override
+	public int getDelayToReload() {
+		return 2;
+	}
+
+	@Override
+	public AmmoType getAmmoType() {
+		return AmmoType.RIFLE_AMMO;
+	}
+
+	@Override
+	public String getOrigin() {
+		return "USA";
+	}
 
 }

@@ -1,20 +1,21 @@
 package eu.pixliesearth.guns.ammo;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo;
+import eu.pixliesearth.utils.ItemBuilder;
+
 public class NineMMAmmo extends PixliesAmmo {
 
-    public NineMMAmmo(Location location, PixliesGun gun) {
+    public NineMMAmmo(Location location, CustomGun gun) {
         super(location, gun, 2.0);
     }
 
     @Override
-    public NineMMAmmo createNewOne(Location location, PixliesGun gun) {
+    public NineMMAmmo createNewOne(Location location, CustomGun gun) {
         return new NineMMAmmo(location, gun);
     }
 

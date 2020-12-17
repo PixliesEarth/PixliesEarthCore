@@ -1,16 +1,17 @@
 package eu.pixliesearth.core.custom.listeners;
 
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.NBTUtil;
-import lombok.SneakyThrows;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.NBTUtil;
+import lombok.SneakyThrows;
 /**
  * 
  * @author BradBot_1
@@ -23,11 +24,9 @@ public class CustomItemListener extends CustomListener {
 	
 	//TODO: add items to the creative menu
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
-		if (event.isCancelled()) return;
 		if (event.getItem()==null || event.getItem().getType().equals(Material.AIR)) return;
 		if (!event.getHand().equals(EquipmentSlot.HAND)) return;
 		String id = NBTUtil.getTagsFromItem(event.getItem()).getString("UUID");

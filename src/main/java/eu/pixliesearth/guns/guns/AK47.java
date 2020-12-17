@@ -1,21 +1,53 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import org.bukkit.Material;
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
-import java.util.Arrays;
-import java.util.UUID;
+public class AK47 extends CustomGun {
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
+	@Override
+	public String getDefaultDisplayName() {
+		return "§c§lAK-47";
+	}
 
-public class AK47 extends PixliesGun {
+	@Override
+	public Integer getCustomModelData() {
+		return 5;
+	}
 
-    public AK47(int ammo, UUID uuid) {
-        super(uuid, "§c§lAK-47", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(5).setDisplayName("§c§lAK-47 §8| §8[§c" + ammo + "§7/§c40§8]").addLoreLine("§7Ammo: §3RifleAmmo").addLoreLine("§7Origin: §bRUSSIA/USSR").addLoreLine("§7Range: §360 blocks").addLoreLine("§7Accuracy: §30.07").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.RIFLE_AMMO, 60, ammo,40, 0.08, 200, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
-    }
+	@Override
+	public String getUUID() {
+		return "Gun:AK-47";
+	}
+
+	@Override
+	public int getMaxAmmo() {
+		return 40;
+	}
+
+	@Override
+	public int getRange() {
+		return 60;
+	}
+
+	@Override
+	public double getAccuracy() {
+		return 0.08;
+	}
+
+	@Override
+	public String getOrigin() {
+		return "RUSSIA/USSR";
+	}
+
+	@Override
+	public AmmoType getAmmoType() {
+		return AmmoType.RIFLE_AMMO;
+	}
+
+	@Override
+	public int getDelayToReload() {
+		return 2;
+	}
 
 }

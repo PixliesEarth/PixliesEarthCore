@@ -1,21 +1,53 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import org.bukkit.Material;
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
-import java.util.Arrays;
-import java.util.UUID;
+public class Uzi extends CustomGun {
+    
+    @Override
+	public String getDefaultDisplayName() {
+		return "§c§lUzi";
+	}
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
+	@Override
+	public Integer getCustomModelData() {
+		return 4;
+	}
 
-public class Uzi extends PixliesGun {
+	@Override
+	public String getUUID() {
+		return "Gun:Uzi";
+	}
 
-    public Uzi(int ammo, UUID uuid) {
-        super(uuid, "§3§lUzi", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(4).setDisplayName("§3§lUzi §8| §8[§c32§7/§c32§8]").addLoreLine("§7Ammo: §39mm").addLoreLine("§7Origin: §3Israel").addLoreLine("§7Range: §340 blocks").addLoreLine("§7Accuracy: §30.04").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.NINEMM, 40, ammo,32, 0.04, 200, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
-    }
+	@Override
+	public int getMaxAmmo() {
+		return 32;
+	}
+
+	@Override
+	public int getRange() {
+		return 40;
+	}
+
+	@Override
+	public double getAccuracy() {
+		return 0.04;
+	}
+
+	@Override
+	public String getOrigin() {
+		return "Israel";
+	}
+
+	@Override
+	public AmmoType getAmmoType() {
+		return AmmoType.NINEMM;
+	}
+
+	@Override
+	public int getDelayToReload() {
+		return 2;
+	}
 
 }

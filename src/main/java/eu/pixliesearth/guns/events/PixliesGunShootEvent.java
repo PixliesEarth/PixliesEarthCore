@@ -1,12 +1,13 @@
 package eu.pixliesearth.guns.events;
 
-import eu.pixliesearth.events.ShootEvent;
-import eu.pixliesearth.guns.PixliesAmmo;
-import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import eu.pixliesearth.events.ShootEvent;
+import eu.pixliesearth.guns.PixliesAmmo;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class PixliesGunShootEvent extends Event implements Cancellable {

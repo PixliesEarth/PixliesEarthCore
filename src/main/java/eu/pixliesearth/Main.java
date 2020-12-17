@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-import eu.pixliesearth.guns.PixliesGun;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -104,8 +103,14 @@ import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.vendors.VendorItem;
 import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.guns.commands.GunGiveCommand;
-import eu.pixliesearth.guns.listeners.GunListener;
+import eu.pixliesearth.guns.guns.AK47;
+import eu.pixliesearth.guns.guns.K98K;
+import eu.pixliesearth.guns.guns.M16;
+import eu.pixliesearth.guns.guns.M1911;
+import eu.pixliesearth.guns.guns.MP5;
+import eu.pixliesearth.guns.guns.RPG7;
+import eu.pixliesearth.guns.guns.Slingshot;
+import eu.pixliesearth.guns.guns.Uzi;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.localization.Lang;
@@ -379,7 +384,14 @@ public final class Main extends JavaPlugin {
             new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
-        PixliesGun.loadGuns();
+        loader.loadCustomItem(new AK47());
+    	loader.loadCustomItem(new K98K());
+    	loader.loadCustomItem(new M16());
+    	loader.loadCustomItem(new M1911());
+    	loader.loadCustomItem(new MP5());
+    	loader.loadCustomItem(new Slingshot());
+    	loader.loadCustomItem(new Uzi());
+    	loader.loadCustomItem(new RPG7());
 
     }
 
@@ -439,8 +451,6 @@ public final class Main extends JavaPlugin {
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
-        getCommand("gungive").setExecutor(new GunGiveCommand());
-        getCommand("gungive").setTabCompleter(new GunGiveCommand());
         // getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
@@ -468,7 +478,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new LeaveListener(), this);
         manager.registerEvents(new MoveListener(), this);
         manager.registerEvents(new ItemInteractListener(), this);
-        manager.registerEvents(new GunListener(this), this);
         manager.registerEvents(new PlayerCombatListener(), this);
         manager.registerEvents(new AchievementListener(), this);
         manager.registerEvents(new Restrictions(), this);

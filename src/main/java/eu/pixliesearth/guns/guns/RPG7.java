@@ -1,58 +1,126 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.guns.PixliesGun;
-import eu.pixliesearth.guns.RPGFireResult;
-import eu.pixliesearth.guns.events.PixliesGunShootEvent;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.UUID;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.guns.PixliesAmmo;
+import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
+import eu.pixliesearth.guns.RPGFireResult;
+import eu.pixliesearth.guns.events.PixliesGunShootEvent;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
+public class RPG7 extends CustomGun {
 
-public class RPG7 extends PixliesGun {
-
-    public RPG7(int ammo, UUID uuid) {
-        super(uuid, "§6RPG-7", new ItemBuilder(Material.CARROT_ON_A_STICK).setCustomModelData(15).setDisplayName("§6RPG-7 §8| §8[§c1§7/§c1§8]").addLoreLine("§7Ammo: §3Rocket").addLoreLine("§7Origin: §bUSA").addLoreLine("§7Range: §3100 blocks").addLoreLine("§7Accuracy: §30.1").addNBTTag("gunId", uuid.toString(), NBTTagType.STRING).build(), PixliesAmmo.AmmoType.ROCKET, 100, ammo,1, 1, 1500, Arrays.asList(RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK));
+    @Override
+    public boolean PlayerInteractEvent(PlayerInteractEvent event) {
+    	if (!event.getHand().equals(EquipmentSlot.HAND)) return true;
+		ItemStack itemStack = event.getItem();
+		if (itemStack==null || itemStack.getType().equals(Material.AIR)) return false;
+		int ammo = Integer.parseInt(NBTUtil.getTagsFromItem(itemStack).getString("ammo"));
+		if (ammo==0) { // Reload
+			CustomItem customItem = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(itemStack));
+			if (customItem instanceof CustomGun) {
+				CustomGun customGun = (CustomGun) customItem;
+				if (Methods.removeRequiredAmount(customGun.getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
+					event.getPlayer().sendActionBar("§b§lReloading...");
+					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+						
+						@Override
+						public void run() {
+							event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
+							ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
+				            event.getPlayer().sendActionBar("§a§lReloaded!");
+				            event.getPlayer().getInventory().setItemInMainHand(itemStack2);
+						}
+						
+					}, 20 * getDelayToReload());
+				} else {
+					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+					event.getPlayer().sendActionBar("§c§lNO AMMO!");
+				}
+			} else {
+				event.getPlayer().sendActionBar("§c§lInvalid gun!");
+			}
+		} else { // Shoot
+			CustomItem customItem = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(itemStack));
+			if (customItem instanceof CustomGun) {
+				CustomGun customGun = (CustomGun) customItem;
+				PixliesAmmo pammo = customGun.getAmmoType().getAmmo().createNewOne(event.getPlayer().getLocation(), this);
+				PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(event.getPlayer(), pammo);
+				shootEvent.callEvent();
+				if (!shootEvent.isCancelled()) {
+					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
+					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
+					RPGFireResult result = pammo.traceRPG(event.getPlayer());
+					if (result==null) {
+						return true;
+					} else {
+						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
+						Bukkit.getScheduler().runTaskLater(CustomFeatureLoader.getLoader().getInstance(), () -> result.getLocation().createExplosion(3F, true), 40L);
+					}
+				}
+			} else {
+				return true;
+			}
+		}
+		return false;
     }
 
-    public void trigger(final PlayerInteractEvent event) {
-        ItemStack eventItem = event.getItem();
-        if (eventItem == null) return;
-        if (!triggers.contains(event.getAction())) return;
-        if (instance.getUtilLists().waitingGuns.containsKey(uuid)) return;
-        instance.getUtilLists().waitingGuns.put(uuid, new Timer(delay));
-        Player player = event.getPlayer();
-        PixliesAmmo ammo = ammoType.getAmmo().createNewOne(player.getEyeLocation(), this);
-        if (this.ammo <= 0) {
-            reload(event);
-            return;
-        }
-        if (player.isSwimming()) {
-            player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
-            return;
-        }
-        PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(player, ammo);
-        Bukkit.getPluginManager().callEvent(shootEvent);
-        if (!shootEvent.isCancelled()) {
-            this.ammo -= 1;
-            reloadItem(eventItem);
-            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
-            RPGFireResult result = ammo.traceRPG(player);
-            if (result == null) return;
-            Bukkit.getScheduler().runTaskLater(instance, () -> result.getLocation().createExplosion(3F, true), 40L);
-        }
+    @Override
+    public String getDefaultDisplayName() {
+    	return "§c§lRPG-7";
     }
+
+    @Override
+	public Integer getCustomModelData() {
+		return 15;
+	}
+
+	@Override
+	public String getUUID() {
+		return "Gun:RPG7";
+	}
+
+	@Override
+	public int getMaxAmmo() {
+		return 1;
+	}
+
+	@Override
+	public int getRange() {
+		return 100;
+	}
+
+	@Override
+	public double getAccuracy() {
+		return 0.1;
+	}
+
+	@Override
+	public int getDelayToReload() {
+		return 2;
+	}
+
+	@Override
+	public AmmoType getAmmoType() {
+		return AmmoType.ROCKET;
+	}
+
+	@Override
+	public String getOrigin() {
+		return "USA";
+	}
 
 
 }
