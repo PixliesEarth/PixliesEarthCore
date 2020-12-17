@@ -56,7 +56,7 @@ public class WeaponClayDagger extends CustomWeapon {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 2;
 	}
 
 	@Override

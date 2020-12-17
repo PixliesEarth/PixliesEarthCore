@@ -57,7 +57,7 @@ public class ItemCircuitBoard extends CustomBlock {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 2;
     }
 
     @Override

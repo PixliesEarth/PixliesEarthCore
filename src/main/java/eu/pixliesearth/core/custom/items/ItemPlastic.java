@@ -56,7 +56,7 @@ public class ItemPlastic extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 4;
     }
 
     @Override

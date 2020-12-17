@@ -60,7 +60,7 @@ public class ItemICBMLocationHolder extends CustomItem {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 2;
 	}
 
 	@Override
