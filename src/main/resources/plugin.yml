@@ -4,10 +4,8 @@ main: eu.pixliesearth.Main
 api-version: 1.13
 depend:
   - Vault
-  - HolographicDisplays
 softdepend:
   - PlaceholderAPI
-  - Citizens
 authors: [MickMMars, Machmeinparaillegal, BradBot_1]
 description: PixliesEarth core
 commands:

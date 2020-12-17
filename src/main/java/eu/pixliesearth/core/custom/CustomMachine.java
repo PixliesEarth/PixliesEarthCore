@@ -1,7 +1,5 @@
 package eu.pixliesearth.core.custom;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import org.bukkit.Location;
@@ -158,23 +156,5 @@ public class CustomMachine extends CustomBlock {
         toSpawn.setZ(toSpawn.getZ() + 0.5);
         return toSpawn;
     }
-	/**
-	 * Creates a {@link Hologram} at the {@link Location} provided with the text provided
-	 * 
-	 * @param title The {@link Hologram}'s title
-	 * @param location The {@link Hologram}'s {@link Location}
-	 * @return The created {@link Hologram}
-	 */
-	public static Hologram createHologram(String title, Location location) {
-		Hologram hologram = HologramsAPI.createHologram(CustomFeatureLoader.getLoader().getInstance(), holoLocation(location));
-		hologram.insertTextLine(0, title);
-		return hologram;
-	}
-
-	public static Hologram createHologram(ItemStack item, Location location) {
-		Hologram hologram = HologramsAPI.createHologram(CustomFeatureLoader.getLoader().getInstance(), holoLocation(location));
-		hologram.insertItemLine(0, item);
-		return hologram;
-	}
 
 }
