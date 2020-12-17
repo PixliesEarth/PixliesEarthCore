@@ -21,7 +21,7 @@ public class ItemCanister extends CustomItem {
 
 	@Override
 	public Integer getCustomModelData() {
-		return null;
+		return 4;
 	}
 	
 	@Override
