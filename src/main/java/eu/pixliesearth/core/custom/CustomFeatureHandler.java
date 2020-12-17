@@ -1,6 +1,5 @@
 package eu.pixliesearth.core.custom;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
@@ -55,7 +54,6 @@ public class CustomFeatureHandler {
 	private final Map<Location, Integer> locationToEventMap;
 	private final Map<Location, Inventory> locationToInventoryMap;
 	private final Map<Location, Timer> locationToTimerMap;
-	private final Map<Location, Hologram> locationToHologramMap;
 	private final Map<Location, Double> locationToPowerMap;
 	private final Map<Location, Double> locationToTempratureMap;
 	private final Map<Location, UUID> locationToPrivateMap; // Used to lock things to a player
@@ -87,7 +85,6 @@ public class CustomFeatureHandler {
 		this.customMachines = new HashSet<CustomMachine>();
 		this.locationToInventoryMap = new ConcurrentHashMap<Location, Inventory>();
 		this.locationToTimerMap = new ConcurrentHashMap<Location, Timer>();
-		this.locationToHologramMap = new ConcurrentHashMap<Location, Hologram>();
 		this.locationToPowerMap = new ConcurrentHashMap<Location, Double>();
 		this.locationToPrivateMap = new HashMap<Location, UUID>();
 		this.locationToTempratureMap = new HashMap<Location, Double>();
@@ -622,14 +619,6 @@ public class CustomFeatureHandler {
 		this.locationToInventoryMap.remove(location);
 		this.locationToInventoryMap.put(location, inventory);
 	}
-	// TODO: notes
-	public Hologram getHologramAtLocation(Location location) {
-		return this.locationToHologramMap.get(location);
-	}
-
-	public void registerHologramAtLocation(Location location, Hologram hologram) {
-		this.locationToHologramMap.put(location, hologram);
-	}
 
 	/**
 	 * Called when a custom block at the location has been broken
@@ -640,15 +629,8 @@ public class CustomFeatureHandler {
 		CustomBlock cb = getCustomBlockFromLocation(location);
 		if (cb==null) return;
 		if (cb instanceof CustomMachine) {
-			Hologram h = getHologramAtLocation(location);
-			Hologram h2 = getHologramAtLocation(location);
-			if (h!=null)
-				h.delete();
-			if (h2!=null)
-				h2.delete();
 			this.locationToInventoryMap.remove(location);
 			this.locationToTimerMap.remove(location);
-			this.locationToHologramMap.remove(location);
 			this.locationToPowerMap.remove(location);
 			this.locationToPrivateMap.remove(location);
 			this.locationToTempratureMap.remove(location);
