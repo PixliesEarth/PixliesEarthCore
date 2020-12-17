@@ -279,8 +279,8 @@ public class claimNation extends SubCommand {
                 chunk.claim();
                 claimed++;
             }
-            double price = claimed * 15;
-            nation.withdraw(price);
+            // double price = claimed * 15;
+            // nation.withdraw(price);
             for (Player member : nation.getOnlineMemberSet())
                 Lang.PLAYER_CLAIMFILLED.send(member, "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
             Lang.PLAYER_CLAIMFILLED.send(Bukkit.getConsoleSender(), "%CHUNKS%;" + claimed, "%PLAYER%;" + claimer.getName());
