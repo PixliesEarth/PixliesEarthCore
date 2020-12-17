@@ -3,6 +3,7 @@ package eu.pixliesearth.guns.guns;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +13,6 @@ import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
-import eu.pixliesearth.guns.RPGFireResult;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -62,12 +62,18 @@ public class RPG7 extends CustomGun {
 				if (!shootEvent.isCancelled()) {
 					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
 					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
-					RPGFireResult result = pammo.traceRPG(event.getPlayer());
-					if (result==null) {
+					Block block = event.getPlayer().getTargetBlock(getRange());
+					if (block==null) {
 						return true;
 					} else {
 						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 2, 2);
-						Bukkit.getScheduler().runTaskLater(CustomFeatureLoader.getLoader().getInstance(), () -> result.getLocation().createExplosion(3F, true), 40L);
+						double distance = event.getPlayer().getEyeLocation().distanceSquared(block.getLocation())*10000;
+						long ticks = 0;
+						while (distance>10000) {
+							distance /= 10000;
+							ticks++;
+						}
+						Bukkit.getScheduler().runTaskLater(CustomFeatureLoader.getLoader().getInstance(), () -> block.getLocation().createExplosion(3F, true), ticks);
 					}
 				}
 			} else {
