@@ -56,7 +56,7 @@ public class ItemOilShard extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 8;
     }
 
     @Override
