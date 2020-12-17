@@ -148,7 +148,11 @@ public class PixliesFunGUI {
             gui.addPane(recipePane);
 
             StaticPane result = new StaticPane(7, 2, 1, 1);
-            result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> e.setCancelled(true)), 0, 0);
+            result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> {
+                e.setCancelled(true);
+                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()) && e.isLeftClick())
+                    player.getInventory().addItem(getItem(recipe.getResultUUID()));
+            }), 0, 0);
             gui.addPane(result);
 
             StaticPane hotBar = new StaticPane(0, 5, 9, 1);
