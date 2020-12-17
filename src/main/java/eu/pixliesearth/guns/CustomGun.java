@@ -57,7 +57,7 @@ public abstract class CustomGun extends CustomItem {
 	@Override
 	public boolean PlayerInteractEvent(PlayerInteractEvent event) {
 		if (!event.getHand().equals(EquipmentSlot.HAND)) return true;
-		ItemStack itemStack = event.getItem();
+		final ItemStack itemStack = event.getItem();
 		if (itemStack==null || itemStack.getType().equals(Material.AIR)) return false;
 		int ammo = Integer.parseInt(NBTUtil.getTagsFromItem(itemStack).getString("ammo"));
 		if (ammo<=0) { // Reload
@@ -66,17 +66,13 @@ public abstract class CustomGun extends CustomItem {
 				CustomGun customGun = (CustomGun) customItem;
 				if (Methods.removeRequiredAmount(customGun.getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
 					event.getPlayer().sendActionBar("§b§lReloading...");
-					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
-						
-						@Override
-						public void run() {
-							event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
-							ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
-				            event.getPlayer().sendActionBar("§a§lReloaded!");
-				            event.getPlayer().getInventory().setItemInMainHand(itemStack2);
-						}
-						
-					}, 20 * getDelayToReload());
+					event.getPlayer().getInventory().setItemInMainHand(null);
+					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {
+						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
+						ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
+						event.getPlayer().sendActionBar("§a§lReloaded!");
+						event.getPlayer().getInventory().setItemInMainHand(itemStack2);
+					}, 20L * getDelayToReload());
 				} else {
 					event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
 					event.getPlayer().sendActionBar("§c§lNO AMMO!");
@@ -179,7 +175,7 @@ public abstract class CustomGun extends CustomItem {
 		List<String> list = new ArrayList<>();
 		list.add("§7Ammo: §3"+getAmmoType().name());
 		list.add("§7Origin: §b"+getOrigin());
-		list.add("§7Range: §"+getRange()+" blocks");
+		list.add("§7Range: §3"+getRange()+" blocks");
 		list.add("§7Accuracy: §3"+getAccuracy());
 		return list;
 	}
