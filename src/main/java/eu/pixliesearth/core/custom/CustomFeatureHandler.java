@@ -229,8 +229,8 @@ public class CustomFeatureHandler {
 		this.customBlocks.add(customMachine);
 		this.customItems.add(customMachine);
 		this.customItemsToItemStackMap.put(customMachine, customMachine.buildItem());
-		categoriesForItems.putIfAbsent(CustomItem.Category.BLOCKS, new ArrayList<>());
-		categoriesForItems.get(CustomItem.Category.BLOCKS).add(customMachine.getUUID());
+		categoriesForItems.putIfAbsent(CustomItem.Category.MACHINES, new ArrayList<>());
+		categoriesForItems.get(CustomItem.Category.MACHINES).add(customMachine.getUUID());
 		// System.out.println("Registered the custom machine "+customMachine.getUUID());
 	}
 	/**
