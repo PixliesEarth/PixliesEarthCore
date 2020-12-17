@@ -27,9 +27,10 @@ public interface ILiquidable {
 	
 	public static boolean isBucketFormOf(ItemStack is, String UUID, boolean convert) {
 		String id = (convert) ? convertID(UUID) : UUID;
-		boolean isBucket = CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(id+"_bucket");
-		String[] s = id.split(":");
-		boolean isCanist = CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(s[0]+"Canister_"+s[1]);
+		String itemid = CustomItemUtil.getUUIDFromItemStack(is);
+		boolean isBucket = itemid.equals(itemid.split(":")[0]+":"+id.split(":")[1]+"_bucket");
+				//CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(id+"_bucket");
+		boolean isCanist = itemid.equals(itemid.split(":")[0]+":Canister_"+id.split(":")[1]);
     	return (isBucket || isCanist);
     }
 	
