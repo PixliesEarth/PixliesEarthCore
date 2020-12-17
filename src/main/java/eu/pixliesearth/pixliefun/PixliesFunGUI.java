@@ -6,6 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import lombok.Data;
@@ -23,7 +24,7 @@ import java.util.Map;
  * this is the class for the Mick version of the PixlieFun GUI
  */
 @Data
-public class PixliesFunGUI {
+public class PixliesFunGUI implements Constants {
 
     public static final Map<String, List<CustomRecipe>> recipes = new HashMap<>();
 
@@ -94,14 +95,14 @@ public class PixliesFunGUI {
             renderMainMenu();
         }), 4, 0);
         if (entriesPane.getPages() > 1) {
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lNext").build(), event -> {
+            hotBar.addItem(new GuiItem(nextButtonMick, event -> {
                 event.setCancelled(true);
                 try {
                     entriesPane.setPage(entriesPane.getPage() + 1);
                     gui.update();
                 } catch (Exception ignored) {}
             }), 8, 0);
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lLast").build(), event -> {
+            hotBar.addItem(new GuiItem(backButtonMick, event -> {
                 event.setCancelled(true);
                 try {
                     entriesPane.setPage(entriesPane.getPage() - 1);
@@ -157,14 +158,14 @@ public class PixliesFunGUI {
 
             StaticPane hotBar = new StaticPane(0, 5, 9, 1);
             hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> e.setCancelled(true)), 2, 0);
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lNext").build(), event -> {
+            hotBar.addItem(new GuiItem(nextButtonMick, event -> {
                 event.setCancelled(true);
                 try {
                     renderRecipe(i, page + 1);
                 } catch (Exception ignore) {
                 }
             }), 5, 0);
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§b§lLast").build(), event -> {
+            hotBar.addItem(new GuiItem(backButtonMick, event -> {
                 event.setCancelled(true);
                 try {
                     renderRecipe(i, page - 1);

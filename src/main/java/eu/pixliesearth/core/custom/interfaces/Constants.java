@@ -28,7 +28,18 @@ public interface Constants {
 			.addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING)
 			.addNBTTag("EXTRA", "MNEXT", NBTTagType.STRING)
 			.build(); // Next
-	
+
+
+	public static ItemStack backButtonMick = new ItemBuilder(Material.HEART_OF_THE_SEA)
+			.setCustomModelData(3)
+			.setDisplayName("§bBack")
+			.build();
+
+	public static ItemStack nextButtonMick = new ItemBuilder(Material.HEART_OF_THE_SEA)
+			.setCustomModelData(2)
+			.setDisplayName("§bNext")
+			.build();
+
 	public static boolean isNextItem(ItemStack itemStack) {
 		if (!hasExtraData(itemStack)) return false;
 		return getExtraData(itemStack).equalsIgnoreCase("MNEXT");
