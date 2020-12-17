@@ -15,7 +15,7 @@ public class ICBMLocationSaver extends CustomRecipe {
     }
     @Override
     public String getResultUUID() {
-        return "Pixlies:ICBM_Location_Saver";
+        return "Pixlies:ICBM_Location_Holder";
     }
     @Override
     public Map<Integer, String> getContentsList() {
