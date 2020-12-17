@@ -28,7 +28,7 @@ public class ToolSilverAxe extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "6Silver Axe";
+        return "§6Silver Axe";
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ToolAluminiumShovel extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6aluminium Shovel";
+        return "§6Aluminium Shovel";
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ToolSilverHoe extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "6Silver Hoe";
+        return "§6Silver Hoe";
     }
 
     @Override

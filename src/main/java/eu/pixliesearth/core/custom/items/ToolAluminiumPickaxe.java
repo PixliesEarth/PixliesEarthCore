@@ -28,7 +28,7 @@ public class ToolAluminiumPickaxe extends CustomItem {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6aluminium Pickaxe";
+        return "§6Aluminium Pickaxe";
     }
 
     @Override
