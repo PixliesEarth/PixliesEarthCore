@@ -48,7 +48,7 @@ public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
     }
     
 	public double getCapacity() {
-		return 100000D;
+		return 1_000_000D;
 	}
     
     @Override
@@ -99,7 +99,7 @@ public class EnergyToolExplosivePickaxe extends CustomEnergyItem {
     @Override
     public boolean onBlockBrokeWithItem(BlockBreakEvent e) {
     	
-    	double energyCostPerBlock = 1000D;
+    	double energyCostPerBlock = 125D;
     	
 		Player p = e.getPlayer();
 		Block b = e.getBlock();
