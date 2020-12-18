@@ -20,15 +20,15 @@ public class Carbon extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, MinecraftMaterial.COAL_BLOCK.getUUID());
-        map.put(1, MinecraftMaterial.GLASS.getUUID());
-        map.put(2, MinecraftMaterial.COAL_BLOCK.getUUID());
-        map.put(3, MinecraftMaterial.GLASS.getUUID());
-        map.put(4, "Pixlies:CharcoalChunk");
-        map.put(5, MinecraftMaterial.GLASS.getUUID());
-        map.put(6, MinecraftMaterial.COAL_BLOCK.getUUID());
-        map.put(7, MinecraftMaterial.GLASS.getUUID());
-        map.put(8, MinecraftMaterial.COAL_BLOCK.getUUID());
+        map.put(0, "Pixlies:Carbon_Dust");
+        map.put(1, "Pixlies:Carbon_Dust");
+        map.put(2, "Pixlies:Carbon_Dust");
+        map.put(3, "Pixlies:Carbon_Dust");
+        map.put(4, "Pixlies:Carbon_Dust");
+        map.put(5, "Pixlies:Carbon_Dust");
+        map.put(6, "Pixlies:Carbon_Dust");
+        map.put(7, "Pixlies:Carbon_Dust");
+        map.put(8, "Pixlies:Carbon_Dust");
         return map;
     }
     @Override
