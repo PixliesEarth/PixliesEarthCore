@@ -70,7 +70,7 @@ public class IngotAluminium extends CustomItem {
 
     @Override
     public String getUUID() {
-        return "Pixlies:aluminium_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+        return "Pixlies:Aluminium_Ingot"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
 
     @Override

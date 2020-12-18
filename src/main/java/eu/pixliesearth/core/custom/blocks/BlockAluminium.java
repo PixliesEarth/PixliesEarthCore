@@ -28,7 +28,7 @@ public class BlockAluminium extends CustomBlock {
 
     @Override
     public String getDefaultDisplayName() {
-        return "§6aluminium Block";
+        return "§6Aluminium Block";
     }
 
     @Override
