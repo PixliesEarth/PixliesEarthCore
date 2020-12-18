@@ -79,6 +79,7 @@ public class PixliesFunGUI implements Constants {
         PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
+            if (s.contains("test")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
