@@ -92,7 +92,7 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 			if (l.getLiquidContentsAtAtBasedOnUUID(loc, oxygenID)>=1000) {
 				ItemStack is2 = inv.getItem(24);
 				if (is2!=null && CustomItemUtil.getUUIDFromItemStack(is2).equals("Pixlies:Canister")) {
-					inv.setItem(22, CustomItemUtil.getItemStackFromUUID("Pixlies:Canister_Oxygen"));
+					inv.setItem(24, CustomItemUtil.getItemStackFromUUID("Pixlies:Canister_Oxygen"));
 					l.removeLiquidFrom(loc, oxygenID, 1000);
 				}
 			}
