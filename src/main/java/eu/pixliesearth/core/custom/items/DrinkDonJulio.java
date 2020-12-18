@@ -34,4 +34,9 @@ public class DrinkDonJulio extends CustomItem implements IConsumable {
         return 2;
     }
 
+    @Override
+    public String getUUID() {
+        return "Pixlies:DonJulio";
+    }
+
 }
