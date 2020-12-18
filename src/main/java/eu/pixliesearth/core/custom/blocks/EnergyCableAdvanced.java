@@ -31,6 +31,11 @@ public class EnergyCableAdvanced extends CustomEnergyCable {
     public Rarity getRarity() {
     	return Rarity.RARE;
     }
+
+    @Override
+    public Integer getCustomModelData() {
+        return 2;
+    }
     
     @Override
     public String getUUID() {

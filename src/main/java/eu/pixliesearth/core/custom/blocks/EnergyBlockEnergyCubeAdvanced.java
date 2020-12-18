@@ -23,8 +23,8 @@ public class EnergyBlockEnergyCubeAdvanced extends CustomEnergyBlock {
     public String getUUID() {
         return "Machine:Energy_Cube_Advanced"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
-    
-	public double getCapacity() {
+
+    public double getCapacity() {
 		return 450000D;
 	}
 }

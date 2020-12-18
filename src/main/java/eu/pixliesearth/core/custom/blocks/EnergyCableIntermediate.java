@@ -31,7 +31,12 @@ public class EnergyCableIntermediate extends CustomEnergyCable {
     public Rarity getRarity() {
     	return Rarity.UNCOMMON;
     }
-    
+
+    @Override
+    public Integer getCustomModelData() {
+        return 2;
+    }
+
     @Override
     public String getUUID() {
         return "Machine:Cable_Intermediate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d

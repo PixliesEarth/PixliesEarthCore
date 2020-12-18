@@ -33,6 +33,11 @@ public class EnergyCableUltimate extends CustomEnergyCable {
     }
 
     @Override
+    public Integer getCustomModelData() {
+        return 2;
+    }
+
+    @Override
     public String getUUID() {
         return "Machine:Cable_Ultimate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
