@@ -1,18 +1,9 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomLiquidHandler;
-import eu.pixliesearth.core.custom.interfaces.ILiquidable;
-import eu.pixliesearth.core.custom.items.ItemCanister;
-import eu.pixliesearth.core.custom.items.ItemCanisterHelium;
-import eu.pixliesearth.core.custom.items.ItemCanisterHydrogen;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.Timer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,9 +14,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomLiquidHandler;
+import eu.pixliesearth.core.custom.interfaces.ILiquidable;
+import eu.pixliesearth.core.custom.items.ItemCanister;
+import eu.pixliesearth.core.custom.items.ItemCanisterHelium;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockNuclearGenerator2 extends CustomEnergyBlock implements ILiquidable {
 	
@@ -34,7 +34,7 @@ public class EnergyBlockNuclearGenerator2 extends CustomEnergyBlock implements I
 	}
 	
 	long timePerAction = 250L;
-	double energyPerMB = 5D;
+	double energyPerMB = 12.5D;
 	
 	public double getCapacity() {
 		return 15000000D;
@@ -126,14 +126,14 @@ public class EnergyBlockNuclearGenerator2 extends CustomEnergyBlock implements I
 			h.registerTimer(loc, new Timer(250L)); // A quarter of a second per action
 			ItemStack is = inv.getItem(20);
 			if (is!=null) {
-				if (h.getCustomItemFromItemStack(is) instanceof ItemCanisterHydrogen) {
+				if (ILiquidable.isBucketFormOf(is, hydrogenID, false)) {
 					inv.setItem(20, h.getItemStackFromClass(ItemCanister.class));
 					l.addLiquidTo(loc, hydrogenID, 1000);
 				}
 			}
 			ItemStack is2 = inv.getItem(24);
 			if (is2!=null) {
-				if (h.getCustomItemFromItemStack(is2) instanceof ItemCanister) {
+				if (ILiquidable.isBucketFormOf(is2, heliumID, false)) {
 					if (l.getLiquidContentsAtAtBasedOnUUID(loc, heliumID)>=1000) {
 						inv.setItem(24, h.getItemStackFromClass(ItemCanisterHelium.class));
 						l.removeLiquidFrom(loc, heliumID, 1000);

@@ -62,6 +62,8 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 		for (int i = 0; i < 5*9; i++) 
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		inv.clear(20); // Input slot
+		inv.clear(22);
+		inv.clear(24);
 		return inv;
 	}
 	
@@ -79,6 +81,20 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 			if (is!=null && ILiquidable.isBucketFormOf(is, waterID, false)) {
 				inv.setItem(20, new ItemStack(Material.BUCKET));
 				l.addLiquidTo(loc, waterID, 1000);
+			}
+			if (l.getLiquidContentsAtAtBasedOnUUID(loc, hydrogenID)>=1000) {
+				ItemStack is2 = inv.getItem(22);
+				if (is2!=null && CustomItemUtil.getUUIDFromItemStack(is2).equals("Pixlies:Canister")) {
+					inv.setItem(22, CustomItemUtil.getItemStackFromUUID("Pixlies:Canister_Hydrogen"));
+					l.removeLiquidFrom(loc, hydrogenID, 1000);
+				}
+			}
+			if (l.getLiquidContentsAtAtBasedOnUUID(loc, oxygenID)>=1000) {
+				ItemStack is2 = inv.getItem(24);
+				if (is2!=null && CustomItemUtil.getUUIDFromItemStack(is2).equals("Pixlies:Canister")) {
+					inv.setItem(22, CustomItemUtil.getItemStackFromUUID("Pixlies:Canister_Oxygen"));
+					l.removeLiquidFrom(loc, oxygenID, 1000);
+				}
 			}
 			inv.setItem(21, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE) {{
 					setDisplayName("§bInput Information");
