@@ -323,7 +323,7 @@ public final class Main extends JavaPlugin {
 
         assemble.setTicks(2);
 
-        assemble.setAssembleStyle(AssembleStyle.VIPER);
+        assemble.setAssembleStyle(AssembleStyle.MODERN);
 
         NationChunk.init();
 

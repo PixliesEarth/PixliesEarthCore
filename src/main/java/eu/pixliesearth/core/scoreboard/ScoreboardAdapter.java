@@ -23,7 +23,6 @@ import java.util.Map;
 public class ScoreboardAdapter implements AssembleAdapter {
 
     private static final Main instance = Main.getInstance();
-    private static int frame = 0;
     private static String[] frames(Player player) {
         String c = Main.getInstance().getProfile(player.getUniqueId()).getFavoriteColour();
         String nc = Methods.getNeighbourColor(c)+"";
@@ -55,8 +54,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
     @Override
     public String getTitle(Player player) {
-        if (frame == frames(player).length - 1) frame = 0;
-        frame++;
+        instance.getUtilLists().scoreboardFrames.putIfAbsent(player.getUniqueId(), 0);
+        int frame = instance.getUtilLists().scoreboardFrames.get(player.getUniqueId());
+        if (frame == frames(player).length - 1) instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), 0);
+        instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()));
         return frames(player)[frame];
     }
 

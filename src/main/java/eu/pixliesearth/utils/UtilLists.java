@@ -94,6 +94,8 @@ public class UtilLists {
 
     public Map<UUID, UUID> lastMessageSender;
 
+    public Map<UUID, Integer> scoreboardFrames;
+
     public List<UUID> cringers;
 
     public UtilLists() {
@@ -135,6 +137,7 @@ public class UtilLists {
         embedsToSend = new ArrayList<>();
         lastLocation = new HashMap<>();
         lastMessageSender = new HashMap<>();
+        scoreboardFrames = new HashMap<>();
         cringers = new ArrayList<>();
     }
 
