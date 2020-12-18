@@ -3,12 +3,15 @@ package eu.pixliesearth.core.listener;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -35,6 +38,7 @@ public class JoinListener implements Listener {
                 op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             profile.openLangGui();
             profile.addTimer("Free TP", new Timer(Timer.DAY));
+            player.getInventory().addItem(new ItemBuilder(Material.BREAD, 16).setDisplayName("\uD83C\uDF5E§bBot_1").build());
         }
 
         if (!instance.getUtilLists().vanishList.isEmpty()) {
