@@ -29,7 +29,7 @@ public class RPG7 extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "RPG-7";
+		return "Gun:RPG-7";
 	}
 	/**
 	 * How many of the result to give
