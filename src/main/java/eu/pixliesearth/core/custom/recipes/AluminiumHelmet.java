@@ -59,15 +59,15 @@ public class AluminiumHelmet extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:aluminium_Ingot");
-		map.put(1, "Pixlies:aluminium_Ingot");
-		map.put(2, "Pixlies:aluminium_Ingot");
-		map.put(3, "Pixlies:aluminium_Ingot");
-		map.put(4, "Minecraft:air");
-		map.put(5, "Pixlies:aluminium_Ingot");
-		map.put(6, "Minecraft:air");
-		map.put(7, "Minecraft:air");
-		map.put(8, "Minecraft:air");
+		map.put(0, "Pixlies:Aluminium_Ingot");
+		map.put(1, "Pixlies:Aluminium_Ingot");
+		map.put(2, "Pixlies:Aluminium_Ingot");
+		map.put(3, "Pixlies:Aluminium_Ingot");
+		map.put(4, "Minecraft:Air");
+		map.put(5, "Pixlies:Aluminium_Ingot");
+		map.put(6, "Minecraft:Air");
+		map.put(7, "Minecraft:Air");
+		map.put(8, "Minecraft:Air");
 		return map;
 	}
 	/**

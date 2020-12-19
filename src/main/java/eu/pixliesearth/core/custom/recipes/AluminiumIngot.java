@@ -29,7 +29,7 @@ public class AluminiumIngot extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:aluminium_Ingot";
+		return "Pixlies:Aluminium_Ingot";
 	}
 	/**
 	 * How many of the result to give
