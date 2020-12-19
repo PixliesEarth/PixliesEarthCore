@@ -114,20 +114,20 @@ public class ChatSystem implements Listener, Module {
                             for (UUID uuid : instance.getUtilLists().staffMode) {
                                 Player target = Bukkit.getPlayer(uuid);
                                 if (target == null) continue;
-                                target.sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                target.sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             break;
                         case ALLY:
-                            profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             for (String s : profile.getCurrentNation().getAllies()) {
                                 Nation ally = Nation.getById(s);
                                 if (ally == null) continue;
-                                ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             for (UUID uuid : instance.getUtilLists().staffMode) {
                                 Player target = Bukkit.getPlayer(uuid);
                                 if (target == null) continue;
-                                target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             break;
                        default :
