@@ -137,20 +137,20 @@ public class ChatSystem implements Listener, Module {
                 }
             }
 
+            if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
+                if (profile.getTimers().containsKey("Chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
+                    player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(new Timer(profile.getTimers().get("Chat")).getRemaining(), true)));
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+
             // ACTUAL CHAT
             if (!event.isCancelled()) {
                 if (isMuted() && !player.hasPermission("earth.chat.bypassmute")) {
                     event.setCancelled(true);
                     player.sendMessage(Lang.CHAT_IS_MUTED_ATM.get(player));
                     return;
-                }
-
-                if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
-                    if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(new Timer(profile.getTimers().get("Chat")).getRemaining(), true)));
-                        event.setCancelled(true);
-                        return;
-                    }
                 }
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
