@@ -21,7 +21,7 @@ public class RocketAmmo extends PixliesAmmo {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STICK).setDisplayName("§3Rocket").setCustomModelData(5).addLoreLine("§7§oUsed for RPG-7").build();
+        return new ItemBuilder(Material.STICK).setDisplayName("§3Rocket").setCustomModelData(9).addLoreLine("§7§oUsed for RPG-7").build();
     }
 
 }
