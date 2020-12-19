@@ -26,6 +26,7 @@ import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.javacord.api.entity.permission.Role;
 
 import java.util.*;
@@ -285,16 +286,17 @@ public class Profile {
 
     public void teleport(Location location, String locationName) {
         Player player = getAsPlayer();
-        long cooldown = (long) Energy.calculateTime(player.getLocation(), location);
-        if (cooldown < 1.0)
-            cooldown = (long) 1.0;
+        // long cooldown = (long) Energy.calculateTime(player.getLocation(), location);
+        // if (cooldown < 1.0)
+            // cooldown = (long) 1.0;
+        long cooldown = 5;
         teleport(location, locationName, Energy.calculateNeeded(player.getLocation(), location), cooldown);
     }
 
     public void teleport(Location location, String locationName, double manaNeeded, long cooldown) {
         Player player = getAsPlayer();
         if (isStaff()) {
-            player.teleport(location);
+            player.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
             return;
@@ -321,10 +323,10 @@ public class Profile {
             if (timers.containsKey("Teleport")) {
                 timers.remove("Teleport");
                 save();
-                player.teleport(location);
-                Energy.take(instance.getProfile(player.getUniqueId()), manaNeeded);
+                player.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+                Energy.take(this, manaNeeded);
             }
         }, cooldown * 20);
     }

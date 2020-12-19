@@ -155,8 +155,8 @@ public class ChatSystem implements Listener, Module {
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
                         for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (event.getMessage().contains(s1))
-                                event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
+                            if (event.getMessage().toLowerCase().contains(s1.toLowerCase()))
+                                event.setMessage(event.getMessage().replace(s1.toLowerCase(), Methods.replaceBadWord(s1)));
                 }
 
                 // "@" MENTIONING SYSTEM
