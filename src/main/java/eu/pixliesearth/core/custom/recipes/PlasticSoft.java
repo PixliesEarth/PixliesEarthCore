@@ -36,7 +36,7 @@ public class PlasticSoft extends CustomRecipe {
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 8;
 	}
 	/**
 	 * The era required to craft the item

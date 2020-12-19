@@ -36,7 +36,7 @@ public class PlasticHard extends CustomRecipe {
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 8;
 	}
 	/**
 	 * The era required to craft the item
@@ -63,7 +63,7 @@ public class PlasticHard extends CustomRecipe {
 		map.put(1, "Pixlies:Plastic_Soft");
 		map.put(2, "Pixlies:Plastic_Soft");
 		map.put(3, "Pixlies:Plastic_Soft");
-		map.put(4, "Minecraft:lava_bucket");
+		map.put(4, "Minecraft:Lava_Bucket");
 		map.put(5, "Pixlies:Plastic_Soft");
 		map.put(6, "Pixlies:Plastic_Soft");
 		map.put(7, "Pixlies:Plastic_Soft");
