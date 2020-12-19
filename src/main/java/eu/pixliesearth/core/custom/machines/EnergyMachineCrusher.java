@@ -192,7 +192,12 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Bronze_Dust"),
-						// 10 Copper
+						// 15 Copper
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
+						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),
 						CustomItemUtil.getItemStackFromUUID("Pixlies:Copper_Dust"),

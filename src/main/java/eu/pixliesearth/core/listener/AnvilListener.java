@@ -1,13 +1,7 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.CustomItemUtil;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -48,9 +42,10 @@ public class AnvilListener implements Listener {
      }
 
     //Disallow in every other craft
-    @EventHandler
-    public void onClick(InventoryClickEvent e){
-        
+    // This has been disabled
+    /*@EventHandler
+    public void onClick(InventoryClickEvent e) {
+    	
     	if (!(e.getWhoClicked() instanceof Player) || e.getCurrentItem()==null || e.getCurrentItem().getType() == Material.AIR) return;
         
         String id = CustomItemUtil.getUUIDFromItemStack(e.getCurrentItem());
@@ -74,6 +69,6 @@ public class AnvilListener implements Listener {
         		return;
         } else
         	return;
-    }
+    }*/
 
 }

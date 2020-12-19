@@ -44,7 +44,7 @@ public class CustomBlockListener extends CustomListener {
 		if (id==null) return;
 		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
 		if (c==null) return;
-		if (id.contains("_Hoe")) return; // To stop the custom hoe errors
+		if (!(c instanceof CustomBlock)) return; // To stop the custom item errors
 		boolean e = false;
 		for (CustomBlock b : CustomFeatureLoader.getLoader().getHandler().getCustomBlocks()) 
 			if (b.getUUID().equals(id)) {
