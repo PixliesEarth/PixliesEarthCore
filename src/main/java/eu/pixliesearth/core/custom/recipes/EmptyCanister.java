@@ -59,15 +59,15 @@ public class EmptyCanister extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:aluminium_Ingot");
+		map.put(0, "Pixlies:Aluminium_Ingot");
 		map.put(1, "Pixlies:Heavy_Steel_Ingot");
-		map.put(2, "Pixlies:aluminium_Ingot");
+		map.put(2, "Pixlies:Aluminium_Ingot");
 		map.put(3, "Pixlies:Tin_Ingot");
 		map.put(4, MinecraftMaterial.BUCKET.getUUID());
 		map.put(5, "Pixlies:Tin_Ingot");
-		map.put(6, "Pixlies:aluminium_Ingot");
+		map.put(6, "Pixlies:Aluminium_Ingot");
 		map.put(7, "Pixlies:Tin_Ingot");
-		map.put(8, "Pixlies:aluminium_Ingot");
+		map.put(8, "Pixlies:Aluminium_Ingot");
 		return map;
 	}
 	/**

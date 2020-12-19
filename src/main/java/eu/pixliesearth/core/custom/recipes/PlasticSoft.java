@@ -63,7 +63,7 @@ public class PlasticSoft extends CustomRecipe {
 		map.put(1, "Pixlies:Plastic_Raw");
 		map.put(2, "Pixlies:Plastic_Raw");
 		map.put(3, "Pixlies:Plastic_Raw");
-		map.put(4, "Minecraft:water_bucket");
+		map.put(4, "Minecraft:Water_Bucket");
 		map.put(5, "Pixlies:Plastic_Raw");
 		map.put(6, "Pixlies:Plastic_Raw");
 		map.put(7, "Pixlies:Plastic_Raw");
