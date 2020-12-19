@@ -114,25 +114,33 @@ public class ChatSystem implements Listener, Module {
                             for (UUID uuid : instance.getUtilLists().staffMode) {
                                 Player target = Bukkit.getPlayer(uuid);
                                 if (target == null) continue;
-                                target.sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                target.sendMessage("§cSTAFF-§bNATION-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             break;
                         case ALLY:
-                            profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            profile.getCurrentNation().broadcastMembers("§dALLY-CHAT §8| §b" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             for (String s : profile.getCurrentNation().getAllies()) {
                                 Nation ally = Nation.getById(s);
                                 if (ally == null) continue;
-                                ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                ally.broadcastMembers("§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             for (UUID uuid : instance.getUtilLists().staffMode) {
                                 Player target = Bukkit.getPlayer(uuid);
                                 if (target == null) continue;
-                                target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                                target.sendMessage("§cSTAFF-§dALLY-CHAT §8| §d" + profile.getCurrentNation().getName() + " §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             }
                             break;
                        default :
                     	    break;
                     }
+                    return;
+                }
+            }
+
+            if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
+                if (profile.getTimers().containsKey("Chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
+                    player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(new Timer(profile.getTimers().get("Chat")).getRemaining(), true)));
+                    event.setCancelled(true);
                     return;
                 }
             }
@@ -143,14 +151,6 @@ public class ChatSystem implements Listener, Module {
                     event.setCancelled(true);
                     player.sendMessage(Lang.CHAT_IS_MUTED_ATM.get(player));
                     return;
-                }
-
-                if (config.getDouble("modules.chatsystem.cooldown") != 0.0) {
-                    if (profile.getTimers().containsKey("chat") && !player.hasPermission("earth.chat.bypasscooldown")) {
-                        player.sendMessage(Lang.CHAT_COOLDOWN.get(player).replace("%COOLDOWN%", Methods.getTimeAsString(new Timer(profile.getTimers().get("Chat")).getRemaining(), true)));
-                        event.setCancelled(true);
-                        return;
-                    }
                 }
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
