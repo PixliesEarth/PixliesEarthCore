@@ -22,7 +22,7 @@ public class BioFuelGenerator extends CustomRecipe {
         map.put(1, "Pixlies:Carbon_Steel_Ingot");
         map.put(2, "Pixlies:Titanium_Ingot");
         map.put(3, "Pixlies:Circuit_Board");
-        map.put(4, "Pixlies:Machine_Base");
+        map.put(4, "Pixlies:Machine_Base_Energy");
         map.put(5, "Pixlies:Circuit_Board");
         map.put(6, "Pixlies:Titanium_Ingot");
         map.put(7, "Pixlies:Carbon_Steel_Ingot");
