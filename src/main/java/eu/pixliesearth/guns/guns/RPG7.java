@@ -125,7 +125,7 @@ public class RPG7 extends CustomGun {
 
 	@Override
 	public String getOrigin() {
-		return "USA";
+		return "Soviet Union/USSR";
 	}
 
 
