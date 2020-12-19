@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Energy {
 
     public static boolean take(Profile profile, double amount) {
-        if (profile.getEnergy() - amount < 0) {
+        if (profile.getEnergy() - amount < 0.0) {
             return false;
         }
         profile.setEnergy(profile.getEnergy() - amount);
