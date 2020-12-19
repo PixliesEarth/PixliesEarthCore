@@ -72,19 +72,6 @@ public class CustomCrafterMachine extends CustomMachine {
 				player.openInventory(i);
 			} else {
 				if (is.getType().equals(Material.BARRIER)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getHandler().getInstance(), new Runnable() {
-
-						@Override
-						public void run() {
-							for (int slot : craftSlots) {
-								ItemStack is = i.getItem(slot);
-								if (is!=null && !is.getType().equals(Material.AIR)) 
-									player.getLocation().getWorld().dropItemNaturally(player.getLocation(), is);
-								i.clear(slot);
-							}
-						}
-						
-					}, 1l);
 					Inventory inv = getInventory();
 					player.openInventory(inv);
 					CustomFeatureLoader.getLoader().getHandler().setInventoryFromLocation(location, inv);
