@@ -59,15 +59,15 @@ public class AluminiumBoots extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:air");
-		map.put(1, "Minecraft:air");
-		map.put(2, "Minecraft:air");
-		map.put(3, "Pixlies:aluminium_Ingot");
-		map.put(4, "Minecraft:air");
-		map.put(5, "Pixlies:aluminium_Ingot");
-		map.put(6, "Pixlies:aluminium_Ingot");
-		map.put(7, "Minecraft:air");
-		map.put(8, "Pixlies:aluminium_Ingot");
+		map.put(0, "Minecraft:Air");
+		map.put(1, "Minecraft:Air");
+		map.put(2, "Minecraft:Air");
+		map.put(3, "Pixlies:Aluminium_Ingot");
+		map.put(4, "Minecraft:Air");
+		map.put(5, "Pixlies:Aluminium_Ingot");
+		map.put(6, "Pixlies:Aluminium_Ingot");
+		map.put(7, "Minecraft:Air");
+		map.put(8, "Pixlies:Aluminium_Ingot");
 		return map;
 	}
 	/**

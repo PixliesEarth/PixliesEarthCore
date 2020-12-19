@@ -11,7 +11,7 @@ import java.util.Map;
 public class AluminiumIngot9 extends CustomRecipe {
     @Override
     public String getResultUUID() {
-        return "Pixlies:aluminium_Ingot";
+        return "Pixlies:Aluminium_Ingot";
     }
     @Override
     public Map<Integer, String> getContentsList() {

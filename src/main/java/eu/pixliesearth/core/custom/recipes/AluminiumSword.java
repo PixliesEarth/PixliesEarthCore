@@ -29,7 +29,7 @@ public class AluminiumSword extends CustomRecipe {
 	 */
 	@Override
 	public String getResultUUID() {
-		return "Pixlies:aluminium_Sword";
+		return "Pixlies:Aluminium_Sword";
 	}
 	/**
 	 * How many of the result to give
@@ -59,8 +59,8 @@ public class AluminiumSword extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:aluminium_Ingot");
-		map.put(1, "Pixlies:aluminium_Ingot");
+		map.put(0, "Pixlies:Aluminium_Ingot");
+		map.put(1, "Pixlies:Aluminium_Ingot");
 		map.put(2, MinecraftMaterial.STICK.getUUID());
 		return map;
 	}
