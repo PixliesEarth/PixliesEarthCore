@@ -30,8 +30,7 @@ public class BronzeIngot extends CustomRecipe {
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
        // map.put(0, MinecraftMaterial.OAK_PLANKS.getUUID());
-        map.put(0, "Pixlies:Tin_Dust");
-        map.put(0, "Pixlies:Copper_Dust");
+        map.put(0, "Pixlies:Bronze_Dust");
         return map;
     }
     @Override
