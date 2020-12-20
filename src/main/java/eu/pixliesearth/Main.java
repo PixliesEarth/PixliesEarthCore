@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import eu.pixliesearth.api.REST;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -170,13 +171,14 @@ public final class Main extends JavaPlugin {
     private @Getter @Setter Gulag gulag;
     private @Getter final boolean warEnabled = false;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
+    private @Getter REST rest;
 
     @Override
     public void onEnable() {
         instance = this;
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
-        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3000), getConfig().getLocation("spawn-location"));
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 1000), getConfig().getLocation("spawn-location"));
         init();
     }
 
@@ -351,7 +353,7 @@ public final class Main extends JavaPlugin {
         dynmapKernel.onEnable();
 
         nationsTop = new NTop();
-        // rest = new REST();
+        rest = new REST();
         // machineTask = new MachineTask();
 
         // MACHINES
