@@ -13,8 +13,8 @@ public class DrinkDonJulio extends CustomItem implements IConsumable {
     @Override
     public boolean PlayerItemConsumeEvent(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15, 0));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 15, 0));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15 * 20, 0));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 15 * 20, 0));
         player.sendMessage("§7§oAw man I feel dizzy...");
         return false;
     }
