@@ -7,11 +7,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class AmmoRifleAmmo extends CustomItem {
 
-    private static final ItemStack ammoItem = PixliesAmmo.AmmoType.RIFLE_AMMO.getAmmo().getItem();
-
     @Override
     public Material getMaterial() {
-        return ammoItem.getType();
+        return Material.STICK;
     }
 
     @Override
@@ -21,12 +19,12 @@ public class AmmoRifleAmmo extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return ammoItem.getCustomModelData();
+        return 5;
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return ammoItem.getDisplayName();
+        return "§aRifle Ammo";
     }
 
 }

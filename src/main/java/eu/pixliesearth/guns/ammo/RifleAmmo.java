@@ -1,6 +1,7 @@
 package eu.pixliesearth.guns.ammo;
 
 import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,7 +24,7 @@ public class RifleAmmo extends PixliesAmmo {
     
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STICK).setDisplayName("§3Rifle Ammo").setCustomModelData(5).addNBTTag("UUID", "Ammo:Rifle-Ammo", NBTTagType.STRING).addNBTTag("RARITY", CustomItem.Rarity.COMMON.getUUID(), NBTTagType.STRING).addLoreLine("§fRarity: " + CustomItem.Rarity.COMMON.getName()).build();
+        return CustomItemUtil.getItemStackFromUUID("Ammo:Rifle-Ammo");
     }
 
 }

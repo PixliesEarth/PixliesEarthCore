@@ -1,17 +1,13 @@
 package eu.pixliesearth.core.custom.items;
 
 import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.guns.PixliesAmmo;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class AmmoNato762x51 extends CustomItem {
 
-    private static final ItemStack ammoItem = PixliesAmmo.AmmoType.NATO762x51.getAmmo().getItem();
-
     @Override
     public Material getMaterial() {
-        return ammoItem.getType();
+        return Material.STICK;
     }
 
     @Override
@@ -21,12 +17,12 @@ public class AmmoNato762x51 extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return ammoItem.getCustomModelData();
+        return 7;
     }
 
     @Override
     public String getDefaultDisplayName() {
-        return ammoItem.getDisplayName();
+        return "§37.62x51mm NATO";
     }
 
 }
