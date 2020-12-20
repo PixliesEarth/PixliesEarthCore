@@ -10,6 +10,7 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.*;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import org.apache.commons.lang.StringUtils;
@@ -121,6 +122,7 @@ public class menuNation extends SubCommand {
                 }
                 break;
             case SETTINGS:
+                // RELIGION
                 Religion religion = Religion.valueOf(nation.getReligion());
                 String religionName = StringUtils.capitalize(religion.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine("§" + religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
@@ -151,6 +153,7 @@ public class menuNation extends SubCommand {
                     gui.addPane(pane);
                     gui.update();
                 }), 0, 0);
+                // IDEOLOGY
                 Ideology ideology = Ideology.valueOf(nation.getIdeology());
                 String ideologyName = StringUtils.capitalize(ideology.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(ideology.getMaterial()).setGlow().setDisplayName("§b§lIdeology").addLoreLine("§" + ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
@@ -182,6 +185,38 @@ public class menuNation extends SubCommand {
                     gui.addPane(pane);
                     gui.update();
                 }), 1, 0);
+
+                // DYNMAP COLOUR
+                Colours dmapColour = Colours.getByFillAndStroke(nation.getDynmapFill(), nation.getDynmapBorder());
+                menu.addItem(new GuiItem(new ItemBuilder(dmapColour.getMaterial()).setDisplayName("§b§lDynmap colour").addLoreLine("§b" + dmapColour.name()).build(), event -> {
+                    event.setCancelled(true);
+                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
+                    StaticPane pane = new StaticPane(0, 1, 9, 5);
+                    pane.clear();
+                    pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event1 -> event1.setCancelled(true));
+                    int x1 = 0;
+                    int y1 = 0;
+                    for (Colours colours : Colours.values()) {
+                        ItemBuilder iBuilder = new ItemBuilder(colours.getMaterial()).setDisplayName("§b" + colours.name());
+                        if (dmapColour == colours)
+                            iBuilder.setGlow();
+                        if (x1 + 1 > 9) {
+                            x1 = 0;
+                            y1++;
+                        }
+                        pane.addItem(new GuiItem(iBuilder.build(), event1 -> {
+                            event1.setCancelled(true);
+                            nation.setDynmapFill(colours.getFill());
+                            nation.setDynmapBorder(colours.getStroke());
+                            nation.save();
+                            player.closeInventory();
+                            open(gui, player, MenuPage.SETTINGS);
+                        }), x1, y1);
+                        x1++;
+                    }
+                    gui.addPane(pane);
+                    gui.update();
+                }), 2, 0);
                 break;
             case RELATIONS:
                 x = 0;

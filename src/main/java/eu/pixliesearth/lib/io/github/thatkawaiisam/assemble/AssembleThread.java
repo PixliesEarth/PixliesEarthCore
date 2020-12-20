@@ -49,6 +49,7 @@ public class AssembleThread extends Thread {
             if (profile.isScoreboard()) {
                 if (profile.getTimers().size() > 0) {
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet()) {
+                        if (entry.getKey().equalsIgnoreCase("teleport")) continue;
                         if (new Timer(entry.getValue()).hasExpired()) {
                             profile.getTimers().remove(entry.getKey());
                             profile.save();

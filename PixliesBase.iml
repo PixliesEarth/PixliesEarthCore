@@ -19,15 +19,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-api:3.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-core:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.pl3x.purpur:purpur:1.16.4-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.5.19" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.3" level="project" />
-    <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.1.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-api:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-core:3.1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okhttp3:okhttp:3.9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okio:okio:1.13.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okhttp3:logging-interceptor:3.9.1" level="project" />
@@ -58,6 +58,23 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.12" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.dynmap:dynmap:2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sparkjava:spark-core:2.9.3" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-server:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-common:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-client:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-client:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-servlet:9.4.31.v20200723" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.31.v20200723" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.luckperms:api:5.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.yannicklamprecht.WorldBorderAPI:API:1.163.1" level="project" />
