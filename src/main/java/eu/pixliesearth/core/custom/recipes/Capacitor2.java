@@ -24,7 +24,7 @@ public class Capacitor2 extends CustomRecipe {
         map.put(1, "Pixlies:Silver_Ingot");
         map.put(2, MinecraftMaterial.AIR.getUUID());
         map.put(3, "Pixlies:Capacitor_Basic");
-        map.put(4, "Pixlies:Copper_Block");
+        map.put(4, "Pixlies:Carbon_Dust");
         map.put(5, "Pixlies:Capacitor_Basic");
         map.put(6, MinecraftMaterial.AIR.getUUID());
         map.put(7, "Pixlies:Silver_Ingot");
