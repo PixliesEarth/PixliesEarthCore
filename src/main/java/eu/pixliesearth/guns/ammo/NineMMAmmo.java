@@ -1,5 +1,7 @@
 package eu.pixliesearth.guns.ammo;
 
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +23,7 @@ public class NineMMAmmo extends PixliesAmmo {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STICK).setDisplayName("§39mm Ammo").setCustomModelData(6).build();
+        return new ItemBuilder(Material.STICK).setDisplayName("§39mm Ammo").addNBTTag("UUID", "Ammo:9mm", NBTTagType.STRING).addNBTTag("RARITY", CustomItem.Rarity.COMMON.getUUID(), NBTTagType.STRING).addLoreLine("§fRarity: " + CustomItem.Rarity.COMMON.getName()).setCustomModelData(6).build();
     }
 
 }

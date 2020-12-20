@@ -1,5 +1,7 @@
 package eu.pixliesearth.guns.ammo;
 
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +23,7 @@ public class Ammo762x51mm extends PixliesAmmo {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(Material.STICK).setDisplayName("§37.62x51mm NATO").setCustomModelData(7).build();
+        return new ItemBuilder(Material.STICK).setDisplayName("§37.62x51mm NATO").setCustomModelData(7).addNBTTag("UUID", "Ammo:Nato762x51", NBTTagType.STRING).addNBTTag("RARITY", CustomItem.Rarity.COMMON.getUUID(), NBTTagType.STRING).addLoreLine("§fRarity: " + CustomItem.Rarity.COMMON.getName()).build();
     }
 
 }
