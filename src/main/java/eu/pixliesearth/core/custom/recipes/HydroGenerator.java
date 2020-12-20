@@ -20,15 +20,15 @@ public class HydroGenerator extends CustomRecipe {
     @Override
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "Pixlies:Steel_Block");
+        map.put(0, "Pixlies:Steel_Ingot");
         map.put(1, "Pixlies:Circuit_Board");
-        map.put(2, "Pixlies:Steel_Block");
+        map.put(2, "Pixlies:Steel_Ingot");
         map.put(3, MinecraftMaterial.WATER_BUCKET.getUUID());
-        map.put(4, "Machine:Energy_Cube_Intermediate");
+        map.put(4, "Machine:Machine_Base_Energy");
         map.put(5, MinecraftMaterial.WATER_BUCKET.getUUID());
-        map.put(6, "Pixlies:Steel_Block");
+        map.put(6, "Pixlies:Steel_Ingot");
         map.put(7, "Pixlies:Circuit_Board");
-        map.put(8, "Pixlies:Steel_Block");
+        map.put(8, "Pixlies:Steel_Ingot");
         return map;
     }
     @Override
