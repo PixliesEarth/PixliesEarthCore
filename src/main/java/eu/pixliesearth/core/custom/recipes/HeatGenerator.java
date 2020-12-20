@@ -20,13 +20,13 @@ public class HeatGenerator extends CustomRecipe {
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, "Machine:Energy_Cube_Advanced");
-        map.put(1, "Pixlies:Platinum_Block");
+        map.put(1, "Pixlies:Platinum_Ingot");
         map.put(2, "Pixlies:Copper_Wire");
-        map.put(3, "Pixlies:Platinum_Block");
+        map.put(3, "Pixlies:Platinum_Ingot");
         map.put(4, "Pixlies:Circuit_Board");
-        map.put(5, "Pixlies:Platinum_Block");
+        map.put(5, "Pixlies:Platinum_Ingot");
         map.put(6, "Pixlies:Copper_Wire");
-        map.put(7, "Pixlies:Platinum_Block");
+        map.put(7, "Pixlies:Platinum_Ingot");
         map.put(8, "Machine:Energy_Cube_Advanced");
         return map;
     }
