@@ -21,13 +21,13 @@ public class Capacitor4 extends CustomRecipe {
     public Map<Integer, String> getContentsList() {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, MinecraftMaterial.AIR.getUUID());
-        map.put(1, "Pixlies:Silver_Ingot");
-        map.put(2, MinecraftMaterial.AIR.getUUID());
+        map.put(1, "Pixlies:Lithium_Ingot");
+        map.put(2, MinecraftMaterial.REDSTONE.getUUID());
         map.put(3, "Pixlies:Capacitor_Advanced");
-        map.put(4, "Pixlies:Silver_Block");
+        map.put(4, "Pixlies:Solder_Dust");
         map.put(5, "Pixlies:Capacitor_Advanced");
-        map.put(6, MinecraftMaterial.AIR.getUUID());
-        map.put(7, "Pixlies:Silver_Ingot");
+        map.put(6, MinecraftMaterial.REDSTONE.getUUID());
+        map.put(7, "Pixlies:Lithium_Ingot");
         map.put(8, MinecraftMaterial.AIR.getUUID());
         return map;
     }
