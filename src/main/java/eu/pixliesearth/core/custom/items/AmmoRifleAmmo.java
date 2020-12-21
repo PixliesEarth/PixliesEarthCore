@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomItem;
-import eu.pixliesearth.guns.PixliesAmmo;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+
+import eu.pixliesearth.core.custom.CustomItem;
 
 public class AmmoRifleAmmo extends CustomItem {
 
