@@ -14,7 +14,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 public class NineMMAmmo extends PixliesAmmo {
 
     public NineMMAmmo(Location location, CustomGun gun) {
-        super(location, gun, 2.0);
+        super(location, gun, 1.5);
     }
 
     @Override

@@ -14,7 +14,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 public class RifleAmmo extends PixliesAmmo {
 
     public RifleAmmo(Location location, CustomGun gun) {
-        super(location, gun, 3.0);
+        super(location, gun, 2.5);
     }
 
     @Override
