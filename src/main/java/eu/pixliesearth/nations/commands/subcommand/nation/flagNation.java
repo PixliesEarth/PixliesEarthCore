@@ -5,6 +5,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationFlag;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -41,10 +42,14 @@ public class flagNation extends SubCommand {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = instance.getProfile(player.getUniqueId());
-            if (profile.isStaff() && args.length == 2) {
+            if (args.length == 2) {
                 Nation nation = Nation.getByName(args[1]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(player);
+                    return false;
+                }
+                if (!Permission.hasForeignPermission(profile, Permission.EDIT_FLAGS, nation)) {
+                    Lang.NO_PERMISSIONS.send(sender);
                     return false;
                 }
                 if (!NationFlag.exists(args[0])) {
@@ -52,6 +57,10 @@ public class flagNation extends SubCommand {
                     return false;
                 }
                 NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());
+                if (flag.isRequiresStaff() && !profile.isStaff()) {
+                    Lang.NO_PERMISSIONS.send(player);
+                    return false;
+                }
                 if (nation.getFlags().contains(flag.name())) {
                     nation.getFlags().remove(flag.name());
                     nation.save();
@@ -81,6 +90,10 @@ public class flagNation extends SubCommand {
                 Nation nation = profile.getCurrentNation();
                 if (!NationFlag.exists(args[0])) {
                     Lang.X_DOESNT_EXIST.send(player, "%X%;flag");
+                    return false;
+                }
+                if (!Permission.EDIT_FLAGS.hasPermission(sender)) {
+                    Lang.NO_PERMISSIONS.send(sender);
                     return false;
                 }
                 NationFlag flag = NationFlag.valueOf(args[0].toUpperCase());

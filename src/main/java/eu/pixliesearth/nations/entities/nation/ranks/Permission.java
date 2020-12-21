@@ -29,7 +29,8 @@ public enum Permission {
     DECLARE_WAR,
     JUSTIFY_WAR_GOAL,
     SET_WIKI_LINK,
-    MANAGE_WAR
+    MANAGE_WAR,
+    EDIT_FLAGS
     ;
 
     public boolean hasPermission(CommandSender sender) {
