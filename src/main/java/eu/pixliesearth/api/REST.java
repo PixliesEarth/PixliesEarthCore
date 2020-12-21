@@ -37,22 +37,22 @@ public class REST {
             return gson.toJsonTree(nation);
         });
 
-        get("/block/:coords", (request, response) -> {
-           String[] s = request.params("coords").split(";");
-            World world = Bukkit.getWorld("world");
-            if (s[3].equalsIgnoreCase("nether"))
-                world = Bukkit.getWorld("world_nether");
-            else if (s[3].equalsIgnoreCase("end"))
-                world = Bukkit.getWorld("world_the_end");
-            else if (Bukkit.getWorld(s[3]) != null)
-                world = Bukkit.getWorld(s[3]);
-            Location loc = new Location(world, Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]));
-            CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-            JsonObject json = new JsonObject();
-            json.addProperty("UUID", CustomItemUtil.getUUIDFromLocation(loc));
-            json.addProperty("Energy", h.getPowerAtLocation(loc) != null ? Methods.convertEnergyDouble(h.getPowerAtLocation(loc)) : "No energy!");
-            json.addProperty("Temperature",  h.getTempratureAtLocation(loc) != null ? Methods.round(h.getTempratureAtLocation(loc), 2) + "°C" : "0°C");
-            return json.toString();
+        get("/block/:x/:y/:z/:world", (request, response) -> {
+           World world = Bukkit.getWorld("world");
+           String s = request.params("world");
+           if (s.equalsIgnoreCase("nether"))
+               world = Bukkit.getWorld("world_nether");
+           else if (s.equalsIgnoreCase("end"))
+               world = Bukkit.getWorld("world_the_end");
+           else if (Bukkit.getWorld(s) != null)
+               world = Bukkit.getWorld(s);
+           Location loc = new Location(world, Integer.parseInt(request.params("x")), Integer.parseInt(request.params("y")), Integer.parseInt(request.params("z")));
+           CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+           JsonObject json = new JsonObject();
+           json.addProperty("UUID", CustomItemUtil.getUUIDFromLocation(loc));
+           json.addProperty("Energy", h.getPowerAtLocation(loc) != null ? Methods.convertEnergyDouble(h.getPowerAtLocation(loc)) : "No energy!");
+           json.addProperty("Temperature",  h.getTempratureAtLocation(loc) != null ? Methods.round(h.getTempratureAtLocation(loc), 2) + "°C" : "0°C");
+           return json.toString();
         });
         
         post("/nation", (request, response) -> {
