@@ -1,17 +1,22 @@
 package eu.pixliesearth.core.custom.blocks;
 
 import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
-public class TestBlock extends CustomBlock {
+public class TestBlock extends CustomBlock implements IRedstoneable {
 	
 	public TestBlock() {
 		
@@ -97,6 +102,18 @@ public class TestBlock extends CustomBlock {
 		Location l = event.getBlock().getLocation();
 		event.getPlayer().sendMessage("§rYou placed the custom block §a"+getDefaultDisplayName()+"§r(§a"+getUUID()+"§r) at §a"+l.getBlockX()+"§r, §a"+l.getBlockY()+"§r, §a"+l.getBlockZ());
 		return false;
+	}
+
+	@Override
+	public void onRecievedRedstoneSignal(Location location, int strength, BlockRedstoneEvent event) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				new Location(location.getWorld(), location.getX(), location.getY()+1, location.getZ()).getBlock().setType(Material.COARSE_DIRT);
+			}
+			
+		}, 1l);
 	}
 	
 }
