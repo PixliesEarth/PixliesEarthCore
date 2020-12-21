@@ -156,7 +156,11 @@ public abstract class CustomGun extends CustomItem {
 							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
 							Bukkit.getPluginManager().callEvent(nevent);
 							if (!nevent.isCancelled()) {
-								result.setHealth(result.getHealth() - (pammo.getDamage() * 2));
+								if (result.getHealth() - (pammo.getDamage() * 2.0) <= 0) {
+									result.setHealth(0);
+								} else {
+									result.setHealth(result.getHealth() - (pammo.getDamage()));
+								}
 								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
 							}
 			        	} else {
@@ -166,7 +170,11 @@ public abstract class CustomGun extends CustomItem {
 							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
 							Bukkit.getPluginManager().callEvent(nevent);
 							if (!nevent.isCancelled()) {
-								result.setHealth(result.getHealth() - (pammo.getDamage()));
+								if (result.getHealth() - pammo.getDamage() <= 0) {
+									result.setHealth(0);
+								} else {
+									result.setHealth(result.getHealth() - (pammo.getDamage()));
+								}
 								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
 							}
 			        	}
