@@ -117,21 +117,6 @@ public class CustomFeatureHandler {
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
-		loadAdvancedHopperTickable();
-	}
-	
-	public void loadAdvancedHopperTickable() {
-		registerTickable(new Tickable() {
-			@Override
-			public void onTick() {
-				for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
-					CustomBlock cb = getCustomBlockFromLocation(entry.getKey());
-					if (cb instanceof BlockAdvancedHopper) {
-						((BlockAdvancedHopper) cb).onTick(entry.getKey());
-					}
-				}
-			}
-		});
 	}
 	
 	public void loadCustomBlockTickable() {
