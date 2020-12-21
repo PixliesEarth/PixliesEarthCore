@@ -1,12 +1,14 @@
 package eu.pixliesearth.core.custom.blocks;
 
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
+
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.utils.Timer;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
 
 public class EnergyBlockHydroGenerator extends CustomEnergyBlock {
 	
@@ -29,7 +31,13 @@ public class EnergyBlockHydroGenerator extends CustomEnergyBlock {
 		if (timer==null) {
 			h.registerTimer(location, new Timer(1000L));
 			if (isFull(location)) return;
-			h.addPowerToLocation(location, (location.getBlockY()<17) ? 0.2 : 0.1);
+			double energyToGive = 0.0D;
+			for (Block block : getSurroundingBlocks(location)) {
+				if (block.getType().equals(Material.WATER)) {
+					energyToGive += 0.1D;
+				}
+			}
+			h.addPowerToLocation(location, (location.getBlockY()<17) ? energyToGive*2 : energyToGive);
 			return;
 		} else {
 			if (timer.hasExpired()) {
