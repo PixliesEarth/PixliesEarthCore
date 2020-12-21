@@ -49,7 +49,7 @@ public class descriptionNation extends SubCommand {
         nation.setDescription(stringBuilder.toString());
         nation.save();
         for (Player np : nation.getOnlineMemberSet())
-            np.sendMessage(Lang.PLAYER_CHANGED_DESCRIPTION.get(np).replace("%PLAYER%", np.getName()).replace("%DESC%", nation.getDescription()));
+            np.sendMessage(Lang.PLAYER_CHANGED_DESCRIPTION.get(np).replace("%PLAYER%", player.getName()).replace("%DESC%", nation.getDescription()));
         return false;
     }
 }
