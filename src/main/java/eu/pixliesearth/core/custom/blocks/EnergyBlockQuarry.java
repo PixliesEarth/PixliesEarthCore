@@ -1,12 +1,14 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomEnergyBlock;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
-import org.bukkit.*;
+import java.util.Arrays;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -16,7 +18,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class EnergyBlockQuarry extends CustomEnergyBlock {
+import eu.pixliesearth.core.custom.CustomEnergyBlock;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
+
+public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable {
 	
 	public EnergyBlockQuarry() {
 		
@@ -166,4 +176,27 @@ public class EnergyBlockQuarry extends CustomEnergyBlock {
             vector.normalize();
         }
     }
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		List<Integer> ints = Arrays.asList(0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,45,46,47,48,49,50,51,52,53);
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		for (int i = 0; i < inv.getSize(); i++) {
+			if (ints.contains(i)) continue;
+			ItemStack itemStack = inv.getItem(i);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			ItemStack itemStack2 = itemStack.clone().asOne();
+			itemStack.setAmount(itemStack.getAmount()-1);
+			return itemStack2;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		if (inv.firstEmpty()==-1) return false;
+		inv.addItem(itemStack);
+		return true;
+	}
 }

@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.blocks.BlockAdvancedHopper;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
@@ -116,6 +117,21 @@ public class CustomFeatureHandler {
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
+		loadAdvancedHopperTickable();
+	}
+	
+	public void loadAdvancedHopperTickable() {
+		registerTickable(new Tickable() {
+			@Override
+			public void onTick() {
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+					CustomBlock cb = getCustomBlockFromLocation(entry.getKey());
+					if (cb instanceof BlockAdvancedHopper) {
+						((BlockAdvancedHopper) cb).onTick(entry.getKey());
+					}
+				}
+			}
+		});
 	}
 	
 	public void loadCustomBlockTickable() {
