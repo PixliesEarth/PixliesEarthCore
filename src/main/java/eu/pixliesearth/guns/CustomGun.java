@@ -153,13 +153,22 @@ public abstract class CustomGun extends CustomItem {
 			        		result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, (pammo.getDamage()*2)));
 			        		// double newHealth = (result.getHealth() - (pammo.getDamage()*2));
 			        		// result.setHealth((newHealth<0) ? 0 : newHealth);
-			        		result.damage(pammo.getDamage()*2, event.getPlayer());
-			        		result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
+							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
+							Bukkit.getPluginManager().callEvent(nevent);
+							if (!nevent.isCancelled()) {
+								result.setHealth(result.getHealth() - (pammo.getDamage() * 2));
+								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
+							}
 			        	} else {
 			        		result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage()));
 			        		// double newHealth = (result.getHealth() - pammo.getDamage());
 			        		// result.setHealth((newHealth<0) ? 0 : newHealth);
-			        		result.damage(pammo.getDamage(), event.getPlayer());
+							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
+							Bukkit.getPluginManager().callEvent(nevent);
+							if (!nevent.isCancelled()) {
+								result.setHealth(result.getHealth() - (pammo.getDamage()));
+								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
+							}
 			        	}
 			        }
 				} else {

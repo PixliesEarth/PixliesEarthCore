@@ -29,7 +29,7 @@ public class settlementsCommand extends SubCommand implements Listener {
 
     @Override
     public String[] aliases() {
-        return new String[]{"settlements"};
+        return new String[]{"settlements", "home", "homes"};
     }
 
     @Override
@@ -59,13 +59,9 @@ public class settlementsCommand extends SubCommand implements Listener {
         switch (args.length) {
             case 0:
                 Inventory inventory = Bukkit.createInventory(null, 9 * 3, "§bSettlements");
-                int i = 12;
-                for (int j = 0; j < inventory.getSize(); j++)
-                    inventory.setItem(j, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
                 for (String s : nation.getSettlements().values()) {
                     Settlement st = new Gson().fromJson(s, Settlement.class);
-                    inventory.setItem(i, new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
-                    i++;
+                    inventory.addItem(new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
                 }
                 player.openInventory(inventory);
                 break;
@@ -79,7 +75,7 @@ public class settlementsCommand extends SubCommand implements Listener {
                         Lang.SETTLEMENT_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    if (!nation.getExtras().containsKey("settlements") && nation.getSettlements().size() == 3 || nation.getExtras().containsKey("settlements") && nation.getSettlements().size() + 1 >= Integer.parseInt(nation.getExtras().get("settlements").toString())) {
+                    if (!nation.getExtras().containsKey("settlements") || nation.getExtras().containsKey("settlements") && nation.getSettlements().size() + 1 >= Integer.parseInt(nation.getExtras().get("settlements").toString())) {
                         player.sendMessage(Lang.NATION + "§7You have reached your limit to set settlements.");
                         return false;
                     }
