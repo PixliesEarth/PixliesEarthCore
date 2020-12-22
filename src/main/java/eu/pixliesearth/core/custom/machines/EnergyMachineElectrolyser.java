@@ -64,6 +64,24 @@ public class EnergyMachineElectrolyser extends CustomEnergyCrafterMachine implem
 		inv.clear(20); // Input slot
 		inv.clear(22);
 		inv.clear(24);
+		inv.setItem(21, new ItemBuilder(Material.LIME_STAINED_GLASS_PANE) {{
+			setDisplayName("§bInput Information");
+			addLoreLine("§3ID: "+ILiquidable.convertID(waterID)+" / "+waterID);
+			addLoreLine("§3Amount: "+0);
+			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+		}}.build());
+		inv.setItem(23, new ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE) {{
+			setDisplayName("§bHydrogen");
+			addLoreLine("§3ID: "+hydrogenID);
+			addLoreLine("§3Amount: "+0);
+			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+		}}.build());
+		inv.setItem(25, new ItemBuilder(Material.PINK_STAINED_GLASS_PANE) {{
+			setDisplayName("§bOxygen");
+			addLoreLine("§3ID: "+oxygenID);
+			addLoreLine("§3Amount: "+0);
+			addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING);
+		}}.build());
 		return inv;
 	}
 	
