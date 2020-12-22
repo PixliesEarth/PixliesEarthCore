@@ -194,7 +194,7 @@ public class ChatSystem implements Listener, Module {
                                 oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", profile.getCurrentNationRank().getPrefix()).replace("%nations_nation%", "§f" + profile.getCurrentNation().getName()));
                             }
                         } else {
-                            oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation% " + ChatColor.DARK_GRAY + "| ", ""));
+                            oProfile.getAsPlayer().sendMessage(format.replace("%nations_rank%", "").replace("%nations_nation%", ""));
                         }
                     }
                 }
