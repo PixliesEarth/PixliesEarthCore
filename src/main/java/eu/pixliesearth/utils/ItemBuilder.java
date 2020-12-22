@@ -217,9 +217,13 @@ public class ItemBuilder {
         return item;
     }
     
-    private OfflinePlayer getOfflinePlayer(String name) {
+/*    private OfflinePlayer getOfflinePlayer(String name) {
     	for (OfflinePlayer op : Bukkit.getOfflinePlayers()) if (op.getName().equalsIgnoreCase(name)) return op;
     	return null;
+    }*/
+
+    private OfflinePlayer getOfflinePlayer(String name) {
+        return Bukkit.getOfflinePlayerIfCached(name);
     }
 
 }
