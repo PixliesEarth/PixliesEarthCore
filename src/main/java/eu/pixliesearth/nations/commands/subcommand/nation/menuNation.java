@@ -88,14 +88,12 @@ public class menuNation extends SubCommand {
                 x = 0;
                 y = 0;
                 for (String s : nation.getMembers()) {
-                    OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(s));
-                    Profile member = instance.getProfile(op.getUniqueId());
+                    Profile member = instance.getProfile(UUID.fromString(s));
                     if (x + 1 > 9) {
                         y++;
                         x = 0;
                     }
-                    ChatColor cc = op.isOnline() ? ChatColor.GREEN : ChatColor.RED;
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(op.getUniqueId()).setDisplayName(member.getCurrentNationRank().getPrefix() + cc + op.getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(member.getUUID()).setDisplayName(member.getCurrentNationRank().getPrefix() + "§7" + profile.getAsOfflinePlayer().getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
                         event.setCancelled(true);
                         if (!Permission.hasNationPermission(profile, Permission.MODERATE)) return;
                         showMemberMenu(gui, menu, player, member);
