@@ -148,6 +148,7 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 	public void take(Location location) {
 		Inventory inventory = getMCInventory(location);
 		Block b = location.getBlock().getRelative(BlockFace.UP);
+		if (b==null||b.getType().equals(Material.AIR)) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		CustomBlock cb = h.getCustomBlockFromLocation(b.getLocation());
 		if (cb instanceof IHopperable) {
@@ -170,6 +171,7 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 	public void give(Location location) {
 		Inventory inventory = getMCInventory(location);
 		Block b = location.getBlock().getRelative(getFactingOutput(location));
+		if (b==null||b.getType().equals(Material.AIR)) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		CustomBlock cb = h.getCustomBlockFromLocation(b.getLocation());
 		if (cb instanceof IHopperable) {
