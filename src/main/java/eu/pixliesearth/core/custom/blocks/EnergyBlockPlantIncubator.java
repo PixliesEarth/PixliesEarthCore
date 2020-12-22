@@ -45,6 +45,8 @@ public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
 	
 	@Override
 	public boolean InventoryClickEvent(InventoryClickEvent event) {
+		if (event.getCurrentItem()==null || event.getCurrentItem().getType().equals(Material.AIR)) return false;
+		if (isUnclickable(event.getCurrentItem())) return true;
 		if (event.getRawSlot()==13) {
 			ItemStack itemStack = event.getInventory().getItem(13);
 			if (itemStack==null || itemStack.getType().equals(Material.AIR)) return super.InventoryClickEvent(event);
@@ -56,7 +58,7 @@ public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
 				event.getInventory().setItem(13, itemStack);
 			}
 		}
-		return super.InventoryClickEvent(event);
+		return false;
 	}
 	
 	@Override
