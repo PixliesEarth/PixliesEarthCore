@@ -53,11 +53,11 @@ public class CableBasic extends CustomRecipe {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, "Minecraft:air");
 		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Basic");
+		map.put(2, "Minecraft:air");
 		map.put(3, "Pixlies:Rubber");
 		map.put(4, "Pixlies:Copper_Wire");
 		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Basic");
+		map.put(6, "Minecraft:air");
 		map.put(7, "Pixlies:Rubber");
 		map.put(8, "Minecraft:air");
 		return map;

@@ -9,6 +9,7 @@ import eu.pixliesearth.core.custom.*;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
+import jdk.internal.joptsimple.internal.Strings;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -62,6 +63,67 @@ public class PixliesFunGUI implements Constants {
         }
         categories.populateWithGuiItems(categoryItems);
         gui.addPane(categories);
+        gui.show(player);
+    }
+
+    public List<String> searchItems(String keyWord) {
+        List<String> returner = new ArrayList<>();
+        CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
+        for (CustomItem.Category category : CustomItem.Category.values())
+            for (String s : handler.getCategoriesForItems().get(category))
+                if (s.matches("(?i)(" + keyWord + ").*"))
+                    returner.add(s);
+        return returner;
+    }
+
+    public void renderSearchItems(String keyWord) {
+        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| §b" + keyWord);
+
+        StaticPane background = new StaticPane(0, 0, 9, 6);
+        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        gui.addPane(background);
+
+        StaticPane background2 = new StaticPane(1, 1, 7, 4);
+        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        gui.addPane(background2);
+
+        PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
+        List<GuiItem> entries = new ArrayList<>();
+        List<String> itemsToRender = searchItems(keyWord);
+        for (String s : itemsToRender) {
+            if (s.contains("test")) continue;
+            ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
+            if (i == null) continue;
+            entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
+                event.setCancelled(true);
+                renderRecipe(i, 0);
+            }));
+        }
+        entriesPane.populateWithGuiItems(entries);
+        gui.addPane(entriesPane);
+
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), e -> {
+            e.setCancelled(true);
+            renderMainMenu();
+        }), 4, 0);
+        if (entriesPane.getPages() > 1) {
+            hotBar.addItem(new GuiItem(nextButtonMick, event -> {
+                event.setCancelled(true);
+                try {
+                    entriesPane.setPage(entriesPane.getPage() + 1);
+                    gui.update();
+                } catch (Exception ignored) {}
+            }), 8, 0);
+            hotBar.addItem(new GuiItem(backButtonMick, event -> {
+                event.setCancelled(true);
+                try {
+                    entriesPane.setPage(entriesPane.getPage() - 1);
+                    gui.update();
+                } catch (Exception ignored) {}
+            }), 0, 0);
+        }
+        gui.addPane(hotBar);
         gui.show(player);
     }
 
