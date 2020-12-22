@@ -35,7 +35,7 @@ public class CableIntermediate extends CustomRecipe {
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 8;
 	}
 	/**
 	 * The contents of the recipe, If it is a Pixlies:Crafting_Table recipe then the Integer matters as it dictates the slot that the item is needed in.
@@ -51,15 +51,15 @@ public class CableIntermediate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Pixlies:Copper_Ingot");
-		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Intermediate");
-		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Minecraft:air");
-		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Intermediate");
-		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:Copper_Ingot");
+		map.put(0, "Machine:Cable_Basic");
+		map.put(1, "Machine:Cable_Basic");
+		map.put(2, "Machine:Cable_Basic");
+		map.put(3, "Machine:Cable_Basic");
+		map.put(4, "Pixlies:Capacitor_Intermediate");
+		map.put(5, "Machine:Cable_Basic");
+		map.put(6, "Machine:Cable_Basic");
+		map.put(7, "Machine:Cable_Basic");
+		map.put(8, "Machine:Cable_Basic");
 		return map;
 	}
 	/**

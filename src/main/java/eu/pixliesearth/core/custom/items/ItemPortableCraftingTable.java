@@ -1,11 +1,9 @@
 package eu.pixliesearth.core.custom.items;
 
-import eu.pixliesearth.core.custom.CustomItem;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import eu.pixliesearth.core.custom.CustomItem;
 
 public class ItemPortableCraftingTable extends CustomItem {
 	
@@ -40,7 +38,7 @@ public class ItemPortableCraftingTable extends CustomItem {
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
-    	event.getPlayer().openInventory(Bukkit.createInventory(null, InventoryType.CRAFTING));
+    	event.getPlayer().openWorkbench(null, true);
         return true;
     }
 }

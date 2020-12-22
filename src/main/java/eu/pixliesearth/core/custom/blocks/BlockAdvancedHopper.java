@@ -138,8 +138,9 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 			return true;
 		}
 	}
-
-	public void tick(Location location) {
+	
+	@Override
+	public void onTick(Location location) {
 		take(location);
 		give(location);
 	}

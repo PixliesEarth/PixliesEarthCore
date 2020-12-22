@@ -36,7 +36,7 @@ public class CableUltimate extends CustomRecipe {
 	 */
 	@Override
 	public int getResultAmount() {
-		return 1;
+		return 8;
 	}
 	/**
 	 * The era required to craft the item
@@ -59,15 +59,15 @@ public class CableUltimate extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Minecraft:gold_ingot");
-		map.put(1, "Pixlies:Rubber");
-		map.put(2, "Pixlies:Capacitor_Ultimate");
-		map.put(3, "Pixlies:Rubber");
-		map.put(4, "Machine:Cable_Advanced");
-		map.put(5, "Pixlies:Rubber");
-		map.put(6, "Pixlies:Capacitor_Ultimate");
-		map.put(7, "Pixlies:Rubber");
-		map.put(8, "Pixlies:aluminium_Ingot");
+		map.put(0, "Machine:Cable_Advanced");
+		map.put(1, "Machine:Cable_Advanced");
+		map.put(2, "Machine:Cable_Advanced");
+		map.put(3, "Machine:Cable_Advanced");
+		map.put(4, "Pixlies:Capacitor_Ultimate");
+		map.put(5, "Machine:Cable_Advanced");
+		map.put(6, "Machine:Cable_Advanced");
+		map.put(7, "Machine:Cable_Advanced");
+		map.put(8, "Machine:Cable_Advanced");
 		return map;
 	}
 	/**

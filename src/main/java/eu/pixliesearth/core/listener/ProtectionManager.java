@@ -248,6 +248,7 @@ public class ProtectionManager implements Listener {
             if (nc == null) continue;
             if (nc.getCurrentNation().getLeader().equalsIgnoreCase("NONE")) {
                 event.setCancelled(true);
+                event.blockList().clear();
                 break;
             }
         }
