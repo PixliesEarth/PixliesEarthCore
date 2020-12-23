@@ -57,9 +57,16 @@ public class handoverCommand extends SubCommand {
             }
             nation = target.getCurrentNation();
         }
-        if (!Permission.CHANGE_LEADERSHIP.hasPermission(sender)) {
-            Lang.NO_PERMISSIONS.send(sender);
-            return false;
+        if (sender instanceof Player) {
+            Profile profile = instance.getProfile(((Player) sender).getUniqueId());
+            if (!profile.isStaff() && !profile.isInNation()) {
+                Lang.NO_PERMISSIONS.send(sender);
+                return false;
+            }
+            if (profile.isInNation() && !Permission.CHANGE_LEADERSHIP.hasPermission(sender)) {
+                Lang.NO_PERMISSIONS.send(sender);
+                return false;
+            }
         }
         if (!nation.getLeader().equalsIgnoreCase("NONE")) {
             Profile leader = instance.getProfile(UUID.fromString(nation.getLeader()));
