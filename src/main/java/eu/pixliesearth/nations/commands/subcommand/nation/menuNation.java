@@ -93,7 +93,7 @@ public class menuNation extends SubCommand {
                         y++;
                         x = 0;
                     }
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(member.getUUID()).setDisplayName(member.getCurrentNationRank().getPrefix() + "§7" + profile.getAsOfflinePlayer().getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.PLAYER_HEAD).setDisplayName(member.getCurrentNationRank().getPrefix() + "§7" + member.getAsOfflinePlayer().getName()).addLoreLine("§7§oLeftclick to edit").build(), event -> {
                         event.setCancelled(true);
                         if (!Permission.hasNationPermission(profile, Permission.MODERATE)) return;
                         showMemberMenu(gui, menu, player, member);
