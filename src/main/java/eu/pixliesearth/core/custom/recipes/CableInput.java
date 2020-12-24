@@ -51,15 +51,15 @@ public class CableInput extends CustomRecipe {
 	@Override
 	public Map<Integer, String> getContentsList() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, MinecraftMaterial.AIR.getUUID());
+		map.put(0, MinecraftMaterial.HOPPER.getUUID());
 		map.put(1, "Pixlies:Rubber");
-		map.put(2, MinecraftMaterial.AIR.getUUID());
+		map.put(2, MinecraftMaterial.HOPPER.getUUID());
 		map.put(3, "Pixlies:Rubber");
 		map.put(4, "Pixlies:Copper_Wire");
 		map.put(5, "Pixlies:Rubber");
-		map.put(6, MinecraftMaterial.AIR.getUUID());
+		map.put(6, MinecraftMaterial.HOPPER.getUUID());
 		map.put(7, "Pixlies:Rubber");
-		map.put(8, MinecraftMaterial.AIR.getUUID());
+		map.put(8, MinecraftMaterial.HOPPER.getUUID());
 		return map;
 	}
 	/**

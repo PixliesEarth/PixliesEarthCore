@@ -41,7 +41,7 @@ public class LeaveListener implements Listener {
             }
         }
 
-        if (profile.getTimers().containsKey("§c§lCombat")) {
+        if (profile.getTimers().containsKey("§c§lCombat") && event.getReason().equals(PlayerQuitEvent.QuitReason.DISCONNECTED)) {
             if (player.getLastDamageCause() == null) return;
             Location chestLoc = new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
             chestLoc.getBlock().setType(Material.CHEST);
