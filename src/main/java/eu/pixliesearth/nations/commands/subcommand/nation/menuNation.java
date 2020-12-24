@@ -303,7 +303,7 @@ public class menuNation extends SubCommand {
         PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4);
         List<GuiItem> upgradeItems = new ArrayList<>();
         for (NationUpgrade upgrade : NationUpgrade.values()) {
-            upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
+            upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) && !upgrade.isMultiplePurchasable() ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
                 event.setCancelled(true);
                 player.closeInventory();
                 if (nation.getXpPoints() < upgrade.getCost() || !upgrade.getEra().canAccess(nation)) {
