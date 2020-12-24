@@ -49,7 +49,7 @@ public class PlayerCombatListener implements Listener {
     }
 
     public static void startCombatTimer(Profile tProfile, Profile dProfile) {
-        Timer timer = new Timer(60 * 1000);
+        Timer timer = new Timer(15 * 1000);
         dProfile.getTimers().put("§c§lCombat", timer.toMap());
         tProfile.getTimers().put("§c§lCombat", timer.toMap());
         dProfile.save();
