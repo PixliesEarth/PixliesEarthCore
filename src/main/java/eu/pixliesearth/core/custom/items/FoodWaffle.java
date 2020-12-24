@@ -23,6 +23,11 @@ public class FoodWaffle extends CustomItem implements IConsumable {
     }
 
     @Override
+    public String getDefaultDisplayName() {
+        return "§6Waffle";
+    }
+
+    @Override
     public boolean PlayerItemConsumeEvent(PlayerItemConsumeEvent event) {
         return false;
     }
