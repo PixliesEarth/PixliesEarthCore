@@ -14,8 +14,8 @@ import java.util.List;
 public class MachineRefrigerator extends CustomEnergyCrafterMachine {
 
     @Override
-    public Material getMaterial() {
-        return Material.IRON_BLOCK;
+    public String getPlayerHeadUUID() {
+        return "38a4650ee3b74594112426004246df531e2c68b6ca47cab8fe2323b9790a1a5e";
     }
 
     @Override
