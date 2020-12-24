@@ -70,7 +70,7 @@ public class PixliesFunGUI implements Constants {
         CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
         for (CustomItem.Category category : CustomItem.Category.values())
             for (String s : handler.getCategoriesForItems().get(category))
-                if (s.matches("(?i)(" + keyWord + ").*"))
+                if (s.contains(keyWord))
                     returner.add(s);
         return returner;
     }
