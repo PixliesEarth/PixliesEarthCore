@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom;
 
+import eu.pixliesearth.core.custom.interfaces.IConsumable;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
@@ -200,6 +201,9 @@ public class CustomFeatureHandler {
 		} else if (customitem instanceof CustomArmour) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.ARMOR, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.ARMOR).add(customitem.getUUID());
+		} else if (customitem.getUUID().startsWith("Food:") || customitem instanceof IConsumable) {
+			categoriesForItems.putIfAbsent(CustomItem.Category.FOOD, new ArrayList<>());
+			categoriesForItems.get(CustomItem.Category.FOOD).add(customitem.getUUID());
 		} else {
 			categoriesForItems.putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.ITEMS).add(customitem.getUUID());

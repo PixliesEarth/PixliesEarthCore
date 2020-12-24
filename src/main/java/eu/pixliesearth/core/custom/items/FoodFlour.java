@@ -16,6 +16,11 @@ public class FoodFlour extends CustomItem {
     }
 
     @Override
+    public String getDefaultDisplayName() {
+        return "§3Flour";
+    }
+
+    @Override
     public Integer getCustomModelData() {
         return 2;
     }

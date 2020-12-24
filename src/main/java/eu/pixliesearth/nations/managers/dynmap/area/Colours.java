@@ -24,6 +24,8 @@ public enum Colours {
     AMBER("#ffc107", "#c79100", Material.YELLOW_STAINED_GLASS_PANE),
     ORANGE("#ff9800", "#c66900", Material.ORANGE_STAINED_GLASS_PANE),
     DEEP_ORANGE("#ff5722", "#c41c00", Material.ORANGE_STAINED_GLASS_PANE),
+    DARK_GREEN("#32B454", "#32914B", Material.GREEN_STAINED_GLASS_PANE),
+    DARK_RED("#ED3131", "#D14343", Material.RED_STAINED_GLASS_PANE)
     ;
 
     private final String fill;

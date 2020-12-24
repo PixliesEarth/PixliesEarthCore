@@ -1,8 +1,6 @@
 package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.core.custom.CustomSubCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.machines.SubCommandSearch;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import org.bukkit.command.CommandSender;
@@ -45,7 +43,7 @@ public class MachinesCommand extends CustomCommand {
 
 	@Override
 	public ITabable[] getParams() {
-		return new ITabable[]{new CustomSubCommand.TabableSubCommand(new SubCommandSearch())};
+		return new ITabable[]{new TabableString("searchKeyWord")};
 	}
 
 	@Override
@@ -57,6 +55,10 @@ public class MachinesCommand extends CustomCommand {
 		inv.setItem(13, new ItemBuilder(Material.ITEM_FRAME).setDisplayName("§bItems").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MOPEN2", NBTTagType.STRING).build());
 		inv.setItem(15, new ItemBuilder(Material.CRAFTING_TABLE).setDisplayName("§bRecipes").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MOPEN3", NBTTagType.STRING).build());
 		((Player)commandSender).openInventory(inv);*/
+		if (parameters.length > 0) {
+			new PixliesFunGUI((Player)commandSender).renderSearchItems(parameters[0]);
+			return false;
+		}
 		new PixliesFunGUI((Player)commandSender).open();
 		return true;
 	}
