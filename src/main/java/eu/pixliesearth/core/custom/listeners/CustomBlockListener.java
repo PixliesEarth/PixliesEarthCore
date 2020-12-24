@@ -75,7 +75,9 @@ public class CustomBlockListener extends CustomListener {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 					@Override
 					public void run() {
-						CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), Double.parseDouble(s));
+						if (CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(event.getBlock().getLocation())!=null && CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(event.getBlock().getLocation())<=0) {
+							CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(event.getBlock().getLocation(), Double.parseDouble(s));
+						}
 					}
 				}, 3l);
 			}
