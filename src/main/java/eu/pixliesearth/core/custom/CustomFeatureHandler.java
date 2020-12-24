@@ -1,16 +1,13 @@
 package eu.pixliesearth.core.custom;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
+import eu.pixliesearth.core.custom.interfaces.Tickable;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.Timer;
+import eu.pixliesearth.utils.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,17 +19,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import eu.pixliesearth.core.custom.interfaces.Tickable;
-import eu.pixliesearth.core.files.FileBase;
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.NBTTagType;
-import eu.pixliesearth.utils.Timer;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.FileNotFoundException;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 

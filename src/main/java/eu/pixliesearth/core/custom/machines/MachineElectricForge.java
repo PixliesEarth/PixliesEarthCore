@@ -33,7 +33,7 @@ public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: m
 
 	@Override
 	public double getCapacity() {
-		return 150000D;
+		return 150_000D;
 	}
 	/**
 	 * Called to check if the item can be crafted

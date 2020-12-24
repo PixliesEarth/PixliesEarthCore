@@ -1,6 +1,9 @@
 package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.machines.SubCommandSearch;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,7 +42,12 @@ public class MachinesCommand extends CustomCommand {
 	public boolean isPlayerOnlyCommand() {
 		return true;
 	}
-	
+
+	@Override
+	public ITabable[] getParams() {
+		return new ITabable[]{new CustomSubCommand.TabableSubCommand(new SubCommandSearch())};
+	}
+
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
 /*		Inventory inv = Bukkit.createInventory(null, 3*9, "§6Machines");

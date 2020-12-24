@@ -285,6 +285,7 @@ public class CustomItem {
 		TOOLS("§eTools", "Pixlies:Explosive_Pickaxe"),
 		BLOCKS("§eBlocks", "Pixlies:Silver_Block"),
 		ARMOR("§3Armors", "Pixlies:Aluminium_Chestplate"),
+		FOOD("§cFood", "Christmas:Candy_Cane"),
 		;
 
 		@Getter String name;

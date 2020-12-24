@@ -1,7 +1,10 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class MachineDistillery extends CustomFuelableCrafterMachine {
 
@@ -23,6 +26,13 @@ public class MachineDistillery extends CustomFuelableCrafterMachine {
     @Override
     public String getUUID() {
         return "Machine:Distillery"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
+    }
+
+    @Override
+    public void takeCost(Location location, CustomRecipe customRecipe) {
+        CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+        Inventory i = h.getInventoryFromLocation(location);
+        i.setItem(52, new ItemStack(Material.BUCKET));
     }
 
 }
