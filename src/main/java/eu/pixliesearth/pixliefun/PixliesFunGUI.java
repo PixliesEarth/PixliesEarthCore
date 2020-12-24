@@ -88,7 +88,7 @@ public class PixliesFunGUI implements Constants {
 
         PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
         List<GuiItem> entries = new ArrayList<>();
-        List<String> itemsToRender = searchItems(keyWord);
+        final List<String> itemsToRender = searchItems(keyWord);
         for (String s : itemsToRender) {
             if (s.contains("test")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);

@@ -145,7 +145,8 @@ public class Nation {
     }
 
     public int getMaxClaimingPower() {
-        return Era.getByName(era).getChunksPerPlayer() * members.size();
+        int actualPower = Era.getByName(era).getChunksPerPlayer() * members.size();
+        return Math.min(actualPower, Main.getInstance().getFastConf().getMaxClaimSize());
     }
 
     public boolean rename(String newName) {
