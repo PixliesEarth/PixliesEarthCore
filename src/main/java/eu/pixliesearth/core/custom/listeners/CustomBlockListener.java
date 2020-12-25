@@ -69,7 +69,7 @@ public class CustomBlockListener extends CustomListener {
 			}
 		}
 		if (!e) {
-			CustomFeatureLoader.getLoader().getHandler().setCustomBlockToLocation(event.getBlock().getLocation(), id);
+			CustomFeatureLoader.getLoader().getHandler().setCustomBlockToLocation(event.getBlock().getLocation(), id, false); // Blocks already there!
 			String s = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("ENERGY");
 			if (s!=null && !s.equalsIgnoreCase("")) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
