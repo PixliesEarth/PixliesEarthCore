@@ -169,7 +169,7 @@ public final class Main extends JavaPlugin {
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
     private @Getter @Setter Gulag gulag;
-    private @Getter final boolean warEnabled = false;
+    private @Getter final boolean warEnabled = true;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
 
