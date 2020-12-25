@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.war.*;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WarCommand extends CustomCommand {
+public class WarCommand extends CustomCommand implements Constants {
 
     @Override
     public String getCommandName() {
@@ -121,6 +122,7 @@ public class WarCommand extends CustomCommand {
             if (n.getLeaderName().equalsIgnoreCase("Server")) continue;
             guiItems.add(new GuiItem(new ItemBuilder(n.getFlag()){{
                 setDisplayName("§c" + n.getName());
+                addLoreLine("§7Cost: §3" + War.getCost(profile.getCurrentNation(), n) + "§bPP");
                 addLoreLine("§7Leader: §c" + n.getLeaderName());
                 addLoreLine("§7Ideology: " + Ideology.valueOf(n.getIdeology()).getDisplayName());
                 addLoreLine("§7Religion: " + Religion.valueOf(n.getReligion()).getDisplayName());
@@ -136,14 +138,14 @@ public class WarCommand extends CustomCommand {
         gui.addPane(nations);
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
         hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§bLast page").build(), event -> {
+        hotBar.addItem(new GuiItem(backItem, event -> {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() - 1);
                 gui.show(profile.getAsPlayer());
             } catch (Exception ignored) { }
         }), 0, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.HEART_OF_THE_SEA).setDisplayName("§bNext page").build(), event -> {
+        hotBar.addItem(new GuiItem(nextItem, event -> {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() + 1);
