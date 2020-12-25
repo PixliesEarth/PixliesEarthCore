@@ -20,7 +20,7 @@ public class Settlement {
         Main instance = Main.getInstance();
         Profile profile = instance.getProfile(player.getUniqueId());
         Location location = SimpleLocation.fromString(getLocation()).toLocation();
-        profile.teleport(location, name);
+        profile.teleport(new Location(location.getWorld(), location.getX(), location.getY(), location.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()), name);
     }
 
     public Location getAsBukkitLocation() {
