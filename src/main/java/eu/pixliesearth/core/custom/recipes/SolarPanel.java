@@ -27,7 +27,7 @@ public class SolarPanel extends CustomRecipe {
         map.put(4, "Pixlies:Plastic_Hard_Block");
         map.put(5, MinecraftMaterial.GLASS.getUUID());
         map.put(6, "Pixlies:Plastic_Hard_Block");
-        map.put(7, "Pixlies:Plastic_Hard_Block");
+        map.put(7, "Pixlies:Circuit_Board");
         map.put(8, "Pixlies:Plastic_Hard_Block");
         return map;
     }
