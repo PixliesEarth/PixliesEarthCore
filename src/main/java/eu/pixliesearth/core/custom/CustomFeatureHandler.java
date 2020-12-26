@@ -1,15 +1,16 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.custom.interfaces.IConsumable;
-import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
-import eu.pixliesearth.core.custom.interfaces.Tickable;
-import eu.pixliesearth.core.files.FileBase;
-import eu.pixliesearth.core.files.JSONFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.utils.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,10 +22,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.FileNotFoundException;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import eu.pixliesearth.core.custom.interfaces.IConsumable;
+import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
+import eu.pixliesearth.core.custom.interfaces.Tickable;
+import eu.pixliesearth.core.files.FileBase;
+import eu.pixliesearth.core.files.JSONFile;
+import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.InventoryUtils;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.Timer;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 
@@ -480,17 +490,21 @@ public class CustomFeatureHandler {
 			fb.clearFile();
 			Map<Location, String> map = new HashMap<Location, String>();
 			for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
-				if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
-					Map<String, String> map2 = ((CustomMachine) getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
-					if (map2==null) {
-						map2 = new HashMap<String, String>();
+				try {
+					if (getCustomBlockFromLocation(entry.getKey()) instanceof CustomMachine) {
+						Map<String, String> map2 = ((CustomMachine) getCustomBlockFromLocation(entry.getKey())).getSaveData(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
+						if (map2==null) {
+							map2 = new HashMap<String, String>();
+						}
+						map2.put("MID", entry.getValue());
+						Inventory inv = getInventoryFromLocation(entry.getKey());
+						if (inv!=null) {
+							map2.put("MINV", InventoryUtils.makeInventoryToString(inv));
+						}
+						map.put(entry.getKey(), InventoryUtils.serialize(map2));
 					}
-					map2.put("MID", entry.getValue());
-					Inventory inv = getInventoryFromLocation(entry.getKey());
-					if (inv!=null) {
-						map2.put("MINV", InventoryUtils.makeInventoryToString(inv));
-					}
-					map.put(entry.getKey(), InventoryUtils.serialize(map2));
+				} catch (Exception ignore) {
+					System.out.println("Failed to save custom block "+entry.getValue());
 				}
 			}
 			fb.writeToFile(InventoryUtils.serialize(map));
@@ -505,19 +519,23 @@ public class CustomFeatureHandler {
 			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customMachines", ".txt");
 			Map<Location, String> map = (Map<Location, String>) InventoryUtils.deserialize(String.join("", fb.loadFileIntoArray()));
 			for (Entry<Location, String> entry : map.entrySet()) {
-				Map<String, String> map2 = (Map<String, String>) InventoryUtils.deserialize(entry.getValue());
-				CustomItem ci = getCustomItemFromUUID(map2.get("MID"));
-				if (entry.getValue()==null) System.out.println("Machine data is null");
-				if (ci instanceof CustomMachine) {
-					Inventory inv = ((CustomMachine) ci).getInventory();
-					((CustomMachine) ci).loadFromSaveData(inv, entry.getKey(), map2);
-					if (inv!=null) {
-						String data2 = map2.get("MINV");
-						if (data2!=null) {
-							InventoryUtils.setInventoryContentsFromString(data2, inv);
+				try {
+					Map<String, String> map2 = (Map<String, String>) InventoryUtils.deserialize(entry.getValue());
+					CustomItem ci = getCustomItemFromUUID(map2.get("MID"));
+					if (entry.getValue()==null) System.out.println("Machine data is null");
+					if (ci instanceof CustomMachine) {
+						Inventory inv = ((CustomMachine) ci).getInventory();
+						((CustomMachine) ci).loadFromSaveData(inv, entry.getKey(), map2);
+						if (inv!=null) {
+							String data2 = map2.get("MINV");
+							if (data2!=null) {
+								InventoryUtils.setInventoryContentsFromString(data2, inv);
+							}
+							locationToInventoryMap.put(entry.getKey(), inv);
 						}
-						locationToInventoryMap.put(entry.getKey(), inv);
 					}
+				} catch (Exception ingore) {
+					System.out.println("Failed to load custom block"+entry.getValue());
 				}
 			}
 		} catch (Exception e) {
