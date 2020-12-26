@@ -107,7 +107,7 @@ public class Gulag {
     }
 
     public void handleKill(Player winner, Player loser) {
-        winner.teleport(instance.getFastConf().getSpawnLocation());
+        winner.teleport(Bukkit.getWorld("world").getSpawnLocation());
         winner.getInventory().clear();
         timers.remove("gulagCooldown");
         winner.sendTitle("§b§lYou won!", "§7The gulag has ended", 20, 20 * 3, 20);
