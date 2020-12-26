@@ -16,7 +16,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
@@ -190,11 +189,15 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 	}
 
 	private Inventory getMCInventory(Location loc) {
-		return ((InventoryHolder) loc.getBlock().getState()).getInventory();
+		Block block = loc.getBlock();
+		if (block instanceof Hopper) {
+			return ((Hopper)block).getInventory();
+		}
+		return null;
 	}
 
 	private BlockFace getFactingOutput(Location loc) {
-		return ((org.bukkit.block.data.type.Hopper) ((Hopper) loc.getBlock().getState()).getData()).getFacing();
+		return ((org.bukkit.block.data.type.Hopper) loc.getBlock().getState().getData()).getFacing();
 	}
 	
 }

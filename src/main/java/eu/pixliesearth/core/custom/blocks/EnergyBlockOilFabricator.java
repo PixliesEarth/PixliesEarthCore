@@ -92,11 +92,11 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		CustomLiquidHandler l = CustomLiquidHandler.getCustomLiquidHandler();
 		if (inv==null) return;
 		inv.setItem(25, buildInfoItem(loc));
-		if (getContainedPower(loc)>=getCapacity()) return;
+		if (h.getPowerAtLocation(loc)<=0) return;
 		ItemStack itemStack = inv.getItem(13);
 		if (itemStack==null) return;
 		if (CustomItemUtil.getUUIDFromItemStack(itemStack).equalsIgnoreCase("Pixlies:Biofuel")) {
-			if (!(getContainedPower(loc)>0) || l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)>=1000) return;
+			if (l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)>=1000) return;
 			itemStack.setAmount(itemStack.getAmount()-1);
 			if (itemStack==null || itemStack.getAmount()<=0) {
 				inv.clear(13);

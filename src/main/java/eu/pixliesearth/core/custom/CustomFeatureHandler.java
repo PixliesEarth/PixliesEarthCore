@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import eu.pixliesearth.core.custom.interfaces.IConsumable;
+import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
@@ -117,6 +118,22 @@ public class CustomFeatureHandler {
 		
 		loadCustomBlockTickable();
 		loadMachineTickable();
+	}
+	
+	public void loadIRedstoneableTickable() {
+		registerTickable(new Tickable() {
+			@Override
+			public void onTick() {
+				for (Entry<Location, String> entry : locationToUUIDMap.entrySet()) {
+					CustomBlock cb = getCustomBlockFromLocation(entry.getKey());
+					if (cb instanceof IRedstoneable) {
+						if (entry.getKey().getBlock().isBlockPowered() || entry.getKey().getBlock().isBlockIndirectlyPowered()) {
+							((IRedstoneable) cb).onRecievedRedstoneSignal(entry.getKey());
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	public void loadCustomBlockTickable() {
