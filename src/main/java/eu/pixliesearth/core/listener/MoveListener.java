@@ -90,7 +90,7 @@ public class MoveListener implements Listener {
         Player player = event.getPlayer();
         Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), event.getFrom());
         if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
-        	if (instance.getProfile(player.getUniqueId()).isInWar() && !instance.getProfile(player.getUniqueId()).isStaff() && !event.getTo().getWorld().getName().equals(instance.getFastConf().getSpawnLocation().getWorld().getName())) event.setCancelled(true);
+        	if (instance.getProfile(player.getUniqueId()).isInWar() && !instance.getProfile(player.getUniqueId()).isStaff() && !event.getTo().getWorld().getName().equals("world")) event.setCancelled(true);
             Main.getInstance().getUtilLists().claimAuto.remove(player.getUniqueId());
             Main.getInstance().getUtilLists().unclaimAuto.remove(player.getUniqueId());
         }
