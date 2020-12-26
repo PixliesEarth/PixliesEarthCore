@@ -56,7 +56,7 @@ public class War {
     }
 
     public static double getCost(Nation aggressor, Nation defender) {
-        return 1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20);
+        return Math.max(10.0, Methods.round(1 + ((aggressor.getCurrentEra().getNumber() - defender.getCurrentEra().getNumber()) * 10) + (aggressor.getXpPoints() / 20), 2));
     }
 
     @SneakyThrows
