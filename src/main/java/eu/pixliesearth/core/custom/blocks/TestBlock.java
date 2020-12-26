@@ -1,8 +1,10 @@
 package eu.pixliesearth.core.custom.blocks;
 
-import eu.pixliesearth.core.custom.CustomBlock;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,11 +12,12 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.*;
+import eu.pixliesearth.core.custom.CustomBlock;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 
 public class TestBlock extends CustomBlock implements IRedstoneable {
 	
@@ -105,7 +108,7 @@ public class TestBlock extends CustomBlock implements IRedstoneable {
 	}
 
 	@Override
-	public void onRecievedRedstoneSignal(Location location, int strength, BlockRedstoneEvent event) {
+	public void onRecievedRedstoneSignal(Location location) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 
 			@Override
