@@ -24,7 +24,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
     	
-    	SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
+    	// SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
     	
         Player player = event.getPlayer();
 

@@ -18,12 +18,12 @@ public class PixlieFunGuide {
 
         // FIRST PAGE
         bookMeta.addPage(
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
                 "        Welcome to               PixliesEarth!"
         );
 
@@ -37,12 +37,12 @@ public class PixlieFunGuide {
         bookMeta.addPage(
                 "First of, you can see all the recipes for PixlieFun in §b/recipes§r. " +
                         "The first thing you should craft is a custom-crafting table. " +
-                        "You can craft it with the following recipe:",
-                "R | S | S",
-                "S | C | S",
-                "R | S | R",
-                "R = Redstone",
-                "S = Stick",
+                        "You can craft it with the following recipe:\n" +
+                "R | S | S\n" +
+                "S | C | S\n" +
+                "R | S | R\n" +
+                "R = Redstone\n" +
+                "S = Stick\n" +
                 "C = Crafting table"
         );
 
@@ -96,12 +96,13 @@ public class PixlieFunGuide {
 
         // FIRST PAGE
         bookMeta.addPage(
-                "",
-                "",
-                "",
-                "",
-                "",
-                "        Welcome to               PixliesEarth!"
+                "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "        Welcome to               PixliesEarth!"
         );
 
         // SECOND PAGE
@@ -122,7 +123,7 @@ public class PixlieFunGuide {
         // FOURTH PAGE
         bookMeta.addPage(
                 "You can now claim territory around the map. " +
-                        "You can see our map online on https://pixlies.net/map. " +
+                        "You can see our map online on §ehttps://pixlies.net/map§r. " +
                         "You can use /warp to go to the nearest warp to your desired location. " +
                         "Claiming is pretty easy, if you do §b/n claim auto§r, you can walk and claim."
         );
@@ -153,7 +154,7 @@ public class PixlieFunGuide {
 
         // EIGHT PAGE
         bookMeta.addPage(
-                "You can find more detailed information about Eras on your wiki.",
+                "You can find more detailed information about Eras on your wiki.\n" +
                 "To allow your members to teleport to your cities/settlements, you can create nation settlements using §b/n settlements add NAME§r. " +
                         "You can teleport to them using §b/n settlements§r."
         );
@@ -168,13 +169,13 @@ public class PixlieFunGuide {
         // TENTH PAGE
         bookMeta.addPage(
                 "Thank you for reading this guide, if you have any more questions, you can always ask our staff team. " +
-                        "We will be more than happy to help you.",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
+                        "We will be more than happy to help you.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
                 "§c❤ §fYour PixliesNet team"
         );
 

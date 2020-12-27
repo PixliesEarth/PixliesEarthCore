@@ -1,5 +1,7 @@
 package eu.pixliesearth.core.custom.skills;
 
+import eu.pixliesearth.Main;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,8 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class SkillHandler implements Serializable {
 	
 	private static final long serialVersionUID = -7062481020279469116L;
-	
-	private static SkillHandler skillHandler = new SkillHandler();
+
+	private static SkillHandler skillHandler = Main.getInstance().getSkillHandler();
 	
 	public static SkillHandler getSkillHandler() {
 		return skillHandler;
@@ -22,10 +24,7 @@ public final class SkillHandler implements Serializable {
 	public static void setSkills(SkillHandler handler) {
 		skillHandler = handler;
 	}
-	
-	private SkillHandler() {
-		
-	}
+
 	/**
 	 * A map containing a players skill levels
 	 */
