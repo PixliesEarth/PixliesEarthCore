@@ -40,7 +40,7 @@ public class Disable extends CustomSubCommand {
 			return false;
 		}
 		String id = parameters[0];
-		if (!CIControl.DISABLED_ITEMS.contains(id)) {
+		if (CIControl.DISABLED_ITEMS.contains(id)) {
 			commandSender.sendMessage("§c[§r❌§c] §rThis item is already disabled!");
 			return false;
 		} else {

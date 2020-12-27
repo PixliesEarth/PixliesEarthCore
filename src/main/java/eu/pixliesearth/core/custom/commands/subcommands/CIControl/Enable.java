@@ -11,12 +11,12 @@ public class Enable extends CustomSubCommand {
 
 	@Override
 	public String getCommandName() {
-		return "disable";
+		return "enable";
 	}
 
 	@Override
 	public String getCommandUsage() {
-		return "Disables a given item";
+		return "Enables a given item";
 	}
 	
 	@Override
