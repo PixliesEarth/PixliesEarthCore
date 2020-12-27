@@ -32,6 +32,9 @@ public class Disable extends CustomSubCommand {
 	
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
+		if (!commandSender.isOp()) {
+			commandSender.sendMessage("§c[§r❌§c] §rThis is an operator command only.");
+		}
 		if (parameters.length<1) {
 			commandSender.sendMessage("§c[§r❌§c] §rIncorrect usage! Follow the usage /cicontrol disable <itemUUID>");
 			return false;

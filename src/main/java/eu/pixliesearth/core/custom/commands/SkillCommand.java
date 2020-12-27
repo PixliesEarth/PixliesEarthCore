@@ -1,15 +1,12 @@
 package eu.pixliesearth.core.custom.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
 
 import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomSubCommand.TabableSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.skills.GetSkill;
+import eu.pixliesearth.core.custom.commands.subcommands.skills.ViewSkills;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
-import eu.pixliesearth.core.custom.skills.Skill;
-import eu.pixliesearth.core.custom.skills.SkillHandler;
 
 public class SkillCommand extends CustomCommand {
 
@@ -28,23 +25,9 @@ public class SkillCommand extends CustomCommand {
 		return true;
 	}
 	
-	protected class SkillsTabable implements ITabable {
-		
-		@Override
-		public List<String> getTabable(CommandSender commandSender, String[] params) {
-			List<String> list = new ArrayList<>();
-			for (Skill skill : SkillHandler.getSkillHandler().getSkills()) {
-				list.add(skill.getSkillUUID());
-			}
-			Collections.sort(list);
-			return list;
-		}
-		
-		@Override
-		public String getTabableName() {
-			return "skillUUID";
-		}
-		
+	@Override
+	public ITabable[] getParams() {
+		return new ITabable[] {new TabableSubCommand(new GetSkill(), new ViewSkills())};
 	}
 
 }

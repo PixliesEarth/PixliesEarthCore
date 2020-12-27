@@ -20,7 +20,7 @@ public abstract class Skill implements Serializable {
 			level++;
 			currentXP -= (level*20)+1000;
 		}
-		return level-1;
+		return (level-1>getMaxSkillLevel()) ? getMaxSkillLevel() : level-1;
 	}
 	
 }
