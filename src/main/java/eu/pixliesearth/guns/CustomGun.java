@@ -9,6 +9,8 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
@@ -149,35 +151,23 @@ public abstract class CustomGun extends CustomItem {
 			        if (result==null) {
 			        	
 			        } else {
+			        	double damage = pammo.getDamage();
+		        		damage = damage-(getChesplateToughness(result)/(damage*1.83333333333));
 			        	if (headshot) {
-			        		result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, (pammo.getDamage()*2)));
-			        		// double newHealth = (result.getHealth() - (pammo.getDamage()*2));
-			        		// result.setHealth((newHealth<0) ? 0 : newHealth);
-							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
-							Bukkit.getPluginManager().callEvent(nevent);
-							if (!nevent.isCancelled()) {
-								if (result.getHealth() - (pammo.getDamage() * 2.0) <= 0) {
-									result.setHealth(0);
-								} else {
-									result.setHealth(result.getHealth() - (pammo.getDamage()));
-								}
-								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
-							}
-			        	} else {
-			        		result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage()));
-			        		// double newHealth = (result.getHealth() - pammo.getDamage());
-			        		// result.setHealth((newHealth<0) ? 0 : newHealth);
-							EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, pammo.getDamage() * 2);
-							Bukkit.getPluginManager().callEvent(nevent);
-							if (!nevent.isCancelled()) {
-								if (result.getHealth() - pammo.getDamage() <= 0) {
-									result.setHealth(0);
-								} else {
-									result.setHealth(result.getHealth() - (pammo.getDamage()));
-								}
-								result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
-							}
+			        		damage *= 2;
 			        	}
+			        	result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
+						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
+						Bukkit.getPluginManager().callEvent(nevent);
+						if (!nevent.isCancelled()) {
+							if (result.getHealth() - damage <= 0) {
+								result.setHealth(0);
+							} else {
+								result.setHealth(result.getHealth() - (damage));
+							}
+							result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
+							result.damage(0);
+						}
 			        }
 				} else {
 					return true;
@@ -185,6 +175,17 @@ public abstract class CustomGun extends CustomItem {
 			}
 		}
 		return false;
+	}
+	
+	protected double getChesplateToughness(LivingEntity e) {
+		try {
+			for (AttributeModifier a : e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS)) {
+				if (a.getSlot().equals(EquipmentSlot.CHEST)) {
+					return a.getAmount();
+				}
+			}
+		} catch (Exception ignore) {}
+		return 0;
 	}
 	
 	@Override
