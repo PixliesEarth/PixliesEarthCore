@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.blocks;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -24,6 +25,7 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ExplosionCalculator;
 import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable {
@@ -36,6 +38,8 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
     public Material getMaterial() {
         return Material.BLACK_GLAZED_TERRACOTTA;
     }
+	
+	private static final Set<String> UNBREAKABLES = new ExplosionCalculator(new Location(Bukkit.getWorld("world"), 0, 0, 0), 0, true).getUnbreakableBlocks();
 	
 	@Override
 	public Inventory getInventory() {
@@ -82,6 +86,7 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
 	        			if (id==null) continue;
 	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
 	        			if (is==null) continue;
+	        			if (UNBREAKABLES.contains(id)) return;
 	        			inventory.addItem(is);
 	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
 							@Override
