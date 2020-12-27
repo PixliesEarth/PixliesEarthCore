@@ -516,7 +516,7 @@ public class CustomFeatureHandler {
 	
 	public void saveSkillsToFile() {
 		try {
-			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "skills", ".txt");
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/", "skills", ".txt");
 			fb.clearFile();
 			fb.writeToFile(InventoryUtils.serialize(SkillHandler.getSkillHandler()));
 		} catch (Exception ignore) {
