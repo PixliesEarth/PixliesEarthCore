@@ -14,9 +14,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import eu.pixliesearth.core.custom.CustomCommand.RegisterableCommand;
+import eu.pixliesearth.core.custom.commands.CIControl;
 import eu.pixliesearth.core.files.FileDirectory;
+import eu.pixliesearth.core.files.ListFile;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.pixliefun.PixliesFunGUI;
+import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -70,16 +73,21 @@ public class CustomFeatureLoader {
 		//loadCustomMachineRecipes(path);
 		//loadQuests(path);
 		loadMachines(path);
+		try {
+			new ListFile(getInstance().getDataFolder().getAbsolutePath()+"/", "disableditems").loadList().parallelStream().forEach((s) -> CIControl.DISABLED_ITEMS.add(s));
+		} catch (Exception ignore) {
+			System.err.println("Failed to load disabled custom items");
+		}
 		getHandler().loadSkillsFromFile();
 		try {
 			getHandler().loadCustomBlocksFromFileOptimised();
 		} catch (Exception e) {
-			System.out.println("Failed to load custom blocks");
+			System.err.println("Failed to load custom blocks");
 		}
 		try {
 			getHandler().loadMachinesFromFileOptimised();
 		} catch (Exception e) {
-			System.out.println("Failed to load custom machines data");
+			System.err.println("Failed to load custom machines data");
 		}
 		// loadVendors(path);
 		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
@@ -89,6 +97,13 @@ public class CustomFeatureLoader {
 	 * Saves everything
 	 */
 	public void save() {
+		try {
+			ListFile lf = new ListFile(getInstance().getDataFolder().getAbsolutePath()+"/", "disableditems");
+			lf.clearFile();
+			lf.writeArrayToFile((ArrayList<String>) Methods.convertSetIntoList(CIControl.DISABLED_ITEMS));
+		} catch (Exception ignore) {
+			System.err.println("Failed to save disabled custom items");
+		}
 		getHandler().saveSkillsToFile();
 		try {
 			getHandler().saveCustomBlocksToFileOptimised();

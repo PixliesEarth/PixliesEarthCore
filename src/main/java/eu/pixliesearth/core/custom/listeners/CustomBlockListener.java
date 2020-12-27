@@ -19,6 +19,7 @@ import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.custom.commands.CIControl;
 import eu.pixliesearth.core.listener.ProtectionManager;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -47,6 +48,11 @@ public class CustomBlockListener extends CustomListener {
 		if (event.getClickedBlock() == null) return;
 		CustomBlock id = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
 		if (id==null) return;
+		if (CIControl.DISABLED_ITEMS.contains(id.getUUID())) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage("§c[§r❌§c] §rThis item has been disabled!");
+			return;
+		}
 		event.setCancelled(id.onBlockIsInteractedWith(event));
 	}
 	
@@ -58,6 +64,11 @@ public class CustomBlockListener extends CustomListener {
 		if (event.isCancelled()) return;
 		String id = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("UUID");
 		if (id==null) return;
+		if (CIControl.DISABLED_ITEMS.contains(id)) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage("§c[§r❌§c] §rThis item has been disabled!");
+			return;
+		}
 		CustomItem c = CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
 		if (c==null) return;
 		if (!(c instanceof CustomBlock)) return; // To stop the custom item errors
@@ -92,6 +103,11 @@ public class CustomBlockListener extends CustomListener {
 		if (event.isCancelled()) return;
 		CustomBlock c = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getBlock().getLocation());
 		if (c==null) return;
+		if (CIControl.DISABLED_ITEMS.contains(c.getUUID())) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage("§c[§r❌§c] §rThis item has been disabled!");
+			return;
+		}
 		boolean b = c.BlockBreakEvent(event);
 		if (!b) {
 			event.setDropItems(false);
