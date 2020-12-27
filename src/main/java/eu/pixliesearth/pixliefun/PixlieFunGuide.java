@@ -176,7 +176,7 @@ public class PixlieFunGuide {
                 "\n" +
                 "\n" +
                 "\n" +
-                "§c❤ §fYour PixliesNet team"
+                "§c❤ §rYour PixliesNet team"
         );
 
         // META
