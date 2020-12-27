@@ -18,6 +18,7 @@ public final class SkillHandler implements Serializable {
 	private static SkillHandler skillHandler = Main.getInstance().getSkillHandler();
 	
 	public static SkillHandler getSkillHandler() {
+		if (skillHandler==null) skillHandler = new SkillHandler();
 		return skillHandler;
 	}
 	
@@ -36,9 +37,11 @@ public final class SkillHandler implements Serializable {
 	
 	public void createSkillsFor(UUID uuid) {
 		if (this.skillMap.containsKey(uuid)) return; // Don't override
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = this.skillMap.getOrDefault(uuid, new HashMap<>());
 		for (Skill skill : skills) {
-			map.put(skill.getSkillUUID(), 0);
+			if (!map.containsKey(skill.getSkillUUID())) {
+				map.put(skill.getSkillUUID(), 0);
+			}
 		}
 		this.skillMap.put(uuid, map);
 	}
@@ -52,7 +55,7 @@ public final class SkillHandler implements Serializable {
 	}
 	
 	public void addXPTo(UUID uuid, String skillUUID, int amount) {
-		skillMap.get(uuid).put(skillUUID, skillMap.get(uuid).get(skillUUID)+amount);
+		skillMap.get(uuid).put(skillUUID, skillMap.get(uuid).getOrDefault(skillUUID, 0)+amount);
 	}
 	
 	public void removeXPFrom(UUID uuid, String skillUUID, int amount) {

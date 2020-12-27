@@ -1,4 +1,4 @@
-package eu.pixliesearth.core.custom.listeners;
+package eu.pixliesearth.core.custom;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -20,13 +20,11 @@ import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.custom.items.EnergyToolExplosivePickaxe;
 import eu.pixliesearth.core.custom.items.EnergyToolLumberAxe;
 import eu.pixliesearth.core.custom.items.ToolLumberAxe;
@@ -39,6 +37,11 @@ import eu.pixliesearth.core.objects.Profile;
 public class SkillListener extends CustomListener {
 	
 	private final Random random = new Random();
+	
+	@EventHandler
+	public void PlayerJoinEvent(PlayerJoinEvent event) {
+		SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
+	}
 	
 	@EventHandler
 	public void SkillLevelGainedEvent(SkillLevelGainedEvent event) {
@@ -108,13 +111,13 @@ public class SkillListener extends CustomListener {
 	
 	@EventHandler
 	public void BlockPlaceEvent(BlockPlaceEvent event) {
-		if (event.isCancelled()) return;
+		if (event.isCancelled() || event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
 		new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Building", 1).callEvent();
 	}
 	
 	@EventHandler
 	public void BlockBreakEvent(BlockBreakEvent event) {
-		if (event.isCancelled()) return;
+		if (event.isCancelled() || event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
 		if (SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), "Pixlies:Mining")>=15) {
 			// (int) (Math.floor((level/15D))*10);
 			if ((random.nextInt(100)+1)<=SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), "Pixlies:Mining")/10) {
@@ -125,7 +128,7 @@ public class SkillListener extends CustomListener {
 		}
 		if (isWood(event.getBlock().getType())) {
 			new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Lumbering", random.nextInt(3)+1).callEvent();
-		} else if (event.getBlock().getBlockData() instanceof Ageable) {
+		} else if (event.getBlock().getBlockData()!=null && event.getBlock().getBlockData() instanceof Ageable) {
 			if (((Ageable)event.getBlock().getBlockData()).getMaximumAge()==((Ageable)event.getBlock().getBlockData()).getAge()) {
 				new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Farming", 1).callEvent();
 				if (SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), "Pixlies:Farming")>=35) {
