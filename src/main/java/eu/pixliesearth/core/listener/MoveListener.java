@@ -6,8 +6,10 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import net.pl3x.purpur.event.entity.EntityMoveEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +22,7 @@ import java.util.Objects;
 public class MoveListener implements Listener {
 
     private static final Main instance = Main.getInstance();
-    
+
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
     	try {

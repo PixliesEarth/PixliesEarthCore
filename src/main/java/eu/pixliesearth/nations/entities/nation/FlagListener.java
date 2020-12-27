@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import net.pl3x.purpur.event.entity.EntityMoveEvent;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +30,17 @@ public class FlagListener implements Listener {
         if (nc == null) return;
         Nation nation = nc.getCurrentNation();
         if (nation.getFlags().contains(NationFlag.PEACEFUL.name())) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityMove(EntityMoveEvent event) {
+        if (!(event.getEntity() instanceof Monster)) return;
+        if (event.getFrom().getChunk() != event.getTo().getChunk()) {
+            Nation nation = NationChunk.getNationData(event.getTo().getChunk());
+            if (nation == null) return;
+            if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
+            event.getEntity().remove();
+        }
     }
 
 }
