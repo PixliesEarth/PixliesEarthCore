@@ -1,11 +1,31 @@
 package eu.pixliesearth.core.objects;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.lang.WordUtils;
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.javacord.api.entity.permission.Role;
+
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
+
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.modules.economy.Receipt;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.discord.DiscordIngameRank;
@@ -22,14 +42,6 @@ import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.luckperms.api.model.group.Group;
-import org.apache.commons.lang.WordUtils;
-import org.bson.Document;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.javacord.api.entity.permission.Role;
-
-import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -326,6 +338,13 @@ public class Profile {
                 player.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 player.sendMessage(Lang.TELEPORTATION_SUCESS.get(player).replace("%LOCATION%", locationName));
+                double energyCost = manaNeeded;
+                if (SkillHandler.getSkillHandler().getLevelOf(player.getUniqueId(), "Pixlies:Traveling")>=10) {
+                    energyCost -= (0.1*(Math.floor(SkillHandler.getSkillHandler().getLevelOf(player.getUniqueId(), "Pixlies:Traveling")/10.0)));
+                    if (energyCost<0) {
+                        energyCost = 0.1;
+                    }
+                }
                 Energy.take(this, manaNeeded);
             }
         }, cooldown * 20);
