@@ -92,7 +92,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
     	if (inv==null) return null;
     	for (ItemStack is : inv.getContents()) {
-    		if (is.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+    		if (is.getType().equals(Material.RED_STAINED_GLASS_PANE) && is.getDisplayName().contains(", ")) {
     			String[] s = ChatColor.stripColor(is.getDisplayName()).split(", ");// "§b" + chunkX + "§8, §b" + chunkZ
     			Chunk c = world.getChunkAt((s[0].contains("-") ? -Integer.parseUnsignedInt(s[0].replaceAll("-", "")) : Integer.parseUnsignedInt(s[0])), (s[1].contains("-") ? -Integer.parseUnsignedInt(s[1].replaceAll("-", "")) : Integer.parseUnsignedInt(s[1])));
     			final int minX = c.getX() << 4;
