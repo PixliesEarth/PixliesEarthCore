@@ -2,6 +2,7 @@ package eu.pixliesearth.core.listener;
 
 import java.util.UUID;
 
+import eu.pixliesearth.pixliefun.PixlieFunGuide;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
     	
-    	SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
+    	// SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
     	
         Player player = event.getPlayer();
 
@@ -43,6 +44,7 @@ public class JoinListener implements Listener {
             profile.openLangGui();
             profile.addTimer("Free TP", new Timer(Timer.DAY));
             player.getInventory().addItem(new ItemBuilder(Material.BREAD, 16).setDisplayName("\uD83C\uDF5E§bBot_1").build());
+            PixlieFunGuide.giveBooks(player);
         }
 
         if (!instance.getUtilLists().vanishList.isEmpty()) {

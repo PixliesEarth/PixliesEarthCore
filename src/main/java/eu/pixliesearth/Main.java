@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import eu.pixliesearth.api.REST;
+import eu.pixliesearth.core.custom.skills.SkillHandler;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -172,6 +173,7 @@ public final class Main extends JavaPlugin {
     private @Getter final boolean warEnabled = true;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
+    private @Getter SkillHandler skillHandler;
 
     @Override
     public void onEnable() {
@@ -184,6 +186,8 @@ public final class Main extends JavaPlugin {
 
     @SuppressWarnings("resource")
 	private void init() {
+
+        skillHandler = new SkillHandler();
 
         gson = new Gson();
 
