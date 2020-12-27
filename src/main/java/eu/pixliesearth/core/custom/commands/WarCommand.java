@@ -142,14 +142,14 @@ public class WarCommand extends CustomCommand implements Constants {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() - 1);
-                gui.show(profile.getAsPlayer());
+                gui.update();
             } catch (Exception ignored) { }
         }), 0, 0);
         hotBar.addItem(new GuiItem(nextItem, event -> {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() + 1);
-                gui.show(profile.getAsPlayer());
+                gui.update();
             } catch (Exception ignored) { }
         }), 8, 0);
         gui.addPane(hotBar);
@@ -158,7 +158,7 @@ public class WarCommand extends CustomCommand implements Constants {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand(), new SkipJustificationCommand(), new SkipGraceCommand(), new StopCommand())};
+    	return new ITabable[] {new CustomSubCommand.TabableSubCommand(new JustifyWarGoalCommand(), new DeclareWarGoalCommand(), new InvitePlayerCommand(), new AcceptCommand(), new CancelJustificationCommand(), new SkipJustificationCommand(), new SkipGraceCommand(), new StopCommand(), new ListCommand())};
     }
     
     public static class TabableNation implements ITabable {
