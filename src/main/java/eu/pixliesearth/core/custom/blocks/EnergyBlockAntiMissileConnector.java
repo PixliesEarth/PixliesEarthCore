@@ -90,6 +90,7 @@ public class EnergyBlockAntiMissileConnector extends CustomEnergyBlock {
     
     public Location getWhereToDefendFromInventory(Inventory inv, World world) {
     	CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
+    	if (inv==null) return null;
     	for (ItemStack is : inv.getContents()) {
     		if (is.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
     			String[] s = ChatColor.stripColor(is.getDisplayName()).split(", ");// "§b" + chunkX + "§8, §b" + chunkZ
