@@ -106,6 +106,8 @@ public class CustomFeatureHandler {
 		categoriesForItems = new HashMap<>();
 
 		this.dropMap = new HashMap<>();
+		
+		registerSkills();
 
 		this.customRecipes = new HashSet<CustomRecipe>();
 
