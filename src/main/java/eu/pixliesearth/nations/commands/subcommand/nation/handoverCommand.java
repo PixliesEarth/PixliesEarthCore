@@ -63,9 +63,18 @@ public class handoverCommand extends SubCommand {
                 Lang.NO_PERMISSIONS.send(sender);
                 return false;
             }
-            if (profile.isInNation() && !Permission.CHANGE_LEADERSHIP.hasPermission(sender)) {
-                Lang.NO_PERMISSIONS.send(sender);
-                return false;
+            if (profile.isInNation()) {
+                if (profile.getNationId().equals(nation.getNationId())) {
+                    if (!Permission.hasNationPermission(profile, Permission.CHANGE_LEADERSHIP) && !profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(sender);
+                        return false;
+                    }
+                } else {
+                    if (!Permission.hasForeignPermission(profile, Permission.CHANGE_LEADERSHIP, nation) && !profile.isStaff()) {
+                        Lang.NO_PERMISSIONS.send(sender);
+                        return false;
+                    }
+                }
             }
         }
         if (!nation.getLeader().equalsIgnoreCase("NONE")) {

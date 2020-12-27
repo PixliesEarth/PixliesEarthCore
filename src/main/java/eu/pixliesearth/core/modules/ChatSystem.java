@@ -110,7 +110,7 @@ public class ChatSystem implements Listener, Module {
                     event.setCancelled(true);
                     switch (instance.getUtilLists().chatTypes.get(player.getUniqueId())) {
                         case NATION:
-                            profile.getCurrentNation().broadcastMembers("§bNATION-CHAT §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» " + event.getMessage());
+                            profile.getCurrentNation().broadcastMembers("§bNATION-CHAT §8| " + profile.getCurrentNationRank().getPrefix() + player.getDisplayName() + " §8» §7" + event.getMessage());
                             for (UUID uuid : instance.getUtilLists().staffMode) {
                                 Player target = Bukkit.getPlayer(uuid);
                                 if (target == null) continue;
