@@ -37,15 +37,24 @@ public class EnergyBlockWindTurbine extends CustomEnergyBlock {
 	@Override
 	public void onTick(Location location, Inventory inventory, Timer timer) {
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		int y = location.getBlockY()+4; // account for the top of the wind turbine
-		double amountToGive;
-		if (y<=60) {
-			amountToGive = 0.05D;
+		if (timer==null) {
+			h.registerTimer(location, new Timer(200l));
+			int y = location.getBlockY()+4; // account for the top of the wind turbine
+			double amountToGive;
+			if (y<=60) {
+				amountToGive = 0.05D;
+			} else {
+				amountToGive = ((y-60D)/10D);
+			}
+			if (isFull(location)) return;
+			h.addPowerToLocation(location, amountToGive);
 		} else {
-			amountToGive = ((y-60D)/10D);
+			if (timer.hasExpired()) {
+				h.unregisterTimer(location);
+			} else {
+				// do nothing
+			}
 		}
-		if (isFull(location)) return;
-		h.addPowerToLocation(location, amountToGive);
 	}
 
     @Override
