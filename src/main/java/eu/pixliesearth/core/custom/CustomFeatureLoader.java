@@ -1,5 +1,18 @@
 package eu.pixliesearth.core.custom;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
+
 import eu.pixliesearth.core.custom.CustomCommand.RegisterableCommand;
 import eu.pixliesearth.core.files.FileDirectory;
 import eu.pixliesearth.core.vendors.Vendor;
@@ -7,14 +20,6 @@ import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandMap;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.reflections.Reflections;
-
-import java.lang.reflect.Field;
-import java.util.*;
 
 /**
  * 
@@ -65,6 +70,7 @@ public class CustomFeatureLoader {
 		//loadCustomMachineRecipes(path);
 		//loadQuests(path);
 		loadMachines(path);
+		getHandler().loadSkillsFromFile();
 		try {
 			getHandler().loadCustomBlocksFromFileOptimised();
 		} catch (Exception e) {
@@ -83,6 +89,7 @@ public class CustomFeatureLoader {
 	 * Saves everything
 	 */
 	public void save() {
+		getHandler().saveSkillsToFile();
 		try {
 			getHandler().saveCustomBlocksToFileOptimised();
 		} catch (Exception e) {

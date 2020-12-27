@@ -76,7 +76,8 @@ public abstract class CustomEnergyBlock extends CustomSaveableBlock implements E
 			map.put("TIMEREX", Long.toString(timer.getExpiry()));
 			map.put("TIMEREN", Boolean.toString(timer.isEnded()));
 		}
-		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
+		Double energy = CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location);
+		map.put("ENERGY", (energy==null) ? Double.toString(0D) : Double.toString(energy));
 		return map;
 	}
 	

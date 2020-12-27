@@ -1,19 +1,20 @@
 package eu.pixliesearth.core.listener;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Timer;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.skills.SkillHandler;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Timer;
 
 public class JoinListener implements Listener {
 
@@ -21,6 +22,9 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+    	
+    	SkillHandler.getSkillHandler().createSkillsFor(event.getPlayer().getUniqueId());
+    	
         Player player = event.getPlayer();
 
         final long started = System.currentTimeMillis();

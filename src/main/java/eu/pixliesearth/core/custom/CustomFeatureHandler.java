@@ -25,6 +25,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import eu.pixliesearth.core.custom.interfaces.IConsumable;
 import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
+import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.vendors.Vendor;
@@ -510,6 +511,24 @@ public class CustomFeatureHandler {
 			fb.writeToFile(InventoryUtils.serialize(map));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void saveSkillsToFile() {
+		try {
+			FileBase fb = new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/customblocks/", "customMachines", ".txt");
+			fb.clearFile();
+			fb.writeToFile(InventoryUtils.serialize(SkillHandler.getSkillHandler()));
+		} catch (Exception ignore) {
+			System.out.println("Failed to save skills");
+		}
+	}
+	
+	public void loadSkillsFromFile() {
+		try {
+			SkillHandler.setSkills((SkillHandler)InventoryUtils.deserialize(String.join("", new FileBase(getInstance().getDataFolder().getAbsolutePath()+"/", "skills", ".txt").loadFileIntoArray())));
+		} catch (Exception ignore) {
+			System.out.println("Failed to load skills");
 		}
 	}
 	
