@@ -174,10 +174,12 @@ public final class Main extends JavaPlugin {
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
     private @Getter SkillHandler skillHandler;
+    private @Getter boolean testServer;
 
     @Override
     public void onEnable() {
         instance = this;
+        testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
@@ -196,22 +198,24 @@ public final class Main extends JavaPlugin {
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
 
-        String uri = getConfig().getString("mongodb-connectionstring");
-        if (uri == null) {
-            getLogger().warning("Plugin can't start because MongoDB URI is missing.");
-            Bukkit.getPluginManager().disablePlugin(instance);
-            return;
+        if (!testServer) {
+            String uri = getConfig().getString("mongodb-connectionstring");
+            if (uri == null) {
+                getLogger().warning("Plugin can't start because MongoDB URI is missing.");
+                Bukkit.getPluginManager().disablePlugin(instance);
+                return;
+            }
+            MongoClientURI clientURI = new MongoClientURI(uri);
+            MongoClient mongoClient = new MongoClient(clientURI);
+
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
+            playerCollection = mongoDatabase.getCollection(getConfig().getString("users-collection", "users"));
+            nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
+            warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
+
+            for (Document doc : warCollection.find())
+                utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
         }
-        MongoClientURI clientURI = new MongoClientURI(uri);
-        MongoClient mongoClient = new MongoClient(clientURI);
-
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
-        playerCollection = mongoDatabase.getCollection("users");
-        nationCollection = mongoDatabase.getCollection("nations");
-        warCollection = mongoDatabase.getCollection("wars");
-
-        for (Document doc : warCollection.find())
-            utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
 
         economy = new VaultAPI();
         getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);

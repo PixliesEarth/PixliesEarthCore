@@ -5,6 +5,9 @@ chatchannel: "ID_HERE"
 afktime: 15
 joined-so-far: 0
 max-claim-size: 3000
+nations-collection: "nations"
+users-collection: "users"
+wars-collection: "wars"
 modules:
   chatsystem:
     enabled: true
