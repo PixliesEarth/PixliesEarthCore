@@ -212,6 +212,10 @@ public class War {
     }
 
     public void tick() {
+        if (getDefenderInstance() == null || getAggressorInstance()  == null) {
+            this.remove();
+            return;
+        }
         if (!declareAble) {
             if (this.timers.containsKey("warGoalJustification"))
                 if (this.timers.get("warGoalJustification").hasExpired())
