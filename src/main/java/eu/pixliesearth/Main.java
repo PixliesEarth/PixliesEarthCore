@@ -173,7 +173,7 @@ public final class Main extends JavaPlugin {
     private @Getter final boolean warEnabled = true;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
-    private @Getter SkillHandler skillHandler;
+    private @Getter SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
 
     @Override
@@ -188,8 +188,6 @@ public final class Main extends JavaPlugin {
 
     @SuppressWarnings("resource")
 	private void init() {
-
-        skillHandler = new SkillHandler();
 
         gson = new Gson();
 

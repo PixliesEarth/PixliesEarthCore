@@ -25,7 +25,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import eu.pixliesearth.core.custom.interfaces.IConsumable;
 import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 import eu.pixliesearth.core.custom.interfaces.Tickable;
-import eu.pixliesearth.core.custom.skills.Skill;
+import eu.pixliesearth.core.custom.skills.SimpleSkill;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.files.FileBase;
 import eu.pixliesearth.core.files.JSONFile;
@@ -75,7 +75,7 @@ public class CustomFeatureHandler {
 	 * The instance of {@link CustomFeatureLoader} that initiated this class
 	 */
 	private @Getter @Setter CustomFeatureLoader loader;
-
+	
 	private @Getter final Map<CustomItem.Category, List<String>> categoriesForItems;
 
 	/**
@@ -106,8 +106,6 @@ public class CustomFeatureHandler {
 		categoriesForItems = new HashMap<>();
 
 		this.dropMap = new HashMap<>();
-		
-		registerSkills();
 
 		this.customRecipes = new HashSet<CustomRecipe>();
 
@@ -136,54 +134,17 @@ public class CustomFeatureHandler {
 	
 	public void registerSkills() {
 		SkillHandler skillHandler = SkillHandler.getSkillHandler();
-		class CreateableSkill extends Skill {
-			
-			private static final long serialVersionUID = -4881018984700621605L;
-			
-			private final String name;
-			private final String UUID;
-			private final int maxLevel;
-			
-			public CreateableSkill(String name, String UUID, int maxLevel) {
-				this.name = name;
-				this.UUID = UUID;
-				this.maxLevel = maxLevel;
-			}
-			
-			public CreateableSkill(String name, int maxLevel) {
-				this(name, "Pixlies:"+name, maxLevel);
-			}
-			
-			public CreateableSkill(String name) {
-				this(name, 100);
-			}
-			
-			@Override
-			public String getSkillName() {
-				return this.name;
-			}
-
-			@Override
-			public int getMaxSkillLevel() {
-				return this.maxLevel;
-			}
-
-			@Override
-			public String getSkillUUID() {
-				return this.UUID;
-			}
-			
-		}
-		skillHandler.registerSkill(new CreateableSkill("Lumbering"));//
-		skillHandler.registerSkill(new CreateableSkill("Mining"));//
-		skillHandler.registerSkill(new CreateableSkill("Building"));//
-		skillHandler.registerSkill(new CreateableSkill("Traveling"));//
-		skillHandler.registerSkill(new CreateableSkill("Farming"));//
-		skillHandler.registerSkill(new CreateableSkill("Hunting"));//
-		skillHandler.registerSkill(new CreateableSkill("Enchanting"));//
-		skillHandler.registerSkill(new CreateableSkill("Fishing"));//
-		skillHandler.registerSkill(new CreateableSkill("Taming"));//
-		skillHandler.registerSkill(new CreateableSkill("Questing"));
+		skillHandler.registerSkill(new SimpleSkill("Lumbering"));//
+		skillHandler.registerSkill(new SimpleSkill("Mining"));//
+		skillHandler.registerSkill(new SimpleSkill("Building"));//
+		skillHandler.registerSkill(new SimpleSkill("Traveling"));//
+		skillHandler.registerSkill(new SimpleSkill("Farming"));//
+		skillHandler.registerSkill(new SimpleSkill("Hunting"));//
+		skillHandler.registerSkill(new SimpleSkill("Enchanting"));//
+		skillHandler.registerSkill(new SimpleSkill("Fishing"));//
+		skillHandler.registerSkill(new SimpleSkill("Taming"));//
+		skillHandler.registerSkill(new SimpleSkill("Questing"));
+		System.out.println("Registered skills");
 	}
 	
 	

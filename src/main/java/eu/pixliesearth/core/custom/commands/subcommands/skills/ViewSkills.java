@@ -25,6 +25,7 @@ public class ViewSkills extends CustomSubCommand {
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
 		SkillHandler skillHandler = SkillHandler.getSkillHandler();
+		commandSender.sendMessage("§eThere are §r"+skillHandler.getSkills().size()+"§e skills");
 		commandSender.sendMessage("§e+-------------+"); // 15 long (13 -'s)
 		for (Skill skill : skillHandler.getSkills()) 
 			commandSender.sendMessage(buildSkillComponent(skill));

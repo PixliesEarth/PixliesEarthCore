@@ -79,6 +79,7 @@ public class CustomFeatureLoader {
 			System.err.println("Failed to load disabled custom items");
 		}
 		getHandler().loadSkillsFromFile();
+		getHandler().registerSkills();
 		try {
 			getHandler().loadCustomBlocksFromFileOptimised();
 		} catch (Exception e) {

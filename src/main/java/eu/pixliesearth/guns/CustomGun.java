@@ -149,13 +149,15 @@ public abstract class CustomGun extends CustomItem {
 			        	}
 			        }
 			        if (result==null) {
-			        	
+			        	return false;
 			        } else {
-			        	double damage = pammo.getDamage();
-		        		damage = damage-(getChesplateToughness(result)/(damage*1.83333333333));
+			        	//double damage = pammo.getDamage()-(getChesplateToughness(result)/(pammo.getDamage()*1.83333333333));
+			        	double damage = (getChesplateToughness(result)==0) ? pammo.getDamage() : ((((7.5-(getChesplateToughness(result)))-pammo.getDamage())/pammo.getDamage())/2);
 			        	if (headshot) {
 			        		damage *= 2;
 			        	}
+			        	damage *= 2.5;
+			        	if (damage<0.3) damage = 0.3;
 			        	result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
 						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
 						Bukkit.getPluginManager().callEvent(nevent);
@@ -166,7 +168,8 @@ public abstract class CustomGun extends CustomItem {
 								result.setHealth(result.getHealth() - (damage));
 							}
 							result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
-							result.damage(0);
+							result.damage(0.1);
+							result.damage(-0.1);
 						}
 			        }
 				} else {
@@ -178,14 +181,28 @@ public abstract class CustomGun extends CustomItem {
 	}
 	
 	protected double getChesplateToughness(LivingEntity e) {
+		double value = 0;
+		if (e.getEquipment().getChestplate()==null) return 0;
 		try {
 			for (AttributeModifier a : e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS)) {
-				if (a.getSlot().equals(EquipmentSlot.CHEST)) {
-					return a.getAmount();
-				}
+				value += a.getAmount();
 			}
+			return value;
 		} catch (Exception ignore) {}
-		return 0;
+		if (value<=0) {
+			switch(e.getEquipment().getChestplate().getType()) {
+				case DIAMOND_CHESTPLATE :
+					value = 2;
+					break;
+				case NETHERITE_CHESTPLATE :
+					value = 3;
+					break;
+				default :
+					value = 0;
+					break;
+			}
+		}
+		return value;
 	}
 	
 	@Override

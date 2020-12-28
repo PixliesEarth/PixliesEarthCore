@@ -80,7 +80,7 @@ public class SkillListener extends CustomListener {
 	
 	@EventHandler
 	public void SkillXPGainedEvent(SkillXPGainedEvent event) {
-		if (event.getAmount()<=0) {
+		if (event.getAmount()<=0 || event.getGainedSkillUUID()==null) {
 			event.setCancelled(true);
 			return;
 		}

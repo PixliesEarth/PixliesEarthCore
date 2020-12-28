@@ -1,7 +1,5 @@
 package eu.pixliesearth.core.custom.skills;
 
-import eu.pixliesearth.Main;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,10 +13,12 @@ public final class SkillHandler implements Serializable {
 	
 	private static final long serialVersionUID = -7062481020279469116L;
 
-	private static SkillHandler skillHandler = Main.getInstance().getSkillHandler();
+	private static SkillHandler skillHandler;
 	
 	public static SkillHandler getSkillHandler() {
-		if (skillHandler==null) skillHandler = new SkillHandler();
+		if (skillHandler==null) {
+			skillHandler = new SkillHandler();
+		}
 		return skillHandler;
 	}
 	
@@ -51,6 +51,7 @@ public final class SkillHandler implements Serializable {
 	}
 	
 	public void registerSkill(Skill skill) {
+		skills.removeIf((s) -> s.getSkillUUID().equals(skill.getSkillUUID()));
 		skills.add(skill);
 	}
 	
