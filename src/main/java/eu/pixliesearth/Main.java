@@ -198,7 +198,6 @@ public final class Main extends JavaPlugin {
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
 
-        if (!testServer) {
             String uri = getConfig().getString("mongodb-connectionstring");
             if (uri == null) {
                 getLogger().warning("Plugin can't start because MongoDB URI is missing.");
@@ -215,7 +214,6 @@ public final class Main extends JavaPlugin {
 
             for (Document doc : warCollection.find())
                 utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
-        }
 
         economy = new VaultAPI();
         getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);
@@ -361,7 +359,7 @@ public final class Main extends JavaPlugin {
         dynmapKernel.onEnable();
 
         nationsTop = new NTop();
-        rest = new REST();
+        if (!testServer) rest = new REST();
         // machineTask = new MachineTask();
 
         // MACHINES
