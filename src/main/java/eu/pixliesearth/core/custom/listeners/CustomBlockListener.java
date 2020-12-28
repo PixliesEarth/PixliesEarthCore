@@ -147,6 +147,7 @@ public class CustomBlockListener extends CustomListener {
 	
 	@EventHandler
     public void EntityExplodeEvent(EntityExplodeEvent event) {
+		if (event.isCancelled()) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		for (Block b : event.blockList().toArray(new Block[event.blockList().size()])){
 			if(h.isCustomBlockAtLocation(b.getLocation())){
@@ -163,6 +164,7 @@ public class CustomBlockListener extends CustomListener {
 	
 	@EventHandler
     public void BlockExplodeEvent(BlockExplodeEvent event) {
+		if (event.isCancelled()) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
 		for (Block b : event.blockList().toArray(new Block[event.blockList().size()])){
 			if(h.isCustomBlockAtLocation(b.getLocation())) {

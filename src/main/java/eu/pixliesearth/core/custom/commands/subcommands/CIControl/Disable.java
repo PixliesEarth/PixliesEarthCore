@@ -44,8 +44,8 @@ public class Disable extends CustomSubCommand {
 			commandSender.sendMessage("§c[§r❌§c] §rThis item is already disabled!");
 			return false;
 		} else {
-			CIControl.DISABLED_ITEMS.remove(id);
-			commandSender.sendMessage("§a[§r✔️§a] §rDisabled the custom item "+id);
+			CIControl.DISABLED_ITEMS.add(id);
+			commandSender.sendMessage("§a[§r✔§a] §rDisabled the custom item "+id);
 			return true;
 		}
 	}

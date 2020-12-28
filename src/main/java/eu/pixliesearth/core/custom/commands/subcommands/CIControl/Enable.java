@@ -39,7 +39,7 @@ public class Enable extends CustomSubCommand {
 			return false;
 		} else {
 			CIControl.DISABLED_ITEMS.remove(id);
-			commandSender.sendMessage("§a[§r✔️§a] §rEnabled the custom item "+id);
+			commandSender.sendMessage("§a[§r✔§a] §rEnabled the custom item "+id);
 			return true;
 		}
 	}
