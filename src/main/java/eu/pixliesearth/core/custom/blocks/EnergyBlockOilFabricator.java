@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.google.common.collect.Table.Cell;
 
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
@@ -78,6 +79,21 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		} catch (ParseException e) {
 			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, getLiquidCapacities().keySet());
 		}
+		try {
+			JSONObject obj = (JSONObject) new JSONParser().parse(map.get("OIL"));
+			for (Object key : obj.keySet()) {
+				if (key instanceof String) {
+					String string = (String) key;
+					if (string.contains(", ")) {
+						String[] strings = string.split(", ");
+						int value = (int) obj.get(key);
+						oilTable.put(((strings[0].startsWith("-")) ? -(Integer.parseUnsignedInt(strings[0].replaceAll("-", ""))) : Integer.parseUnsignedInt(strings[0])), ((strings[1].startsWith("-")) ? -(Integer.parseUnsignedInt(strings[1].replaceAll("-", ""))) : Integer.parseUnsignedInt(strings[1])), value);
+					}
+				}
+			}
+		} catch (ParseException e) {
+			System.err.println("Failed to load oil map!");
+		}
     }
 	
 	@SuppressWarnings("unchecked")
@@ -92,6 +108,10 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		JSONObject obj = new JSONObject();
 		obj.put(oilID, Integer.toString(CustomLiquidHandler.getCustomLiquidHandler().getLiquidContentsAtAtBasedOnUUID(location, oilID)));
 		map.put("LIQUID", obj.toJSONString());
+		JSONObject obj2 = new JSONObject();
+		for (Cell<Integer, Integer, Integer> cell : oilTable.cellSet()) {
+			obj2.put(cell.getRowKey()+", "+cell.getColumnKey(), cell.getValue());
+		}
 		return map;
 	}
 	
