@@ -188,7 +188,7 @@ public class SkillListener extends CustomListener {
 	
 	@EventHandler
 	public void EntityDeathEvent(EntityDeathEvent event) {
-		if (event.isCancelled()) return;
+		if (event.isCancelled() || event.getEntity()==null || event.getEntity().getKiller()==null) return;
 		new SkillXPGainedEvent(event.getEntity().getKiller(), "Pixlies:Hunting", (int) Math.ceil((event.getEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue()/10D))).callEvent();
 	}
 	
