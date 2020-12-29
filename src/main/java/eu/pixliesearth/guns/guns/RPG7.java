@@ -33,6 +33,7 @@ public class RPG7 extends CustomGun {
 			if (customItem instanceof CustomGun) {
 				CustomGun customGun = (CustomGun) customItem;
 				if (Methods.removeRequiredAmount(customGun.getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
+					event.getPlayer().getInventory().setItemInMainHand(null);
 					event.getPlayer().sendActionBar("§b§lReloading...");
 					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 						
