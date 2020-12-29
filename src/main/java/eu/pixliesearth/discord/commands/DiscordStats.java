@@ -40,7 +40,7 @@ public class DiscordStats extends DiscordCommand {
                                 .addInlineField("Discord synced", profile.discordIsSynced() + "")
                                 .addInlineField("Nation rank", profile.getNationRank())
                                 .addInlineField("Married to", marriagePartner)
-                                .setImage("https://minotar.net/avatar/" + profile.getAsOfflinePlayer().getName())
+                                .setImage("https://minotar.net/avatar/" + profile.getAsOfflinePlayer().getUniqueId())
                                 .setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar())
                 );
             }

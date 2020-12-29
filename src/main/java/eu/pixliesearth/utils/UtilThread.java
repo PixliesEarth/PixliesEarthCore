@@ -53,10 +53,9 @@ public class UtilThread extends Thread {
             DiscordMessage dm = new DiscordMessage.Builder()
                     .withUsername(Bukkit.getOfflinePlayer(entry.getKey()).getName())
                     .withContent(ChatColor.stripColor(entry.getValue().replace("@", "").replace("discord.gg", "").replace("discord.com", "")))
-                    .withAvatarURL("https://minotar.net/avatar/" + Bukkit.getOfflinePlayer(entry.getKey()).getName())
+                    .withAvatarURL("https://minotar.net/avatar/" + Bukkit.getOfflinePlayer(entry.getKey()).getUniqueId())
                     .build();
             Main.getInstance().getUtilLists().webhook.sendMessage(dm);
-            System.out.println(Bukkit.getOfflinePlayer(entry.getKey()).getName());
             Main.getInstance().getUtilLists().chatQueue.remove(entry.getKey());
         }
 
