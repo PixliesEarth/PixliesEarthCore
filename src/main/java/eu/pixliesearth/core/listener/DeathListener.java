@@ -33,7 +33,7 @@ public class DeathListener implements Listener {
         String finalDeathMessage = StringUtils.isNotBlank(deathMessage) ? deathMessage : "";
         String endDeathMessage = finalDeathMessage.replace(player.getName(), ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName())));
 
-        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("**" + endDeathMessage + "**");
+        MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("**" + ChatColor.stripColor(endDeathMessage) + "**");
 
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.getTimers().remove("§c§lCombat");
