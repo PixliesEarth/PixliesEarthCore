@@ -54,7 +54,7 @@ public class SkillListener extends CustomListener {
 		}
 		if (event.isCancelled()) return;
 		
-		event.getPlayer().sendMessage("§a[§r✔️§a]§r You have gained a level in "+event.getGainedSkillUUID()+"!");
+		event.getPlayer().sendMessage("§a[§r✔§a]§r You have gained a level in "+event.getGainedSkillUUID()+"!");
 		event.getPlayer().sendMessage("§aYou are now level §r"+event.getNewLevel()+"§a!");
 		
 		Profile profile = Main.getInstance().getProfile(event.getPlayer().getUniqueId());
@@ -66,10 +66,10 @@ public class SkillListener extends CustomListener {
 			}
 		} else if (event.getGainedSkillUUID().equals("Pixlies:Lumbering")) {
 			if (event.getOldLevel()<10 && event.getNewLevel()>=10) {
-				event.getPlayer().sendMessage("§a[§r✔️§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(ToolLumberAxe.class).getUUID());
+				event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(ToolLumberAxe.class).getUUID());
 			}
 			if (event.getOldLevel()<35 && event.getNewLevel()>=35) {
-				event.getPlayer().sendMessage("§a[§r✔️§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(EnergyToolLumberAxe.class).getUUID());
+				event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(EnergyToolLumberAxe.class).getUUID());
 			}
 		} else if (event.getGainedSkillUUID().equals("Pixlies:Mining")) {
 			if (event.getOldLevel()<35 && event.getNewLevel()>=35) {

@@ -1,16 +1,18 @@
 package eu.pixliesearth.core.custom;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
@@ -39,8 +41,13 @@ public class CustomRecipe {
 		return 1;
 	}
 	// TODO: notes
+	@Deprecated
 	public Era getEraNeeded() {
 		return Era.TRIBAL;
+	}
+	// TODO: notes
+	public boolean canCraft(UUID crafter) {
+		return true;
 	}
 	// TODO: notes
 	public Map<Integer, String> getContentsList() {

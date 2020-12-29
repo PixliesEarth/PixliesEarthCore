@@ -52,21 +52,26 @@ public class CustomCraftingListener extends CustomListener {
 	public boolean craft(Player player, Map<Integer, String> map, Inventory inv) {
 		CustomRecipe customRecipe = getCustomRecipe(map);
 		if (customRecipe==null) {
-			player.sendMessage("§cInvalid recipe");
+			player.sendMessage("§c[§r❌§c] §rInvalid recipe");
 			return false;
 		} else {
-			player.sendMessage("§aCrafting "+customRecipe.getResultUUID());
-			ItemStack[] isl = inv.getContents();
-			for (int i = 0; i < isl.length; i++) {
-				ItemStack is = isl[i];
-				if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) continue;
-				is.setAmount(is.getAmount()-1);
-				isl[i] = is;
+			if (!customRecipe.canCraft(player.getUniqueId())) {
+				player.sendMessage("§c[§r❌§c] §rYou dont have access to this recipe!");
+				return false;
+			} else {
+				player.sendMessage("§a[§r✔§a] §rCrafting "+customRecipe.getResultUUID());
+				ItemStack[] isl = inv.getContents();
+				for (int i = 0; i < isl.length; i++) {
+					ItemStack is = isl[i];
+					if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) continue;
+					is.setAmount(is.getAmount()-1);
+					isl[i] = is;
+				}
+				inv.setContents(isl);
+				for (int i = 0; i < customRecipe.getResultAmount(); i++)
+					player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+				return true;
 			}
-			inv.setContents(isl);
-			for (int i = 0; i < customRecipe.getResultAmount(); i++)
-				player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
-			return true;
 		}
 	}
 	
