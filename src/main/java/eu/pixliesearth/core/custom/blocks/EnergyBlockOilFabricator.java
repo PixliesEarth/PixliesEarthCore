@@ -2,17 +2,24 @@ package eu.pixliesearth.core.custom.blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World.Environment;
+import org.bukkit.block.Biome;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
@@ -21,6 +28,8 @@ import eu.pixliesearth.core.custom.CustomLiquidHandler;
 import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
 public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiquidable {
@@ -40,13 +49,15 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	
 	@Override
     public String getDefaultDisplayName() {
-        return "§6Oil Fabricator";
+        return "§6Oil Pump";
 	}
     
     @Override
     public String getUUID() {
         return "Machine:Oil_Fabricator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+    
+    private final double energyPerAction = 2;
     
     @Override
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
@@ -83,7 +94,8 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		map.put("LIQUID", obj.toJSONString());
 		return map;
 	}
-    
+	
+	private Table<Integer, Integer, Integer> oilTable = HashBasedTable.create();
 	
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
@@ -92,27 +104,77 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		CustomLiquidHandler l = CustomLiquidHandler.getCustomLiquidHandler();
 		if (inv==null) return;
 		inv.setItem(25, buildInfoItem(loc));
-		if (h.getPowerAtLocation(loc)<=0) return;
+		int remainingOil = oilInChunk(loc);
+		if (remainingOil<=0) {
+			inv.setItem(12, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cOut of oil!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
+		} else {
+			if (getCapacity(loc)<=energyPerAction) {
+				inv.setItem(12, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cOut of energy!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
+			} else {
+				inv.setItem(12, new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayName("§aExtracting of oil!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
+				l.addLiquidTo(loc, oilID, 1);
+				takeOil(loc, 1);
+				h.removePowerFromLocation(loc, energyPerAction);
+			}
+		}
+		inv.setItem(14, new ItemBuilder(Material.BROWN_STAINED_GLASS_PANE).setDisplayName("§aOil info").addLoreLine("§aOil: "+l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)).addLoreLine("§aTotal Oil: "+remainingOil).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 		ItemStack itemStack = inv.getItem(13);
 		if (itemStack==null) return;
-		if (CustomItemUtil.getUUIDFromItemStack(itemStack).equalsIgnoreCase("Pixlies:Biofuel")) {
-			if (l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)>=1000) return;
-			itemStack.setAmount(itemStack.getAmount()-1);
-			if (itemStack==null || itemStack.getAmount()<=0) {
-				inv.clear(13);
-			} else {
-				inv.setItem(13, itemStack);
-			}
-			h.removePowerFromLocation(loc, 2.5);
-			l.addLiquidTo(loc, oilID, 1);
-		} else if(CustomItemUtil.getUUIDFromItemStack(itemStack).equalsIgnoreCase("Pixlies:Canister")) {
+		if (CustomItemUtil.getUUIDFromItemStack(itemStack).equals("Pixlies:Canister")) {
 			if (l.getLiquidContentsAtAtBasedOnUUID(loc, oilID)>=1000) {
 				inv.setItem(13, CustomItemUtil.getItemStackFromUUID("Pixlies:Canister_Oil"));
 				l.removeLiquidFrom(loc, oilID, 1000);
 			}
 		}
 	}
+	
+	private Random random = new Random();
+	
+	private int oilInChunk(Location loc) {
+		if (!loc.getWorld().getEnvironment().equals(Environment.NORMAL)) return 0;
+		Chunk chunk = loc.getChunk();
+	    Integer oil = oilTable.get(chunk.getX(), chunk.getZ());
+	    if (oil==null) {
+	    	Biome biome = loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+	    	switch (biome) {
+	    	case DESERT :
+	    	case DESERT_HILLS :
+	    		oil = 1000 + (random.nextInt(3000)+1);
+	    		break;
+	    	case OCEAN :
+	    	case COLD_OCEAN :
+	    	case LUKEWARM_OCEAN :
+	    	case FROZEN_OCEAN :
+	    	case WARM_OCEAN :
+	    		oil = 1000 + (random.nextInt(1500)+1);
+	    		break;
+	    	case DEEP_COLD_OCEAN :
+	    	case DEEP_FROZEN_OCEAN :
+	    	case DEEP_LUKEWARM_OCEAN :
+	    	case DEEP_OCEAN :
+	    	case DEEP_WARM_OCEAN :
+	    		oil = 1000 + (random.nextInt(3000)+1);
+	    		break;
+	    	case DESERT_LAKES :
+	    		oil = 1000 + (random.nextInt(4000)+1);
+	    		break;
+	    	default :
+	    		oil = 350 + (random.nextInt(750)+1);
+	    		break;
+	    	}
+	    	oilTable.put(chunk.getX(), chunk.getZ(), oil);
+	    	return oil;
+	    } else {
+	    	return oil;
+	    }
+	}
     
+	private void takeOil(Location loc, int amount) {
+		if (!loc.getWorld().getEnvironment().equals(Environment.NORMAL)) return;
+		Chunk chunk = loc.getChunk();
+		oilTable.put(chunk.getX(), chunk.getZ(), (oilTable.get(chunk.getX(), chunk.getZ())-amount));
+	}
+	
     @Override
     public boolean InventoryClickEvent(InventoryClickEvent event) {
     	if (event.getCurrentItem()==null || event.getCurrentItem().getType().equals(Material.AIR)) return false;
@@ -134,5 +196,11 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		return new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = -3992298522257305061L;{
 			put(oilID, 1000);
 		}};
+	}
+	
+	@Override
+	public boolean BlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
+		CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(event.getBlock().getLocation(), getLiquidCapacities().keySet());
+		return super.BlockPlaceEvent(event);
 	}
 }
