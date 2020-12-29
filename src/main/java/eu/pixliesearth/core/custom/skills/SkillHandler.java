@@ -1,8 +1,10 @@
 package eu.pixliesearth.core.custom.skills;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -88,6 +90,32 @@ public final class SkillHandler implements Serializable {
 			}
 		}
 		return -1;
+	}
+	
+	protected Map<String, List<UUID>> leaderboardMap = new HashMap<>();
+	private long leaderboardRefreshTimer = 0;
+	
+	public List<UUID> getLeaderboardOf(String skillUUID) {
+		if (System.currentTimeMillis()<leaderboardRefreshTimer) {
+			return leaderboardMap.get(skillUUID);
+		}
+		Map<String, List<UUID>> newMap = new HashMap<>();
+		for (Skill skill : skills) {
+			Map<UUID, Integer> map = new HashMap<>();
+			skillMap.entrySet().parallelStream().forEach((entry) -> {
+				map.put(entry.getKey(), entry.getValue().getOrDefault(skillUUID, 0));
+			});
+			List<Entry<UUID, Integer>> list = new ArrayList<>(map.entrySet());
+	        list.sort(Entry.comparingByValue());
+	        List<UUID> list2 = new ArrayList<>();
+	        for (Entry<UUID, Integer> entry : list) {
+	        	list2.add(0, entry.getKey()); // Invert list
+	        }
+	        newMap.put(skill.getSkillUUID(), list2);
+		}
+		leaderboardMap = newMap;
+        leaderboardRefreshTimer = System.currentTimeMillis()+7500l;
+		return getLeaderboardOf(skillUUID);
 	}
 	
 }

@@ -5,6 +5,8 @@ import org.bukkit.command.CommandSender;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand.TabableSubCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.skills.GetSkill;
+import eu.pixliesearth.core.custom.commands.subcommands.skills.LeaderboardSkill;
+import eu.pixliesearth.core.custom.commands.subcommands.skills.RanksSkill;
 import eu.pixliesearth.core.custom.commands.subcommands.skills.ViewSkills;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 
@@ -27,7 +29,7 @@ public class SkillCommand extends CustomCommand {
 	
 	@Override
 	public ITabable[] getParams() {
-		return new ITabable[] {new TabableSubCommand(new GetSkill(), new ViewSkills())};
+		return new ITabable[] {new TabableSubCommand(new GetSkill(), new ViewSkills(), new LeaderboardSkill(), new RanksSkill())};
 	}
 
 }
