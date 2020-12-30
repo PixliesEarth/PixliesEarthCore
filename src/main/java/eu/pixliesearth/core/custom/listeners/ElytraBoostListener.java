@@ -8,6 +8,7 @@ public class ElytraBoostListener extends CustomListener {
 
     @EventHandler
     public void onBoost(PlayerElytraBoostEvent event) {
+        if (event.getPlayer().getWorld().getName().contains("the_end")) return;
         event.setCancelled(true);
     }
 
