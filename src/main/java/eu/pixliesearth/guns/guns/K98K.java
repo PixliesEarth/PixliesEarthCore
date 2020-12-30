@@ -49,5 +49,10 @@ public class K98K extends CustomGun {
 	public String getOrigin() {
 		return "Germany";
 	}
-
+	
+	@Override
+	public long getDelayPerShot() {
+		return 550l;
+	}
+	
 }
