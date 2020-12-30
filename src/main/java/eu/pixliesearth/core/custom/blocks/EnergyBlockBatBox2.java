@@ -4,6 +4,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.interfaces.Energyable;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import org.bukkit.Bukkit;
@@ -13,7 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class EnergyBlockBatBox2 extends CustomEnergyBlock {
+public class EnergyBlockBatBox2 extends CustomEnergyBlock implements IHopperable {
 	
 	public EnergyBlockBatBox2() {
 		
@@ -27,6 +28,7 @@ public class EnergyBlockBatBox2 extends CustomEnergyBlock {
 		inv.clear(34);
 		inv.clear(13);
 		inv.clear(22);
+		inv.setMaxStackSize(1);
 		return inv;
 	}
 	
@@ -93,5 +95,33 @@ public class EnergyBlockBatBox2 extends CustomEnergyBlock {
     public String getUUID() {
         return "Machine:Charger_Intermediate"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack is = inv.getItem(13);
+		if (is==null || is.getType().equals(Material.AIR)) {
+			return null;
+		} else {
+			if (getContainedPower(is)>=getCapacity(is)) {
+				inv.clear(13);
+				return is;
+			} else {
+				return null;
+			}
+		}
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack is = inv.getItem(13);
+		if (is==null || is.getType().equals(Material.AIR)) {
+			inv.setItem(13, itemStack);
+			return true;
+		} else {
+			return false;
+		}
+	}
     
 }

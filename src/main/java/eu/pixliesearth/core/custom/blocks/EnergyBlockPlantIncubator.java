@@ -11,6 +11,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -18,7 +19,7 @@ import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.Timer;
 
-public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
+public class EnergyBlockPlantIncubator extends CustomEnergyBlock implements IHopperable {
 	
 	public EnergyBlockPlantIncubator() {
 		
@@ -172,5 +173,22 @@ public class EnergyBlockPlantIncubator extends CustomEnergyBlock {
     public String getUUID() {
         return "Machine:Plant_Incubator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(13);
+		if (itemStack2==null || itemStack2.getType().equals(Material.AIR)) {
+			inv.setItem(13, itemStack);
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }

@@ -21,6 +21,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -154,9 +155,21 @@ public class SkillListener extends CustomListener {
 		}
 	}
 	
+	@EventHandler
+	public void PlayerMoveEvent(PlayerMoveEvent event) {
+		if (((event.getFrom().getBlockX()!=event.getTo().getBlockX()) || (event.getFrom().getBlockZ()!=event.getTo().getBlockZ())) && !event.getPlayer().getLocation().getBlock().getType().equals(Material.WATER) && !event.getPlayer().getLocation().getBlock().getType().equals(Material.LAVA)) {
+			DISTANCE_MAP.put(event.getPlayer().getUniqueId(), (DISTANCE_MAP.getOrDefault(event.getPlayer().getUniqueId(), 0)+1));
+		}
+		if (DISTANCE_MAP.getOrDefault(event.getPlayer().getUniqueId(), 0)>3) {
+			DISTANCE_MAP.put(event.getPlayer().getUniqueId(), DISTANCE_MAP.getOrDefault(event.getPlayer().getUniqueId(), 0)-3);
+			new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Traveling", 1).callEvent();
+		}
+	}
+	
 	private static final Map<UUID, Integer> DISTANCE_MAP = new HashMap<>();
 	
-	@EventHandler
+	// @EventHandler
+	@Deprecated
 	public void PlayerStatisticIncrementEvent(PlayerStatisticIncrementEvent event) {
 		if (event.isCancelled()) return;
 		if (event.getStatistic().equals(Statistic.WALK_ONE_CM)) {

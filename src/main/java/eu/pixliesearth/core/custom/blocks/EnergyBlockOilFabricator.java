@@ -26,6 +26,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomLiquidHandler;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -33,7 +34,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
-public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiquidable {
+public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiquidable, IHopperable {
 	
 	public EnergyBlockOilFabricator() {
 		
@@ -222,5 +223,27 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	public boolean BlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
 		CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(event.getBlock().getLocation(), getLiquidCapacities().keySet());
 		return super.BlockPlaceEvent(event);
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack = inv.getItem(13);
+		if (itemStack==null || itemStack.getType().equals(Material.AIR) || CustomItemUtil.getUUIDFromItemStack(itemStack).equals("Pixlies:Canister")) {
+			return null;
+		}
+		return itemStack;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(13);
+		if (itemStack2==null || itemStack2.getType().equals(Material.AIR)) {
+			inv.setItem(13, itemStack);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

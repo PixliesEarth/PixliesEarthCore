@@ -4,6 +4,8 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomLiquidHandler;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
@@ -21,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidable {
+public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidable, IHopperable {
 	
 	public EnergyBlockOilBurner() {
 		
@@ -255,5 +257,45 @@ public class EnergyBlockOilBurner extends CustomEnergyBlock implements ILiquidab
     public ItemStack buildTempItem(Location location) {
 		Double temp = getTemprature(location);
 		return new ItemBuilder((temp==null) ? Material.GRAY_STAINED_GLASS_PANE : (temp<35) ? Material.PINK_STAINED_GLASS_PANE : (temp<100) ? Material.PURPLE_STAINED_GLASS_PANE : (temp<250) ? Material.GREEN_STAINED_GLASS_PANE : (temp<300) ? Material.YELLOW_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE).setDisplayName((temp==null) ? "§cError!" : "§cTemprature").addLoreLine((temp==null) ? "§cRecieved a null!" : "§c"+temp+"°c").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack = inv.getItem(20);
+		if (itemStack!=null && !itemStack.getType().equals(Material.AIR)) {
+			ItemStack itemStack2 = itemStack.clone().asOne();
+			itemStack.setAmount(itemStack.getAmount()-1);
+			return itemStack2;
+		}
+		ItemStack itemStack3 = inv.getItem(24);
+		if (itemStack3!=null && !itemStack3.getType().equals(Material.AIR)) {
+			ItemStack itemStack4 = itemStack3.clone().asOne();
+			itemStack3.setAmount(itemStack3.getAmount()-1);
+			return itemStack4;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		String id = CustomItemUtil.getUUIDFromItemStack(itemStack);
+		if (id.equals("Pixlies:Canister_Oil")) {
+			if (inv.getItem(20)==null || inv.getItem(20).getType().equals(Material.AIR)) {
+				inv.setItem(20, itemStack);
+				return true;
+			} else {
+				return false;
+			}
+		} else if (id.equals(MinecraftMaterial.WATER.getUUID())) {
+			if (inv.getItem(24)==null || inv.getItem(24).getType().equals(Material.AIR)) {
+				inv.setItem(24, itemStack);
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
 	}
 }
