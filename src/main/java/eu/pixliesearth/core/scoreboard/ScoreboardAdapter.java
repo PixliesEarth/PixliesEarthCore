@@ -120,7 +120,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add("  §8» " + c + player.getDisplayName());
-                // returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
+                returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
                 returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
                 returnable.add("  §8» §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
@@ -144,7 +144,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                         returnable.add("§d" + boost.getName() + ": §7" + boost.getTimer().getRemainingAsString());
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()))
                     returnable.add("&3Staff: §aenabled");
-                // returnable.add("§2§l$§a" + profile.getBalance());
+                returnable.add("§2§l$§a" + profile.getBalance());
                 // returnable.add("§b" + profile.getPixliecoins() + "§3§l⛃");
                 returnable.add("§4§l✦§c" + profile.getElo());
                 returnable.add("§e" + energy);

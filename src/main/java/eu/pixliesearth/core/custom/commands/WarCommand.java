@@ -138,18 +138,20 @@ public class WarCommand extends CustomCommand implements Constants {
         gui.addPane(nations);
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
         hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-        hotBar.addItem(new GuiItem(backItem, event -> {
+        hotBar.addItem(new GuiItem(backButtonMick, event -> {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() - 1);
-                gui.update();
+                gui.addPane(nations);
+                gui.show(profile.getAsPlayer());
             } catch (Exception ignored) { }
         }), 0, 0);
-        hotBar.addItem(new GuiItem(nextItem, event -> {
+        hotBar.addItem(new GuiItem(nextButtonMick, event -> {
             event.setCancelled(true);
             try {
                 nations.setPage(nations.getPage() + 1);
-                gui.update();
+                gui.addPane(nations);
+                gui.show(profile.getAsPlayer());
             } catch (Exception ignored) { }
         }), 8, 0);
         gui.addPane(hotBar);
