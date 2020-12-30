@@ -50,7 +50,9 @@ public class ArmourAluminiumChestplate extends CustomArmour {
 
     @Override
     public Map<Enchantment, Integer> getDefaultEnchants() {
-        return new HashMap<Enchantment, Integer>();
+        return new HashMap<Enchantment, Integer>(){{
+            put(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+        }};
     }
 
     @Override
