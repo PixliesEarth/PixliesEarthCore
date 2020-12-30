@@ -128,6 +128,12 @@ public class RPG7 extends CustomGun {
 	public String getOrigin() {
 		return "Soviet Union/USSR";
 	}
-
+	
+	@Override
+	public long getDelayPerShot() {
+		return 1250l;
+	}
+	
+	
 
 }

@@ -50,4 +50,9 @@ public class AK47 extends CustomGun {
 		return 2;
 	}
 
+	@Override
+	public long getDelayPerShot() {
+		return 200l;
+	}
+
 }

@@ -3,6 +3,7 @@ package eu.pixliesearth.guns;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -61,6 +62,19 @@ public abstract class CustomGun extends CustomItem {
 		if (!event.getHand().equals(EquipmentSlot.HAND)) return true;
 		final ItemStack itemStack = event.getItem();
 		if (itemStack==null || itemStack.getType().equals(Material.AIR)) return false;
+		// Check for action timer
+		String timeString = NBTUtil.getTagsFromItem(itemStack).getString("cooldown");
+		if (timeString!=null && !timeString.equals("")) {
+			if (timeString!=null && timeString.equals("reloading")) {
+				return true;
+			} else {
+				long time = Long.parseLong(timeString);
+				if (!(time<=System.currentTimeMillis())) {
+					return true;
+				}
+			}
+		}
+		// Rest of method
 		int ammo = Integer.parseInt(NBTUtil.getTagsFromItem(itemStack).getString("ammo"));
 		if (ammo<=0) { // Reload
 			CustomItem customItem = CustomItemUtil.getCustomItemFromUUID(CustomItemUtil.getUUIDFromItemStack(itemStack));
@@ -68,8 +82,18 @@ public abstract class CustomGun extends CustomItem {
 				CustomGun customGun = (CustomGun) customItem;
 				if (Methods.removeRequiredAmount(customGun.getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
 					event.getPlayer().sendActionBar("§b§lReloading...");
-					event.getPlayer().getInventory().setItemInMainHand(null);
+					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", "reloading", NBTTagType.STRING).build());
+					final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();
+					String gunID = CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand());
 					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {
+						if (slotToReloadIn!=event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID)) {
+							event.getPlayer().sendActionBar("§c§lFailed to reload!");
+							for (Entry<Integer, ItemStack> entry : event.getPlayer().getInventory().addItem(getAmmoType().getAmmo().getItem()).entrySet()) {
+								if (entry==null || entry.getValue()==null) continue;
+								event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), entry.getValue());
+							}
+							return;
+						}
 						event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
 						ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
 						event.getPlayer().sendActionBar("§a§lReloaded!");
@@ -90,31 +114,8 @@ public abstract class CustomGun extends CustomItem {
 				PixliesGunShootEvent shootEvent = new PixliesGunShootEvent(event.getPlayer(), pammo);
 				shootEvent.callEvent();
 				if (!shootEvent.isCancelled()) {
-					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
+					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", Long.toString((System.currentTimeMillis()+getDelayPerShot())), NBTTagType.STRING).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
 					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
-					// GunFireResult result = pammo.trace(event.getPlayer());
-					/*RayTraceResult result = event.getPlayer().getLocation().getWorld().rayTraceEntities(new Location(event.getPlayer().getWorld(), event.getPlayer().getEyeLocation().getX(), y, z), event.getPlayer().getLocation().getDirection(), getRange());
-					if (result==null) {
-						System.out.println("null");
-						return true;
-					} else if (result.getHitEntity()!=null) {
-						Entity entity = result.getHitEntity();
-						double damage = pammo.getDamage();
-						if (entity instanceof LivingEntity) {
-							LivingEntity livingEntity = (LivingEntity) entity;
-							if (result.getHitPosition().equals(livingEntity.getEyeLocation().toVector())) {
-								damage *= 2;
-								entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
-							}
-						}
-						if (entity instanceof Damageable) {
-							Damageable damageable = (Damageable) entity;
-							damageable.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), entity, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
-							damageable.setHealth(damageable.getHealth() - damage);
-						} else {
-							entity.remove();
-						}
-					}*/
 					event.getPlayer().getWorld().playEffect(event.getPlayer().getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
 					
 					LivingEntity result = null;
@@ -228,7 +229,7 @@ public abstract class CustomGun extends CustomItem {
 
 	public abstract double getAccuracy();
 	
-	// public abstract long getDelayPerShot();
+	public abstract long getDelayPerShot();
 
 	public abstract int getDelayToReload();
 

@@ -56,5 +56,11 @@ public class M16 extends CustomGun {
 	public String getOrigin() {
 		return "USA";
 	}
+	
+	@Override
+	public long getDelayPerShot() {
+		return 150l;
+	}
+	
 
 }
