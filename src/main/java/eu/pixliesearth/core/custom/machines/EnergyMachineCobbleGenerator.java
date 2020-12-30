@@ -1,19 +1,27 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.*;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
+import eu.pixliesearth.core.custom.CustomCrafterMachine;
+import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
 
-public class EnergyMachineCobbleGenerator extends CustomEnergyCrafterMachine {
+public class EnergyMachineCobbleGenerator extends CustomEnergyCrafterMachine implements IHopperable {
 	
 	public EnergyMachineCobbleGenerator() {
 		
@@ -110,5 +118,25 @@ public class EnergyMachineCobbleGenerator extends CustomEnergyCrafterMachine {
 
 	public double getCapacity() {
 		return 100D;
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		List<Integer> ints = Arrays.asList(0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,45,46,47,48,49,50,51,52,53);
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		for (int i = 0; i < inv.getSize(); i++) {
+			if (ints.contains(i)) continue;
+			ItemStack itemStack = inv.getItem(i);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			ItemStack itemStack2 = itemStack.clone().asOne();
+			itemStack.setAmount(itemStack.getAmount()-1);
+			return itemStack2;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		return false;
 	}
 }

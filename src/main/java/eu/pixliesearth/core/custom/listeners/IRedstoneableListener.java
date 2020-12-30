@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.listeners;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,7 @@ public class IRedstoneableListener extends CustomListener {
 		Set<Block> blocks = getSurroundingBlocks(block);
 		CustomBlock customBlock;
 		for (Block block2 : blocks) {
+			if (block2==null || block2.getType().equals(Material.AIR)) continue;
 			customBlock = h.getCustomBlockFromLocation(block2.getLocation());
 			if (customBlock==null) continue;
 			if (customBlock instanceof IRedstoneable) {
@@ -35,7 +37,9 @@ public class IRedstoneableListener extends CustomListener {
 	private Set<Block> getSurroundingBlocks(Block block){
 		Set<Block> blocks = new LinkedHashSet<>();
         for (BlockFace face : BlockFace.values()){
-        	blocks.add(block.getRelative(face));
+        	try {
+        		blocks.add(block.getRelative(face));
+        	} catch (Exception ignore) {}
         }
         return blocks;
     }

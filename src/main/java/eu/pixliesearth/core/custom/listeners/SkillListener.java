@@ -54,8 +54,7 @@ public class SkillListener extends CustomListener {
 		}
 		if (event.isCancelled()) return;
 		
-		event.getPlayer().sendMessage("§a[§r✔§a]§r You have gained a level in "+event.getGainedSkillUUID()+"!");
-		event.getPlayer().sendMessage("§aYou are now level §r"+event.getNewLevel()+"§a!");
+		event.getPlayer().sendMessage("§a[§r✔§a]§r You have gained a level in "+event.getGainedSkillUUID()+"! ("+((int)event.getOldLevel())+"->"+((int)event.getNewLevel())+")");
 		
 		Profile profile = Main.getInstance().getProfile(event.getPlayer().getUniqueId());
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
