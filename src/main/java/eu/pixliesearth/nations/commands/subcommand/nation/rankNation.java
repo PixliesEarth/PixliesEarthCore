@@ -48,7 +48,8 @@ public class rankNation extends SubCommand {
                 "§7Remove a rank: §b/n rank remove §eRANK-NAME\n" +
                 "§7Set a players rank: §b/n rank set §ePLAYER §cRANK-NAME\n" +
                 "§7Add a permission to a rank: §b/n rank addpermission §ePERMISSION §cRANK-NAME\n" +
-                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME";
+                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME\n" +
+                "§7Rename a rank prefix: §b/n rank rename §eRANK §cPREFIX";
     }
 
     @Override
@@ -160,6 +161,21 @@ public class rankNation extends SubCommand {
                     n.getRanks().put(rank.getName(), rank.toMap());
                     n.save();
                     Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
+                } else if (args[0].equalsIgnoreCase("rename")) {
+                    Rank rank = Rank.get(n.getRanks().get(args[1]));
+                    if (!Permission.exists(args[1])) {
+                        Lang.PERMISSION_DOESNT_EXIST.send(player);
+                        return false;
+                    }
+                    if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
+                        Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                        return false;
+                    }
+                    rank.setPrefix(args[2]);
+                    n.getRanks().put(rank.getName(), rank.toMap());
+                    n.save();
+                    //TODO Proper message
+                    sender.sendMessage(Lang.NATION + "§7Rank renamed.");
                 }
                 break;
             case 2:

@@ -5,11 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
@@ -163,14 +159,16 @@ public abstract class CustomGun extends CustomItem {
 						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
 						Bukkit.getPluginManager().callEvent(nevent);
 						if (!nevent.isCancelled()) {
+						if (!(result instanceof Player) || ((Player) result).getGameMode() == GameMode.SURVIVAL) {
 							if (result.getHealth() - damage <= 0) {
 								result.setHealth(0);
 							} else {
 								result.setHealth(result.getHealth() - (damage));
 							}
-							result.getWorld().playSound(result.getLocation(), Sound.BLOCK_ANVIL_HIT, 1, 1);
-							result.damage(0.1);
-							result.damage(-0.1);
+							result.damage(0.1, player);
+							result.damage(-0.1, player);
+						}
+							result.getWorld().playSound(result.getLocation(), "gunshoot", SoundCategory.PLAYERS,15, 1);
 						}
 			        }
 				} else {
