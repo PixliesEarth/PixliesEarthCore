@@ -111,7 +111,7 @@ public abstract class CustomGun extends CustomItem {
 				shootEvent.callEvent();
 				if (!shootEvent.isCancelled()) {
 					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", Long.toString((System.currentTimeMillis()+getDelayPerShot())), NBTTagType.STRING).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
-					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, 2, 2);
+					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "gunshoot", 15, 1);
 					event.getPlayer().getWorld().playEffect(event.getPlayer().getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
 					
 					LivingEntity result = null;
@@ -168,7 +168,6 @@ public abstract class CustomGun extends CustomItem {
 								result.damage(0.1, player);
 								result.damage(-0.1, player);
 							}
-							result.getWorld().playSound(result.getLocation(), "gunshoot", SoundCategory.PLAYERS,15, 1);
 						}
 			        }
 				} else {
