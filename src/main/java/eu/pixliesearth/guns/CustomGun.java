@@ -159,15 +159,15 @@ public abstract class CustomGun extends CustomItem {
 						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
 						Bukkit.getPluginManager().callEvent(nevent);
 						if (!nevent.isCancelled()) {
-						if (!(result instanceof Player) || ((Player) result).getGameMode() == GameMode.SURVIVAL) {
-							if (result.getHealth() - damage <= 0) {
-								result.setHealth(0);
-							} else {
-								result.setHealth(result.getHealth() - (damage));
+							if (!(result instanceof Player) || ((Player) result).getGameMode() == GameMode.SURVIVAL) {
+								if (result.getHealth() - damage <= 0) {
+									result.setHealth(0);
+								} else {
+									result.setHealth(result.getHealth() - (damage));
+								}
+								result.damage(0.1, player);
+								result.damage(-0.1, player);
 							}
-							result.damage(0.1, player);
-							result.damage(-0.1, player);
-						}
 							result.getWorld().playSound(result.getLocation(), "gunshoot", SoundCategory.PLAYERS,15, 1);
 						}
 			        }

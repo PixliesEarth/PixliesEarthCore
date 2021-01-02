@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.Ageable;
@@ -55,26 +57,36 @@ public class SkillListener extends CustomListener {
 		}
 		if (event.isCancelled()) return;
 		
-		event.getPlayer().sendMessage("§a[§r✔§a]§r You have gained a level in "+event.getGainedSkillUUID()+"! ("+((int)event.getOldLevel())+"->"+((int)event.getNewLevel())+")");
-		
+		event.getPlayer().sendMessage("§8[§a✔§8] §7You have gained a level in §a" + event.getGainedSkillUUID().split(":")[1] + "§7! (§8" + ((int)event.getOldLevel()) + "§7 -> §a"+((int)event.getNewLevel()) + "§7)");
+		event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+
 		Profile profile = Main.getInstance().getProfile(event.getPlayer().getUniqueId());
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		
-		if (event.getGainedSkillUUID().equals("Pixlies:Traveling")) {
-			for (int i = 0; i < event.getNewLevel()-event.getOldLevel(); i++) {
-				Energy.add(profile, BigDecimal.valueOf((0.1D*(Math.floor(Math.floor((event.getOldLevel()+1+i)/10.0)/10.0)))).setScale(1, BigDecimal.ROUND_DOWN).doubleValue());
-			}
-		} else if (event.getGainedSkillUUID().equals("Pixlies:Lumbering")) {
-			if (event.getOldLevel()<10 && event.getNewLevel()>=10) {
-				event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(ToolLumberAxe.class).getUUID());
-			}
-			if (event.getOldLevel()<35 && event.getNewLevel()>=35) {
-				event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(EnergyToolLumberAxe.class).getUUID());
-			}
-		} else if (event.getGainedSkillUUID().equals("Pixlies:Mining")) {
-			if (event.getOldLevel()<35 && event.getNewLevel()>=35) {
-				event.getPlayer().sendMessage("§a[§r✔️§a]§r You have unlocked the recipe for "+h.getCustomItemFromClass(EnergyToolExplosivePickaxe.class).getUUID());
-			}
+
+		switch (event.getGainedSkillUUID()) {
+			case "Pixlies:Traveling":
+				for (int i = 0; i < event.getNewLevel() - event.getOldLevel(); i++) {
+					Energy.add(profile, BigDecimal.valueOf((0.1D * (Math.floor(Math.floor((event.getOldLevel() + 1 + i) / 10.0) / 10.0)))).setScale(1, BigDecimal.ROUND_DOWN).doubleValue());
+				}
+				break;
+			case "Pixlies:Lumbering":
+				if (event.getOldLevel() < 10 && event.getNewLevel() >= 10) {
+					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(ToolLumberAxe.class).getUUID());
+				}
+				if (event.getOldLevel() < 35 && event.getNewLevel() >= 35) {
+					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolLumberAxe.class).getUUID());
+				}
+				break;
+			case "Pixlies:Mining":
+				if (event.getOldLevel() < 35 && event.getNewLevel() >= 35) {
+					event.getPlayer().sendMessage("§a[§r✔️§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolExplosivePickaxe.class).getUUID());
+				}
+				break;
+		}
+		if (!event.getGainedSkillUUID().equals("Pixlies:Mining") && !event.getGainedSkillUUID().equals("Pixlies:Building") && profile.isInNation()) {
+			Nation nation = profile.getCurrentNation();
+			nation.setXpPoints(nation.getXpPoints() + 0.1);
+			nation.save();
 		}
 	}
 	
@@ -86,7 +98,7 @@ public class SkillListener extends CustomListener {
 		}
 		if (event.isCancelled()) return;
 		
-		event.getPlayer().sendActionBar("§aGained §r"+event.getAmount()+"§a "+event.getGainedSkillUUID()+"§a XP");
+		event.getPlayer().sendActionBar("§7Gained §a" + event.getAmount() + "§7 " + event.getGainedSkillUUID().split(":")[1] + "§7 XP");
 		
 		int level = SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), event.getGainedSkillUUID());
 		SkillHandler.getSkillHandler().addXPTo(event.getPlayer().getUniqueId(), event.getGainedSkillUUID(), event.getAmount());
