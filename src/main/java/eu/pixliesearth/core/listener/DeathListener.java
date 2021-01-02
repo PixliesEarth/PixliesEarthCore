@@ -34,7 +34,6 @@ public class DeathListener implements Listener {
         String endDeathMessage = finalDeathMessage.replace(player.getName(), ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%vault_prefix%" + player.getDisplayName())));
 
         MiniMick.getApi().getServerTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get().sendMessage("**" + ChatColor.stripColor(endDeathMessage) + "**");
-        //TODO: Fuck groots boypussy
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         profile.getTimers().remove("§c§lCombat");
 
@@ -49,12 +48,9 @@ public class DeathListener implements Listener {
         }
         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());
-        TextComponent comp = new TextComponent("§c☠ §7" + player.getDisplayName() + " §8[§c" + profile.getElo() + "§8]");
-        comp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§o" + e.getDeathMessage() + "\n\n§7ELO: §c" + profile.getElo())));
-        Bukkit.broadcast(comp);
-        e.setDeathMessage("");
+        e.setDeathMessage("§c☠ §7" + e.getDeathMessage());
         profile.save();
-        Main.getInstance().getUtilLists().lastLocation.put(player.getUniqueId(), player.getLocation());
+        instance.getUtilLists().lastLocation.put(player.getUniqueId(), player.getLocation());
     }
 
 }

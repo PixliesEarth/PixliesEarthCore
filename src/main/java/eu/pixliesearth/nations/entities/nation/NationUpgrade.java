@@ -12,9 +12,9 @@ public enum NationUpgrade {
 
     TWO_MORE_SETTLEMENTS("§b§l+2 settlements", Material.MAGENTA_BED, Era.ANCIENT, 5, (nation, player) -> {
         nation.getExtras().putIfAbsent("settlements", 3);
-        nation.getExtras().put("settlements", Integer.parseInt(nation.getExtras().get("settlements").toString()) + 2);
+        nation.getExtras().put("settlements", (Integer) nation.getExtras().get("settlements") + 2);
         nation.save();
-    }, true)
+    }, true),
     ;
 
     String displayName;

@@ -235,6 +235,15 @@ public class Nation {
         return i;
     }
 
+    public int broadcastMembersActionbar(String message) {
+        int i = 0;
+        for (Player player : getOnlineMemberSet()) {
+            player.sendActionBar(message);
+            i++;
+        }
+        return i;
+    }
+
     public int broadcastMembers(Lang lang) {
         int i = 0;
         for (Player player : getOnlineMemberSet()) {
