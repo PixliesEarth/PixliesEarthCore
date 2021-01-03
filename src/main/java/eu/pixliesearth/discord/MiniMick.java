@@ -3,6 +3,7 @@ package eu.pixliesearth.discord;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
@@ -49,6 +50,9 @@ public class MiniMick {
                             Color col = event.getMessageAuthor().getRoleColor().get();
                             roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getGreen(), col.getBlue());
                         }
+                        for (String s1 : Main.getInstance().getConfig().getStringList("modules.chatsystem.blacklist"))
+                            if (StringUtils.containsIgnoreCase(event.getReadableMessageContent(), s1))
+                                return;
                         String message = event.getReadableMessageContent();
                         Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + message);
                     }

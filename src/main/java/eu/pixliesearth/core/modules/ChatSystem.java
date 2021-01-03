@@ -10,6 +10,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -156,8 +157,8 @@ public class ChatSystem implements Listener, Module {
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
                         for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (event.getMessage().toLowerCase().contains(s1.toLowerCase()))
-                                event.setMessage(event.getMessage().replace(s1.toLowerCase(), Methods.replaceBadWord(s1)));
+                            if (StringUtils.containsIgnoreCase(event.getMessage(), s1))
+                                event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
                 }
 
                 // "@" MENTIONING SYSTEM
