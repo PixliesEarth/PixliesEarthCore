@@ -55,10 +55,10 @@ public class CustomCraftingListener extends CustomListener {
 			player.sendMessage("§c[§r❌§c] §rInvalid recipe");
 			return false;
 		} else {
-			if (!customRecipe.canCraft(player.getUniqueId())) {
+/*			if (!customRecipe.canCraft(player.getUniqueId())) {
 				player.sendMessage("§c[§r❌§c] §rYou dont have access to this recipe!");
 				return false;
-			} else {
+			} else {*/
 				player.sendMessage("§a[§r✔§a] §rCrafting "+customRecipe.getResultUUID());
 				ItemStack[] isl = inv.getContents();
 				for (int i = 0; i < isl.length; i++) {
@@ -71,7 +71,7 @@ public class CustomCraftingListener extends CustomListener {
 				for (int i = 0; i < customRecipe.getResultAmount(); i++)
 					player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
 				return true;
-			}
+			// }
 		}
 	}
 	

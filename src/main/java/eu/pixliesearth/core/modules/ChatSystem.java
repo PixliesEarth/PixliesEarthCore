@@ -157,8 +157,12 @@ public class ChatSystem implements Listener, Module {
 
                 if (!player.hasPermission("earth.chat.bypassblacklist")) {
                         for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (StringUtils.containsIgnoreCase(event.getMessage(), s1))
-                                event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
+                            if (StringUtils.containsIgnoreCase(event.getMessage(), s1)) {
+                                event.setCancelled(true);
+                                player.sendMessage(Lang.EARTH + "§cYou are not allowed to say that here!");
+                                return;
+                            }
+                                // event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
                 }
 
                 // "@" MENTIONING SYSTEM
