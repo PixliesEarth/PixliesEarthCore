@@ -40,17 +40,17 @@ public class CustomBlockListener extends CustomListener {
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
-		if (!ProtectionManager.canInteract(event)) {
-			event.setCancelled(true);
-			event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
-			return;
-		}
 		if (event.getClickedBlock() == null) return;
 		CustomBlock id = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
 		if (id==null) return;
 		if (CIControl.DISABLED_ITEMS.contains(id.getUUID())) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage("§c[§r❌§c] §rThis item has been disabled!");
+			return;
+		}
+		if (!ProtectionManager.canInteract(event)) {
+			event.setCancelled(true);
+			event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
 			return;
 		}
 		event.setCancelled(id.onBlockIsInteractedWith(event));

@@ -1,10 +1,7 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import eu.pixliesearth.nations.entities.nation.Nation;
 import org.bukkit.Bukkit;
@@ -97,8 +94,8 @@ public class SkillListener extends CustomListener {
 			return;
 		}
 		if (event.isCancelled()) return;
-		
-		event.getPlayer().sendActionBar("§7Gained §a" + event.getAmount() + "§7 " + event.getGainedSkillUUID().split(":")[1] + "§7 XP");
+
+		if (!event.getGainedSkillUUID().equals("Pixlies:Traveling")) event.getPlayer().sendActionBar("§7Gained §a" + event.getAmount() + "§7 " + event.getGainedSkillUUID().split(":")[1] + "§7 XP");
 		
 		int level = SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), event.getGainedSkillUUID());
 		SkillHandler.getSkillHandler().addXPTo(event.getPlayer().getUniqueId(), event.getGainedSkillUUID(), event.getAmount());
@@ -127,12 +124,14 @@ public class SkillListener extends CustomListener {
 	@EventHandler
 	public void BlockPlaceEvent(BlockPlaceEvent event) {
 		if (event.isCancelled() || event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
+		if (!buildingBlocks.contains(event.getBlock().getType())) return;
 		new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Building", 1).callEvent();
 	}
 	
 	@EventHandler
 	public void BlockBreakEvent(BlockBreakEvent event) {
 		if (event.isCancelled() || event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
+
 		if (SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), "Pixlies:Mining")>=15) {
 			// (int) (Math.floor((level/15D))*10);
 			if ((random.nextInt(100)+1)<=SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), "Pixlies:Mining")/10) {
@@ -163,6 +162,7 @@ public class SkillListener extends CustomListener {
 				}
 			}
 		} else {
+			if (!miningBlocks.contains(event.getBlock().getType())) return;
 			new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Mining", random.nextInt(2)+1).callEvent();
 		}
 	}
@@ -217,5 +217,115 @@ public class SkillListener extends CustomListener {
 	}
 	
 	private boolean isWood(Material material) { return ( material.equals(Material.OAK_LOG) || material.equals(Material.DARK_OAK_LOG) || material.equals(Material.BIRCH_LOG) || material.equals(Material.SPRUCE_LOG) || material.equals(Material.JUNGLE_LOG) || material.equals(Material.ACACIA_LOG) || material.equals(Material.WARPED_STEM) || material.equals(Material.CRIMSON_STEM) ); }
-	
+
+	private static final List<Material> miningBlocks = new ArrayList<>();
+
+	private static final List<Material> buildingBlocks = new ArrayList<>();
+
+	static {
+		// MINING BLOCKS
+		miningBlocks.add(Material.STONE);
+		miningBlocks.add(Material.COAL_ORE);
+		miningBlocks.add(Material.DIAMOND_ORE);
+		miningBlocks.add(Material.EMERALD_ORE);
+		miningBlocks.add(Material.GOLD_ORE);
+		miningBlocks.add(Material.IRON_ORE);
+		miningBlocks.add(Material.LAPIS_ORE);
+		miningBlocks.add(Material.REDSTONE_ORE);
+		miningBlocks.add(Material.NETHER_GOLD_ORE);
+		miningBlocks.add(Material.NETHER_QUARTZ_ORE);
+		miningBlocks.add(Material.ANDESITE);
+		miningBlocks.add(Material.DIORITE);
+		miningBlocks.add(Material.GRANITE);
+		miningBlocks.add(Material.COBBLESTONE);
+		miningBlocks.add(Material.MOSSY_COBBLESTONE);
+		miningBlocks.add(Material.OBSIDIAN);
+
+		// BUILDING BLOCKS
+		buildingBlocks.add(Material.NETHER_BRICKS);
+		buildingBlocks.add(Material.RED_NETHER_BRICKS);
+		buildingBlocks.add(Material.CHISELED_NETHER_BRICKS);
+		buildingBlocks.add(Material.QUARTZ_BLOCK);
+		buildingBlocks.add(Material.CHISELED_QUARTZ_BLOCK);
+		buildingBlocks.add(Material.QUARTZ_PILLAR);
+		buildingBlocks.add(Material.QUARTZ_BRICKS);
+		buildingBlocks.add(Material.HAY_BLOCK);
+		for (Material material : Material.values()) {
+			if (material.name().contains("CARPET"))
+				buildingBlocks.add(material);
+			if (material.name().contains("TERRACOTTA"))
+				buildingBlocks.add(material);
+			if (material.name().contains("CONCRETE"))
+				buildingBlocks.add(material);
+			if (material.name().contains("WOOD"))
+				buildingBlocks.add(material);
+			if (material.name().contains("HYPHAE"))
+				buildingBlocks.add(material);
+			if (material.name().contains("PLANKS"))
+				buildingBlocks.add(material);
+			if (material.name().contains("LOG"))
+				buildingBlocks.add(material);
+			if (material.name().contains("STAINED"))
+				buildingBlocks.add(material);
+			if (material.name().contains("STAIRS"))
+				buildingBlocks.add(material);
+			if (material.name().contains("SLAB"))
+				buildingBlocks.add(material);
+			if (material.name().contains("WOOL"))
+				buildingBlocks.add(material);
+		}
+		buildingBlocks.add(Material.PACKED_ICE);
+		buildingBlocks.add(Material.GRANITE);
+		buildingBlocks.add(Material.POLISHED_GRANITE);
+		buildingBlocks.add(Material.DIORITE);
+		buildingBlocks.add(Material.POLISHED_DIORITE);
+		buildingBlocks.add(Material.SEA_LANTERN);
+		buildingBlocks.add(Material.COARSE_DIRT);
+		buildingBlocks.add(Material.ANDESITE);
+		buildingBlocks.add(Material.POLISHED_ANDESITE);
+		buildingBlocks.add(Material.PRISMARINE);
+		buildingBlocks.add(Material.PRISMARINE_BRICKS);
+		buildingBlocks.add(Material.DARK_PRISMARINE);
+		buildingBlocks.add(Material.MAGMA_BLOCK);
+		buildingBlocks.add(Material.END_STONE_BRICKS);
+		buildingBlocks.add(Material.BONE_BLOCK);
+		buildingBlocks.add(Material.NETHER_WART_BLOCK);
+		buildingBlocks.add(Material.PURPUR_BLOCK);
+		buildingBlocks.add(Material.PURPUR_PILLAR);
+		buildingBlocks.add(Material.BLUE_ICE);
+		buildingBlocks.add(Material.CONDUIT);
+		buildingBlocks.add(Material.DRIED_KELP_BLOCK);
+		buildingBlocks.add(Material.EMERALD_BLOCK);
+		buildingBlocks.add(Material.STONECUTTER);
+		buildingBlocks.add(Material.COAL_BLOCK);
+		buildingBlocks.add(Material.POLISHED_BLACKSTONE_BRICKS);
+		buildingBlocks.add(Material.CHAIN);
+		buildingBlocks.add(Material.NETHERITE_BLOCK);
+		buildingBlocks.add(Material.POLISHED_BLACKSTONE);
+		buildingBlocks.add(Material.CHISELED_POLISHED_BLACKSTONE);
+		buildingBlocks.add(Material.GOLD_BLOCK);
+		buildingBlocks.add(Material.BOOKSHELF);
+		buildingBlocks.add(Material.DIAMOND_BLOCK);
+		buildingBlocks.add(Material.BRICKS);
+		buildingBlocks.add(Material.SNOW_BLOCK);
+		buildingBlocks.add(Material.CLAY);
+		buildingBlocks.add(Material.JACK_O_LANTERN);
+		buildingBlocks.add(Material.GLOWSTONE);
+		buildingBlocks.add(Material.LAPIS_BLOCK);
+		buildingBlocks.add(Material.SANDSTONE);
+		buildingBlocks.add(Material.RED_SANDSTONE);
+		buildingBlocks.add(Material.CUT_RED_SANDSTONE);
+		buildingBlocks.add(Material.CUT_SANDSTONE);
+		buildingBlocks.add(Material.CHISELED_SANDSTONE);
+		buildingBlocks.add(Material.CHISELED_RED_SANDSTONE);
+		buildingBlocks.add(Material.MELON);
+		buildingBlocks.add(Material.STONE_BRICKS);
+		buildingBlocks.add(Material.MOSSY_STONE_BRICKS);
+		buildingBlocks.add(Material.CHISELED_STONE_BRICKS);
+		buildingBlocks.add(Material.IRON_BLOCK);
+		buildingBlocks.add(Material.MOSSY_COBBLESTONE);
+		buildingBlocks.add(Material.CARTOGRAPHY_TABLE);
+		buildingBlocks.add(Material.SCAFFOLDING);
+	}
+
 }

@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.modules;
 
+import com.vdurmont.emoji.EmojiParser;
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.Warp;
@@ -180,6 +181,8 @@ public class ChatSystem implements Listener, Module {
                 } else {
                     event.setMessage("§" + profile.getChatColor() + event.getMessage().replace("&", "").replace("%", "%%"));
                 }
+
+                event.setMessage(EmojiParser.parseToUnicode(event.getMessage()));
 
                 String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor()).replace("%message%", event.getMessage()));
                 event.getRecipients().clear();

@@ -32,6 +32,7 @@ public class rankNation extends SubCommand {
         returner.put("addpermission", 1);
         returner.put("removepermission", 1);
         returner.put("set", 1);
+        returner.put("rename", 1);
         for (Permission permission : Permission.values())
             returner.put(permission.name(), 3);
         return returner;
@@ -162,13 +163,17 @@ public class rankNation extends SubCommand {
                     n.save();
                     Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
                 } else if (args[0].equalsIgnoreCase("rename")) {
-                    Rank rank = Rank.get(n.getRanks().get(args[1]));
-                    if (!Permission.exists(args[1])) {
-                        Lang.PERMISSION_DOESNT_EXIST.send(player);
+                    if (n.getRanks().get(args[1]) == null) {
+                        Lang.RANK_DOESNT_EXIST.send(player);
                         return false;
                     }
+                    Rank rank = Rank.get(n.getRanks().get(args[1]));
                     if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
                         Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                        return false;
+                    }
+                    if (args[2].length() > 10) {
+                        Lang.INVALID_INPUT.send(sender);
                         return false;
                     }
                     rank.setPrefix(args[2]);
