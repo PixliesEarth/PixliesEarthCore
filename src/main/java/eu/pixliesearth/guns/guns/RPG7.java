@@ -74,7 +74,7 @@ public class RPG7 extends CustomGun {
 							distance /= 10000;
 							ticks++;
 						}
-						Bukkit.getScheduler().runTaskLater(CustomFeatureLoader.getLoader().getInstance(), () -> block.getLocation().createExplosion(5F, true), ticks);
+						Bukkit.getScheduler().runTaskLater(CustomFeatureLoader.getLoader().getInstance(), () -> block.getLocation().createExplosion(3F, true), ticks);
 					}
 				}
 			} else {

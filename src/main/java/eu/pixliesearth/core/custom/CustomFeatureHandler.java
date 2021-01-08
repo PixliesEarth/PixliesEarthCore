@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import eu.pixliesearth.guns.CustomGun;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -77,6 +78,7 @@ public class CustomFeatureHandler {
 	private @Getter @Setter CustomFeatureLoader loader;
 	
 	private @Getter final Map<CustomItem.Category, List<String>> categoriesForItems;
+	private @Getter final Map<String, CustomItem.Category> itemsForCategories;
 
 	/**
 	 * Initiates a new {@link CustomFeatureHandler} based of the {@link CustomFeatureLoader} provided
@@ -104,6 +106,7 @@ public class CustomFeatureHandler {
 		this.locationToTempratureMap = new HashMap<Location, Double>();
 
 		categoriesForItems = new HashMap<>();
+		itemsForCategories = new HashMap<>();
 
 		this.dropMap = new HashMap<>();
 
@@ -237,21 +240,27 @@ public class CustomFeatureHandler {
 		if (customitem.getUUID().contains("_Pickaxe") || customitem.getUUID().contains("_Axe") || customitem.getUUID().contains("_Shovel") || customitem.getUUID().contains("_Hoe")) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.TOOLS, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.TOOLS).add(customitem.getUUID());
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.TOOLS);
 		} else if (customitem.getUUID().contains("_Dust") || customitem.getUUID().contains("_Ingot") || customitem.getUUID().contains("Plastic_") || customitem.getUUID().contains("Chunk")) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.MATERIAL, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.MATERIAL).add(customitem.getUUID());
-		} else if (customitem instanceof CustomWeapon) {
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.MATERIAL);
+		} else if (customitem instanceof CustomWeapon || customitem instanceof CustomGun) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.WEAPONS, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.WEAPONS).add(customitem.getUUID());
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.WEAPONS);
 		} else if (customitem instanceof CustomArmour) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.ARMOR, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.ARMOR).add(customitem.getUUID());
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.ARMOR);
 		} else if (customitem.getUUID().startsWith("Food:") || customitem instanceof IConsumable) {
 			categoriesForItems.putIfAbsent(CustomItem.Category.FOOD, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.FOOD).add(customitem.getUUID());
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.FOOD);
 		} else {
 			categoriesForItems.putIfAbsent(CustomItem.Category.ITEMS, new ArrayList<>());
 			categoriesForItems.get(CustomItem.Category.ITEMS).add(customitem.getUUID());
+			itemsForCategories.put(customitem.getUUID(), CustomItem.Category.ITEMS);
 		}
 		// System.out.println("Registered the item "+customitem.getUUID());
 	}

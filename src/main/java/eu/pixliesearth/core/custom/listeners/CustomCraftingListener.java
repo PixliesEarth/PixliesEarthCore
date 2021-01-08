@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class CustomCraftingListener extends CustomListener {
 		Inventory inv = d.getInventory();
 		if (inv==null) return;
 		
-		if (event.getPlayer().isSneaking()) {
+		if (event.getPlayer().isSneaking() || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			//craft
 			Map<Integer, String> cwaftin = new HashMap<Integer, String>();
 			for (int i = 0; i<9; i++) {

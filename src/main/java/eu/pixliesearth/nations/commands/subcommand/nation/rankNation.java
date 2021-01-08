@@ -176,7 +176,7 @@ public class rankNation extends SubCommand {
                         Lang.INVALID_INPUT.send(sender);
                         return false;
                     }
-                    rank.setPrefix(args[2]);
+                    rank.setPrefix(args[2].replace("&", "§"));
                     n.getRanks().put(rank.getName(), rank.toMap());
                     n.save();
                     //TODO Proper message

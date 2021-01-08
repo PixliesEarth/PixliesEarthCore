@@ -10,6 +10,8 @@ import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,8 +38,11 @@ public class PixliesFunGUI implements Constants {
     }
 
     public void open() {
-        gui = new Gui(Main.getInstance(), 6,"§b§lPixliesFun");
-        renderMainMenu();
+        if (gui == null) {
+            renderMainMenu();
+            return;
+        }
+        gui.show(player);
     }
 
     private void renderMainMenu() {
@@ -48,11 +53,11 @@ public class PixliesFunGUI implements Constants {
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(1, 1, 7, 4);
-        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane categories = new PaginatedPane(1, 1, 7, 4);
+        PaginatedPane categories = new PaginatedPane(0, 1, 9, 4);
         List<GuiItem> categoryItems = new ArrayList<>();
         for (CustomItem.Category category : CustomItem.Category.values()) {
             categoryItems.add(new GuiItem(new ItemBuilder(CustomItemUtil.getItemStackFromUUID(category.getIcon())).setDisplayName(category.getName()).addLoreLine("§f§lLEFT §7click to open").build(), event -> {
@@ -70,7 +75,7 @@ public class PixliesFunGUI implements Constants {
         CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
         for (CustomItem.Category category : CustomItem.Category.values())
             for (String s : handler.getCategoriesForItems().get(category))
-                if (s.contains(keyWord))
+                if (StringUtils.containsIgnoreCase(ChatColor.stripColor(CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(s).getDefaultDisplayName()), keyWord))
                     returner.add(s);
         return returner;
     }
@@ -82,11 +87,11 @@ public class PixliesFunGUI implements Constants {
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(1, 1, 7, 4);
-        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
+        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4);
         List<GuiItem> entries = new ArrayList<>();
         final List<String> itemsToRender = searchItems(keyWord);
         for (String s : itemsToRender) {
@@ -133,11 +138,11 @@ public class PixliesFunGUI implements Constants {
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(1, 1, 7, 4);
-        background2.fillWith(new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane entriesPane = new PaginatedPane(1, 1, 7, 4);
+        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4);
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             if (s.contains("test")) continue;
@@ -236,7 +241,7 @@ public class PixliesFunGUI implements Constants {
             }), 3, 0);
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
                 event.setCancelled(true);
-                renderMainMenu();
+                renderCategoryMenu(CustomFeatureLoader.getLoader().getHandler().getItemsForCategories().get(recipe.getResultUUID()));
             }), 4, 0);
             long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {

@@ -31,6 +31,13 @@ public class ChatSystem implements Listener, Module {
         if (config.getBoolean("modules.chatsystem.enabled")) {
             Player player = event.getPlayer();
             Profile profile = instance.getProfile(player.getUniqueId());
+
+            if (!player.hasPermission("earth.chat.bypassblacklist")) {
+                for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
+                    if (StringUtils.containsIgnoreCase(event.getMessage(), s1))
+                        event.setMessage(event.getMessage().replaceAll("(?i)" + s1, Methods.replaceBadWord(s1)));
+            }
+
             if (instance.getUtilLists().warpAdder.contains(player.getUniqueId())) {
                 event.setCancelled(true);
                 Material mat = Material.GRASS_BLOCK;
@@ -153,16 +160,6 @@ public class ChatSystem implements Listener, Module {
                     event.setCancelled(true);
                     player.sendMessage(Lang.CHAT_IS_MUTED_ATM.get(player));
                     return;
-                }
-
-                if (!player.hasPermission("earth.chat.bypassblacklist")) {
-                        for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (StringUtils.containsIgnoreCase(event.getMessage(), s1)) {
-                                event.setCancelled(true);
-                                player.sendMessage(Lang.EARTH + "§cYou are not allowed to say that here!");
-                                return;
-                            }
-                                // event.setMessage(event.getMessage().replace(s1, Methods.replaceBadWord(s1)));
                 }
 
                 // "@" MENTIONING SYSTEM

@@ -75,7 +75,7 @@ public class settlementsCommand extends SubCommand implements Listener {
                         Lang.SETTLEMENT_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    if (!nation.getExtras().containsKey("settlements") && nation.getSettlements().size() == 3 || nation.getExtras().containsKey("settlements") && nation.getSettlements().size() + 1 >= Double.parseDouble(nation.getExtras().get("settlements").toString())) {
+                    if (!nation.getExtras().containsKey("settlements") && nation.getSettlements().size() == 3 || nation.getExtras().containsKey("settlements") && nation.getSettlements().size() + 1 >= (Double) nation.getExtras().get("settlements")) {
                         player.sendMessage(Lang.NATION + "§7You have reached your limit to set settlements.");
                         return false;
                     }

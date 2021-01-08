@@ -2,7 +2,9 @@ package eu.pixliesearth.core.modules;
 
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Methods;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

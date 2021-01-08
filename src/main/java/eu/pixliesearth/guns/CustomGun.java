@@ -154,7 +154,7 @@ public abstract class CustomGun extends CustomItem {
 			        		damage *= 2;
 			        	}
 			        	damage *= 2.5;
-			        	if (damage<0.3) damage = 0.3;
+			        	if (damage<2.5) damage = 2.0;
 			        	result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
 						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
 						Bukkit.getPluginManager().callEvent(nevent);
