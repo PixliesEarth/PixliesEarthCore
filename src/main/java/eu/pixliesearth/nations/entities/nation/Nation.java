@@ -310,12 +310,34 @@ public class Nation {
         return NationRelation.NEUTRAL;
     }
 
+    /**
+     * Get nation by ID
+     * @param id Id of the nation
+     * @return Nation object or null
+     */
     public static Nation getById(String id) {
         return NationManager.nations.get(id);
     }
 
+    /**
+     * Get nation by name
+     * @param name name of the nation
+     * @return Nation object or null
+     */
     public static Nation getByName(String name) {
         return getById(NationManager.names.get(name));
+    }
+
+    /**
+     * Get all nations that are owned by players
+     * @return List with nations owned by players
+     */
+    public static List<Nation> getAllPlayerNations() {
+        List<Nation> nations = new ArrayList<>();
+        for (Nation nation : NationManager.nations.values())
+            if (!nation.getLeaderName().equalsIgnoreCase("SERVER"))
+                nations.add(nation);
+        return nations;
     }
 
     public enum NationRelation {

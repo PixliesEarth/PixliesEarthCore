@@ -359,7 +359,7 @@ public final class Main extends JavaPlugin {
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
 
-        nationsTop = new NTop();
+        // nationsTop = new NTop();
         if (!testServer) rest = new REST();
         // machineTask = new MachineTask();
 
