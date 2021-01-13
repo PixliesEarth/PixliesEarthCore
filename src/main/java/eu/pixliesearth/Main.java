@@ -332,7 +332,7 @@ public final class Main extends JavaPlugin {
 
         assemble = new Assemble(this, new ScoreboardAdapter());
 
-        assemble.setTicks(2);
+        assemble.setTicks(1);
 
         assemble.setAssembleStyle(AssembleStyle.MODERN);
 

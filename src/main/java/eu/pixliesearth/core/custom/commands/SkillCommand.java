@@ -56,7 +56,7 @@ public class SkillCommand extends CustomCommand {
 			int currentLevel = SkillHandler.getSkillHandler().getLevelOf(player.getUniqueId(), skill.getSkillUUID());
 			int currentXP = SkillHandler.getSkillHandler().getXPOf(player.getUniqueId(), skill.getSkillUUID());
 			int nextLevel = Math.min(currentLevel + 1, skill.getMaxSkillLevel());
-			String lore1 = currentLevel == nextLevel ? "§aYou have mastered this skill." : "§3§l" + currentLevel + " §8[" + Methods.getProgressBar(currentXP, skill.getExperienceFromLevel(currentLevel), 10, "|", "§3", "§7") + "§8] §3" + nextLevel;
+			String lore1 = currentLevel == nextLevel ? "§aYou have mastered this skill." : "§3§l" + currentLevel + " §8[" + Methods.getProgressBar(currentXP, skill.getExperienceFromLevel(currentLevel), 10, "|", "§3", "§7") + "§8] §3§l" + nextLevel;
 			pane.addItem(new GuiItem(new ItemBuilder(skillIcons.get(skill.getSkillUUID())).setDisplayName("§e§l" + skill.getSkillName()).addLoreLine("§7" + skill.getDescription()).addLoreLine(" ").addLoreLine(lore1).addLoreLine(" ").addLoreLine("§7XP: §3" + currentXP + "§7/§3" + skill.getExperienceFromLevel(currentLevel)).build(), event -> {
 				event.setCancelled(true);
 				renderSkillMenu(player, skill);
@@ -90,7 +90,7 @@ public class SkillCommand extends CustomCommand {
 		int currentLevel = SkillHandler.getSkillHandler().getLevelOf(player.getUniqueId(), skill.getSkillUUID());
 		int currentXP = SkillHandler.getSkillHandler().getXPOf(player.getUniqueId(), skill.getSkillUUID());
 		int nextLevel = Math.min(currentLevel + 1, skill.getMaxSkillLevel());
-		String lore1 = currentLevel == nextLevel ? "§aYou have mastered this skill." : "§3§l" + currentLevel + " §8[" + Methods.getProgressBar(currentXP, skill.getExperienceFromLevel(currentLevel), 10, "|", "§3", "§7") + "§8] §3" + nextLevel;
+		String lore1 = currentLevel == nextLevel ? "§aYou have mastered this skill." : "§3§l" + currentLevel + " §8[" + Methods.getProgressBar(currentXP, skill.getExperienceFromLevel(currentLevel), 10, "|", "§3", "§7") + "§8] §3§l" + nextLevel;
 		GuiItem skillIcon = new GuiItem(new ItemBuilder(skillIcons.get(skill.getSkillUUID())).setDisplayName("§e§l" + skill.getSkillName()).addLoreLine("§7" + skill.getDescription()).addLoreLine(" ").addLoreLine(lore1).addLoreLine(" ").addLoreLine("§7XP: §3" + currentXP + "§7/§3" + skill.getExperienceFromLevel(currentLevel)).build(), event -> event.setCancelled(true));
 
 		pane.addItem(firstPlaceItem, 4, 1);

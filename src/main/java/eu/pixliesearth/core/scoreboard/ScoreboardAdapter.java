@@ -54,11 +54,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
     @Override
     public String getTitle(Player player) {
-        instance.getUtilLists().scoreboardFrames.putIfAbsent(player.getUniqueId(), 0);
+/*        instance.getUtilLists().scoreboardFrames.putIfAbsent(player.getUniqueId(), 0);
         int frame = instance.getUtilLists().scoreboardFrames.get(player.getUniqueId());
         if (frame == frames(player).length - 1) instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), 0);
         instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()));
-        return frames(player)[frame];
+        return frames(player)[frame];*/
+        return instance.getProfile(player.getUniqueId()).getFavoriteColour() + "EARTH";
     }
 
     @Override
@@ -70,9 +71,9 @@ public class ScoreboardAdapter implements AssembleAdapter {
             War war = instance.getCurrentWar();
             returnable.add("§c§lWAR §7players left");
             returnable.add("§a§lYour side");
-            returnable.add("  §8» §7" + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide()));
+            returnable.add("§a§l| " + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide()));
             returnable.add("§c§lOpponent");
-            returnable.add("  §8» §7" + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide().getOpposite()));
+            returnable.add("§c§l| " + war.getLeft().get(war.getPlayers().get(player.getUniqueId()).getSide().getOpposite()));
             return returnable;
         }
         if (Main.getInstance().getUtilLists().scoreboardMaps.contains(player.getUniqueId())) {
@@ -112,32 +113,32 @@ public class ScoreboardAdapter implements AssembleAdapter {
             }
             return returnable;
         }
-        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10" + "§6★";
+        final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10" + "§6⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
                 if (instance.getUtilLists().boosts.size() > 0)
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                returnable.add("  §8» " + c + player.getDisplayName());
+                returnable.add(c + "§l| §7" + player.getDisplayName());
                 // returnable.add("  §8» §2§l$§a" + Methods.formatNumber((long) profile.getBalance()));
                 // returnable.add("  §8» §c" + profile.getElo() + "§4§l✦");
-                returnable.add("  §8» §b" + profile.getPixliecoins() + "§3⛃");
-                returnable.add("  §8» §e" + energy);
+                returnable.add(c + "§l| §b" + profile.getPixliecoins() + "§3⛃");
+                returnable.add(c + "§l| §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add(c + "§lStaff§aenabled");
-                    returnable.add(c + "§lTPS§a" + Methods.round(Bukkit.getTPS()[0], 2));
+                    returnable.add(c + "§lStaff §aenabled");
+                    returnable.add(c + "§lTPS §a" + Methods.round(Bukkit.getTPS()[0], 2));
                 }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "§lNation");
-                    returnable.add("  §8» §b" + nation.getName());
-                    returnable.add("  §8» §7PP: §b" + nation.getXpPoints());
-                    returnable.add("  §8» §7Era: §b" + nation.getEra());
+                    returnable.add(c + "§l| §b" + nation.getName());
+                    returnable.add(c + "§l| §7PP: §b" + nation.getXpPoints());
+                    returnable.add(c + "§l| §7Era: §b" + nation.getEra());
                 }
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
-                        returnable.add(c + "§l" + entry.getKey() + "§7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                        returnable.add(c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)

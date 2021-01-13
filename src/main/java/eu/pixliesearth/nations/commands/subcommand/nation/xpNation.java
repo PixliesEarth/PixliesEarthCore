@@ -38,7 +38,7 @@ public class xpNation extends SubCommand {
             return false;
         }
         Nation nation = Nation.getByName(args[0]);
-        int amount = Integer.parseInt(args[1]);
+        double amount = Double.parseDouble(args[1]);
         nation.setXpPoints(amount);
         nation.save();
         Lang.PLAYER_ADDED_X.send(sender, "%PLAYER%;" + sender.getName(), "%X%;" + amount, "%Y%;Nation-XP");
