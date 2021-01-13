@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
 import eu.pixliesearth.core.commands.economy.PayCommand;
+import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.modules.economy.EconomySystem;
 import org.bson.Document;
@@ -185,6 +186,7 @@ public final class Main extends JavaPlugin {
         testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
+        loader.loadCommand(new SkillCommand());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }

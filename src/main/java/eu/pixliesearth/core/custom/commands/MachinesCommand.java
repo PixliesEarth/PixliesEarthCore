@@ -57,8 +57,12 @@ public class MachinesCommand extends CustomCommand {
 		inv.setItem(13, new ItemBuilder(Material.ITEM_FRAME).setDisplayName("§bItems").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MOPEN2", NBTTagType.STRING).build());
 		inv.setItem(15, new ItemBuilder(Material.CRAFTING_TABLE).setDisplayName("§bRecipes").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).addNBTTag("EXTRA", "MOPEN3", NBTTagType.STRING).build());
 		((Player)commandSender).openInventory(inv);*/
-		instance.getUtilLists().pixliesFunGUIMap.putIfAbsent(((Player)commandSender).getUniqueId(), new PixliesFunGUI((Player) commandSender));
-		instance.getUtilLists().pixliesFunGUIMap.get(((Player)commandSender).getUniqueId()).open();
+		try {
+			instance.getUtilLists().pixliesFunGUIMap.putIfAbsent(((Player) commandSender).getUniqueId(), new PixliesFunGUI((Player) commandSender));
+			instance.getUtilLists().pixliesFunGUIMap.get(((Player) commandSender).getUniqueId()).open();
+		} catch (Exception e ) {
+			new PixliesFunGUI((Player)commandSender).open();
+		}
 		return true;
 	}
 

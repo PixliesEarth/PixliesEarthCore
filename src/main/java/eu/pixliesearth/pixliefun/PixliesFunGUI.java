@@ -9,6 +9,8 @@ import eu.pixliesearth.core.custom.*;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.SkullCreator;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -132,6 +134,10 @@ public class PixliesFunGUI implements Constants {
     }
 
     private void renderCategoryMenu(CustomItem.Category category) {
+        if (category == null) {
+            renderMainMenu();
+            return;
+        }
         gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| " + category.getName());
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
@@ -146,6 +152,7 @@ public class PixliesFunGUI implements Constants {
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             if (s.contains("test")) continue;
+            if (s.equalsIgnoreCase(" ")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
@@ -224,7 +231,10 @@ public class PixliesFunGUI implements Constants {
             gui.addPane(result);
 
             StaticPane hotBar = new StaticPane(0, 5, 9, 1);
-            hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> e.setCancelled(true)), 2, 0);
+            hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> {
+                e.setCancelled(true);
+                renderRecipe(getItem(recipe.craftedInUUID()), 0);
+            }), 2, 0);
             hotBar.addItem(new GuiItem(nextButtonMick, event -> {
                 event.setCancelled(true);
                 try {
@@ -247,6 +257,12 @@ public class PixliesFunGUI implements Constants {
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
                 event.setCancelled(true);
             }), 6, 0);
+            if (recipe.getEnergyCost() != null) hotBar.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/f4f21cf5c234fc96db90a0a311d6fbe12f8789b7fa8155716757fd516b1811")).setDisplayName("§eEnergy needed").addLoreLine("§6" + Methods.convertEnergyDouble(recipe.getEnergyCost())).build(), event -> {
+                event.setCancelled(true);
+            }), 7, 0);
+            if (recipe.getProbability() != null) hotBar.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/3d143dbdcc9f4e377e34f36e316bd19df634c59b3bf93a69ab21d95b2fd57b")).setDisplayName("§bProbability").addLoreLine("§3" + (recipe.getProbability() * 10) + "%").build(), event -> {
+                event.setCancelled(true);
+            }), 1, 0);
             gui.addPane(hotBar);
 
             gui.show(player);

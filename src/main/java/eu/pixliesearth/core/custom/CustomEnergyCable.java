@@ -47,7 +47,7 @@ public abstract class CustomEnergyCable extends CustomEnergyBlock {
 			if (d==null) continue;
 			if (c instanceof CustomEnergyCable) {
 				if (getContainedPower(location)>(getCapacity(location)/50D)) {
-					if (timer==null) {
+					if (timer == null) {
 						giveEnergy(location, b.getLocation());
 						h.registerTimer(location, new Timer(15L));
 					} else {

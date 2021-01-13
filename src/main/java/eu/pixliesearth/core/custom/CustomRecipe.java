@@ -95,6 +95,10 @@ public class CustomRecipe {
 		}
 		return map;
 	}
+
+	public Double getProbability() {
+		return null;
+	}
 	
 	public ItemStack getRecipeBook() {
 		return new ItemBuilder(MinecraftMaterial.BOOK.getMaterial()) {{

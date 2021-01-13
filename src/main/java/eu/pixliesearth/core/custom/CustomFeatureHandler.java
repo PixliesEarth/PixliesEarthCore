@@ -137,16 +137,16 @@ public class CustomFeatureHandler {
 	
 	public void registerSkills() {
 		SkillHandler skillHandler = SkillHandler.getSkillHandler();
-		skillHandler.registerSkill(new SimpleSkill("Lumbering"));//
-		skillHandler.registerSkill(new SimpleSkill("Mining"));//
-		skillHandler.registerSkill(new SimpleSkill("Building"));//
-		skillHandler.registerSkill(new SimpleSkill("Traveling"));//
-		skillHandler.registerSkill(new SimpleSkill("Farming"));//
-		skillHandler.registerSkill(new SimpleSkill("Hunting"));//
-		skillHandler.registerSkill(new SimpleSkill("Enchanting"));//
-		skillHandler.registerSkill(new SimpleSkill("Fishing"));//
-		skillHandler.registerSkill(new SimpleSkill("Taming"));//
-		skillHandler.registerSkill(new SimpleSkill("Questing"));
+		skillHandler.registerSkill(new SimpleSkill("Lumbering", "Chop down trees!"));//
+		skillHandler.registerSkill(new SimpleSkill("Mining", "Mine minerals and stone underground"));//
+		skillHandler.registerSkill(new SimpleSkill("Building", "Build big structures!"));//
+		skillHandler.registerSkill(new SimpleSkill("Traveling", "Walking is good for your body"));//
+		skillHandler.registerSkill(new SimpleSkill("Farming", "Live a farmers life"));//
+		skillHandler.registerSkill(new SimpleSkill("Hunting", "Hunt animals"));//
+		skillHandler.registerSkill(new SimpleSkill("Enchanting", "Enchant your gear"));//
+		skillHandler.registerSkill(new SimpleSkill("Fishing", "Just fish!"));//
+		skillHandler.registerSkill(new SimpleSkill("Taming", "Tame animals"));//
+		skillHandler.registerSkill(new SimpleSkill("Questing", ""));
 		System.out.println("Registered skills");
 	}
 	

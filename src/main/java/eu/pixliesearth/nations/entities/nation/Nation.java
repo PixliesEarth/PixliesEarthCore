@@ -123,6 +123,11 @@ public class Nation {
             iter.remove();
             nc.unclaim();
         }
+        for (String s : allies) {
+            Nation ally = getById(s);
+            ally.getAllies().remove(nationId);
+            ally.save();
+        }
         Document found = Main.getNationCollection().find(new Document("nationId", nationId)).first();
         if (found != null)
             Main.getNationCollection().deleteOne(found);
@@ -305,7 +310,7 @@ public class Nation {
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
             return NationRelation.SAME;
-        if (getById(n1).isAlliedWith(n2))
+        if (getById(n1) != null && getById(n1).isAlliedWith(n2))
             return NationRelation.ALLY;
         return NationRelation.NEUTRAL;
     }
