@@ -40,7 +40,7 @@ public class PixliesFunGUI implements Constants {
     }
 
     public void open() {
-        if (gui == null) {
+        if (gui == null || gui.getInventory().getItem(0) == null || gui.getInventory().getItem(0).getType() == Material.AIR) {
             renderMainMenu();
             return;
         }
