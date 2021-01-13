@@ -333,9 +333,11 @@ public class DynmapEngine {
         Map<String, NationBlocks> blocks_by_faction = new HashMap<>();
 
         Collection<Nation> facts = NationManager.nations.values();
-        for (Nation fact : facts) {
-            List<String> chunks = fact.getChunks();
-            String fid = "World_" + fact.getNationId();
+        /* Loop through factions */
+        for (final Nation nation : facts) {
+
+            List<String> chunks = nation.getChunks();
+            String fid = "World_" + nation.getNationId();
             NationBlocks factblocks = blocks_by_faction.get(fid); /* Look up Nation */
             if (factblocks == null) {    /* Create Nation block if first time */
                 factblocks = new NationBlocks();
@@ -351,13 +353,8 @@ public class DynmapEngine {
 
                 blocks.add(new NationBlock(cc.getX(), cc.getZ())); /* Add to list */
             }
-        }
-        /* Loop through factions */
-        for (final Nation nation : facts) {
+
             final String factname = ChatColor.stripColor(nation.getName());
-            final String fid = "World" + "_" + nation.getNationId();
-            final NationBlocks factblocks = blocks_by_faction.get(fid); /* Look up Nation */
-            if (factblocks == null) continue;
 
             /* Loop through each world that Nation has blocks on */
             for (Map.Entry<String, LinkedList<NationBlock>> worldblocks : factblocks.getBlocks().entrySet()) {
