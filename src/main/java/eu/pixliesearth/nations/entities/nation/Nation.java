@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +33,7 @@ public class Nation {
     private String banner;
     private double xpPoints;
     private double money;
+    private String capital;
     private String leader;
     private String dynmapFill;
     private String dynmapBorder;
@@ -70,6 +73,7 @@ public class Nation {
         nation.append("banner", banner);
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
+        nation.append("capital", capital);
         nation.append("leader", leader);
         nation.append("dynmapFill", dynmapFill);
         nation.append("dynmapBorder", dynmapBorder);
@@ -98,6 +102,14 @@ public class Nation {
     public void setFlag(ItemStack flag) {
         setBanner(InventoryUtils.serialize(flag));
         save();
+    }
+
+    public void setCapital(Location location) {
+        capital = new SimpleLocation(location).parseString();
+    }
+
+    public Location getCapital() {
+        return SimpleLocation.fromString(capital).toLocation();
     }
 
     public Nation save() {
@@ -253,6 +265,15 @@ public class Nation {
         int i = 0;
         for (Player player : getOnlineMemberSet()) {
             lang.send(player);
+            i++;
+        }
+        return i;
+    }
+
+    public int broadcastMembers(Lang lang, String... placeholders) {
+        int i = 0;
+        for (Player player : getOnlineMemberSet()) {
+            lang.send(player, placeholders);
             i++;
         }
         return i;
