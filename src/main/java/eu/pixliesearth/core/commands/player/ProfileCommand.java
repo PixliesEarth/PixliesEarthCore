@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
