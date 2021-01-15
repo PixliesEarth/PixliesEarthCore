@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import org.bukkit.Material;
@@ -88,24 +87,22 @@ public class PixliesFunGUI implements Constants {
     	List<String> values = new ArrayList<String>();
     	// Cache handler
     	CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
-    	// Loop threw all items
-    	handler.getCustomItems().parallelStream().forEach((c) -> values.add(c.getUUID()));
     	// Create pattern from the keyword
     	Pattern pattern = Pattern.compile(keyWord);
-    	// Use the predicate to match values
-    	values.removeIf(new Predicate<String>() {
-			@Override
-			public boolean test(String t) {
-				/*
-				 * This ones a little complex
-				 * 
-				 * We first check if the keyword contains a colon, if it does we do not remove all characters before the colon in the uuid, else-wise we do
-				 * Then we make the uuid to common characters
-				 * Then we use the pattern we made earlier to check for matches, if one is not found the id is removed
-				 */
-				return !pattern.matcher(((keyWord.contains(":")) ? t.toLowerCase() : t.toLowerCase().replaceAll(".*?(?=:):", ""))).find();
-			}
-		});
+    	// Loop threw all items
+    	if (keyWord.contains(":")) {
+    		handler.getCustomItems().parallelStream().forEach((c) -> {
+        		if (pattern.matcher(c.getUUID().toLowerCase().replaceAll(".*?(?=:):", "")).find()) {
+        			values.add(c.getUUID());
+        		}
+        	});
+    	} else {
+    		handler.getCustomItems().parallelStream().forEach((c) -> {
+        		if (pattern.matcher(c.getDefaultDisplayName().toLowerCase()).find()) {
+        			values.add(c.getUUID());
+        		}
+        	});
+    	}
     	// Return the value
         return values;
     }
