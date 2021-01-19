@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -159,6 +160,17 @@ public class NationChunk {
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
         }
         return true;
+    }
+
+    public Chunk getChunk() {
+        return Bukkit.getWorld(world).getChunkAt(x, z);
+    }
+
+    public Location chunkCenter() {
+        Chunk chunk = getChunk();
+        Location center = new Location(chunk.getWorld(), chunk.getX() << 4, 64, chunk.getZ() << 4).add(7, 0, 7);
+        center.setY(center.getWorld().getHighestBlockYAt(center));
+        return center;
     }
 
     @Deprecated

@@ -137,6 +137,7 @@ public class Nation {
         }
         for (String s : allies) {
             Nation ally = getById(s);
+            if (ally == null) continue;
             ally.getAllies().remove(nationId);
             ally.save();
         }
