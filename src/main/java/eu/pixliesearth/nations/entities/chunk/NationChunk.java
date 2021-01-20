@@ -48,7 +48,7 @@ public class NationChunk {
                     nation.getChunks().add(serialize());
                     nation.save();
                 }
-                System.out.println("§bChunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
+                System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
             }
         } catch (Exception e) {
             e.printStackTrace();
