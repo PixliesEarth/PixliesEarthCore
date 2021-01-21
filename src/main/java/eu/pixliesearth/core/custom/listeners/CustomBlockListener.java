@@ -4,12 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -128,11 +123,16 @@ public class CustomBlockListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
 	public void BlockPistonExtendEvent(BlockPistonExtendEvent event) {
-		if (event.getBlock()==null) return;
 		if (event.isCancelled()) return;
-		for (Block b : event.getBlocks()) 
-			if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null)
-				event.setCancelled(true);
+		for (Block b : event.getBlocks()) if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null) event.setCancelled(true);
+	}
+
+	@EventHandler
+	@SneakyThrows
+	public void BlockFromToEvent(BlockFromToEvent event) {
+		if (event.isCancelled()) return;
+		Block b = event.getToBlock();
+		if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null) event.setCancelled(true);
 	}
 	
 	@EventHandler
