@@ -59,7 +59,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
         return "Machine:Oil_Fabricator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
-    private final double energyPerAction = 2;
+    private final double energyPerAction = 2.0;
     
     @Override
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
@@ -149,7 +149,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		}
 	}
 	
-	private Random random = new Random();
+	private final Random random = new Random();
 	
 	private int oilInChunk(Location loc) {
 		if (!loc.getWorld().getEnvironment().equals(Environment.NORMAL)) return 0;
@@ -160,7 +160,12 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    	switch (biome) {
 	    	case DESERT :
 	    	case DESERT_HILLS :
-	    		oil = 1000 + (random.nextInt(3000)+1);
+				case DEEP_COLD_OCEAN :
+				case DEEP_FROZEN_OCEAN :
+				case DEEP_LUKEWARM_OCEAN :
+				case DEEP_OCEAN :
+				case DEEP_WARM_OCEAN :
+					oil = 1000 + (random.nextInt(3000)+1);
 	    		break;
 	    	case OCEAN :
 	    	case COLD_OCEAN :
@@ -169,14 +174,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    	case WARM_OCEAN :
 	    		oil = 1000 + (random.nextInt(1500)+1);
 	    		break;
-	    	case DEEP_COLD_OCEAN :
-	    	case DEEP_FROZEN_OCEAN :
-	    	case DEEP_LUKEWARM_OCEAN :
-	    	case DEEP_OCEAN :
-	    	case DEEP_WARM_OCEAN :
-	    		oil = 1000 + (random.nextInt(3000)+1);
-	    		break;
-	    	case DESERT_LAKES :
+				case DESERT_LAKES :
 	    		oil = 1000 + (random.nextInt(4000)+1);
 	    		break;
 	    	default :
@@ -184,10 +182,8 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    		break;
 	    	}
 	    	oilTable.put(chunk.getX(), chunk.getZ(), oil);
-	    	return oil;
-	    } else {
-	    	return oil;
-	    }
+		}
+		return oil;
 	}
     
 	private void takeOil(Location loc, int amount) {

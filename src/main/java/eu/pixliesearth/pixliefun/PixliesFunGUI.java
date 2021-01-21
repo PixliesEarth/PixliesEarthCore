@@ -1,27 +1,31 @@
 package eu.pixliesearth.pixliefun;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.*;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.CustomItem;
+import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import lombok.Data;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author MickMMars
@@ -40,7 +44,7 @@ public class PixliesFunGUI implements Constants {
     }
 
     public void open() {
-        if (gui == null) {
+        if (gui == null || gui.getInventory().getItem(0) == null || gui.getInventory().getItem(0).getType() == Material.AIR) {
             renderMainMenu();
             return;
         }
@@ -73,13 +77,34 @@ public class PixliesFunGUI implements Constants {
     }
 
     public List<String> searchItems(String keyWord) {
-        List<String> returner = new ArrayList<>();
-        CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
-        for (CustomItem.Category category : CustomItem.Category.values())
-            for (String s : handler.getCategoriesForItems().get(category))
-                if (StringUtils.containsIgnoreCase(ChatColor.stripColor(CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(s).getDefaultDisplayName()), keyWord))
-                    returner.add(s);
-        return returner;
+    	/**
+    	 * Hey mick! Just so you know the regex
+    	 * .*?(?=:):
+    	 * gets all characters before and including the ':' basically removing the start of the id's
+    	 * For example the string "Pixlies:Test" would become "Test"
+    	 */
+    	// Create a new list to store all item uuids in
+    	List<String> values = new ArrayList<String>();
+    	// Cache handler
+    	CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
+    	// Create pattern from the keyword
+    	Pattern pattern = Pattern.compile(keyWord);
+    	// Loop threw all items
+    	if (keyWord.contains(":")) {
+    		handler.getCustomItems().parallelStream().forEach((c) -> {
+        		if (pattern.matcher(c.getUUID().toLowerCase().replaceAll(".*?(?=:):", "")).find()) {
+        			values.add(c.getUUID());
+        		}
+        	});
+    	} else {
+    		handler.getCustomItems().parallelStream().forEach((c) -> {
+        		if (pattern.matcher(c.getDefaultDisplayName().toLowerCase()).find()) {
+        			values.add(c.getUUID());
+        		}
+        	});
+    	}
+    	// Return the value
+        return values;
     }
 
     public void renderSearchItems(String keyWord) {

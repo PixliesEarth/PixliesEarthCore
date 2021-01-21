@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.commands.economy.BalanceCommand;
@@ -253,9 +254,14 @@ public final class Main extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
                 for (Player player : getServer().getOnlinePlayers()) {
                     // if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
-                    Profile profile = getProfile(player.getUniqueId());
-                    profile.syncDiscordAndIngameRoles();
-                    profile.backup();
+                    try {
+                        Profile profile = getProfile(player.getUniqueId());
+                        profile.syncDiscordAndIngameRoles();
+                        profile.backup();
+                    } catch (Exception e) {
+                        getLogger().log(Level.SEVERE, "Couldn't backup " + player.getName() + "'s profile on to the database.");
+                        e.printStackTrace();
+                    }
                 }
                 Bukkit.getConsoleSender().sendMessage("§aDone.");
             }
@@ -267,7 +273,12 @@ public final class Main extends JavaPlugin {
             public void run() {
                 System.out.println("§aSaving all nations in the database...");
                 for (Nation nation : NationManager.nations.values())
-                    nation.backup();
+                    try {
+                        nation.backup();
+                    } catch (Exception e) {
+                        getLogger().log(Level.SEVERE, "Couldn't backup " + nation.getName() + " on to the database.");
+                        e.printStackTrace();
+                    }
                 System.out.println("§aSaved all nations in the database.");
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 16, (20 * 60) * 15);

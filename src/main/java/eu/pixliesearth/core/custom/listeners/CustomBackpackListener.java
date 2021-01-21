@@ -1,15 +1,18 @@
 package eu.pixliesearth.core.custom.listeners;
 
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.inventory.ItemStack;
+
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import lombok.SneakyThrows;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 /**
  * 
  * @author BradBot_1
@@ -35,4 +38,16 @@ public class CustomBackpackListener extends CustomListener {
 		if (id==null) return;
 		if (id.equalsIgnoreCase("Pixlies:Backpack")) event.setCancelled(true);
 	}
+	
+	@EventHandler public void InventoryDragEvent(InventoryDragEvent event) {
+		if (!event.getView().getTitle().equalsIgnoreCase("§6Backpack")) return;
+		for (ItemStack itemStack : event.getNewItems().values()) {
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			if (CustomItemUtil.getUUIDFromItemStack(itemStack).equals("Pixlies:Backpack")) {
+				event.setCancelled(true);
+				return;
+			}
+		}
+	}
+	
 }
