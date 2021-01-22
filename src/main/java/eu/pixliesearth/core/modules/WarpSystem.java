@@ -75,10 +75,6 @@ public class WarpSystem implements CommandExecutor, Module {
                 break;
             case 2:
                 if (args[0].equalsIgnoreCase("remove")) {
-                    if (args[1] == null) {
-                        sender.sendMessage("§aEARTH §8| §7You need to specify the warp you want to remove.");
-                        return false;
-                    }
                     if (!Methods.testPermission(sender, "earth.warps.edit")) {
                         sender.sendMessage("§aEARTH §8| §cInsufficient permissions.");
                         return false;

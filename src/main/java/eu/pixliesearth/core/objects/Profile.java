@@ -202,6 +202,16 @@ public class Profile {
         return true;
     }
 
+    public boolean leaveEmergency() {
+        if (!inNation)
+            return false;
+        this.nationId = "NONE";
+        this.inNation = false;
+        save();
+        instance.getUtilLists().inspectors.remove(getUUID());
+        return true;
+    }
+
     public OfflinePlayer getAsOfflinePlayer() {
         return Bukkit.getOfflinePlayer(UUID.fromString(uniqueId));
     }

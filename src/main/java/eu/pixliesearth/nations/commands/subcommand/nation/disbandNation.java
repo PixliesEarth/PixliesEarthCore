@@ -52,7 +52,7 @@ public class disbandNation extends SubCommand {
                     return false;
                 }
                 instance.getUtilLists().nationDisbander.put(player.getUniqueId(), user.getNationId());
-                player.sendMessage(Lang.NATION_DELEATION_CONIIRMATION.get(player));
+                player.sendMessage(Lang.NATION_DELETATION_CONFIRMATION.get(player));
                 break;
             case 1:
                 Nation nation = Nation.getByName(args[0]);
@@ -73,7 +73,7 @@ public class disbandNation extends SubCommand {
                 }
                 if (sender instanceof Player) {
                     instance.getUtilLists().nationDisbander.put(((Player) sender).getUniqueId(), nation.getNationId());
-                    sender.sendMessage(Lang.NATION_DELEATION_CONIIRMATION.get(sender));
+                    sender.sendMessage(Lang.NATION_DELETATION_CONFIRMATION.get(sender));
                 } else {
                     nation.remove();
                     sender.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());

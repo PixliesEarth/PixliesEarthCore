@@ -39,7 +39,7 @@ NATION_WITH_NAME_ALREADY_EXISTS: "&7Eine Nation mit diesem Namen &cexistiert sch
 NATION_NAME_UNVALID: "&7Der Name deiner Nation darf nur Alphanumerisch, minimum §b3 §7und maximum §10 §7Buchstaben lang sein."
 PLAYER_FORMED_NATION: "&6%PLAYER% &7hat gerade die Nation von &b%NAME% &7geformt."
 ALREADY_IN_NATION: "&7Du &cbist schon &7in einer Nation."
-NATION_DELEATION_CONIIRMATION: "&7Willst du wirklich deine Nation auflösen? Schreibe &aconfirm &7um es aufzulösen, falls du dich umentschieden hast, schreibe &ccancel&7."
+NATION_DELETATION_CONFIRMATION: "&7Willst du wirklich deine Nation auflösen? Schreibe &aconfirm &7um es aufzulösen, falls du dich umentschieden hast, schreibe &ccancel&7."
 PLAYER_CLAIMED: "&6%PLAYER% &7hat soeben einen Chunk für deine Nation an &b%X%&8, &b%Z% &7in beansprucht."
 PLAYER_UNCLAIMED: "&6%PLAYER% &7hat soeben einen Chunk von deiner Nation aufgegeben."
 CHUNK_NOT_YOURS: "&cDu kannst nichts unclaimed was nicht dir gehört."
@@ -228,3 +228,4 @@ NOT_ENOUGH_XP_POINTS: "&7Deine Nation benötigt mehr Forschungs-Punkte für dies
 NATION_REACHED_NEW_ERA: "&7Deine Nation hat eine neue Era erreicht."
 PLAYER_REMOVED_X: "&6%PLAYER% &7hat die &b%X% %Y% &7entfernt."
 PLAYER_ADDED_X: "&6%PLAYER% &7hat die &bX% %Y% &7hinzugefügt."
+CANT_SEND_MESSAGE_TO_YOURSELF: "&7Du kannst dir selber keine Privatnachrichten schreiben."

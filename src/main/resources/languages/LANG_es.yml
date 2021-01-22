@@ -40,7 +40,7 @@ NATION_NAME_UNVALID: "§7El nombre de tu nación solo puede estar compuesto por,
   §b3 §7y max. §b10 §7caracteres alfanuméricos."
 PLAYER_FORMED_NATION: "§6%PLAYER% §7acaba de formar la nación de §b%NAME%&7."
 ALREADY_IN_NATION: "&Ya &7formas parte de una nación."
-NATION_DELEATION_CONIIRMATION: "§7¿Estás seguro de que quieres desmantelar tu nación?
+NATION_DELETATION_CONFIRMATION: "§7¿Estás seguro de que quieres desmantelar tu nación?
   Escribe §aconfirm §7para desmantelarla, si has cambiado de idea, escribe §ccancel§7."
 PLAYER_CLAIMED: "&6%PLAYER% &7reclamó territorio para tu nación en &b%X%&8, &b%Z%&7."
 PLAYER_UNCLAIMED: "&6%PLAYER% &7desreclamó terreno de tu nación en  &b%X%&8, &b%Z%&7."
