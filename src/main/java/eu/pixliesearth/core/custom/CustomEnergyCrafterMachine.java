@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import eu.pixliesearth.core.custom.interfaces.Energyable;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import org.bukkit.Location;
@@ -117,4 +118,5 @@ public abstract class CustomEnergyCrafterMachine extends CustomCrafterMachine im
 	public void takeCost(Location location, CustomRecipe customRecipe) {
 		CustomFeatureLoader.getLoader().getHandler().removePowerFromLocation(location, customRecipe.getEnergyCost());
 	}
+
 }
