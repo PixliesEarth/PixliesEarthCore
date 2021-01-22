@@ -17,10 +17,6 @@ commands:
     description: Seen Command
     aliases:
       - lastseen
-  coins:
-    description: Main command for pixliecoins
-    aliases:
-      - pixliecoins
   message:
     description: PM command
     aliases:
@@ -262,11 +258,6 @@ permissions:
   earth.chat.bypassblacklist:
     default: op
   earth.chat.broadcast:
-    default: op
-  # COINS
-  earth.coins.admin:
-    default: op
-  earth.coins.others:
     default: op
   # PRIVATEMESSAGE
   earth.pm.bypassblacklist:

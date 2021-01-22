@@ -9,11 +9,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
-import eu.pixliesearth.core.commands.economy.BalanceCommand;
-import eu.pixliesearth.core.commands.economy.PayCommand;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
-import eu.pixliesearth.core.modules.economy.EconomySystem;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -41,7 +38,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import eu.pixliesearth.core.commands.economy.CoinsCommand;
 import eu.pixliesearth.core.commands.player.AdoptCommand;
 import eu.pixliesearth.core.commands.player.BlockCommand;
 import eu.pixliesearth.core.commands.player.BoostCommand;
