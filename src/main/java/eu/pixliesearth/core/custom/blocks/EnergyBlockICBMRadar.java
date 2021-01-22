@@ -211,7 +211,7 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 		        for (int row = height; row >= -height; row--) {
 		        	for (int x = width; x >= -width; x--) {
 		        		final int chunkX = playerCX - x, chunkZ = playerCZ - row;
-		        		if (getContainedPower(location)>=energyCostPerOperation) {
+		        		if (getContainedPower(location) != null && getContainedPower(location) >= energyCostPerOperation) {
 		        			final int i2 = i; // cast i to a final
 		        			Bukkit.getScheduler().scheduleAsyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), 
 		        			new Runnable() {
@@ -219,7 +219,7 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 								public void run() {
 									inv.setItem(i2, getRadarItem(chunkX, chunkZ, getDanger(world, chunkX, chunkZ)));
 								}
-		        			}, 1l);
+		        			}, 1L);
 		        			h.removePowerFromLocation(location, energyCostPerOperation);
 		        			i++;
 		        		}

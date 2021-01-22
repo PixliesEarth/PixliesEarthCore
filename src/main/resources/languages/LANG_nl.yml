@@ -41,7 +41,7 @@ NATION_NAME_UNVALID: "§7De naam van uw land kan alleen alfanumeriek zijn, min. 
   §7en max. §b10 §7tekens lang."
 PLAYER_FORMED_NATION: "§6%PLAYER% §7heeft net de natie §b%NAME%&7 gevormd."
 ALREADY_IN_NATION: "&7Je bent &cal&7 in een land."
-NATION_DELEATION_CONIIRMATION: "§7Weet u zeker dat u uw land wilt ontbinden? Type
+NATION_DELETATION_CONFIRMATION: "§7Weet u zeker dat u uw land wilt ontbinden? Type
   §aconfirm §7om te ontbinden, anders type §ccancel§7."
 PLAYER_CLAIMED: "&6%PLAYER% &7eiste een brok op voor uw land op &b%X%&8, &b%Z%&7."
 PLAYER_UNCLAIMED: "&6%PLAYER% &7heeft een brokstuk voor uw land afgehaald op &b%X%&8,

@@ -43,6 +43,10 @@ public class PrivateMessage implements CommandExecutor, Module {
             Lang.PLAYER_BLOCKED_YOU.send(sender);
             return false;
         }
+        if (sender.getName().equalsIgnoreCase(receiver.getName())) {
+            Lang.CANT_SEND_MESSAGE_TO_YOURSELF.send(sender);
+            return false;
+        }
         StringBuilder messageBuilder = new StringBuilder();
         for (int i = 1; i != args.length; i++)
             messageBuilder.append(args[i]).append(" ");

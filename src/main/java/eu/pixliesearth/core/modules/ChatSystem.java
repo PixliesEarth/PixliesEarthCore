@@ -32,6 +32,11 @@ public class ChatSystem implements Listener, Module {
             Player player = event.getPlayer();
             Profile profile = instance.getProfile(player.getUniqueId());
 
+            /*
+             * Fix for corrupted profiles
+             */
+            if (profile.isInNation() && profile.getCurrentNation() == null) profile.leaveEmergency();
+
             if (!player.hasPermission("earth.chat.bypassblacklist")) {
                 for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
                     if (StringUtils.containsIgnoreCase(event.getMessage(), s1))
@@ -45,7 +50,7 @@ public class ChatSystem implements Listener, Module {
                     mat = player.getInventory().getItemInMainHand().getType();
                 new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
                 instance.getUtilLists().warpAdder.remove(player.getUniqueId());
-                player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
+                player.sendMessage(Lang.EARTH + "§7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }
 
