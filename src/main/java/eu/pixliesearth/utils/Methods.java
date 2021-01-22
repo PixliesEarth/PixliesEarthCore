@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Methods {
 	
@@ -116,6 +117,11 @@ public class Methods {
         int h = time / 3600 % 24;
 
         return (h > 0 ? h + ":" : "") + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+    }
+
+    public static String formatTime(long millis) {
+        return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toDays(millis),
+                TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.HOURS.toHours(TimeUnit.MILLISECONDS.toDays(millis)));
     }
 
     public static Material getSBWoolByCC(String chatColor) {
