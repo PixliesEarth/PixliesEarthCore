@@ -71,7 +71,12 @@ public class settlementsCommand extends SubCommand implements Listener {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
-                    if (nation.getSettlements().containsKey(args[1])) {
+                    String settlementName = args[1].replaceAll("[^a-zA-Z0-9]", "");
+                    if (settlementName.length() < 3 || settlementName.length() > 15) {
+                        sender.sendMessage(Lang.NATION + "§7Name has to be longer than 3 and short than 15 characters.");
+                        return false;
+                    }
+                    if (nation.getSettlements().containsKey(settlementName)) {
                         Lang.SETTLEMENT_ALREADY_EXISTS.send(player);
                         return false;
                     }
@@ -84,8 +89,8 @@ public class settlementsCommand extends SubCommand implements Listener {
                         Lang.SETTLEMENT_HAS_TO_BE_IN_TERRITORY.send(player);
                         return false;
                     }
-                    Settlement settlement = new Settlement(args[1].replace(".", ""), new SimpleLocation(player.getLocation()).parseString(), false);
-                    nation.getSettlements().put(args[1], new Gson().toJson(settlement));
+                    Settlement settlement = new Settlement(settlementName, new SimpleLocation(player.getLocation()).parseString(), false);
+                    nation.getSettlements().put(settlementName, new Gson().toJson(settlement));
                     nation.save();
                     for (Player member : nation.getOnlineMemberSet())
                         Lang.PLAYER_SET_SETTLEMENT.send(member, "%PLAYER%;" + player.getName(), "%SETTLEMENT%;" + args[1]);
