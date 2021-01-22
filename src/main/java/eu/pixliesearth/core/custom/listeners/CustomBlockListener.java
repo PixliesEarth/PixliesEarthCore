@@ -57,6 +57,8 @@ public class CustomBlockListener extends CustomListener {
 		if (event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
 		if (!ProtectionManager.canPlace(event)) return;
 		if (event.isCancelled()) return;
+		event.getPlayer().getInventory().getItemInMainHand();
+		if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
 		String id = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("UUID");
 		if (id==null) return;
 		if (CIControl.DISABLED_ITEMS.contains(id)) {
