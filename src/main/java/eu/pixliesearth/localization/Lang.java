@@ -302,10 +302,14 @@ public enum Lang {
 
     public String get(CommandSender sender) {
         if (languages == null) return "";
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-            return languages.containsKey(profile.getLang()) ? PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang())) : PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get("ENG"));
+        try {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+                return languages.containsKey(profile.getLang()) ? PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang())) : PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get("ENG"));
+            }
+        } catch (Exception e) {
+            return PREFIX + languages.get("ENG").replace("&", "§");
         }
         return PREFIX + languages.get("ENG").replace("&", "§");
     }
