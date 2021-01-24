@@ -16,9 +16,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class ScoreboardAdapter implements AssembleAdapter {
 
@@ -67,6 +66,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
         List<String> returnable = new ArrayList<>();
         Profile profile = Main.getInstance().getProfile(player.getUniqueId());
         ChatColor c = ChatColor.getByChar(profile.getFavoriteColour().replace("§", ""));
+        final World world = player.getWorld();
         if (profile.isInWar()) {
             War war = instance.getCurrentWar();
             returnable.add("§c§lWAR §7players left");
@@ -83,7 +83,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
             final int playerCX = player.getLocation().getChunk().getX();
             final int playerCZ = player.getLocation().getChunk().getZ();
-            final World world = player.getWorld();
             for (int row = height; row >= -height; row--) {
                 StringBuilder builder = new StringBuilder();
                 for (int x = width; x >= -width; x--) {
@@ -119,7 +118,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 if (instance.getUtilLists().boosts.size() > 0)
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
-                returnable.add(c + "§l" + Lang.PLAYER.get(player));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(world.getFullTime());
+                returnable.add(c + "§l| §7" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
+                returnable.add(c + "§l| §7" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+                // returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 returnable.add(c + "§l| " + c + player.getDisplayName());
                 returnable.add(c + "§l| " + profile.getBalanceFormatted());
                 returnable.add(c + "§l| §e" + energy);
