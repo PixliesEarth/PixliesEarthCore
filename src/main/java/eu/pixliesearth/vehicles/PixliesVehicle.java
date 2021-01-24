@@ -96,8 +96,6 @@ public class PixliesVehicle implements Listener {
             } else if (p.getUniqueId().equals(owner)) {
                 this.ds.addPassenger(p);
                 this.driver = p;
-            } else {
-                return;
             }
         }
     }

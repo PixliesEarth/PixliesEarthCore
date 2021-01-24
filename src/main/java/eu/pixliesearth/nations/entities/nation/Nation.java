@@ -109,6 +109,7 @@ public class Nation {
     }
 
     public Location getCapital() {
+        if (capital.equalsIgnoreCase("NONE")) return null;
         return SimpleLocation.fromString(capital).toLocation();
     }
 

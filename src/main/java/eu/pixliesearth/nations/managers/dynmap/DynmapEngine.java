@@ -14,6 +14,7 @@ import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlock;
 import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlocks;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
@@ -367,7 +368,7 @@ public class DynmapEngine {
 
                 /* Now, add marker for warp location */
                 for (Map.Entry<String, String> settleMents : nation.getSettlements().entrySet()) {
-                    final String name = settleMents.getKey();
+                    final String name = nation.getNationId() + "_" + settleMents.getKey();
                     final Settlement settlement = new Gson().fromJson(settleMents.getValue(), Settlement.class);
                     final MarkerIcon ico = getMarkerIcon(cusstyle, defstyle, factname);
                     if (ico != null) {
@@ -391,6 +392,22 @@ public class DynmapEngine {
                             marker.setDescription(formatInfoWindow(infoWindow, nation));
                             newmark.put(name, marker);
                         }
+                    }
+                }
+                if (nation.getCapital() != null) {
+                    Location capital = nation.getCapital();
+                    Marker marker = resmark.remove(nation.getNationId() + "_capital");
+                    if (marker == null) {
+                        marker = set.createMarker(nation.getNationId() + "_capital", "Capital of " + nation.getName(), capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ(), markerAPI.getMarkerIcon("temple"), false);
+                    } else {
+                        marker.setLocation(capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ());
+                        marker.setLabel("Capital of " + nation.getName());
+                        marker.setMarkerIcon(markerAPI.getMarkerIcon("temple"));
+                    }
+
+                    if (marker != null) {
+                        marker.setDescription(formatInfoWindow(infoWindow, nation));
+                        newmark.put(nation.getNationId() + "_capital", marker);
                     }
                 }
             }
