@@ -24,6 +24,7 @@ public class chatNation extends SubCommand {
         map.put("nation", 1);
         map.put("ally", 1);
         map.put("public", 1);
+        map.put("local", 1);
         return map;
     }
 
@@ -51,6 +52,10 @@ public class chatNation extends SubCommand {
                             Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§dAlly");
                             break;
                         case ALLY:
+                            instance.getUtilLists().chatTypes.put(player.getUniqueId(), ChatType.LOCAL);
+                            Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§2Local");
+                            break;
+                        case LOCAL:
                             instance.getUtilLists().chatTypes.remove(player.getUniqueId());
                             Lang.CHANGED_CHATTYPE.send(player, "%TYPE%;§aPublic");
                             break;
@@ -79,7 +84,8 @@ public class chatNation extends SubCommand {
 
         NATION("§bNation"),
         ALLY("§dAlly"),
-        PUBLIC("§aPublic");
+        PUBLIC("§aPublic"),
+        LOCAL("§2Local");
 
         String name;
         ChatType(String name) {
