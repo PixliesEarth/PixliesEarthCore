@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
+import eu.pixliesearth.core.objects.PixliesCalendar;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -159,6 +160,7 @@ public final class Main extends JavaPlugin {
     private @Getter FileManager warpsCfg;
     private @Getter FileManager shopCfg;
     private @Getter FileManager dynmapCfg;
+    private @Getter FileManager calendarCfg;
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
     private @Getter NTop nationsTop;
@@ -174,8 +176,9 @@ public final class Main extends JavaPlugin {
     private @Getter final boolean warEnabled = true;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
-    private @Getter SkillHandler skillHandler = SkillHandler.getSkillHandler();
+    private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
+    private @Getter PixliesCalendar calendar;
 
     @Override
     public void onEnable() {
@@ -231,6 +234,13 @@ public final class Main extends JavaPlugin {
 
         dynmapCfg = new FileManager(this, "dynmap", getDataFolder().getAbsolutePath());
         dynmapCfg.save();
+
+        calendarCfg = new FileManager(this, "calendar", getDataFolder().getAbsolutePath());
+        calendarCfg.save();
+
+        String[] date = calendarCfg.getConfiguration().getString("date").split("/");
+        calendar = new PixliesCalendar(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+        calendar.startRunner();
 
         if (!getConfig().contains("gulag")) {
             gulag = new Gulag("", "", "", new HashMap<>(), new ArrayList<>(), new HashMap<>());

@@ -41,10 +41,6 @@ public class DeathListener implements Listener {
         if (damageEvent instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) damageEvent).getDamager() instanceof Player) {
             Profile killer = Main.getInstance().getProfile(damageEvent.getEntity().getUniqueId());
             killer.getTimers().remove("§c§lCombat");
-            int randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
-            profile.setElo(profile.getElo() - randomNum);
-            killer.setElo(killer.getElo() + randomNum);
-            killer.save();
         }
         instance.getUtilLists().claimAuto.remove(player.getUniqueId());
         instance.getUtilLists().unclaimAuto.remove(player.getUniqueId());

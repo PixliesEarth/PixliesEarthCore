@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.scoreboard;
 
+import com.vdurmont.emoji.EmojiParser;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
@@ -15,9 +16,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ScoreboardAdapter implements AssembleAdapter {
 
@@ -119,12 +125,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(world.getFullTime());
-                returnable.add(c + "§l| §7" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
-                returnable.add(c + "§l| §7" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
-                // returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                returnable.add(c + "§l| " + c + player.getDisplayName());
+                returnable.add("§7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L));
+
+                returnable.add(" ");
+
+                returnable.add(c + "§l" + Lang.PLAYER.get(player));
+                // returnable.add(c + "§l| " + c + player.getDisplayName());
                 returnable.add(c + "§l| " + profile.getBalanceFormatted());
                 returnable.add(c + "§l| §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
@@ -139,7 +145,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "§l| §7Era: " + c + nation.getEra());
                 }
                 returnable.add(" ");
-                returnable.add(c + "§l| §7Playtime: " + c + profile.getPlayTimeFormatted());
+                returnable.add(c + "§l| " + c + profile.getPlayTimeFormatted());
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
                         returnable.add(c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));

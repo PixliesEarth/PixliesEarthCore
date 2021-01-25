@@ -1,6 +1,5 @@
 package eu.pixliesearth.utils;
 
-import com.google.common.base.Strings;
 import eu.pixliesearth.Main;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +13,13 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Methods {
-	
+
+    public static String formatClock(long ticks) {
+        long hours = ticks / 1000;
+        long minutes = Math.round((ticks % 1000) / 60);
+        return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+    }
+
 	public static String convertEnergyDouble(double d) {
 		String s = "";
 		d = Methods.round(d, 3);

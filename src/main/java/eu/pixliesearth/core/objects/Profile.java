@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.*;
@@ -168,7 +169,7 @@ public class Profile {
     }
 
     public String getBalanceFormatted() {
-        return "§b" + Methods.formatNumber((long) balance) + "§3⛃";
+        return "§b" + Methods.formatNumber((long) balance) + "§r" + EmojiParser.parseToUnicode(":moneybag:");
     }
 
     public void addToNation(String id, Rank rank) {
@@ -288,7 +289,7 @@ public class Profile {
         if (hours > 0) {
             msg += hours + "h";
         }
-        msg += minutes + " m";
+        msg += minutes + "m";
         return msg;
     }
 
