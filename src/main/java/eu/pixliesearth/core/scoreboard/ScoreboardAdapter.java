@@ -59,12 +59,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
     @Override
     public String getTitle(Player player) {
-/*        instance.getUtilLists().scoreboardFrames.putIfAbsent(player.getUniqueId(), 0);
+        instance.getUtilLists().scoreboardFrames.putIfAbsent(player.getUniqueId(), 0);
         int frame = instance.getUtilLists().scoreboardFrames.get(player.getUniqueId());
         if (frame == frames(player).length - 1) instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), 0);
-        instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()));
-        return frames(player)[frame];*/
-        return instance.getProfile(player.getUniqueId()).getFavoriteColour() + "§lEARTH";
+        instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()) + 1);
+        return frames(player)[frame];
+        // return instance.getProfile(player.getUniqueId()).getFavoriteColour() + "§lEARTH";
     }
 
     @Override
@@ -125,11 +125,13 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
 
-                returnable.add("§7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L));
+                String timeIcon = instance.getCalendar().day() ? "☀" : "§3§l☾";
+
+                returnable.add(instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
 
                 returnable.add(" ");
 
-                returnable.add(c + "§l" + Lang.PLAYER.get(player));
+                // returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 // returnable.add(c + "§l| " + c + player.getDisplayName());
                 returnable.add(c + "§l| " + profile.getBalanceFormatted());
                 returnable.add(c + "§l| §e" + energy);
@@ -145,7 +147,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(c + "§l| §7Era: " + c + nation.getEra());
                 }
                 returnable.add(" ");
-                returnable.add(c + "§l| " + c + profile.getPlayTimeFormatted());
+                returnable.add(c + "§l| §7" + profile.getPlayTimeFormatted());
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
                         returnable.add(c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));

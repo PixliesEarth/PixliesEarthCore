@@ -283,13 +283,11 @@ public class Profile {
         int minutes = time;
 
         String msg = "";
-        if (days > 0) {
-            msg += days + "d";
-        }
-        if (hours > 0) {
+        if (days > 0)
+            msg += days + "d ";
+        if (hours > 0)
             msg += hours + "h";
-        }
-        msg += minutes + "m";
+        msg += minutes;
         return msg;
     }
 

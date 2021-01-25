@@ -16,6 +16,7 @@ public class Methods {
 
     public static String formatClock(long ticks) {
         long hours = ticks / 1000;
+        if (hours > 24) hours = hours % 24;
         long minutes = Math.round((ticks % 1000) / 60);
         return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
     }
