@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.commands;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand.TabableSubCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.test.TestExplosionsSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.test.TestWolf;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import org.bukkit.command.CommandSender;
 
@@ -25,7 +26,7 @@ public class TestCommand extends CustomCommand {
 	
 	@Override
 	public ITabable[] getParams() {
-		return new ITabable[] {new TabableSubCommand(new TestExplosionsSubCommand())};
+		return new ITabable[] {new TabableSubCommand(new TestExplosionsSubCommand(), new TestWolf())};
 	}
 	
 	@Override
