@@ -5,12 +5,10 @@ import eu.pixliesearth.core.custom.CustomMob;
 import eu.pixliesearth.utils.Methods;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class CustomMobListener extends CustomListener {
