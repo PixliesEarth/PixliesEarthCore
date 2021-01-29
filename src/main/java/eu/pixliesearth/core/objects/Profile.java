@@ -376,6 +376,7 @@ public class Profile {
 
     public void addTimer(String name, Timer timer) {
         this.timers.put(name, timer.toMap());
+        save();
     }
 
     public boolean isStaff() {

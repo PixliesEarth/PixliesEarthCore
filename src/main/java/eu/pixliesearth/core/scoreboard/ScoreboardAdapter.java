@@ -94,6 +94,20 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 c + "§lEARTH",
                 c + "§lEARTH",
                 c + "§lEARTH",
+
+                c + "§lEART" + nc + "§lH",
+                c + "§lEART" + nc + "§lH",
+                c + "§lEAR" + nc + "§lT§f§lH",
+                c + "§lEAR" + nc + "§lT§f§lH",
+                c + "§lEA" + nc + "§lR§f§lTH",
+                c + "§lEA" + nc + "§lR§f§lTH",
+                c + "§lE" + nc + "§lA§f§lRTH",
+                c + "§lE" + nc + "§lA§f§lRTH",
+                nc + "§lE§f§lARTH",
+                nc + "§lE§f§lARTH",
+                "§f§lEARTH",
+                "§f§lEARTH",
+
                 nc+"§lE§f§lARTH",
                 nc+"§lE§f§lARTH",
                 nc+"§lE§f§lARTH",
@@ -123,7 +137,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
         if (frame == frames(player).length - 1) instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), 0);
         instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()) + 1);
         return frames(player)[frame];
-        // return instance.getProfile(player.getUniqueId()).getFavoriteColour() + "§lEARTH";
     }
 
     @Override

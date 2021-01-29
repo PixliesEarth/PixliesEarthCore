@@ -10,6 +10,7 @@ import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
+import eu.pixliesearth.core.custom.listeners.CustomMobListener;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import org.bson.Document;
@@ -413,6 +414,7 @@ public final class Main extends JavaPlugin {
     	loader.loadCustomItem(new Slingshot());
     	loader.loadCustomItem(new Uzi());
     	loader.loadCustomItem(new RPG7());
+    	loader.loadListener(new CustomMobListener());
 
     }
 
