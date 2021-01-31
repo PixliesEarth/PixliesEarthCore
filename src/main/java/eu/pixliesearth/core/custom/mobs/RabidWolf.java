@@ -13,16 +13,16 @@ public class RabidWolf extends EntityWolf {
 
         Wolf craftWolf = (Wolf) this.getBukkitEntity();
 
-        craftWolf.setMaxHealth(50);
+        craftWolf.setMaxHealth(100);
 
-        this.setHealth(50);
+        this.setHealth(100);
         this.setCustomName(new ChatMessage("§cRabid Wolf §8[" + Methods.getProgressBar(this.getHealth(), craftWolf.getMaxHealth(), 10, "|", "&c", "&7") + "§8]"));
         this.setCustomNameVisible(true);
 
-        this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityPig.class, true));
+        this.targetSelector.a(1, new PathfinderGoalNearestAttackableTarget<>(this, EntityPig.class, true));
         this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityPlayer.class, true));
-        this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityCow.class, true));
-        this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntitySheep.class, true));
+        this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(this, EntityCow.class, true));
+        this.targetSelector.a(3, new PathfinderGoalNearestAttackableTarget<>(this, EntitySheep.class, true));
 
         this.setPosition(location.getX(), location.getY(), location.getZ());
 

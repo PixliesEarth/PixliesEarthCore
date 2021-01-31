@@ -6,10 +6,15 @@ import eu.pixliesearth.utils.Methods;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
 
 public class CustomMobListener extends CustomListener {
 
@@ -52,6 +57,23 @@ public class CustomMobListener extends CustomListener {
         String health = StringUtils.substringBetween(entity.getCustomName(), "§8[", "§8]");
         if (health == null) return;
         entity.setCustomName(entity.getCustomName().replace(health, Methods.getProgressBar(damageable.getHealth(), damageable.getMaxHealth(), 10, "|", "&c", "&7")));
+    }
+
+    @EventHandler
+    public void onDirtyJoeHit(EntityDamageByEntityEvent event) {
+        if (!event.isCritical()) return;
+        if (!(event.getEntity() instanceof Villager)) return;
+        Villager villager = (Villager) event.getEntity();
+        if (villager.getCustomName() == null || !villager.getCustomName().startsWith("§eDirty Joe ")) return;
+        ItemStack[] loot = {
+                new ItemStack(Material.GOLD_NUGGET, 16),
+                new ItemStack(Material.GOLD_BLOCK, 2),
+                new ItemStack(Material.GOLDEN_AXE, 1),
+                new ItemStack(Material.GOLDEN_CHESTPLATE, 1),
+        };
+
+        Random r = new Random();
+        villager.getWorld().dropItemNaturally(villager.getLocation(), loot[r.nextInt(loot.length)]);
     }
 
 }

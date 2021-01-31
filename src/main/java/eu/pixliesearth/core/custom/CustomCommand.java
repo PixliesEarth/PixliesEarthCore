@@ -217,4 +217,26 @@ public abstract class CustomCommand {
 		}
 		
 	}
+
+	public static class TabableEnums<T extends Enum<T>> implements ITabable {
+
+		private final List<String> string = new ArrayList<>();
+
+		public TabableEnums(Class<T> enumType) {
+			for (T c : enumType.getEnumConstants())
+				this.string.add(c.name());
+		}
+
+		@Override
+		public List<String> getTabable(CommandSender commandSender, String[] params) {
+			return string;
+		}
+
+		@Override
+		public String getTabableName() {
+			return "enum";
+		}
+
+	}
+
 }

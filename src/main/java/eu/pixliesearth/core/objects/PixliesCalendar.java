@@ -107,10 +107,18 @@ public class PixliesCalendar extends Thread {
     }
 
     static {
-        // NEW YEAR
+        // 360 - NEW YEAR
         events.put(360, () -> {
             BroadcastCommand.broadcastDiscord("Happy Pixlies New Year!", Bukkit.getConsoleSender());
             Bukkit.broadcastMessage("§6Happy Pixlies New Year!");
+            for (Player player : Bukkit.getOnlinePlayers())
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        });
+
+        // 354 - CHRISTMAS
+        events.put(354, () -> {
+            BroadcastCommand.broadcastDiscord("Happy Pixlies Christmas!", Bukkit.getConsoleSender());
+            Bukkit.broadcastMessage("§6Happy Pixlies Christmas!");
             for (Player player : Bukkit.getOnlinePlayers())
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         });
