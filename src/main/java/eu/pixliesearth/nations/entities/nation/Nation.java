@@ -1,5 +1,6 @@
 package eu.pixliesearth.nations.entities.nation;
 
+import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
@@ -47,6 +48,7 @@ public class Nation {
     private List<String> allies;
     private List<String> pacts;
     private List<String> upgrades;
+    private List<String> elections;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -87,6 +89,7 @@ public class Nation {
         nation.append("allies", allies);
         nation.append("pacts", pacts);
         nation.append("upgrades", upgrades);
+        nation.append("elections", elections);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
@@ -102,6 +105,13 @@ public class Nation {
     public void setFlag(ItemStack flag) {
         setBanner(InventoryUtils.serialize(flag));
         save();
+    }
+
+    public Set<NationElection> getElections() {
+        Set<NationElection> electionSet = new HashSet<>();
+        for (String s : elections)
+            electionSet.add(new Gson().fromJson(s, NationElection.class));
+        return electionSet;
     }
 
     public void setCapital(Location location) {

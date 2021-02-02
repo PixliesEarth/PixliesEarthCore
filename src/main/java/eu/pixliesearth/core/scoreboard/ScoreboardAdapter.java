@@ -197,7 +197,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
 
-                String timeIcon = instance.getCalendar().day() ? "☀" : "§3§l☾";
+                final String timeIcon = instance.getCalendar().day() ? "§3☀" : "§9☽";
 
                 returnable.add(instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
 
@@ -246,6 +246,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 break;
         }
+        returnable.add("  " + c + "pixlies.net  ");
         return returnable;
     }
 
