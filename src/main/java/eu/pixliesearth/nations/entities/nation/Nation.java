@@ -114,6 +114,11 @@ public class Nation {
         return electionSet;
     }
 
+    public void addElection(NationElection election) {
+        this.elections.add(new Gson().toJson(election));
+        this.save();
+    }
+
     public void setCapital(Location location) {
         capital = new SimpleLocation(location).parseString();
     }

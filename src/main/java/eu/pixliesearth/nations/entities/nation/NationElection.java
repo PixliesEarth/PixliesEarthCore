@@ -1,8 +1,10 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -14,9 +16,13 @@ public class NationElection {
     private String startedBy;
     private Map<String, String> options;
     private Map<String, String> votes;
-    private long start;
-    private long duration;
+    private Long start;
+    private Long duration;
     private boolean started;
+
+    public static NationElection create(String topic, Player starter) {
+        return new NationElection(topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY, false);
+    }
 
     public boolean ended() {
         return System.currentTimeMillis() > (start + duration);
@@ -28,16 +34,32 @@ public class NationElection {
 
     public List<String> getOptionsFormatted() {
         List<String> lines = new ArrayList<>();
+
+        Map<String, Integer> votesByOption = getVotesByOption();
+
+        // STRING 1 = COLOR
+        // STRING 2 = NAME
+        for (Map.Entry<String, String> entry : options.entrySet()) {
+            if (started && ended() && entry.getValue().equalsIgnoreCase(getWinner())) {
+                lines.add("§a✔ " + entry.getKey() + entry.getValue() + "§8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votesByOption.size(), 7, "|", entry.getKey(), "§7") + "§8]");
+            } else {
+                lines.add(entry.getKey() + entry.getValue() + "§8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votesByOption.size(), 7, "|", entry.getKey(), "§7") + "§8]");
+            }
+        }
+        return lines;
+    }
+
+    public Map<String, Integer> getVotesByOption() {
         Map<String, Integer> votesByOption = new HashMap<>();
         for (String option : votes.values()) {
             votesByOption.putIfAbsent(option, 0);
             votesByOption.put(option, votesByOption.get(option) + 1);
         }
-        // STRING 1 = COLOR
-        // STRING 2 = NAME
-        for (Map.Entry<String, String> entry : options.entrySet())
-            lines.add(entry.getKey() + entry.getValue() + "§8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votesByOption.size(), 7, "|", entry.getKey(), "§7") + "§8]");
-        return lines;
+        return votesByOption;
+    }
+
+    public String getWinner() {
+        return Methods.sortByValue(getVotesByOption()).entrySet().iterator().next().getKey();
     }
 
 }
