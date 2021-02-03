@@ -52,7 +52,7 @@ public class DustLead extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 12;
     }
 
     @Override
