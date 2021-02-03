@@ -81,7 +81,11 @@ public class rankNation extends SubCommand {
                         Lang.RANK_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), Integer.parseInt(args[3]), new ArrayList<>()).toMap());
+                    StringBuilder allArgs = new StringBuilder();
+                    for (String s : args)
+                        allArgs.append(s).append(" ");
+                    String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
+                    n.getRanks().put(args[1], new Rank(args[1], prefix.replace("&", "§"), Integer.parseInt(args[3]), new ArrayList<>()).toMap());
                     n.save();
                     Lang.RANK_CREATED.send(player, "%RANK%;" + args[1]);
                 }
@@ -176,7 +180,11 @@ public class rankNation extends SubCommand {
                         Lang.INVALID_INPUT.send(sender);
                         return false;
                     }
-                    rank.setPrefix(args[2].replace("&", "§"));
+                    StringBuilder allArgs = new StringBuilder();
+                    for (String s : args)
+                        allArgs.append(s).append(" ");
+                    String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
+                    rank.setPrefix(prefix.replace("&", "§"));
                     n.getRanks().put(rank.getName(), rank.toMap());
                     n.save();
                     //TODO Proper message
