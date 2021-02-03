@@ -53,7 +53,7 @@ public class electionNation extends SubCommand implements Constants {
 
         Set<GuiItem> filler = new HashSet<>();
         for (NationElection election : nation.getElections())
-            filler.add(new GuiItem(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/74b89ad06d318f0ae1eeaf660fea78c34eb55d05f01e1cf999f331fb32d38942").setDisplayName("§b" + election.getTopic())))
+            filler.add(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/74b89ad06d318f0ae1eeaf660fea78c34eb55d05f01e1cf999f331fb32d38942")).setDisplayName("§b" + election.getTopic()).addLoreAll(election.getOptionsFormatted()).build()));
 
         if (electionPane.getPages() > 1) {
             background.addItem(new GuiItem(nextButtonMick, event -> {
