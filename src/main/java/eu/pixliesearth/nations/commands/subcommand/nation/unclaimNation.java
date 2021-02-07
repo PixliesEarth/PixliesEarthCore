@@ -26,7 +26,7 @@ public class unclaimNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);

@@ -25,17 +25,85 @@ public class rankNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
-        Map<String, Integer> returner = new HashMap<>();
-        returner.put("create", 1);
-        returner.put("remove", 1);
-        returner.put("addpermission", 1);
-        returner.put("removepermission", 1);
-        returner.put("set", 1);
-        returner.put("rename", 1);
-        for (Permission permission : Permission.values())
-            returner.put(permission.name(), 3);
-        return returner;
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        if (args.length == 1) {
+            map.put("create", 1);
+            map.put("remove", 1);
+            map.put("addpermission", 1);
+            map.put("removepermission", 1);
+            map.put("set", 1);
+            map.put("rename", 1);
+        } else {
+            switch (args[1].toLowerCase()) {
+                case "create":
+                    map.put("§bRank Name", 2);
+                    map.put("§cRank Prefix", 3);
+                    map.put("§6Rank Priority (0-665)", 4);
+                    break;
+                case "remove":
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (profile.isInNation()) {
+                            Nation nation = profile.getCurrentNation();
+                            for (Map<String, Object> rankObject : nation.getRanks().values()) {
+                                Rank rank = Rank.get(rankObject);
+                                if (profile.isStaff() || rank.getPriority() <= profile.getCurrentNationRank().getPriority() && Permission.EDIT_RANKS.hasPermission(sender))
+                                    map.put(rank.getName(), 2);
+                            }
+                        }
+                    }
+                    break;
+                case "set":
+                    Bukkit.getOnlinePlayers().forEach(p -> map.put(p.getName(), 2));
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (profile.isInNation()) {
+                            Nation nation = profile.getCurrentNation();
+                            for (Map<String, Object> rankObject : nation.getRanks().values()) {
+                                Rank rank = Rank.get(rankObject);
+                                if (profile.isStaff() || rank.getPriority() <= profile.getCurrentNationRank().getPriority() && Permission.EDIT_RANKS.hasPermission(sender))
+                                    map.put(rank.getName(), 3);
+                            }
+                        }
+                    }
+                    break;
+                case "removepermission":
+                case "addpermission":
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (profile.isInNation()) {
+                            Nation nation = profile.getCurrentNation();
+                            for (Map<String, Object> rankObject : nation.getRanks().values()) {
+                                Rank rank = Rank.get(rankObject);
+                                if (profile.isStaff() || rank.getPriority() <= profile.getCurrentNationRank().getPriority() && Permission.EDIT_RANKS.hasPermission(sender))
+                                    map.put(rank.getName(), 3);
+                            }
+                            for (Permission permission : Permission.values()) if (permission.hasPermission(sender)) map.put(permission.name(), 2);
+                        }
+                    }
+                    break;
+                case "rename":
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        Profile profile = instance.getProfile(player.getUniqueId());
+                        if (profile.isInNation()) {
+                            Nation nation = profile.getCurrentNation();
+                            for (Map<String, Object> rankObject : nation.getRanks().values()) {
+                                Rank rank = Rank.get(rankObject);
+                                if (profile.isStaff() || rank.getPriority() <= profile.getCurrentNationRank().getPriority() && Permission.EDIT_RANKS.hasPermission(sender))
+                                    map.put(rank.getName(), 2);
+                            }
+                            for (int i = 3; i < 30; i++) map.put("§b\"Rank Prefix\"", i);
+                        }
+                    }
+                    break;
+            }
+        }
+        return map;
     }
 
     @Override

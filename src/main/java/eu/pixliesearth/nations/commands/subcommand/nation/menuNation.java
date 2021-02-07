@@ -38,13 +38,6 @@ public class menuNation extends SubCommand {
     static final String defaultTitle = "§bNations menu §8| ";
 
     @Override
-    public Map<String, Integer> autoCompletion() {
-        Map<String, Integer> returner = new HashMap<>();
-        returner.put(" ", 1);
-        return returner;
-    }
-
-    @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);

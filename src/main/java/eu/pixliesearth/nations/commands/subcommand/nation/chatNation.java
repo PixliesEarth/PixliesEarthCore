@@ -19,7 +19,7 @@ public class chatNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> map = new HashMap<>();
         map.put("nation", 1);
         map.put("ally", 1);

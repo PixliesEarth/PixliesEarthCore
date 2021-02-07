@@ -228,3 +228,4 @@ NOT_ENOUGH_XP_POINTS: "&7Deine Nation benötigt mehr Forschungs-Punkte für dies
 NATION_REACHED_NEW_ERA: "&7Deine Nation hat eine neue Era erreicht."
 PLAYER_REMOVED_X: "&6%PLAYER% &7hat die &b%X% %Y% &7entfernt."
 PLAYER_ADDED_X: "&6%PLAYER% &7hat die &bX% %Y% &7hinzugefügt."
+ELECTION_CREATED: "&7Du hast erfolgreich die Wahl mit dem Thema &b%TOPIC% &7erstellt."

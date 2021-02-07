@@ -27,7 +27,7 @@ public class infoNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         for (String s : NationManager.names.keySet())
             returner.put(s, 1);

@@ -32,7 +32,7 @@ public class createNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("§bNAME", 1);
         return returner;
@@ -70,7 +70,7 @@ public class createNation extends SubCommand {
         }
         final String id = Methods.generateId(7);
         final Colours dynMapColour = Colours.getRandom();
-        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(new ItemStack(Material.WHITE_BANNER)), 0, 0.0, "NONE", player.getUniqueId().toString(), dynMapColour.getFill(), dynMapColour.getStroke(), System.currentTimeMillis()+"", "NONE", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>());
+        Nation nation = new Nation(id, name, "No description :(", Era.TRIBAL.name(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(new ItemStack(Material.WHITE_BANNER)), 0, 0.0, "NONE", player.getUniqueId().toString(), dynMapColour.getFill(), dynMapColour.getStroke(), System.currentTimeMillis()+"", "NONE", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
         NationCreationEvent event = new NationCreationEvent(player, nation);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

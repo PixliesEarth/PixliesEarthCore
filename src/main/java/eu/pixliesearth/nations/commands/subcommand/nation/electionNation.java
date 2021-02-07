@@ -6,6 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationElection;
@@ -27,8 +28,11 @@ public class electionNation extends SubCommand implements Constants {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
-        return Collections.emptyMap();
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+        Map<String, Integer> returner = new HashMap<>();
+        returner.put("create", 1);
+        returner.put("addoption", 1);
+        return returner;
     }
 
     @Override
@@ -51,9 +55,10 @@ public class electionNation extends SubCommand implements Constants {
             PaginatedPane electionPane = new PaginatedPane(0, 0, 9, 5);
 
             List<GuiItem> filler = new ArrayList<>();
-            for (NationElection election : nation.getElections()) {
+            for (NationElection election : nation.getElections().values()) {
                 ItemBuilder builder = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/74b89ad06d318f0ae1eeaf660fea78c34eb55d05f01e1cf999f331fb32d38942"));
                 builder.setDisplayName("§b" + election.getTopic());
+                builder.addLoreLine("§7ID: §b" + election.getId());
                 builder.addLoreLine("§7Started by: §b" + Bukkit.getOfflinePlayer(election.getStartedBy()).getName());
                 builder.addLoreAll(election.getOptionsFormatted());
                 filler.add(new GuiItem(builder.build(), e -> e.setCancelled(true)));
@@ -84,12 +89,34 @@ public class electionNation extends SubCommand implements Constants {
 
             gui.show(player);
         } else {
-            if (args[0].equalsIgnoreCase("add")) {
+            if (args[0].equalsIgnoreCase("create")) {
                 StringBuilder builder = new StringBuilder();
                 for (int i = 1; i < args.length; i++) builder.append(args[i]).append(" ");
                 String topic = builder.toString();
-                nation.addElection(NationElection.create(topic, player));
-
+                if (topic.length() == 0) {
+                    Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%;/n election create <topic>");
+                    return false;
+                }
+                NationElection election = NationElection.create(topic, player);
+                nation.addElection(election);
+                Lang.ELECTION_CREATED.send(sender, "%TOPIC%;" + topic + " §8(§b" + election.getId() + "§8)");
+            } else if (args[0].equalsIgnoreCase("addoption")) {
+                if (args.length != 3) {
+                    Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%;/n election addoption <option> <electionid>");
+                    return false;
+                }
+                NationElection election = nation.getElections().get(args[1]);
+                if (election == null) {
+                    Lang.X_DOESNT_EXIST.send(sender, "%X%;Election");
+                    return false;
+                }
+                if (election.getOptions().size() + 1 > NationElection.colorOptions.length) {
+                    sender.sendMessage(Lang.NATION + "§7You have reached the max amount of election options.");
+                    return false;
+                }
+                election.addOption(args[1]);
+                nation.addElection(election);
+                Lang.PLAYER_ADDED_X.send(sender, "%X%;Election option");
             }
         }
         return true;

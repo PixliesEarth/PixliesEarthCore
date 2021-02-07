@@ -23,7 +23,7 @@ public class capitalNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         return Collections.emptyMap();
     }
 

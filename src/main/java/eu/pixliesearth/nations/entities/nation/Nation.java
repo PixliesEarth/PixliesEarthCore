@@ -48,7 +48,7 @@ public class Nation {
     private List<String> allies;
     private List<String> pacts;
     private List<String> upgrades;
-    private List<String> elections;
+    private Map<String, String> elections;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -107,15 +107,15 @@ public class Nation {
         save();
     }
 
-    public Set<NationElection> getElections() {
-        Set<NationElection> electionSet = new HashSet<>();
-        for (String s : elections)
-            electionSet.add(new Gson().fromJson(s, NationElection.class));
+    public Map<String, NationElection> getElections() {
+        Map<String, NationElection> electionSet = new HashMap<>();
+        for (Map.Entry<String, String> entry : elections.entrySet())
+            electionSet.put(entry.getKey(), new Gson().fromJson(entry.getValue(), NationElection.class));
         return electionSet;
     }
 
     public void addElection(NationElection election) {
-        this.elections.add(new Gson().toJson(election));
+        this.elections.put(election.getId(), new Gson().toJson(election));
         this.save();
     }
 

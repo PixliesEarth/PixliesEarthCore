@@ -182,6 +182,7 @@ public enum Lang {
     NOT_ENOUGH_XP_POINTS(Lang.NATION, new HashMap<>()),
     NATION_REACHED_NEW_ERA("", new HashMap<>()),
     PLAYER_SET_CAPITAL(Lang.NATION, new HashMap<>()),
+    ELECTION_CREATED(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.EARTH, new HashMap<>()),

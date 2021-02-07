@@ -4,6 +4,7 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -12,6 +13,25 @@ import java.util.*;
 @AllArgsConstructor
 public class NationElection {
 
+    // ALL COLOUR OPTIONS
+    public static final String[] colorOptions = new String[]{
+            "§1",
+            "§2",
+            "§3",
+            "§4",
+            "§5",
+            "§6",
+            "§7",
+            "§8",
+            "§9",
+            "§a",
+            "§b",
+            "§c",
+            "§d",
+            "§e"
+    };
+
+    private String id;
     private String topic;
     private String startedBy;
     private Map<String, String> options;
@@ -21,7 +41,7 @@ public class NationElection {
     private boolean started;
 
     public static NationElection create(String topic, Player starter) {
-        return new NationElection(topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY, false);
+        return new NationElection(Methods.generateId(3), topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY, false);
     }
 
     public boolean ended() {
@@ -47,6 +67,14 @@ public class NationElection {
             }
         }
         return lines;
+    }
+
+    public void addOption(String option) {
+        for (String chatColor : colorOptions) {
+            if (options.containsKey(chatColor)) continue;
+            options.put(chatColor, option);
+            break;
+        }
     }
 
     public Map<String, Integer> getVotesByOption() {

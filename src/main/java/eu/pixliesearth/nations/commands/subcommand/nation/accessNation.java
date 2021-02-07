@@ -28,7 +28,7 @@ public class accessNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> map = new HashMap<>();
         map.put("player", 1);
         map.put("nation", 1);

@@ -27,7 +27,7 @@ public class inviteNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("remove", 2);
         returner.put("add", 2);
