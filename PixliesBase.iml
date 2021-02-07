@@ -9,7 +9,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_9">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -21,8 +21,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.1.1" level="project" />
-    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.pl3x.purpur:purpur:1.16.4-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.5.19" level="project" />
@@ -91,5 +89,6 @@
     <orderEntry type="library" name="Maven: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Maven: com.github.NuVotifier.NuVotifier:nuvotifier-api:v2.7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: io.sentry:sentry:4.0.0" level="project" />
   </component>
 </module>

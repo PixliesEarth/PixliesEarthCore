@@ -88,7 +88,10 @@ public class MoveListener implements Listener {
 	                }
 	            }
 	        }
-    	} catch (Exception ignore) {}
+    	} catch (Exception e) {
+            e.printStackTrace();
+             io.sentry.Sentry.captureException(e);
+}
     }
 
     @EventHandler

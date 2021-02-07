@@ -4,6 +4,7 @@ import eu.pixliesearth.events.NationCommandExecuteEvent;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
+import io.sentry.Sentry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -82,6 +83,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         } catch (Exception e) {
             getSubCommandAliases().get(strings[0].toLowerCase()).sendSyntax(sender, strings[0]);
             e.printStackTrace();
+             io.sentry.Sentry.captureException(e);
 	    }
 
 	    return true;

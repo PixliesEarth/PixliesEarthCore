@@ -13,6 +13,7 @@ import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.listeners.CustomMobListener;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
+import io.sentry.Sentry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -20,6 +21,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
@@ -183,6 +185,10 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Sentry.init(options -> {
+            options.setDsn("https://a52eb2ffd8b94548aab2dd7dc1c5d3c8@o518018.ingest.sentry.io/5626447");
+        });
+
         instance = this;
         testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
@@ -395,7 +401,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -403,7 +409,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         loader.loadCustomItem(new AK47());
@@ -561,6 +567,11 @@ public final class Main extends JavaPlugin {
         );
         chatChannel.createUpdater().setTopic("<:offline:716052437688909825> Server is offline!").update();
         MiniMick.getApi().disconnect();
+    }
+
+    public boolean isStaff(CommandSender sender) {
+        if (!(sender instanceof Player)) return true;
+        return getProfile(((Player)sender).getUniqueId()).isStaff();
     }
 
 }

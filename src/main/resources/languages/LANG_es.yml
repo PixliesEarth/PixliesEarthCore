@@ -50,21 +50,21 @@ AUTOUNCLAIM_ENABLED: "&7Acabas de &aactivar &7el modo de desreclamación automá
 AUTOUNCLAIM_DISABLED: "&7Acabas de &cdesactivar &7el modo de desreclamación automática."
 NATION_DOESNT_EXIST: "&7¡Esta nación &cno &7existe!"
 PLAYER_NAMED_NATION_NAME: "&6%PLAYER% &7cambio el nombre de &b%OLD% &7a &b%NEW%&7."
-BALANCE_YOU: "§7Tienes §2§l$§a%BALANCE% §7en tu cuenta."
-BALANCE_OTHERS: "&6%PLAYER% &7tiene &2&l$&a%BALANCE% &7en su cuenta."
+BALANCE_YOU: "§7Tienes §a%BALANCE% §7en tu cuenta."
+BALANCE_OTHERS: "&6%PLAYER% &7tiene &a%BALANCE% &7en su cuenta."
 SET_PLAYER_BALANCE: "&7Balance cambiado con &aéxito&7."
 PAID_HIMSELF: "&7Tu dinero ha sido transferido de un bolsillo a otro."
-PAY_AMT_BELOW_MIN: "&7La cantidad mínima para pagar es &2&l$&a%AMOUNT%&7."
+PAY_AMT_BELOW_MIN: "&7La cantidad mínima para pagar es &a%AMOUNT%&7."
 NOT_ENOUGH_MONEY: "&cNo tienes &7suficiente dinero para esta acción."
 UNEXPECTED_ECO_ERROR: "&cOcurrió un error inesperado con la economía. Por favor informa
   sobre este error al equipo de PixliesEarth  si crees que este error fue causado
   por el servidor."
-PAID_PLAYER_MONEY: "&7Has pagado &acon éxito &a &6%TARGET% &2&l$&a%AMOUNT%&7."
-RECEIVED_MONEY_FROM_PLAYER: "&7Has recibido &2&l$&a%AMOUNT% &7de &6%TARGET%&7."
+PAID_PLAYER_MONEY: "&7Has pagado &acon éxito &a &6%TARGET% &a%AMOUNT%&7."
+RECEIVED_MONEY_FROM_PLAYER: "&7Has recibido &a%AMOUNT% &7de &6%TARGET%&7."
 PLAYER_DOESNT_HAVE_ENOUGH_MONEY: "&7El jugador &cno tiene suficiente dinero &7para
   realizar esta acción."
-TOOK_MONEY_FROM_PLAYER: "&7Sacado &acon éxito &2&l$&a%AMOUNT% &7de la cuenta de &6%PLAYER%&7."
-GAVE_MONEY_TO_PLAYER: "&7Depositado &acon éxito &2&l$&a%AMOUNT% &7en la cuenta de
+TOOK_MONEY_FROM_PLAYER: "&7Sacado &acon éxito &a%AMOUNT% &7de la cuenta de &6%PLAYER%&7."
+GAVE_MONEY_TO_PLAYER: "&7Depositado &acon éxito &a%AMOUNT% &7en la cuenta de
   &6%PLAYER%&7."
 SMSG_1: "&7¡&6%PLAYER% &7se acaba de apuñalar a si mismo!"
 SMSG_2: '&7&o"Puedo ver la luz..." &7&odijo ~&6&o%PLAYER% &7&oantes de quitarse la
@@ -214,10 +214,10 @@ SETTLEMENT_HAS_TO_BE_IN_TERRITORY: "&7Settlements can only be set in nation-terr
 PLAYER_SET_SETTLEMENT: "&6%PLAYER% &7just created a settlement with the name &b%SETTLEMENT%&7."
 SETTLEMENT_DOESNT_EXIST: "&7A settlement with this name does not exist."
 PLAYER_REMOVED_SETTLEMENT: "&6%PLAYER% &7just removed the settlement named &b%SETTLEMENT%&7."
-NATION_BALANCE: "&b%NATION% &7has &2&l$&a%AMOUNT% &7in their nation-bank."
-DEPOSIT_MONEY_INTO_NATION: "&7You just deposited &2&l$&a%AMOUNT% &7into the bank of &b%NATION%&7."
+NATION_BALANCE: "&b%NATION% &7has &a%AMOUNT% &7in their nation-bank."
+DEPOSIT_MONEY_INTO_NATION: "&7You just deposited &a%AMOUNT% &7into the bank of &b%NATION%&7."
 NOT_ENOUGH_MONEY_IN_NATION: "&7This nation does not have enough money for that action."
-WITHDREW_MONEY_FROM_NATION: "&7You just withdrew &2&l$&a%AMOUNT% &7from the bank of &b%NATION%&7."
+WITHDREW_MONEY_FROM_NATION: "&7You just withdrew &a%AMOUNT% &7from the bank of &b%NATION%&7."
 PLAYER_BOOSTED: "&6%PLAYER% &7just boosted the server with &d%BOOST%&7."
 NOT_ENOUGH_BOOSTS: "&7You don't have enough boosts to boost the server. Purchase boosts under &6&lhttps://pixlies.net&7."
 BOOST_EXPIRED: "&7The &d%BOOST%&7-boost just expired."

@@ -197,7 +197,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
 
-                final String timeIcon = instance.getCalendar().day() ? "§3☀" : "§9☽";
+                final String timeIcon = instance.getCalendar().day() ? "§e☀" : "§9☽";
 
                 returnable.add(instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
 
@@ -205,24 +205,24 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
                 // returnable.add(c + "§l" + Lang.PLAYER.get(player));
                 // returnable.add(c + "§l| " + c + player.getDisplayName());
-                returnable.add(c + "§l| " + profile.getBalanceFormatted());
-                returnable.add(c + "§l| §e" + energy);
+                returnable.add("    " + profile.getBalanceFormatted() + "  §e" + energy);
+                // returnable.add(c + "§l| §e" + energy);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add(c + "§lStaff §aenabled");
-                    returnable.add(c + "§lTPS §a" + Methods.round(Bukkit.getTPS()[0], 2));
+                    returnable.add("§7Staff:" + c + " enabled");
+                    returnable.add("§7TPS: " + c + Methods.round(Bukkit.getTPS()[0], 2));
                 }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
-                    returnable.add(c + "§lNation");
-                    returnable.add(c + "§l| " + c + nation.getName());
-                    returnable.add(c + "§l| §7PP: " + c + nation.getXpPoints());
-                    returnable.add(c + "§l| §7Era: " + c + nation.getEra());
+                    returnable.add(" ");
+                    returnable.add("  §7Nation: " + c + nation.getName());
+                    returnable.add("  §7PP: " + c + nation.getXpPoints());
+                    returnable.add("  §7Era: " + c + nation.getEra());
                 }
-                returnable.add(" ");
-                returnable.add(c + "§l| §7" + profile.getPlayTimeFormatted());
+                // returnable.add(" ");
+                // returnable.add("  §7" + profile.getPlayTimeFormatted());
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
-                        returnable.add(c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                        returnable.add("  " + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)
@@ -246,7 +246,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 break;
         }
-        returnable.add("  " + c + "pixlies.net  ");
+        returnable.add(" ");
+        returnable.add("      " + c + "pixlies.net  ");
         return returnable;
     }
 

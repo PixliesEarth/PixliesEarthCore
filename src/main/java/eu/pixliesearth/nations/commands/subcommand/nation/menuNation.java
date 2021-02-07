@@ -13,6 +13,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
+import io.sentry.Sentry;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -326,7 +327,10 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() - 1);
                     gui.update();
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                     io.sentry.Sentry.captureException(e);
+                }
             }
         }), 0, 0);
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§aNext").build(), event -> {
@@ -335,7 +339,10 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() + 1);
                     gui.update();
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+            e.printStackTrace();
+             io.sentry.Sentry.captureException(e);
+}
             }
         }), 8, 0);
         gui.addPane(controlBar);

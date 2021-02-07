@@ -137,8 +137,10 @@ public class Methods {
     }
 
     public static String formatTime(long millis) {
-        return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toDays(millis),
-                TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.HOURS.toHours(TimeUnit.MILLISECONDS.toDays(millis)));
+        int day = (int)TimeUnit.MILLISECONDS.toDays(millis);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis) - (day * 24L);
+        long minute = TimeUnit.MILLISECONDS.toMinutes(millis) - (TimeUnit.MILLISECONDS.toHours(millis)* 60);
+        return day + " day(s) " + hours + " hour(s) " + minute + " minute(s)";
     }
 
     public static Material getSBWoolByCC(String chatColor) {

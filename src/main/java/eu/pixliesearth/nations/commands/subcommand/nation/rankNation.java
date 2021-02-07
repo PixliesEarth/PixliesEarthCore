@@ -27,7 +27,7 @@ public class rankNation extends SubCommand {
     @Override
     public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> map = new HashMap<>();
-        if (args.length == 1) {
+        if (args.length == 2) {
             map.put("create", 1);
             map.put("remove", 1);
             map.put("addpermission", 1);
