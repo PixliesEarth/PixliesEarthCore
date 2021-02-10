@@ -26,6 +26,8 @@ public class RabidWolf extends EntityWolf {
 
         this.setPosition(location.getX(), location.getY(), location.getZ());
 
+        craftWolf.setRemoveWhenFarAway(true);
+
         this.getWorld().addEntity(this);
     }
 

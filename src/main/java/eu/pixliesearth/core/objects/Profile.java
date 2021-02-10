@@ -496,6 +496,12 @@ public class Profile {
         return null;
     }
 
+    public static String getUniqueIdByDiscord(String discordId) {
+        Profile getByDiscord = getByDiscord(discordId);
+        if (getByDiscord == null) return null;
+        return getByDiscord.getUniqueId();
+    }
+
     public static Profile getByNickname(String nickname) {
         Document found = Main.getPlayerCollection().find(new Document("nickname", nickname)).first();
         if (found != null)

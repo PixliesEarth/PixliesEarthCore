@@ -27,6 +27,8 @@ public class DirtyJoe extends EntityVillager {
 
         this.setPosition(location.getX(), location.getY(), location.getZ());
 
+        craftVillager.setRemoveWhenFarAway(true);
+
         this.getWorld().addEntity(this);
     }
 

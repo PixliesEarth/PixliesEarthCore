@@ -42,15 +42,15 @@ commands:
       - warps
   backup:
     description: backup
-  economy:
-    description: Economy command
-    aliases:
-      - eco
-      - money
-  balance:
-    description: bal
-    aliases:
-      - bal
+#  economy:
+#    description: Economy command
+#    aliases:
+#      - eco
+#      - money
+#  balance:
+#    description: bal
+#    aliases:
+#      - bal
   heal:
     description: heal
     aliases:
