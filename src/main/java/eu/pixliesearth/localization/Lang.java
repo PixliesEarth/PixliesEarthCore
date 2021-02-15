@@ -183,6 +183,7 @@ public enum Lang {
     NATION_REACHED_NEW_ERA("", new HashMap<>()),
     PLAYER_SET_CAPITAL(Lang.NATION, new HashMap<>()),
     ELECTION_CREATED(Lang.NATION, new HashMap<>()),
+    PLAYER_IS_ALREADY_ON_THE_HIGHEST_RANK(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.EARTH, new HashMap<>()),

@@ -51,6 +51,8 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new wikiNation());
         subCommands.add(new mergeNation());
         subCommands.add(new capitalNation());
+        subCommands.add(new promoteNation());
+        subCommands.add(new electionNation());
 
 		SubCommandAliases = new HashMap<String, SubCommand>();
 		for (SubCommand subCommand : subCommands)
