@@ -42,7 +42,7 @@ public class electionNation extends SubCommand implements Constants {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (checkIfPlayer(sender)) return false;
+        if (!checkIfPlayer(sender)) return false;
         Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Nation nation = profile.getCurrentNation();
