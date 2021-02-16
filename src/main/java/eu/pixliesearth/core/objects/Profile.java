@@ -509,6 +509,12 @@ public class Profile {
         return null;
     }
 
+    public static String getUniqueIdByDiscord(String discordId) {
+        Profile getByDiscord = getByDiscord(discordId);
+        if (getByDiscord == null) return null;
+        return getByDiscord.getUniqueId();
+    }
+
     public static Map<UUID, Profile> onlineProfiles() {
         Map<UUID, Profile> returner = new HashMap<>();
         for (Player player : Bukkit.getOnlinePlayers())

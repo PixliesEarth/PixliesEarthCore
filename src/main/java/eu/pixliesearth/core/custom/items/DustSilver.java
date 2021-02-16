@@ -56,7 +56,7 @@ public class DustSilver extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 13;
     }
 
     @Override

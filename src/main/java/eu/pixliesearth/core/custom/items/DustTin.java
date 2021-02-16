@@ -56,7 +56,7 @@ public class DustTin extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 17;
     }
 
     @Override
