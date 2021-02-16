@@ -40,6 +40,10 @@ public class demoteNation extends SubCommand {
             Lang.PLAYER_NOT_IN_NATION.send(sender);
             return false;
         }
+        if (targetProfile.getNationRank().equalsIgnoreCase("leader")) {
+            Lang.YOU_HAVE_TO_BE_LEADER.send(sender);
+            return false;
+        }
         Nation nation = targetProfile.getCurrentNation();
         if (sender instanceof Player) {
             Player player = (Player) sender;
