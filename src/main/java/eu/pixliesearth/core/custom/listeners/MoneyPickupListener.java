@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.utils.NBTUtil;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,20 +16,14 @@ public class MoneyPickupListener extends CustomListener {
     @EventHandler
     public void onPickup(PlayerAttemptPickupItemEvent event) {
         ItemStack item = event.getItem().getItemStack();
-        if (item.hasDisplayName() && !item.getDisplayName().startsWith("money")) return;
+        if (NBTUtil.getTagsFromItem(item) != null && NBTUtil.getTagsFromItem(item).getString("money") == null) return;
         double amount = Double.parseDouble(item.getDisplayName().split(" ")[1]);
         event.getItem().remove();
         Player player = event.getPlayer();
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         Profile profile = instance.getProfile(player.getUniqueId());
         profile.depositMoney(amount, "Picked up money from " + item.getDisplayName().split(" ")[2]);
-    }
-
-    @EventHandler
-    public void onPickupByInventory(InventoryPickupItemEvent event) {
-        ItemStack item = event.getItem().getItemStack();
-        if (event.getInventory() instanceof PlayerInventory) return;
-        if (item.hasDisplayName() && item.getDisplayName().startsWith("money")) event.setCancelled(true);
+        event.setCancelled(true);
     }
 
 }

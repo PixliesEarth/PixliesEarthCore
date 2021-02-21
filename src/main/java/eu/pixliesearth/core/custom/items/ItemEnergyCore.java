@@ -79,7 +79,7 @@ public class ItemEnergyCore extends CustomItem implements IMissileFuel {
 
 	@Override
 	public int getMissileExplosiveValue() {
-		return 9;
+		return 2;
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class ItemEnergyCore extends CustomItem implements IMissileFuel {
 
 	@Override
 	public int getMissilePlayerDamageValue() {
-		return 35;
+		return 9;
 	}
 
 	@Override

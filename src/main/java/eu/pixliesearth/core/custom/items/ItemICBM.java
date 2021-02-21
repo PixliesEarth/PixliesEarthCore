@@ -315,7 +315,7 @@ public class ItemICBM extends CustomItem {
 														//l4.createExplosion((float)ex, true);
 														ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
 														calc.explode(true);
-														l4.getNearbyPlayers(pd).forEach(p -> p.setHealth());
+														l4.getNearbyPlayers(pd).forEach(p -> p.setHealth(0.0));
 														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
 													} else {

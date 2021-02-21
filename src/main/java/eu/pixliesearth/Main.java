@@ -12,6 +12,7 @@ import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.listeners.CustomMobListener;
+import eu.pixliesearth.core.custom.listeners.MoneyPickupListener;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import io.sentry.Sentry;
@@ -196,6 +197,7 @@ public final class Main extends JavaPlugin {
         if (warEnabled) loader.loadCommand(new WarCommand());
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
+        loader.loadListener(new MoneyPickupListener());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }
