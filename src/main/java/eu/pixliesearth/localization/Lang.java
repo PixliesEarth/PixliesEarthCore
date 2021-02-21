@@ -91,6 +91,7 @@ public enum Lang {
     PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
     CRINGED(Lang.EARTH, new HashMap<>()),
     CANT_SEND_MESSAGE_TO_YOURSELF(Lang.EARTH, new HashMap<>()),
+    WELCOME_TO_PIXLIES(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),

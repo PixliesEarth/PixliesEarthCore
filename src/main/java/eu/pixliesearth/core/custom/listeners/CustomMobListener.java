@@ -37,6 +37,7 @@ public class CustomMobListener extends CustomListener {
             }
             event.getEntity().setCustomName(event.getEntity().getName().replace("§8[§c||||||||||§8]", "") + " §8[" + Methods.getProgressBar(damageable.getHealth(), damageable.getMaxHealth(), 10, "|", "&c", "&7") + "§8]");
             event.getEntity().setCustomNameVisible(true);
+            ((Monster) event.getEntity()).setRemoveWhenFarAway(true);
         }
     }
 

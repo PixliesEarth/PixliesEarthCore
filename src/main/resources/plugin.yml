@@ -139,24 +139,24 @@ commands:
     aliases:
       - boosts
       - serverboost
-  marry:
-    description: marriage command
-    aliases:
-      - propose
-  divorce:
-    description: divorce command
-    aliases:
-      - breakup
+#  marry:
+#    description: marriage command
+#    aliases:
+#      - propose
+#  divorce:
+#    description: divorce command
+#    aliases:
+#      - breakup
   sudo:
     description: sudo command
   tphere:
     description: tphere command
-  family:
-    description: show family info
-  woohoo:
-    description: Have sex
-  adopt:
-    description: Adopt command
+#  family:
+#    description: show family info
+#  woohoo:
+#    description: Have sex
+#  adopt:
+#    description: Adopt command
   block:
     description: Block player
     aliases:

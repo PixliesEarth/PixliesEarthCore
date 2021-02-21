@@ -135,7 +135,7 @@ public class rankNation extends SubCommand {
         }
         Nation n = profile.getCurrentNation();
 
-         if (args[0].equalsIgnoreCase("rename")) {
+        if (args[0].equalsIgnoreCase("rename")) {
             if (n.getRanks().get(args[1]) == null) {
                 Lang.RANK_DOESNT_EXIST.send(player);
                 return false;
@@ -149,10 +149,10 @@ public class rankNation extends SubCommand {
             for (String s : args)
                 allArgs.append(s).append(" ");
             String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
-             if (prefix.length() > 15) {
-                 Lang.INVALID_INPUT.send(sender);
-                 return false;
-             }
+            if (prefix.length() > 15) {
+                Lang.INVALID_INPUT.send(sender);
+                return false;
+            }
             rank.setPrefix(prefix.replace("&", "§"));
             n.getRanks().put(rank.getName(), rank.toMap());
             n.save();
@@ -274,8 +274,16 @@ public class rankNation extends SubCommand {
                         Lang.NO_PERMISSIONS.send(player);
                         return false;
                     }
+                    Rank lowerRank = null;
+                    for (int i = (int) rank.getPriority(); i >= 0; i--) {
+                        Rank newRank = n.getRankByPriority(i);
+                        if (newRank != null) {
+                            lowerRank = newRank;
+                            break;
+                        }
+                    }
                     for (Profile p : n.getProfilesByRank(rank)) {
-                        p.setNationRank("admin");
+                        p.setNationRank(lowerRank.getName());
                         p.save();
                     }
                     n.getRanks().remove(args[1]);

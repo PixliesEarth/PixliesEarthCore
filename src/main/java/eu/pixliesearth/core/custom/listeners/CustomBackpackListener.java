@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.CustomListener;
@@ -48,6 +49,12 @@ public class CustomBackpackListener extends CustomListener {
 				return;
 			}
 		}
+	}
+
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent event) {
+		if (!event.getPlayer().getOpenInventory().getTitle().equalsIgnoreCase("§6Backpack")) return;
+		event.setCancelled(true);
 	}
 	
 }

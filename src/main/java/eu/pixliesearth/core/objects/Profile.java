@@ -351,7 +351,7 @@ public class Profile {
         timers.put("Teleport", timer.toMap());
         save();
         player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", locationName).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
-        Bukkit.getScheduler().runTaskLater(instance, () -> {
+        instance.getUtilLists().playerTeleportTasks.put(player.getUniqueId(), Bukkit.getScheduler().runTaskLater(instance, () -> {
             if (timers.containsKey("Teleport")) {
                 timers.remove("Teleport");
                 save();
@@ -365,9 +365,10 @@ public class Profile {
                         energyCost = 0.1;
                     }
                 }
+                instance.getUtilLists().playerTeleportTasks.remove(player.getUniqueId());
                 Energy.take(this, manaNeeded);
             }
-        }, cooldown * 20);
+        }, cooldown * 20).getTaskId());
     }
 
     public void setTimer(String name, long duration) {
@@ -494,12 +495,6 @@ public class Profile {
         if (found != null)
             return new Gson().fromJson(found.toJson(), Profile.class);
         return null;
-    }
-
-    public static String getUniqueIdByDiscord(String discordId) {
-        Profile getByDiscord = getByDiscord(discordId);
-        if (getByDiscord == null) return null;
-        return getByDiscord.getUniqueId();
     }
 
     public static Profile getByNickname(String nickname) {

@@ -11,6 +11,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.War;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -193,10 +194,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
-                if (instance.getUtilLists().boosts.size() > 0)
-                    for (Boost boost : instance.getUtilLists().boosts.values())
-                        returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
-
                 final String timeIcon = instance.getCalendar().day() ? "§e☀" : "§9☽";
 
                 returnable.add(instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
@@ -216,13 +213,16 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(" ");
                     returnable.add("  §7Nation: " + c + nation.getName());
                     returnable.add("  §7PP: " + c + nation.getXpPoints());
-                    returnable.add("  §7Era: " + c + nation.getEra());
+                    returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra().toLowerCase()));
                 }
                 // returnable.add(" ");
                 // returnable.add("  §7" + profile.getPlayTimeFormatted());
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
-                        returnable.add("  " + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                        returnable.add("  " + c + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                if (instance.getUtilLists().boosts.size() > 0)
+                    for (Boost boost : instance.getUtilLists().boosts.values())
+                        returnable.add("  §d§l" + boost.getName() + " §7" + Methods.getTimeAsString(boost.getTimer().getRemaining(), true));
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)

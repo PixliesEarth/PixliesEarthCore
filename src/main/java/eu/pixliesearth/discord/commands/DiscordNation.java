@@ -62,7 +62,7 @@ public class DiscordNation extends DiscordCommand {
                     .addInlineField("Religion", WordUtils.capitalize(nation.getReligion().toLowerCase().replace("_", " ")))
                     .addInlineField("Era", nation.getCurrentEra().getName())
                     .addInlineField("Balance", "$" + nation.getMoney())
-                    .addInlineField("GDP", "$" + nation.getGDP())
+                    // .addInlineField("GDP", "$" + nation.getGDP())
                     .addInlineField("Territory", nation.getChunks().size() + "")
                     .setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar())
                );

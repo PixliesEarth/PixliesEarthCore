@@ -508,7 +508,7 @@ public class DynmapEngine {
         int per = cfg.getInt("update.period", 300);
         if (per < 15)
             per = 15;
-        updperiod = (per * TICKRATE_RATIO);
+        updperiod = ((long) per * TICKRATE_RATIO);
         stop = false;
 
         scheduleSyncDelayedTask(new FactionsUpdate(this), 40);   /* First time is 2 seconds */

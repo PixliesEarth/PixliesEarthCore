@@ -112,6 +112,10 @@
             <id>purpur</id>
             <url>https://repo.pl3x.net/</url>
         </repository>
+        <repository>
+            <id>bintray-repo</id>
+            <url>https://dl.bintray.com/ichbinjoe/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -281,6 +285,12 @@
             <groupId>io.sentry</groupId>
             <artifactId>sentry</artifactId>
             <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vexsoftware</groupId>
+            <artifactId>nuvotifier-universal</artifactId>
+            <version>2.6.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
