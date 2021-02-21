@@ -35,7 +35,7 @@ public class PremiumCommand implements CommandExecutor {
         } else if (player.hasPermission("earth.premium.ultimate") && !profile.getExtras().containsKey("dynmapMarkers")) {
             profile.getExtras().put("dynmapMarkers", 3);
         }
-        double dynmapMarker = (double) Math.round((Double) profile.getExtras().getOrDefault("dynmapMarkers", 0));
+        double dynmapMarker = (double) Math.round((Double) profile.getExtras().getOrDefault("dynmapMarkers", 0.0));
         boolean alreadyGifted = (boolean) profile.getExtras().getOrDefault("giftedRoyal", false);
         Gui gui = new Gui(instance, 3, "§6Premium-GUI");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
