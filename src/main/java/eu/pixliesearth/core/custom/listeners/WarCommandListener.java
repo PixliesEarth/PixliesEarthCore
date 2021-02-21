@@ -14,6 +14,9 @@ public class WarCommandListener extends CustomListener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
+        if(event.getMessage().contains("@a") || event.getMessage().contains("@e")){
+            player.sendMessage("§cCommands with @a and @e may only be executed from console!");
+        }
         if (!instance.getUtilLists().inGulag.contains(player.getUniqueId())) return;
         String[] split = event.getMessage().split(" ");
         if (split[0].equalsIgnoreCase("/back")
@@ -28,9 +31,6 @@ public class WarCommandListener extends CustomListener {
     @EventHandler
     public void onSubCommand(NationCommandExecuteEvent event) {
         if (!(event.getSender() instanceof Player)) return;
-        if(event.getCommand().toString().contains("@a") || event.getCommand().toString().contains("@e")){
-                event.getSender().sendMessage("§cCommands with @a and @e may only be executed from console!");
-        }
         Player player = (Player) event.getSender();
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInWar()) return;
