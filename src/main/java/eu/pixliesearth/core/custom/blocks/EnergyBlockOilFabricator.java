@@ -26,6 +26,7 @@ import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomLiquidHandler;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.interfaces.ILiquidable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -33,7 +34,7 @@ import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.Timer;
 
-public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiquidable {
+public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiquidable, IHopperable {
 	
 	public EnergyBlockOilFabricator() {
 		
@@ -58,7 +59,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
         return "Machine:Oil_Fabricator"; // 6bcc41e5-5a09-4955-8756-f06c26d61c4d
     }
     
-    private final double energyPerAction = 2;
+    private final double energyPerAction = 2.0;
     
     @Override
 	public void loadFromSaveData(Inventory inventory, Location location, Map<String, String> map) {
@@ -148,7 +149,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		}
 	}
 	
-	private Random random = new Random();
+	private final Random random = new Random();
 	
 	private int oilInChunk(Location loc) {
 		if (!loc.getWorld().getEnvironment().equals(Environment.NORMAL)) return 0;
@@ -159,7 +160,12 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    	switch (biome) {
 	    	case DESERT :
 	    	case DESERT_HILLS :
-	    		oil = 1000 + (random.nextInt(3000)+1);
+				case DEEP_COLD_OCEAN :
+				case DEEP_FROZEN_OCEAN :
+				case DEEP_LUKEWARM_OCEAN :
+				case DEEP_OCEAN :
+				case DEEP_WARM_OCEAN :
+					oil = 1000 + (random.nextInt(3000)+1);
 	    		break;
 	    	case OCEAN :
 	    	case COLD_OCEAN :
@@ -168,14 +174,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    	case WARM_OCEAN :
 	    		oil = 1000 + (random.nextInt(1500)+1);
 	    		break;
-	    	case DEEP_COLD_OCEAN :
-	    	case DEEP_FROZEN_OCEAN :
-	    	case DEEP_LUKEWARM_OCEAN :
-	    	case DEEP_OCEAN :
-	    	case DEEP_WARM_OCEAN :
-	    		oil = 1000 + (random.nextInt(3000)+1);
-	    		break;
-	    	case DESERT_LAKES :
+				case DESERT_LAKES :
 	    		oil = 1000 + (random.nextInt(4000)+1);
 	    		break;
 	    	default :
@@ -183,10 +182,8 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	    		break;
 	    	}
 	    	oilTable.put(chunk.getX(), chunk.getZ(), oil);
-	    	return oil;
-	    } else {
-	    	return oil;
-	    }
+		}
+		return oil;
 	}
     
 	private void takeOil(Location loc, int amount) {
@@ -222,5 +219,27 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 	public boolean BlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
 		CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(event.getBlock().getLocation(), getLiquidCapacities().keySet());
 		return super.BlockPlaceEvent(event);
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack = inv.getItem(13);
+		if (itemStack==null || itemStack.getType().equals(Material.AIR) || CustomItemUtil.getUUIDFromItemStack(itemStack).equals("Pixlies:Canister")) {
+			return null;
+		}
+		return itemStack;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(13);
+		if (itemStack2==null || itemStack2.getType().equals(Material.AIR)) {
+			inv.setItem(13, itemStack);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -66,6 +66,18 @@ public class REST {
             profile.save();
             return "OK";
         });
+
+        get("/discordProfile/:id", (request, response) -> {
+            String uniqueId = Profile.getUniqueIdByDiscord(request.params("id"));
+            if (uniqueId == null) {
+                response.status(401);
+                return new Gson().toJson("{}");
+            }
+            Profile profile = Main.getInstance().getProfile(UUID.fromString(uniqueId));
+            response.status(200);
+            return new Gson().toJson(profile);
+        });
+
     }
 
 }

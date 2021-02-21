@@ -13,11 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.Timer;
 
-public class EnergyBlockBioFuelGenerator extends CustomEnergyBlock {
+public class EnergyBlockBioFuelGenerator extends CustomEnergyBlock implements IHopperable  {
 	
 	public EnergyBlockBioFuelGenerator() {
 		
@@ -97,5 +98,27 @@ public class EnergyBlockBioFuelGenerator extends CustomEnergyBlock {
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
 		inv.clear(13);
 		return inv;
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack is = inv.getItem(13);
+		if (is==null || is.getType().equals(Material.AIR)) {
+			inv.setItem(13, itemStack);
+			return true;
+		} else {
+			if (!(is.getAmount()+itemStack.getAmount()>64) && is.asOne().equals(itemStack.asOne())) {
+				is.setAmount(is.getAmount()+itemStack.getAmount());
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 }

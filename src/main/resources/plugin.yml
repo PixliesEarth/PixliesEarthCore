@@ -46,15 +46,15 @@ commands:
       - warps
   backup:
     description: backup
-#  economy:
-#    description: Economy command
-#    aliases:
-#      - eco
-#      - money
-#  balance:
-#    description: bal
-#    aliases:
-#      - bal
+  economy:
+    description: Economy command
+    aliases:
+      - eco
+      - money
+  balance:
+    description: bal
+    aliases:
+      - bal
   heal:
     description: heal
     aliases:
@@ -94,8 +94,8 @@ commands:
     description: suicide
     aliases:
       - kms
-#  pay:
-#    description: pay
+  pay:
+    description: pay
   broadcast:
     description: broadcast
     aliases:

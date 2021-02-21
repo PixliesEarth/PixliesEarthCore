@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class CustomCraftingListener extends CustomListener {
 		Inventory inv = d.getInventory();
 		if (inv==null) return;
 		
-		if (event.getPlayer().isSneaking()) {
+		if (event.getPlayer().isSneaking() || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			//craft
 			Map<Integer, String> cwaftin = new HashMap<Integer, String>();
 			for (int i = 0; i<9; i++) {
@@ -52,21 +53,26 @@ public class CustomCraftingListener extends CustomListener {
 	public boolean craft(Player player, Map<Integer, String> map, Inventory inv) {
 		CustomRecipe customRecipe = getCustomRecipe(map);
 		if (customRecipe==null) {
-			player.sendMessage("§cInvalid recipe");
+			player.sendMessage("§c[§r❌§c] §rInvalid recipe");
 			return false;
 		} else {
-			player.sendMessage("§aCrafting "+customRecipe.getResultUUID());
-			ItemStack[] isl = inv.getContents();
-			for (int i = 0; i < isl.length; i++) {
-				ItemStack is = isl[i];
-				if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) continue;
-				is.setAmount(is.getAmount()-1);
-				isl[i] = is;
-			}
-			inv.setContents(isl);
-			for (int i = 0; i < customRecipe.getResultAmount(); i++)
-				player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
-			return true;
+/*			if (!customRecipe.canCraft(player.getUniqueId())) {
+				player.sendMessage("§c[§r❌§c] §rYou dont have access to this recipe!");
+				return false;
+			} else {*/
+				player.sendMessage("§a[§r✔§a] §rCrafting "+customRecipe.getResultUUID());
+				ItemStack[] isl = inv.getContents();
+				for (int i = 0; i < isl.length; i++) {
+					ItemStack is = isl[i];
+					if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) continue;
+					is.setAmount(is.getAmount()-1);
+					isl[i] = is;
+				}
+				inv.setContents(isl);
+				for (int i = 0; i < customRecipe.getResultAmount(); i++)
+					player.getLocation().getWorld().dropItemNaturally(player.getLocation(), CustomItemUtil.getItemStackFromUUID(customRecipe.getResultUUID()));
+				return true;
+			// }
 		}
 	}
 	

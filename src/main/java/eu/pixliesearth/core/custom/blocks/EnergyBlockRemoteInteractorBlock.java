@@ -12,11 +12,13 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.interfaces.IRedstoneable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -24,7 +26,7 @@ import eu.pixliesearth.utils.NBTUtil;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
 import eu.pixliesearth.utils.Timer;
 
-public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implements IRedstoneable {
+public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implements IRedstoneable, IHopperable {
 
 	public final int locationSaverSlot = 12;
     public final int itemSlot = 14;
@@ -115,6 +117,26 @@ public class EnergyBlockRemoteInteractorBlock extends CustomEnergyBlock implemen
 	@Override
 	public double getCapacity() {
 		return 100000D;
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(itemSlot);
+		inv.clear(itemSlot);
+		return itemStack2;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(itemSlot);
+		if (itemStack2==null || itemStack2.getType().equals(Material.AIR)) {
+			inv.setItem(itemSlot, itemStack);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

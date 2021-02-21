@@ -202,6 +202,16 @@ public class Profile {
         return true;
     }
 
+    public boolean leaveEmergency() {
+        if (!inNation)
+            return false;
+        this.nationId = "NONE";
+        this.inNation = false;
+        save();
+        instance.getUtilLists().inspectors.remove(getUUID());
+        return true;
+    }
+
     public OfflinePlayer getAsOfflinePlayer() {
         return Bukkit.getOfflinePlayer(UUID.fromString(uniqueId));
     }
@@ -480,6 +490,12 @@ public class Profile {
         if (found != null)
             return new Gson().fromJson(found.toJson(), Profile.class);
         return null;
+    }
+
+    public static String getUniqueIdByDiscord(String discordId) {
+        Profile getByDiscord = getByDiscord(discordId);
+        if (getByDiscord == null) return null;
+        return getByDiscord.getUniqueId();
     }
 
     public static Map<UUID, Profile> onlineProfiles() {

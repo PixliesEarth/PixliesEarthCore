@@ -3,6 +3,7 @@ package eu.pixliesearth.discord;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
@@ -28,6 +29,8 @@ public class MiniMick {
             return;
         }
 
+        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
+
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
 
@@ -37,8 +40,8 @@ public class MiniMick {
 
         api.addMessageCreateListener(event -> {
             String[] split = event.getMessageContent().split(" ");
-            if (split[0].startsWith("/") && commands.containsKey(split[0].replace("/", ""))) {
-                commands.get(split[0].replace("/", "")).run(event);
+            if (split[0].startsWith(prefix) && commands.containsKey(split[0].replace(prefix, ""))) {
+                commands.get(split[0].replace(prefix, "")).run(event);
             } else {
                 if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
                     if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
@@ -47,6 +50,9 @@ public class MiniMick {
                             Color col = event.getMessageAuthor().getRoleColor().get();
                             roleColour = String.format("#{%02x%02x%02x}", col.getRed(), col.getGreen(), col.getBlue());
                         }
+                        for (String s1 : Main.getInstance().getConfig().getStringList("modules.chatsystem.blacklist"))
+                            if (StringUtils.containsIgnoreCase(event.getReadableMessageContent(), s1))
+                                return;
                         String message = event.getReadableMessageContent();
                         Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + message);
                     }

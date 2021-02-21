@@ -1,5 +1,6 @@
 package eu.pixliesearth.utils;
 
+import com.google.common.base.Strings;
 import eu.pixliesearth.Main;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -150,18 +151,24 @@ public class Methods {
         return cc;
     }
 
-    public String getProgressBar(double current_progress, double required_progress, ChatColor finished, ChatColor left) {
-        double progress_percentage = current_progress / required_progress;
+    public static String getProgressBar(int current, int max, int totalBars, String symbol, String completedColor, String notCompletedColor){
+
+        float percent = (float) current / max;
+
+        int progressBars = (int) ((int) totalBars * percent);
+
+        int leftOver = (totalBars - progressBars);
+
         StringBuilder sb = new StringBuilder();
-        int bar_length = 20;
-        for (int i = 0; i < bar_length; i++) {
-            if (i < bar_length * progress_percentage) {
-                sb.append(finished).append("▇");
-            } else {
-                sb.append(left).append("▇");
-            }
+        sb.append(ChatColor.translateAlternateColorCodes('&', completedColor));
+        for (int i = 0; i < progressBars; i++) {
+            sb.append(symbol);
         }
-       return sb.toString();
+        sb.append(ChatColor.translateAlternateColorCodes('&', notCompletedColor));
+        for (int i = 0; i < leftOver; i++) {
+            sb.append(symbol);
+        }
+        return sb.toString();
     }
 
     private final static int CENTER_PX = 154;

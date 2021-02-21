@@ -284,7 +284,7 @@ public class CustomItem {
 		WEAPONS("§cWeapons", "Pixlies:Zulfiqar"),
 		TOOLS("§eTools", "Pixlies:Explosive_Pickaxe"),
 		BLOCKS("§eBlocks", "Pixlies:Silver_Block"),
-		ARMOR("§3Armors", "Pixlies:Aluminium_Chestplate"),
+		ARMOR("§3Armors", "Pixlies:Carbon_Kevlar_Chestplate"),
 		FOOD("§cFood", "Christmas:Candy_Cane"),
 		;
 

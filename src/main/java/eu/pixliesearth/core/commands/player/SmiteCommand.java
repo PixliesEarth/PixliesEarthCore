@@ -14,22 +14,18 @@ public class SmiteCommand implements CommandExecutor {
             sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
             return false;
         }
+        if(args.length == 0){
+            sender.sendMessage(Lang.WRONG_USAGE.get(sender).replace("%USAGE%", "/smite <player>"));
+            return false;
+        }
+        if(Bukkit.getPlayer(args[0]) == null){
+            sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
+            return false;
+        }
 
-            if(args.length == 0){
-                sender.sendMessage(Lang.WRONG_USAGE.get(sender).replace("%USAGE%", "/smite <player>"));
-                return false;
-            }
-            if(Bukkit.getPlayer(args[0]) == null){
-                sender.sendMessage(Lang.PLAYER_DOES_NOT_EXIST.get(sender));
-                return false;
-            }
-            Player player = Bukkit.getPlayer(args[0]);
+        Player player = Bukkit.getPlayer(args[0]);
         player.getWorld().strikeLightning(player.getLocation());
-
         sender.sendMessage(Lang.STRIKED_PLAYER.get(sender).replace("%PLAYER%", player.getName()));
-
-
-
         return false;
     }
 }

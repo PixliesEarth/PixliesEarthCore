@@ -59,7 +59,7 @@ public class LeaveListener implements Listener {
                 }
         }
 
-        if (Main.getInstance().getUtilLists().playersInWar.containsKey(player.getUniqueId()))
+        if (Main.getInstance().getUtilLists().playersInWar.containsKey(player.getUniqueId()) && event.getReason().equals(PlayerQuitEvent.QuitReason.DISCONNECTED))
             Main.getInstance().getCurrentWar().handleLeave(profile);
 
         profile.getTimers().clear();

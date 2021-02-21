@@ -73,12 +73,16 @@ public class MoveListener implements Listener {
 	                            player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
 	                        } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
 	                            player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else if (tn.getNationId().equals("warzone")) { // WARZONE
 	                            player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
 	                            player.sendTitle("§d§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+	                            tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else { // ANY OTHER NATION
 	                            player.sendTitle("§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        }
 	                    }
 	                }

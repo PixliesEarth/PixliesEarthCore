@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom;
 
 import eu.pixliesearth.core.custom.interfaces.Constants;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.utils.*;
@@ -23,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <h3>A class to create a machine</h3>
  *
  */
-public class CustomCrafterMachine extends CustomMachine {
+public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	
 	// ?
 	
@@ -65,7 +66,6 @@ public class CustomCrafterMachine extends CustomMachine {
 		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
 		if (i==null) {
 			player.sendMessage("This machine has no inventory!");
-			return;
 		} else {
 			ItemStack is = i.getItem(Constants.getGUIDataSlot);
 			if (is==null || is.getType().equals(Material.AIR)) {
@@ -613,8 +613,6 @@ public class CustomCrafterMachine extends CustomMachine {
 				inv.setItem(i, is);
 				return true;
 			}
-			else 
-				continue;
 		}
 		return false;
 	}
@@ -633,8 +631,6 @@ public class CustomCrafterMachine extends CustomMachine {
 				inv.setItem(i, is);
 				return true;
 			}
-			else 
-				continue;
 		}
 		return false;
 	}
@@ -653,8 +649,6 @@ public class CustomCrafterMachine extends CustomMachine {
 				inv.setItem(i, is);
 				return true;
 			}
-			else 
-				continue;
 		}
 		return false;
 	}
@@ -689,4 +683,41 @@ public class CustomCrafterMachine extends CustomMachine {
 	 * @param customRecipe The current {@link CustomRecipe}
 	 */
 	public void takeCost(Location location, CustomRecipe customRecipe) {}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		for (Integer i : resultSlots) {
+			ItemStack item = inv.getItem(i);
+			if (item == null || item.getType().equals(Material.AIR)) continue;
+			if (item.getAmount() > 1) {
+				inv.setItem(i, item.asQuantity(item.getAmount() - 1));
+				return item.asOne();
+			} else {
+				inv.setItem(i, null);
+				return item;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		for (Integer i : craftSlots) {
+			ItemStack item = inv.getItem(i);
+			String id = CustomItemUtil.getUUIDFromItemStack(itemStack);
+			String idSlot = CustomItemUtil.getUUIDFromItemStack(item);
+			if (item == null || item.getType().equals(Material.AIR)) {
+				inv.setItem(i, itemStack);
+				return true;
+			} else if (id.equals(idSlot)) {
+				if (item.getAmount() == item.getMaxStackSize()) continue;
+				item.setAmount(item.getAmount() + 1);
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

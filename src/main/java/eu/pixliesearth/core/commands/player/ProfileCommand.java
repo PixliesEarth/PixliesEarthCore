@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.Gui;
 import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
@@ -83,6 +84,17 @@ public class ProfileCommand implements CommandExecutor {
                 }
                 Profile targetProfile = Main.getInstance().getProfile(targetUUID);
                 sender.sendMessage(new Gson().toJson(targetProfile));
+            } else if (args[0].equalsIgnoreCase("drop")) {
+                if (sender instanceof Player && !Main.getInstance().getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
+                    return false;
+                }
+                UUID targetUUID = Bukkit.getPlayerUniqueId(args[1]);
+                if (!Main.getInstance().getUtilLists().profiles.containsKey(targetUUID)) {
+                    Lang.PLAYER_DOES_NOT_EXIST.send(sender);
+                    return false;
+                }
+                Main.getInstance().getUtilLists().profiles.remove(targetUUID);
+                sender.sendMessage("Profile dropped from internal database.");
             }
         }
         return false;

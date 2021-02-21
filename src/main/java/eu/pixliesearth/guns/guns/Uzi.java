@@ -49,5 +49,11 @@ public class Uzi extends CustomGun {
 	public int getDelayToReload() {
 		return 2;
 	}
+	
+	@Override
+	public long getDelayPerShot() {
+		return 200l;
+	}
+	
 
 }

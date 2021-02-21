@@ -10,11 +10,15 @@ import java.util.function.BiConsumer;
 @Getter
 public enum NationUpgrade {
 
-    TWO_MORE_SETTLEMENTS("§b§l+2 settlements", Material.MAGENTA_BED, Era.ANCIENT, 5, (nation, player) -> {
-        nation.getExtras().putIfAbsent("settlements", 3);
-        nation.getExtras().put("settlements", Integer.parseInt(nation.getExtras().get("settlements").toString()) + 2);
-        nation.save();
-    }, true)
+    TWO_MORE_SETTLEMENTS("§b§l+2 settlements", Material.CAMPFIRE, Era.ANCIENT, 5, (nation, player) -> {
+        try {
+            nation.getExtras().putIfAbsent("settlements", 3.0);
+            nation.getExtras().put("settlements", (Double) nation.getExtras().get("settlements") + 2.0);
+            nation.save();
+        } catch (Exception e ) {
+            nation.getExtras().put("settlements", 5.0);
+        }
+    }, true),
     ;
 
     String displayName;

@@ -40,7 +40,7 @@ NATION_NAME_UNVALID: "§7Le nom de ta nation doit être alphanumérique, min. §
   max. §b10 §7charactères de long."
 PLAYER_FORMED_NATION: "§6%PLAYER% §7viens juste de former la nation de §b%NAME%&7."
 ALREADY_IN_NATION: "&7Tu fais &cdéjà &7partie d'une nation."
-NATION_DELEATION_CONIIRMATION: "§7Es-tu sûr que tu veux dissoudre ta nation? Tapez
+NATION_DELETATION_CONFIRMATION: "§7Es-tu sûr que tu veux dissoudre ta nation? Tapez
   §aconfirm §7pour dissoudre, si tu change d'avis, tapez §ccancel§7."
 PLAYER_CLAIMED: "&6%PLAYER% &7a ajouter un chunk à votre territoire à &b%X%&8, &b%Z%&7."
 PLAYER_UNCLAIMED: "&6%PLAYER% &7a enlevé un chunk de votre territoire à &b%X%&8, &b%Z%&7."

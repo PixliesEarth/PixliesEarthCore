@@ -141,6 +141,8 @@ public class ProtectionManager implements Listener {
 
     @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null) return;
+        if (!event.getClickedBlock().getType().isInteractable()) return;
         boolean can = canInteract(event);
         if (!can) {
             event.setCancelled(true);

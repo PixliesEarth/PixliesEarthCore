@@ -4,7 +4,9 @@ import eu.pixliesearth.core.custom.CustomCrafterMachine;
 import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomRecipe;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,4 +74,5 @@ public class MachineElectricForge extends CustomEnergyCrafterMachine { //TODO: m
 		}
 		return list2;
 	}
+
 }

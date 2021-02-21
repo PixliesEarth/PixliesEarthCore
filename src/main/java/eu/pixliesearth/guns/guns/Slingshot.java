@@ -56,5 +56,11 @@ public class Slingshot extends CustomGun {
 	public int getDelayToReload() {
 		return 2;
 	}
+	
+	@Override
+	public long getDelayPerShot() {
+		return 1000l;
+	}
+	
 
 }

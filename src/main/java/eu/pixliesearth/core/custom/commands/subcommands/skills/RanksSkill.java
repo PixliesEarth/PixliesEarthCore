@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.commands.subcommands.skills;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.command.CommandSender;
@@ -42,6 +43,13 @@ public class RanksSkill extends CustomSubCommand {
 	}
 	
 	private int getPosition(UUID uuid, String skillUUID) {
-		return 0;
+		SkillHandler skillHandler = SkillHandler.getSkillHandler();
+		List<UUID> leaderboard = skillHandler.getLeaderboardOf(skillUUID);
+		for (int i = 0; i < leaderboard.size(); i++) {
+			if (leaderboard.get(i).equals(uuid)) {
+				return i;
+			}
+		}
+		return -2;
 	}
 }

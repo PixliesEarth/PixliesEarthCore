@@ -186,6 +186,11 @@ public class War {
         instance.setCurrentWar(null);
         Nation aggressor = getAggressorInstance();
         aggressor.getExtras().remove("WAR:" + mainDefender);
+        Timer cooldown = new Timer(Timer.DAY * 5);
+        aggressor.getExtras().put("WarCooldown", cooldown.toMap());
+        Nation defender = getDefenderInstance();
+        defender.getExtras().put("WarCooldown", cooldown.toMap());
+        defender.save();
         aggressor.save();
         instance.getUtilLists().wars.remove(this.getId());
     }
@@ -194,21 +199,23 @@ public class War {
         if (!running) return;
         this.left.put(players.get(left.getUUID()).getSide(), this.left.get(players.get(left.getUUID()).getSide()) - 1);
         players.remove(left.getUUID());
-        instance.getGulag().handleLeave(left.getAsPlayer());
+        // instance.getGulag().handleLeave(left.getAsPlayer());
     }
 
     public void handleKill(Profile killed) {
         if (!running) return;
-        if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
+        // if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
+        if (!killed.getAsPlayer().hasPermission("earth.admin")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
-            instance.getUtilLists().inGulag.remove(killed.getUUID());
+            // instance.getUtilLists().inGulag.remove(killed.getUUID());
             instance.getUtilLists().bannedInWar.add(killed.getUUID());
-            players.remove(killed.getUUID());
-            left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
-            return;
         }
         left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
-        instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
+        players.remove(killed.getUUID());
+            // return;
+        // }
+        // left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
+        // instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
     }
 
     public void tick() {
@@ -236,7 +243,6 @@ public class War {
 
     @SneakyThrows
     public boolean makeDeclarable() {
-        if (this.isDeclareAble()) return false;
         this.declareAble = true;
         this.timers.remove("warGoalJustification");
         for (String s : getAggressorInstance().getMembers()) {

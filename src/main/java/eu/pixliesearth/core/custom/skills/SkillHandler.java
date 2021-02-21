@@ -1,13 +1,16 @@
 package eu.pixliesearth.core.custom.skills;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -103,19 +106,35 @@ public final class SkillHandler implements Serializable {
 		for (Skill skill : skills) {
 			Map<UUID, Integer> map = new HashMap<>();
 			skillMap.entrySet().parallelStream().forEach((entry) -> {
-				map.put(entry.getKey(), entry.getValue().getOrDefault(skillUUID, 0));
+				map.put(entry.getKey(), entry.getValue().getOrDefault(skill.getSkillUUID(), 0));
 			});
-			List<Entry<UUID, Integer>> list = new ArrayList<>(map.entrySet());
-	        list.sort(Entry.comparingByValue());
+			/*List<Entry<UUID, Integer>> list = new ArrayList<>(map.entrySet());
+	        list.sort(Entry.comparingByValue(Comparator.reverseOrder()));
 	        List<UUID> list2 = new ArrayList<>();
 	        for (Entry<UUID, Integer> entry : list) {
-	        	list2.add(0, entry.getKey()); // Invert list
+	        	list2.add(entry.getKey()); // Invert list
 	        }
-	        newMap.put(skill.getSkillUUID(), list2);
+	        newMap.put(skill.getSkillUUID(), list2);*/
+			List<UUID> list = new LinkedList<>();
+			entriesSortedByValues(map).stream().forEachOrdered((entry) -> list.add(0, entry.getKey()));
+			newMap.put(skill.getSkillUUID(), list);
 		}
 		leaderboardMap = newMap;
         leaderboardRefreshTimer = System.currentTimeMillis()+7500l;
 		return getLeaderboardOf(skillUUID);
 	}
 	
+	
+	private <K,V extends Comparable<? super V>>SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+	    SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+	        new Comparator<Map.Entry<K,V>>() {
+	            @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+	                int res = e1.getValue().compareTo(e2.getValue());
+	                return res != 0 ? res : 1;
+	            }
+	        }
+	    );
+	    sortedEntries.addAll(map.entrySet());
+	    return sortedEntries;
+	}
 }

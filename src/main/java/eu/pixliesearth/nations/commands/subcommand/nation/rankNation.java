@@ -32,6 +32,7 @@ public class rankNation extends SubCommand {
         returner.put("addpermission", 1);
         returner.put("removepermission", 1);
         returner.put("set", 1);
+        returner.put("rename", 1);
         for (Permission permission : Permission.values())
             returner.put(permission.name(), 3);
         return returner;
@@ -48,7 +49,8 @@ public class rankNation extends SubCommand {
                 "§7Remove a rank: §b/n rank remove §eRANK-NAME\n" +
                 "§7Set a players rank: §b/n rank set §ePLAYER §cRANK-NAME\n" +
                 "§7Add a permission to a rank: §b/n rank addpermission §ePERMISSION §cRANK-NAME\n" +
-                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME";
+                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME\n" +
+                "§7Rename a rank prefix: §b/n rank rename §eRANK §cPREFIX";
     }
 
     @Override
@@ -64,6 +66,33 @@ public class rankNation extends SubCommand {
             return false;
         }
         Nation n = profile.getCurrentNation();
+
+         if (args[0].equalsIgnoreCase("rename")) {
+            if (n.getRanks().get(args[1]) == null) {
+                Lang.RANK_DOESNT_EXIST.send(player);
+                return false;
+            }
+            Rank rank = Rank.get(n.getRanks().get(args[1]));
+            if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
+                Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                return false;
+            }
+            StringBuilder allArgs = new StringBuilder();
+            for (String s : args)
+                allArgs.append(s).append(" ");
+            String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
+             if (prefix.length() > 15) {
+                 Lang.INVALID_INPUT.send(sender);
+                 return false;
+             }
+            rank.setPrefix(prefix.replace("&", "§"));
+            n.getRanks().put(rank.getName(), rank.toMap());
+            n.save();
+            //TODO Proper message
+            sender.sendMessage(Lang.NATION + "§7Rank renamed.");
+            return false;
+        }
+
         switch (args.length) {
             case 4:
                 if (args[0].equalsIgnoreCase("create")) {
@@ -79,7 +108,11 @@ public class rankNation extends SubCommand {
                         Lang.RANK_ALREADY_EXISTS.send(player);
                         return false;
                     }
-                    n.getRanks().put(args[1], new Rank(args[1], args[2].replace("&", "§"), Integer.parseInt(args[3]), new ArrayList<>()).toMap());
+                    StringBuilder allArgs = new StringBuilder();
+                    for (String s : args)
+                        allArgs.append(s).append(" ");
+                    String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
+                    n.getRanks().put(args[1], new Rank(args[1], prefix.replace("&", "§"), Integer.parseInt(args[3]), new ArrayList<>()).toMap());
                     n.save();
                     Lang.RANK_CREATED.send(player, "%RANK%;" + args[1]);
                 }

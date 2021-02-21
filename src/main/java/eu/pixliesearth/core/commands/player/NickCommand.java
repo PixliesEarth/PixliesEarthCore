@@ -46,7 +46,7 @@ public class NickCommand implements CommandExecutor {
                 }
                 String nick = args[0];
                 if (args[0].contains("&") && !player.hasPermission("earth.nick.colours")) nick = nick.replace("&", "");
-                if (nick.length() > 15 || nick.length() < 3) {
+                if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', nick)).length() > 15 || nick.length() < 3) {
                     Lang.INVALID_INPUT.send(player);
                     return false;
                 }

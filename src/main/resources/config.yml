@@ -8,6 +8,7 @@ max-claim-size: 3000
 nations-collection: "nations"
 users-collection: "users"
 wars-collection: "wars"
+discord-prefix: "/"
 modules:
   chatsystem:
     enabled: true

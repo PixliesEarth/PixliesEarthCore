@@ -6,21 +6,24 @@ import eu.pixliesearth.events.NationCommandExecuteEvent;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class WarCommandListener extends CustomListener {
 
-/*    @EventHandler
+    @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
-        if (!profile.isInWar()) return;
+        if (!instance.getUtilLists().inGulag.contains(player.getUniqueId())) return;
         String[] split = event.getMessage().split(" ");
-        if (split[0].equalsIgnoreCase("/n")
-                || split[0].equalsIgnoreCase("/nations")
-                || split[0].equalsIgnoreCase("/nation")) {
+        if (split[0].equalsIgnoreCase("/back")
+                || split[0].equalsIgnoreCase("/ec")
+                || split[0].equalsIgnoreCase("/enderchest")
+                || split[0].equalsIgnoreCase("/echest")
+                || split[0].equalsIgnoreCase("/home")) {
             player.sendMessage(Lang.WAR + "§7You cant use nation commands in war.");
         }
-    }*/
+    }
 
     @EventHandler
     public void onSubCommand(NationCommandExecuteEvent event) {

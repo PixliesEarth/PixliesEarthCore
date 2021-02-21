@@ -4,12 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -40,17 +35,17 @@ public class CustomBlockListener extends CustomListener {
     @SneakyThrows
     public void PlayerInteractEvent(PlayerInteractEvent event) {
 		if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
-		if (!ProtectionManager.canInteract(event)) {
-			event.setCancelled(true);
-			event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
-			return;
-		}
 		if (event.getClickedBlock() == null) return;
 		CustomBlock id = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(event.getClickedBlock().getLocation());
 		if (id==null) return;
 		if (CIControl.DISABLED_ITEMS.contains(id.getUUID())) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage("§c[§r❌§c] §rThis item has been disabled!");
+			return;
+		}
+		if (!ProtectionManager.canInteract(event)) {
+			event.setCancelled(true);
+			event.getPlayer().sendActionBar(Lang.CANT_INTERACT_TERRITORY.get(event.getPlayer()));
 			return;
 		}
 		event.setCancelled(id.onBlockIsInteractedWith(event));
@@ -62,6 +57,8 @@ public class CustomBlockListener extends CustomListener {
 		if (event.getBlock()==null || event.getBlock().getType().equals(Material.AIR)) return;
 		if (!ProtectionManager.canPlace(event)) return;
 		if (event.isCancelled()) return;
+		event.getPlayer().getInventory().getItemInMainHand();
+		if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
 		String id = NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("UUID");
 		if (id==null) return;
 		if (CIControl.DISABLED_ITEMS.contains(id)) {
@@ -128,11 +125,16 @@ public class CustomBlockListener extends CustomListener {
 	@EventHandler
     @SneakyThrows
 	public void BlockPistonExtendEvent(BlockPistonExtendEvent event) {
-		if (event.getBlock()==null) return;
 		if (event.isCancelled()) return;
-		for (Block b : event.getBlocks()) 
-			if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null)
-				event.setCancelled(true);
+		for (Block b : event.getBlocks()) if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null) event.setCancelled(true);
+	}
+
+	@EventHandler
+	@SneakyThrows
+	public void BlockFromToEvent(BlockFromToEvent event) {
+		if (event.isCancelled()) return;
+		Block b = event.getToBlock();
+		if (CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation())!=null) event.setCancelled(true);
 	}
 	
 	@EventHandler

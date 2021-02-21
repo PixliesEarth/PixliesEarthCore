@@ -1,12 +1,7 @@
 package eu.pixliesearth.core.custom.machines;
 
-import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
-import eu.pixliesearth.core.custom.CustomFeatureHandler;
-import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.MinecraftMaterial;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.Timer;
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,9 +10,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
+import eu.pixliesearth.core.custom.CustomEnergyCrafterMachine;
+import eu.pixliesearth.core.custom.CustomFeatureHandler;
+import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.Timer;
 
-public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
+public class EnergyMachineCrusher extends CustomEnergyCrafterMachine implements IHopperable {
 	
 	public EnergyMachineCrusher() {
 		
@@ -268,5 +270,33 @@ public class EnergyMachineCrusher extends CustomEnergyCrafterMachine {
 			}
 		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {@Override public void run() {loc.getWorld().dropItemNaturally(loc, is);}}, 0L);
+	}
+
+	@Override
+	public ItemStack takeFirstTakeableItemFromIHopperableInventory(Location location) {
+		int[] ints = {14,15,16,23,24,25,32,33,34};
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		for (int i : ints) {
+			ItemStack itemStack = inv.getItem(i);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			ItemStack itemStack2 = itemStack.clone().asOne();
+			itemStack.setAmount(itemStack.getAmount()-1);
+			return itemStack2;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean addItemToIHopperableInventory(Location location, ItemStack itemStack) {
+		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
+		ItemStack itemStack2 = inv.getItem(19);
+		if (itemStack2==null || itemStack2.getType().equals(Material.AIR)) {
+			inv.setItem(19, itemStack);
+			return true;
+		} else if (itemStack2.asOne().equals(itemStack)) {
+			inv.getItem(19).setAmount(itemStack2.getAmount()+itemStack.getAmount());
+			return true;
+		}
+		return false;
 	}
 }

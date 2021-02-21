@@ -90,6 +90,7 @@ public enum Lang {
     PLAYER_REMOVED_X(Lang.EARTH, new HashMap<>()),
     PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
     CRINGED(Lang.EARTH, new HashMap<>()),
+    CANT_SEND_MESSAGE_TO_YOURSELF(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
@@ -100,7 +101,7 @@ public enum Lang {
     NATION_NAME_UNVALID(Lang.NATION, new HashMap<>()),
     PLAYER_FORMED_NATION(Lang.NATION, new HashMap<>()),
     ALREADY_IN_NATION(Lang.NATION, new HashMap<>()),
-    NATION_DELEATION_CONIIRMATION(Lang.NATION, new HashMap<>()),
+    NATION_DELETATION_CONFIRMATION(Lang.NATION, new HashMap<>()),
     PLAYER_CLAIMED(Lang.NATION, new HashMap<>()),
     PLAYER_UNCLAIMED(Lang.NATION, new HashMap<>()),
     CHUNK_NOT_YOURS(Lang.NATION, new HashMap<>()),
@@ -300,10 +301,14 @@ public enum Lang {
 
     public String get(CommandSender sender) {
         if (languages == null) return "";
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            Profile profile = Main.getInstance().getProfile(player.getUniqueId());
-            return languages.containsKey(profile.getLang()) ? PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang())) : PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get("ENG"));
+        try {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+                return languages.containsKey(profile.getLang()) ? PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get(profile.getLang())) : PREFIX + ChatColor.translateAlternateColorCodes('&', languages.get("ENG"));
+            }
+        } catch (Exception e) {
+            return PREFIX + languages.get("ENG").replace("&", "§");
         }
         return PREFIX + languages.get("ENG").replace("&", "§");
     }

@@ -7,6 +7,8 @@ public abstract class Skill implements Serializable {
 	private static final long serialVersionUID = 3944761533255069214L;
 
 	public abstract String getSkillName();
+
+	public abstract String getDescription();
 	
 	public abstract int getMaxSkillLevel();
 	
@@ -20,7 +22,16 @@ public abstract class Skill implements Serializable {
 			level++;
 			currentXP -= (level*20)+1000;
 		}
-		return (level-1>getMaxSkillLevel()) ? getMaxSkillLevel() : level-1;
+		return Math.min(level - 1, getMaxSkillLevel());
+	}
+
+	public int getExperienceFromLevel(int level) {
+		int experience = 0;
+		while (level >= 0) {
+			experience += ((level*20)+1000);
+			level--;
+		}
+		return experience;
 	}
 	
 }

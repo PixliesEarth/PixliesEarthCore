@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Hopper;
+import org.bukkit.block.Container;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -140,12 +141,20 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 	
 	@Override
 	public void onTick(Location location) {
-		take(location);
-		give(location);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				take(location);
+				give(location);
+			}
+			
+		}, 0l);
 	}
 
 	public void take(Location location) {
 		Inventory inventory = getMCInventory(location);
+		if (inventory==null) return;
 		Block b = location.getBlock().getRelative(BlockFace.UP);
 		if (b==null||b.getType().equals(Material.AIR)) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
@@ -153,22 +162,15 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 		if (cb instanceof IHopperable) {
 			ItemStack itemStack = ((IHopperable) cb).takeFirstTakeableItemFromIHopperableInventory(b.getLocation());
 			if (itemStack==null) return;
-			if (hasRoomFor(inventory, itemStack)) {
-				inventory.addItem(itemStack);
+			if (!inventory.addItem(itemStack).isEmpty()) {
+				((IHopperable) cb).addItemToIHopperableInventory(b.getLocation(), itemStack);
 			}
 		}
 	}
 
-	private boolean hasRoomFor(Inventory inventory, ItemStack itemStack) {
-		if (inventory.isEmpty() || inventory.firstEmpty()!=-1) return true;
-		for (ItemStack is : inventory.getContents()) {
-			if (is.asOne().equals(itemStack.asOne()) && is.getAmount()<64) return true;
-		}
-		return false;
-	}
-
 	public void give(Location location) {
 		Inventory inventory = getMCInventory(location);
+		if (inventory==null || inventory.isEmpty()) return;
 		Block b = location.getBlock().getRelative(getFactingOutput(location));
 		if (b==null||b.getType().equals(Material.AIR)) return;
 		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
@@ -177,12 +179,12 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 			ItemStack itemStack = null;
 			for (ItemStack is : inventory.getContents()) {
 				if (is!=null) {
-					itemStack = is.asOne();
+					itemStack = is;
 					break;
 				}
 			}
 			if (itemStack==null) return;
-			if (((IHopperable) cb).addItemToIHopperableInventory(location, itemStack.asOne())) {
+			if (((IHopperable) cb).addItemToIHopperableInventory(b.getLocation(), itemStack.asOne())) {
 				itemStack.setAmount(itemStack.getAmount()-1);
 			}
 		}
@@ -190,14 +192,14 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 
 	private Inventory getMCInventory(Location loc) {
 		Block block = loc.getBlock();
-		if (block instanceof Hopper) {
-			return ((Hopper)block).getInventory();
+		if (block.getState() instanceof Container) {
+			return ((Container)block.getState()).getInventory();
 		}
 		return null;
 	}
 
 	private BlockFace getFactingOutput(Location loc) {
-		return ((org.bukkit.block.data.type.Hopper) loc.getBlock().getState().getData()).getFacing();
+		return ((org.bukkit.block.data.type.Hopper) loc.getBlock().getBlockData()).getFacing();
 	}
 	
 }

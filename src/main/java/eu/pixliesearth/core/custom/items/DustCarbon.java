@@ -56,7 +56,7 @@ public class DustCarbon extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 10;
     }
 
     @Override

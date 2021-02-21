@@ -2,7 +2,9 @@ package eu.pixliesearth.core.modules;
 
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Methods;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,6 +41,10 @@ public class PrivateMessage implements CommandExecutor, Module {
         }
         if (sender instanceof Player && instance.getProfile(receiver.getUniqueId()).getBlocked().contains(((Player) sender).getUniqueId().toString())) {
             Lang.PLAYER_BLOCKED_YOU.send(sender);
+            return false;
+        }
+        if (sender.getName().equalsIgnoreCase(receiver.getName())) {
+            Lang.CANT_SEND_MESSAGE_TO_YOURSELF.send(sender);
             return false;
         }
         StringBuilder messageBuilder = new StringBuilder();

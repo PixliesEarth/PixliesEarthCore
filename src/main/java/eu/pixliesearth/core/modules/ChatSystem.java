@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.modules;
 
+import com.vdurmont.emoji.EmojiParser;
 import eu.pixliesearth.core.interfaces.Module;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.Warp;
@@ -9,6 +10,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,6 +31,18 @@ public class ChatSystem implements Listener, Module {
         if (config.getBoolean("modules.chatsystem.enabled")) {
             Player player = event.getPlayer();
             Profile profile = instance.getProfile(player.getUniqueId());
+
+            /*
+             * Fix for corrupted profiles
+             */
+            if (profile.isInNation() && profile.getCurrentNation() == null) profile.leaveEmergency();
+
+            if (!player.hasPermission("earth.chat.bypassblacklist")) {
+                for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
+                    if (StringUtils.containsIgnoreCase(event.getMessage(), s1))
+                        event.setMessage(event.getMessage().replaceAll("(?i)" + s1, Methods.replaceBadWord(s1)));
+            }
+
             if (instance.getUtilLists().warpAdder.contains(player.getUniqueId())) {
                 event.setCancelled(true);
                 Material mat = Material.GRASS_BLOCK;
@@ -36,7 +50,7 @@ public class ChatSystem implements Listener, Module {
                     mat = player.getInventory().getItemInMainHand().getType();
                 new Warp(event.getMessage(), player.getLocation(), mat.name()).serialize();
                 instance.getUtilLists().warpAdder.remove(player.getUniqueId());
-                player.sendMessage("§aEARTH §8| §7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
+                player.sendMessage(Lang.EARTH + "§7You §asuccessfully §7created the warp §b" + event.getMessage() + "§7!");
                 return;
             }
 
@@ -153,12 +167,6 @@ public class ChatSystem implements Listener, Module {
                     return;
                 }
 
-                if (!player.hasPermission("earth.chat.bypassblacklist")) {
-                        for (String s1 : config.getStringList("modules.chatsystem.blacklist"))
-                            if (event.getMessage().toLowerCase().contains(s1.toLowerCase()))
-                                event.setMessage(event.getMessage().replace(s1.toLowerCase(), Methods.replaceBadWord(s1)));
-                }
-
                 // "@" MENTIONING SYSTEM
                 if (event.getMessage().contains("@")) {
                     for (String string : event.getMessage().split(" ")) {
@@ -180,6 +188,8 @@ public class ChatSystem implements Listener, Module {
                 } else {
                     event.setMessage("§" + profile.getChatColor() + event.getMessage().replace("&", "").replace("%", "%%"));
                 }
+
+                event.setMessage(EmojiParser.parseToUnicode(event.getMessage()));
 
                 String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor()).replace("%message%", event.getMessage()));
                 event.getRecipients().clear();

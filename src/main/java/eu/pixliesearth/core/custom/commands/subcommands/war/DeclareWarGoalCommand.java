@@ -7,11 +7,13 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.War;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public class DeclareWarGoalCommand extends CustomSubCommand {
 
@@ -49,6 +51,16 @@ public class DeclareWarGoalCommand extends CustomSubCommand {
         if (!Permission.hasNationPermission(profile, Permission.DECLARE_WAR)) {
             Lang.NO_PERMISSIONS.send(player);
             return false;
+        }
+        if (profile.getCurrentNation().getExtras().containsKey("WarCooldown")) {
+            if (!new Timer((Map<String, String>) profile.getCurrentNation().getExtras().get("WarCooldown")).hasExpired() && !profile.isStaff()) {
+                commandSender.sendMessage(Lang.WAR + "§7You are on a war cooldown. " + new Timer((Map<String, String>) profile.getCurrentNation().getExtras().get("WarCooldown")).getRemainingAsString());
+                return false;
+            } else {
+                Nation nation = profile.getCurrentNation();
+                nation.getExtras().remove("WarCooldown");
+                nation.save();
+            }
         }
         War war = War.getById(parameters[0]);
         if (war == null || !war.getMainAggressor().equals(profile.getNationId())) {

@@ -4,7 +4,7 @@ import eu.pixliesearth.core.custom.CustomEnergyItem;
 import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
 import org.bukkit.Material;
 
-public class EnergyItemBattery extends CustomEnergyItem implements IMissileFuel {
+public class EnergyItemBattery extends CustomEnergyItem {
 	
     public EnergyItemBattery() {
 
@@ -40,23 +40,4 @@ public class EnergyItemBattery extends CustomEnergyItem implements IMissileFuel 
 		return 500;
 	}
 
-	@Override
-	public int getMissileExplosiveValue() {
-		return 6;
-	}
-
-	@Override
-	public int getMissileRangeValue() {
-		return 0;
-	}
-
-	@Override
-	public int getMissilePlayerDamageValue() {
-		return 0;
-	}
-
-	@Override
-	public int getMissileLaunchTimeValue() {
-		return 1;
-	}
 }

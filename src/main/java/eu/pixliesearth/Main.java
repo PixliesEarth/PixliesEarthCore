@@ -6,9 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
+import eu.pixliesearth.core.commands.economy.BalanceCommand;
+import eu.pixliesearth.core.commands.economy.PayCommand;
+import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
+import eu.pixliesearth.core.modules.economy.EconomySystem;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -182,6 +187,7 @@ public final class Main extends JavaPlugin {
         testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
+        loader.loadCommand(new SkillCommand());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }
@@ -248,9 +254,14 @@ public final class Main extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage("§7Backing up all profiles in the database.");
                 for (Player player : getServer().getOnlinePlayers()) {
                     // if (CitizensAPI.getNPCRegistry().isNPC(player)) continue;
-                    Profile profile = getProfile(player.getUniqueId());
-                    profile.syncDiscordAndIngameRoles();
-                    profile.backup();
+                    try {
+                        Profile profile = getProfile(player.getUniqueId());
+                        profile.syncDiscordAndIngameRoles();
+                        profile.backup();
+                    } catch (Exception e) {
+                        getLogger().log(Level.SEVERE, "Couldn't backup " + player.getName() + "'s profile on to the database.");
+                        e.printStackTrace();
+                    }
                 }
                 Bukkit.getConsoleSender().sendMessage("§aDone.");
             }
@@ -262,7 +273,12 @@ public final class Main extends JavaPlugin {
             public void run() {
                 System.out.println("§aSaving all nations in the database...");
                 for (Nation nation : NationManager.nations.values())
-                    nation.backup();
+                    try {
+                        nation.backup();
+                    } catch (Exception e) {
+                        getLogger().log(Level.SEVERE, "Couldn't backup " + nation.getName() + " on to the database.");
+                        e.printStackTrace();
+                    }
                 System.out.println("§aSaved all nations in the database.");
             }
         }.runTaskTimerAsynchronously(this, (20 * 60) * 16, (20 * 60) * 15);
@@ -327,7 +343,7 @@ public final class Main extends JavaPlugin {
 
         assemble = new Assemble(this, new ScoreboardAdapter());
 
-        assemble.setTicks(2);
+        assemble.setTicks(1);
 
         assemble.setAssembleStyle(AssembleStyle.MODERN);
 
@@ -356,7 +372,7 @@ public final class Main extends JavaPlugin {
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
 
-        nationsTop = new NTop();
+        // nationsTop = new NTop();
         if (!testServer) rest = new REST();
         // machineTask = new MachineTask();
 
@@ -429,8 +445,8 @@ public final class Main extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpSystem());
         getCommand("nation").setExecutor(new NationCommand());
         getCommand("backup").setExecutor(new BackupCommand());
-/*        getCommand("economy").setExecutor(new EconomySystem());
-        getCommand("balance").setExecutor(new BalanceCommand());*/
+        // getCommand("economy").setExecutor(new EconomySystem());
+        // getCommand("balance").setExecutor(new BalanceCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
