@@ -30,7 +30,7 @@ public class MiniMick {
             return;
         }
 
-        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
+        final String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
@@ -45,7 +45,7 @@ public class MiniMick {
                 commands.get(split[0].replace(prefix, "")).run(event);
             } else {
                 if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
-                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
+                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith(prefix)) {
                         String roleColour = "#{#00ffff}";
                         if (event.getMessageAuthor().getRoleColor().isPresent()) {
                             Color col = event.getMessageAuthor().getRoleColor().get();

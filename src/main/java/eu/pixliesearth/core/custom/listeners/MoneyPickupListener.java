@@ -17,6 +17,7 @@ public class MoneyPickupListener extends CustomListener {
     public void onPickup(PlayerAttemptPickupItemEvent event) {
         ItemStack item = event.getItem().getItemStack();
         if (NBTUtil.getTagsFromItem(item) != null && NBTUtil.getTagsFromItem(item).getString("money") == null) return;
+        if (item.getDisplayName().split(" ").length < 3) return;
         double amount = Double.parseDouble(item.getDisplayName().split(" ")[1]);
         event.getItem().remove();
         Player player = event.getPlayer();
