@@ -33,7 +33,7 @@ public class settlementsCommand extends SubCommand implements Listener {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("travel", 1);
         returner.put("remove", 1);

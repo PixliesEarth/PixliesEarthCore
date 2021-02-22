@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.javacord.api.entity.permission.Role;
@@ -47,8 +51,11 @@ public class Profile {
 
     private String uniqueId;
     private String discord;
+    private boolean inNation;
     private double balance;
     private List<String> receipts;
+    private int playTime;
+    private int elo;
     private String marriagePartner;
     private List<String> marriageRequests;
     private Map<String, String> relations;
@@ -65,6 +72,7 @@ public class Profile {
     private String chatColor;
     private int boosts;
     private String lastAt;
+    private double pixliecoins;
     private Map<String, Map<String, String>> timers;
     private String favoriteColour;
     private String boardType;
@@ -79,8 +87,11 @@ public class Profile {
         Profile data;
         if (found == null) {
             profile.append("discord", "NONE");
+            profile.append("inNation", false);
             profile.append("balance", 4000.0);
             profile.append("receipts", new ArrayList<>());
+            profile.append("playTime", 0);
+            profile.append("elo", 0);
             profile.append("marriagePartner", "NONE");
             profile.append("marriageRequests", new ArrayList<>());
             profile.append("relations", new HashMap<>());
@@ -97,6 +108,7 @@ public class Profile {
             profile.append("chatColor", "f");
             profile.append("boosts", 0);
             profile.append("lastAt", "NONE");
+            profile.append("pixliecoins", 0D);
             profile.append("timers", new HashMap<>());
             profile.append("favoriteColour", "§3");
             profile.append("boardType", ScoreboardAdapter.scoreboardType.STANDARD.name());
@@ -105,7 +117,7 @@ public class Profile {
             profile.append("banned", false);
             profile.append("extras", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",0, new ArrayList<>(),"NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), new HashMap<>(), new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",false, 4000, new ArrayList<>(), 0, 0,"NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", 0D, new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), new HashMap<>(), new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);
@@ -118,8 +130,11 @@ public class Profile {
         Document found = Main.getPlayerCollection().find(profile).first();
         if (found == null) return;
         profile.append("discord", discord);
+        profile.append("inNation", inNation);
         profile.append("balance", balance);
         profile.append("receipts", receipts);
+        profile.append("playTime", playTime);
+        profile.append("elo", elo);
         profile.append("marriagePartner", marriagePartner);
         profile.append("marriageRequests", marriageRequests);
         profile.append("relations", relations);
@@ -136,6 +151,7 @@ public class Profile {
         profile.append("chatColor", chatColor);
         profile.append("boosts", boosts);
         profile.append("lastAt", lastAt);
+        profile.append("pixliecoins", pixliecoins);
         profile.append("timers", timers);
         profile.append("favoriteColour", favoriteColour);
         profile.append("boardType", boardType);
@@ -160,21 +176,10 @@ public class Profile {
         this.nickname = s.replace("&", "§");
     }
 
-    public boolean inNation() {
-        return !nationId.equalsIgnoreCase("NONE");
-    }
-
-    public boolean isInNation() {
-        return inNation();
-    }
-
-    public String getBalanceFormatted() {
-        return "§b" + Methods.formatNumber((long) balance) + "§r" + EmojiParser.parseToUnicode(":moneybag:");
-    }
-
     public void addToNation(String id, Rank rank) {
-        if (inNation()) return;
+        if (inNation) return;
         this.nationId = id;
+        this.inNation = true;
         this.nationRank = rank.getName();
         Nation nation = Nation.getById(id);
         nation.getMembers().add(uniqueId);
@@ -183,12 +188,13 @@ public class Profile {
     }
 
     public boolean leaveNation() {
-        if (!inNation())
+        if (!inNation)
             return false;
         Nation nation = getCurrentNation();
         nation.getMembers().remove(uniqueId);
         nation.save();
         this.nationId = "NONE";
+        this.inNation = false;
         save();
         instance.getUtilLists().inspectors.remove(getUUID());
         for (Player p : nation.getOnlineMemberSet())
@@ -197,9 +203,10 @@ public class Profile {
     }
 
     public boolean leaveEmergency() {
-        if (!inNation())
+        if (!inNation)
             return false;
         this.nationId = "NONE";
+        this.inNation = false;
         save();
         instance.getUtilLists().inspectors.remove(getUUID());
         return true;
@@ -216,7 +223,8 @@ public class Profile {
     public boolean isInWar() { return instance.getUtilLists().playersInWar.containsKey(this.getUUID()); }
 
     public void removeFromNation() {
-        if (!inNation()) return;
+        if (!isInNation()) return;
+        this.inNation = false;
         this.nationId = "NONE";
         save();
     }
@@ -247,7 +255,7 @@ public class Profile {
     }
 
     public Nation getCurrentNation() {
-        if (!inNation())
+        if (!inNation)
             return null;
         return Nation.getById(nationId);
     }
@@ -271,24 +279,6 @@ public class Profile {
 
     public UUID getUUID() {
         return UUID.fromString(uniqueId);
-    }
-
-    public String getPlayTimeFormatted() {
-        int time = getAsOfflinePlayer().getStatistic(Statistic.PLAY_ONE_MINUTE);
-        time /= 1200;
-        int days = time / 1440;
-        time %= 1440;
-        int hours = time / 60;
-        time %= 60;
-        int minutes = time;
-
-        String msg = "";
-        if (days > 0)
-            msg += days + "d ";
-        if (hours > 0)
-            msg += hours + "h";
-        msg += minutes;
-        return msg;
     }
 
     public void removeForeignPermission(Nation host, Permission permission) {
@@ -351,7 +341,7 @@ public class Profile {
         timers.put("Teleport", timer.toMap());
         save();
         player.sendMessage(Lang.YOU_WILL_BE_TPD.get(player).replace("%LOCATION%", locationName).replace("%TIME%", Methods.getTimeAsString(cooldown * 1000, true)));
-        instance.getUtilLists().playerTeleportTasks.put(player.getUniqueId(), Bukkit.getScheduler().runTaskLater(instance, () -> {
+        Bukkit.getScheduler().runTaskLater(instance, () -> {
             if (timers.containsKey("Teleport")) {
                 timers.remove("Teleport");
                 save();
@@ -365,10 +355,9 @@ public class Profile {
                         energyCost = 0.1;
                     }
                 }
-                instance.getUtilLists().playerTeleportTasks.remove(player.getUniqueId());
                 Energy.take(this, manaNeeded);
             }
-        }, cooldown * 20).getTaskId());
+        }, cooldown * 20);
     }
 
     public void setTimer(String name, long duration) {
@@ -377,7 +366,6 @@ public class Profile {
 
     public void addTimer(String name, Timer timer) {
         this.timers.put(name, timer.toMap());
-        save();
     }
 
     public boolean isStaff() {

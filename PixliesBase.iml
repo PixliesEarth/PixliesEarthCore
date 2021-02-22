@@ -9,7 +9,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_9">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -21,34 +21,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.1.1" level="project" />
-    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: io.sentry:sentry:4.0.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-universal:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bukkit:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-common:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-handler:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-buffer:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-common:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-transport:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-resolver:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-codec:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bungeecord:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-sponge:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-velocity:2.6.0" level="project" />
-    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: io.sentry:sentry:4.0.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-universal:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bukkit:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-common:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-handler:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-buffer:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-common:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-transport:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-resolver:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-codec:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bungeecord:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-sponge:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-velocity:2.6.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.pl3x.purpur:purpur:1.16.4-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.5.19" level="project" />
@@ -104,7 +76,6 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.31.v20200723" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.luckperms:api:5.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
-    <orderEntry type="library" name="Maven: net.citizensnpcs:citizensapi:2.0.18-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.github.yannicklamprecht.WorldBorderAPI:API:1.163.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.gitlab.ruany:LiteBansAPI:0.3.4" level="project" />
     <orderEntry type="library" name="Maven: com.flowpowered:flow-nbt:1.0.1-SNAPSHOT" level="project" />
@@ -117,18 +88,5 @@
     <orderEntry type="library" name="Maven: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Maven: com.github.NuVotifier.NuVotifier:nuvotifier-api:v2.7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: io.sentry:sentry:4.0.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-universal:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bukkit:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-common:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-handler:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-buffer:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-common:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-transport:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-resolver:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: io.netty:netty-codec:4.1.32.Final" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-bungeecord:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-sponge:2.6.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vexsoftware:nuvotifier-velocity:2.6.0" level="project" />
   </component>
 </module>

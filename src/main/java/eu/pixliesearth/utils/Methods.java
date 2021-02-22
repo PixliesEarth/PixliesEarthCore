@@ -1,5 +1,6 @@
 package eu.pixliesearth.utils;
 
+import com.google.common.base.Strings;
 import eu.pixliesearth.Main;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -10,28 +11,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Methods {
-
-    public static LinkedHashMap<String, Integer> sortByValue(Map<String, Integer> map) {
-        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
-
-        map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
-
-        return reverseSortedMap;
-    }
-
-    public static String formatClock(long ticks) {
-        long hours = ticks / 1000;
-        if (hours > 24) hours = hours % 24;
-        long minutes = Math.round((ticks % 1000) / 60);
-        return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
-    }
-
+	
 	public static String convertEnergyDouble(double d) {
 		String s = "";
 		d = Methods.round(d, 3);
@@ -136,13 +118,6 @@ public class Methods {
         return (h > 0 ? h + ":" : "") + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
     }
 
-    public static String formatTime(long millis) {
-        int day = (int)TimeUnit.MILLISECONDS.toDays(millis);
-        long hours = TimeUnit.MILLISECONDS.toHours(millis) - (day * 24L);
-        long minute = TimeUnit.MILLISECONDS.toMinutes(millis) - (TimeUnit.MILLISECONDS.toHours(millis)* 60);
-        return day + " day(s) " + hours + " hour(s) " + minute + " minute(s)";
-    }
-
     public static Material getSBWoolByCC(String chatColor) {
         switch (chatColor) {
             case "§b":
@@ -179,26 +154,6 @@ public class Methods {
     public static String getProgressBar(int current, int max, int totalBars, String symbol, String completedColor, String notCompletedColor){
 
         float percent = (float) current / max;
-
-        int progressBars = (int) ((int) totalBars * percent);
-
-        int leftOver = (totalBars - progressBars);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.translateAlternateColorCodes('&', completedColor));
-        for (int i = 0; i < progressBars; i++) {
-            sb.append(symbol);
-        }
-        sb.append(ChatColor.translateAlternateColorCodes('&', notCompletedColor));
-        for (int i = 0; i < leftOver; i++) {
-            sb.append(symbol);
-        }
-        return sb.toString();
-    }
-
-    public static String getProgressBar(double current, double max, int totalBars, String symbol, String completedColor, String notCompletedColor){
-
-        float percent = (float) ((float) current / max);
 
         int progressBars = (int) ((int) totalBars * percent);
 
@@ -267,7 +222,7 @@ public class Methods {
             if(c == '§'){
                 previousCode = true;
                 continue;
-            }else if(previousCode){
+            }else if(previousCode == true){
                 previousCode = false;
                 if(c == 'l' || c == 'L'){
                     isBold = true;

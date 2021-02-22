@@ -26,15 +26,13 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
     	try {
-	        if (event.getTo().getX() != event.getFrom().getX() || event.getTo().getY() != event.getFrom().getY() || event.getTo().getZ() != event.getFrom().getZ()) {
+	        if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
 	            Player player = event.getPlayer();
 	            Profile profile = instance.getProfile(player.getUniqueId());
 	
 	            if (profile.getTimers().containsKey("Teleport")) {
 	                profile.getTimers().remove("Teleport");
 	                profile.save();
-	                Bukkit.getScheduler().cancelTask(instance.getUtilLists().playerTeleportTasks.get(player.getUniqueId()));
-	                instance.getUtilLists().playerTeleportTasks.remove(player.getUniqueId());
 	                event.getPlayer().sendMessage(Lang.TELEPORTATION_FAILURE.get(event.getPlayer()));
 	            }
 	            if (instance.getUtilLists().afk.contains(event.getPlayer().getUniqueId())) {
@@ -73,30 +71,24 @@ public class MoveListener implements Listener {
 	                    } else {
 	                        if (tn.getNationId().equals(profile.getNationId())) { // YOUR NATION
 	                            player.sendTitle("§b§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-								NationChunk fnc = NationChunk.get(fc);
-								NationChunk tnc = NationChunk.get(tc);
-								if (fnc.getType() != tnc.getType()) player.sendActionBar("§e" + tnc.getType().getName());
 	                        } else if (tn.getNationId().equals("safezone")) { // SAFEZONE
 	                            player.sendTitle("§a§lSafeZone", "§7" + Lang.SAFEZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
-	                            if (!profile.isStaff()) tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else if (tn.getNationId().equals("warzone")) { // WARZONE
 	                            player.sendTitle("§c§lWarZone", "§7" + Lang.WARZONE_SUBTITLE.get(player), 20, 20 * 2, 20);
-								if (!profile.isStaff()) tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else if (tn.isAlliedWith(profile.getNationId())) { // ALLIES
 	                            player.sendTitle("§d§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-								if (!profile.isStaff()) tn.broadcastMembersActionbar("§d" + player.getName() + " §7just entered your territory!");
+	                            tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        } else { // ANY OTHER NATION
 	                            player.sendTitle("§l" + tn.getName(), "§7" + tn.getDescription(), 20, 20 * 2, 20);
-								if (!profile.isStaff()) tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
+								tn.broadcastMembersActionbar("§6" + player.getName() + " §7just entered your territory!");
 	                        }
 	                    }
 	                }
 	            }
 	        }
-    	} catch (Exception e) {
-            e.printStackTrace();
-             io.sentry.Sentry.captureException(e);
-}
+    	} catch (Exception ignore) {}
     }
 
     @EventHandler

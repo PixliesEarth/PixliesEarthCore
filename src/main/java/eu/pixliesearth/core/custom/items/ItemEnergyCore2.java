@@ -77,7 +77,7 @@ public class ItemEnergyCore2 extends CustomItem implements IMissileFuel {
 
 	@Override
 	public int getMissileExplosiveValue() {
-		return 2;
+		return 4;
 	}
 
 	@Override

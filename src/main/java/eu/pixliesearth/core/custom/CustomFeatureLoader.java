@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
@@ -94,8 +93,6 @@ public class CustomFeatureLoader {
 		// loadVendors(path);
 		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
 			handler.getCategoriesForItems().get(category).sort(Comparator.comparing(String::toString));
-
-		loadCustomBlock(new EnergyBlockQuarry());
 	}
 	/**
 	 * Saves everything

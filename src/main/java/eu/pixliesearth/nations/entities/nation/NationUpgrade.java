@@ -37,8 +37,4 @@ public enum NationUpgrade {
         this.multiplePurchasable = multiplePurchasable;
     }
 
-    public boolean has(Nation nation) {
-        return nation.getUpgrades().contains(name());
-    }
-
 }

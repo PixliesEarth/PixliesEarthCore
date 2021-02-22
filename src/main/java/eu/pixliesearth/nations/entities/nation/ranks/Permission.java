@@ -30,8 +30,7 @@ public enum Permission {
     JUSTIFY_WAR_GOAL,
     SET_WIKI_LINK,
     MANAGE_WAR,
-    EDIT_FLAGS,
-    CHANGE_CAPITAL
+    EDIT_FLAGS
     ;
 
     public boolean hasPermission(CommandSender sender) {

@@ -22,7 +22,7 @@ public class bankNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> map = new HashMap<>();
         map.put("deposit", 1);
         map.put("withdraw", 1);

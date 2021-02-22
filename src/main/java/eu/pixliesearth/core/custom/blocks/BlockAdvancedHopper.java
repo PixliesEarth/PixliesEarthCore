@@ -141,7 +141,7 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 	
 	@Override
 	public void onTick(Location location) {
-		Bukkit.getScheduler().runTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 
 			@Override
 			public void run() {
@@ -149,7 +149,7 @@ public class BlockAdvancedHopper extends CustomBlock implements IHopperable {
 				give(location);
 			}
 			
-		});
+		}, 0l);
 	}
 
 	public void take(Location location) {
