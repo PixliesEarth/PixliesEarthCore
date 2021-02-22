@@ -186,7 +186,10 @@ public abstract class CustomGun extends CustomItem {
 				value += a.getAmount();
 			}
 			return value;
-		} catch (Exception ignore) {}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			io.sentry.Sentry.captureException(exception);
+		}
 		if (value<=0) {
 			switch(e.getEquipment().getChestplate().getType()) {
 				case DIAMOND_CHESTPLATE :

@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.items;
 
+import eu.pixliesearth.core.commands.util.BroadcastCommand;
 import eu.pixliesearth.core.custom.*;
 import eu.pixliesearth.core.custom.interfaces.IMissileFuel;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -273,6 +274,8 @@ public class ItemICBM extends CustomItem {
     	}
     	final UUID id = UUID.randomUUID();
     	addBS(id, start);
+
+		BroadcastCommand.broadcastDiscord(p.getName() + " just launched an ICBM at " + end.getBlockX() + ", " + end.getBlockY() + ", " + end.getBlockZ(), Bukkit.getConsoleSender());
     	
     	Integer i = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(CustomFeatureLoader.getLoader().getInstance(), new Runnable() {
 			public void run() {
@@ -312,6 +315,7 @@ public class ItemICBM extends CustomItem {
 														//l4.createExplosion((float)ex, true);
 														ExplosionCalculator calc = new ExplosionCalculator(l4, ex, false);
 														calc.explode(true);
+														l4.getNearbyPlayers(pd).forEach(p -> p.setHealth(0.0));
 														Bukkit.getScheduler().cancelTask(CustomFeatureLoader.getLoader().getHandler().getLocationEvent(start));
 														CustomFeatureLoader.getLoader().getHandler().unregisterLocationEvent(start);
 													} else {

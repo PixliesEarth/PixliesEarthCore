@@ -32,7 +32,7 @@ public class mapNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("chat", 1);
         returner.put("gui", 1);

@@ -7,6 +7,7 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
+import eu.pixliesearth.nations.entities.chunk.NationChunkType;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
@@ -34,7 +35,7 @@ public class claimNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("auto", 1);
         returner.put("one", 1);
@@ -263,7 +264,7 @@ public class claimNation extends SubCommand {
             return;
         }
 
-        toClaim.put(x, z, new NationChunk(nation.getNationId(), world, x, z));
+        toClaim.put(x, z, new NationChunk(nation.getNationId(), world, x, z, NationChunkType.NORMAL));
 
         floodSearch(player, nation, x + 1, z, world, toClaim);
         floodSearch(player, nation, x - 1, z, world, toClaim);

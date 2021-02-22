@@ -12,11 +12,11 @@ import java.util.Collection;
 public class TerritoryChangeEvent extends Event implements Cancellable {
 
     public static HandlerList handlers = new HandlerList();
+
     private @Getter Player player;
     private @Getter Collection<NationChunk> chunk;
     private @Getter ChangeType type;
     private boolean isCancelled = false;
-
 
     public TerritoryChangeEvent(Player player, Collection<NationChunk> chunk, ChangeType type) {
         this.player = player;
@@ -26,11 +26,11 @@ public class TerritoryChangeEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers(){
-        return ShootEvent.handlers;
+        return handlers;
     }
 
     public static HandlerList getHandlerList(){
-        return ShootEvent.handlers;
+        return handlers;
     }
 
     @Override
@@ -57,6 +57,7 @@ public class TerritoryChangeEvent extends Event implements Cancellable {
         UNCLAIM_ONE_OTHER,
         UNCLAIM_FILL_SELF,
         UNCLAIM_FILL_OTHER,
+        CHANGE_TYPE
 
     }
 

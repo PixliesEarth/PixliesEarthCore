@@ -21,7 +21,7 @@ public class neutralNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion() {
+    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> map = new HashMap<>();
         for (String s : NationManager.names.keySet())
             map.put(s, 1);

@@ -52,21 +52,21 @@ AUTOUNCLAIM_ENABLED: "&7U hebt zojuist de auto-unclaim modus &aingeschakeld&7."
 AUTOUNCLAIM_DISABLED: "&7Je hebt net de auto-unclaim modus &cuitgeschakeld&7."
 NATION_DOESNT_EXIST: "&7Deze natie bestaat &cniet&7!"
 PLAYER_NAMED_NATION_NAME: "&6%PLAYER% &7hernoemde &b%OLD% &7naar &b%NEW%&7."
-BALANCE_YOU: "§7Je hebt  §2§l$§a%BALANCE% §7op je rekening staan."
-BALANCE_OTHERS: "&6%PLAYER% &7heeft &2&l$&a%BALANCE% &7op je rekening staan."
+BALANCE_YOU: "§7Je hebt  §a%BALANCE% §7op je rekening staan."
+BALANCE_OTHERS: "&6%PLAYER% &7heeft &a%BALANCE% &7op je rekening staan."
 SET_PLAYER_BALANCE: "&aSuccesvol&7 in balans brengen van de speler."
 PAID_HIMSELF: "&7Je geld werd van de ene naar de andere zak overgemaakt."
-PAY_AMT_BELOW_MIN: "&7Het minimum geldbedrag is &2&l$&a%AMOUNT%&7."
+PAY_AMT_BELOW_MIN: "&7Het minimum geldbedrag is &a%AMOUNT%&7."
 NOT_ENOUGH_MONEY: "&7Je hebt &cniet&7 genoeg geld voor deze actie."
 UNEXPECTED_ECO_ERROR: "&cEr was een onverwachte economiefout. Meld dit aan het PixliesEarth
   personeelsteam als u denkt dat dit server-zijdig was."
-PAID_PLAYER_MONEY: "&7Je hebt &6%TARGET%&7 met succes &2&l$&a%AMOUNT%&7 betaald."
-RECEIVED_MONEY_FROM_PLAYER: "Je hebt &2&l$&a%AMOUNT% &7van &6%TARGET%&7 gekregen."
+PAID_PLAYER_MONEY: "&7Je hebt &6%TARGET%&7 met succes &a%AMOUNT%&7 betaald."
+RECEIVED_MONEY_FROM_PLAYER: "Je hebt &a%AMOUNT% &7van &6%TARGET%&7 gekregen."
 PLAYER_DOESNT_HAVE_ENOUGH_MONEY: "&7De speler heeft  &cniet&7 genoeg geld voor deze
   actie."
-TOOK_MONEY_FROM_PLAYER: "&aSuccesvol &7teruggetrokken &2&l$&a%AMOUNT% &7van &6%PLAYER%&7's
+TOOK_MONEY_FROM_PLAYER: "&aSuccesvol &7teruggetrokken &a%AMOUNT% &7van &6%PLAYER%&7's
   rekening."
-GAVE_MONEY_TO_PLAYER: "&aSuccesvol &7gedeponeerd &2&l$&a%AMOUNT% &7naar &6%PLAYER%&7's
+GAVE_MONEY_TO_PLAYER: "&aSuccesvol &7gedeponeerd &a%AMOUNT% &7naar &6%PLAYER%&7's
   rekening."
 SMSG_1: "&6%PLAYER% &7heeft zichzelf net gestoken."
 SMSG_2: '&7&o"Ik zie het licht..." ~&6&o%PLAYER% &7&ovoordat hij zijn eigen leven

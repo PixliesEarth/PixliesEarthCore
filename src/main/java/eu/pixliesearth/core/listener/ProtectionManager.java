@@ -142,7 +142,7 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
-        if (!event.getClickedBlock().getType().isInteractable()) return;
+        if (!event.getClickedBlock().getType().isInteractable() && event.getClickedBlock().getType() != Material.FARMLAND) return;
         boolean can = canInteract(event);
         if (!can) {
             event.setCancelled(true);
@@ -166,8 +166,7 @@ public class ProtectionManager implements Listener {
         if (!profile.isInNation()) return false;
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return true;
-        if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return true;
-        return false;
+        return Permission.hasForeignPermission(guest, Permission.INTERACT, host);
     }
 
     @EventHandler(priority = HIGHEST)

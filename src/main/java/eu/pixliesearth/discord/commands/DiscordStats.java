@@ -33,7 +33,7 @@ public class DiscordStats extends DiscordCommand {
                                 .setTitle("**" + profile.getAsOfflinePlayer().getName() + "**")
                                 .addInlineField("Nation", profile.isInNation() ? profile.getCurrentNation().getName() : "Not in a nation")
                                 .addInlineField("Balance", "$" + Methods.formatNumber((long) profile.getBalance()))
-                                .addInlineField("Elo", profile.getElo() + "")
+                                // .addInlineField("Elo", profile.getElo() + "")
                                 .addInlineField("Mana", profile.getEnergy() + "")
                                 .addInlineField("Nickname", profile.getNickname())
                                 .addInlineField("Boosts", profile.getBoosts() + "")

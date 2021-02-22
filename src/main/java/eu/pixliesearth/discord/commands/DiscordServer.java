@@ -3,10 +3,12 @@ package eu.pixliesearth.discord.commands;
 import eu.pixliesearth.discord.DiscordCommand;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.awt.*;
+import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 
 public class DiscordServer extends DiscordCommand {
@@ -37,6 +39,17 @@ public class DiscordServer extends DiscordCommand {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 
         embed.addInlineField("Uptime", time);
+        if (Bukkit.getOnlinePlayers().size() > 0) {
+            StringJoiner joiner = new StringJoiner(", ");
+            for (Player player : Bukkit.getOnlinePlayers())
+                joiner.add(player.getName());
+
+            embed.setDescription(
+                    "```\n" +
+                    joiner.toString() + "\n" +
+                    "```"
+            );
+        }
         embed.setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());
         event.getChannel().sendMessage(embed);
     }

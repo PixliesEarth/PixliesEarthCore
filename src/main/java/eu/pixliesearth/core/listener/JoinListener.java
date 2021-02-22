@@ -37,6 +37,8 @@ public class JoinListener implements Listener {
 
         event.setJoinMessage("§8[§a§l+§8] §7" + player.getName());
 
+        Lang.WELCOME_TO_PIXLIES.send(player);
+
         if (!player.hasPlayedBefore()) {
             player.teleport(instance.getFastConf().getSpawnLocation());
             for (Player op : Bukkit.getOnlinePlayers())

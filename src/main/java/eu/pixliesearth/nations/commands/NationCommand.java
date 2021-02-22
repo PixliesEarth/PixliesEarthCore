@@ -4,6 +4,7 @@ import eu.pixliesearth.events.NationCommandExecuteEvent;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
+import io.sentry.Sentry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -42,7 +43,6 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new neutralNation());
         subCommands.add(new chatNation());
         // subCommands.add(new bankNation());
-        subCommands.add(new topNation());
         subCommands.add(new bannerNation());
         subCommands.add(new foreignPermission());
         subCommands.add(new accessNation());
@@ -50,6 +50,10 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new xpNation());
         subCommands.add(new wikiNation());
         subCommands.add(new mergeNation());
+        subCommands.add(new capitalNation());
+        subCommands.add(new promoteNation());
+        subCommands.add(new electionNation());
+        subCommands.add(new demoteNation());
 
 		SubCommandAliases = new HashMap<String, SubCommand>();
 		for (SubCommand subCommand : subCommands)
@@ -82,6 +86,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         } catch (Exception e) {
             getSubCommandAliases().get(strings[0].toLowerCase()).sendSyntax(sender, strings[0]);
             e.printStackTrace();
+             io.sentry.Sentry.captureException(e);
 	    }
 
 	    return true;
@@ -98,7 +103,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         if (args.length > 1) {
             if (getSubCommandAliases().get(args[0]) == null)
                 return completions;
-            for (Map.Entry<String, Integer> entry : getSubCommandAliases().get(args[0]).autoCompletion().entrySet())
+            for (Map.Entry<String, Integer> entry : getSubCommandAliases().get(args[0]).autoCompletion(sender, args).entrySet())
                 if (args.length == entry.getValue() + 1) {
                     argCompletions.computeIfAbsent(entry.getValue(), k -> new HashSet<>());
                     argCompletions.get(entry.getValue()).add(entry.getKey());

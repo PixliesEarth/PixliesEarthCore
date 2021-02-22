@@ -13,6 +13,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
+import io.sentry.Sentry;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -36,13 +37,6 @@ public class menuNation extends SubCommand {
     }
 
     static final String defaultTitle = "§bNations menu §8| ";
-
-    @Override
-    public Map<String, Integer> autoCompletion() {
-        Map<String, Integer> returner = new HashMap<>();
-        returner.put(" ", 1);
-        return returner;
-    }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
@@ -87,6 +81,7 @@ public class menuNation extends SubCommand {
             case MEMBERS:
                 x = 0;
                 y = 0;
+
                 for (String s : nation.getMembers()) {
                     Profile member = instance.getProfile(UUID.fromString(s));
                     if (x + 1 > 9) {
@@ -112,7 +107,7 @@ public class menuNation extends SubCommand {
                         y++;
                         x = 0;
                     }
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName()).addLoreLine("§7§oClick to edit").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName() + " §8(§c" + rank.getPriority() + "§8)").addLoreLine("§7§oClick to edit").build(), event -> {
                         event.setCancelled(true);
                         if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) showRankMenu(gui, menu, player, rank);
                     }), x, y);
@@ -333,7 +328,10 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() - 1);
                     gui.update();
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                     io.sentry.Sentry.captureException(e);
+                }
             }
         }), 0, 0);
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§aNext").build(), event -> {
@@ -342,7 +340,10 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() + 1);
                     gui.update();
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+            e.printStackTrace();
+             io.sentry.Sentry.captureException(e);
+}
             }
         }), 8, 0);
         gui.addPane(controlBar);
@@ -399,7 +400,7 @@ public class menuNation extends SubCommand {
             for (Map.Entry<String, Map<String, Object>> ranks : target.getCurrentNation().getRanks().entrySet()) {
                 Rank rank = Rank.get(ranks.getValue());
                 if (rank.getName().equalsIgnoreCase("leader")) continue;
-                if (rank.getPriority() >= profile.getCurrentNationRank().getPriority()) continue;
+                if (rank.getPriority() >= profile.getCurrentNationRank().getPriority() && !profile.isStaff()) continue;
                 if (x + 1 > 8) {
                     y++;
                     x = 0;

@@ -14,6 +14,7 @@ import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlock;
 import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlocks;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
@@ -333,9 +334,11 @@ public class DynmapEngine {
         Map<String, NationBlocks> blocks_by_faction = new HashMap<>();
 
         Collection<Nation> facts = NationManager.nations.values();
-        for (Nation fact : facts) {
-            List<String> chunks = fact.getChunks();
-            String fid = "World_" + fact.getNationId();
+        /* Loop through factions */
+        for (final Nation nation : facts) {
+
+            List<String> chunks = nation.getChunks();
+            String fid = "World_" + nation.getNationId();
             NationBlocks factblocks = blocks_by_faction.get(fid); /* Look up Nation */
             if (factblocks == null) {    /* Create Nation block if first time */
                 factblocks = new NationBlocks();
@@ -351,13 +354,8 @@ public class DynmapEngine {
 
                 blocks.add(new NationBlock(cc.getX(), cc.getZ())); /* Add to list */
             }
-        }
-        /* Loop through factions */
-        for (final Nation nation : facts) {
+
             final String factname = ChatColor.stripColor(nation.getName());
-            final String fid = "World" + "_" + nation.getNationId();
-            final NationBlocks factblocks = blocks_by_faction.get(fid); /* Look up Nation */
-            if (factblocks == null) continue;
 
             /* Loop through each world that Nation has blocks on */
             for (Map.Entry<String, LinkedList<NationBlock>> worldblocks : factblocks.getBlocks().entrySet()) {
@@ -370,7 +368,7 @@ public class DynmapEngine {
 
                 /* Now, add marker for warp location */
                 for (Map.Entry<String, String> settleMents : nation.getSettlements().entrySet()) {
-                    final String name = settleMents.getKey();
+                    final String name = nation.getNationId() + "_" + settleMents.getKey();
                     final Settlement settlement = new Gson().fromJson(settleMents.getValue(), Settlement.class);
                     final MarkerIcon ico = getMarkerIcon(cusstyle, defstyle, factname);
                     if (ico != null) {
@@ -394,6 +392,22 @@ public class DynmapEngine {
                             marker.setDescription(formatInfoWindow(infoWindow, nation));
                             newmark.put(name, marker);
                         }
+                    }
+                }
+                if (nation.getCapital() != null) {
+                    Location capital = nation.getCapital();
+                    Marker marker = resmark.remove(nation.getNationId() + "_capital");
+                    if (marker == null) {
+                        marker = set.createMarker(nation.getNationId() + "_capital", "Capital of " + nation.getName(), capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ(), markerAPI.getMarkerIcon("temple"), false);
+                    } else {
+                        marker.setLocation(capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ());
+                        marker.setLabel("Capital of " + nation.getName());
+                        marker.setMarkerIcon(markerAPI.getMarkerIcon("temple"));
+                    }
+
+                    if (marker != null) {
+                        marker.setDescription(formatInfoWindow(infoWindow, nation));
+                        newmark.put(nation.getNationId() + "_capital", marker);
                     }
                 }
             }
@@ -494,7 +508,7 @@ public class DynmapEngine {
         int per = cfg.getInt("update.period", 300);
         if (per < 15)
             per = 15;
-        updperiod = (per * TICKRATE_RATIO);
+        updperiod = ((long) per * TICKRATE_RATIO);
         stop = false;
 
         scheduleSyncDelayedTask(new FactionsUpdate(this), 40);   /* First time is 2 seconds */

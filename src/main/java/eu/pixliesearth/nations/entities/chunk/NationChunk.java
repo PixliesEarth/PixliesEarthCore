@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -34,6 +35,7 @@ public class NationChunk {
     private String world;
     private int x;
     private int z;
+    private NationChunkType type;
 
     public boolean claim() {
         try {
@@ -46,7 +48,7 @@ public class NationChunk {
                     nation.getChunks().add(serialize());
                     nation.save();
                 }
-                System.out.println("§bChunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
+                System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +80,7 @@ public class NationChunk {
     }
 
     public String serialize() {
-        return nationId + ";" + world + ";" + x + ";" + z;
+        return nationId + ";" + world + ";" + x + ";" + z + ";" + type.name();
     }
 
     public Nation getCurrentNation() {
@@ -87,7 +89,7 @@ public class NationChunk {
 
     public static NationChunk fromString(String s) {
         String[] split = s.split(";");
-        return new NationChunk(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]));
+        return new NationChunk(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), NationChunkType.valueOf(split[4]));
     }
 
     public static NationChunk get(String world, int x, int z) {
@@ -106,8 +108,8 @@ public class NationChunk {
 
     public NationChunk withChunkX(Integer chunkX) { return get(this.getWorld(), chunkX, this.getZ()); }
     public NationChunk withChunkZ(Integer chunkZ) { return get(this.getWorld(), this.getX(), chunkZ); }
-    public NationChunk withChunkXNew(Integer chunkX) { return new NationChunk(nationId, world, chunkX, z); }
-    public NationChunk withChunkZNew(Integer chunkZ) { return new NationChunk(nationId, world, x, chunkZ); }
+    public NationChunk withChunkXNew(Integer chunkX) { return new NationChunk(nationId, world, chunkX, z, type); }
+    public NationChunk withChunkZNew(Integer chunkZ) { return new NationChunk(nationId, world, x, chunkZ, type); }
 
     public static Nation getNationData(Chunk chunk) {
         NationChunk c = get(chunk);
@@ -130,7 +132,7 @@ public class NationChunk {
         return Nation.getById(c.getNationId());
     }
 
-    public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId) {
+    public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId, NationChunkType type) {
         if (!world.equalsIgnoreCase("world") && !Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
             player.sendMessage(Lang.NATION + "§cYou can't claim in this world.");
             return false;
@@ -148,7 +150,7 @@ public class NationChunk {
             Lang.NOT_ENOUGH_MONEY_IN_NATION.send(player);
             return false;
         }*/
-        NationChunk nc = new NationChunk(nationId, world, x, z);
+        NationChunk nc = new NationChunk(nationId, world, x, z, type);
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, Collections.singletonList(nc), changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
@@ -158,6 +160,22 @@ public class NationChunk {
                 members.sendMessage(Lang.PLAYER_CLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
         }
         return true;
+    }
+
+    public Chunk getChunk() {
+        return Bukkit.getWorld(world).getChunkAt(x, z);
+    }
+
+    public Location chunkCenter() {
+        Chunk chunk = getChunk();
+        Location center = new Location(chunk.getWorld(), chunk.getX() << 4, 64, chunk.getZ() << 4).add(7, 0, 7);
+        center.setY(center.getWorld().getHighestBlockYAt(center));
+        return center;
+    }
+
+    @Deprecated
+    public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId) {
+        return claim(player, world, x, z, changeType, nationId, NationChunkType.NORMAL);
     }
 
     public static boolean unclaim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType) {
