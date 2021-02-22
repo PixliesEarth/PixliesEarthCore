@@ -51,6 +51,11 @@ public class LeaveListener implements Listener {
             if (player.getLastDamageCause().getEntity() != null)
                 if (player.getLastDamageCause().getEntity() instanceof Player) {
                     player.setKiller((Player) player.getLastDamageCause().getEntity());
+                    int randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+                    profile.setElo(profile.getElo() - randomNum);
+                    Profile opponent = Main.getInstance().getProfile(player.getLastDamageCause().getEntity().getUniqueId());
+                    opponent.setElo(opponent.getElo() + randomNum);
+                    opponent.save();
                 }
         }
 

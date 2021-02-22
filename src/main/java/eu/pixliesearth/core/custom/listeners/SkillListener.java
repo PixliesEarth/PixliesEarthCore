@@ -1,11 +1,13 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 
 import eu.pixliesearth.nations.entities.nation.Nation;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.Statistic;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
@@ -61,7 +63,7 @@ public class SkillListener extends CustomListener {
 		switch (event.getGainedSkillUUID()) {
 			case "Pixlies:Traveling":
 				for (int i = 0; i < event.getNewLevel() - event.getOldLevel(); i++) {
-					Energy.add(profile, BigDecimal.valueOf((0.1D * (Math.floor(Math.floor((event.getOldLevel() + 1 + i) / 10.0) / 10.0)))).setScale(1, RoundingMode.DOWN).doubleValue());
+					Energy.add(profile, BigDecimal.valueOf((0.1D * (Math.floor(Math.floor((event.getOldLevel() + 1 + i) / 10.0) / 10.0)))).setScale(1, BigDecimal.ROUND_DOWN).doubleValue());
 				}
 				break;
 			case "Pixlies:Lumbering":
@@ -74,7 +76,7 @@ public class SkillListener extends CustomListener {
 				break;
 			case "Pixlies:Mining":
 				if (event.getOldLevel() < 35 && event.getNewLevel() >= 35) {
-					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolExplosivePickaxe.class).getUUID());
+					event.getPlayer().sendMessage("§a[§r✔️§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolExplosivePickaxe.class).getUUID());
 				}
 				break;
 		}
@@ -94,11 +96,7 @@ public class SkillListener extends CustomListener {
 		if (event.isCancelled()) return;
 
 		if (!event.getGainedSkillUUID().equals("Pixlies:Traveling")) event.getPlayer().sendActionBar("§7Gained §a" + event.getAmount() + "§7 " + event.getGainedSkillUUID().split(":")[1] + "§7 XP");
-
-		if (event.getPlayer().getGameMode() == GameMode.CREATIVE ||event.getPlayer().getGameMode() == GameMode.SPECTATOR) return;
-
-		if (event.getPlayer().isFlying()) return;
-
+		
 		int level = SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), event.getGainedSkillUUID());
 		SkillHandler.getSkillHandler().addXPTo(event.getPlayer().getUniqueId(), event.getGainedSkillUUID(), event.getAmount());
 		if (level<SkillHandler.getSkillHandler().getLevelOf(event.getPlayer().getUniqueId(), event.getGainedSkillUUID())) {
@@ -165,7 +163,6 @@ public class SkillListener extends CustomListener {
 			}
 		} else {
 			if (!miningBlocks.contains(event.getBlock().getType())) return;
-			if (!event.getPlayer().getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && !event.getPlayer().getInventory().getItemInOffHand().getType().name().contains("PICKAXE")) return;
 			new SkillXPGainedEvent(event.getPlayer(), "Pixlies:Mining", random.nextInt(2)+1).callEvent();
 		}
 	}

@@ -17,6 +17,10 @@ commands:
     description: Seen Command
     aliases:
       - lastseen
+  coins:
+    description: Main command for pixliecoins
+    aliases:
+      - pixliecoins
   message:
     description: PM command
     aliases:
@@ -42,15 +46,15 @@ commands:
       - warps
   backup:
     description: backup
-#  economy:
-#    description: Economy command
-#    aliases:
-#      - eco
-#      - money
-#  balance:
-#    description: bal
-#    aliases:
-#      - bal
+  economy:
+    description: Economy command
+    aliases:
+      - eco
+      - money
+  balance:
+    description: bal
+    aliases:
+      - bal
   heal:
     description: heal
     aliases:
@@ -139,24 +143,24 @@ commands:
     aliases:
       - boosts
       - serverboost
-#  marry:
-#    description: marriage command
-#    aliases:
-#      - propose
-#  divorce:
-#    description: divorce command
-#    aliases:
-#      - breakup
+  marry:
+    description: marriage command
+    aliases:
+      - propose
+  divorce:
+    description: divorce command
+    aliases:
+      - breakup
   sudo:
     description: sudo command
   tphere:
     description: tphere command
-#  family:
-#    description: show family info
-#  woohoo:
-#    description: Have sex
-#  adopt:
-#    description: Adopt command
+  family:
+    description: show family info
+  woohoo:
+    description: Have sex
+  adopt:
+    description: Adopt command
   block:
     description: Block player
     aliases:
@@ -258,6 +262,11 @@ permissions:
   earth.chat.bypassblacklist:
     default: op
   earth.chat.broadcast:
+    default: op
+  # COINS
+  earth.coins.admin:
+    default: op
+  earth.coins.others:
     default: op
   # PRIVATEMESSAGE
   earth.pm.bypassblacklist:

@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
 
@@ -30,7 +29,7 @@ public class MiniMick {
             return;
         }
 
-        final String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
+        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
@@ -45,7 +44,7 @@ public class MiniMick {
                 commands.get(split[0].replace(prefix, "")).run(event);
             } else {
                 if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
-                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith(prefix)) {
+                    if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
                         String roleColour = "#{#00ffff}";
                         if (event.getMessageAuthor().getRoleColor().isPresent()) {
                             Color col = event.getMessageAuthor().getRoleColor().get();

@@ -22,7 +22,7 @@ public class renameNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         for (Map.Entry<String, String> entry : NationManager.names.entrySet())
             returner.put(entry.getKey(), 2);

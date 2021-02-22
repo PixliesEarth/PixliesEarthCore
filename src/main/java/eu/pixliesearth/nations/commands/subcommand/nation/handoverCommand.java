@@ -25,7 +25,7 @@ public class handoverCommand extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         for (Player player : Bukkit.getOnlinePlayers())
             returner.put(player.getName(), 1);

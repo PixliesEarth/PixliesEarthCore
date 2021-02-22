@@ -26,7 +26,7 @@ public class listNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("PAGE", 1);
         return returner;

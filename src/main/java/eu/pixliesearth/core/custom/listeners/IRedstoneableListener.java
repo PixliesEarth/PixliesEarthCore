@@ -39,10 +39,7 @@ public class IRedstoneableListener extends CustomListener {
         for (BlockFace face : BlockFace.values()){
         	try {
         		blocks.add(block.getRelative(face));
-        	} catch (Exception e) {
-            e.printStackTrace();
-             io.sentry.Sentry.captureException(e);
-}
+        	} catch (Exception ignore) {}
         }
         return blocks;
     }
