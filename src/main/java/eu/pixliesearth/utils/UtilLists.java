@@ -101,8 +101,6 @@ public class UtilLists {
 
     public Map<UUID, PixliesFunGUI> pixliesFunGUIMap;
 
-    public Map<UUID, Integer> playerTeleportTasks;
-
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -145,7 +143,6 @@ public class UtilLists {
         scoreboardFrames = new HashMap<>();
         cringers = new ArrayList<>();
         pixliesFunGUIMap = new HashMap<>();
-        playerTeleportTasks = new HashMap<>();
     }
 
 }

@@ -7,8 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.dynmap.DynmapAPI;
-import org.dynmap.DynmapCommonAPI;
 
 
 public class VanishCommand implements CommandExecutor {
@@ -36,8 +34,6 @@ public class VanishCommand implements CommandExecutor {
                 }
                 p.sendMessage(Lang.VANISH_OFF.get(sender));
                 Main.getInstance().getUtilLists().vanishList.remove(p.getUniqueId());
-                DynmapAPI dynmapAPI = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-                dynmapAPI.assertPlayerVisibility(p, true, Main.getInstance());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
                     if(!(players.hasPermission("earth.seevanished"))) {
@@ -47,8 +43,6 @@ public class VanishCommand implements CommandExecutor {
                 }
                 p.sendMessage(Lang.VANISH_ON.get(sender));
                 Main.getInstance().getUtilLists().vanishList.add(p.getUniqueId());
-                DynmapAPI dynmapAPI = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-                dynmapAPI.assertPlayerInvisibility(p, true, Main.getInstance());
             }
         }else if(args.length == 1){
             if(Bukkit.getPlayer(args[0]) == null){
@@ -62,8 +56,6 @@ public class VanishCommand implements CommandExecutor {
                 }
                 player.sendMessage(Lang.VANISH_OFF_BY_OTHER.get(sender).replace("%other%", p.getName()));
                 Main.getInstance().getUtilLists().vanishList.remove(player.getUniqueId());
-                DynmapAPI dynmapAPI = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-                dynmapAPI.assertPlayerVisibility(player, true, Main.getInstance());
             }else{
                 for(Player players : Bukkit.getOnlinePlayers()){
                     if(!players.hasPermission("earth.seevanished")) {
@@ -72,8 +64,6 @@ public class VanishCommand implements CommandExecutor {
                 }
                 player.sendMessage(Lang.VANISH_ON_BY_OTHER.get(sender).replace("%other%", p.getName()));
                 Main.getInstance().getUtilLists().vanishList.add(player.getUniqueId());
-                DynmapAPI dynmapAPI = (DynmapAPI) Bukkit.getPluginManager().getPlugin("dynmap");
-                dynmapAPI.assertPlayerInvisibility(player, true, Main.getInstance());
             }
 
         }

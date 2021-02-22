@@ -1,9 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
-import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -15,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,7 +31,6 @@ public class Nation {
     private String banner;
     private double xpPoints;
     private double money;
-    private String capital;
     private String leader;
     private String dynmapFill;
     private String dynmapBorder;
@@ -48,7 +44,6 @@ public class Nation {
     private List<String> allies;
     private List<String> pacts;
     private List<String> upgrades;
-    private Map<String, String> elections;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
 
@@ -75,7 +70,6 @@ public class Nation {
         nation.append("banner", banner);
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
-        nation.append("capital", capital);
         nation.append("leader", leader);
         nation.append("dynmapFill", dynmapFill);
         nation.append("dynmapBorder", dynmapBorder);
@@ -89,7 +83,6 @@ public class Nation {
         nation.append("allies", allies);
         nation.append("pacts", pacts);
         nation.append("upgrades", upgrades);
-        nation.append("elections", elections);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
         if (found != null) {
@@ -105,27 +98,6 @@ public class Nation {
     public void setFlag(ItemStack flag) {
         setBanner(InventoryUtils.serialize(flag));
         save();
-    }
-
-    public Map<String, NationElection> getElections() {
-        Map<String, NationElection> electionSet = new HashMap<>();
-        for (Map.Entry<String, String> entry : elections.entrySet())
-            electionSet.put(entry.getKey(), new Gson().fromJson(entry.getValue(), NationElection.class));
-        return electionSet;
-    }
-
-    public void addElection(NationElection election) {
-        this.elections.put(election.getId(), new Gson().toJson(election));
-        this.save();
-    }
-
-    public void setCapital(Location location) {
-        capital = new SimpleLocation(location).parseString();
-    }
-
-    public Location getCapital() {
-        if (capital.equalsIgnoreCase("NONE")) return null;
-        return SimpleLocation.fromString(capital).toLocation();
     }
 
     public Nation save() {
@@ -282,15 +254,6 @@ public class Nation {
         int i = 0;
         for (Player player : getOnlineMemberSet()) {
             lang.send(player);
-            i++;
-        }
-        return i;
-    }
-
-    public int broadcastMembers(Lang lang, String... placeholders) {
-        int i = 0;
-        for (Player player : getOnlineMemberSet()) {
-            lang.send(player, placeholders);
             i++;
         }
         return i;

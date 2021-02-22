@@ -15,7 +15,7 @@ public class SubCommand {
 
     public String[] aliases() { return new String[]{}; }
 
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) { return new HashMap<>(); }
+    public Map<String, Integer> autoCompletion() { return new HashMap<>(); }
 
     public String getSyntax() {
         return "§cThere is no explanation for this command yet. If you feel that this is necessarily, please contact the Pixlies Network staff, so we can explain this command more.";

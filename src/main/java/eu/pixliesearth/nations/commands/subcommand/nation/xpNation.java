@@ -18,7 +18,7 @@ public class xpNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         return new HashMap<>();
     }
 

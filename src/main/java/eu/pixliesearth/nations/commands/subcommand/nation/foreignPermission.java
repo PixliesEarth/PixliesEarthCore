@@ -22,7 +22,7 @@ public class foreignPermission extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> map = new HashMap<>();
         map.put("set", 1);
         map.put("unset", 1);

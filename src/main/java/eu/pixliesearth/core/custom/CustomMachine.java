@@ -144,10 +144,7 @@ public class CustomMachine extends CustomBlock {
 			inv.getViewers().forEach(e -> {
 				if (e!=null) e.closeInventory();
 			});
-		} catch (Exception e) {
-            e.printStackTrace();
-            io.sentry.Sentry.captureException(e);
-		}
+		} catch (Exception ignore) {}
 	}
 	/**
 	 * Sets the provided {@link Location} to a more optimal {@link Location} and returns it

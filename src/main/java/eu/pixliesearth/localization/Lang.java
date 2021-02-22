@@ -91,7 +91,6 @@ public enum Lang {
     PLAYER_ADDED_X(Lang.EARTH, new HashMap<>()),
     CRINGED(Lang.EARTH, new HashMap<>()),
     CANT_SEND_MESSAGE_TO_YOURSELF(Lang.EARTH, new HashMap<>()),
-    WELCOME_TO_PIXLIES(Lang.EARTH, new HashMap<>()),
 
     // NATIONS
     NOT_IN_A_NATION(Lang.NATION, new HashMap<>()),
@@ -182,9 +181,6 @@ public enum Lang {
     MACHINES_NEED_TO_BE_IN_CLAIMED_TERRITORY("", new HashMap<>()),
     NOT_ENOUGH_XP_POINTS(Lang.NATION, new HashMap<>()),
     NATION_REACHED_NEW_ERA("", new HashMap<>()),
-    PLAYER_SET_CAPITAL(Lang.NATION, new HashMap<>()),
-    ELECTION_CREATED(Lang.NATION, new HashMap<>()),
-    PLAYER_IS_ALREADY_ON_THE_HIGHEST_RANK(Lang.NATION, new HashMap<>()),
 
     // ECONOMY
     BALANCE_YOU(Lang.EARTH, new HashMap<>()),

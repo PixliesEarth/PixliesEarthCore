@@ -19,7 +19,7 @@ public class currencyNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         returner.put("NAME", 1);
         returner.put("SHORTNAME", 2);

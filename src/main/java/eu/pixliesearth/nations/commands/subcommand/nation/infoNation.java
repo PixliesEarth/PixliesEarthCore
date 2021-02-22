@@ -12,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -27,7 +25,7 @@ public class infoNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> returner = new HashMap<>();
         for (String s : NationManager.names.keySet())
             returner.put(s, 1);
@@ -87,8 +85,6 @@ public class infoNation extends SubCommand {
         sender.sendMessage(" ");
         sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
         sender.sendMessage("§7Description: §b" + nation.getDescription());
-        long age = System.currentTimeMillis() - Long.parseLong(nation.getCreated());
-        sender.sendMessage("§7Age: §b" + Methods.formatTime(age));
         // sender.sendMessage("§7GDP: §2§l$§a" + nation.getGDP());
         // sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
         sender.sendMessage("§7Era: §b" + nation.getEra());

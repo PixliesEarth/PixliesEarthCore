@@ -23,7 +23,7 @@ public class flagNation extends SubCommand {
     }
 
     @Override
-    public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
+    public Map<String, Integer> autoCompletion() {
         Map<String, Integer> map = new HashMap<>();
         for (NationFlag flag : NationFlag.values())
             map.put(flag.name(), 1);

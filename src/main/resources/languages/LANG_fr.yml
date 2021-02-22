@@ -50,21 +50,21 @@ AUTOUNCLAIM_ENABLED: "&7Tu viens &ad'activer &7le mode auto-claim."
 AUTOUNCLAIM_DISABLED: "&7Tu viens de &cdésactiver &7le mode auto-claim."
 NATION_DOESNT_EXIST: "&7Ce pays &cn'existe &7pas!"
 PLAYER_NAMED_NATION_NAME: "&6%PLAYER% &7a renommé &b%OLD% &7à &b%NEW%&7."
-BALANCE_YOU: "§7Tu as §a%BALANCE% §7dans ton compte."
-BALANCE_OTHERS: "&6%PLAYER% &7as &a%BALANCE% &7dans son compte."
+BALANCE_YOU: "§7Tu as §2§l$§a%BALANCE% §7dans ton compte."
+BALANCE_OTHERS: "&6%PLAYER% &7as &2&l$&a%BALANCE% &7dans son compte."
 SET_PLAYER_BALANCE: "&adéterminé la balance des joueurs &7successivement."
 PAID_HIMSELF: "&7Ton argent a été transféré d'une poche à une autre."
-PAY_AMT_BELOW_MIN: "&7Le minimum de la quantité de paye est  &a%AMOUNT%&7."
+PAY_AMT_BELOW_MIN: "&7Le minimum de la quantité de paye est  &2&l$&a%AMOUNT%&7."
 NOT_ENOUGH_MONEY: "&7Tu &cn'a pas &7assez d'argent pour faire cela."
 UNEXPECTED_ECO_ERROR: "&cIl y eu une erreur dans le système économique. Svp réportés
   ceci au staff du serveur si vous pensez que cela a été causé par le serveur."
-PAID_PLAYER_MONEY: "&7Tu as &asuccessivement &7payé &6%TARGET% &a%AMOUNT%&7."
-RECEIVED_MONEY_FROM_PLAYER: "&7Tu as reçu &a%AMOUNT% &7de &6%TARGET%&7."
+PAID_PLAYER_MONEY: "&7Tu as &asuccessivement &7payé &6%TARGET% &2&l$&a%AMOUNT%&7."
+RECEIVED_MONEY_FROM_PLAYER: "&7Tu as reçu &2&l$&a%AMOUNT% &7de &6%TARGET%&7."
 PLAYER_DOESNT_HAVE_ENOUGH_MONEY: "&7Le joueur &cdoes n'a pas assez d'argent &7pour
   faire cette action."
-TOOK_MONEY_FROM_PLAYER: "&aEmprunté &7successivement &a%AMOUNT% &7du compte de
+TOOK_MONEY_FROM_PLAYER: "&aEmprunté &7successivement &2&l$&a%AMOUNT% &7du compte de
   &6%PLAYER%&7."
-GAVE_MONEY_TO_PLAYER: "&aDéposé &7successivement &a%AMOUNT% &7dans le compte
+GAVE_MONEY_TO_PLAYER: "&aDéposé &7successivement &2&l$&a%AMOUNT% &7dans le compte
   de &6%PLAYER%&7."
 SMSG_1: "&6%PLAYER% &7s'est poignardé!"
 SMSG_2: '&7&o"Je vois la lumière" dit ~&6&o%PLAYER% &7&oavant de ce suicider...'
