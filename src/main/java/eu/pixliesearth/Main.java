@@ -188,7 +188,7 @@ public final class Main extends JavaPlugin {
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
         loader.loadCommand(new SkillCommand());
-        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 4600), getConfig().getLocation("spawn-location"));
         init();
     }
 
