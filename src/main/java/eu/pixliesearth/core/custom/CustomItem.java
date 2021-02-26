@@ -240,13 +240,13 @@ public class CustomItem {
 	 * <h3>An enum containing all rarities</h3>
 	 *
 	 */
-	public static enum Rarity {
+	public enum Rarity {
 		NONE("Pixlies:Rarity_NONE", 0, "§lNone"),
 		COMMON("Pixlies:Rarity_COMMON", 1, "§a§lCommon"),
 		UNCOMMON("Pixlies:Rarity_UNCOMMON", 2, "§2§lUncommon"),
 		RARE("Pixlies:Rarity_RARE", 3, "§b§lRare"),
 		VERYRARE("Pixlies:Rarity_VERYRARE", 4, "§3§lVery Rare"),
-		LEGENDARY("Pixlies:Rarity_LEGENDARY", 5, "§c§lLegandary"),
+		LEGENDARY("Pixlies:Rarity_LEGENDARY", 5, "§c§lLegendary"),
 		MYTHIC("Pixlies:Rarity_MYTHIC", 6, "§4§lMythic"),
 		GODLIKE("Pixlies:Rarity_GODLIKE", 7, "§6§lGodlike"),
 		;
