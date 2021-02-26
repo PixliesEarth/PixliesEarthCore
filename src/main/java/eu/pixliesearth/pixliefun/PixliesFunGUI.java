@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -68,6 +69,7 @@ public class PixliesFunGUI implements Constants {
         for (CustomItem.Category category : CustomItem.Category.values()) {
             categoryItems.add(new GuiItem(new ItemBuilder(CustomItemUtil.getItemStackFromUUID(category.getIcon())).setDisplayName(category.getName()).addLoreLine("§f§lLEFT §7click to open").build(), event -> {
                 event.setCancelled(true);
+                player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderCategoryMenu(category);
             }));
         }
@@ -127,6 +129,7 @@ public class PixliesFunGUI implements Constants {
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
                 event.setCancelled(true);
+                player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderRecipe(i, 0);
             }));
         }
@@ -182,6 +185,7 @@ public class PixliesFunGUI implements Constants {
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
                 event.setCancelled(true);
+                player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderRecipe(i, 0);
             }));
         }
@@ -198,6 +202,7 @@ public class PixliesFunGUI implements Constants {
                 event.setCancelled(true);
                 try {
                     entriesPane.setPage(entriesPane.getPage() + 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                     gui.update();
                 } catch (Exception ignored) {}
             }), 8, 0);
@@ -205,6 +210,7 @@ public class PixliesFunGUI implements Constants {
                 event.setCancelled(true);
                 try {
                     entriesPane.setPage(entriesPane.getPage() - 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                     gui.update();
                 } catch (Exception ignored) {}
             }), 0, 0);
@@ -239,6 +245,7 @@ public class PixliesFunGUI implements Constants {
                     e.setCancelled(true);
                     try {
                         renderRecipe(ingredient, 0);
+                        player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                     } catch (Exception ignore) {
                     }
                 }));
@@ -264,6 +271,7 @@ public class PixliesFunGUI implements Constants {
                 event.setCancelled(true);
                 try {
                     renderRecipe(i, page + 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 } catch (Exception ignore) {
                 }
             }), 5, 0);
@@ -271,12 +279,14 @@ public class PixliesFunGUI implements Constants {
                 event.setCancelled(true);
                 try {
                     renderRecipe(i, page - 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 } catch (Exception ignore) {
                 }
             }), 3, 0);
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
                 event.setCancelled(true);
                 renderCategoryMenu(CustomFeatureLoader.getLoader().getHandler().getItemsForCategories().get(recipe.getResultUUID()));
+                player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
             }), 4, 0);
             long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
