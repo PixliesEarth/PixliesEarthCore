@@ -56,7 +56,7 @@ public class DeathListener implements Listener, Constants {
         instance.getUtilLists().lastLocation.put(player.getUniqueId(), player.getLocation());
         if (profile.getBalance() > 5.0) {
             double amount = Methods.round((profile.getBalance() / 100) * 5, 2);
-            ItemStack itemStack = new ItemBuilder(Material.BRICK).setCustomModelData(6).addNBTTag("money", Double.toString(amount), NBTTagType.STRING).addNBTTag("owner", player.getName(), NBTTagType.STRING).build();
+            ItemStack itemStack = new ItemBuilder(Material.BRICK).setDisplayName("money form death").setCustomModelData(6).addNBTTag("money", Double.toString(amount), NBTTagType.STRING).addNBTTag("owner", player.getName(), NBTTagType.STRING).build();
             Item item = player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
             item.setCustomName("§2§l$§a" + amount);
             item.setCustomNameVisible(true);

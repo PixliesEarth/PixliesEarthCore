@@ -147,10 +147,8 @@ public class ChatSystem implements Listener, Module {
                             break;
                         case LOCAL:
                             Bukkit.getScheduler().runTask(instance, () -> {
-                                for (Player nearby : player.getLocation().getNearbyEntitiesByType(Player.class, 25)) {
+                                for (Player nearby : player.getLocation().getNearbyEntitiesByType(Player.class, 25))
                                     nearby.sendMessage("\uD83E\uDDED§3" + player.getDisplayName() + "§7: " + event.getMessage());
-                                }
-                                player.sendMessage("\uD83E\uDDED§3" + player.getDisplayName() + "§7: " + event.getMessage());
                             });
                             break;
                        default :

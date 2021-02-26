@@ -96,6 +96,8 @@ public class unclaimNation extends SubCommand {
                     unclaimFill(player, nation, toClaim);
                 }
                 break;
+            default:
+                break;
         }
         return false;
     }

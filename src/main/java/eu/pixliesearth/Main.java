@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
+import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.listeners.CustomMobListener;
@@ -198,6 +199,7 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadListener(new CustomMoneyPickupListener());
+        loader.loadCustomBlock(new EnergyBlockQuarry());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }

@@ -1,13 +1,11 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.custom.mobs.DirtyJoe;
 import eu.pixliesearth.core.custom.mobs.RabidWolf;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import lombok.Getter;
 import org.bukkit.block.Biome;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public enum CustomMob {

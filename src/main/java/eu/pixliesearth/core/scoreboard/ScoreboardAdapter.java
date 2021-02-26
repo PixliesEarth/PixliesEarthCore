@@ -11,6 +11,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.War;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -216,7 +217,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(" ");
                     returnable.add("  §7Nation: " + c + nation.getName());
                     returnable.add("  §7PP: " + c + nation.getXpPoints());
-                    returnable.add("  §7Era: " + c + nation.getEra());
+                    returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra()));
                 }
                 // returnable.add(" ");
                 // returnable.add("  §7" + profile.getPlayTimeFormatted());
@@ -238,7 +239,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add(c + "♚ §8| §b" + nation.getName());
                     returnable.add(c + "P §8| §b" + nation.getXpPoints());
-                    returnable.add(c + "☗ §8| §b" + nation.getEra());
+                    returnable.add(c + "☗ §8| §b" + StringUtils.capitalize(nation.getEra()));
                 }
                 if (profile.getTimers().size() > 0) {
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet()) {

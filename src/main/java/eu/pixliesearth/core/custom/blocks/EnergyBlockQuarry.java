@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import eu.pixliesearth.core.custom.MinecraftMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Color;
@@ -33,6 +34,26 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
 	public EnergyBlockQuarry() {
 		
 	}
+
+	private static final String[] breakAbles = new String[]{
+			MinecraftMaterial.IRON_ORE.getUUID(),
+			MinecraftMaterial.EMERALD_ORE.getUUID(),
+			MinecraftMaterial.DIAMOND_ORE.getUUID(),
+			MinecraftMaterial.COAL_ORE.getUUID(),
+			MinecraftMaterial.GOLD_ORE.getUUID(),
+			MinecraftMaterial.LAPIS_ORE.getUUID(),
+			MinecraftMaterial.NETHER_GOLD_ORE.getUUID(),
+			MinecraftMaterial.NETHER_QUARTZ_ORE.getUUID(),
+			MinecraftMaterial.REDSTONE_ORE.getUUID(),
+			MinecraftMaterial.IRON_BLOCK.getUUID(),
+			MinecraftMaterial.EMERALD_BLOCK.getUUID(),
+			MinecraftMaterial.DIAMOND_BLOCK.getUUID(),
+			MinecraftMaterial.COAL_BLOCK.getUUID(),
+			MinecraftMaterial.GOLD_BLOCK.getUUID(),
+			MinecraftMaterial.LAPIS_BLOCK.getUUID(),
+			MinecraftMaterial.QUARTZ_BLOCK.getUUID(),
+			MinecraftMaterial.REDSTONE_BLOCK.getUUID()
+	};
 	
 	@Override
     public Material getMaterial() {
@@ -84,18 +105,16 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
 	                    // TODO: ignore unbreakable blocks
 	        			String id = CustomItemUtil.getUUIDFromLocation(b.getLocation());
 	        			if (id==null) continue;
+	        			if (!Arrays.asList(breakAbles).contains(id)) continue;
 	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
 	        			if (is==null) continue;
-	        			if (UNBREAKABLES.contains(id)) return;
+	        			if (UNBREAKABLES.contains(id)) continue;
 	        			inventory.addItem(is);
-	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								// makeParticleLine(location.clone(), b.getLocation().clone());
-								h.removeCustomBlockFromLocation(b.getLocation());
-								b.setType(Material.AIR);
-							}
-	        			}, 1L);
+	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), () -> {
+							makeParticleLine(location.clone(), b.getLocation().clone());
+							h.removeCustomBlockFromLocation(b.getLocation());
+							b.setType(Material.AIR);
+						}, 1L);
 	        			h.removePowerFromLocation(location, energyPerOperation);
 	        			return;
 	        		}
