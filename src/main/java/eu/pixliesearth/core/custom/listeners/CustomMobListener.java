@@ -19,7 +19,7 @@ public class CustomMobListener extends CustomListener {
         if (event.getEntity() instanceof Monster) {
             double d = Math.random();
             for (CustomMob mob : CustomMob.values()) {
-                if (mob.getBiomes().contains(event.getLocation().getBlock().getBiome()) && mob.getSeasons().contains(instance.getCalendar().getSeason())) {
+                if (event.getLocation().getY() > mob.getSpawnAbove() && mob.getBiomes().contains(event.getLocation().getBlock().getBiome()) && mob.getSeasons().contains(instance.getCalendar().getSeason())) {
                     if (d >= mob.getProbabilityFrom() && d <= mob.getProbabilityTo()) {
                         mob.getClazz().getConstructor(Location.class).newInstance(event.getLocation());
                         damageable.remove();
