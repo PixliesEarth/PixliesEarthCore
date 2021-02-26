@@ -220,9 +220,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 // returnable.add(" ");
                 // returnable.add("  §7" + profile.getPlayTimeFormatted());
+                returnable.add(" ");
+
                 if (profile.getTimers().size() > 0)
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
-                        returnable.add("  " + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                        returnable.add("  " + c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)

@@ -1,8 +1,12 @@
 package eu.pixliesearth.core.listener;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
+import eu.pixliesearth.utils.NBTTagType;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,17 +14,20 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DeathListener implements Listener {
+public class DeathListener implements Listener, Constants {
 
     Main instance = Main.getInstance();
 
@@ -47,6 +54,14 @@ public class DeathListener implements Listener {
         e.setDeathMessage("§c☠ §7" + e.getDeathMessage().replace("§r", "§7").replace("§f", "§r"));
         profile.save();
         instance.getUtilLists().lastLocation.put(player.getUniqueId(), player.getLocation());
+        if (profile.getBalance() > 5.0) {
+            double amount = Methods.round((profile.getBalance() / 100) * 5, 2);
+            ItemStack itemStack = new ItemBuilder(Material.BRICK).setCustomModelData(6).addNBTTag("money", Double.toString(amount), NBTTagType.STRING).addNBTTag("owner", player.getName(), NBTTagType.STRING).build();
+            Item item = player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+            item.setCustomName("§2§l$§a" + amount);
+            item.setCustomNameVisible(true);
+            profile.withdrawMoney(amount, "Died at " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+        }
     }
 
 }

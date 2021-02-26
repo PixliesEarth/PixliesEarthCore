@@ -9,8 +9,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
+import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.listeners.CustomMobListener;
+import eu.pixliesearth.core.custom.listeners.CustomMoneyPickupListener;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import io.sentry.Sentry;
@@ -194,6 +196,8 @@ public final class Main extends JavaPlugin {
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
         loader.loadCommand(new SkillCommand());
+        loader.loadCommand(new GiveCustomItems());
+        loader.loadListener(new CustomMoneyPickupListener());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }
