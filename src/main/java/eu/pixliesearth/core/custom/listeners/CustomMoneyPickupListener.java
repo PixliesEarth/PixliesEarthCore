@@ -19,7 +19,7 @@ public class CustomMoneyPickupListener extends CustomListener {
         if (itemStack.hasDisplayName() && !itemStack.getDisplayName().equalsIgnoreCase("money form death")) return;
         NBTUtil.NBTTags nbt = NBTUtil.getTagsFromItem(itemStack);
         if (nbt == null) return;
-        if (nbt.getString("money") == null) return;
+        if (nbt.getString("money") == null || nbt.getString("money").isEmpty()) return;
         double amount = Double.parseDouble(nbt.getString("money"));
         String owner = nbt.getString("owner");
         Player player = event.getPlayer();

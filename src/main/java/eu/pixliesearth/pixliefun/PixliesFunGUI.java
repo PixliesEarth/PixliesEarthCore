@@ -233,6 +233,9 @@ public class PixliesFunGUI implements Constants {
 
             StaticPane background = new StaticPane(0, 0, 9, 6);
             background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
+            background.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(4).setDisplayName("§aResult").build(), event -> {
+                event.setCancelled(true);
+            }), 5, 2);
             gui.addPane(background);
 
             PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
@@ -288,9 +291,6 @@ public class PixliesFunGUI implements Constants {
                 renderCategoryMenu(CustomFeatureLoader.getLoader().getHandler().getItemsForCategories().get(recipe.getResultUUID()));
                 player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
             }), 4, 0);
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setDisplayName("§c§lClose").build(), event -> {
-                event.setCancelled(true);
-            }), 5, 2);
             long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
                 event.setCancelled(true);
