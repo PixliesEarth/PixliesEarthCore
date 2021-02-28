@@ -194,13 +194,9 @@ public class ScoreboardAdapter implements AssembleAdapter {
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
             case STANDARD:
-                if (instance.getUtilLists().boosts.size() > 0)
-                    for (Boost boost : instance.getUtilLists().boosts.values())
-                        returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
-
                 final String timeIcon = instance.getCalendar().day() ? "§e☀" : "§9☽";
 
-                returnable.add(instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
+                returnable.add(" " + instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
 
                 returnable.add(" ");
 
@@ -221,11 +217,18 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 }
                 // returnable.add(" ");
                 // returnable.add("  §7" + profile.getPlayTimeFormatted());
-                returnable.add(" ");
 
-                if (profile.getTimers().size() > 0)
+                if (instance.getUtilLists().boosts.size() > 0) {
+                    returnable.add(" ");
+                    for (Boost boost : instance.getUtilLists().boosts.values())
+                        returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
+                }
+
+                if (profile.getTimers().size() > 0) {
+                    returnable.add(" ");
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
                         returnable.add("  " + c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
+                }
                 break;
             case COMPACT:
                 if (instance.getUtilLists().boosts.size() > 0)

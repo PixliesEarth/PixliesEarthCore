@@ -57,7 +57,7 @@ public class PixliesFunGUI implements Constants {
         gui.getPanes().clear();
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
-        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
         StaticPane background2 = new StaticPane(0, 1, 9, 4);
@@ -113,7 +113,7 @@ public class PixliesFunGUI implements Constants {
         gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| §b" + keyWord);
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
-        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
         StaticPane background2 = new StaticPane(0, 1, 9, 4);
@@ -137,7 +137,7 @@ public class PixliesFunGUI implements Constants {
         gui.addPane(entriesPane);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), e -> {
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setCustomModelData(2).setDisplayName("§c§lClose").build(), e -> {
             e.setCancelled(true);
             renderMainMenu();
         }), 4, 0);
@@ -169,7 +169,7 @@ public class PixliesFunGUI implements Constants {
         gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| " + category.getName());
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
-        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
         StaticPane background2 = new StaticPane(0, 1, 9, 4);
@@ -193,7 +193,7 @@ public class PixliesFunGUI implements Constants {
         gui.addPane(entriesPane);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), e -> {
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setCustomModelData(2).setDisplayName("§c§lClose").build(), e -> {
             e.setCancelled(true);
             renderMainMenu();
         }), 4, 0);
@@ -232,7 +232,7 @@ public class PixliesFunGUI implements Constants {
             gui.getPanes().clear();
 
             StaticPane background = new StaticPane(0, 0, 9, 6);
-            background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+            background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
             gui.addPane(background);
 
             PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
@@ -283,11 +283,14 @@ public class PixliesFunGUI implements Constants {
                 } catch (Exception ignore) {
                 }
             }), 3, 0);
-            hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§c§lClose").build(), event -> {
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setCustomModelData(2).setDisplayName("§c§lClose").build(), event -> {
                 event.setCancelled(true);
                 renderCategoryMenu(CustomFeatureLoader.getLoader().getHandler().getItemsForCategories().get(recipe.getResultUUID()));
                 player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
             }), 4, 0);
+            hotBar.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setDisplayName("§c§lClose").build(), event -> {
+                event.setCancelled(true);
+            }), 5, 2);
             long craftTime = recipe.getCraftTime() == null ? 0 : recipe.getCraftTime();
             hotBar.addItem(new GuiItem(new ItemBuilder(Material.CLOCK).setDisplayName("§b§lCraft-time").addLoreLine("§3" + (craftTime / 1000) + "s").build(), event -> {
                 event.setCancelled(true);
