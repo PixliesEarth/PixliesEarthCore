@@ -180,7 +180,9 @@ public abstract class CustomGun extends CustomItem {
 	
 	protected double getChesplateToughness(LivingEntity e) {
 		double value = 0;
-		if (e.getEquipment().getChestplate()==null) return 0;
+		if (e.getEquipment() == null) return value;
+		if (e.getEquipment().getChestplate()==null) return value;
+		if (e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS) == null) return value;
 		try {
 			for (AttributeModifier a : e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS)) {
 				value += a.getAmount();

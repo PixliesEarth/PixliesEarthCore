@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.blocks;
 import eu.pixliesearth.core.custom.CustomEnergyBlock;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.*;
 import eu.pixliesearth.utils.NBTUtil.NBTTags;
@@ -18,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
+public class EnergyBlockNuclearGenerator extends CustomEnergyBlock implements Constants {
 	
 	public EnergyBlockNuclearGenerator() {
 		
@@ -27,7 +28,9 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 	public double getCapacity() {
 		return 1000000D;
 	}
-	
+
+	public int uranium_used = 0;
+
 	@Override
 	public Material getMaterial() {
 		return Material.LODESTONE;
@@ -49,6 +52,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 			CustomFeatureLoader.getLoader().getHandler().registerTimer(location, new Timer(Long.parseLong(map.get("TIMEREX")), Boolean.getBoolean(map.get("TIMEREN"))));
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
 		CustomFeatureLoader.getLoader().getHandler().addTempratureToLocation(location, Double.parseDouble(map.get("TEMP")));
+		this.uranium_used = Integer.parseInt(map.get("UR_USED"));
 	}
 	
 	@Override
@@ -60,6 +64,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 		}
 		map.put("ENERGY", Double.toString(CustomFeatureLoader.getLoader().getHandler().getPowerAtLocation(location)));
 		map.put("TEMP", Double.toString(getTemprature(location)));
+		map.put("UR_USED", Integer.toString(uranium_used));
 		return map;
 	}
     
@@ -72,6 +77,10 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 		inv.setItem(23, buildTempItem(loc));
 		if (timer==null) {
 			h.registerTimer(loc, new Timer(250L)); // A quarter of a second per action
+			if (uranium_used >= 9) {
+				uranium_used = 0;
+				inv.addItem(CustomItemUtil.getItemStackFromUUID("Pixlies:Enriched_Uranium"));
+			}
 			for (int i : ints) {
 				ItemStack is = inv.getItem(i);
 				if (is==null) continue;
@@ -100,6 +109,7 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 						}
 						if (Integer.parseInt(tags.getString("dmg"))<=0) {
 							inv.clear(i);
+							uranium_used++;
 						} else {
 							inv.setItem(i, NBTUtil.addTagsToItem(is, tags));
 						}
@@ -249,9 +259,9 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
     @Override
 	public Inventory getInventory() {
 		Inventory inv = Bukkit.createInventory(null, 5*9, getInventoryTitle());
-		int[] ints = {10,11,12,19,20,21,28,29,30};
+		int[] ints = {7, 10,11,12,19,20,21,28,29,30};
 		for (int i = 0; i < 5*9; i++)
-			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
+			inv.setItem(i, backgroundItem);
 		for (int i : ints) 
 			inv.clear(i);
 		inv.setMaxStackSize(1);
@@ -272,11 +282,11 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock {
 			if (b!=null) 
 				if (b.getType().equals(Material.WATER) || b.getType().equals(Material.ICE) || b.getType().equals(Material.FROSTED_ICE) || b.getType().equals(Material.BLUE_ICE))
 					i++;
-		return new ItemBuilder(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setDisplayName("§bCooling Information").addLoreLine("§3Surrounding water sources: "+Integer.toString(i)).addLoreLine("§3Coolants: "+"?"/*TODO: make coolant*/).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setCustomModelData(69).setDisplayName("§bCooling Information").addLoreLine("§3Surrounding water sources: "+Integer.toString(i)).addLoreLine("§3Coolants: "+"?"/*TODO: make coolant*/).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
     }
     
     public ItemStack buildTempItem(Location location) {
 		Double temp = getTemprature(location);
-		return new ItemBuilder((temp==null) ? Material.GRAY_STAINED_GLASS_PANE : (temp<35) ? Material.PINK_STAINED_GLASS_PANE : (temp<100) ? Material.PURPLE_STAINED_GLASS_PANE : (temp<250) ? Material.GREEN_STAINED_GLASS_PANE : (temp<300) ? Material.YELLOW_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE).setDisplayName((temp==null) ? "§cError!" : "§cTemprature").addLoreLine((temp==null) ? "§cRecieved a null!" : "§c"+temp+"°c").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
+		return new ItemBuilder((temp==null) ? Material.GRAY_STAINED_GLASS_PANE : (temp<35) ? Material.PINK_STAINED_GLASS_PANE : (temp<100) ? Material.PURPLE_STAINED_GLASS_PANE : (temp<250) ? Material.GREEN_STAINED_GLASS_PANE : (temp<300) ? Material.YELLOW_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE).setDisplayName((temp==null) ? "§cError!" : "§cTemperature").addLoreLine((temp==null) ? "§cRecieved a null!" : "§c"+temp+"°c").setCustomModelData(69).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build();
 	}
 }

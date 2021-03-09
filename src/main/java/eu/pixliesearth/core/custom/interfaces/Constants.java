@@ -12,7 +12,13 @@ public interface Constants {
 	
 	public static final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 	public static final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-	
+
+	public static ItemStack backgroundItem = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
+		.setCustomModelData(3)
+		.setNoName()
+		.addNBTTag("UUID", "Inventory:UnclickableGlass", NBTTagType.STRING)
+		.build();
+
 	public static ItemStack backItem = new ItemBuilder(Material.ARROW)
 			.setDisplayName("§bBack")
 			.addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING)

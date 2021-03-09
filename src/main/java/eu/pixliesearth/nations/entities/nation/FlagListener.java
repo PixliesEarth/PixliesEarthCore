@@ -1,7 +1,7 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
-import net.pl3x.purpur.event.entity.EntityMoveEvent;
+import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
