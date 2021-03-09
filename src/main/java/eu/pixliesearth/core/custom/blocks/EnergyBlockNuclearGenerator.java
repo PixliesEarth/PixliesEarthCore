@@ -239,8 +239,6 @@ public class EnergyBlockNuclearGenerator extends CustomEnergyBlock implements Co
 		} else {
 			if (timer.hasExpired()) {
 				h.unregisterTimer(loc);
-			} else {
-				// Do nothing
 			}
 		}
     }
