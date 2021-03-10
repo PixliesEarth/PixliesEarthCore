@@ -200,8 +200,6 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadListener(new CustomMoneyPickupListener());
-        loader.loadCustomBlock(new EnergyBlockQuarry());
-        loader.loadCustomBlock(new EnergyBlockNuclearGenerator());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }

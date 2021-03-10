@@ -1,6 +1,7 @@
 package eu.pixliesearth.utils;
 
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import io.sentry.Sentry;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.inventory.Inventory;
@@ -72,7 +73,8 @@ public class InventoryUtils {
             
             dataInput.close();
             return items;
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+			Sentry.captureException(e);
             return new ItemStack[0];
         }
     }

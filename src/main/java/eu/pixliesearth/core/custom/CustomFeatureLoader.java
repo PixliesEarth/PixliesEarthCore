@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.pixliesearth.core.custom.blocks.EnergyBlockNuclearGenerator;
+import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
@@ -198,6 +200,8 @@ public class CustomFeatureLoader {
 			loadMachine(clazz.getConstructor().newInstance());
 			i++;
 		}
+		loadMachine(new EnergyBlockQuarry());
+		loadMachine(new EnergyBlockNuclearGenerator());
 		System.out.println("§7Loaded §b" + i + "§7 custom blocks.");
 	}
 	/**

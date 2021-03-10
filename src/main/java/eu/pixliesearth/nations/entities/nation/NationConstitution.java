@@ -1,24 +1,27 @@
 package eu.pixliesearth.nations.entities.nation;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-@Data
 @AllArgsConstructor
-public class NationConstitution {
+public enum NationConstitution {
 
     /*
      * Values:
-     * 0 - Forbidden
+     * 0 - No
      * 1 - Restricted
-     * 2 - Allowed
+     * 2 - Yes
      */
-    private final @Getter Map<String, Integer> entries = new HashMap<>(){{
-        put("test", 2);
-    }};
+    ALCOHOL_CONSUMPTION(2),
+    FIREARM_POSSESSION(1),
+    ELECTIONS(2),
+    CENTRALIZED_GOVERNMENT(2),
+    FREEDOM_OF_SPEECH(2),
+    FREEDOM_OF_PRESS(2),
+    PRIVATE_PROPERTY(2),
+
+    ;
+
+    private @Getter final int defaultValue;
 
 }
