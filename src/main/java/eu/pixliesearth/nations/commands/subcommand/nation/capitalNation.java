@@ -46,7 +46,8 @@ public class capitalNation extends SubCommand {
             return false;
         }
         chunk.unclaim();
-        NationChunk.claim(player, chunk.getWorld(), chunk.getX(), chunk.getZ(), TerritoryChangeEvent.ChangeType.CLAIM_ONE_SELF, nation.getNationId(), NationChunkType.CAPITAL);
+        chunk.setType(NationChunkType.CAPITAL);
+        chunk.claim();
         nation.setCapital(player.getLocation());
         nation.save();
         nation.broadcastMembers(Lang.PLAYER_SET_CAPITAL, "%PLAYER%;" + player.getName(), "%X%;" + player.getLocation().getBlock().getX(), "%Z%;" + player.getLocation().getBlock().getZ());

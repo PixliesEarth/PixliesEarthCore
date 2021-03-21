@@ -29,7 +29,6 @@ public abstract class CustomEnergyCable extends CustomEnergyBlock {
 		Inventory i = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
 		if (i!=null) {
 			player.openInventory(i);
-			return;
 		}
 	}
 	
@@ -46,18 +45,17 @@ public abstract class CustomEnergyCable extends CustomEnergyBlock {
 			Double d = getCapacity(b.getLocation());
 			if (d==null) continue;
 			if (c instanceof CustomEnergyCable) {
-				if (getContainedPower(location)>(getCapacity(location)/50D)) {
+				// if (getContainedPower(location)>(getCapacity(location)/50D)) {
 					if (timer == null) {
 						giveEnergy(location, b.getLocation());
 						h.registerTimer(location, new Timer(15L));
 					} else {
 						if (timer.hasExpired()) {
 							h.unregisterTimer(location);
-						} else {
-							// Do nothing
-						}
+						}  // Do nothing
+
 					}
-				}
+				// }
 			} else {
 				if (c.getUUID().equalsIgnoreCase("Machine:Cable_Input")) 
 					continue;
@@ -68,10 +66,6 @@ public abstract class CustomEnergyCable extends CustomEnergyBlock {
 	
 	public boolean giveEnergy(Location cable, Location to) {
 		double d = getContainedPower(cable); //TODO: make this check the block its giving it tos power
-		if (d>=getTransferRate()) {
-			return giveEnergy(cable, to, getTransferRate());
-		} else {
-			return giveEnergy(cable, to, d);
-		}
+		return giveEnergy(cable, to, Math.min(d, getTransferRate()));
 	}
 }

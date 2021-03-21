@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import eu.pixliesearth.guns.CustomGun;
+import io.sentry.Sentry;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -197,8 +198,8 @@ public class CustomFeatureHandler {
 						}
 						try {
 							((CustomMachine)getCustomBlockFromLocation(entry.getKey())).onTick(entry.getKey(), getInventoryFromLocation(entry.getKey()), getTimerFromLocation(entry.getKey()));
-						} catch (Exception ignore) {
-							
+						} catch (Exception e) {
+							Sentry.captureException(e);
 						}
 					}
 				}

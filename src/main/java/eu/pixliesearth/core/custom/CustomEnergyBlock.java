@@ -45,7 +45,7 @@ public abstract class CustomEnergyBlock extends CustomSaveableBlock implements E
 	public boolean isFull(Location loc) {
 		Double d = getContainedPower(loc);
 		Double d2 = getCapacity(loc);
-		return (d==null||d2==null) ? true : d>=d2; // If null send a fake true value
+		return d == null || d2 == null || d >= d2; // If null send a fake true value
 	}
 	
 	public boolean isFull(ItemStack itemStack) {

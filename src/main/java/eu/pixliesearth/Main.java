@@ -13,6 +13,8 @@ import eu.pixliesearth.core.custom.blocks.EnergyBlockNuclearGenerator;
 import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
+import eu.pixliesearth.core.custom.items.ItemBlockInspector;
+import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.CustomMobListener;
 import eu.pixliesearth.core.custom.listeners.CustomMoneyPickupListener;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
@@ -170,7 +172,6 @@ public final class Main extends JavaPlugin {
     private @Getter FileManager calendarCfg;
     private @Getter UtilLists utilLists;
     private @Getter DynmapEngine dynmapKernel;
-    private @Getter NTop nationsTop;
     private @Getter LuckPerms luckPerms;
     private @Getter Gson gson;
     private @Getter CustomFeatureLoader loader;
@@ -200,6 +201,8 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadListener(new CustomMoneyPickupListener());
+        loader.loadCustomItem(new ItemEnergyInspector());
+        loader.loadCustomItem(new ItemBlockInspector());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
         init();
     }
