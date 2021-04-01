@@ -135,7 +135,6 @@ public class mapNation extends SubCommand {
         for (int i = 0; i < 9; i++)
             inv.setItem(i + 45, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
         player.openInventory(inv);
-        player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
 
     public void renderChatMap(Player player) {
@@ -199,7 +198,6 @@ public class mapNation extends SubCommand {
         for (TextComponent r : rows)
             player.spigot().sendMessage(r);
         player.sendMessage("§7Legend: §e█You §8| §b█Yours §8| §d█Ally §8| §2█Wilderness");
-        player.sendMessage(System.currentTimeMillis() - start + "ms");
     }
     //</editor-fold>
 }

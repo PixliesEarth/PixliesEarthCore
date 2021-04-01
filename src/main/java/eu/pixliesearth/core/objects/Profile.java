@@ -70,7 +70,7 @@ public class Profile {
     private String boardType;
     private String lang;
     private List<String> blocked;
-    private List<Map<String, String>> punishments;
+    private Map<String, String> punishments;
     private Map<String, Object> extras;
 
     public static Profile get(UUID uuid) {
@@ -104,9 +104,9 @@ public class Profile {
             profile.append("blocked", new ArrayList<>());
             profile.append("banned", false);
             profile.append("extras", new HashMap<>());
-            profile.append("punishments", new ArrayList<>());
+            profile.append("punishments", new HashMap<>());
             Main.getPlayerCollection().insertOne(profile);
-            data = new Profile(uuid.toString(), "NONE",0, new ArrayList<>(),"NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+            data = new Profile(uuid.toString(), "NONE",0, new ArrayList<>(),"NONE", new ArrayList<>(), new HashMap<>(), 10.0, "NONE", new ArrayList<>(), new ArrayList<>(), true, "NONE", new ArrayList<>(), "NONE", Sound.BLOCK_NOTE_BLOCK_PLING.name(), true, "f",0, "NONE", new HashMap<>(), "§3", ScoreboardAdapter.scoreboardType.STANDARD.name(), "ENG", new ArrayList<>(), new HashMap<>(), new HashMap<>());
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Profile for " + uuid.toString() + " created in Database.");
         } else {
             data = new Gson().fromJson(found.toJson(), Profile.class);

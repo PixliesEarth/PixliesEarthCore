@@ -78,7 +78,6 @@ public class unclaimNation extends SubCommand {
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);
                     unclaimFill(player, profile.getCurrentNation(), toClaim);
-                    player.sendMessage(System.currentTimeMillis() - start + "ms");
                 } else if (args[0].equalsIgnoreCase("all")) {
                     Nation nation = profile.getCurrentNation();
                     final int chunks = nation.getChunks().size();

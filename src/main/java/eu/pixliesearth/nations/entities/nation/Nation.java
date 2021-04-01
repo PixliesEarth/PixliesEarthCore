@@ -8,6 +8,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.Methods;
@@ -34,7 +35,6 @@ public class Nation {
     private String banner;
     private double xpPoints;
     private double money;
-    private String capital;
     private String leader;
     private String dynmapFill;
     private String dynmapBorder;
@@ -75,7 +75,6 @@ public class Nation {
         nation.append("banner", banner);
         nation.append("xpPoints", xpPoints);
         nation.append("money", money);
-        nation.append("capital", capital);
         nation.append("leader", leader);
         nation.append("dynmapFill", dynmapFill);
         nation.append("dynmapBorder", dynmapBorder);
@@ -119,13 +118,16 @@ public class Nation {
         this.save();
     }
 
-    public void setCapital(Location location) {
-        capital = new SimpleLocation(location).parseString();
-    }
-
-    public Location getCapital() {
-        if (capital.equalsIgnoreCase("NONE")) return null;
-        return SimpleLocation.fromString(capital).toLocation();
+    public Settlement getCapital() {
+        Settlement capital = null;
+        for (Map.Entry<String, String> entry : settlements.entrySet()) {
+            Settlement settlement = new Gson().fromJson(entry.getValue(), Settlement.class);
+            if (settlement.isCapital()) {
+                capital = settlement;
+                break;
+            }
+        }
+        return capital;
     }
 
     public Nation save() {
@@ -191,10 +193,6 @@ public class Nation {
         setName(newName);
         save();
         return true;
-    }
-
-    public double getGDP() {
-        return Main.getInstance().getNationsTop().getTopMap().get(nationId).getGDP();
     }
 
     public int getOnlineMembers() {

@@ -163,6 +163,7 @@ public final class Main extends JavaPlugin {
     private static @Getter MongoCollection<Document> playerCollection;
     private static @Getter MongoCollection<Document> nationCollection;
     private static @Getter MongoCollection<Document> warCollection;
+    private static @Getter MongoCollection<Document> punishmentCollection;
     private static @Getter VaultAPI economy;
     private static @Getter Assemble assemble = null;
     private static @Getter Scoreboard emptyScoreboard;
@@ -230,6 +231,7 @@ public final class Main extends JavaPlugin {
             playerCollection = mongoDatabase.getCollection(getConfig().getString("users-collection", "users"));
             nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
             warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
+            punishmentCollection = mongoDatabase.getCollection(getConfig().getString("punishment-collection", "punishments"));
 
             for (Document doc : warCollection.find())
                 utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
