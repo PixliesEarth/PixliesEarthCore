@@ -14,6 +14,7 @@ public enum NationFlag {
     PEACEFUL(true),
     INF_POWER(true),
     FRIENDLY_FIRE(false),
+    EVERYONE_INTERACT(false),
     ;
 
     private final boolean requiresStaff;
