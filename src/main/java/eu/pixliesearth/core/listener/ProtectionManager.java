@@ -229,6 +229,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
         Nation host = nc.getCurrentNation();
+        if (host.getFlags().contains(NationFlag.EVERYONE_INTERACT.name())) return;
         if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
         if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
