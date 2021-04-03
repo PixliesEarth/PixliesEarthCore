@@ -1,10 +1,16 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.custom.interfaces.Constants;
-import eu.pixliesearth.core.custom.interfaces.IHopperable;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.utils.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,9 +19,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import eu.pixliesearth.core.custom.interfaces.Constants;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.Timer;
 
 /**
  * 
@@ -122,7 +133,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	 */
 	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
 		if (!hasCost(loc, r)) return false;
-		Set<ItemStack> items = getItemsInCraftingSection(inv);
+		List<ItemStack> items = getItemsInCraftingSection(inv);
 		if (items == null || items.isEmpty()) return false;
 		Map<String, Integer> m = new ConcurrentHashMap<String, Integer>();
 		for (ItemStack is : items) {
@@ -476,8 +487,8 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	 * @param inv The {@link Inventory} to check/look threw
 	 * @return All items in the crafting section in a {@link Set}
 	 */
-	public static Set<ItemStack> getItemsInCraftingSection(Inventory inv) {
-		Set<ItemStack> list = new HashSet<ItemStack>();
+	public static List<ItemStack> getItemsInCraftingSection(Inventory inv) {
+		List<ItemStack> list = new ArrayList<ItemStack>();
 		for (int i : craftSlots) 
 			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial())) 
 				continue;
@@ -538,7 +549,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		for (Entry<String, Integer> entry : map.entrySet()) {
 			if (entry.getValue()>64) {
 				int a = entry.getValue();
-				while (a!=0) {
+				while (a>0) {
 					if (entry.getValue()>64) {
 						int i2 = getNextFreeSlotInCrafting(inv);
 						if (i2==-1) 
