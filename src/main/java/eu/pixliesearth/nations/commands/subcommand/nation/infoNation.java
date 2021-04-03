@@ -109,7 +109,7 @@ public class infoNation extends SubCommand {
                 allyJoiner.add("§d" + ally.getName());
         }
         sender.sendMessage("§7Allies: " + allyJoiner.toString());
-        sender.sendMessage("§7Members: " + memberJoiner.toString());
+        sender.sendMessage("§7Population: " + memberJoiner.toString());
         sender.sendMessage(" ");
     }
 

@@ -20,11 +20,11 @@ display-warp: true
 show-faction-name: true
 
 # Format for popup - substitute values for macros
-infoWindow: '<h2 style="text-align: left;"><strong><span style="color: #33cccc;">%regionname%</span></strong></h2><em><strong><span
-              style="color: #33cccc;">%description%</span></strong></em><span style="color:
-              #000000;"><strong>Leader:&nbsp;</strong>%owner%</span><strong><span style="color:
-              #000000;">Members:</span></strong><span style="color: #000000;">&nbsp;%members%</span><strong><span
-              style="color: #000000;">Money:&nbsp;</span></strong><span style="color: #000000;">%money%</span><strong><span style="color: #000000;">Money:&nbsp;</span></strong><span style="color: #000000;">%money%</span>'
+infoWindow: '<h2 style="text-align: left;"><strong><span style="color: #33cccc;">%regionname% (%era%)</span></strong></h2><em><strong><span
+  style="color: #33cccc;">%description%</span></strong></em><br/><span><strong>Capital:</strong></span> %capital%<br/><span><strong>Ideology:
+  </strong></span><span>%ideology%</span><br/><strong><br/><span>Religion:&nbsp;</span></strong>%religion%<br><span><strong>Leader:&nbsp;</strong></span><span>%owner%</span><strong><br/><span
+  >Population:</span></strong><span>&nbsp;%members%</span><strong><br/><span>Money:&nbsp;</span></strong><span
+  >%money%</span>'
 
 # Allow players in faction to see one another on dynmap (only relevant if dynmap has 'player-info-protected' enabled)
 visibility-by-faction: true

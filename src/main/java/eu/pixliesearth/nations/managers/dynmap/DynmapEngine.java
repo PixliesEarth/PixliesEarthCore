@@ -370,13 +370,13 @@ public class DynmapEngine {
                 for (Map.Entry<String, String> settleMents : nation.getSettlements().entrySet()) {
                     final String name = nation.getNationId() + "_" + settleMents.getKey();
                     final Settlement settlement = new Gson().fromJson(settleMents.getValue(), Settlement.class);
-                    final MarkerIcon ico = getMarkerIcon(cusstyle, defstyle, factname);
+                    final MarkerIcon ico = settlement.isCapital() ? markerAPI.getMarkerIcon("blueflag") : markerAPI.getMarkerIcon("house");
                     if (ico != null) {
                         final SimpleLocation pos = SimpleLocation.fromString(settlement.getLocation());
                         final double lx = pos.getX();
                         final double ly = pos.getY();
                         final double lz = pos.getZ();
-                        final String labelName = "[Settlement] " + factname + " - " + settlement.getName();
+                        final String labelName = "[" + (settlement.isCapital() ? "Capital" : "Settlement") + "] " + factname + " - " + settlement.getName();
 
                         Marker marker = resmark.remove(name);
                         if (marker == null) {
@@ -392,22 +392,6 @@ public class DynmapEngine {
                             marker.setDescription(formatInfoWindow(infoWindow, nation));
                             newmark.put(name, marker);
                         }
-                    }
-                }
-                if (nation.getCapital() != null) {
-                    Location capital = nation.getCapital();
-                    Marker marker = resmark.remove(nation.getNationId() + "_capital");
-                    if (marker == null) {
-                        marker = set.createMarker(nation.getNationId() + "_capital", "Capital of " + nation.getName(), capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ(), markerAPI.getMarkerIcon("temple"), false);
-                    } else {
-                        marker.setLocation(capital.getWorld().getName(), capital.getX(), capital.getY(), capital.getZ());
-                        marker.setLabel("Capital of " + nation.getName());
-                        marker.setMarkerIcon(markerAPI.getMarkerIcon("temple"));
-                    }
-
-                    if (marker != null) {
-                        marker.setDescription(formatInfoWindow(infoWindow, nation));
-                        newmark.put(nation.getNationId() + "_capital", marker);
                     }
                 }
             }

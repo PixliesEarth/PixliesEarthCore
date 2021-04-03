@@ -72,22 +72,15 @@ public class AreaCommon {
         final String adm = nation.getLeader().equalsIgnoreCase("NONE") ? "SERVER" : Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName();
         formattedWindow = formattedWindow.replace("%playerowners%", adm);
 
-        final StringBuilder res = new StringBuilder();
-        for (final String mPlayer : nation.getMembers()) {
-            if (res.length() > 0) {
-                res.append(", ");
-            }
-            res.append(Bukkit.getOfflinePlayer(UUID.fromString(mPlayer)).getName());
-        }
-
         formattedWindow = formattedWindow.replace("%money%", "$" + nation.getMoney());
 
-        formattedWindow = formattedWindow.replace("%members%", res.toString());
+        formattedWindow = formattedWindow.replace("%members%", nation.getMembers().size() + "");
         formattedWindow = formattedWindow.replace("%nation%", ChatColor.stripColor(nation.getName()));
         formattedWindow = formattedWindow.replace("%era%", StringUtils.capitalize(nation.getCurrentEra().getName()).replace("_", " "));
         formattedWindow = formattedWindow.replace("%religion%", ChatColor.stripColor(Religion.valueOf(nation.getReligion()).getDisplayName()));
         formattedWindow = formattedWindow.replace("%ideology%", ChatColor.stripColor(Ideology.valueOf(nation.getIdeology()).getDisplayName()));
-        
+        formattedWindow = formattedWindow.replace("%capital%", nation.getCapital().getName());
+
         return formattedWindow;
     }
 
