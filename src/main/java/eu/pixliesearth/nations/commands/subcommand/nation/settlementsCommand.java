@@ -38,6 +38,14 @@ public class settlementsCommand extends SubCommand implements Listener {
         returner.put("travel", 1);
         returner.put("remove", 1);
         returner.put("add", 1);
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            Profile profile = instance.getProfile(player.getUniqueId());
+            if (profile.isInNation()) {
+                for (String s : profile.getCurrentNation().getSettlements().keySet())
+                    returner.put(s, 2);
+            }
+        }
         return returner;
     }
 
@@ -61,7 +69,11 @@ public class settlementsCommand extends SubCommand implements Listener {
                 Inventory inventory = Bukkit.createInventory(null, 9 * 3, "§bSettlements");
                 for (String s : nation.getSettlements().values()) {
                     Settlement st = new Gson().fromJson(s, Settlement.class);
-                    inventory.addItem(new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
+                    if (st.isCapital()) {
+                        inventory.addItem(new ItemBuilder(Material.BELL).setDisplayName("§b" + st.getName()).addLoreLine("§eCapital of the nation").addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
+                    } else {
+                        inventory.addItem(new ItemBuilder(Material.CAMPFIRE).setDisplayName("§b" + st.getName()).addLoreLine("§7Cost: §e" + Energy.calculateNeeded(player.getLocation(), st.getAsBukkitLocation()) + "§6★").addLoreLine("§7§oClick me to teleport...").build());
+                    }
                 }
                 player.openInventory(inventory);
                 break;

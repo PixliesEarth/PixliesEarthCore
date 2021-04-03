@@ -9,8 +9,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
-import eu.pixliesearth.core.custom.blocks.EnergyBlockNuclearGenerator;
-import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.items.ItemBlockInspector;
@@ -412,7 +410,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -420,7 +418,7 @@ public final class Main extends JavaPlugin {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.NON_ALIGNED.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         loader.loadCustomItem(new AK47());
