@@ -700,7 +700,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
 		for (Integer i : resultSlots) {
 			ItemStack item = inv.getItem(i);
-			if (item == null || item.getType().equals(Material.AIR)) continue;
+			if (item == null || item.getType().equals(Material.AIR) || isUnclickable(item)) continue;
 			if (item.getAmount() > 1) {
 				inv.setItem(i, item.asQuantity(item.getAmount() - 1));
 				return item.asOne();
