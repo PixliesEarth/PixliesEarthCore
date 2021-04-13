@@ -7,6 +7,7 @@ import eu.pixliesearth.core.objects.Warp;
 import eu.pixliesearth.events.NationDisbandEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.pixliemoji.PixlieMoji;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -189,7 +190,7 @@ public class ChatSystem implements Listener, Module {
                     event.setMessage("§" + profile.getChatColor() + event.getMessage().replace("&", "").replace("%", "%%"));
                 }
 
-                event.setMessage(EmojiParser.parseToUnicode(event.getMessage()));
+                event.setMessage(EmojiParser.parseToUnicode(PixlieMoji.replacePixlieMojis(event.getMessage())));
 
                 String format = PlaceholderAPI.setPlaceholders(player, config.getString("modules.chatsystem.format").replace("%player_displayname%", player.getDisplayName()).replace("%chatcolor%", profile.getChatColor()).replace("%message%", event.getMessage()));
                 event.getRecipients().clear();

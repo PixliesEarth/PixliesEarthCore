@@ -178,6 +178,7 @@ public class PixliesFunGUI implements Constants {
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             if (s.contains("test")) continue;
             if (s.equalsIgnoreCase(" ")) continue;
+            if (!recipes.containsKey(s)) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
