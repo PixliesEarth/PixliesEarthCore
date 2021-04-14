@@ -37,7 +37,7 @@ public class EmojiCommand extends CustomCommand {
         int i = 0;
         TextComponent currentComponent = new TextComponent();
         for (Map.Entry<String, Character> entry : PixlieMoji.pixlieMojis.entrySet()) {
-            if (i + 1 > 5) {
+            if (i + 1 > 15) {
                 i = 0;
                 lines.add(currentComponent.duplicate());
                 currentComponent = new TextComponent();
@@ -48,8 +48,12 @@ public class EmojiCommand extends CustomCommand {
             currentComponent.addExtra(currentEmoji);
             i++;
         }
-        for (TextComponent line : lines) {
-            sender.spigot().sendMessage(line);
+        if (lines.isEmpty()) {
+            sender.spigot().sendMessage(currentComponent);
+        } else {
+            for (TextComponent line : lines) {
+                sender.spigot().sendMessage(line);
+            }
         }
         return true;
     }
