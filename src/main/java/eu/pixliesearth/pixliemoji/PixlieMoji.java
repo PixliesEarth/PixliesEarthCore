@@ -10,6 +10,7 @@ public class PixlieMoji {
         put(":mad:", '了');
         put(":really:", '不');
         put(":amogus:", '在');
+        put(":pog:", '码');
     }};
 
     public static String replacePixlieMojis(String text) {
