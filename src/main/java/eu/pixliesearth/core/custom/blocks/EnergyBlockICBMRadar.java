@@ -31,7 +31,7 @@ public class EnergyBlockICBMRadar extends CustomEnergyBlock {
 	
 	public boolean enabled = true;
 	public long timePerRefresh = 5255l; // 60555l
-	public double energyCostPerOperation = 100D;
+	public double energyCostPerOperation = 25D;
 	
 	// Default Stuff
 	

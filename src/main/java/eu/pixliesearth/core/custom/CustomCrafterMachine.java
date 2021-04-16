@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -534,6 +535,36 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}, 0L);
 	}
 	/**
+	 * 
+	 * TODO: notes
+	 * 
+	 * @param loc The {@link CustomCrafterMachine}'s {@link Location}
+	 * @param inv The {@link CustomCrafterMachine}'s {@link Inventory}
+	 * @param recipe The {@link CustomRecipe} to follow
+	 */
+	public void removeIndgredientsForRecipeFromCraftSlots(Location location, Inventory inventory, CustomRecipe recipe) {
+		for (Entry<String, Integer> entry : recipe.getAsUUIDToAmountMap().entrySet()) {
+			removeItemStackFromCraftSlot(inventory, entry.getKey(), entry.getValue());
+		}
+	}
+	
+	protected void removeItemStackFromCraftSlot(Inventory inventory, String uuid, int amount) {
+		for (int slot : craftSlots) {
+			ItemStack itemStack = inventory.getItem(slot);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			final String uuid2 = CustomItemUtil.getUUIDFromItemStack(itemStack);
+			if (uuid2==null || uuid2.equals("") || uuid2.equals(" ") || !uuid2.equals(uuid)) continue;
+			final int amount2 = itemStack.getAmount();
+			if (amount>amount2) {
+				itemStack.setAmount(0);
+				removeItemStackFromCraftSlot(inventory, uuid, (amount2 - amount));
+			} else {
+				itemStack.setAmount(amount2 - amount);
+			}
+			break;
+		}
+	}
+	/**
 	 * Adds the provided {@link Map} to the {@link CustomCrafterMachine}'s {@link Inventory}'s craft slots
 	 * 
 	 * @param loc The {@link CustomCrafterMachine}'s {@link Location}
@@ -542,7 +573,10 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	 * 
 	 * TODO: optimise like {@link #addToResult(Location, Inventory, ItemStack)}
 	 * 
+	 * @deprecated <b>Do not use!</b> Duplicates items; instead opt for {@link CustomCrafterMachine#removeIndgredientsForRecipeFromCraftSlots(Location, Inventory, CustomRecipe)}
+	 * 
 	 */
+	@Deprecated
 	public void setMapToCraftSlots(Location loc, Inventory inv, Map<String, Integer> map) {
 		for (int i : craftSlots) 
 			inv.clear(i);
