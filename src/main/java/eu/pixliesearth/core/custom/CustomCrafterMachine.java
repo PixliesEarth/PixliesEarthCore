@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -735,6 +734,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		for (Integer i : resultSlots) {
 			ItemStack item = inv.getItem(i);
 			if (item == null || item.getType().equals(Material.AIR) || isUnclickable(item)) continue;
+			if (NBTUtil.getTagsFromItem(item).getString("RECIPE")!=null || Constants.getExtraData(item).equalsIgnoreCase("MRECIPE")) continue;
 			if (item.getAmount() > 1) {
 				inv.setItem(i, item.asQuantity(item.getAmount() - 1));
 				return item.asOne();
