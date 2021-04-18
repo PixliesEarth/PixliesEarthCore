@@ -13,7 +13,6 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
-import io.sentry.Sentry;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
