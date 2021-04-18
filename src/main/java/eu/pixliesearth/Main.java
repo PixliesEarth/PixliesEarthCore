@@ -131,7 +131,6 @@ import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Era;
 import eu.pixliesearth.nations.entities.nation.FlagListener;
 import eu.pixliesearth.nations.entities.nation.Ideology;
-import eu.pixliesearth.nations.entities.nation.NTop;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.Religion;
@@ -151,7 +150,6 @@ import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-// import net.citizensnpcs.api.CitizensAPI;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 
@@ -189,9 +187,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Sentry.init(options -> {
-            options.setDsn("https://a52eb2ffd8b94548aab2dd7dc1c5d3c8@o518018.ingest.sentry.io/5626447");
-        });
+        Sentry.init(options -> options.setDsn("https://a52eb2ffd8b94548aab2dd7dc1c5d3c8@o518018.ingest.sentry.io/5626447"));
 
         instance = this;
         testServer = getConfig().getBoolean("test-server", false);
@@ -254,7 +250,7 @@ public final class Main extends JavaPlugin {
         calendarCfg = new FileManager(this, "calendar", getDataFolder().getAbsolutePath());
         calendarCfg.save();
 
-        String[] date = calendarCfg.getConfiguration().getString("date").split("/");
+        String[] date = calendarCfg.getConfiguration().getString("date", "0/0/0").split("/");
         calendar = new PixliesCalendar(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
         calendar.startRunner();
 
@@ -436,6 +432,7 @@ public final class Main extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onDisable() {
+        calendar.stopRunner();
     	loader.save();
         discordDisable();
         // machineTask.stopThread();
@@ -461,15 +458,12 @@ public final class Main extends JavaPlugin {
         getCommand("modules").setExecutor(new ModulesCommand());
         getCommand("chat").setExecutor(new ChatCommand());
         getCommand("seen").setExecutor(new SeenCommand());
-        // getCommand("coins").setExecutor(new CoinsCommand());
         getCommand("message").setExecutor(new PrivateMessage());
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("link").setExecutor(new LinkCommand());
         getCommand("warp").setExecutor(new WarpSystem());
         getCommand("nation").setExecutor(new NationCommand());
         getCommand("backup").setExecutor(new BackupCommand());
-        // getCommand("economy").setExecutor(new EconomySystem());
-        // getCommand("balance").setExecutor(new BalanceCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
