@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
+import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -43,27 +44,26 @@ public class menuNation extends SubCommand {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        ChestGui gui = new ChestGui(6, "§bNations menu");
         Player player = (Player) sender;
-        open(gui, player, MenuPage.HOME);
+        open(player, MenuPage.HOME);
         return false;
     }
 
-    private void open(@NotNull ChestGui gui, @NotNull Player player, @NotNull MenuPage page) {
-        gui.setTitle(defaultTitle + page.title);
-        StaticPane hotbar = new StaticPane(0, 0, 9, 1);
+    private void open(@NotNull Player player, @NotNull MenuPage page) {
+        ChestGui gui = new ChestGui(6, defaultTitle + page.title);
+        StaticPane hotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGHEST);
         int j = 0;
         for (MenuPage p : MenuPage.values()) {
             ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
             if (p.title.equals(page.title)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
             hotbar.addItem(new GuiItem(item, event -> {
                 event.setCancelled(true);
-                if (!p.equals(page)) open(gui, player, MenuPage.getByDisplayName(p.title));
+                if (!p.equals(page)) open(player, MenuPage.getByDisplayName(p.title));
             }), j, 0);
             j++;
         }
         gui.addPane(hotbar);
-        StaticPane menu = new StaticPane(0, 1, 9, 5);
+        StaticPane menu = new StaticPane(0, 1, 9, 5, Pane.Priority.HIGHEST);
         menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
@@ -137,7 +137,7 @@ public class menuNation extends SubCommand {
                             nation.setReligion(religion1.name());
                             nation.save();
                             player.closeInventory();
-                            open(gui, player, MenuPage.SETTINGS);
+                            open(player, MenuPage.SETTINGS);
                         }), x1, y1);
                         x1++;
                     }
@@ -169,7 +169,7 @@ public class menuNation extends SubCommand {
                             nation.setIdeology(ideology1.name());
                             nation.save();
                             player.closeInventory();
-                            open(gui, player, MenuPage.SETTINGS);
+                            open(player, MenuPage.SETTINGS);
                         }), x1, y1);
                         x1++;
                     }
@@ -201,7 +201,7 @@ public class menuNation extends SubCommand {
                             nation.setDynmapBorder(colours.getStroke());
                             nation.save();
                             player.closeInventory();
-                            open(gui, player, MenuPage.SETTINGS);
+                            open(player, MenuPage.SETTINGS);
                         }), x1, y1);
                         x1++;
                     }
@@ -245,7 +245,7 @@ public class menuNation extends SubCommand {
                         event.setCancelled(true);
                         player.performCommand("n flag " + flag.name());
                         player.closeInventory();
-                        open(gui, player, MenuPage.FLAGS);
+                        open(player, MenuPage.FLAGS);
                     }), x, y);
                     x++;
                 }
@@ -387,7 +387,7 @@ public class menuNation extends SubCommand {
         GuiItem kick = new GuiItem(new ItemBuilder(Material.BARRIER).setDisplayName("§cKick from nation").build(), event -> {
             event.setCancelled(true);
             requester.performCommand("n kick " + target.getAsOfflinePlayer().getName());
-            open(gui, requester, MenuPage.MEMBERS);
+            open(requester, MenuPage.MEMBERS);
         });
         GuiItem changeRank = new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§bChange rank").build(), event -> {
             event.setCancelled(true);
@@ -407,12 +407,12 @@ public class menuNation extends SubCommand {
                     event1.setCancelled(true);
                     if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) {
                         requester.performCommand("n rank set " + target.getAsOfflinePlayer().getName() + " " + rank.getName());
-                        open(gui, requester, MenuPage.MEMBERS);
+                        open(requester, MenuPage.MEMBERS);
                     }
                 }), x, y);
                 x++;
                 gui.addPane(menu);
-                gui.show(requester);
+                gui.update();
             }
         });
         menu.addItem(kick, 0, 0);

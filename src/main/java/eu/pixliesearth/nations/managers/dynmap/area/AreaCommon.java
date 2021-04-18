@@ -79,7 +79,7 @@ public class AreaCommon {
         formattedWindow = formattedWindow.replace("%era%", StringUtils.capitalize(nation.getCurrentEra().getName()).replace("_", " "));
         formattedWindow = formattedWindow.replace("%religion%", ChatColor.stripColor(Religion.valueOf(nation.getReligion()).getDisplayName()));
         formattedWindow = formattedWindow.replace("%ideology%", ChatColor.stripColor(Ideology.valueOf(nation.getIdeology()).getDisplayName()));
-        formattedWindow = formattedWindow.replace("%capital%", nation.getCapital().getName());
+        formattedWindow = formattedWindow.replace("%capital%", nation.getCapital() == null ? "No Capital" : nation.getCapital().getName());
 
         return formattedWindow;
     }
