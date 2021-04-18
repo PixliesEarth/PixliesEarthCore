@@ -1,7 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.interfaces.Constants;
@@ -47,7 +47,7 @@ public class electionNation extends SubCommand implements Constants {
         Profile profile = instance.getProfile(player.getUniqueId());
         Nation nation = profile.getCurrentNation();
         if (args.length == 0) {
-            Gui gui = new Gui(instance, 6, "§b" + nation.getName() + " §7");
+            ChestGui gui = new ChestGui(6, "§b" + nation.getName() + " §7");
 
             StaticPane background = new StaticPane(0, 0, 9, 6);
             background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).build(), e -> e.setCancelled(true));

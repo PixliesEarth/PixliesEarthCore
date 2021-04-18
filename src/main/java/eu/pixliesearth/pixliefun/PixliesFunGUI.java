@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 
@@ -38,7 +38,7 @@ public class PixliesFunGUI implements Constants {
     public static final Map<String, List<CustomRecipe>> recipes = new HashMap<>();
 
     private Player player;
-    private Gui gui;
+    private ChestGui gui;
 
     public PixliesFunGUI(Player player) {
         this.player = player;
@@ -53,7 +53,7 @@ public class PixliesFunGUI implements Constants {
     }
 
     private void renderMainMenu() {
-        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun");
+        gui = new ChestGui(6, "§b§lPixliesFun");
         gui.getPanes().clear();
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
@@ -110,7 +110,7 @@ public class PixliesFunGUI implements Constants {
     }
 
     public void renderSearchItems(String keyWord) {
-        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| §b" + keyWord);
+        gui = new ChestGui(6, "§b§lPixliesFun §8| §b" + keyWord);
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
@@ -166,7 +166,7 @@ public class PixliesFunGUI implements Constants {
             renderMainMenu();
             return;
         }
-        gui = new Gui(Main.getInstance(), 6, "§b§lPixliesFun §8| " + category.getName());
+        gui = new ChestGui(6, "§b§lPixliesFun §8| " + category.getName());
 
         StaticPane background = new StaticPane(0, 0, 9, 6);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
@@ -225,7 +225,7 @@ public class PixliesFunGUI implements Constants {
             if (recipes.get(getId(i)).size() < page - 1) return;
             if (page < 0) return;
 
-            gui = new Gui(Main.getInstance(), 6, "§b§lRecipe");
+            gui = new ChestGui(6, "§b§lRecipe");
 
             CustomRecipe recipe = recipes.get(getId(i)).get(page);
 

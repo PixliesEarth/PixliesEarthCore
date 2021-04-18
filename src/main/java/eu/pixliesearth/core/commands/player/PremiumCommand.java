@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.commands.player;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
@@ -37,7 +37,7 @@ public class PremiumCommand implements CommandExecutor {
         }
         int dynmapMarker = (int) Math.round((Double) profile.getExtras().getOrDefault("dynmapMarkers", 0));
         boolean alreadyGifted = (boolean) profile.getExtras().getOrDefault("giftedRoyal", false);
-        Gui gui = new Gui(instance, 3, "§6Premium-GUI");
+        ChestGui gui = new ChestGui(3, "§6Premium-GUI");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
         pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         ItemStack markerItem = dynmapMarker > 0 ? new ItemBuilder(Material.SOUL_CAMPFIRE).setDisplayName("§aSet a dynmapmarker").addLoreLine("§a" + dynmapMarker + " §7left").build() : new ItemBuilder(Material.BARRIER).setDisplayName("§cAlready used").build();

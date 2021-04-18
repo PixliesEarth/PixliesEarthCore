@@ -1,9 +1,8 @@
 package eu.pixliesearth.core.custom.commands;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
-import eu.pixliesearth.core.custom.skills.SimpleSkill;
 import eu.pixliesearth.core.custom.skills.Skill;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -22,7 +21,6 @@ import eu.pixliesearth.core.custom.commands.subcommands.skills.RanksSkill;
 import eu.pixliesearth.core.custom.commands.subcommands.skills.ViewSkills;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class SkillCommand extends CustomCommand {
 	
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-		Gui gui = new Gui(instance, 5, "§eSkills");
+		ChestGui gui = new ChestGui(5, "§eSkills");
 		Player player = (Player) commandSender;
 
 		StaticPane pane = new StaticPane(0, 0, 9, 5);
@@ -69,7 +67,7 @@ public class SkillCommand extends CustomCommand {
 	}
 
 	private static void renderSkillMenu(Player player, Skill skill) {
-		Gui gui = new Gui(instance, 6, "§3" + skill.getSkillName());
+		ChestGui gui = new ChestGui(6, "§3" + skill.getSkillName());
 
 		StaticPane pane = new StaticPane(0, 0, 9, 6);
 

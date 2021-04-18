@@ -1,7 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.objects.Profile;
@@ -43,13 +43,13 @@ public class menuNation extends SubCommand {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Gui gui = new Gui(instance, 6, "§bNations menu");
+        ChestGui gui = new ChestGui(6, "§bNations menu");
         Player player = (Player) sender;
         open(gui, player, MenuPage.HOME);
         return false;
     }
 
-    private void open(@NotNull Gui gui, @NotNull Player player, @NotNull MenuPage page) {
+    private void open(@NotNull ChestGui gui, @NotNull Player player, @NotNull MenuPage page) {
         gui.setTitle(defaultTitle + page.title);
         StaticPane hotbar = new StaticPane(0, 0, 9, 1);
         int j = 0;
@@ -287,7 +287,7 @@ public class menuNation extends SubCommand {
         }
     }
 
-    private void showUpgradeGui(Gui gui, Player player, StaticPane menuPane) {
+    private void showUpgradeGui(ChestGui gui, Player player, StaticPane menuPane) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         gui.addPane(menuPane);
@@ -348,7 +348,7 @@ public class menuNation extends SubCommand {
         gui.show(player);
     }
 
-    private void showRankMenu(Gui gui, StaticPane menuPane, Player player, Rank rank) {
+    private void showRankMenu(ChestGui gui, StaticPane menuPane, Player player, Rank rank) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         int x = 0;
@@ -380,7 +380,7 @@ public class menuNation extends SubCommand {
         gui.show(player);
     }
 
-    private void showMemberMenu(Gui gui, StaticPane menu, Player requester, Profile target) {
+    private void showMemberMenu(ChestGui gui, StaticPane menu, Player requester, Profile target) {
         menu.clear();
         menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         Profile profile = instance.getProfile(requester.getUniqueId());

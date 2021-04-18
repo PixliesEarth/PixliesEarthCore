@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
@@ -14,8 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.javacord.api.entity.permission.Role;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
@@ -406,7 +406,7 @@ public class Profile {
 
     public void openPingSoundGui() {
         Player player = getAsPlayer();
-        Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your ping sound");
+        ChestGui gui = new ChestGui(3, "§bChoose your ping sound");
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 3);
         List<GuiItem> guiItems = new ArrayList<>();
         for (Sound sound : Methods.soundsForPing())
@@ -428,7 +428,7 @@ public class Profile {
 
     public void openLangGui() {
         Player player = getAsPlayer();
-        Gui gui = new Gui(Main.getInstance(), 3, "§bChoose your language");
+        ChestGui gui = new ChestGui(3, "§bChoose your language");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
         pane.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/5e7899b4806858697e283f084d9173fe487886453774626b24bd8cfecc77b3f")).setDisplayName("§eDeutsch").build(), e -> {
             e.setCancelled(true);

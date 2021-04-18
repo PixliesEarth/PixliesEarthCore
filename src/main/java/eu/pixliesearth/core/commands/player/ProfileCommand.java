@@ -1,10 +1,9 @@
 package eu.pixliesearth.core.commands.player;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
@@ -34,7 +33,7 @@ public class ProfileCommand implements CommandExecutor {
             Player player = (Player) sender;
             Profile profile = Main.getInstance().getProfile(player.getUniqueId());
 
-            Gui menu = new Gui(Main.getInstance(), 3, "§e§l" + Lang.YOUR_PROFILE.get(player));
+            ChestGui menu = new ChestGui(3, "§e§l" + Lang.YOUR_PROFILE.get(player));
             StaticPane pane = new StaticPane(0, 0, 9, 3);
             pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
             // LANGUAGE
@@ -100,8 +99,8 @@ public class ProfileCommand implements CommandExecutor {
         return false;
     }
 
-    private Gui getScoreboardGui(Profile profile, Player player) {
-        Gui scoregui = new Gui(Main.getInstance(), 3, "§bScoreboard");
+    private ChestGui getScoreboardGui(Profile profile, Player player) {
+        ChestGui scoregui = new ChestGui(3, "§bScoreboard");
         StaticPane pane = new StaticPane(0, 0, 9, 3);
         pane.addItem(new GuiItem(new ItemBuilder(Material.MAP).setDisplayName("§7Style: §b" + profile.getBoardType()).build(), event -> {
             event.setCancelled(true);
@@ -122,7 +121,7 @@ public class ProfileCommand implements CommandExecutor {
         }), 1, 1);
         pane.addItem(new GuiItem(new ItemBuilder(Methods.getSBWoolByCC(profile.getFavoriteColour())).setDisplayName("§7Favorite color").build(), event -> {
             event.setCancelled(true);
-            Gui menu = new Gui(Main.getInstance(), 3, "§b"+ Lang.CHOOSE_COLOUR.get(player));
+            ChestGui menu = new ChestGui(3, "§b"+ Lang.CHOOSE_COLOUR.get(player));
             StaticPane pane2 = new StaticPane(0, 0, 9, 3);
             pane2.addItem(new GuiItem(new ItemBuilder(Material.LIGHT_BLUE_WOOL).setDisplayName("§bAqua").build(), e -> {
                 e.setCancelled(true);

@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.custom.commands.subcommands.war;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomSubCommand;
@@ -35,7 +35,7 @@ public class ListCommand extends CustomSubCommand implements Constants {
             return false;
         }
         Player player = (Player) commandSender;
-        Gui gui = new Gui(instance, 6 , "§c§lWars");
+        ChestGui gui = new ChestGui(6 , "§c§lWars");
         StaticPane outerPane = new StaticPane(0, 0, 9, 6);
         outerPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
 

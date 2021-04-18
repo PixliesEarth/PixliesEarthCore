@@ -140,7 +140,7 @@
         <dependency>
             <groupId>com.github.stefvanschie.inventoryframework</groupId>
             <artifactId>IF</artifactId>
-            <version>0.5.19</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
@@ -235,7 +235,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
+            <version>LATEST</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

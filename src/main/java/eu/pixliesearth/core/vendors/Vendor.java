@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.vendors;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.Main;
@@ -41,7 +41,7 @@ public class Vendor {
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
         if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
         if (soldLast == null) return;
-        Gui gui = new Gui(instance, 6, title);
+        ChestGui gui = new ChestGui(6, title);
 
         StaticPane outline = new StaticPane(0, 0, 9, 6);
 

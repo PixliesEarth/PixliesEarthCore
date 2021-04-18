@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.modules;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.interfaces.Module;
@@ -41,7 +41,7 @@ public class WarpSystem implements CommandExecutor, Module {
                     return false;
                 }
                 Player player = (Player) sender;
-                Gui warpGui = new Gui(instance, 4, "§cWhere do you wanna go?");
+                ChestGui warpGui = new ChestGui(4, "§cWhere do you wanna go?");
                 PaginatedPane warps = new PaginatedPane(0, 0, 9, 3);
                 StaticPane toolbar = new StaticPane(0, 3, 9, 1);
                 List<GuiItem> items = new ArrayList<>();

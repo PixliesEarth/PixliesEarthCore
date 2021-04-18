@@ -1,7 +1,7 @@
 package eu.pixliesearth.core.custom.commands;
 
-import com.github.stefvanschie.inventoryframework.Gui;
-import com.github.stefvanschie.inventoryframework.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomCommand;
@@ -73,7 +73,7 @@ public class WarCommand extends CustomCommand implements Constants {
             return false;
         }
         Nation nation = profile.getCurrentNation();
-        Gui gui = new Gui(instance, 6 , "§c§lWar");
+        ChestGui gui = new ChestGui(6 , "§c§lWar");
         PaginatedPane wars = new PaginatedPane(0, 0, 9, 5);
         List<GuiItem> guiItems = new ArrayList<>();
         for (War war : War.getWars(nation)) {
@@ -112,7 +112,7 @@ public class WarCommand extends CustomCommand implements Constants {
         return true;
     }
 
-    private static void openJustificationGui(Profile profile, Nation nation, Gui gui) {
+    private static void openJustificationGui(Profile profile, Nation nation, ChestGui gui) {
         gui.getPanes().clear();
         PaginatedPane nations = new PaginatedPane(0, 0, 9, 5);
         List<GuiItem> guiItems = new ArrayList<>();
