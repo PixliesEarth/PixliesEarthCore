@@ -26,6 +26,27 @@ import java.util.*;
 
 public class menuNation extends SubCommand {
 
+    static final String defaultTitle = "§bNations menu §8| ";
+
+    public static void upgradeEra(Player player, Nation nation) {
+        Era toUpgrade = Era.getByNumber(nation.getCurrentEra().getNumber() + 1);
+        if (toUpgrade == null) return;
+        if (toUpgrade.getCost() > nation.getXpPoints()) {
+            player.closeInventory();
+            Lang.NOT_ENOUGH_XP_POINTS.send(player);
+            return;
+        }
+        nation.setXpPoints(nation.getXpPoints() - toUpgrade.getCost());
+        nation.setEra(toUpgrade.name());
+        nation.save();
+        player.closeInventory();
+        for (Player member : nation.getOnlineMemberSet()) {
+            member.getWorld().spawnEntity(member.getLocation(), EntityType.FIREWORK);
+            member.sendTitle("§a" + toUpgrade.getName(), Lang.NATION_REACHED_NEW_ERA.get(member), 20, 20 * 3, 20);
+            member.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        }
+    }
+
     @Override
     public String[] aliases() {
         return new String[]{"menu", "gui"};
@@ -35,8 +56,6 @@ public class menuNation extends SubCommand {
     public boolean staff() {
         return false;
     }
-
-    static final String defaultTitle = "§bNations menu §8| ";
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
@@ -142,7 +161,7 @@ public class menuNation extends SubCommand {
                         x1++;
                     }
                     gui.addPane(pane);
-                    gui.update();
+                    gui.show(player);
                 }), 0, 0);
                 // IDEOLOGY
                 Ideology ideology = Ideology.valueOf(nation.getIdeology());
@@ -174,7 +193,7 @@ public class menuNation extends SubCommand {
                         x1++;
                     }
                     gui.addPane(pane);
-                    gui.update();
+                    gui.show(player);
                 }), 1, 0);
 
                 // DYNMAP COLOUR
@@ -206,7 +225,7 @@ public class menuNation extends SubCommand {
                         x1++;
                     }
                     gui.addPane(pane);
-                    gui.update();
+                    gui.show(player);
                 }), 2, 0);
                 break;
             case RELATIONS:
@@ -268,25 +287,6 @@ public class menuNation extends SubCommand {
         gui.show(player);
     }
 
-    public static void upgradeEra(Player player, Nation nation) {
-        Era toUpgrade = Era.getByNumber(nation.getCurrentEra().getNumber() + 1);
-        if (toUpgrade == null) return;
-        if (toUpgrade.getCost() > nation.getXpPoints()) {
-            player.closeInventory();
-            Lang.NOT_ENOUGH_XP_POINTS.send(player);
-            return;
-        }
-        nation.setXpPoints(nation.getXpPoints() - toUpgrade.getCost());
-        nation.setEra(toUpgrade.name());
-        nation.save();
-        player.closeInventory();
-        for (Player member : nation.getOnlineMemberSet()) {
-            member.getWorld().spawnEntity(member.getLocation(), EntityType.FIREWORK);
-            member.sendTitle("§a" + toUpgrade.getName(), Lang.NATION_REACHED_NEW_ERA.get(member), 20, 20 * 3, 20);
-            member.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-        }
-    }
-
     private void showUpgradeGui(ChestGui gui, Player player, StaticPane menuPane) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
@@ -339,9 +339,9 @@ public class menuNation extends SubCommand {
                     pagePane.setPage(pagePane.getPage() + 1);
                     gui.update();
                 } catch (Exception e) {
-            e.printStackTrace();
-             io.sentry.Sentry.captureException(e);
-}
+                    e.printStackTrace();
+                    io.sentry.Sentry.captureException(e);
+                }
             }
         }), 8, 0);
         gui.addPane(controlBar);
