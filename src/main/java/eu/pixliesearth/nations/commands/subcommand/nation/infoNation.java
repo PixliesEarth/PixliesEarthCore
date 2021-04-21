@@ -3,9 +3,13 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -14,10 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 
 public class infoNation extends SubCommand {
 
@@ -85,16 +86,15 @@ public class infoNation extends SubCommand {
 
     public static void sendNationInfo(Nation nation, CommandSender sender) {
         sender.sendMessage(" ");
-        sender.sendMessage(Methods.getCenteredMessage("§8-= §b§n" + nation.getName() + "§8 =-"));
-        sender.sendMessage("§7Description: §b" + nation.getDescription());
+        sender.sendMessage("§3§l" + nation.getName() + " §8(" + Religion.valueOf(nation.getReligion()).getIcon() + "§8)");
+        sender.sendMessage("    §7Description: §b" + nation.getDescription());
+        sender.sendMessage("    §7Ideology/Religion: §" + Ideology.valueOf(nation.getIdeology()).getColour() + WordUtils.capitalize(nation.getIdeology().toLowerCase().replace("_", " ")) + "§7/§" + Religion.valueOf(nation.getReligion()).getColour() + WordUtils.capitalize(nation.getReligion().toLowerCase().replace("_", " ")));
         long age = System.currentTimeMillis() - Long.parseLong(nation.getCreated());
-        sender.sendMessage("§7Age: §b" + Methods.formatTime(age));
-        // sender.sendMessage("§7GDP: §2§l$§a" + nation.getGDP());
-        // sender.sendMessage("§7Balance: §2§l$§a" + nation.getMoney());
-        sender.sendMessage("§7Era: §b" + nation.getEra());
+        sender.sendMessage("    §7Age: §b" + Methods.formatTime(age));
+        sender.sendMessage("    §7Era: §b" + StringUtils.capitalize(nation.getEra().toLowerCase()));
         String leader = nation.getLeader().equals("NONE") ? "SERVER" : Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName();
-        sender.sendMessage("§7Leader: §6" + leader);
-        sender.sendMessage("§7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower());
+        sender.sendMessage("    §7Leader: §6" + leader);
+        sender.sendMessage("    §7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower());
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {
             UUID uuid = UUID.fromString(s);
@@ -108,8 +108,8 @@ public class infoNation extends SubCommand {
             if (ally != null)
                 allyJoiner.add("§d" + ally.getName());
         }
-        sender.sendMessage("§7Allies: " + allyJoiner.toString());
-        sender.sendMessage("§7Population: " + memberJoiner.toString());
+        sender.sendMessage("    §7Allies: " + allyJoiner.toString());
+        sender.sendMessage("    §7Population: " + memberJoiner.toString());
         sender.sendMessage(" ");
     }
 
