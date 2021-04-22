@@ -158,7 +158,7 @@ public class menuNation extends SubCommand {
                     int x1 = 0;
                     int y1 = 0;
                     for (Religion religion1 : Religion.values()) {
-                        String religion1Name = StringUtils.capitalize(religion1.name().toLowerCase().replace("_", " "));
+                        String religion1Name = WordUtils.capitalize(religion1.name().toLowerCase().replace("_", " "));
                         ItemBuilder iBuilder = new ItemBuilder(religion1.getMaterial()).setDisplayName("§" + religion1.getColour() + religion1Name);
                         if (religion == religion1)
                             iBuilder.setGlow();
@@ -203,7 +203,7 @@ public class menuNation extends SubCommand {
                     int x1 = 0;
                     int y1 = 0;
                     for (Ideology ideology1 : Ideology.values()) {
-                        String ideology1Name = StringUtils.capitalize(ideology1.name().toLowerCase().replace("_", " "));
+                        String ideology1Name = WordUtils.capitalize(ideology1.name().toLowerCase().replace("_", " "));
                         ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName("§" + ideology1.getColour() + ideology1Name);
                         if (ideology == ideology1)
                             iBuilder.setGlow();
