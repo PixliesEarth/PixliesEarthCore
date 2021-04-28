@@ -20,7 +20,7 @@ public class RespawnListener extends CustomListener {
         if (player.getBedSpawnLocation() != null) {
             event.setRespawnLocation(player.getBedSpawnLocation());
         } else {
-            event.setRespawnLocation(instance.getFastConf().getSpawnLocation());
+            event.setRespawnLocation(instance.getFastConf().getSpawnLocation() != null ? instance.getFastConf().getSpawnLocation() : player.getLocation());
         }
     }
 

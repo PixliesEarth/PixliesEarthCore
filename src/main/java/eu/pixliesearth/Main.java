@@ -1,6 +1,7 @@
 package eu.pixliesearth;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +14,7 @@ import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
 import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
-import eu.pixliesearth.core.custom.listeners.CustomMobListener;
-import eu.pixliesearth.core.custom.listeners.CustomMoneyPickupListener;
+import eu.pixliesearth.core.custom.listeners.*;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import io.sentry.Sentry;
@@ -88,8 +88,6 @@ import eu.pixliesearth.core.commands.util.SeenCommand;
 import eu.pixliesearth.core.commands.util.StaffCommand;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.commands.WarCommand;
-import eu.pixliesearth.core.custom.listeners.CustomBlockListener;
-import eu.pixliesearth.core.custom.listeners.TabListener;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.listener.AchievementListener;
 import eu.pixliesearth.core.listener.AnvilListener;
@@ -196,6 +194,7 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadListener(new CustomMoneyPickupListener());
+        loader.loadListener(new SuicideVestListener());
         loader.loadCustomItem(new ItemEnergyInspector());
         loader.loadCustomItem(new ItemBlockInspector());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
@@ -212,23 +211,23 @@ public final class Main extends JavaPlugin {
         registerCommands();
         registerEvents(Bukkit.getPluginManager());
 
-            String uri = getConfig().getString("mongodb-connectionstring");
-            if (uri == null) {
-                getLogger().warning("Plugin can't start because MongoDB URI is missing.");
-                Bukkit.getPluginManager().disablePlugin(instance);
-                return;
-            }
-            MongoClientURI clientURI = new MongoClientURI(uri);
-            MongoClient mongoClient = new MongoClient(clientURI);
+        String uri = getConfig().getString("mongodb-connectionstring");
+        if (uri == null) {
+            getLogger().warning("Plugin can't start because MongoDB URI is missing.");
+            Bukkit.getPluginManager().disablePlugin(instance);
+            return;
+        }
+        MongoClientURI clientURI = new MongoClientURI(uri);
+        MongoClient mongoClient = new MongoClient(clientURI);
 
-            MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
-            playerCollection = mongoDatabase.getCollection(getConfig().getString("users-collection", "users"));
-            nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
-            warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
-            punishmentCollection = mongoDatabase.getCollection(getConfig().getString("punishment-collection", "punishments"));
+        MongoDatabase mongoDatabase = mongoClient.getDatabase("admin");
+        playerCollection = mongoDatabase.getCollection(getConfig().getString("users-collection", "users"));
+        nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
+        warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
+        punishmentCollection = mongoDatabase.getCollection(getConfig().getString("punishment-collection", "punishments"));
 
-            for (Document doc : warCollection.find())
-                utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
+        for (Document doc : warCollection.find())
+            utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
 
         economy = new VaultAPI();
         getServer().getServicesManager().register(Economy.class, economy, this, ServicePriority.Normal);
@@ -259,9 +258,7 @@ public final class Main extends JavaPlugin {
             getConfig().set("gulag", gson.toJson(gulag));
             saveConfig();
             reloadConfig();
-        } else {
-            gulag = gson.fromJson(getConfig().getString("gulag"), Gulag.class);
-        }
+        } else gulag = gson.fromJson(getConfig().getString("gulag"), Gulag.class);
 
         saveDefaultConfig();
 

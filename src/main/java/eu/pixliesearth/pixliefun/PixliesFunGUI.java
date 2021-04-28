@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
+import com.github.stefvanschie.inventoryframework.pane.Pane;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -56,15 +57,15 @@ public class PixliesFunGUI implements Constants {
         gui = new ChestGui(6, "§b§lPixliesFun");
         gui.getPanes().clear();
 
-        StaticPane background = new StaticPane(0, 0, 9, 6);
+        StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        StaticPane background2 = new StaticPane(0, 1, 9, 4, Pane.Priority.NORMAL);
         background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane categories = new PaginatedPane(0, 1, 9, 4);
+        PaginatedPane categories = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGH);
         List<GuiItem> categoryItems = new ArrayList<>();
         for (CustomItem.Category category : CustomItem.Category.values()) {
             categoryItems.add(new GuiItem(new ItemBuilder(CustomItemUtil.getItemStackFromUUID(category.getIcon())).setDisplayName(category.getName()).addLoreLine("§f§lLEFT §7click to open").build(), event -> {
@@ -112,15 +113,15 @@ public class PixliesFunGUI implements Constants {
     public void renderSearchItems(String keyWord) {
         gui = new ChestGui(6, "§b§lPixliesFun §8| §b" + keyWord);
 
-        StaticPane background = new StaticPane(0, 0, 9, 6);
+        StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        StaticPane background2 = new StaticPane(0, 1, 9, 4, Pane.Priority.NORMAL);
         background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4);
+        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGH);
         List<GuiItem> entries = new ArrayList<>();
         final List<String> itemsToRender = searchItems(keyWord);
         for (String s : itemsToRender) {
@@ -136,7 +137,7 @@ public class PixliesFunGUI implements Constants {
         entriesPane.populateWithGuiItems(entries);
         gui.addPane(entriesPane);
 
-        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setCustomModelData(2).setDisplayName("§c§lClose").build(), e -> {
             e.setCancelled(true);
             renderMainMenu();
@@ -168,15 +169,15 @@ public class PixliesFunGUI implements Constants {
         }
         gui = new ChestGui(6, "§b§lPixliesFun §8| " + category.getName());
 
-        StaticPane background = new StaticPane(0, 0, 9, 6);
+        StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
         gui.addPane(background);
 
-        StaticPane background2 = new StaticPane(0, 1, 9, 4);
+        StaticPane background2 = new StaticPane(0, 1, 9, 4, Pane.Priority.NORMAL);
         background2.fillWith(new ItemStack(Material.AIR));
         gui.addPane(background2);
 
-        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4);
+        PaginatedPane entriesPane = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGH);
         List<GuiItem> entries = new ArrayList<>();
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             if (s.contains("test")) continue;
@@ -192,7 +193,7 @@ public class PixliesFunGUI implements Constants {
         entriesPane.populateWithGuiItems(entries);
         gui.addPane(entriesPane);
 
-        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.BARRIER).setCustomModelData(2).setDisplayName("§c§lClose").build(), e -> {
             e.setCancelled(true);
             renderMainMenu();
@@ -231,14 +232,14 @@ public class PixliesFunGUI implements Constants {
 
             gui.getPanes().clear();
 
-            StaticPane background = new StaticPane(0, 0, 9, 6);
+            StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
             background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
             background.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(4).setDisplayName("§aResult").build(), event -> {
                 event.setCancelled(true);
             }), 5, 2);
             gui.addPane(background);
 
-            PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3);
+            PaginatedPane recipePane = new PaginatedPane(1, 1, 3, 3, Pane.Priority.NORMAL);
             List<GuiItem> ingredients = new ArrayList<>();
             // Loop through all ingredients and set them to their slots
             for (String s : recipe.getContentsList().values()) {
@@ -257,7 +258,7 @@ public class PixliesFunGUI implements Constants {
             recipePane.populateWithGuiItems(ingredients);
             gui.addPane(recipePane);
 
-            StaticPane result = new StaticPane(7, 2, 1, 1);
+            StaticPane result = new StaticPane(7, 2, 1, 1, Pane.Priority.HIGH);
             result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> {
                 e.setCancelled(true);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()) && e.isLeftClick())
@@ -265,7 +266,7 @@ public class PixliesFunGUI implements Constants {
             }), 0, 0);
             gui.addPane(result);
 
-            StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+            StaticPane hotBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
             hotBar.addItem(new GuiItem(getItem(recipe.craftedInUUID()), e -> {
                 e.setCancelled(true);
                 renderRecipe(getItem(recipe.craftedInUUID()), 0);
