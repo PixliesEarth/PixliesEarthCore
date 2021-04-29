@@ -5,7 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
@@ -61,7 +66,20 @@ public abstract class CustomGun extends CustomItem {
 		// Check for action timer
 		String timeString = NBTUtil.getTagsFromItem(itemStack).getString("cooldown");
 		if (timeString!=null && !timeString.equals("")) {
-			if (timeString!=null && timeString.equals("reloading")) {
+			if (timeString!=null && timeString.equals("reloading")) { // This line causes the reload bug lmao (bc the tag isnt removed)
+				NBTUtil.NBTTags nbt = NBTUtil.getTagsFromItem(itemStack);
+				String cancelStr = nbt.getString("cancel");
+				if (cancelStr==null || cancelStr.equals("") || cancelStr.equals(" ")) cancelStr = Integer.toString(4);
+				int cancel = Integer.parseInt(cancelStr) - 1;
+				nbt.addTag("cancel", Integer.toString(cancel));
+				if (cancel<=0) {
+					nbt.addTag("cancel", "");
+					nbt.addTag("reloading", "");
+					event.getPlayer().sendActionBar("§c§lCanceled reload");
+				} else {
+					event.getPlayer().sendActionBar("§c§lClick "+cancel+" more times to cancel reload");
+				}
+				event.getPlayer().getInventory().setItemInMainHand(NBTUtil.addTagsToItem(itemStack, nbt));
 				return true;
 			} else {
 				long time = Long.parseLong(timeString);
@@ -82,7 +100,7 @@ public abstract class CustomGun extends CustomItem {
 					final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();
 					String gunID = CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand());
 					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {
-						if (slotToReloadIn!=event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID)) {
+						if (slotToReloadIn!=event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID) && NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("cooldown").equals("reloading")) {
 							event.getPlayer().sendActionBar("§c§lFailed to reload!");
 							for (Entry<Integer, ItemStack> entry : event.getPlayer().getInventory().addItem(getAmmoType().getAmmo().getItem()).entrySet()) {
 								if (entry==null || entry.getValue()==null) continue;
