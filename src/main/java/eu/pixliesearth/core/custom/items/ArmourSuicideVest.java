@@ -19,7 +19,7 @@ public class ArmourSuicideVest extends CustomArmour {
         return Arrays.asList(
                 "§7§oBlock up your enemies in a distance of 12 blocks",
                 " ",
-                "§f§lRIGHT-CLICK §7to detonate"
+                "§f§lSHIFT+RIGHT-CLICK §7to detonate"
         );
     }
 
