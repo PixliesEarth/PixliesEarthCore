@@ -74,7 +74,7 @@ public abstract class CustomGun extends CustomItem {
 				nbt.addTag("cancel", Integer.toString(cancel));
 				if (cancel<=0) {
 					nbt.addTag("cancel", "");
-					nbt.addTag("reloading", "");
+					nbt.addTag("cooldown", "");
 					event.getPlayer().sendActionBar("§c§lCanceled reload");
 				} else {
 					event.getPlayer().sendActionBar("§c§lClick "+cancel+" more times to cancel reload");
