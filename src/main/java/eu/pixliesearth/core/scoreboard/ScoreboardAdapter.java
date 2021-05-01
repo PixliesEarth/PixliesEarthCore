@@ -1,11 +1,9 @@
 package eu.pixliesearth.core.scoreboard;
 
-import com.vdurmont.emoji.EmojiParser;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleAdapter;
-import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.Methods;
@@ -17,14 +15,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class ScoreboardAdapter implements AssembleAdapter {
 
