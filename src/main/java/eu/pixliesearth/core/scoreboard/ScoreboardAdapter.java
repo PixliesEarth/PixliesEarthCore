@@ -200,10 +200,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
                 returnable.add(" ");
 
-                // returnable.add(c + "§l" + Lang.PLAYER.get(player));
-                // returnable.add(c + "§l| " + c + player.getDisplayName());
                 returnable.add("    " + profile.getBalanceFormatted() + "  §e" + energy);
-                // returnable.add(c + "§l| §e" + energy);
+
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add("§7Staff:" + c + " enabled");
                     returnable.add("§7TPS: " + c + Methods.round(Bukkit.getTPS()[0], 2));
@@ -213,10 +211,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add(" ");
                     returnable.add("  §7Nation: " + c + nation.getName());
                     returnable.add("  §7PP: " + c + nation.getXpPoints());
-                    returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra()));
+                    returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra().toLowerCase()));
                 }
-                // returnable.add(" ");
-                // returnable.add("  §7" + profile.getPlayTimeFormatted());
 
                 if (instance.getUtilLists().boosts.size() > 0) {
                     returnable.add(" ");

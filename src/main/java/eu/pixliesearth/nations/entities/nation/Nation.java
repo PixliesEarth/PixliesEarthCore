@@ -58,7 +58,7 @@ public class Nation {
         ranks.put("admin", Rank.ADMIN().toMap());
         ranks.put("member", Rank.MEMBER().toMap());
         ranks.put("newbie", new Rank("newbie", "§a*", 111, new ArrayList<>()).toMap());
-        ranks.put("leader", new Rank("leader", "§c+", 666, new ArrayList<>()).toMap());
+        ranks.put("leader", new Rank("leader", "§6★", 666, new ArrayList<>()).toMap());
         save();
         return this;
     }
