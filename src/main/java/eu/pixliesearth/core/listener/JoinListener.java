@@ -3,6 +3,7 @@ package eu.pixliesearth.core.listener;
 import java.util.UUID;
 
 import eu.pixliesearth.pixliefun.PixlieFunGuide;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import eu.pixliesearth.Main;
-import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;

@@ -129,7 +129,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
         int frame = instance.getUtilLists().scoreboardFrames.get(player.getUniqueId());
         if (frame == frames(player).length - 1) instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), 0);
         instance.getUtilLists().scoreboardFrames.put(player.getUniqueId(), instance.getUtilLists().scoreboardFrames.get(player.getUniqueId()) + 1);
-        return frames(player)[frame];
+        if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
+            return "§eStaff - " +  frames(player)[frame];
+        } else {
+            return frames(player)[frame];
+        }
     }
 
     @Override
@@ -196,7 +200,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
                     returnable.add("§7Staff:" + c + " enabled");
-                    returnable.add("§7TPS: " + c + Methods.round(Bukkit.getTPS()[0], 2));
                 }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
