@@ -1,11 +1,6 @@
 package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.core.custom.CustomCommand;
-import eu.pixliesearth.core.custom.CustomSubCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyAddCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyBalanceCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomySetCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyTakeCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -29,6 +24,7 @@ public class BalanceCommand extends CustomCommand {
         return new HashSet<>(){{
             add("checkmoney");
             add("purse");
+            add("bal");
         }};
     }
 
