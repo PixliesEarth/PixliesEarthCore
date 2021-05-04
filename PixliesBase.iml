@@ -24,8 +24,8 @@
     <orderEntry type="library" name="Maven: com.github.stefvanschie.inventoryframework:IF:0.9.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.3" level="project" />
-    <orderEntry type="library" name="Maven: org.javacord:javacord-api:3.1.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.javacord:javacord-core:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-api:3.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javacord.javacord:javacord-core:3.1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okhttp3:okhttp:3.9.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okio:okio:1.13.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.squareup.okhttp3:logging-interceptor:3.9.1" level="project" />
