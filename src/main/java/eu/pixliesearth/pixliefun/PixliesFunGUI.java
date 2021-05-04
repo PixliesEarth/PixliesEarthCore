@@ -259,7 +259,7 @@ public class PixliesFunGUI implements Constants {
             gui.addPane(recipePane);
 
             StaticPane result = new StaticPane(7, 2, 1, 1, Pane.Priority.HIGH);
-            result.addItem(new GuiItem(getItem(recipe.getResultUUID()), e -> {
+            result.addItem(new GuiItem(new ItemBuilder(getItem(recipe.getResultUUID())).setAmount(recipe.getResultAmount()).build(), e -> {
                 e.setCancelled(true);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()) && e.isLeftClick())
                     player.getInventory().addItem(getItem(recipe.getResultUUID()));
