@@ -82,6 +82,7 @@ public class createNation extends SubCommand {
             profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("leader")));
             for (Player op : Bukkit.getOnlinePlayers())
                 op.sendMessage(Lang.PLAYER_FORMED_NATION.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%NAME%", name));
+            player.performCommand("n menu");
         }
         return false;
     }

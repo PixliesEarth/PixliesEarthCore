@@ -218,6 +218,14 @@ public class War {
         // instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
     }
 
+    public boolean isDeclareAble() {
+        if (!declareAble)
+            if (this.timers.containsKey("warGoalJustification"))
+                if (this.timers.get("warGoalJustification").hasExpired())
+                    makeDeclarable();
+        return declareAble;
+    }
+
     public void tick() {
         if (getDefenderInstance() == null || getAggressorInstance()  == null) {
             this.remove();
