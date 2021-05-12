@@ -233,6 +233,7 @@ public enum Lang {
     DC_ALREADY_SYNCED(Lang.DISCORD, new HashMap<>()),
     DC_ALREADY_HAVE_CODE(Lang.DISCORD, new HashMap<>()),
     DC_VERIFICATION_CODE(Lang.DISCORD, new HashMap<>()),
+    DC_NOT_SYNCED(Lang.DISCORD, new HashMap<>()),
 
     // PIXLIECOINS
     PC_BALANCE(Lang.PIXLIECOINS, new HashMap<>()),
