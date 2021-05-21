@@ -43,6 +43,7 @@ public abstract class DiscordCommand {
 
     @SneakyThrows
     public static void loadAll() {
+        System.out.println("Loading Discord Commands");
         for (Class<? extends DiscordCommand> clazz : CustomFeatureLoader.reflectBasedOnExtentionOf("eu.pixliesearth.discord.commands", DiscordCommand.class)) {
             System.out.println("Found Discord command " + clazz.getName());
             DiscordCommand cmd = clazz.getConstructor().newInstance();

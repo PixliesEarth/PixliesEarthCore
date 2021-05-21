@@ -30,7 +30,7 @@ public class MiniMick {
             return;
         }
 
-        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "/");
+        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "~");
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
