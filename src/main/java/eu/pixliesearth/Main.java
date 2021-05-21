@@ -143,7 +143,6 @@ import eu.pixliesearth.utils.UtilLists;
 import eu.pixliesearth.utils.UtilThread;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.WarThread;
-import eu.pixliesearth.warsystem.gulag.Gulag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -174,7 +173,6 @@ public final class Main extends JavaPlugin {
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
-    private @Getter @Setter Gulag gulag;
     private @Getter final boolean warEnabled = true;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
@@ -250,13 +248,6 @@ public final class Main extends JavaPlugin {
         String[] date = calendarCfg.getConfiguration().getString("date", "0/0/0").split("/");
         calendar = new PixliesCalendar(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
         calendar.startRunner();
-
-        if (!getConfig().contains("gulag")) {
-            gulag = new Gulag("", "", "", new HashMap<>(), new ArrayList<>(), new HashMap<>());
-            getConfig().set("gulag", gson.toJson(gulag));
-            saveConfig();
-            reloadConfig();
-        } else gulag = gson.fromJson(getConfig().getString("gulag"), Gulag.class);
 
         saveDefaultConfig();
 
@@ -432,8 +423,6 @@ public final class Main extends JavaPlugin {
         discordDisable();
         // machineTask.stopThread();
         dynmapKernel.onDisable();
-        getUtilLists().awaitingGulag1.clear();
-        getUtilLists().awaitingGulag2.clear();
         for (Profile profile : utilLists.profiles.values())
             profile.backup();
         for (Nation nation : NationManager.nations.values())

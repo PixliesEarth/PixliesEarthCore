@@ -27,10 +27,6 @@ public class WarThread extends Thread {
     private void tick() {
         for (War war : instance.getUtilLists().wars.values())
             war.tick();
-/*        if (instance.getCurrentWar() == null) return;
-        if (!instance.getGulag().getFighting().isEmpty()) return;
-        if (instance.getGulag().getPlayers().size() < 2) return;
-        instance.getGulag().placeFighters();*/
     }
 
 }

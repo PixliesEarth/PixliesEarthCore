@@ -14,7 +14,6 @@ public class WarCommandListener extends CustomListener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
-        if (!instance.getUtilLists().inGulag.contains(player.getUniqueId())) return;
         String[] split = event.getMessage().split(" ");
         if (split[0].equalsIgnoreCase("/back")
                 || split[0].equalsIgnoreCase("/ec")

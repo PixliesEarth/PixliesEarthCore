@@ -199,23 +199,16 @@ public class War {
         if (!running) return;
         this.left.put(players.get(left.getUUID()).getSide(), this.left.get(players.get(left.getUUID()).getSide()) - 1);
         players.remove(left.getUUID());
-        // instance.getGulag().handleLeave(left.getAsPlayer());
     }
 
     public void handleKill(Profile killed) {
         if (!running) return;
-        // if (instance.getUtilLists().inGulag.contains(killed.getUUID())) {
         if (!killed.getAsPlayer().hasPermission("earth.admin")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + killed.getAsPlayer().getName() + " &7You are &cbanned &7until the war is over.");
-            // instance.getUtilLists().inGulag.remove(killed.getUUID());
             instance.getUtilLists().bannedInWar.add(killed.getUUID());
         }
         left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
         players.remove(killed.getUUID());
-            // return;
-        // }
-        // left.put(players.get(killed.getUUID()).getSide(), left.get(players.get(killed.getUUID()).getSide()) - 1);
-        // instance.getGulag().addPlayer(killed.getAsPlayer(), players.get(killed.getUUID()).getSide());
     }
 
     public boolean isDeclareAble() {

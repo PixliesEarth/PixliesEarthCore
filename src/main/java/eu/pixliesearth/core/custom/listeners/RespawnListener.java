@@ -12,11 +12,6 @@ public class RespawnListener extends CustomListener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        Profile profile = instance.getProfile(player.getUniqueId());
-        if (profile.isInWar()) {
-            event.setRespawnLocation(Methods.locationFromSaveableString(instance.getGulag().getSpectatorLocation()));
-            return;
-        }
         if (player.getBedSpawnLocation() != null) {
             event.setRespawnLocation(player.getBedSpawnLocation());
         } else {

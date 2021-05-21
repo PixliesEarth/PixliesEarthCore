@@ -39,16 +39,6 @@ public class DiscordWar extends DiscordCommand {
         embed.addInlineField("Fighters left", war.getLeft().get(WarParticipant.WarSide.AGGRESSOR)+"");
         embed.addInlineField("    ", "    ");
         embed.addInlineField("Fighters left", war.getLeft().get(WarParticipant.WarSide.DEFENDER)+"");
-
-        embed.addInlineField("GULAG", "INFO");
-        embed.addInlineField("GULAG", "INFO");
-        embed.addInlineField("GULAG", "INFO");
-
-        String fighterOne = instance.getGulag().getFighting().size() == 2 ? Bukkit.getPlayer(instance.getGulag().getFighting().get(1)).getName() : "Noone";
-        embed.addInlineField("Attacker", fighterOne);
-        embed.addInlineField("In queue", instance.getGulag().getPlayers().size()+"");
-        String fighterTwo = instance.getGulag().getFighting().size() == 2 ? Bukkit.getPlayer(instance.getGulag().getFighting().get(0)).getName() : "Noone";
-        embed.addInlineField("Defender", fighterTwo);
         event.getChannel().sendMessage(embed);
     }
 

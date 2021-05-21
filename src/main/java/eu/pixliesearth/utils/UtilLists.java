@@ -57,14 +57,6 @@ public class UtilLists {
 
     public List<UUID> unclaimFill;
 
-    public List<UUID> awaitingGulag1;
-
-    public List<UUID> awaitingGulag2;
-
-    public Map<UUID, UUID> fightingGulag;
-
-    public List<UUID> wasGulag;
-
     public List<UUID> dynmapSetters;
 
     public List<UUID> royalGifters;
@@ -78,8 +70,6 @@ public class UtilLists {
     public Map<UUID, Profile> profiles;
 
     public Map<String, War> wars;
-
-    public List<UUID> inGulag;
 
     public List<UUID> bannedInWar;
 
@@ -122,17 +112,12 @@ public class UtilLists {
         scoreboardMaps = new ArrayList<>();
         claimFill = new ArrayList<>();
         unclaimFill = new ArrayList<>();
-        awaitingGulag1 = new ArrayList<>();
-        awaitingGulag2 = new ArrayList<>();
-        fightingGulag = new HashMap<>();
-        wasGulag = new ArrayList<>();
         dynmapSetters = new ArrayList<>();
         royalGifters = new ArrayList<>();
         chatTypes = new HashMap<>();
         craftingTables = new HashMap<>();
         waitingGuns = new ConcurrentHashMap<>();
         wars = new ConcurrentHashMap<>();
-        inGulag = new ArrayList<>();
         bannedInWar = new ArrayList<>();
         playersInWar = new HashMap<>();
         invitationsToWar = new HashMap<>();
