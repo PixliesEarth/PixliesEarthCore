@@ -196,7 +196,7 @@ public final class Main extends JavaPlugin {
         loader.loadListener(new SuicideVestListener());
         loader.loadCustomItem(new ItemEnergyInspector());
         loader.loadCustomItem(new ItemBlockInspector());
-        fastConf = new FastConf(getConfig().getInt("max-claim-size", 3200), getConfig().getLocation("spawn-location"));
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 4600), getConfig().getLocation("spawn-location"));
         init();
     }
 

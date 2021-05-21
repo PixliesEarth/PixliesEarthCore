@@ -5,7 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
@@ -42,11 +47,11 @@ public abstract class CustomGun extends CustomItem {
 	public ItemStack buildItem() {
 		return new ItemBuilder(getMaterial()) {{
 			setDisplayName(getDefaultDisplayName());
-			if (getDefaultLore()!=null) 
+			if (getDefaultLore()!=null)
 				addLoreAll(getDefaultLore());
-			if (getCustomModelData()!=null) 
+			if (getCustomModelData()!=null)
 				setCustomModelData(getCustomModelData());
-			for (ItemFlag flag : getItemFlags()) 
+			for (ItemFlag flag : getItemFlags())
 				addItemFlag(flag);
 			addNBTTag("UUID", getUUID(), NBTTagType.STRING);
 			addNBTTag("ammo", Integer.toString(0), NBTTagType.STRING);
@@ -61,7 +66,20 @@ public abstract class CustomGun extends CustomItem {
 		// Check for action timer
 		String timeString = NBTUtil.getTagsFromItem(itemStack).getString("cooldown");
 		if (timeString!=null && !timeString.equals("")) {
-			if (timeString!=null && timeString.equals("reloading")) {
+			if (timeString!=null && timeString.equals("reloading")) { // This line causes the reload bug lmao (bc the tag isnt removed)
+				NBTUtil.NBTTags nbt = NBTUtil.getTagsFromItem(itemStack);
+				String cancelStr = nbt.getString("cancel");
+				if (cancelStr==null || cancelStr.equals("") || cancelStr.equals(" ")) cancelStr = Integer.toString(4);
+				int cancel = Integer.parseInt(cancelStr) - 1;
+				nbt.addTag("cancel", Integer.toString(cancel));
+				if (cancel<=0) {
+					nbt.addTag("cancel", "");
+					nbt.addTag("cooldown", "");
+					event.getPlayer().sendActionBar("§c§lCanceled reload");
+				} else {
+					event.getPlayer().sendActionBar("§c§lClick "+cancel+" more times to cancel reload");
+				}
+				event.getPlayer().getInventory().setItemInMainHand(NBTUtil.addTagsToItem(itemStack, nbt));
 				return true;
 			} else {
 				long time = Long.parseLong(timeString);
@@ -82,7 +100,7 @@ public abstract class CustomGun extends CustomItem {
 					final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();
 					String gunID = CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand());
 					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {
-						if (slotToReloadIn!=event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID)) {
+						if (slotToReloadIn!=event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID) && NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("cooldown").equals("reloading")) {
 							event.getPlayer().sendActionBar("§c§lFailed to reload!");
 							for (Entry<Integer, ItemStack> entry : event.getPlayer().getInventory().addItem(getAmmoType().getAmmo().getItem()).entrySet()) {
 								if (entry==null || entry.getValue()==null) continue;
@@ -113,49 +131,49 @@ public abstract class CustomGun extends CustomItem {
 					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", Long.toString((System.currentTimeMillis()+getDelayPerShot())), NBTTagType.STRING).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
 					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "gunshoot", 15, 1);
 					event.getPlayer().getWorld().playEffect(event.getPlayer().getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
-					
+
 					LivingEntity result = null;
 					boolean headshot = false;
 					int maxDistance = getRange();
 					Player player = event.getPlayer();
 					Location location = player.getEyeLocation();
 					Block block = event.getPlayer().getTargetBlock(null, maxDistance);
-			        if (block.getType().isSolid()) {
-			        	maxDistance = (int) Math.min(maxDistance, block.getLocation().distance(location));
-			        }
-			        Collection<LivingEntity> entityList = event.getPlayer().getWorld().getNearbyLivingEntities(location, maxDistance);
-			        if (!entityList.isEmpty()) {
-			        	Vector vector = location.toVector();
-			        	x:
-			        	for(double distance = 0.0; distance <= maxDistance; distance += getAccuracy()) {
-			        		Vector vector2 = vector.clone().add(location.getDirection().clone().multiply(distance));
-			        		Location location2 = vector2.toLocation(event.getPlayer().getWorld());
-			        		AxisAlignedBB axisAlignedBB = new AxisAlignedBB(location2.getX(), location2.getY(), location2.getZ(), location2.getX(), location2.getY(), location2.getZ());
-			        		for(LivingEntity entity : entityList) {
-			        			if(entity == null || entity.isDead() || entity.getEntityId() == event.getPlayer().getEntityId()) {
-			        				continue;
-			        			} else {
-			        				AxisAlignedBB axisAlignedBB2 = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
-			        				if(axisAlignedBB2.intersects(axisAlignedBB)) {
-			        					result = entity;
-			        					headshot = location2.distance(entity.getEyeLocation()) <= 0.5;
-			        					break x;
-			        				}
-			        			}
-			        		}
-			        	}
-			        }
-			        if (result==null) {
-			        	return false;
-			        } else {
-			        	//double damage = pammo.getDamage()-(getChesplateToughness(result)/(pammo.getDamage()*1.83333333333));
-			        	double damage = (getChesplateToughness(result)==0) ? pammo.getDamage() : ((((7.5-(getChesplateToughness(result)))-pammo.getDamage())/pammo.getDamage())/2);
-			        	if (headshot) {
-			        		damage *= 2;
-			        	}
-			        	damage *= 2.5;
-			        	if (damage<2.5) damage = 2.0;
-			        	result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
+					if (block.getType().isSolid()) {
+						maxDistance = (int) Math.min(maxDistance, block.getLocation().distance(location));
+					}
+					Collection<LivingEntity> entityList = event.getPlayer().getWorld().getNearbyLivingEntities(location, maxDistance);
+					if (!entityList.isEmpty()) {
+						Vector vector = location.toVector();
+						x:
+						for(double distance = 0.0; distance <= maxDistance; distance += getAccuracy()) {
+							Vector vector2 = vector.clone().add(location.getDirection().clone().multiply(distance));
+							Location location2 = vector2.toLocation(event.getPlayer().getWorld());
+							AxisAlignedBB axisAlignedBB = new AxisAlignedBB(location2.getX(), location2.getY(), location2.getZ(), location2.getX(), location2.getY(), location2.getZ());
+							for(LivingEntity entity : entityList) {
+								if(entity == null || entity.isDead() || entity.getEntityId() == event.getPlayer().getEntityId()) {
+									continue;
+								} else {
+									AxisAlignedBB axisAlignedBB2 = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
+									if(axisAlignedBB2.intersects(axisAlignedBB)) {
+										result = entity;
+										headshot = location2.distance(entity.getEyeLocation()) <= 0.5;
+										break x;
+									}
+								}
+							}
+						}
+					}
+					if (result==null) {
+						return false;
+					} else {
+						//double damage = pammo.getDamage()-(getChesplateToughness(result)/(pammo.getDamage()*1.83333333333));
+						double damage = (getChesplateToughness(result)==0) ? pammo.getDamage() : ((((7.5-(getChesplateToughness(result)))-pammo.getDamage())/pammo.getDamage())/2);
+						if (headshot) {
+							damage *= 2;
+						}
+						damage *= 2.5;
+						if (damage<2.5) damage = 2.0;
+						result.setLastDamageCause(new EntityDamageByEntityEvent(event.getPlayer(), player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
 						EntityDamageByEntityEvent nevent = new EntityDamageByEntityEvent(player, result, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
 						Bukkit.getPluginManager().callEvent(nevent);
 						if (!nevent.isCancelled()) {
@@ -169,7 +187,7 @@ public abstract class CustomGun extends CustomItem {
 								result.damage(-0.1, player);
 							}
 						}
-			        }
+					}
 				} else {
 					return true;
 				}
@@ -177,21 +195,16 @@ public abstract class CustomGun extends CustomItem {
 		}
 		return false;
 	}
-	
+
 	protected double getChesplateToughness(LivingEntity e) {
 		double value = 0;
-		if (e.getEquipment() == null) return value;
-		if (e.getEquipment().getChestplate()==null) return value;
-		if (e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS) == null) return value;
+		if (e.getEquipment().getChestplate()==null) return 0;
 		try {
 			for (AttributeModifier a : e.getEquipment().getChestplate().getAttributeModifiers(Attribute.GENERIC_ARMOR_TOUGHNESS)) {
 				value += a.getAmount();
 			}
 			return value;
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			io.sentry.Sentry.captureException(exception);
-		}
+		} catch (Exception ignore) {}
 		if (value<=0) {
 			switch(e.getEquipment().getChestplate().getType()) {
 				case DIAMOND_CHESTPLATE :
@@ -207,7 +220,7 @@ public abstract class CustomGun extends CustomItem {
 		}
 		return value;
 	}
-	
+
 	@Override
 	public List<String> getDefaultLore() {
 		List<String> list = new ArrayList<>();
@@ -230,7 +243,7 @@ public abstract class CustomGun extends CustomItem {
 	public abstract int getRange();
 
 	public abstract double getAccuracy();
-	
+
 	public abstract long getDelayPerShot();
 
 	public abstract int getDelayToReload();

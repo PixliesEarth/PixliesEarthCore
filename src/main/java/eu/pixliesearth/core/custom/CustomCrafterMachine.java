@@ -1,10 +1,16 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.custom.interfaces.Constants;
-import eu.pixliesearth.core.custom.interfaces.IHopperable;
-import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.utils.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,30 +19,35 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import eu.pixliesearth.core.custom.interfaces.Constants;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
+import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
+import eu.pixliesearth.utils.CustomItemUtil;
+import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.NBTTagType;
+import eu.pixliesearth.utils.NBTUtil;
+import eu.pixliesearth.utils.Timer;
 
 /**
- * 
+ *
  * @author BradBot_1
- * 
+ *
  * <h3>A class to create a machine</h3>
  *
  */
 public class CustomCrafterMachine extends CustomMachine implements IHopperable {
-	
+
 	// ?
-	
+
 	/**
 	 * Initialises the class
 	 */
 	public CustomCrafterMachine() {
-		
+
 	}
-	
+
 	// Global variables
-	
+
 	/**
 	 * The slots where the crafting ingredients are stored
 	 */
@@ -47,17 +58,17 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	public static final List<Integer> resultSlots = Arrays.asList(5, 6, 7, 8, 17, 26, 35, 14, 15, 16, 23, 24, 25, 32, 33, 34);
 	/**
 	 * The slots where the crafting indicators are shown
-	 * 
+	 *
 	 * @deprecated No longer used as other information is shown there
 	 */
 	@Deprecated
 	public static final List<Integer> progressSlots = Arrays.asList(36, 37, 38, 39, 40, 41, 42, 43, 44);
-	
+
 	// ?
-	
+
 	/**
 	 * Opens the custom inventory
-	 * 
+	 *
 	 * @param player The {@link Player} who wants to open the {@link Inventory}
 	 * @param location The {@link Location} of the {@link CustomMachine} that houses the {@link Inventory}
 	 */
@@ -87,7 +98,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onTick(Location loc, Inventory inv, Timer timer) {
 		if (inv==null || loc==null) return;
@@ -115,14 +126,14 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Called to check if an item can be crafted and if so, it is crafted
-	 * 
+	 *
 	 * TODO: add param notes
-	 * 
+	 *
 	 * @return If the item was crafted
 	 */
 	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
 		if (!hasCost(loc, r)) return false;
-		Set<ItemStack> items = getItemsInCraftingSection(inv);
+		List<ItemStack> items = getItemsInCraftingSection(inv);
 		if (items == null || items.isEmpty()) return false;
 		Map<String, Integer> m = new ConcurrentHashMap<String, Integer>();
 		for (ItemStack is : items) {
@@ -150,7 +161,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 				m3.put(entry.getKey(), i-entry.getValue());
 			}
 		}
-		for (Entry<String, Integer> entry : m.entrySet()) 
+		for (Entry<String, Integer> entry : m.entrySet())
 			m3.put(entry.getKey(), entry.getValue());
 		setMapToCraftSlots(loc, inv, m3); // Give extras back
 		addToResult(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
@@ -159,11 +170,11 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Creates an {@link Inventory} and returns it
-	 * 
+	 *
 	 * @return The {@link CustomCrafterMachine}'s {@link Inventory}
 	 */
 	@Override
-	public Inventory getInventory() { 
+	public Inventory getInventory() {
 		Inventory inv = Bukkit.createInventory(null, 6*9, getInventoryTitle());
 		for (int i = 0; i < 6*9; i++)
 			inv.setItem(i, CustomItemUtil.getItemStackFromUUID(CustomInventoryListener.getUnclickableItemUUID()));
@@ -173,15 +184,15 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		inv.setItem(50, Constants.nextItem.clone());
 		return inv;
 	}
-	
+
 	public void set(Inventory inv) { // Next page
-		
+
 		final List<Integer> ints = Arrays.asList(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43);
-		
+
 		List<List<CustomRecipe>> rll = getRecipes();
-		
+
 		if (rll.isEmpty()) return;
-		
+
 		if (inv.getItem(ints.get(0))==null || isUnclickable(inv.getItem(ints.get(0)))) {
 			int i = 0;
 			for (int i2 : ints) {
@@ -208,15 +219,15 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 			}
 		}
 	}
-	
+
 	public void set2(Inventory inv) { // Last Page
-		
+
 		final List<Integer> ints = Arrays.asList(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43);
-		
+
 		List<List<CustomRecipe>> rll = getRecipes();
-		
+
 		if (rll.isEmpty()) return;
-		
+
 		if (inv.getItem(ints.get(0))==null || isUnclickable(inv.getItem(ints.get(0)))) {
 			int i = 0;
 			for (int i2 : ints) {
@@ -243,19 +254,19 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 			}
 		}
 	}
-	
+
 	public void set3(Inventory inv) { // Next page
-		
+
 		List<List<CustomRecipe>> rll = getRecipes();
-		
+
 		if (rll.isEmpty()) return;
-		
+
 		ItemStack is = inv.getItem(53);
-		
+
 		if (is==null || is.getType().equals(Material.AIR)) return;
-		
+
 		String id = CustomItemUtil.getUUIDFromItemStack(is);
-		
+
 		for (List<CustomRecipe> rl : rll) {
 			if (rl.get(0).getResultUUID().equalsIgnoreCase(id)) {
 				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
@@ -267,35 +278,35 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 					inv.setItem(53, new ItemBuilder(id).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).addNBTTag("EXTRA", "MCRAFTING", NBTTagType.STRING).build());
 					/*List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
-					for (int i2 : craftSlots) 
+					for (int i2 : craftSlots)
 						list.add(inv.getItem(i2));
-					for (int i2 : resultSlots) 
+					for (int i2 : resultSlots)
 						list2.add(inv.getItem(i2));
 					inv.setContents(getInventory2(rl.get(i), i).getContents());
 					int i3 = 0;
-					for (int i2 : craftSlots) 
+					for (int i2 : craftSlots)
 						inv.setItem(i2, list.get(i3));
 					i3 = 0;
-					for (int i2 : resultSlots) 
+					for (int i2 : resultSlots)
 						inv.setItem(i2, list2.get(i3));*/
 				}
 				break;
 			}
 		}
 	}
-	
+
 	public void set4(Inventory inv) { // Next page
-		
+
 		List<List<CustomRecipe>> rll = getRecipes();
 
 		if (rll.isEmpty()) return;
-		
+
 		ItemStack is = inv.getItem(53);
-		
+
 		if (is==null || is.getType().equals(Material.AIR)) return;
-		
+
 		String id = CustomItemUtil.getUUIDFromItemStack(is);
-		
+
 		for (List<CustomRecipe> rl : rll) {
 			if (rl.get(0).getResultUUID().equalsIgnoreCase(id)) {
 				String s = NBTUtil.getTagsFromItem(is).getString("RECIPE");
@@ -307,23 +318,23 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 					inv.setItem(53, new ItemBuilder(id).addNBTTag("RECIPE", Integer.toString(i), NBTTagType.STRING).addNBTTag("EXTRA", "MCRAFTING", NBTTagType.STRING).build());
 					/*List<ItemStack> list = new ArrayList<>();
 					List<ItemStack> list2 = new ArrayList<>();
-					for (int i2 : craftSlots) 
+					for (int i2 : craftSlots)
 						list.add(inv.getItem(i2));
-					for (int i2 : resultSlots) 
+					for (int i2 : resultSlots)
 						list2.add(inv.getItem(i2));
 					inv.setContents(getInventory2(rl.get(i), i).getContents());
 					int i3 = 0;
-					for (int i2 : craftSlots) 
+					for (int i2 : craftSlots)
 						inv.setItem(i2, list.get(i3));
 					i3 = 0;
-					for (int i2 : resultSlots) 
+					for (int i2 : resultSlots)
 						inv.setItem(i2, list2.get(i3));*/
 				}
 				break;
 			}
 		}
 	}
-	
+
 	// TODO: notes
 	public Inventory getInventory2(CustomRecipe r, int listValue) {
 		Inventory inv = Bukkit.createInventory(null, 6*9, getInventoryTitle());
@@ -346,7 +357,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Called when a player clicks on the {@link Inventory}
-	 * 
+	 *
 	 * @param event The {@link InventoryClickEvent} that occurred
 	 * @return If the event should be cancelled
 	 */
@@ -399,9 +410,9 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		if (!Constants.hasExtraData(is)) return false;
 		return true;
 	}
-	
+
 	// SAVING AND LOADING
-	
+
 	/**
 	 * Uses the provided {@link Inventory}, {@link Location} and {@link Map} to load the {@link CustomCrafterMachine}
 	 */
@@ -422,12 +433,12 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}
 		return map;
 	}
-	
+
 	// GENERAL UTILITIES
-	
+
 	/**
 	 * Gets and returns all recipes of an item based on its uuid
-	 * 
+	 *
 	 * @param id The item id
 	 * @return All recipes of an item based on its uuid
 	 */
@@ -442,7 +453,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Gets and returns all recipes of an item based on its uuid
-	 * 
+	 *
 	 * @param id The item id
 	 * @return All recipes of an item based on its uuid in an ordered list
 	 */
@@ -472,24 +483,24 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Returns all items in the craft slots in the {@link Inventory} provided
-	 * 
+	 *
 	 * @param inv The {@link Inventory} to check/look threw
 	 * @return All items in the crafting section in a {@link Set}
 	 */
-	public static Set<ItemStack> getItemsInCraftingSection(Inventory inv) {
-		Set<ItemStack> list = new HashSet<ItemStack>();
-		for (int i : craftSlots) 
-			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial())) 
+	public static List<ItemStack> getItemsInCraftingSection(Inventory inv) {
+		List<ItemStack> list = new ArrayList<ItemStack>();
+		for (int i : craftSlots)
+			if (inv.getItem(i)==null || inv.getItem(i).getType().equals(MinecraftMaterial.AIR.getMaterial()))
 				continue;
-			else 
+			else
 				list.add(inv.getItem(i));
 		return list;
 	}
 	/**
 	 * Add the given item to an available result slot or drops it at the location provided
-	 * 
+	 *
 	 * @apiNote If location is null it will instead do nothing
-	 * 
+	 *
 	 * @param location The {@link Location} the {@link ItemStack} will be dropped at if the {@link Inventory} is full
 	 * @param inventory The {@link Inventory} that the {@link ItemStack} will be added to
 	 * @param itemStack The {@link ItemStack} that will be added to the results slot
@@ -523,59 +534,92 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}, 0L);
 	}
 	/**
+	 *
+	 * TODO: notes
+	 *
+	 * @param location The {@link CustomCrafterMachine}'s {@link Location}
+	 * @param inventory The {@link CustomCrafterMachine}'s {@link Inventory}
+	 * @param recipe The {@link CustomRecipe} to follow
+	 */
+	public void removeIndgredientsForRecipeFromCraftSlots(Location location, Inventory inventory, CustomRecipe recipe) {
+		for (Entry<String, Integer> entry : recipe.getAsUUIDToAmountMap().entrySet()) {
+			removeItemStackFromCraftSlot(inventory, entry.getKey(), entry.getValue());
+		}
+	}
+
+	protected void removeItemStackFromCraftSlot(Inventory inventory, String uuid, int amount) {
+		for (int slot : craftSlots) {
+			ItemStack itemStack = inventory.getItem(slot);
+			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;
+			final String uuid2 = CustomItemUtil.getUUIDFromItemStack(itemStack);
+			if (uuid2==null || uuid2.equals("") || uuid2.equals(" ") || !uuid2.equals(uuid)) continue;
+			final int amount2 = itemStack.getAmount();
+			if (amount>amount2) {
+				itemStack.setAmount(0);
+				removeItemStackFromCraftSlot(inventory, uuid, (amount2 - amount));
+			} else {
+				itemStack.setAmount(amount2 - amount);
+			}
+			break;
+		}
+	}
+	/**
 	 * Adds the provided {@link Map} to the {@link CustomCrafterMachine}'s {@link Inventory}'s craft slots
-	 * 
+	 *
 	 * @param loc The {@link CustomCrafterMachine}'s {@link Location}
 	 * @param inv The {@link CustomCrafterMachine}'s {@link Inventory}
 	 * @param map The {@link Map} to set to the {@link Inventory}'s crafting slots
-	 * 
+	 *
 	 * TODO: optimise like {@link #addToResult(Location, Inventory, ItemStack)}
-	 * 
+	 *
+	 * @deprecated <b>Do not use!</b> Duplicates items; instead opt for {@link CustomCrafterMachine#removeIndgredientsForRecipeFromCraftSlots(Location, Inventory, CustomRecipe)}
+	 *
 	 */
+	@Deprecated
 	public void setMapToCraftSlots(Location loc, Inventory inv, Map<String, Integer> map) {
-		for (int i : craftSlots) 
+		for (int i : craftSlots)
 			inv.clear(i);
 		for (Entry<String, Integer> entry : map.entrySet()) {
 			if (entry.getValue()>64) {
 				int a = entry.getValue();
-				while (a!=0) {
+				while (a>0) {
 					if (entry.getValue()>64) {
 						int i2 = getNextFreeSlotInCrafting(inv);
-						if (i2==-1) 
+						if (i2==-1)
 							loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
-						else 
+						else
 							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(64).build());
 						a -= 64; // decrease the integer a by the amount given
 					} else {
 						int i2 = getNextFreeSlotInCrafting(inv);
-						if (i2==-1) 
+						if (i2==-1)
 							loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(a).build());
-						else 
+						else
 							inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(a).build());
 						a = 0;
 					}
 				}
 			} else {
 				int i2 = getNextFreeSlotInCrafting(inv);
-				if (i2==-1) 
+				if (i2==-1)
 					loc.getWorld().dropItemNaturally(loc, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(entry.getValue()).build());
-				else 
+				else
 					inv.setItem(i2, new ItemBuilder(CustomItemUtil.getItemStackFromUUID(entry.getKey())).setAmount(entry.getValue()).build());
 			}
 		}
 	}
 	/**
 	 * Gets the next available slot in the {@link Inventory}'s crafting slots
-	 * 
+	 *
 	 * @param inventory The {@link Inventory} to search threw
 	 * @return The next slot that does not contain any item
-	 * 
+	 *
 	 *  TODO: remove
-	 *  
+	 *
 	 */
 	public int getNextFreeSlotInCrafting(Inventory inventory) {
-		for (int i : craftSlots) 
-			if (inventory.getItem(i)==null || inventory.getItem(i).getType().equals(Material.AIR)) 
+		for (int i : craftSlots)
+			if (inventory.getItem(i)==null || inventory.getItem(i).getType().equals(Material.AIR))
 				return i;
 		return -1;
 	}
@@ -584,7 +628,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	 */
 	public boolean addItemToNextAvailableSlot(Inventory inv, ItemStack is) {
 		int i = inv.firstEmpty();
-		
+
 		if (i==-1) {
 			for (ItemStack is2 : inv.getContents()) {
 				if (CustomItemUtil.getUUIDFromItemStack(is2).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) {
@@ -600,7 +644,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Gets the next free slot based on the provided list and sets the item to it
-	 * 
+	 *
 	 * @apiNote <b>WARINING</b> Will override any item with the unclickable uuid!
 	 */
 	public boolean addItemToNextAvailableSlotBasedOnList(Inventory inv, ItemStack is, List<Integer> ints) {
@@ -618,7 +662,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Gets the next free slot based on the provided list and sets the item to it
-	 * 
+	 *
 	 * @apiNote <b>WARINING</b> Will override any item with the unclickable uuid!
 	 */
 	public boolean addItemToNextAvailableSlotBasedOnList(Inventory inv, ItemStack is, int[] ints) {
@@ -636,7 +680,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	}
 	/**
 	 * Gets the next free slot based on the provided list and sets the item to it
-	 * 
+	 *
 	 * @apiNote <b>WARINING</b> Will override any item with the unclickable uuid!
 	 */
 	public boolean addItemToNextAvailableSlotBasedOnList(Inventory inv, ItemStack is, Set<Integer> ints) {
@@ -652,7 +696,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}
 		return false;
 	}
-	
+
 	public List<List<CustomRecipe>> getRecipes() {
 		List<String> list = new ArrayList<>();
 		List<List<CustomRecipe>> list2 = new ArrayList<>();
@@ -665,12 +709,12 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}
 		return list2;
 	}
-	
+
 	// FOR EXTENDED CUSTOM CLASSES
-	
+
 	/**
 	 * Called to check if the item can be crafted
-	 * 
+	 *
 	 * @param location The {@link CustomCrafterMachine} {@link Location}
 	 * @param customRecipe The current {@link CustomRecipe}
 	 * @return If the crafting can go ahead
@@ -678,7 +722,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	public boolean hasCost(Location location, CustomRecipe customRecipe) { return true; }
 	/**
 	 * Called to take the cost of the crafting
-	 * 
+	 *
 	 * @param location The {@link CustomCrafterMachine} {@link Location}
 	 * @param customRecipe The current {@link CustomRecipe}
 	 */
@@ -689,7 +733,8 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		Inventory inv = CustomFeatureLoader.getLoader().getHandler().getInventoryFromLocation(location);
 		for (Integer i : resultSlots) {
 			ItemStack item = inv.getItem(i);
-			if (item == null || item.getType().equals(Material.AIR)) continue;
+			if (item == null || item.getType().equals(Material.AIR) || isUnclickable(item)) continue;
+			if (NBTUtil.getTagsFromItem(item).getString("RECIPE")!=null || Constants.getExtraData(item).equalsIgnoreCase("MRECIPE")) continue;
 			if (item.getAmount() > 1) {
 				inv.setItem(i, item.asQuantity(item.getAmount() - 1));
 				return item.asOne();

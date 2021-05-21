@@ -5,6 +5,7 @@ import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
@@ -160,6 +161,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return true;
         Nation host = nc.getCurrentNation();
+        if (host.getFlags().contains(NationFlag.EVERYONE_CAN_INTERACT.name())) return true;
         if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
@@ -227,6 +229,7 @@ public class ProtectionManager implements Listener {
         Profile profile = instance.getProfile(player.getUniqueId());
         if (nc == null) return;
         Nation host = nc.getCurrentNation();
+        if (host.getFlags().contains(NationFlag.EVERYONE_CAN_INTERACT.name())) return;
         if (Permission.hasForeignPermission(profile, Permission.INTERACT, host)) return;
         if (Permission.hasAccessHere(profile, nc)) return;
         if (!profile.isInNation()) {
