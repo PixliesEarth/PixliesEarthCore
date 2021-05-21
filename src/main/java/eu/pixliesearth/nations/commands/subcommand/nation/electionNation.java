@@ -50,7 +50,7 @@ public class electionNation extends SubCommand implements Constants {
             ChestGui gui = new ChestGui(6, "§b" + nation.getName() + " §7");
 
             StaticPane background = new StaticPane(0, 0, 9, 6);
-            background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).build(), e -> e.setCancelled(true));
+            background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
 
             PaginatedPane electionPane = new PaginatedPane(0, 0, 9, 5);
 

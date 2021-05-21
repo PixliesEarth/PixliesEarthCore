@@ -173,7 +173,7 @@ public final class Main extends JavaPlugin {
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
-    private @Getter final boolean warEnabled = true;
+    private @Getter final boolean warEnabled = false;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
