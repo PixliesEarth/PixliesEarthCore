@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
+import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
@@ -49,10 +50,10 @@ public class electionNation extends SubCommand implements Constants {
         if (args.length == 0) {
             ChestGui gui = new ChestGui(6, "§b" + nation.getName() + " §7");
 
-            StaticPane background = new StaticPane(0, 0, 9, 6);
+            StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOWEST);
             background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
 
-            PaginatedPane electionPane = new PaginatedPane(0, 0, 9, 5);
+            PaginatedPane electionPane = new PaginatedPane(0, 0, 9, 5, Pane.Priority.HIGHEST);
 
             List<GuiItem> filler = new ArrayList<>();
             for (NationElection election : nation.getElections().values()) {

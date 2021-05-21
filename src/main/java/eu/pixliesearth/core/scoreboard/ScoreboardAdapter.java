@@ -178,7 +178,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     } else {
                         if (nc == null) {
                             builder.append("§2█");
-                        } else  {
+                        } else {
                             builder.append("█");
                         }
                     }
@@ -192,18 +192,15 @@ public class ScoreboardAdapter implements AssembleAdapter {
             case STANDARD:
                 final String timeIcon = instance.getCalendar().day() ? "§e☀" : "§9☽";
 
-                returnable.add(" " + instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(world.getTime() + 6000L) + "§r " + timeIcon);
+                returnable.add(" " + instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(instance.getCalendar().getWorld().getTime() + 6000L) + "§r " + timeIcon);
 
                 returnable.add(" ");
 
                 returnable.add("    " + profile.getBalanceFormatted() + "  §e" + energy);
 
-                if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId())) {
-                    returnable.add("§7Staff:" + c + " enabled");
-                }
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
-                    returnable.add(" ");
+                    returnable.add("  ");
                     returnable.add("  §7Nation: " + c + nation.getName());
                     returnable.add("  §7PP: " + c + nation.getXpPoints());
                     returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra().toLowerCase()));
