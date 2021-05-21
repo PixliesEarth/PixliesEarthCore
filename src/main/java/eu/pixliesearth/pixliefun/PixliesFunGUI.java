@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
+import eu.pixliesearth.core.custom.commands.CIControl;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -182,6 +183,7 @@ public class PixliesFunGUI implements Constants {
         for (String s : CustomFeatureLoader.getLoader().getHandler().getCategoriesForItems().get(category)) {
             if (s.contains("test")) continue;
             if (s.equalsIgnoreCase(" ")) continue;
+            if (CIControl.DISABLED_ITEMS.contains(s)) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -38,7 +39,11 @@ public class PixliesCalendar extends Thread {
     }
 
     public boolean day() {
-        return Bukkit.getWorlds().get(0).getTime() < 12300 || Bukkit.getWorlds().get(0).getTime() > 23850;
+        return getWorld().getTime() < 12300 || getWorld().getTime() > 23850;
+    }
+
+    public World getWorld() {
+        return Bukkit.getWorld("world");
     }
 
     public void dayPassed() {
@@ -84,14 +89,14 @@ public class PixliesCalendar extends Thread {
 
     public void startRunner() {
         prevTime = 0L;
-        currTime = (Bukkit.getWorlds().get(0).getTime() + 6000L) % 24000L;
+        currTime = (getWorld().getTime() + 6000L) % 24000L;
         this.start();
     }
 
     public void run() {
         while (!exit) {
             this.prevTime = this.currTime;
-            this.currTime = (Bukkit.getWorlds().get(0).getTime() + 6000L) % 24000L;
+            this.currTime = (getWorld().getTime() + 6000L) % 24000L;
             if (this.currTime < this.prevTime) dayPassed();
         }
     }

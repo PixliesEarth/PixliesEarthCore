@@ -202,7 +202,6 @@ public final class Main extends JavaPlugin {
 
     @SuppressWarnings("resource")
 	private void init() {
-
         gson = new Gson();
 
         utilLists = new UtilLists();
