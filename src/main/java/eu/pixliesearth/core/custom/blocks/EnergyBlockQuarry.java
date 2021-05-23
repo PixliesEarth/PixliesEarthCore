@@ -120,39 +120,8 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
 	        		}
 	        	}
 	        }
-	        
-	        /*
-	        for (int x = minX; x <= maxX; ++x) {
-	            for (int y = 0; y <= maxY; ++y) {
-	                for (int z = minZ; z <= maxZ; ++z) {
-	                    Block b = chunk.getBlock(x & 15, y, z & 15);
-	                    if (b==null || b.getType().equals(Material.AIR)) continue;
-	                    // TODO: ignore unbreakable blocks
-	        			String id = CustomItemUtil.getUUIDFromLocation(b.getLocation());
-	        			if (id==null) continue;
-	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
-	        			if (is==null) continue;
-	        			inventory.addItem(is);
-	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								h.removeCustomBlockFromLocation(b.getLocation());
-								b.setType(Material.AIR);
-							}
-	        			}, 1L);
-	        			h.removePowerFromLocation(location, energyPerOperation);
-	        			return;
-	                }
-	            }
-	        }
-	        */
 		} else {
-			if (timer.hasExpired()) {
-				h.unregisterTimer(location);
-			} else {
-				// Do nothing
-				return;
-			}
+			if (timer.hasExpired()) h.unregisterTimer(location);
 		}
 	}
 

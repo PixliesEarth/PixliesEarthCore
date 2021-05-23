@@ -68,15 +68,19 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		CustomFeatureLoader.getLoader().getHandler().addPowerToLocation(location, Double.parseDouble(map.get("ENERGY")));
 		try {
 			JSONObject obj = (JSONObject) new JSONParser().parse(map.get("LIQUID"));
-			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, new ConcurrentHashMap<String, Integer>(){private static final long serialVersionUID = 2953303923607067655L;{
-				for (Object key : obj.keySet()) {
-					try {
-						put((String) key, Integer.parseInt((String) obj.get(obj)));
-					} catch (Exception e) {
-						put((String) key, 0);
+			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, new ConcurrentHashMap<>() {
+				private static final long serialVersionUID = 2953303923607067655L;
+
+				{
+					for (Object key : obj.keySet()) {
+						try {
+							put((String) key, Integer.parseInt((String) obj.get(obj)));
+						} catch (Exception e) {
+							put((String) key, 0);
+						}
 					}
 				}
-			}});
+			});
 		} catch (ParseException e) {
 			CustomLiquidHandler.getCustomLiquidHandler().registerLiquidContents(location, getLiquidCapacities().keySet());
 		}
@@ -129,7 +133,7 @@ public class EnergyBlockOilFabricator extends CustomEnergyBlock implements ILiqu
 		if (remainingOil<=0) {
 			inv.setItem(12, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cOut of oil!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 		} else {
-			if (getCapacity(loc)<=energyPerAction) {
+			if (getContainedPower(loc)<=energyPerAction) {
 				inv.setItem(12, new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cOut of energy!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 			} else {
 				inv.setItem(12, new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayName("§aExtracting of oil!").addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
