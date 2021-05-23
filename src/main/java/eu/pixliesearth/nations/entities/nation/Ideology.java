@@ -6,13 +6,17 @@ import org.bukkit.Material;
 
 public enum Ideology {
 
-    PEOPLES_REPUBLIC('4', Material.RED_STAINED_GLASS_PANE),
+    ANARCHISM('7', Material.BARRIER),
+    COMMUNISM('4', Material.IRON_PICKAXE),
+    SOCIAL_DEMOCRACY('c', Material.POPPY),
+    CONSERVATIVE_DEMOCRACY('9', Material.CORNFLOWER),
+    LIBERAL_DEMOCRACY('e', Material.TORCH),
+    ABSOLUTE_MONARCHY('6', Material.GOLDEN_HELMET),
+    FASCISM('3', Material.WITHER_ROSE),
     THEOCRACY('2', Material.GREEN_STAINED_GLASS_PANE),
-    REPUBLIC('b', Material.CYAN_STAINED_GLASS_PANE),
-    MONARCHY('6', Material.YELLOW_STAINED_GLASS_PANE),
     CONSTITUTIONAL_MONARCHY('3', Material.BLUE_STAINED_GLASS_PANE),
     DICTATORSHIP('5', Material.PURPLE_STAINED_GLASS_PANE),
-    TRIBE('f', Material.WHITE_STAINED_GLASS_PANE),
+    TRIBE('f', Material.CAMPFIRE),
     ;
 
     private final @Getter char colour;

@@ -1,5 +1,8 @@
 package eu.pixliesearth.nations.entities.nation;
 
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import lombok.AllArgsConstructor;
@@ -41,7 +44,7 @@ public class NationElection {
     private boolean started;
 
     public static NationElection create(String topic, Player starter) {
-        return new NationElection(Methods.generateId(3), topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY, false);
+        return new NationElection(Methods.generateId(3), topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY * 2, false);
     }
 
     public boolean ended() {
@@ -88,6 +91,18 @@ public class NationElection {
 
     public String getWinner() {
         return Methods.sortByValue(getVotesByOption()).entrySet().iterator().next().getKey();
+    }
+
+    public void vote(Player player, String option) {
+        if (votes.containsKey(player.getUniqueId().toString())) {
+            player.sendMessage(Lang.NATION + "§7You have already voted in this eleciton.");
+            return;
+        }
+        votes.put(player.getUniqueId().toString(), option);
+        Profile profile = Main.getInstance().getProfile(player.getUniqueId());
+        Nation nation = profile.getCurrentNation();
+        nation.addElection(this);
+        player.sendMessage(Lang.NATION + "§7Thank you for voting in this election.");
     }
 
 }

@@ -12,6 +12,7 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationElection;
 import eu.pixliesearth.utils.ItemBuilder;
+import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,8 +32,21 @@ public class electionNation extends SubCommand implements Constants {
     @Override
     public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
-        returner.put("create", 1);
-        returner.put("addoption", 1);
+        if (args.length == 1) {
+            returner.put("create", 1);
+            returner.put("addoption", 1);
+        } else if (args.length == 2 && args[1].equalsIgnoreCase("addoption")) {
+            returner.put("option", 2);
+        } else if (args.length == 3 && args[1].equalsIgnoreCase("addoption")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Profile profile = instance.getProfile(player.getUniqueId());
+                if (profile.isInNation()) {
+                    for (String s : profile.getCurrentNation().getElections().keySet())
+                        returner.put(s, 3);
+                }
+            }
+        }
         return returner;
     }
 
@@ -62,7 +76,24 @@ public class electionNation extends SubCommand implements Constants {
                 builder.addLoreLine("§7ID: §b" + election.getId());
                 builder.addLoreLine("§7Started by: §b" + Bukkit.getOfflinePlayer(election.getStartedBy()).getName());
                 builder.addLoreAll(election.getOptionsFormatted());
-                filler.add(new GuiItem(builder.build(), e -> e.setCancelled(true)));
+                filler.add(new GuiItem(builder.build(), e -> {
+                    e.setCancelled(true);
+                    ChestGui voteGui = new ChestGui(3, "§b" + election.getTopic());
+
+                    PaginatedPane optionsPane = new PaginatedPane(0, 0, 9, 3);
+                    List<GuiItem> optionsFiller = new ArrayList<>();
+                    for (Map.Entry<String, String> entry : election.getOptions().entrySet()) {
+                        optionsFiller.add(new GuiItem(new ItemBuilder(Methods.getSBWoolByCC(entry.getKey())).setDisplayName(entry.getKey() + entry.getValue()).build(), e1 -> {
+                            e1.setCancelled(true);
+                            election.vote(player, entry.getValue());
+                            player.closeInventory();
+                        }));
+                    }
+                    optionsPane.populateWithGuiItems(optionsFiller);
+                    voteGui.addPane(optionsPane);
+
+                    voteGui.show(player);
+                }));
             }
             electionPane.populateWithGuiItems(filler);
 

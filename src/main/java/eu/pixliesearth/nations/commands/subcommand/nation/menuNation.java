@@ -14,6 +14,7 @@ import eu.pixliesearth.nations.entities.nation.ranks.Rank;
 import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
+import eu.pixliesearth.utils.Timer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
@@ -168,7 +169,19 @@ public class menuNation extends SubCommand {
                         }
                         pane.addItem(new GuiItem(iBuilder.build(), event1 -> {
                             event1.setCancelled(true);
+                            if (nation.getExtras().containsKey("RELIGION-TIMER") && !profile.isStaff()) {
+                                Timer timer = new Timer((Map<String, String>) nation.getExtras().get("RELIGION-TIMER"));
+                                if (timer.hasExpired()) {
+                                    nation.getExtras().remove("RELIGION-TIMER");
+                                    nation.save();
+                                } else {
+                                    player.sendMessage(Lang.NATION + "§7You can change your nation religion again in §c§l" + timer.getRemainingAsString() + "§7.");
+                                    player.closeInventory();
+                                    return;
+                                }
+                            }
                             nation.setReligion(religion1.name());
+                            nation.getExtras().put("RELIGION-TIMER", new Timer(Timer.DAY * 14).toMap());
                             nation.save();
                             player.closeInventory();
                             open(player, MenuPage.SETTINGS);
@@ -213,7 +226,19 @@ public class menuNation extends SubCommand {
                         }
                         pane.addItem(new GuiItem(iBuilder.build(), event1 -> {
                             event1.setCancelled(true);
+                            if (nation.getExtras().containsKey("IDEOLOGY-TIMER") && !profile.isStaff()) {
+                                Timer timer = new Timer((Map<String, String>) nation.getExtras().get("IDEOLOGY-TIMER"));
+                                if (timer.hasExpired()) {
+                                    nation.getExtras().remove("IDEOLOGY-TIMER");
+                                    nation.save();
+                                } else {
+                                    player.sendMessage(Lang.NATION + "§7You can change your nation ideology again in §c§l" + timer.getRemainingAsString() + "§7.");
+                                    player.closeInventory();
+                                    return;
+                                }
+                            }
                             nation.setIdeology(ideology1.name());
+                            nation.getExtras().put("IDEOLOGY-TIMER", new Timer(Timer.DAY * 14).toMap());
                             nation.save();
                             player.closeInventory();
                             open(player, MenuPage.SETTINGS);

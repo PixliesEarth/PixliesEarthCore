@@ -145,14 +145,29 @@ public class Methods {
 
     public static Material getSBWoolByCC(String chatColor) {
         switch (chatColor) {
+            case "§1":
+                return Material.BLACK_WOOL;
+            case "§2":
+                return Material.GREEN_WOOL;
+            case "§c":
+            case "§4":
+                return Material.RED_WOOL;
+            case "§d":
+            case "§5":
+                return Material.MAGENTA_WOOL;
+            case "§e":
+            case "§6":
+                return Material.YELLOW_WOOL;
+            case "§7":
+                return Material.LIGHT_GRAY_WOOL;
+            case "§8":
+                return Material.GRAY_WOOL;
+            case "§9":
+                return Material.BLUE_WOOL;
             case "§b":
                 return Material.LIGHT_BLUE_WOOL;
-            case "§c":
-                return Material.RED_WOOL;
-            case "§e":
-                return Material.YELLOW_WOOL;
             case "§a":
-                return Material.GREEN_WOOL;
+                return Material.LIME_WOOL;
             case "§3":
                 return Material.CYAN_WOOL;
         }

@@ -6,6 +6,7 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
+import eu.pixliesearth.utils.Timer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -58,11 +59,23 @@ public class renameNation extends SubCommand {
                         player.sendMessage(Lang.NATION_NAME_UNVALID.get(player).replace("10", "15"));
                         return false;
                     }
+                    if (nation.getExtras().containsKey("RENAME-TIMER") && !profile.isStaff()) {
+                        Timer renameTimer = new Timer((Map<String, String>) nation.getExtras().get("RENAME-TIMER"));
+                        if (renameTimer.hasExpired()) {
+                            nation.getExtras().remove("RENAME-TIMER");
+                            nation.save();
+                        } else {
+                            sender.sendMessage(Lang.NATION + "§7You can change your nation name again in §c§l" + renameTimer.getRemainingAsString() + "§7.");
+                            return false;
+                        }
+                    }
                     rename = nation.rename(args[0].replace("&", ""));
                     if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
+                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 14).toMap());
+                    nation.save();
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());
                     placeholders.put("%OLD%", oldName);
@@ -79,12 +92,24 @@ public class renameNation extends SubCommand {
                         player.sendMessage(Lang.NATION_DOESNT_EXIST.get(player));
                         return false;
                     }
+                    if (nation.getExtras().containsKey("RENAME-TIMER") && !profile.isStaff()) {
+                        Timer renameTimer = new Timer((Map<String, String>) nation.getExtras().get("RENAME-TIMER"));
+                        if (renameTimer.hasExpired()) {
+                            nation.getExtras().remove("RENAME-TIMER");
+                            nation.save();
+                        } else {
+                            sender.sendMessage(Lang.NATION + "§7You can change your nation name again in §c§l" + renameTimer.getRemainingAsString() + "§7.");
+                            return false;
+                        }
+                    }
                     final String oldName1 = nation.getName();
                     rename = nation.rename(args[0]);
                     if (!rename) {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
+                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 14).toMap());
+                    nation.save();
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());
                     placeholders.put("%OLD%", oldName1);
