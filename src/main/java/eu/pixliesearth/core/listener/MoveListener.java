@@ -6,6 +6,9 @@ import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
@@ -61,6 +64,18 @@ public class MoveListener implements Listener {
 							NationChunk.unclaim(player, nc.getWorld(), nc.getX(), nc.getZ(), changeType);
 						}
 	                }
+	                NationChunk fnc = NationChunk.get(fc);
+	                NationChunk tnc = NationChunk.get(tc);
+
+					if (fnc != null &&
+							tnc != null &&
+							tnc.getNationId().equals(profile.getNationId()) &&
+							fnc.getNationId().equals(profile.getNationId()) &&
+							!fnc.getType().equals(tnc.getType())
+					) {
+						player.sendActionBar(tnc.getType().getDisplayName());
+					}
+
 	                Nation fn = NationChunk.getNationData(fc);
 	                Nation tn = NationChunk.getNationData(tc);
 	                if (!Objects.equals(fn, tn)) {
