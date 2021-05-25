@@ -292,7 +292,7 @@ public enum Lang {
 
     public static final String EARTH = "§x§2§E§D§C§3§E§lE§x§3§0§C§A§3§E§lA§x§3§1§B§F§3§E§lR§x§3§8§B§2§4§3§lT§x§3§7§A§3§4§1§lH §8| ";
     public static final String NATION = "§x§2§F§D§1§E§5§lN§x§3§4§C§6§D§8§lA§x§3§7§B§A§C§A§lT§x§3§5§B§0§B§F§lI§x§3§3§A§3§B§0§lO§x§3§2§9§9§A§5§lN §8| ";
-    public static final String DISCORD = "§3DISCORD §8| ";
+    public static final String DISCORD = "§3§lDISCORD §8| ";
     public static final String PIXLIECOINS = "§3PIXLIECOINS §8| ";
     public static final String GUNS = "§aGUNS §8| ";
     public static final String CUSTOMITEMS = "§dCUSTOM ITEMS §8| ";

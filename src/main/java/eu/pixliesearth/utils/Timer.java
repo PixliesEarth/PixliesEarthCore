@@ -46,7 +46,7 @@ public class Timer {
     }
 
     public String getRemainingAsString() {
-        return Methods.getTimeAsString(expiry - System.currentTimeMillis(), false);
+        return expiry - System.currentTimeMillis() >= Timer.DAY ? Methods.formatTime(expiry - System.currentTimeMillis()) : Methods.getTimeAsString(expiry - System.currentTimeMillis(), false);
     }
 
     public boolean hasExpired() { return getRemaining() <= 0; }

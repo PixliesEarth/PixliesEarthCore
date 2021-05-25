@@ -134,6 +134,33 @@ public class rankNation extends SubCommand {
             return false;
         }
         Nation n = profile.getCurrentNation();
+
+        if (args[0].equalsIgnoreCase("rename")) {
+            if (n.getRanks().get(args[1]) == null) {
+                Lang.RANK_DOESNT_EXIST.send(player);
+                return false;
+            }
+            Rank rank = Rank.get(n.getRanks().get(args[1]));
+            if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority() && profile.getCurrentNationRank().getPriority() != 666) {
+                Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
+                return false;
+            }
+            StringBuilder allArgs = new StringBuilder();
+            for (String s : args)
+                allArgs.append(s).append(" ");
+            String prefix = StringUtils.substringBetween(allArgs.toString(), "\"", "\"") != null ? StringUtils.substringBetween(allArgs.toString(), "\"", "\"") : args[2];
+            if (prefix.length() > 15) {
+                Lang.INVALID_INPUT.send(sender);
+                return false;
+            }
+            rank.setPrefix(prefix.replace("&", "§"));
+            n.getRanks().put(rank.getName(), rank.toMap());
+            n.save();
+            //TODO Proper message
+            sender.sendMessage(Lang.NATION + "§7Rank renamed.");
+            return false;
+        }
+
         switch (args.length) {
             case 4:
                 if (args[0].equalsIgnoreCase("create")) {
@@ -230,25 +257,6 @@ public class rankNation extends SubCommand {
                     n.getRanks().put(rank.getName(), rank.toMap());
                     n.save();
                     Lang.REMOVED_PERMISSION_FROM_RANK.send(player, "%RANK%;" + rank.getName(), "%PERMISSION%;" + args[2].toUpperCase());
-                } else if (args[0].equalsIgnoreCase("rename")) {
-                    if (n.getRanks().get(args[1]) == null) {
-                        Lang.RANK_DOESNT_EXIST.send(player);
-                        return false;
-                    }
-                    Rank rank = Rank.get(n.getRanks().get(args[1]));
-                    if (!profile.isStaff() && profile.getCurrentNationRank().getPriority() <= rank.getPriority()) {
-                        Lang.CANT_SET_RANK_WITH_HIGHER_OR_EQUAL_PRIORITY.send(player);
-                        return false;
-                    }
-                    if (args[2].length() > 10) {
-                        Lang.INVALID_INPUT.send(sender);
-                        return false;
-                    }
-                    rank.setPrefix(args[2].replace("&", "§"));
-                    n.getRanks().put(rank.getName(), rank.toMap());
-                    n.save();
-                    //TODO Proper message
-                    sender.sendMessage(Lang.NATION + "§7Rank renamed.");
                 }
                 break;
             case 2:

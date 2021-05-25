@@ -22,6 +22,8 @@ public class MiniMick {
     private @Getter TextChannel chatChannel;
     private static final @Getter Map<String, DiscordCommand> commands = new HashMap<>();
 
+    public static String prefix = Main.getInstance().getConfig().getString("discord-prefix", "~");
+
     public void start() {
 
         String token = Main.getInstance().getConfig().getString("discordtoken", "TOKEN_HERE");
@@ -29,8 +31,6 @@ public class MiniMick {
             Bukkit.getConsoleSender().sendMessage("§cDiscord token is not configured. Bot will not start.");
             return;
         }
-
-        String prefix = Main.getInstance().getConfig().getString("discord-prefix", "~");
 
         api = new DiscordApiBuilder().setToken(token).login().join();
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");

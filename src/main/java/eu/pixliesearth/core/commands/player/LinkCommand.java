@@ -2,6 +2,7 @@ package eu.pixliesearth.core.commands.player;
 
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.command.Command;
@@ -28,12 +29,12 @@ public class LinkCommand implements CommandExecutor {
             return false;
         }
         if (instance.getUtilLists().discordcodes.containsValue(player.getUniqueId())) {
-            player.sendMessage(Lang.DC_ALREADY_HAVE_CODE.get(sender).replace("%CODE%", getCode(player.getUniqueId())));
+            player.sendMessage(Lang.DC_ALREADY_HAVE_CODE.get(sender).replace("%CODE%", getCode(player.getUniqueId())).replace("/", MiniMick.prefix));
             return false;
         }
         String code = Methods.generateId(5);
         instance.getUtilLists().discordcodes.put(code, player.getUniqueId());
-        player.sendMessage(Lang.DC_VERIFICATION_CODE.get(sender).replace("%CODE%", code));
+        player.sendMessage(Lang.DC_VERIFICATION_CODE.get(sender).replace("%CODE%", code).replace("/", MiniMick.prefix));
         return false;
     }
 

@@ -60,13 +60,15 @@ public class NationElection {
 
         Map<String, Integer> votesByOption = getVotesByOption();
 
+        lines.add(" ");
+
         // STRING 1 = COLOR
         // STRING 2 = NAME
         for (Map.Entry<String, String> entry : options.entrySet()) {
             if (started && ended() && entry.getValue().equalsIgnoreCase(getWinner())) {
-                lines.add("§a✔ " + entry.getKey() + entry.getValue() + "§8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votesByOption.size(), 7, "|", entry.getKey(), "§7") + "§8]");
+                lines.add("§a✔ " + entry.getKey() + entry.getValue() + " §8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votes.size(), 7, "|", entry.getKey(), "§7") + "§8] §7(§a" + votesByOption.get(entry.getValue()) + "§7)");
             } else {
-                lines.add(entry.getKey() + entry.getValue() + "§8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votesByOption.size(), 7, "|", entry.getKey(), "§7") + "§8]");
+                lines.add(entry.getKey() + entry.getValue() + " §8[" + Methods.getProgressBar(votesByOption.get(entry.getValue()), votes.size(), 7, "|", entry.getKey(), "§7") + "§8] §7(§f" + votesByOption.get(entry.getValue()) + "§7)");
             }
         }
         return lines;
@@ -82,8 +84,8 @@ public class NationElection {
 
     public Map<String, Integer> getVotesByOption() {
         Map<String, Integer> votesByOption = new HashMap<>();
+        options.values().forEach(s -> votesByOption.put(s, 0));
         for (String option : votes.values()) {
-            votesByOption.putIfAbsent(option, 0);
             votesByOption.put(option, votesByOption.get(option) + 1);
         }
         return votesByOption;

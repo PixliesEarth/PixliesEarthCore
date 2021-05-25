@@ -197,7 +197,7 @@ public class NationChunk {
         if (!event.isCancelled()) {
             // Nation.getById(nc.getNationId()).deposit(15);
             nc.unclaim();
-            for (Player members : profile.getCurrentNation().getOnlineMemberSet())
+            for (Player members : nc.getCurrentNation().getOnlineMemberSet())
                 members.sendMessage(Lang.PLAYER_UNCLAIMED.get(members).replace("%PLAYER%", player.getDisplayName()).replace("%X%", x + "").replace("%Z%", z + ""));
             System.out.println("§bChunk unclaimed at §e" + nc.getX() + "§8, §e" + nc.getZ());
         }

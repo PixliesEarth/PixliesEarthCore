@@ -32,12 +32,12 @@ public class electionNation extends SubCommand implements Constants {
     @Override
     public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
         Map<String, Integer> returner = new HashMap<>();
-        if (args.length == 1) {
+        if (args.length == 2) {
             returner.put("create", 1);
             returner.put("addoption", 1);
-        } else if (args.length == 2 && args[1].equalsIgnoreCase("addoption")) {
-            returner.put("option", 2);
         } else if (args.length == 3 && args[1].equalsIgnoreCase("addoption")) {
+            returner.put("option", 2);
+        } else if (args.length == 4 && args[1].equalsIgnoreCase("addoption")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 Profile profile = instance.getProfile(player.getUniqueId());
@@ -137,7 +137,7 @@ public class electionNation extends SubCommand implements Constants {
                     Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%;/n election addoption <option> <electionid>");
                     return false;
                 }
-                NationElection election = nation.getElections().get(args[1]);
+                NationElection election = nation.getElections().get(args[2]);
                 if (election == null) {
                     Lang.X_DOESNT_EXIST.send(sender, "%X%;Election");
                     return false;
@@ -148,7 +148,7 @@ public class electionNation extends SubCommand implements Constants {
                 }
                 election.addOption(args[1]);
                 nation.addElection(election);
-                Lang.PLAYER_ADDED_X.send(sender, "%X%;Election option");
+                Lang.PLAYER_ADDED_X.send(sender, "%Y%;Election option", "%PLAYER%;" + sender.getName(), "%X%;" + args[1]);
             }
         }
         return true;

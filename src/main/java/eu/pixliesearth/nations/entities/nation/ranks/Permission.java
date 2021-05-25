@@ -31,7 +31,8 @@ public enum Permission {
     SET_WIKI_LINK,
     MANAGE_WAR,
     EDIT_FLAGS,
-    CHANGE_CAPITAL
+    CHANGE_CAPITAL,
+    CHUNK_MENU,
     ;
 
     public boolean hasPermission(CommandSender sender) {

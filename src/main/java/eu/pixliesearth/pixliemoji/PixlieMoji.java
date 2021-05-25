@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class PixlieMoji {
 
-    public static final Map<String, Character> pixlieMojis = new HashMap<String, Character>(){{
+    public static final Map<String, Character> pixlieMojis = new HashMap<>() {{
         put(":relax:", '是');
         put(":mad:", '了');
         put(":really:", '不');
