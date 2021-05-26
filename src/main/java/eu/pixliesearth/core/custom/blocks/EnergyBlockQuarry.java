@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.items.FuelUraniumChunk;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Color;
@@ -109,6 +110,11 @@ public class EnergyBlockQuarry extends CustomEnergyBlock implements IHopperable 
 	        			ItemStack is = CustomItemUtil.getItemStackFromUUID(id);
 	        			if (is==null) continue;
 	        			if (UNBREAKABLES.contains(id)) continue;
+	        			if (id.equals("Minecraft:iron_ore")) {
+	        				double d = Math.random();
+	        				if (d < 0.95)
+	        					is = CustomItemUtil.getItemStackFromUUID("Pixlies:Uranium_Chunk");
+						}
 	        			inventory.addItem(is);
 	        			Bukkit.getScheduler().scheduleSyncDelayedTask(h.getInstance(), () -> {
 							makeParticleLine(location.clone(), b.getLocation().clone());
