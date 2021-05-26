@@ -470,13 +470,13 @@ public final class Main extends JavaPlugin {
         // getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
-        getCommand("marry").setExecutor(new MarryCommand());
-        getCommand("divorce").setExecutor(new DivorceCommand());
+        // getCommand("marry").setExecutor(new MarryCommand());
+        // getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
         getCommand("tphere").setExecutor(new TpHereCommand());
-        getCommand("family").setExecutor(new FamilyCommand());
-        getCommand("woohoo").setExecutor(new WoohooCommand());
-        getCommand("adopt").setExecutor(new AdoptCommand());
+        // getCommand("family").setExecutor(new FamilyCommand());
+        // getCommand("woohoo").setExecutor(new WoohooCommand());
+        // getCommand("adopt").setExecutor(new AdoptCommand());
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
         getCommand("realname").setExecutor(new RealNameCommand());
