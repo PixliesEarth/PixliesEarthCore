@@ -10,8 +10,8 @@ import org.bukkit.event.HandlerList;
 public class NationCommandExecuteEvent extends Event implements Cancellable {
 
     public static HandlerList handlers = new HandlerList();
-    private @Getter CommandSender sender;
-    private @Getter SubCommand command;
+    private @Getter final CommandSender sender;
+    private @Getter final SubCommand command;
     private boolean isCancelled = false;
 
 
@@ -22,11 +22,11 @@ public class NationCommandExecuteEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers(){
-        return ShootEvent.handlers;
+        return handlers;
     }
 
     public static HandlerList getHandlerList(){
-        return ShootEvent.handlers;
+        return handlers;
     }
 
     @Override

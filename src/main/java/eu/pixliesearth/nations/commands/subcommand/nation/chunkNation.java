@@ -47,7 +47,16 @@ public class chunkNation extends SubCommand {
         ChestGui chestGui = new ChestGui(3, "Chunk-Menu §b" + nc.getX() + "§7, §b" + nc.getZ());
 
         StaticPane pane = new StaticPane(0, 0, 9, 3);
-        pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build());
+        pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+
+        GuiItem chunkPermissions = new GuiItem(
+                new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/8ad943d063347f95ab9e9fa75792da84ec665ebd22b050bdba519ff7da61db"))
+                        .setDisplayName("§cManage Access §8(§cSoon§8)")
+                        .build(),
+                e -> {
+                    e.setCancelled(true);
+                }
+        );
 
         GuiItem chunkType = new GuiItem(
                 new ItemBuilder(nc.getType().getIcon())
@@ -59,16 +68,7 @@ public class chunkNation extends SubCommand {
                 }
         );
 
-        GuiItem chunkPermissions = new GuiItem(
-                new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/8ad943d063347f95ab9e9fa75792da84ec665ebd22b050bdba519ff7da61db"))
-                        .setDisplayName("§cManage Access")
-                        .build(),
-                e -> {
-                    e.setCancelled(true);
-                }
-        );
-
-        GuiItem unclaim = new GuiItem(
+        GuiItem unClaim = new GuiItem(
                 new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/e9cdb9af38cf41daa53bc8cda7665c509632d14e678f0f19f263f46e541d8a30"))
                         .setDisplayName("§c§lUnclaim this chunk")
                         .build(),
@@ -80,7 +80,7 @@ public class chunkNation extends SubCommand {
 
         pane.addItem(chunkPermissions, 2, 1);
         pane.addItem(chunkType, 4, 1);
-        pane.addItem(unclaim, 6, 1);
+        pane.addItem(unClaim, 6, 1);
 
         chestGui.addPane(pane);
 
@@ -89,7 +89,7 @@ public class chunkNation extends SubCommand {
     }
 
     private void openChunkTypeMenu(Player player, NationChunk chunk) {
-        ChestGui gui = new ChestGui(3, "§bType §8| §c§l❌ §7= Unselectable §8| §a§l✔ §7= Already selected");
+        ChestGui gui = new ChestGui(3, "§c§l❌ §7= §cUnselectable §8| §a§l✔ §7= §aSelected");
 
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 3);
 

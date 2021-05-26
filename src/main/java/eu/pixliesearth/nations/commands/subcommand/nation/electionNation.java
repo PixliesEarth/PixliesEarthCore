@@ -14,6 +14,7 @@ import eu.pixliesearth.nations.entities.nation.NationElection;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -73,6 +74,7 @@ public class electionNation extends SubCommand implements Constants {
             for (NationElection election : nation.getElections().values()) {
                 ItemBuilder builder = new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/74b89ad06d318f0ae1eeaf660fea78c34eb55d05f01e1cf999f331fb32d38942"));
                 builder.setDisplayName("§b" + election.getTopic());
+                if (!election.ended()) builder.addLoreLine("§c§l" + new Timer(election.getStart() + election.getDuration(), false).getRemainingAsString() + " §7left");
                 builder.addLoreLine("§7ID: §b" + election.getId());
                 builder.addLoreLine("§7Started by: §b" + Bukkit.getOfflinePlayer(election.getStartedBy()).getName());
                 builder.addLoreAll(election.getOptionsFormatted());

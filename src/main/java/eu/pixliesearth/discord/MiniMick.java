@@ -63,25 +63,18 @@ public class MiniMick {
 
     }
 
-    static final Color hexToColor( String value )
-    {
+    static Color hexToColor(String value) {
         String digits;
-        if ( value.startsWith( "#" ) )
-        {
-            digits = value.substring( 1, Math.min( value.length( ), 7 ) );
-        }
-        else
-        {
+        if (value.startsWith("#")) {
+            digits = value.substring(1, Math.min(value.length(), 7));
+        } else {
             digits = value;
         }
         String hstr = "0x" + digits;
         Color c;
-        try
-        {
-            c = Color.decode( hstr );
-        }
-        catch ( NumberFormatException nfe )
-        {
+        try {
+            c = Color.decode(hstr);
+        } catch (NumberFormatException nfe) {
             c = null;
         }
         return c;
