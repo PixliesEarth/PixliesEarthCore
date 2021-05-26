@@ -127,6 +127,9 @@ public class PixliesFunGUI implements Constants {
         final List<String> itemsToRender = searchItems(keyWord);
         for (String s : itemsToRender) {
             if (s.contains("test")) continue;
+            if (s.equalsIgnoreCase(" ")) continue;
+            if (CIControl.DISABLED_ITEMS.contains(s)) continue;
+            if (s.contains("_UNB")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
@@ -184,6 +187,7 @@ public class PixliesFunGUI implements Constants {
             if (s.contains("test")) continue;
             if (s.equalsIgnoreCase(" ")) continue;
             if (CIControl.DISABLED_ITEMS.contains(s)) continue;
+            if (s.contains("_UNB")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
             entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
