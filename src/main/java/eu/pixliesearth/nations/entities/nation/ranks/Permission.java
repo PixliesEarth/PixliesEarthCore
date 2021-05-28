@@ -33,6 +33,7 @@ public enum Permission {
     EDIT_FLAGS,
     CHANGE_CAPITAL,
     CHUNK_MENU,
+    MANAGE_ELECTIONS,
     ;
 
     public boolean hasPermission(CommandSender sender) {

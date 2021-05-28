@@ -39,12 +39,12 @@ public class NationElection {
     private String startedBy;
     private Map<String, String> options;
     private Map<String, String> votes;
-    private Long start;
-    private Long duration;
+    private long start;
+    private long duration;
     private boolean started;
 
     public static NationElection create(String topic, Player starter) {
-        return new NationElection(Methods.generateId(3), topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), null, Timer.DAY * 2, false);
+        return new NationElection(Methods.generateId(3), topic, starter.getUniqueId().toString(), new HashMap<>(), new HashMap<>(), System.currentTimeMillis(), Timer.DAY * 2, false);
     }
 
     public boolean ended() {

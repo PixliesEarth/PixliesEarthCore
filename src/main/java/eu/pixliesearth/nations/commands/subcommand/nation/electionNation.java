@@ -11,6 +11,7 @@ import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationElection;
+import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.SkullCreator;
@@ -123,6 +124,10 @@ public class electionNation extends SubCommand implements Constants {
 
             gui.show(player);
         } else {
+            if (!Permission.MANAGE_ELECTIONS.hasPermission(sender)) {
+                Lang.NO_PERMISSIONS.send(sender);
+                return false;
+            }
             if (args[0].equalsIgnoreCase("create")) {
                 StringBuilder builder = new StringBuilder();
                 for (int i = 1; i < args.length; i++) builder.append(args[i]).append(" ");
@@ -151,6 +156,18 @@ public class electionNation extends SubCommand implements Constants {
                 election.addOption(args[1]);
                 nation.addElection(election);
                 Lang.PLAYER_ADDED_X.send(sender, "%Y%;Election option", "%PLAYER%;" + sender.getName(), "%X%;" + args[1]);
+            } else if (args[0].equalsIgnoreCase("delete")) {
+                if (args.length != 2) {
+                    Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%/n election delete <electionId>");
+                    return false;
+                }
+                NationElection election = nation.getElections().get(args[1]);
+                if (election == null) {
+                    Lang.X_DOESNT_EXIST.send(sender, "%X%;Election");
+                    return false;
+                }
+                nation.deleteElection(args[1]);
+                Lang.PLAYER_REMOVED_X.send(sender, "%X%;Election", "%Y%;" + election.getTopic());
             }
         }
         return true;

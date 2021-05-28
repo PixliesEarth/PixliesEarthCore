@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.custom.commands.GiveCustomItems;
 import eu.pixliesearth.core.custom.commands.SkillCommand;
+import eu.pixliesearth.core.custom.commands.SusCommand;
 import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
@@ -190,6 +191,7 @@ public final class Main extends JavaPlugin {
         if (warEnabled) loader.loadCommand(new WarCommand());
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
+        loader.loadCommand(new SusCommand());
         loader.loadListener(new CustomMoneyPickupListener());
         loader.loadListener(new SuicideVestListener());
         loader.loadCustomItem(new ItemEnergyInspector());

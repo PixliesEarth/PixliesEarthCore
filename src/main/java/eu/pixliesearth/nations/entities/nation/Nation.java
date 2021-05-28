@@ -118,6 +118,11 @@ public class Nation {
         this.save();
     }
 
+    public void deleteElection(String id) {
+        this.elections.remove(id);
+        this.save();
+    }
+
     public Settlement getCapital() {
         Settlement capital = null;
         for (Map.Entry<String, String> entry : settlements.entrySet()) {
