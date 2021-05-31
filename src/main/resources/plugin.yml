@@ -4,6 +4,7 @@ main: eu.pixliesearth.Main
 api-version: 1.13
 depend:
   - Vault
+  - Citizens
 softdepend:
   - PlaceholderAPI
 authors: [MickMMars, Machmeinparaillegal, BradBot_1]
@@ -42,15 +43,6 @@ commands:
       - warps
   backup:
     description: backup
-#  economy:
-#    description: Economy command
-#    aliases:
-#      - eco
-#      - money
-#  balance:
-#    description: bal
-#    aliases:
-#      - bal
   heal:
     description: heal
     aliases:
@@ -101,15 +93,6 @@ commands:
     description: vanish
     aliases:
       - v
-#  tpa:
-#    description: tpa
-#    aliases:
-#      - tprq
-#      - tpr
-#  tpaccept:
-#    description: tpaccept
-#    aliases:
-#      - tpaaccept
   enderchest:
     description: Enderchest
     aliases:
@@ -128,8 +111,6 @@ commands:
     description: gungive
     aliases:
       - givegun
-#  shop:
-#    description: shopsystem
   lobby:
     description: send to lobby
     aliases:

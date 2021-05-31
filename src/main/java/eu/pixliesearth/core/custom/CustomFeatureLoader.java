@@ -92,7 +92,6 @@ public class CustomFeatureLoader {
 		} catch (Exception e) {
 			System.err.println("Failed to load custom machines data");
 		}
-		// loadVendors(path);
 		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
 			handler.getCategoriesForItems().get(category).sort(Comparator.comparing(String::toString));
 	}
@@ -211,20 +210,6 @@ public class CustomFeatureLoader {
 	 */
 	public void loadCustomBlock(CustomBlock customBlock) {
 		getHandler().registerBlock(customBlock);
-	}
-
-	@SneakyThrows
-	public void loadVendors(String path) {
-		int i = 0;
-		for (Class<? extends Vendor> clazz : reflectBasedOnExtentionOf(path + ".vendors", Vendor.class)) {
-			loadVendor(clazz.getConstructor().newInstance());
-			i++;
-		}
-		System.out.println("§7Loaded §b" + i + "§7 custom vendors.");
-	}
-
-	public void loadVendor(Vendor vendor) {
-		handler.getVendorMap().put(vendor.getNpcName(), vendor);
 	}
 
 	/**

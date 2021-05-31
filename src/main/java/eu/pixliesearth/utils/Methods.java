@@ -400,6 +400,7 @@ public class Methods {
 
     public static String formatNumber(long value) {
         //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
+        if (value < 1) return Long.toString(value);
         if (value == Long.MIN_VALUE) return formatNumber(Long.MIN_VALUE + 1);
         if (value < 0) return "-" + formatNumber(-value);
         if (value < 1000) return Long.toString(value); //deal with easy case

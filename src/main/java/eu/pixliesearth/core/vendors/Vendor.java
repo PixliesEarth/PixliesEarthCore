@@ -11,9 +11,12 @@ import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import lombok.Data;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -28,11 +31,13 @@ public class Vendor {
 
     private String npcName;
     private String title;
+    private double balance;
     private ItemStack[] items;
 
-    public Vendor(String npcName, String title, ItemStack... items) {
+    public Vendor(String npcName, String title, double balance, ItemStack... items) {
         this.npcName = npcName;
         this.title = title;
+        this.balance = balance;
         this.items = items;
     }
 
@@ -41,7 +46,7 @@ public class Vendor {
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
         if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
         if (soldLast == null) return;
-        ChestGui gui = new ChestGui(6, title);
+        ChestGui gui = new ChestGui(6, title + " §8| §2§l$§a" + balance);
 
         StaticPane outline = new StaticPane(0, 0, 9, 6);
 
@@ -72,6 +77,8 @@ public class Vendor {
                     if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                     else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
                 }
+                gui.setTitle(title + " §8| §2§l$§a" + balance);
+                gui.update();
             }), 4, 5);
         }
 
@@ -107,6 +114,8 @@ public class Vendor {
                 } else {
                     player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                 }
+                gui.setTitle(title + " §8| §2§l$§a" + balance);
+                gui.update();
             }));
         }
 
@@ -148,12 +157,14 @@ public class Vendor {
         itemsPurchased += amount;
         profile.getExtras().put("itemsPurchased", Integer.toString(itemsPurchased));
         profile.save();
+        balance += price;
         return true;
     }
 
     protected boolean sell(ItemStack item, ItemStack placeholderItem, Profile profile, int amount) {
         Player player = profile.getAsPlayer();
         double price = getSellPriceFromItem(placeholderItem) * amount;
+        if (balance < price) return false;
         if (!player.getInventory().containsAtLeast(item, amount)) return false;
         item.setAmount(amount);
         Methods.removeRequiredAmount(item, player.getInventory());
@@ -164,6 +175,7 @@ public class Vendor {
         profile.getExtras().put("itemSold", Integer.toString(itemsSold));
         profile.getExtras().put("soldLast", InventoryUtils.serialize(item));
         profile.save();
+        balance -= price;
         return true;
     }
 
@@ -185,7 +197,7 @@ public class Vendor {
         return null;
     }
 
-    protected static ItemStack g(String uuid) {
+    public static ItemStack g(String uuid) {
         return CustomItemUtil.getItemStackFromUUID(uuid);
     }
 

@@ -52,7 +52,7 @@ public class VendorsCommand extends CustomCommand {
     
     @Override
     public ITabable[] getParams() {
-    	return new ITabable[] {new TabableStrings("BUYPRICE", "NONE"), new TabableStrings("SELLPRICE", "NONE")};
+    	return new ITabable[] {new TabableStrings("BUYPRICE", "NONE", "spawn"), new TabableStrings("SELLPRICE", "NONE")};
     }
 
 }

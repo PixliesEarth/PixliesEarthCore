@@ -137,7 +137,7 @@ public class settlementsCommand extends SubCommand implements Listener {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (!profile.isInNation()) player.closeInventory();
             Nation nation = profile.getCurrentNation();
-            if (item.getType().equals(Material.CAMPFIRE)) {
+            if (item.getType().equals(Material.CAMPFIRE) || item.getType().equals(Material.BELL)) {
                 Settlement settlement = new Gson().fromJson(nation.getSettlements().get(item.getItemMeta().getDisplayName().replace("§b", "")), Settlement.class);
                 settlement.teleport(player);
             }

@@ -17,16 +17,21 @@ import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
+import eu.pixliesearth.core.objects.SimpleLocation;
+import eu.pixliesearth.core.vendors.Vendor;
 import io.sentry.Sentry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.plugin.PluginManager;
@@ -180,6 +185,7 @@ public final class Main extends JavaPlugin {
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
     private @Getter PixliesCalendar calendar;
+    private @Getter Vendor vendor;
 
     @Override
     public void onEnable() {
@@ -233,7 +239,8 @@ public final class Main extends JavaPlugin {
         vendorItems = new HashMap<>();
         JSONFile vendorItemsFile = new JSONFile(getDataFolder().getAbsolutePath() + "/", "vendoritems");
         for (String s : vendorItemsFile.keySet())
-            vendorItems.put(s, gson.fromJson(vendorItemsFile.get(s), VendorItem.class));
+            if (!s.equalsIgnoreCase("balance"))
+                vendorItems.put(s, gson.fromJson(vendorItemsFile.get(s), VendorItem.class));
 
         warpsCfg = new FileManager(this, "warps", getDataFolder().getAbsolutePath());
         warpsCfg.save();
@@ -414,7 +421,30 @@ public final class Main extends JavaPlugin {
     	loader.loadCustomItem(new Uzi());
     	loader.loadCustomItem(new RPG7());
     	loader.loadListener(new CustomMobListener());
+    	loader.loadListener(new VendorListener());
 
+    	if (!vendorItemsFile.containsKey("balance")) vendorItemsFile.put("balance", 50.0);
+
+    	vendor = new Vendor("§bVendor", "§bVendor", vendorItemsFile.getAsJsonElement("balance").getAsDouble(),
+                new ItemStack(Material.PRISMARINE),
+                new ItemStack(Material.PRISMARINE_BRICKS),
+                new ItemStack(Material.DARK_PRISMARINE),
+                new ItemStack(Material.QUARTZ_BLOCK),
+                new ItemStack(Material.SMOOTH_QUARTZ),
+                new ItemStack(Material.BRICKS),
+                new ItemStack(Material.SPONGE),
+                new ItemStack(Material.SEA_LANTERN),
+                new ItemStack(Material.STONE),
+                new ItemStack(Material.ANDESITE),
+                new ItemStack(Material.DIORITE),
+                new ItemStack(Material.GRANITE),
+                new ItemStack(Material.GRAVEL),
+                new ItemStack(Material.TERRACOTTA),
+                new ItemStack(Material.BLACK_CONCRETE),
+                new ItemStack(Material.WHITE_CONCRETE),
+                new ItemStack(Material.GRAY_CONCRETE),
+                new ItemStack(Material.YELLOW_CONCRETE)
+                );
     }
 
     @SneakyThrows
@@ -423,7 +453,6 @@ public final class Main extends JavaPlugin {
         calendar.stopRunner();
     	loader.save();
         discordDisable();
-        // machineTask.stopThread();
         dynmapKernel.onDisable();
         for (Profile profile : utilLists.profiles.values())
             profile.backup();
@@ -437,6 +466,7 @@ public final class Main extends JavaPlugin {
         vendorItemsFile.clearFile();
         for (Map.Entry<String, VendorItem> entry : vendorItems.entrySet())
             vendorItemsFile.put(entry.getKey(), gson.toJson(entry.getValue()));
+        vendorItemsFile.put("balance", vendor.getBalance());
         vendorItemsFile.saveJsonToFile();
     }
 
