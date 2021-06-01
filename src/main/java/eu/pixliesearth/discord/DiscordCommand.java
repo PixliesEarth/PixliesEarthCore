@@ -63,6 +63,7 @@ public abstract class DiscordCommand {
            add(new DiscordUnlink());
            add(new DiscordWar());
            add(new DiscordSetNationUpdates());
+           add(new DiscordRemoveNationUpdates());
         }};
     }
 
