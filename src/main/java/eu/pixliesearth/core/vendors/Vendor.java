@@ -46,7 +46,7 @@ public class Vendor {
         ItemStack soldLast = new ItemBuilder(Material.BARRIER).setDisplayName("§c§lNO LAST SOLD ITEM!").build();
         if (profile.getExtras().containsKey("soldLast")) soldLast = new ItemBuilder((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))).addLoreLine(getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) != null ? "§7Buy: §2§l$§a" + getBuyPriceFromItem((ItemStack) InventoryUtils.deserialize((String) profile.getExtras().get("soldLast"))) : "§c§oUnpurchasable").addLoreLine(" ").addLoreLine("§f§lLEFT §7Click to buy").build();
         if (soldLast == null) return;
-        ChestGui gui = new ChestGui(6, title + " §8| §2§l$§a" + balance);
+        ChestGui gui = new ChestGui(6, title + " §8| §2§l$§a" + Methods.round(balance, 2));
 
         StaticPane outline = new StaticPane(0, 0, 9, 6);
 
@@ -77,7 +77,7 @@ public class Vendor {
                     if (!buy) player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                     else player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
                 }
-                gui.setTitle(title + " §8| §2§l$§a" + balance);
+                gui.setTitle(title + " §8| §2§l$§a" + Methods.round(balance, 2));
                 gui.update();
             }), 4, 5);
         }

@@ -1,14 +1,18 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +54,20 @@ public class descriptionNation extends SubCommand {
         nation.save();
         for (Player np : nation.getOnlineMemberSet())
             np.sendMessage(Lang.PLAYER_CHANGED_DESCRIPTION.get(np).replace("%PLAYER%", player.getName()).replace("%DESC%", nation.getDescription()));
+        if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+            try {
+                ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                channel.sendMessage(
+                        new EmbedBuilder()
+                                .setTitle(player.getName() + " just changed the description of your nation to:")
+                                .setDescription(stringBuilder.toString())
+                                .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                .setColor(Color.CYAN)
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 }

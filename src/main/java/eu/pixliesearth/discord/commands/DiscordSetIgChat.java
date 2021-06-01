@@ -11,6 +11,10 @@ public class DiscordSetIgChat extends DiscordCommand {
         super("setigchat");
     }
 
+    public boolean onlyPixlies() {
+        return true;
+    }
+
     @Override
     public void run(MessageCreateEvent event) {
         if (!event.getServer().get().hasPermission(event.getMessageAuthor().asUser().get(), PermissionType.ADMINISTRATOR)) {

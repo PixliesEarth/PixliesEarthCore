@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -8,8 +9,11 @@ import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -68,6 +72,19 @@ public class kickNation extends SubCommand {
                     Lang.PLAYER_KICKED_FROM_NATION.send(member, "%PLAYER%;" + target.getAsOfflinePlayer().getName());
             target.leaveNation();
             Lang.PLAYER_KICKED_FROM_NATION.send(player, "%PLAYER%;" + target.getAsOfflinePlayer().getName());
+            if (MiniMick.getConfigs().containsKey(targetnation)) {
+                try {
+                    ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(targetnation).getUpdatesChannel()).get();
+                    channel.sendMessage(
+                            new EmbedBuilder()
+                                    .setTitle(player.getName() + " was kicked from your nation.")
+                                    .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                    .setColor(Color.RED)
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
             UUID targetUUID = Bukkit.getPlayerUniqueId(args[0]);
             if (targetUUID == null) {
@@ -84,6 +101,19 @@ public class kickNation extends SubCommand {
                 Lang.PLAYER_KICKED_FROM_NATION.send(member, "%PLAYER%;" + target.getAsOfflinePlayer().getName());
             target.leaveNation();
             Lang.PLAYER_KICKED_FROM_NATION.send(sender, "%PLAYER%;" + target.getAsOfflinePlayer().getName());
+            if (MiniMick.getConfigs().containsKey(targetnation)) {
+                try {
+                    ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(targetnation).getUpdatesChannel()).get();
+                    channel.sendMessage(
+                            new EmbedBuilder()
+                                    .setTitle(target.getAsOfflinePlayer().getName() + " was kicked from your nation.")
+                                    .setAuthor(target.getAsOfflinePlayer().getName(), "", "https://minotar.net/avatar/" + targetUUID)
+                                    .setColor(Color.RED)
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }

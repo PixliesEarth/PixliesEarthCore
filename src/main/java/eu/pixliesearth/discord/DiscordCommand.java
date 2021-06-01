@@ -24,6 +24,10 @@ public abstract class DiscordCommand {
         this.alias = alias;
     }
 
+    public boolean onlyPixlies() {
+        return false;
+    }
+
     public abstract void run(MessageCreateEvent event);
 
     protected static Color hexToColor(String value)
@@ -58,6 +62,7 @@ public abstract class DiscordCommand {
            add(new DiscordStats());
            add(new DiscordUnlink());
            add(new DiscordWar());
+           add(new DiscordSetNationUpdates());
         }};
     }
 

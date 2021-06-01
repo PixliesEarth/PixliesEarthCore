@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -10,8 +11,11 @@ import eu.pixliesearth.nations.managers.NationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -59,6 +63,19 @@ public class joinNation extends SubCommand {
                 profile.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", player.getName()));
+                if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                    try {
+                        ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                        channel.sendMessage(
+                                new EmbedBuilder()
+                                    .setTitle(player.getName() + " has joined your nation.")
+                                    .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                    .setColor(Color.GREEN)
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case 2:
                 if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
@@ -77,6 +94,19 @@ public class joinNation extends SubCommand {
                 target.addToNation(nation.getNationId(), Rank.get(nation.getRanks().get("newbie")));
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", target.getAsOfflinePlayer().getName()));
+                if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                    try {
+                        ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                        channel.sendMessage(
+                                new EmbedBuilder()
+                                        .setTitle(target.getAsOfflinePlayer().getName() + " has joined your nation.")
+                                        .setAuthor(target.getAsOfflinePlayer().getName(), "", "https://minotar.net/avatar/" + targetUUID)
+                                        .setColor(Color.GREEN)
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case 3:
                 if (nation.getRanks().get(args[2]) == null) {
@@ -98,8 +128,22 @@ public class joinNation extends SubCommand {
                 target2.save();
                 for (Player np : nation.getOnlineMemberSet())
                     np.sendMessage(Lang.PLAYER_JOINED_NATION.get(np).replace("%PLAYER%", target2.getAsOfflinePlayer().getName()));
+                if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                    try {
+                        ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                        channel.sendMessage(
+                                new EmbedBuilder()
+                                        .setTitle(target2.getAsOfflinePlayer().getName() + " has joined your nation.")
+                                        .setAuthor(target2.getAsOfflinePlayer().getName(), "", "https://minotar.net/avatar/" + targetUUID2)
+                                        .setColor(Color.GREEN)
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
         }
+
         return false;
     }
 

@@ -19,6 +19,7 @@ import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.vendors.Vendor;
+import eu.pixliesearth.discord.MiniMickServerConfig;
 import io.sentry.Sentry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -354,6 +355,10 @@ public final class Main extends JavaPlugin {
         miniMick = new MiniMick();
         miniMick.start();
 
+        JSONFile miniMickConfigs = new JSONFile(getDataFolder().getAbsolutePath() + "/", "miniMickConfigs");
+        for (String s : miniMickConfigs.keySet())
+            MiniMick.getConfigs().put(s, gson.fromJson(miniMickConfigs.get(s), MiniMickServerConfig.class));
+
         assemble = new Assemble(this, new ScoreboardAdapter());
 
         assemble.setTicks(1);
@@ -438,6 +443,7 @@ public final class Main extends JavaPlugin {
                 new ItemStack(Material.ANDESITE),
                 new ItemStack(Material.DIORITE),
                 new ItemStack(Material.GRANITE),
+                new ItemStack(Material.SANDSTONE),
                 new ItemStack(Material.GRAVEL),
                 new ItemStack(Material.TERRACOTTA),
                 new ItemStack(Material.BLACK_CONCRETE),
@@ -468,6 +474,12 @@ public final class Main extends JavaPlugin {
             vendorItemsFile.put(entry.getKey(), gson.toJson(entry.getValue()));
         vendorItemsFile.put("balance", vendor.getBalance());
         vendorItemsFile.saveJsonToFile();
+
+        JSONFile miniMickConfigs = new JSONFile(getDataFolder().getAbsolutePath() + "/", "miniMickConfigs");
+        miniMickConfigs.clearFile();
+        for (Map.Entry<String, MiniMickServerConfig> entry: MiniMick.getConfigs().entrySet())
+            miniMickConfigs.put(entry.getKey(), gson.toJsonTree(entry.getValue()));
+        miniMickConfigs.saveJsonToFile();
     }
 
     private void registerCommands() {
@@ -553,14 +565,6 @@ public final class Main extends JavaPlugin {
     }
 
     public void discordEnable() {
-        for (Server server : MiniMick.getApi().getServers())
-            if (!server.getIdAsString().equals("589958750866112512")) {
-                try {
-                    server.leave().get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
         ServerTextChannel chatChannel = MiniMick.getApi().getServerTextChannelById(getConfig().getString("chatchannel")).get();
         chatChannel.sendMessage(new EmbedBuilder()
                 .setColor(Color.green)

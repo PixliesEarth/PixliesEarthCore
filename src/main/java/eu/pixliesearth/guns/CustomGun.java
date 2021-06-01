@@ -5,12 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
@@ -129,7 +124,7 @@ public abstract class CustomGun extends CustomItem {
 				shootEvent.callEvent();
 				if (!shootEvent.isCancelled()) {
 					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", Long.toString((System.currentTimeMillis()+getDelayPerShot())), NBTTagType.STRING).addNBTTag("ammo", Integer.toString(ammo-1), NBTTagType.STRING).build());
-					event.getPlayer().playSound(event.getPlayer().getLocation(), "gunshoot", 15, 1);
+					event.getPlayer().playSound(event.getPlayer().getLocation(), "gunshoot", SoundCategory.PLAYERS, 15, 1);
 					event.getPlayer().getWorld().playEffect(event.getPlayer().getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
 
 					LivingEntity result = null;

@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -9,8 +10,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +63,19 @@ public class promoteNation extends SubCommand {
                 targetProfile.setNationRank(rank.getName());
                 targetProfile.save();
                 Lang.CHANGED_PLAYERS_NATION_RANK.send(sender, "%RANK%;" + rank.getName(), "%PLAYER%;" + target.getName());
+                if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                    try {
+                        ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                        channel.sendMessage(
+                                new EmbedBuilder()
+                                        .setTitle(target.getName() + " was promoted to " + rank.getName() + " in your nation.")
+                                        .setAuthor(target.getName(), "", "https://minotar.net/avatar/" + target.getUniqueId())
+                                        .setColor(Color.GREEN)
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 return false;
             }
         }

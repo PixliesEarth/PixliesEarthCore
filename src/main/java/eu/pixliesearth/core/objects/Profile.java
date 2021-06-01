@@ -170,7 +170,7 @@ public class Profile {
     }
 
     public String getBalanceFormatted() {
-        return "§b" + Methods.formatNumber((long) balance) + "§r" + EmojiParser.parseToUnicode(":moneybag:");
+        return "§b" + Methods.round(balance, 2) + "§r" + EmojiParser.parseToUnicode(":moneybag:");
     }
 
     public void addToNation(String id, Rank rank) {

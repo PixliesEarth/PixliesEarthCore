@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -20,9 +21,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class electionNation extends SubCommand implements Constants {
 
@@ -139,6 +144,20 @@ public class electionNation extends SubCommand implements Constants {
                 NationElection election = NationElection.create(topic, player);
                 nation.addElection(election);
                 Lang.ELECTION_CREATED.send(sender, "%TOPIC%;" + topic + " §8(§b" + election.getId() + "§8)");
+                if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                    try {
+                        ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                        channel.sendMessage(
+                                new EmbedBuilder()
+                                        .setTitle(election.getTopic())
+                                        .setDescription("Join earth to vote!")
+                                        .setAuthor("Election", "", "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/Learn_How_to_Vote_1024_x_1024_eWuQLoY.png")
+                                        .setColor(Color.CYAN)
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             } else if (args[0].equalsIgnoreCase("addoption")) {
                 if (args.length != 3) {
                     Lang.WRONG_USAGE_NATIONS.send(sender, "%USAGE%;/n election addoption <option> <electionid>");

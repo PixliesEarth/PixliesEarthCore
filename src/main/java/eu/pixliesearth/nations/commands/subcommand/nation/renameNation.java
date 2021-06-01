@@ -1,6 +1,7 @@
 package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -10,8 +11,11 @@ import eu.pixliesearth.utils.Timer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,6 +85,19 @@ public class renameNation extends SubCommand {
                     placeholders.put("%OLD%", oldName);
                     placeholders.put("%NEW%", nation.getName());
                     Lang.PLAYER_NAMED_NATION_NAME.broadcast(placeholders);
+                    if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                        try {
+                            ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                            channel.sendMessage(
+                                    new EmbedBuilder()
+                                            .setTitle(player.getName() + " has renamed your nation to " + args[0].replace("&", ""))
+                                            .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                            .setColor(Color.CYAN)
+                            );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case 2:
                     nation = Nation.getByName(args[1]);
@@ -115,6 +132,19 @@ public class renameNation extends SubCommand {
                     placeholders.put("%OLD%", oldName1);
                     placeholders.put("%NEW%", nation.getName());
                     Lang.PLAYER_NAMED_NATION_NAME.broadcast(placeholders);
+                    if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                        try {
+                            ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                            channel.sendMessage(
+                                    new EmbedBuilder()
+                                            .setTitle(player.getName() + " has renamed your nation to " + args[0].replace("&", ""))
+                                            .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                            .setColor(Color.CYAN)
+                            );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
             }
         } else {
@@ -134,6 +164,19 @@ public class renameNation extends SubCommand {
             placeholders.put("%OLD%", oldName1);
             placeholders.put("%NEW%", nation.getName());
             Lang.PLAYER_NAMED_NATION_NAME.broadcast(placeholders);
+            if (MiniMick.getConfigs().containsKey(nation.getNationId())) {
+                try {
+                    ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
+                    channel.sendMessage(
+                            new EmbedBuilder()
+                                    .setTitle(sender.getName() + " has renamed your nation to " + args[0].replace("&", ""))
+                                    .setAuthor(sender.getName(), "", "https://minotar.net/avatar/" + sender.getName())
+                                    .setColor(Color.CYAN)
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }

@@ -11,6 +11,7 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class MiniMick {
     private static @Getter DiscordApi api;
     private @Getter TextChannel chatChannel;
     private static final @Getter Map<String, DiscordCommand> commands = new HashMap<>();
+    private static final @Getter Map<String, MiniMickServerConfig> configs = new HashMap<>();
 
     public static String prefix = Main.getInstance().getConfig().getString("discord-prefix", "~");
 
@@ -42,7 +44,12 @@ public class MiniMick {
         api.addMessageCreateListener(event -> {
             String[] split = event.getMessageContent().split(" ");
             if (split[0].startsWith(prefix) && commands.containsKey(split[0].replace(prefix, ""))) {
-                commands.get(split[0].replace(prefix, "")).run(event);
+                DiscordCommand command = commands.get(split[0].replace(prefix, ""));
+                if (command.onlyPixlies() && !event.getServer().get().getIdAsString().equals("589958750866112512")) {
+                    event.getMessage().reply(new EmbedBuilder().setTitle("This command is only executable on the official PixliesNet server.").setUrl("https://discord.gg/cKJkFTG").setDescription("Click above to join").setColor(Color.RED));
+                    return;
+                }
+                command.run(event);
             } else {
                 if (event.getChannel().equals(chatChannel) && event.getMessageAuthor().isRegularUser()) {
                     if (event.getMessage().getReadableContent().length() > 0 && !event.getMessageContent().startsWith("/")) {
