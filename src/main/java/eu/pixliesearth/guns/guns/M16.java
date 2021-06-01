@@ -59,7 +59,7 @@ public class M16 extends CustomGun {
 	
 	@Override
 	public long getDelayPerShot() {
-		return 150l;
+		return 150L;
 	}
 	
 
