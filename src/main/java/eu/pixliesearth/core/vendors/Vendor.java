@@ -114,7 +114,7 @@ public class Vendor {
                 } else {
                     player.playSound(player.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                 }
-                gui.setTitle(title + " §8| §2§l$§a" + balance);
+                gui.setTitle(title + " §8| §2§l$§a" + Methods.round(balance, 2));
                 gui.update();
             }));
         }

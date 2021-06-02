@@ -25,7 +25,7 @@ public class SuicideVest extends CustomRecipe {
         map.put(1, MinecraftMaterial.LEVER.getUUID());
         map.put(2, MinecraftMaterial.TNT.getUUID());
         map.put(3, MinecraftMaterial.REDSTONE.getUUID());
-        map.put(4, MinecraftMaterial.LEATHER_CHESTPLATE.getUUID());
+        map.put(4, MinecraftMaterial.DIAMOND_CHESTPLATE.getUUID());
         map.put(5, MinecraftMaterial.REDSTONE.getUUID());
         map.put(6, MinecraftMaterial.TNT.getUUID());
         map.put(7, MinecraftMaterial.REDSTONE.getUUID());

@@ -9,9 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
-import eu.pixliesearth.core.custom.commands.GiveCustomItems;
-import eu.pixliesearth.core.custom.commands.SkillCommand;
-import eu.pixliesearth.core.custom.commands.SusCommand;
+import eu.pixliesearth.core.custom.commands.*;
 import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
@@ -93,7 +91,6 @@ import eu.pixliesearth.core.commands.util.ModulesCommand;
 import eu.pixliesearth.core.commands.util.SeenCommand;
 import eu.pixliesearth.core.commands.util.StaffCommand;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.commands.WarCommand;
 import eu.pixliesearth.core.files.JSONFile;
 import eu.pixliesearth.core.listener.AchievementListener;
 import eu.pixliesearth.core.listener.AnvilListener;
@@ -199,6 +196,7 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadCommand(new SusCommand());
+        loader.loadCommand(new ReplyCommand());
         loader.loadListener(new CustomMoneyPickupListener());
         loader.loadListener(new SuicideVestListener());
         loader.loadCustomItem(new ItemEnergyInspector());
@@ -430,7 +428,7 @@ public final class Main extends JavaPlugin {
 
     	if (!vendorItemsFile.containsKey("balance")) vendorItemsFile.put("balance", 50.0);
 
-    	vendor = new Vendor("§bVendor", "§bVendor", vendorItemsFile.getAsJsonElement("balance").getAsDouble(),
+    	vendor = new Vendor("§bJohn the Vendor", "§bJohn the Vendor", vendorItemsFile.getAsJsonElement("balance").getAsDouble(),
                 new ItemStack(Material.PRISMARINE),
                 new ItemStack(Material.PRISMARINE_BRICKS),
                 new ItemStack(Material.DARK_PRISMARINE),
