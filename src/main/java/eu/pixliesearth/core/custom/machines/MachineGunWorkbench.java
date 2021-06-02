@@ -15,7 +15,7 @@ public class MachineGunWorkbench extends CustomCrafterMachine {
 	
 	@Override
     public String getDefaultDisplayName() {
-        return "§6Gun Workbench";
+        return "§6Weapons Workbench";
     }
 
     @Override
