@@ -7,9 +7,12 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.AnvilGui;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
 import eu.pixliesearth.core.custom.commands.CIControl;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -60,6 +63,26 @@ public class PixliesFunGUI implements Constants {
 
         StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
+        background.addItem(new GuiItem(
+                new ItemBuilder(Material.COMPASS).setDisplayName("§e§lSearch").addLoreLine("§7Search for items").build(),
+                e -> {
+                    e.setCancelled(true);
+                    AnvilGui searchGui = new AnvilGui("§e§lSearch items");
+
+                    StaticPane resultPane = new StaticPane(0, 0, 1, 1, Pane.Priority.HIGHEST);
+                    resultPane.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§eSearch").build(), rIE -> {
+                        rIE.setCancelled(true);
+                        if (!searchGui.getRenameText().isEmpty()) renderSearchItems(searchGui.getRenameText());
+                    }), 0, 0);
+                    searchGui.getSecondItemComponent().addPane(resultPane);
+
+                    StaticPane firstItemPane = new StaticPane(0, 0, 1, 1, Pane.Priority.HIGHEST);
+                    firstItemPane.addItem(new GuiItem(new ItemBuilder(Material.STICK).setNoName().build(), fIE -> fIE.setCancelled(true)), 0, 0);
+                    searchGui.getFirstItemComponent().addPane(firstItemPane);
+
+                    searchGui.show(player);
+                }
+        ), 4, 0);
         gui.addPane(background);
 
         StaticPane background2 = new StaticPane(0, 1, 9, 4, Pane.Priority.NORMAL);
@@ -81,38 +104,18 @@ public class PixliesFunGUI implements Constants {
     }
 
     public List<String> searchItems(String keyWord) {
-    	/**
-    	 * Hey mick! Just so you know the regex
-    	 * .*?(?=:):
-    	 * gets all characters before and including the ':' basically removing the start of the id's
-    	 * For example the string "Pixlies:Test" would become "Test"
-    	 */
-    	// Create a new list to store all item uuids in
-    	List<String> values = new ArrayList<String>();
-    	// Cache handler
-    	CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
-    	// Create pattern from the keyword
-    	Pattern pattern = Pattern.compile(keyWord);
-    	// Loop threw all items
-    	if (keyWord.contains(":")) {
-    		handler.getCustomItems().parallelStream().forEach((c) -> {
-        		if (pattern.matcher(c.getUUID().toLowerCase().replaceAll(".*?(?=:):", "")).find()) {
-        			values.add(c.getUUID());
-        		}
-        	});
-    	} else {
-    		handler.getCustomItems().parallelStream().forEach((c) -> {
-        		if (pattern.matcher(c.getDefaultDisplayName().toLowerCase()).find()) {
-        			values.add(c.getUUID());
-        		}
-        	});
-    	}
-    	// Return the value
-        return values;
+        List<String> returner = new ArrayList<>();
+        CustomFeatureHandler handler = CustomFeatureLoader.getLoader().getHandler();
+        for (CustomItem.Category category : CustomItem.Category.values())
+            for (String s : handler.getCategoriesForItems().get(category))
+                if (StringUtils.containsIgnoreCase(ChatColor.stripColor(CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(s).getDefaultDisplayName()), keyWord))
+                    returner.add(s);
+        return returner;
     }
 
     public void renderSearchItems(String keyWord) {
         gui = new ChestGui(6, "§b§lPixliesFun §8| §b" + keyWord);
+        gui.getPanes().clear();
 
         StaticPane background = new StaticPane(0, 0, 9, 6, Pane.Priority.LOW);
         background.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setCustomModelData(3).setNoName().build(), e -> e.setCancelled(true));
