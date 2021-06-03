@@ -60,7 +60,7 @@ public class IngotLead extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 10;
     }
 
     @Override

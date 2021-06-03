@@ -60,7 +60,7 @@ public class DustSteel extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 16;
     }
 
     @Override

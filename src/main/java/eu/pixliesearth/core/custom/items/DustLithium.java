@@ -56,7 +56,7 @@ public class DustLithium extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 20;
     }
 
     @Override
