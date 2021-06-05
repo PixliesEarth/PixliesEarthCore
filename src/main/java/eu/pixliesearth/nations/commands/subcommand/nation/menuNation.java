@@ -72,7 +72,7 @@ public class menuNation extends SubCommand {
 
     private void open(@NotNull Player player, @NotNull MenuPage page) {
         ChestGui gui = new ChestGui(6, defaultTitle + page.title);
-        StaticPane hotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGHEST);
+        StaticPane hotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGH);
         int j = 0;
         for (MenuPage p : MenuPage.values()) {
             ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
@@ -84,7 +84,7 @@ public class menuNation extends SubCommand {
             j++;
         }
         gui.addPane(hotbar);
-        StaticPane menu = new StaticPane(0, 1, 9, 5, Pane.Priority.HIGHEST);
+        StaticPane menu = new StaticPane(0, 1, 9, 5, Pane.Priority.HIGH);
         menu.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
@@ -218,6 +218,7 @@ public class menuNation extends SubCommand {
                     for (Ideology ideology1 : Ideology.values()) {
                         String ideology1Name = WordUtils.capitalize(ideology1.name().toLowerCase().replace("_", " "));
                         ItemBuilder iBuilder = new ItemBuilder(ideology1.getMaterial()).setDisplayName("§" + ideology1.getColour() + ideology1Name);
+                        iBuilder.addLoreAll(Arrays.asList(ideology1.getTraits()));
                         if (ideology == ideology1)
                             iBuilder.setGlow();
                         if (x1 + 1 > 9) {
@@ -356,10 +357,9 @@ public class menuNation extends SubCommand {
     private void showUpgradeGui(ChestGui gui, Player player, StaticPane menuPane) {
         menuPane.clear();
         menuPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
-        gui.addPane(menuPane);
         Profile profile = instance.getProfile(player.getUniqueId());
         Nation nation = profile.getCurrentNation();
-        PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4);
+        PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGHEST);
         List<GuiItem> upgradeItems = new ArrayList<>();
         for (NationUpgrade upgrade : NationUpgrade.values()) {
             upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) && !upgrade.isMultiplePurchasable() ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
@@ -384,7 +384,7 @@ public class menuNation extends SubCommand {
         }
         pagePane.populateWithGuiItems(upgradeItems);
         gui.addPane(pagePane);
-        StaticPane controlBar = new StaticPane(0, 5, 9, 1);
+        StaticPane controlBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
         controlBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§cBack").build(), event -> {
             event.setCancelled(true);
@@ -392,10 +392,7 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() - 1);
                     gui.update();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                     io.sentry.Sentry.captureException(e);
-                }
+                } catch (Exception ignored) { }
             }
         }), 0, 0);
         controlBar.addItem(new GuiItem(new ItemBuilder(Material.LIME_STAINED_GLASS_PANE).setDisplayName("§aNext").build(), event -> {
@@ -404,10 +401,7 @@ public class menuNation extends SubCommand {
                 try {
                     pagePane.setPage(pagePane.getPage() + 1);
                     gui.update();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    io.sentry.Sentry.captureException(e);
-                }
+                } catch (Exception ignored) { }
             }
         }), 8, 0);
         gui.addPane(controlBar);

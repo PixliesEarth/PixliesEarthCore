@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import eu.pixliesearth.nations.entities.nation.Ideology;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -68,8 +69,10 @@ public class War {
             return false;
         if (aggressor.getExtras().containsKey("WAR:" + mainDefender))
             return false;
+        if (Ideology.valueOf(defender.getIdeology()) == Ideology.COMMUNISM)
+            defender.setXpPoints(defender.getXpPoints() + cost);
 
-        this.timers.put("warGoalJustification", new Timer(259_200_000));
+        this.timers.put("warGoalJustification", new Timer(getJustTime(aggressor, defender)));
 
         if (!getDefenderInstance().getLeader().equalsIgnoreCase("NONE")) {
             Profile profile = instance.getProfile(UUID.fromString(getDefenderInstance().getLeader()));
@@ -84,6 +87,20 @@ public class War {
         aggressor.save();
         instance.getUtilLists().wars.put(id, this);
         return true;
+    }
+
+    public static long getJustTime(Nation aggressor, Nation defender) {
+        long time = Timer.DAY + 3;
+        switch (Ideology.valueOf(aggressor.getIdeology())) {
+            case FASCISM:
+                time = time / 2;
+                break;
+        }
+        switch (Ideology.valueOf(defender.getIdeology())) {
+            case SOCIAL_DEMOCRACY:
+                time = time * 5;
+        }
+        return time;
     }
 
     @SneakyThrows
