@@ -58,7 +58,7 @@ public class GunRifleReceiver extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 8;
     }
 
     @Override

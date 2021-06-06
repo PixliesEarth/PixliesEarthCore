@@ -23,11 +23,11 @@ public class SuicideVest extends CustomRecipe {
         Map<Integer, String> map = new HashMap<Integer, String>();
         map.put(0, MinecraftMaterial.TNT.getUUID());
         map.put(1, MinecraftMaterial.LEVER.getUUID());
-        map.put(2, MinecraftMaterial.TNT.getUUID());
+        map.put(2, MinecraftMaterial.BLAZE_ROD.getUUID());
         map.put(3, MinecraftMaterial.REDSTONE.getUUID());
-        map.put(4, MinecraftMaterial.DIAMOND_CHESTPLATE.getUUID());
+        map.put(4, MinecraftMaterial.NETHERITE_CHESTPLATE.getUUID());
         map.put(5, MinecraftMaterial.REDSTONE.getUUID());
-        map.put(6, MinecraftMaterial.TNT.getUUID());
+        map.put(6, MinecraftMaterial.BLAZE_ROD.getUUID());
         map.put(7, MinecraftMaterial.REDSTONE.getUUID());
         map.put(8, MinecraftMaterial.TNT.getUUID());
         return map;

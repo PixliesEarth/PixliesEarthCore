@@ -19,9 +19,12 @@ public enum NationUpgrade {
             nation.getExtras().put("settlements", 5.0);
         }
     }, true),
-    DOUBLE_PP("§b§lDouble Political-Power", Material.EXPERIENCE_BOTTLE, Era.MEDIEVAL, 20, (nation, player) -> {
-        
-    }, false),
+    DOUBLE_PP("§b§lDouble Political-Power", Material.EXPERIENCE_BOTTLE, Era.MEDIEVAL, 20, (nation, player) -> { }, false),
+    FIFTY_CLAIMS("§b§l50 More Claims", Material.BARREL, Era.ANCIENT, 20, (nation, player) -> {
+        nation.boostClaims(50);
+        nation.save();
+    }, true),
+    SIX_MORE_ALLIES("§b§l6 More Allies", Material.PLAYER_HEAD, Era.ANCIENT, 15, (nation, player) -> { }, false),
     ;
 
     String displayName;

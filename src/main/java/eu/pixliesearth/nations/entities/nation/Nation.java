@@ -181,12 +181,26 @@ public class Nation {
         }
     }
 
+    public int getMaxAllies() {
+        return upgrades.contains(NationUpgrade.SIX_MORE_ALLIES.name()) ? 9 : 3;
+    }
+
+    public int getClaimBoost() {
+        if (!extras.containsKey("claimBoost")) return 0;
+        return (int) Double.parseDouble(extras.get("claimBoost").toString());
+    }
+
+    public void boostClaims(int amount) {
+        extras.putIfAbsent("claimBoost", 0);
+        extras.put("claimBoost", getClaimBoost() + amount);
+    }
+
     public int getClaimingPower() {
         return getMaxClaimingPower() - chunks.size();
     }
 
     public int getMaxClaimingPower() {
-        int actualPower = Era.getByName(era).getChunksPerPlayer() * members.size();
+        int actualPower = Era.getByName(era).getChunksPerPlayer() * members.size() + getClaimBoost();
         return Math.min(actualPower, Main.getInstance().getFastConf().getMaxClaimSize());
     }
 

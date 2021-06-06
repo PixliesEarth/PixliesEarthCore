@@ -94,7 +94,7 @@ public class infoNation extends SubCommand {
         sender.sendMessage("    §7Era: §b" + StringUtils.capitalize(nation.getEra().toLowerCase()));
         String leader = nation.getLeader().equals("NONE") ? "SERVER" : Bukkit.getOfflinePlayer(UUID.fromString(nation.getLeader())).getName();
         sender.sendMessage("    §7Leader: §6" + leader);
-        sender.sendMessage("    §7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower());
+        sender.sendMessage("    §7Territory: §b" + nation.getChunks().size() + "§8/§b" + nation.getMaxClaimingPower() + " §7(§e" + nation.getClaimBoost() + "§7)");
         StringJoiner memberJoiner = new StringJoiner("§8, ");
         for (String s : nation.getMembers()) {
             UUID uuid = UUID.fromString(s);

@@ -65,7 +65,7 @@ public class allyNation extends SubCommand {
             Lang.NO_PERMISSIONS.send(player);
             return false;
         }
-        if (nation.getAllies().size() == 3) {
+        if (nation.getAllies().size() == nation.getMaxAllies()) {
             sender.sendMessage(Lang.NATION + "§7Your nation has already reached the maximum amount of allies.");
             return false;
         }

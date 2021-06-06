@@ -58,7 +58,7 @@ public class GunRifleStock extends CustomItem {
 
     @Override
     public Integer getCustomModelData() {
-        return null;
+        return 10;
     }
 
     @Override
