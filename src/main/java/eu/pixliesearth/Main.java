@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
@@ -14,23 +13,20 @@ import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
+import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
-import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
 import io.sentry.Sentry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.plugin.PluginManager;
@@ -41,7 +37,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
-import org.javacord.api.entity.server.Server;
 
 import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
@@ -50,14 +45,11 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import eu.pixliesearth.core.commands.player.AdoptCommand;
 import eu.pixliesearth.core.commands.player.BlockCommand;
 import eu.pixliesearth.core.commands.player.BoostCommand;
 import eu.pixliesearth.core.commands.player.CraftCommand;
 import eu.pixliesearth.core.commands.player.CringeCommand;
-import eu.pixliesearth.core.commands.player.DivorceCommand;
 import eu.pixliesearth.core.commands.player.EnderchestCommand;
-import eu.pixliesearth.core.commands.player.FamilyCommand;
 import eu.pixliesearth.core.commands.player.FeedCommand;
 import eu.pixliesearth.core.commands.player.FlyCommand;
 import eu.pixliesearth.core.commands.player.FlySpeedCommand;
@@ -69,7 +61,6 @@ import eu.pixliesearth.core.commands.player.HealCommand;
 import eu.pixliesearth.core.commands.player.HomeCommand;
 import eu.pixliesearth.core.commands.player.LinkCommand;
 import eu.pixliesearth.core.commands.player.LobbyCommand;
-import eu.pixliesearth.core.commands.player.MarryCommand;
 import eu.pixliesearth.core.commands.player.NickCommand;
 import eu.pixliesearth.core.commands.player.PremiumCommand;
 import eu.pixliesearth.core.commands.player.ProfileCommand;
@@ -82,7 +73,6 @@ import eu.pixliesearth.core.commands.player.SuicideCommand;
 import eu.pixliesearth.core.commands.player.TpHereCommand;
 import eu.pixliesearth.core.commands.player.VanishCommand;
 import eu.pixliesearth.core.commands.player.WalkSpeedCommand;
-import eu.pixliesearth.core.commands.player.WoohooCommand;
 import eu.pixliesearth.core.commands.util.BackupCommand;
 import eu.pixliesearth.core.commands.util.BroadcastCommand;
 import eu.pixliesearth.core.commands.util.ChatCommand;
@@ -177,6 +167,8 @@ public final class Main extends JavaPlugin {
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
+    private @Getter
+    BalTopThread baltopThread;
     private @Getter final boolean warEnabled = false;
     private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
@@ -449,6 +441,9 @@ public final class Main extends JavaPlugin {
                 new ItemStack(Material.GRAY_CONCRETE),
                 new ItemStack(Material.YELLOW_CONCRETE)
                 );
+
+        baltopThread = new BalTopThread();
+        baltopThread.start();
     }
 
     @SneakyThrows

@@ -3,10 +3,7 @@ package eu.pixliesearth.core.custom.commands;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyAddCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyBalanceCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomySetCommand;
-import eu.pixliesearth.core.custom.commands.subcommands.economy.EconomyTakeCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.economy.*;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
@@ -39,7 +36,7 @@ public class EcoCommand extends CustomCommand {
 
     @Override
     public ITabable[] getParams() {
-        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyAddCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand())};
+        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyAddCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand(), new EconomyTopCommand())};
     }
 
     @Override
@@ -54,6 +51,7 @@ public class EcoCommand extends CustomCommand {
             sender.sendMessage("§7* §6/eco give <player> <amount>");
             sender.sendMessage("§7* §6/eco take <player> <amount>");
             sender.sendMessage("§7* §6/eco balance <player>");
+            sender.sendMessage("§7* §6/eco top");
         }
         return true;
     }

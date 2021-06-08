@@ -49,10 +49,6 @@ public class BalanceCommand extends CustomCommand {
             Profile profile = instance.getProfile(player.getUniqueId());
             sender.sendMessage(Lang.BALANCE_YOU.get(player).replace("%BALANCE%", profile.getBalanceFormatted()));
         } else {
-            if (!instance.isStaff(sender)) {
-                Lang.NO_PERMISSIONS.send(sender);
-                return false;
-            }
             OfflinePlayer player = Bukkit.getOfflinePlayerIfCached(parameters[0]);
             if (player == null) {
                 Lang.PLAYER_DOES_NOT_EXIST.send(sender);
