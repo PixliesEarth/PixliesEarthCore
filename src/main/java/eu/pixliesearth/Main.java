@@ -439,7 +439,8 @@ public final class Main extends JavaPlugin {
                 new ItemStack(Material.BLACK_CONCRETE),
                 new ItemStack(Material.WHITE_CONCRETE),
                 new ItemStack(Material.GRAY_CONCRETE),
-                new ItemStack(Material.YELLOW_CONCRETE)
+                new ItemStack(Material.YELLOW_CONCRETE),
+                new ItemStack(Material.DIAMOND)
                 );
 
         baltopThread = new BalTopThread();

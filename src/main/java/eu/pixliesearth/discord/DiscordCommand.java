@@ -64,6 +64,8 @@ public abstract class DiscordCommand {
            add(new DiscordWar());
            add(new DiscordSetNationUpdates());
            add(new DiscordRemoveNationUpdates());
+           add(new DiscordInvite());
+           add(new DiscordServers());
         }};
     }
 
