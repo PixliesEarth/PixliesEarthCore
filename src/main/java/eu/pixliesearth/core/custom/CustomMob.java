@@ -1,6 +1,5 @@
 package eu.pixliesearth.core.custom;
 
-import eu.pixliesearth.core.custom.mobs.RabidWolf;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import lombok.Getter;
 import org.bukkit.block.Biome;
