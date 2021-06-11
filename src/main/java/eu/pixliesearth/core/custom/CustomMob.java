@@ -9,8 +9,6 @@ import java.util.List;
 
 public enum CustomMob {
 
-    RABID_WOLF(RabidWolf.class, 0.1, 0.6, 64,  Arrays.asList(PixliesCalendar.PixliesSeasons.values()), Biome.WOODED_MOUNTAINS, Biome.WOODED_BADLANDS_PLATEAU, Biome.WOODED_HILLS, Biome.TAIGA, Biome.TAIGA_HILLS, Biome.TAIGA_MOUNTAINS, Biome.SNOWY_MOUNTAINS),
-
     ;
 
     private @Getter final Class<?> clazz;

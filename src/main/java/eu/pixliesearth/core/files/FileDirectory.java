@@ -1,7 +1,5 @@
 package eu.pixliesearth.core.files;
 
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.FilenameUtils;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -100,7 +98,7 @@ public class FileDirectory {
 		File dir = new File(getDirectoryConstruct());
 		for (File f : dir.listFiles()) {
 			String path = f.getAbsolutePath();
-			set.add(new FileBase(FilenameUtils.getFullPath(path), FilenameUtils.getBaseName(path), "."+FilenameUtils.getExtension(path)));
+			set.add(new FileBase(path, f.getName().split("\\.")[0], "."+f.getName().split("\\.")[1]));
 		}
 		return set;
 	}

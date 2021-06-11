@@ -27,7 +27,7 @@ public class DiscordServer extends DiscordCommand {
         System.gc();
         embed.addInlineField("Ram usage", (runtime.totalMemory() - runtime.freeMemory()) / 1048576L +  " MB / " + runtime.totalMemory() / 1048576L + " MB");
 
-        long millis = instance.getServerStopWatch().elapsed(TimeUnit.MILLISECONDS);
+        long millis = 0;
 
         String time = String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),

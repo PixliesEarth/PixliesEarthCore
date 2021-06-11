@@ -9,7 +9,6 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -18,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
@@ -29,7 +29,6 @@ import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
-import net.minecraft.server.v1_16_R3.AxisAlignedBB;
 
 public abstract class CustomGun extends CustomItem {
 
@@ -143,13 +142,13 @@ public abstract class CustomGun extends CustomItem {
 						for(double distance = 0.0; distance <= maxDistance; distance += getAccuracy()) {
 							Vector vector2 = vector.clone().add(location.getDirection().clone().multiply(distance));
 							Location location2 = vector2.toLocation(event.getPlayer().getWorld());
-							AxisAlignedBB axisAlignedBB = new AxisAlignedBB(location2.getX(), location2.getY(), location2.getZ(), location2.getX(), location2.getY(), location2.getZ());
+							BoundingBox axisAlignedBB = new BoundingBox(location2.getX(), location2.getY(), location2.getZ(), location2.getX(), location2.getY(), location2.getZ());
 							for(LivingEntity entity : entityList) {
 								if(entity == null || entity.isDead() || entity.getEntityId() == event.getPlayer().getEntityId()) {
 									continue;
 								} else {
-									AxisAlignedBB axisAlignedBB2 = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
-									if(axisAlignedBB2.intersects(axisAlignedBB)) {
+									BoundingBox axisAlignedBB2 = entity.getBoundingBox();
+									if(axisAlignedBB2.overlaps(axisAlignedBB)) {
 										result = entity;
 										headshot = location2.distance(entity.getEyeLocation()) <= 0.5;
 										break x;
@@ -205,7 +204,7 @@ public abstract class CustomGun extends CustomItem {
 				case DIAMOND_CHESTPLATE :
 					value = 2;
 					break;
-				case NETHERITE_CHESTPLATE :
+				case NETHERITE_CHESTPLATE:
 					value = 3;
 					break;
 				default :

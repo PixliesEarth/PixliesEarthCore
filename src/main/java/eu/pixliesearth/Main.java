@@ -12,6 +12,7 @@ import eu.pixliesearth.core.custom.commands.*;
 import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
+import eu.pixliesearth.core.custom.recipes.EnergyMachineBase;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
@@ -37,8 +38,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
-
-import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -167,10 +166,8 @@ public final class Main extends JavaPlugin {
     private @Getter MiniMick miniMick;
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
-    private @Getter
-    BalTopThread baltopThread;
+    private @Getter BalTopThread baltopThread;
     private @Getter final boolean warEnabled = false;
-    private @Getter final Stopwatch serverStopWatch = Stopwatch.createStarted();
     private @Getter REST rest;
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
@@ -191,8 +188,11 @@ public final class Main extends JavaPlugin {
         loader.loadCommand(new ReplyCommand());
         loader.loadListener(new CustomMoneyPickupListener());
         loader.loadListener(new SuicideVestListener());
+        loader.loadListener(new PoliticalPowerListener());
+        loader.loadListener(new CustomCraftingListener());
         loader.loadCustomItem(new ItemEnergyInspector());
         loader.loadCustomItem(new ItemBlockInspector());
+        loader.loadCustomRecipe(new EnergyMachineBase());
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 5200), getConfig().getLocation("spawn-location"));
         init();
     }

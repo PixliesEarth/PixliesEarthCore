@@ -5,16 +5,15 @@ import eu.pixliesearth.guns.ammo.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import net.minecraft.server.v1_16_R3.AxisAlignedBB;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.Collection;
@@ -44,14 +43,14 @@ public class PixliesAmmo implements Constants {
             Vector position = origin.clone().add(this.location.getDirection().clone().multiply(distance));
             Location positionLocation = position.toLocation(player.getWorld());
 
-            AxisAlignedBB locationBoundingBox = new AxisAlignedBB(position.getX(), position.getY(), position.getZ(), position.getX(), position.getY(), position.getZ());
+            BoundingBox locationBoundingBox = new BoundingBox(position.getX(), position.getY(), position.getZ(), position.getX(), position.getY(), position.getZ());
             for(Entity entity : entityList) {
                 if(entity == null || entity.isDead() || entity.getEntityId() == player.getEntityId())
                     continue;
 
-                AxisAlignedBB entityBoundingBox = ((CraftLivingEntity) entity).getHandle().getBoundingBox();
-                if(entityBoundingBox.intersects(locationBoundingBox))
-                    return new GunFireResult((LivingEntity) entity, positionLocation.distance(((CraftLivingEntity) entity).getEyeLocation()) <= 0.5, positionLocation);
+                BoundingBox entityBoundingBox = entity.getBoundingBox();
+                if(entityBoundingBox.overlaps(locationBoundingBox))
+                    return new GunFireResult((LivingEntity) entity, positionLocation.distance(((LivingEntity) entity).getEyeLocation()) <= 0.5, positionLocation);
             }
         }
 
