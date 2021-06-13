@@ -66,6 +66,8 @@ public class CustomArmour extends CustomItem {
 	 */
 	@Override
 	public ItemStack buildItem() {
+		if (getMaterial() == null)
+			return null;
 		return new ItemBuilder(getMaterial()) {{
 			setGlow(isGlowing());
 			setUnbreakable(isUnbreakable());

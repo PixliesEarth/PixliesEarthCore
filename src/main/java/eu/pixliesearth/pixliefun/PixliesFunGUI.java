@@ -232,8 +232,7 @@ public class PixliesFunGUI implements Constants {
     private void renderRecipe(ItemStack i, int page) {
         try {
             if (!recipes.containsKey(getId(i))) return;
-            if (recipes.get(getId(i)).size() < page - 1) return;
-            if (page < 0) return;
+            if (recipes.get(getId(i)).get(page) == null) return;
 
             gui = new ChestGui(6, "§b§lRecipe");
 

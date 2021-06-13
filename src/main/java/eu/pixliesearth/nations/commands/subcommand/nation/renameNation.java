@@ -78,7 +78,7 @@ public class renameNation extends SubCommand {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
-                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 14).toMap());
+                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 2).toMap());
                     nation.save();
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());
@@ -125,7 +125,7 @@ public class renameNation extends SubCommand {
                         Lang.NATION_WITH_NAME_ALREADY_EXISTS.send(sender);
                         return false;
                     }
-                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 14).toMap());
+                    nation.getExtras().put("RENAME-TIMER", new Timer(Timer.DAY * 2).toMap());
                     nation.save();
                     placeholders = new HashMap<>();
                     placeholders.put("%PLAYER%", player.getDisplayName());

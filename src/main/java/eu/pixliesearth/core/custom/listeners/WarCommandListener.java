@@ -15,12 +15,14 @@ public class WarCommandListener extends CustomListener {
         Player player = event.getPlayer();
         Profile profile = instance.getProfile(player.getUniqueId());
         String[] split = event.getMessage().split(" ");
-        if (split[0].equalsIgnoreCase("/back")
+        if (profile.isInWar() && (
+                split[0].equalsIgnoreCase("/back")
                 || split[0].equalsIgnoreCase("/ec")
                 || split[0].equalsIgnoreCase("/enderchest")
                 || split[0].equalsIgnoreCase("/echest")
-                || split[0].equalsIgnoreCase("/home")) {
+                || split[0].equalsIgnoreCase("/home"))) {
             player.sendMessage(Lang.WAR + "§7You cant use nation commands in war.");
+            event.setCancelled(true);
         }
     }
 

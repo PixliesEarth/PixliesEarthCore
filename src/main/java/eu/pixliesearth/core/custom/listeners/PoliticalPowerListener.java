@@ -28,7 +28,8 @@ public class PoliticalPowerListener extends CustomListener {
         Ideology ideology = Ideology.valueOf(nation.getIdeology());
         if (nation.getUpgrades().contains(NationUpgrade.DOUBLE_PP.name())) xpToAdd = xpToAdd * 2;
         if (ideology == Ideology.LIBERAL_DEMOCRACY) xpToAdd += 0.05 * nation.getAllies().size();
-        if (ideology == Ideology.CONSERVATIVE_DEMOCRACY) xpToAdd += (xpToAdd / 100 * 10);
+        if (ideology == Ideology.CONSERVATIVE_DEMOCRACY) xpToAdd += xpToAdd * 1.10;
+        if (ideology == Ideology.DICTATORSHIP) xpToAdd += xpToAdd * 1.25;
         nation.setXpPoints(nation.getXpPoints() + xpToAdd);
         nation.save();
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);

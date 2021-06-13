@@ -13,6 +13,7 @@ import eu.pixliesearth.core.custom.items.ItemBlockInspector;
 import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
 import eu.pixliesearth.core.custom.recipes.EnergyMachineBase;
+import eu.pixliesearth.core.custom.recipes.SteelDust;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
@@ -182,6 +183,12 @@ public final class Main extends JavaPlugin {
         testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
         if (warEnabled) loader.loadCommand(new WarCommand());
+        loadStuffThatDoesntLoadBecauseBradsReflectionIsShit();
+        fastConf = new FastConf(getConfig().getInt("max-claim-size", 5200), getConfig().getLocation("spawn-location"));
+        init();
+    }
+
+    private void loadStuffThatDoesntLoadBecauseBradsReflectionIsShit() {
         loader.loadCommand(new SkillCommand());
         loader.loadCommand(new GiveCustomItems());
         loader.loadCommand(new SusCommand());
@@ -193,8 +200,7 @@ public final class Main extends JavaPlugin {
         loader.loadCustomItem(new ItemEnergyInspector());
         loader.loadCustomItem(new ItemBlockInspector());
         loader.loadCustomRecipe(new EnergyMachineBase());
-        fastConf = new FastConf(getConfig().getInt("max-claim-size", 5200), getConfig().getLocation("spawn-location"));
-        init();
+        loader.loadCustomRecipe(new SteelDust());
     }
 
     @SuppressWarnings("resource")

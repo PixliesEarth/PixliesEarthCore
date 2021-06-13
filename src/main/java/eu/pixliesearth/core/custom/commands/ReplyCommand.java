@@ -4,6 +4,7 @@ import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.localization.Lang;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -80,6 +81,7 @@ public class ReplyCommand extends CustomCommand {
         if (sender instanceof Player)
             instance.getUtilLists().lastMessageSender.put(receiver.getUniqueId(), ((Player)sender).getUniqueId());
         System.out.println("§5PM §8| §6" + senderName + " §8> §b" + receiver.getName() + " §8| §7" + messageBuilder.toString());
+        receiver.playSound(receiver.getLocation(), Sound.valueOf(instance.getProfile(receiver.getUniqueId()).getMessageSound()), 1, 1);
         return true;
     }
 

@@ -25,6 +25,8 @@ import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
 
 /**
  * 
@@ -126,24 +128,44 @@ public class CustomFeatureLoader {
 	public void loadMachines(String path) {
 		int i = 0;
 		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomEnergyCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomEnergyCrafterMachine.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomFuelableCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomFuelableCrafterMachine.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom machines.");
 	}
@@ -184,20 +206,36 @@ public class CustomFeatureLoader {
 	public void loadCustomBlocks(String path) {
 		int i = 0;
 		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) {
-			loadCustomBlock(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadCustomBlock(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) {
-			loadMachine(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadMachine(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		loadMachine(new EnergyBlockQuarry());
 		loadMachine(new EnergyBlockNuclearGenerator());
@@ -221,24 +259,44 @@ public class CustomFeatureLoader {
 	public void loadCustomItems(String path) {
 		int i = 0;
 		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) {
-			loadCustomItem(clazz.getConstructor().newInstance());
-			i++;
+			try {
+				loadCustomItem(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class)) {
-			loadCustomItem(clazz.newInstance());
-			i++;
+			try {
+				loadCustomItem(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class)) {
-			loadCustomItem(clazz.newInstance());
-			i++;
+			try {
+				loadCustomItem(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class)) {
-			loadCustomItem(clazz.newInstance());
-			i++;
+			try {
+				loadCustomItem(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class)) {
-			loadCustomItem(clazz.newInstance());
-			i++;
+			try {
+				loadCustomItem(clazz.getConstructor().newInstance());
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom items.");
 	}

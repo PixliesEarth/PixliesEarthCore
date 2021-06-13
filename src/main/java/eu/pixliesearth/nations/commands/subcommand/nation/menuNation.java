@@ -139,7 +139,7 @@ public class menuNation extends SubCommand {
                 String religionName = WordUtils.capitalize(religion.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(religion.getMaterial()).setGlow().setDisplayName("§b§lReligion").addLoreLine("§" + religion.getColour() + religionName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
-                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
+                    if (profile.getCurrentNationRank().getPriority() != 666.0 && !profile.isStaff()) return;
                     ChestGui religionGui = new ChestGui(6, defaultTitle + "§bReligion");
                     StaticPane religionHotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGHEST);
                     int j1 = 0;
@@ -181,7 +181,7 @@ public class menuNation extends SubCommand {
                                 }
                             }
                             nation.setReligion(religion1.name());
-                            nation.getExtras().put("RELIGION-TIMER", new Timer(Timer.DAY * 14).toMap());
+                            nation.getExtras().put("RELIGION-TIMER", new Timer(Timer.DAY * 2).toMap());
                             nation.save();
                             player.closeInventory();
                             open(player, MenuPage.SETTINGS);
@@ -196,7 +196,7 @@ public class menuNation extends SubCommand {
                 String ideologyName = WordUtils.capitalize(ideology.name().toLowerCase().replace("_", " "));
                 menu.addItem(new GuiItem(new ItemBuilder(ideology.getMaterial()).setGlow().setDisplayName("§b§lGovernment").addLoreLine("§" + ideology.getColour() + ideologyName).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
-                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
+                    if (profile.getCurrentNationRank().getPriority() != 666.0 && !profile.isStaff()) return;
                     ChestGui ideologyGui = new ChestGui(6, defaultTitle + "§bGovernment");
                     StaticPane ideologyHotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGHEST);
                     int j1 = 0;
@@ -239,7 +239,7 @@ public class menuNation extends SubCommand {
                                 }
                             }
                             nation.setIdeology(ideology1.name());
-                            nation.getExtras().put("IDEOLOGY-TIMER", new Timer(Timer.DAY * 14).toMap());
+                            nation.getExtras().put("IDEOLOGY-TIMER", new Timer(Timer.DAY * 2).toMap());
                             nation.save();
                             player.closeInventory();
                             open(player, MenuPage.SETTINGS);
@@ -254,7 +254,7 @@ public class menuNation extends SubCommand {
                 Colours dmapColour = Colours.getByFillAndStroke(nation.getDynmapFill(), nation.getDynmapBorder());
                 menu.addItem(new GuiItem(new ItemBuilder(dmapColour.getMaterial()).setDisplayName("§b§lDynmap colour").addLoreLine("§b" + WordUtils.capitalize(dmapColour.name().toLowerCase())).addLoreLine(" ").addLoreLine("§c§oClick to change").build(), event -> {
                     event.setCancelled(true);
-                    if (profile.getCurrentNationRank().getPriority() != 666.0) return;
+                    if (profile.getCurrentNationRank().getPriority() != 666.0 && !profile.isStaff()) return;
                     ChestGui dmapGui = new ChestGui(6, defaultTitle + "§bChange d-map color");
                     StaticPane dmapHotbar = new StaticPane(0, 0, 9, 1, Pane.Priority.HIGHEST);
                     int j1 = 0;
@@ -362,7 +362,7 @@ public class menuNation extends SubCommand {
         PaginatedPane pagePane = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGHEST);
         List<GuiItem> upgradeItems = new ArrayList<>();
         for (NationUpgrade upgrade : NationUpgrade.values()) {
-            upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) && !upgrade.isMultiplePurchasable() ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").build(), event -> {
+            upgradeItems.add(nation.getUpgrades().contains(upgrade.name()) && !upgrade.isMultiplePurchasable() ? new GuiItem(new ItemBuilder(upgrade.getIcon()).setGlow().setDisplayName("§a" + upgrade.getDisplayName()).addLoreLine("§7Already purchased.").build(), event -> event.setCancelled(true)) : new GuiItem(new ItemBuilder(upgrade.getIcon()).setDisplayName("§c" + upgrade.getDisplayName()).addLoreLine("§7Cost: §b" + upgrade.getCost() + "§3N-XP").addLoreLine("§7Required Era: §b" + upgrade.getEra().getName()).build(), event -> {
                 event.setCancelled(true);
                 player.closeInventory();
                 if (nation.getXpPoints() < upgrade.getCost() || !upgrade.getEra().canAccess(nation)) {
