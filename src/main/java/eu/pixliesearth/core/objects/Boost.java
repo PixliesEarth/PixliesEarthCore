@@ -16,6 +16,7 @@ public class Boost {
 
         DOUBLE_EXP,
         DOUBLE_DROP,
+        QUADRUPLE_PP
 
     }
 

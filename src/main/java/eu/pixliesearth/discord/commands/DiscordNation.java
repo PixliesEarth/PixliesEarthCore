@@ -5,11 +5,15 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.javacord.api.entity.emoji.Emoji;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DiscordNation extends DiscordCommand {
 
@@ -43,7 +47,9 @@ public class DiscordNation extends DiscordCommand {
                     builder.append("* ").append(nation).append("\n");
                 }
                 builder.append("```");
-                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar()).setAuthor("Page: " + page + "/" + pages));
+                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar()).setAuthor("Page: " + page + "/" + pages)).thenAcceptAsync(message -> {
+                    message.addReactions("arrow_backward", "arrow_forward");
+                });
                 return;
             }
             Nation nation = Nation.getByName(split[1]);
@@ -66,6 +72,28 @@ public class DiscordNation extends DiscordCommand {
                     .setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar())
                );
         }
+    }
+
+    public static EmbedBuilder getListEmbed(int page, MessageAuthor author) {
+        List<String> Nations = new ArrayList<>(NationManager.names.keySet());
+        int height = 9;
+        int pages = Nations.size() / height + 1;
+        if (page > pages) {
+            page = pages;
+        } else if (page < 1) {
+            page = 1;
+        }
+        int start = (page - 1) * height;
+        int end = start + height;
+        if (end > Nations.size())
+            end = Nations.size();
+        StringBuilder builder = new StringBuilder();
+        builder.append("```md\n");
+        for (String nation : Nations.subList(start, end)) {
+            builder.append("* ").append(nation).append("\n");
+        }
+        builder.append("```");
+        return new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + author.getDisplayName() + " (" + author.getDiscriminatedName() + ")", author.getAvatar()).setAuthor("Page: " + page + "/" + pages);
     }
 
 }

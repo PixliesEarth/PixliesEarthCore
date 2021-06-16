@@ -5,6 +5,8 @@ import eu.pixliesearth.utils.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -141,9 +144,9 @@ public class CustomMachine extends CustomBlock {
 		try {
 			if (inv==null) return;
 			if (inv.getViewers().isEmpty()) return;
-			inv.getViewers().forEach(e -> {
-				if (e!=null) e.closeInventory();
-			});
+			for (HumanEntity humanEntity : inv.getViewers()) {
+				humanEntity.closeInventory();
+			}
 		} catch (Exception e) {
             e.printStackTrace();
             io.sentry.Sentry.captureException(e);

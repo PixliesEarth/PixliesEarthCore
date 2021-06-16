@@ -313,10 +313,9 @@ public final class Main extends JavaPlugin {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.isAfk()) continue;
                     Profile profile = getProfile(player.getUniqueId());
                     if (profile.isInNation()) {
-                        Energy.add(profile, Methods.round(0.1 * profile.getCurrentNation().getCurrentEra().getNumber(), 2));
+                        Energy.add(profile, 0.1 * profile.getCurrentNation().getCurrentEra().getNumber());
                     } else {
                         Energy.add(profile, 0.1);
                     }

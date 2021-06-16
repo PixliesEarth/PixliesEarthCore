@@ -117,11 +117,10 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 					if (timer.hasExpired()) { // Timer ended
 						h.unregisterTimer(loc);
 						craft(loc, inv, r);
-					} else {
-						// Do nothing as we want to do stuff when timer has ended
-					}
+					}  // Do nothing as we want to do stuff when timer has ended
+
 				}
-			} catch (Exception ignore) { return; }
+			} catch (Exception ignore) { }
 		}
 	}
 	/**

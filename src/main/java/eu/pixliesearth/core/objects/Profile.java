@@ -79,7 +79,7 @@ public class Profile {
         Profile data;
         if (found == null) {
             profile.append("discord", "NONE");
-            profile.append("balance", 4000.0);
+            profile.append("balance", 0.0);
             profile.append("receipts", new ArrayList<>());
             profile.append("marriagePartner", "NONE");
             profile.append("marriageRequests", new ArrayList<>());
@@ -235,6 +235,7 @@ public class Profile {
     }
 
     public void depositMoney(double amount, String reason) {
+        if (amount == 0) return;
         this.balance = this.balance + amount;
         String receipt = Receipt.create(amount, false, reason);
         if (this.receipts == null)

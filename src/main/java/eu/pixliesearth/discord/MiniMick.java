@@ -1,6 +1,7 @@
 package eu.pixliesearth.discord;
 
 import eu.pixliesearth.Main;
+import eu.pixliesearth.discord.commands.DiscordNation;
 import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +12,8 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
@@ -64,6 +67,26 @@ public class MiniMick {
                         String message = event.getReadableMessageContent();
                         Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + message);
                     }
+                }
+            }
+        });
+
+        api.addReactionAddListener(event -> {
+            if (event.getMessage().isPresent()) {
+                Message message = event.getMessage().get();
+                if (!message.getAuthor().getIdAsString().equals(event.getUserIdAsString())) return;
+                if (message.getEmbeds().isEmpty()) return;
+                Embed embed = message.getEmbeds().get(0);
+                if (embed.getTitle().isPresent() && embed.getTitle().get().equalsIgnoreCase("Nation list")) {
+                    int multiplier = 0;
+                    if (event.getEmoji().isUnicodeEmoji() && event.getEmoji().asUnicodeEmoji().get().equalsIgnoreCase("⬅️")) {
+                        multiplier = -1;
+                    } else if (event.getEmoji().isUnicodeEmoji() && event.getEmoji().asUnicodeEmoji().get().equalsIgnoreCase("➡️")) {
+                        multiplier = +1;
+                    }
+                    if (multiplier == 0) return;
+                    int page = Integer.parseUnsignedInt(embed.getDescription().get().split(" ")[1].split("/")[0]) + 1;
+                    message.edit(DiscordNation.getListEmbed(page, event.getMessageAuthor().get()));
                 }
             }
         });

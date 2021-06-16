@@ -90,7 +90,7 @@ public abstract class CustomGun extends CustomItem {
 				CustomGun customGun = (CustomGun) customItem;
 				if (Methods.removeRequiredAmount(customGun.getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
 					event.getPlayer().sendActionBar("§b§lReloading...");
-					event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo-1)).addNBTTag("cooldown", "reloading", NBTTagType.STRING).build());
+					event.getPlayer().getInventory().setItemInMainHand(null);
 					final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();
 					String gunID = CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand());
 					Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {

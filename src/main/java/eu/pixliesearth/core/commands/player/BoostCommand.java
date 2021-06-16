@@ -9,6 +9,7 @@ import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.boosts.DoubleDropBoost;
 import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
+import eu.pixliesearth.core.objects.boosts.QuadruplePPBoost;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;
 import net.md_5.bungee.api.ChatColor;
@@ -68,6 +69,23 @@ public class BoostCommand implements CommandExecutor {
                         BroadcastCommand.broadcastDiscord(ChatColor.stripColor(Lang.PLAYER_BOOSTED.getRaw("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Double ore-drop")), player);
                     }
                 }), 4, 1);
+                boolean alreadyQuadruplePP = instance.getUtilLists().boosts.containsKey(Boost.BoostType.QUADRUPLE_PP);
+                ItemStack quadruplePP = alreadyQuadruplePP ? new ItemBuilder(Material.RED_STAINED_GLASS_PANE).addLoreLine("§c§oSomeone already boosted").build() : new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§bQuadruple Political Power §8(§d2B§8)").addLoreLine("§7With this booster").addLoreLine("§7everyone on the server").addLoreLine("§7will get 4x political power").addLoreLine("§7for §a10 minutes§7!").build();
+                pane.addItem(new GuiItem(quadruplePP, event -> {
+                    event.setCancelled(true);
+                    event.setCancelled(true);
+                    if (!alreadyQuadruplePP) {
+                        if (profile.getBoosts() < 2) {
+                            Lang.NOT_ENOUGH_BOOSTS.send(player);
+                            return;
+                        }
+                        instance.getUtilLists().boosts.put(Boost.BoostType.QUADRUPLE_PP, new QuadruplePPBoost());
+                        Lang.PLAYER_BOOSTED.broadcast("%PLAYER%;" + player.getDisplayName(), "%BOOST%;Quadruple PP");
+                        profile.setBoosts(profile.getBoosts() - 2);
+                        profile.save();
+                        BroadcastCommand.broadcastDiscord(ChatColor.stripColor(Lang.PLAYER_BOOSTED.getRaw("ENG").replace("%PLAYER%", player.getDisplayName()).replace("%BOOST%", "Quadruple PP")), player);
+                    }
+                }), 6, 1);
                 pane.addItem(new GuiItem(new ItemBuilder(Material.CHEST_MINECART).setDisplayName("§f§lBoosts").addLoreLine("§d" + profile.getBoosts()).build(), event -> event.setCancelled(true)), 8, 2);
                 boostGui.addPane(pane);
                 boostGui.show(player);
