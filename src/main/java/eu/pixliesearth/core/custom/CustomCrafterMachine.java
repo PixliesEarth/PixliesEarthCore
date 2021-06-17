@@ -162,7 +162,8 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		}
 		for (Entry<String, Integer> entry : m.entrySet())
 			m3.put(entry.getKey(), entry.getValue());
-		setMapToCraftSlots(loc, inv, m3); // Give extras back
+		// setMapToCraftSlots(loc, inv, m3); // Give extras back
+		removeIndgredientsForRecipeFromCraftSlots(loc, inv, r);
 		addToResult(loc, inv, CustomItemUtil.getItemStackFromUUID(r.getResultUUID())); // Give result
 		takeCost(loc, r); // Take cost
 		return true;

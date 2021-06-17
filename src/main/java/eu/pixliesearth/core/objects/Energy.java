@@ -27,7 +27,7 @@ public class Energy {
         }
         profile.save();
         if (Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())) != null)
-            Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())).sendActionBar("§eYou gained §a" + amount + " §eenergy.");
+            Bukkit.getPlayer(UUID.fromString(profile.getUniqueId())).sendActionBar("§eYou gained §a" + Methods.round(amount, 2) + " §eenergy.");
     }
 
     public static double calculateNeeded(Location a, Location b) {

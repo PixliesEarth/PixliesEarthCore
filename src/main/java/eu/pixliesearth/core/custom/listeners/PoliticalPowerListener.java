@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Ideology;
 import eu.pixliesearth.nations.entities.nation.Nation;
@@ -30,6 +31,7 @@ public class PoliticalPowerListener extends CustomListener {
         if (ideology == Ideology.LIBERAL_DEMOCRACY) xpToAdd += 0.05 * nation.getAllies().size();
         if (ideology == Ideology.CONSERVATIVE_DEMOCRACY) xpToAdd += xpToAdd * 1.10;
         if (ideology == Ideology.DICTATORSHIP) xpToAdd += xpToAdd * 1.25;
+        if (instance.getUtilLists().boosts.containsKey(Boost.BoostType.QUADRUPLE_PP)) xpToAdd = xpToAdd * 2;
         nation.setXpPoints(nation.getXpPoints() + xpToAdd);
         nation.save();
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
