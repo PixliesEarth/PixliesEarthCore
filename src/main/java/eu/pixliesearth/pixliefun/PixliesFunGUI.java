@@ -11,6 +11,7 @@ import com.github.stefvanschie.inventoryframework.gui.type.AnvilGui;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
 import eu.pixliesearth.core.custom.commands.CIControl;
+import eu.pixliesearth.utils.*;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,10 +28,6 @@ import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.interfaces.Constants;
-import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.SkullCreator;
 import lombok.Data;
 
 /**
@@ -92,7 +89,7 @@ public class PixliesFunGUI implements Constants {
         PaginatedPane categories = new PaginatedPane(0, 1, 9, 4, Pane.Priority.HIGH);
         List<GuiItem> categoryItems = new ArrayList<>();
         for (CustomItem.Category category : CustomItem.Category.values()) {
-            categoryItems.add(new GuiItem(new ItemBuilder(CustomItemUtil.getItemStackFromUUID(category.getIcon())).setDisplayName(category.getName()).addLoreLine("§f§lLEFT §7click to open").build(), event -> {
+            categoryItems.add(new GuiItem(new ItemBuilder(CustomItemUtil.getItemStackFromUUID(category.getIcon())).setDisplayName(category.getName()).addLoreLine("§f§lLEFT §7click to open").addNBTTag("guideItem", "ONLY_STAFF", NBTTagType.STRING).build(), event -> {
                 event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderCategoryMenu(category);
@@ -135,7 +132,7 @@ public class PixliesFunGUI implements Constants {
             if (s.contains("_UNB")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
-            entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
+            entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").addNBTTag("guideItem", "ONLY_STAFF", NBTTagType.STRING).build(), event -> {
                 event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderRecipe(i, 0);
@@ -193,7 +190,7 @@ public class PixliesFunGUI implements Constants {
             if (s.contains("_UNB")) continue;
             ItemStack i = CustomItemUtil.getItemStackFromUUID(s);
             if (i == null) continue;
-            entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").build(), event -> {
+            entries.add(new GuiItem(new ItemBuilder(i).addLoreLine(" ").addLoreLine("§f§lLEFT §7click to show recipe").addNBTTag("guideItem", "ONLY_STAFF", NBTTagType.STRING).build(), event -> {
                 event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1);
                 renderRecipe(i, 0);
@@ -267,7 +264,7 @@ public class PixliesFunGUI implements Constants {
             gui.addPane(recipePane);
 
             StaticPane result = new StaticPane(7, 2, 1, 1, Pane.Priority.HIGH);
-            result.addItem(new GuiItem(new ItemBuilder(getItem(recipe.getResultUUID())).setAmount(recipe.getResultAmount()).build(), e -> {
+            result.addItem(new GuiItem(new ItemBuilder(getItem(recipe.getResultUUID())).addNBTTag("guideItem", "ONLY_STAFF", NBTTagType.STRING).setAmount(recipe.getResultAmount()).build(), e -> {
                 e.setCancelled(true);
                 if (Main.getInstance().getUtilLists().staffMode.contains(player.getUniqueId()) && e.isLeftClick())
                     player.getInventory().addItem(getItem(recipe.getResultUUID()));

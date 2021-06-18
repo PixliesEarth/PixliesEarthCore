@@ -143,7 +143,7 @@ public class ProtectionManager implements Listener {
     @EventHandler(priority = HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null) return;
-        if (!event.getClickedBlock().getType().isInteractable() && !event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.WATER_BUCKET) && !event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.WATER_BUCKET) && !event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LAVA_BUCKET) && !event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.LAVA_BUCKET)) return;
+        if (!event.getClickedBlock().getType().isInteractable() && !event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.WATER_BUCKET) && !event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.WATER_BUCKET) && !event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LAVA_BUCKET) && !event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.LAVA_BUCKET) && event.getClickedBlock().getType() != Material.FARMLAND) return;
         boolean can = canInteract(event);
         if (!can) {
             event.setCancelled(true);

@@ -168,7 +168,7 @@ public final class Main extends JavaPlugin {
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
     private @Getter BalTopThread baltopThread;
-    private @Getter final boolean warEnabled = false;
+    private @Getter final boolean warEnabled = true;
     private @Getter REST rest;
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
@@ -197,6 +197,7 @@ public final class Main extends JavaPlugin {
         loader.loadListener(new SuicideVestListener());
         loader.loadListener(new PoliticalPowerListener());
         loader.loadListener(new CustomCraftingListener());
+        loader.loadListener(new PixlieFunGUIListener());
         loader.loadCustomItem(new ItemEnergyInspector());
         loader.loadCustomItem(new ItemBlockInspector());
         loader.loadCustomRecipe(new EnergyMachineBase());

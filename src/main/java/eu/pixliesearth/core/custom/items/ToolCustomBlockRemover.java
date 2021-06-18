@@ -1,5 +1,6 @@
 package eu.pixliesearth.core.custom.items;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomBlock;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomItem;
@@ -80,6 +81,7 @@ public class ToolCustomBlockRemover extends CustomItem {
 
     @Override
     public boolean PlayerInteractEvent(PlayerInteractEvent event) {
+        if (!Main.getInstance().getUtilLists().staffMode.contains(event.getPlayer().getUniqueId())) return true;
     	Block b = event.getClickedBlock();
     	if (b==null) return true;
     	CustomBlock cb = CustomFeatureLoader.getLoader().getHandler().getCustomBlockFromLocation(b.getLocation());
