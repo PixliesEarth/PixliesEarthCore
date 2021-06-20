@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.commands.CIControl;
 import eu.pixliesearth.core.custom.interfaces.ITabable;

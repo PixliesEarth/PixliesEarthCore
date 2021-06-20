@@ -1,15 +1,11 @@
 package eu.pixliesearth.guns.ammo;
 
-import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.utils.CustomItemUtil;
-import eu.pixliesearth.utils.NBTTagType;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo;
-import eu.pixliesearth.utils.ItemBuilder;
 
 public class NineMMAmmo extends PixliesAmmo {
 

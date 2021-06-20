@@ -21,7 +21,6 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.core.custom.CustomItem;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
 import eu.pixliesearth.utils.CustomItemUtil;

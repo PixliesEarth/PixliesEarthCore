@@ -1,14 +1,8 @@
 package eu.pixliesearth.core.custom;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import eu.pixliesearth.core.custom.blocks.EnergyBlockNuclearGenerator;
-import eu.pixliesearth.core.custom.blocks.EnergyBlockQuarry;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
@@ -16,17 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import eu.pixliesearth.core.custom.CustomCommand.RegisterableCommand;
-import eu.pixliesearth.core.custom.commands.CIControl;
 import eu.pixliesearth.core.files.FileDirectory;
-import eu.pixliesearth.core.files.ListFile;
-import eu.pixliesearth.core.vendors.Vendor;
-import eu.pixliesearth.pixliefun.PixliesFunGUI;
-import eu.pixliesearth.utils.Methods;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
 
 /**
  * 
@@ -69,264 +56,20 @@ public class CustomFeatureLoader {
 		setHandler(new CustomFeatureHandler(this));
 		loadCommands(path);
 		loadListeners(path);
-		new CustomRecipes(getInstance());
-		loadCustomRecipes(path);
-		loadCustomItems(path);
 		loadPermissions(path);
-		loadCustomBlocks(path);
-		//loadCustomMachineRecipes(path);
-		//loadQuests(path);
-		loadMachines(path);
-		try {
-			new ListFile(getInstance().getDataFolder().getAbsolutePath()+"/", "disableditems").loadList().parallelStream().forEach((s) -> CIControl.DISABLED_ITEMS.add(s));
-		} catch (Exception ignore) {
-			System.err.println("Failed to load disabled custom items");
-		}
 		getHandler().loadSkillsFromFile();
 		getHandler().registerSkills();
-		try {
-			getHandler().loadCustomBlocksFromFileOptimised();
-		} catch (Exception e) {
-			System.err.println("Failed to load custom blocks");
-		}
-		try {
-			getHandler().loadMachinesFromFileOptimised();
-		} catch (Exception e) {
-			System.err.println("Failed to load custom machines data");
-		}
-		for (CustomItem.Category category : handler.getCategoriesForItems().keySet())
-			handler.getCategoriesForItems().get(category).sort(Comparator.comparing(String::toString));
 	}
 	/**
 	 * Saves everything
 	 */
 	public void save() {
-		try {
-			ListFile lf = new ListFile(getInstance().getDataFolder().getAbsolutePath()+"/", "disableditems");
-			lf.clearFile();
-			lf.writeArrayToFile((ArrayList<String>) Methods.convertSetIntoList(CIControl.DISABLED_ITEMS));
-		} catch (Exception ignore) {
-			System.err.println("Failed to save disabled custom items");
-		}
 		getHandler().saveSkillsToFile();
-		try {
-			getHandler().saveCustomBlocksToFileOptimised();
-		} catch (Exception e) {
-			System.out.println("Failed to save custom blocks");
-		}
-		try {
-			getHandler().saveMachinesToFileOptimised();
-		} catch (Exception e) {
-			System.out.println("Failed to save custom machines data");
-		}
 		for (Listener customListener : getHandler().getCustomListeners()) 
 			if (customListener instanceof CustomListener) 
 				((CustomListener)customListener).onServerShutdown(this, getHandler());
 	}
-	// TODO: notes
-	@SneakyThrows
-	public void loadMachines(String path) {
-		int i = 0;
-		for (Class<? extends CustomMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomMachine.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomCrafterMachine.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomGeneratorMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomGeneratorMachine.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomEnergyCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomEnergyCrafterMachine.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomFuelableCrafterMachine> clazz : reflectBasedOnExtentionOf(path+".machines", CustomFuelableCrafterMachine.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("§7Loaded §b" + i + "§7 custom machines.");
-	}
-	// TODO: notes
-	public void loadMachine(CustomMachine customMachine) {
-		getHandler().registerMachine(customMachine);
-	}
-	/**
-	 * Uses reflection to load custom recipes
-	 * 
-	 * @param path The path to reflect off
-	 */
-	@SneakyThrows
-	public void loadCustomRecipes(String path) {
-		int i = 0;
-		for (Class<? extends CustomRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes", CustomRecipe.class)) {
-			loadCustomRecipe(clazz.getConstructor().newInstance());
-			i++;
-		}
-		System.out.println("§7Loaded §b" + i + "§7 custom recipes.");
-	}
-	/**
-	 * Registers the inputed {@link CustomRecipe}
-	 * 
-	 * @param customRecipe The {@link CustomRecipe} to register
-	 */
-	public void loadCustomRecipe(CustomRecipe customRecipe) {
-		getHandler().registerRecipe(customRecipe);
-		PixliesFunGUI.recipes.putIfAbsent(customRecipe.getResultUUID(), new ArrayList<>());
-		PixliesFunGUI.recipes.get(customRecipe.getResultUUID()).add(customRecipe);
-	}
-	/**
-	 * Uses reflection to load custom blocks
-	 * 
-	 * @param path The path to reflect off
-	 */
-	@SneakyThrows
-	public void loadCustomBlocks(String path) {
-		int i = 0;
-		for (Class<? extends CustomBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomBlock.class)) {
-			try {
-				loadCustomBlock(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomEnergyBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyBlock.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomEnergyCable> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomEnergyCable.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomSaveableBlock> clazz : reflectBasedOnExtentionOf(path+".blocks", CustomSaveableBlock.class)) {
-			try {
-				loadMachine(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		loadMachine(new EnergyBlockQuarry());
-		loadMachine(new EnergyBlockNuclearGenerator());
-		System.out.println("§7Loaded §b" + i + "§7 custom blocks.");
-	}
-	/**
-	 * Loads the {@link CustomBlock} provided
-	 * 
-	 * @param customBlock The {@link CustomBlock} to load
-	 */
-	public void loadCustomBlock(CustomBlock customBlock) {
-		getHandler().registerBlock(customBlock);
-	}
 
-	/**
-	 * Uses reflection to load custom items
-	 * 
-	 * @param path Path to reflect off
-	 */
-	@SneakyThrows
-	public void loadCustomItems(String path) {
-		int i = 0;
-		for (Class<? extends CustomItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomItem.class)) {
-			try {
-				loadCustomItem(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomArmour> clazz : reflectBasedOnExtentionOf(path+".items", CustomArmour.class)) {
-			try {
-				loadCustomItem(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomWeapon> clazz : reflectBasedOnExtentionOf(path+".items", CustomWeapon.class)) {
-			try {
-				loadCustomItem(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomFuel> clazz : reflectBasedOnExtentionOf(path+".items", CustomFuel.class)) {
-			try {
-				loadCustomItem(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		for (Class<? extends CustomEnergyItem> clazz : reflectBasedOnExtentionOf(path+".items", CustomEnergyItem.class)) {
-			try {
-				loadCustomItem(clazz.getConstructor().newInstance());
-				i++;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("§7Loaded §b" + i + "§7 custom items.");
-	}
-
-	/**
-	 * Loads a custom item based on the input
-	 * 
-	 * @param c The custom item to load
-	 */
-	@SuppressWarnings("deprecation")
-	public void loadCustomItem(CustomItem c) {
-		getHandler().registerItem(c);
-		if (c.getDropFromBlock() == null) return;
-		List<BlockDrop> bdrop = new ArrayList<>();
-		if (handler.getDropMap().containsKey(c.getDropFromBlock().getBlock())) bdrop = handler.getDropMap().get(c.getDropFromBlock().getBlock());
-		bdrop.add(c.getDropFromBlock());
-		handler.getDropMap().put(c.getDropFromBlock().getBlock(), bdrop);
-	}
-
-	/**
-	@SneakyThrows
-	public void loadCustomMachineRecipes(String path) {
-		for (Class<? extends CustomMachineRecipe> clazz : reflectBasedOnExtentionOf(path+".recipes.machine", CustomMachineRecipe.class)) 	
-			loadCustomMachineRecipe(clazz.newInstance());
-	}
-	
-	public void loadCustomMachineRecipe(CustomMachineRecipe customMachine) {
-		getHandler().registerCustomMachineRecipe(customMachine);
-	}
-	*/
 	/**
 	 * Uses reflection to register permissions
 	 * 
@@ -400,28 +143,6 @@ public class CustomFeatureLoader {
 		} finally {
 			getHandler().registerCommand(c);
 		}
-	}
-
-	/**
-	 * Loads all {@link CustomQuest} instances
-	 *
-	 * @param path Path to search
-	 */
-	@SneakyThrows
-	public void loadQuests(String path) {
-		for (Class<? extends CustomQuest> clazz : reflectBasedOnExtentionOf(path + ".quests", CustomQuest.class)) {
-			loadListener(clazz.getConstructor().newInstance());
-			loadQuest(clazz.getConstructor().newInstance());
-		}
-	}
-
-	/**
-	 * registers the {@link CustomQuest} instances
-	 *
-	 * @param quest Quest to load
-	 */
-	public void loadQuest(CustomQuest quest) {
-		handler.registerQuest(quest);
 	}
 
 	/**

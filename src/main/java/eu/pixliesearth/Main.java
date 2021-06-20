@@ -196,12 +196,6 @@ public final class Main extends JavaPlugin {
         loader.loadListener(new CustomMoneyPickupListener());
         loader.loadListener(new SuicideVestListener());
         loader.loadListener(new PoliticalPowerListener());
-        loader.loadListener(new CustomCraftingListener());
-        loader.loadListener(new PixlieFunGUIListener());
-        loader.loadCustomItem(new ItemEnergyInspector());
-        loader.loadCustomItem(new ItemBlockInspector());
-        loader.loadCustomRecipe(new EnergyMachineBase());
-        loader.loadCustomRecipe(new SteelDust());
     }
 
     @SuppressWarnings("resource")
@@ -413,15 +407,6 @@ public final class Main extends JavaPlugin {
             new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.TRIBE.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
-        loader.loadCustomItem(new AK47());
-    	loader.loadCustomItem(new K98K());
-    	loader.loadCustomItem(new M16());
-    	loader.loadCustomItem(new M1911());
-    	loader.loadCustomItem(new MP5());
-    	loader.loadCustomItem(new Slingshot());
-    	loader.loadCustomItem(new Uzi());
-    	loader.loadCustomItem(new RPG7());
-    	loader.loadListener(new CustomMobListener());
     	Bukkit.getPluginManager().registerEvents(new VendorListener(), this);
 
     	if (!vendorItemsFile.containsKey("balance")) vendorItemsFile.put("balance", 50.0);
@@ -551,7 +536,6 @@ public final class Main extends JavaPlugin {
         manager.registerEvents(new ProtectionManager(), this);
         manager.registerEvents(new DoubleExpBoost(), this);
         manager.registerEvents(new FlagListener(), this);
-        manager.registerEvents(new CustomBlockListener(), this);
     }
 
     /**

@@ -1,6 +1,5 @@
 package eu.pixliesearth.guns;
 
-import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.guns.ammo.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
