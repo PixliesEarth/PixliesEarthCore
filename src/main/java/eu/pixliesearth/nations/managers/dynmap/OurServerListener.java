@@ -31,7 +31,7 @@ public class OurServerListener implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.MONITOR)
+/*    @EventHandler(priority=EventPriority.MONITOR)
     public void onNationCreation(NationCreationEvent event) {
         if(event.isCancelled()) {
             return;
@@ -59,6 +59,6 @@ public class OurServerListener implements Listener {
             return;
         }
         kernel.requestUpdateFactions();
-    }
+    }*/
 
 }
