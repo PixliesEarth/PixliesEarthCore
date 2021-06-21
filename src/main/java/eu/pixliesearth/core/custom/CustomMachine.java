@@ -144,9 +144,8 @@ public class CustomMachine extends CustomBlock {
 		try {
 			if (inv==null) return;
 			if (inv.getViewers().isEmpty()) return;
-			for (HumanEntity humanEntity : inv.getViewers()) {
-				humanEntity.closeInventory();
-			}
+			for (Iterator<HumanEntity> humanEntityIterator = inv.getViewers().iterator(); humanEntityIterator.hasNext();)
+				humanEntityIterator.next().closeInventory();
 		} catch (Exception e) {
             e.printStackTrace();
             io.sentry.Sentry.captureException(e);

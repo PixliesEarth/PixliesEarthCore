@@ -24,9 +24,7 @@ public class FlagListener implements Listener {
             if (nc == null) return;
             Nation nation = nc.getCurrentNation();
             if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
-            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                event.setCancelled(true);
-            });
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> event.setCancelled(true));
         });
     }
 
@@ -42,13 +40,15 @@ public class FlagListener implements Listener {
 
     @EventHandler
     public void onEntityMove(EntityMoveEvent event) {
-        if (!(event.getEntity() instanceof Monster)) return;
-        if (event.getFrom().getChunk() != event.getTo().getChunk()) {
-            Nation nation = NationChunk.getNationData(event.getTo().getChunk());
-            if (nation == null) return;
-            if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
-            event.getEntity().remove();
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            if (!(event.getEntity() instanceof Monster)) return;
+            if (event.getFrom().getChunk() != event.getTo().getChunk()) {
+                Nation nation = NationChunk.getNationData(event.getTo().getChunk());
+                if (nation == null) return;
+                if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> event.setCancelled(true));
+            }
+        });
     }
 
 }
