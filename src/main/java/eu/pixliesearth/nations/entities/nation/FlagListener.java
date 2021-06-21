@@ -1,7 +1,10 @@
 package eu.pixliesearth.nations.entities.nation;
 
+import eu.pixliesearth.Main;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,14 +15,19 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class FlagListener implements Listener {
 
+    @SneakyThrows
     @EventHandler (priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMonsterSpawn(EntitySpawnEvent event) {
-        if (!(event.getEntity() instanceof Monster)) return;
-        NationChunk nc = NationChunk.get(event.getLocation().getChunk());
-        if (nc == null) return;
-        Nation nation = nc.getCurrentNation();
-        if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
-        event.setCancelled(true);
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            if (!(event.getEntity() instanceof Monster)) return;
+            NationChunk nc = NationChunk.get(event.getLocation().getChunk());
+            if (nc == null) return;
+            Nation nation = nc.getCurrentNation();
+            if (nation.getFlags().contains(NationFlag.MONSTERS.name())) return;
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                event.setCancelled(true);
+            });
+        });
     }
 
     @EventHandler
