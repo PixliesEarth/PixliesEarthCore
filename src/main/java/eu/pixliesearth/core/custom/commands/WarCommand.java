@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.commands;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
+import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
@@ -74,7 +75,7 @@ public class WarCommand extends CustomCommand implements Constants {
         }
         Nation nation = profile.getCurrentNation();
         ChestGui gui = new ChestGui(6 , "§c§lWar");
-        PaginatedPane wars = new PaginatedPane(0, 0, 9, 5);
+        PaginatedPane wars = new PaginatedPane(0, 0, 9, 5, Pane.Priority.HIGHEST);
         List<GuiItem> guiItems = new ArrayList<>();
         for (War war : War.getWars(nation)) {
             guiItems.add(new GuiItem(new ItemBuilder(war.getDefenderInstance().getFlag()) {{
@@ -101,7 +102,7 @@ public class WarCommand extends CustomCommand implements Constants {
         }
         wars.populateWithGuiItems(guiItems);
         gui.addPane(wars);
-        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
         hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.HAY_BLOCK).setDisplayName("§b§lJustify war-goal").build(), event -> {
             event.setCancelled(true);
@@ -114,7 +115,7 @@ public class WarCommand extends CustomCommand implements Constants {
 
     private static void openJustificationGui(Profile profile, Nation nation, ChestGui gui) {
         gui.getPanes().clear();
-        PaginatedPane nations = new PaginatedPane(0, 0, 9, 5);
+        PaginatedPane nations = new PaginatedPane(0, 0, 9, 5, Pane.Priority.HIGHEST);
         List<GuiItem> guiItems = new ArrayList<>();
         for (Nation n : NationManager.nations.values()) {
             if (n.getNationId().equals(nation.getNationId())) continue;
@@ -136,7 +137,7 @@ public class WarCommand extends CustomCommand implements Constants {
         }
         nations.populateWithGuiItems(guiItems);
         gui.addPane(nations);
-        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1, Pane.Priority.HIGHEST);
         hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
         hotBar.addItem(new GuiItem(backButtonMick, event -> {
             event.setCancelled(true);
