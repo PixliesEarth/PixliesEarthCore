@@ -421,7 +421,6 @@ public final class Main extends JavaPlugin {
     	loader.loadCustomItem(new Slingshot());
     	loader.loadCustomItem(new Uzi());
     	loader.loadCustomItem(new RPG7());
-    	loader.loadListener(new CustomMobListener());
     	Bukkit.getPluginManager().registerEvents(new VendorListener(), this);
 
     	if (!vendorItemsFile.containsKey("balance")) vendorItemsFile.put("balance", 50.0);
