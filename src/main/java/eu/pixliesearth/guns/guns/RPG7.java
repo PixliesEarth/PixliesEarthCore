@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns.guns;
 
+import eu.pixliesearth.guns.CustomGun;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;

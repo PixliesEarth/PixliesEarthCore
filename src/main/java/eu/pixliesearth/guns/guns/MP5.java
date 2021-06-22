@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns.guns;
 
+import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class MP5 extends CustomGun {
