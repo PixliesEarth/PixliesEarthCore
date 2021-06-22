@@ -3,7 +3,6 @@ package eu.pixliesearth.core.custom.commands.subcommands.recipes;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
-import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

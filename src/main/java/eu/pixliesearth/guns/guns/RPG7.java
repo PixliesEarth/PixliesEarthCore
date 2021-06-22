@@ -9,7 +9,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
-import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;

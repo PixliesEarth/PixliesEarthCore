@@ -1,6 +1,5 @@
 package eu.pixliesearth.guns.guns;
 
-import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class AK47 extends CustomGun {

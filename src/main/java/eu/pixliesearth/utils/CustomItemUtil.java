@@ -30,29 +30,20 @@ public class CustomItemUtil {
 		return getUUIDFromItemStack(itemStack)!=null;
 	}
 	
-	public static CustomItem getCustomItemFromUUID(String id) {
-		return CustomFeatureLoader.getLoader().getHandler().getCustomItemFromUUID(id);
+	public static ItemStack getCustomItemFromUUID(String id) {
+		return new ItemStack(MinecraftMaterial.getMinecraftMaterialFromUUID(id).getMaterial());
 	}
 	
 	public static ItemStack getItemStackFromUUID(String id) {
-		ItemStack i = CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
-		if (i==null) {
-			Material m = MinecraftMaterial.getMinecraftMaterialFromUUID(id).getMaterial();
-			if (m==null || m.equals(Material.AIR)) {
-				return null;
-			} else {
-				return new ItemStack(m);
-			}
-		} else 
-			return CustomFeatureLoader.getLoader().getHandler().getItemStackFromUUID(id);
+		Material m = MinecraftMaterial.getMinecraftMaterialFromUUID(id).getMaterial();
+		if (m==null || m.equals(Material.AIR)) {
+			return null;
+		} else {
+			return new ItemStack(m);
+		}
 	}
 	
 	public static String getUUIDFromLocation(Location l) {
-		CustomFeatureHandler h = CustomFeatureLoader.getLoader().getHandler();
-		if (h.isCustomBlockAtLocation(l)) {
-			return h.getCustomBlockFromLocation(l).getUUID();
-		} else {
-			return MinecraftMaterial.getMinecraftMaterialFromMaterial(l.getBlock().getType()).getUUID();
-		}
+		return MinecraftMaterial.getMinecraftMaterialFromMaterial(l.getBlock().getType()).getUUID();
 	}
 }

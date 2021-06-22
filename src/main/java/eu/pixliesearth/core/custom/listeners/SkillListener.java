@@ -26,9 +26,6 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomFeatureHandler;
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.core.custom.CustomListener;
-import eu.pixliesearth.core.custom.items.EnergyToolExplosivePickaxe;
-import eu.pixliesearth.core.custom.items.EnergyToolLumberAxe;
-import eu.pixliesearth.core.custom.items.ToolLumberAxe;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.custom.skills.events.SkillLevelGainedEvent;
 import eu.pixliesearth.core.custom.skills.events.SkillXPGainedEvent;
@@ -62,19 +59,6 @@ public class SkillListener extends CustomListener {
 			case "Pixlies:Traveling":
 				for (int i = 0; i < event.getNewLevel() - event.getOldLevel(); i++) {
 					Energy.add(profile, BigDecimal.valueOf((0.1D * (Math.floor(Math.floor((event.getOldLevel() + 1 + i) / 10.0) / 10.0)))).setScale(1, RoundingMode.DOWN).doubleValue());
-				}
-				break;
-			case "Pixlies:Lumbering":
-				if (event.getOldLevel() < 10 && event.getNewLevel() >= 10) {
-					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(ToolLumberAxe.class).getUUID());
-				}
-				if (event.getOldLevel() < 35 && event.getNewLevel() >= 35) {
-					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolLumberAxe.class).getUUID());
-				}
-				break;
-			case "Pixlies:Mining":
-				if (event.getOldLevel() < 35 && event.getNewLevel() >= 35) {
-					event.getPlayer().sendMessage("§a[§r✔§a]§r You have unlocked the recipe for " + h.getCustomItemFromClass(EnergyToolExplosivePickaxe.class).getUUID());
 				}
 				break;
 		}

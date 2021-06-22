@@ -5,6 +5,7 @@ import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;

@@ -4,7 +4,6 @@ import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo;
 
 public class NineMMAmmo extends PixliesAmmo {

@@ -9,11 +9,7 @@ import java.util.logging.Level;
 
 import eu.pixliesearth.api.REST;
 import eu.pixliesearth.core.custom.commands.*;
-import eu.pixliesearth.core.custom.items.ItemBlockInspector;
-import eu.pixliesearth.core.custom.items.ItemEnergyInspector;
 import eu.pixliesearth.core.custom.listeners.*;
-import eu.pixliesearth.core.custom.recipes.EnergyMachineBase;
-import eu.pixliesearth.core.custom.recipes.SteelDust;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
 import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;

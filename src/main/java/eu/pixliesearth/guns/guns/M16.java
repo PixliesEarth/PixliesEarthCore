@@ -2,7 +2,6 @@ package eu.pixliesearth.guns.guns;
 
 import org.bukkit.Material;
 
-import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class M16 extends CustomGun {

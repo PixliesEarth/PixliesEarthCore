@@ -5,7 +5,6 @@ import eu.pixliesearth.core.objects.Boost;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.lib.net.ranktw.DiscordWebHooks.DiscordWebhook;
 import eu.pixliesearth.nations.commands.subcommand.nation.chatNation;
-import eu.pixliesearth.pixliefun.PixliesFunGUI;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.WarParticipant;
 import org.bukkit.Location;

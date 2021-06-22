@@ -3,8 +3,10 @@ package eu.pixliesearth.core.custom.commands.subcommands.war;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
+import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import eu.pixliesearth.core.custom.CustomSubCommand;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.warsystem.War;
@@ -38,7 +40,7 @@ public class ListCommand extends CustomSubCommand implements Constants {
         StaticPane outerPane = new StaticPane(0, 0, 9, 6);
         outerPane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), event -> event.setCancelled(true));
 
-        PaginatedPane wars = new PaginatedPane(1, 1, 7, 4);
+        PaginatedPane wars = new PaginatedPane(1, 1, 7, 4, Pane.Priority.HIGHEST);
         List<GuiItem> warItems = new ArrayList<>();
         for (War war : instance.getUtilLists().wars.values())
             warItems.add(new GuiItem(
