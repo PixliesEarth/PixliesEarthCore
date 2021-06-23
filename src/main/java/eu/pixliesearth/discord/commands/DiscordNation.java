@@ -5,6 +5,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.javacord.api.entity.emoji.CustomEmojiBuilder;
 import org.javacord.api.entity.emoji.Emoji;
 import org.javacord.api.entity.message.MessageAuthor;
 import org.javacord.api.entity.message.embed.Embed;
@@ -13,6 +14,7 @@ import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 public class DiscordNation extends DiscordCommand {
@@ -47,8 +49,9 @@ public class DiscordNation extends DiscordCommand {
                     builder.append("* ").append(nation).append("\n");
                 }
                 builder.append("```");
-                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar()).setAuthor("Page: " + page + "/" + pages)).thenAcceptAsync(message -> {
-                    message.addReactions("arrow_backward", "arrow_forward");
+                event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar()).setAuthor("Page: " + page + "/" + pages)).thenAccept(message -> {
+                    message.addReaction("⬅️");
+                    message.addReaction("➡️");
                 });
                 return;
             }

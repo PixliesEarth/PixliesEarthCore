@@ -2,7 +2,9 @@ package eu.pixliesearth.discord.commands;
 
 import eu.pixliesearth.discord.DiscordCommand;
 import eu.pixliesearth.discord.MiniMick;
+import lombok.SneakyThrows;
 import org.javacord.api.entity.server.Server;
+import org.javacord.api.entity.server.invite.Invite;
 import org.javacord.api.entity.server.invite.RichInvite;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -24,9 +26,14 @@ public class DiscordServers extends DiscordCommand {
         for (Server server : MiniMick.getApi().getServers()) {
             builder.append("* ").append(server.getName()).append(" | ");
             try {
-                builder.append(server.getInvites().get().iterator().next()).append("\n");
+                builder.append(server.getInvites().get().iterator().next().getUrl().toString()).append("\n");
             } catch (Exception e) {
-                builder.append("No invite :(\n");
+                try {
+                    Invite invite = server.getChannels().get(0).createInviteBuilder().create().get();
+                    builder.append(invite.getUrl().toString()).append("\n");
+                } catch (Exception e1) {
+                    builder.append("No invite :(\n");
+                }
             }
         }
         event.getMessage().reply(

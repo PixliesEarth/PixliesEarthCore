@@ -74,19 +74,19 @@ public class MiniMick {
         api.addReactionAddListener(event -> {
             if (event.getMessage().isPresent()) {
                 Message message = event.getMessage().get();
-                if (!message.getAuthor().getIdAsString().equals(event.getUserIdAsString())) return;
                 if (message.getEmbeds().isEmpty()) return;
                 Embed embed = message.getEmbeds().get(0);
                 if (embed.getTitle().isPresent() && embed.getTitle().get().equalsIgnoreCase("Nation list")) {
                     int multiplier = 0;
-                    if (event.getEmoji().isUnicodeEmoji() && event.getEmoji().asUnicodeEmoji().get().equalsIgnoreCase("⬅️")) {
+                    if (event.getEmoji().equalsEmoji("⬅️")) {
                         multiplier = -1;
-                    } else if (event.getEmoji().isUnicodeEmoji() && event.getEmoji().asUnicodeEmoji().get().equalsIgnoreCase("➡️")) {
-                        multiplier = +1;
+                    } else if (event.getEmoji().equalsEmoji("➡️")) {
+                        multiplier = 1;
                     }
                     if (multiplier == 0) return;
-                    int page = Integer.parseUnsignedInt(embed.getDescription().get().split(" ")[1].split("/")[0]) + 1;
+                    int page = Integer.parseUnsignedInt(embed.getDescription().get().split(" ")[1].split("/")[0]) + multiplier;
                     message.edit(DiscordNation.getListEmbed(page, event.getMessageAuthor().get()));
+                    message.removeReactionByEmoji(event.getUser().get(), event.getEmoji().getMentionTag().equalsIgnoreCase("arrow_left") ? "⬅️" : "➡️");
                 }
             }
         });

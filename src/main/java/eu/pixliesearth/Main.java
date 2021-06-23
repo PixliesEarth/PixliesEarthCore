@@ -15,6 +15,7 @@ import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.sentry.Sentry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -139,7 +140,7 @@ import lombok.SneakyThrows;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 
-public final class Main extends JavaPlugin {
+public final class Main extends JavaPlugin implements SlimefunAddon {
 
     private static @Getter Main instance;
     private static @Getter MongoCollection<Document> playerCollection;
@@ -575,6 +576,16 @@ public final class Main extends JavaPlugin {
     public boolean isStaff(CommandSender sender) {
         if (!(sender instanceof Player)) return true;
         return getProfile(((Player)sender).getUniqueId()).isStaff();
+    }
+
+    @Override
+    public JavaPlugin getJavaPlugin() {
+        return this;
+    }
+
+    @Override
+    public String getBugTrackerURL() {
+        return "https://github.com/PixliesEarth/pixliesNet/issues";
     }
 
 }
