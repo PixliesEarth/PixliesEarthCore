@@ -39,7 +39,7 @@ public class SkillCommand extends CustomCommand {
 	
 	@Override
 	public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
-		ChestGui gui = new ChestGui(5, "§eSkills");
+/*		ChestGui gui = new ChestGui(5, "§eSkills");
 		Player player = (Player) commandSender;
 
 		StaticPane pane = new StaticPane(0, 0, 9, 5);
@@ -62,7 +62,7 @@ public class SkillCommand extends CustomCommand {
 			i++;
 		}
 		gui.addPane(pane);
-		gui.show(player);
+		gui.show(player);*/
 		return true;
 	}
 
@@ -108,11 +108,6 @@ public class SkillCommand extends CustomCommand {
 		gui.addPane(pane);
 
 		gui.show(player);
-	}
-	
-	@Override
-	public ITabable[] getParams() {
-		return new ITabable[] {new TabableSubCommand(new GetSkill(), new ViewSkills(), new LeaderboardSkill(), new RanksSkill())};
 	}
 
 	private static final Map<String, Material> skillIcons = new HashMap<>();

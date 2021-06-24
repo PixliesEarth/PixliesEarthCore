@@ -449,7 +449,7 @@ public final class Main extends JavaPlugin {
                 );
 
         baltopThread = new BalTopThread();
-        baltopThread.start();
+        baltopThread.startThread();
     }
 
     @SneakyThrows
@@ -459,6 +459,7 @@ public final class Main extends JavaPlugin {
     	loader.save();
         discordDisable();
         dynmapKernel.onDisable();
+        baltopThread.stopThread();
         for (Profile profile : utilLists.profiles.values())
             profile.backup();
         for (Nation nation : NationManager.nations.values())

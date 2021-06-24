@@ -15,8 +15,10 @@ public class BalTopThread extends Thread {
     public static final Map<UUID, Double> balTopMap = new LinkedHashMap<>();
     public static Date date;
 
+    public boolean running = false;
+
     public void run() {
-        while (true) {
+        while (running) {
             try {
                 tick();
                 sleep((1000 * 60) * 5);
@@ -35,6 +37,15 @@ public class BalTopThread extends Thread {
             balTopMap.put(UUID.fromString(document.getString("uniqueId")), document.getDouble("balance"));
         }
         date = new Date();
+    }
+
+    public void startThread() {
+        this.running = true;
+        this.start();
+    }
+
+    public void stopThread() {
+        this.running = false;
     }
 
 }

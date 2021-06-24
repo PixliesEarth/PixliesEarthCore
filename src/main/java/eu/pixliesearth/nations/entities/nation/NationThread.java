@@ -2,7 +2,7 @@ package eu.pixliesearth.nations.entities.nation;
 
 public class NationThread extends Thread {
 
-    private boolean running = false;
+    private volatile boolean running = false;
 
     @Override
     public void run() {
