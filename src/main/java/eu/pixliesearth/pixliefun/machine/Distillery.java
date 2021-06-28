@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class Distillery extends MultiBlockMachine {
 
-    public static final SlimefunItemStack icon = new SlimefunItemStack("DISTILLERY", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/48437fee749cbd68f3443bb06e45058a687c0fca96436cadb538cad59b5216c6")).setDisplayName("§eDistillery").build());
+    public static final SlimefunItemStack icon = new SlimefunItemStack("DISTILLERY", new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/48437fee749cbd68f3443bb06e45058a687c0fca96436cadb538cad59b5216c6")).setDisplayName("§eDistillery").build());
 
     @ParametersAreNonnullByDefault
     public Distillery() {
