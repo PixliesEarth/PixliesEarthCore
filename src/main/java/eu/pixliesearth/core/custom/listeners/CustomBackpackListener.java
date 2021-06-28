@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import eu.pixliesearth.core.custom.CustomListener;
@@ -39,7 +40,8 @@ public class CustomBackpackListener extends CustomListener {
 		if (id.equalsIgnoreCase("Pixlies:Backpack")) event.setCancelled(true);
 	}
 	
-	@EventHandler public void InventoryDragEvent(InventoryDragEvent event) {
+	@EventHandler
+	public void InventoryDragEvent(InventoryDragEvent event) {
 		if (!event.getView().getTitle().equalsIgnoreCase("§6Backpack")) return;
 		for (ItemStack itemStack : event.getNewItems().values()) {
 			if (itemStack==null || itemStack.getType().equals(Material.AIR)) continue;

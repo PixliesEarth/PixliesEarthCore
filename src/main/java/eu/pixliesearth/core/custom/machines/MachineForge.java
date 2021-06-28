@@ -3,6 +3,7 @@ package eu.pixliesearth.core.custom.machines;
 import eu.pixliesearth.core.custom.CustomFuelableCrafterMachine;
 import eu.pixliesearth.core.custom.CustomRecipe;
 import eu.pixliesearth.core.custom.MinecraftMaterial;
+import eu.pixliesearth.core.custom.interfaces.IHopperable;
 import eu.pixliesearth.core.custom.interfaces.IRecipeable;
 import eu.pixliesearth.core.custom.listeners.CustomInventoryListener;
 import eu.pixliesearth.utils.CustomItemUtil;
@@ -12,7 +13,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Map.Entry;
 
-public class MachineForge extends CustomFuelableCrafterMachine implements IRecipeable {
+public class MachineForge extends CustomFuelableCrafterMachine implements IRecipeable, IHopperable {
 	
 	public MachineForge() {
 		

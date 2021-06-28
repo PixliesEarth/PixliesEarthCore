@@ -133,7 +133,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 	public boolean craft(Location loc, Inventory inv, CustomRecipe r) {
 		if (!hasCost(loc, r)) return false;
 		List<ItemStack> items = getItemsInCraftingSection(inv);
-		if (items == null || items.isEmpty()) return false;
+		if (items.isEmpty()) return false;
 		Map<String, Integer> m = new ConcurrentHashMap<String, Integer>();
 		for (ItemStack is : items) {
 			Integer i = m.get(CustomItemUtil.getUUIDFromItemStack(is));
@@ -144,7 +144,7 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 				m.put(CustomItemUtil.getUUIDFromItemStack(is), i+is.getAmount());
 			}
 		}
-		if (m==null || m.isEmpty()) return false;
+		if (m.isEmpty()) return false;
 		Map<String, Integer> m2 = r.getAsUUIDToAmountMap(); // Recipe map
 		if (m2==null || m2.isEmpty()) return false;
 		Map<String, Integer> m3 = new ConcurrentHashMap<String, Integer>(); // Left over items
@@ -372,6 +372,11 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {
 			closeForAll(event.getInventory());
+			for (ItemStack item : getItemsInCraftingSection(event.getInventory()))
+				event.getWhoClicked().getWorld().dropItemNaturally(event.getWhoClicked().getLocation(), item);
+			for (int i : resultSlots)
+				if (event.getInventory().getItem(i) != null && event.getInventory().getItem(i).getType() != Material.AIR)
+					event.getWhoClicked().getWorld().dropItemNaturally(event.getWhoClicked().getLocation(), event.getInventory().getItem(i));
 			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemBuilder(Material.BARRIER).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 			event.setCancelled(true);
 			return true;
