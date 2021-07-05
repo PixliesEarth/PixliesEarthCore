@@ -372,11 +372,6 @@ public class CustomCrafterMachine extends CustomMachine implements IHopperable {
 		if (is==null || is.getType().equals(MinecraftMaterial.AIR.getMaterial())) return false;
 		if (Constants.isCloseItem(is)) {
 			closeForAll(event.getInventory());
-			for (ItemStack item : getItemsInCraftingSection(event.getInventory()))
-				event.getWhoClicked().getWorld().dropItemNaturally(event.getWhoClicked().getLocation(), item);
-			for (int i : resultSlots)
-				if (event.getInventory().getItem(i) != null && event.getInventory().getItem(i).getType() != Material.AIR)
-					event.getWhoClicked().getWorld().dropItemNaturally(event.getWhoClicked().getLocation(), event.getInventory().getItem(i));
 			event.getInventory().setItem(Constants.getGUIDataSlot, new ItemBuilder(Material.BARRIER).addNBTTag("UUID", CustomInventoryListener.getUnclickableItemUUID(), NBTTagType.STRING).build());
 			event.setCancelled(true);
 			return true;
