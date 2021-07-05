@@ -1,4 +1,4 @@
-package eu.pixliesearth.pixliefun.items;
+package eu.pixliesearth.pixliefun.items.food;
 
 import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -9,6 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DonJulioTequilla extends SimpleSlimefunItem<ItemConsumptionHandler> {
 

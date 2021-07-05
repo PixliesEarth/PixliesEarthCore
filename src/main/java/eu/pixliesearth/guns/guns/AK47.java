@@ -5,54 +5,43 @@ import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class AK47 extends CustomGun {
 
-	@Override
-	public String getDefaultDisplayName() {
+	public static String getDefaultDisplayName() {
 		return "§c§lAK-47";
 	}
 
-	@Override
-	public Integer getCustomModelData() {
+	public static Integer getCustomModelData() {
 		return 5;
 	}
 
-	@Override
-	public String getUUID() {
+	public static String getUUID() {
 		return "Gun:AK-47";
 	}
 
-	@Override
-	public int getMaxAmmo() {
+	public static int getMaxAmmo() {
 		return 40;
 	}
 
-	@Override
-	public int getRange() {
+	public static int getRange() {
 		return 60;
 	}
 
-	@Override
-	public double getAccuracy() {
+	public static double getAccuracy() {
 		return 0.08;
 	}
 
-	@Override
-	public String getOrigin() {
+	public static String getOrigin() {
 		return "RUSSIA/USSR";
 	}
 
-	@Override
-	public AmmoType getAmmoType() {
+	public static AmmoType getAmmoType() {
 		return AmmoType.RIFLE_AMMO;
 	}
 
-	@Override
-	public int getDelayToReload() {
+	public static int getDelayToReload() {
 		return 2;
 	}
 
-	@Override
-	public long getDelayPerShot() {
-		return 200l;
+	public static long getDelayPerShot() {
+		return 200L;
 	}
-
 }

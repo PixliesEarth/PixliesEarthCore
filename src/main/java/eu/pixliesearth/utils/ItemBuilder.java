@@ -92,6 +92,13 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder clearLore() {
+        lore.clear();
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder addLoreLine(String line) {
         lore.add(line);
         meta.setLore(lore);
