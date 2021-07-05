@@ -62,25 +62,12 @@ public class PixliesCalendar extends Thread {
     }
 
     public PixliesSeasons getSeason() {
-        switch (month) {
-            case 1:
-            case 2:
-            case 3:
-                return PixliesSeasons.SPRING;
-            case 4:
-            case 5:
-            case 6:
-                return PixliesSeasons.SUMMER;
-            case 7:
-            case 8:
-            case 9:
-                return PixliesSeasons.AUTUMN;
-            case 10:
-            case 11:
-            case 12:
-                return PixliesSeasons.WINTER;
-        }
-        return PixliesSeasons.SPRING;
+        return switch (month) {
+            case 4, 5, 6 -> PixliesSeasons.SUMMER;
+            case 7, 8, 9 -> PixliesSeasons.AUTUMN;
+            case 10, 11, 12 -> PixliesSeasons.WINTER;
+            default -> PixliesSeasons.SPRING;
+        };
     }
 
     public String formatDate() {
