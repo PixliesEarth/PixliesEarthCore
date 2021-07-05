@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.entities.chunk;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
@@ -19,6 +20,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.dynmap.web.Json;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,6 +38,7 @@ public class NationChunk {
     private int x;
     private int z;
     private NationChunkType type;
+    private JsonObject data;
 
     public boolean claim() {
         try {
@@ -89,7 +92,7 @@ public class NationChunk {
 
     public static NationChunk fromString(String s) {
         String[] split = s.split(";");
-        return new NationChunk(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), NationChunkType.valueOf(split[4]));
+        return new NationChunk(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), NationChunkType.valueOf(split[4]), new Gson().fromJson(split[5], JsonObject.class));
     }
 
     public static NationChunk get(String world, int x, int z) {
@@ -108,8 +111,8 @@ public class NationChunk {
 
     public NationChunk withChunkX(Integer chunkX) { return get(this.getWorld(), chunkX, this.getZ()); }
     public NationChunk withChunkZ(Integer chunkZ) { return get(this.getWorld(), this.getX(), chunkZ); }
-    public NationChunk withChunkXNew(Integer chunkX) { return new NationChunk(nationId, world, chunkX, z, type); }
-    public NationChunk withChunkZNew(Integer chunkZ) { return new NationChunk(nationId, world, x, chunkZ, type); }
+    public NationChunk withChunkXNew(Integer chunkX) { return new NationChunk(nationId, world, chunkX, z, type, data); }
+    public NationChunk withChunkZNew(Integer chunkZ) { return new NationChunk(nationId, world, x, chunkZ, type, data); }
 
     public static Nation getNationData(Chunk chunk) {
         NationChunk c = get(chunk);
@@ -150,7 +153,7 @@ public class NationChunk {
             Lang.NOT_ENOUGH_MONEY_IN_NATION.send(player);
             return false;
         }*/
-        NationChunk nc = new NationChunk(nationId, world, x, z, type);
+        NationChunk nc = new NationChunk(nationId, world, x, z, type, new JsonObject());
         TerritoryChangeEvent event = new TerritoryChangeEvent(player, Collections.singletonList(nc), changeType);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

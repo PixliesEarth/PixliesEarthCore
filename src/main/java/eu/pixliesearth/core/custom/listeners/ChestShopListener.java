@@ -33,8 +33,7 @@ public class ChestShopListener extends CustomListener {
             if (sign.getLine(0).equals("§bChestshop")) {
                 Material material = Material.getMaterial(sign.getLine(1));
                 if (material == null) return;
-                Double price = Double.valueOf(sign.getLine(2).replace("§2§l$§a", ""));
-                if (price == null) return;
+                double price = Double.parseDouble(sign.getLine(2).replace("§2§l$§a", ""));
                 OfflinePlayer seller = Bukkit.getOfflinePlayerIfCached(sign.getLine(3));
                 if (seller == null) return;
                 Profile sellerProfile = instance.getProfile(seller.getUniqueId());
