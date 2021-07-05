@@ -4,6 +4,11 @@ import eu.pixliesearth.Main;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -13,6 +18,14 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Methods {
+
+    public static Block getAttachedBlock(Block block) {
+        if (block != null && block.getState() instanceof Sign) {
+            BlockData data = block.getBlockData();
+            if (data instanceof Directional directional) return block.getRelative(directional.getFacing().getOppositeFace());
+        }
+        return null;
+    }
 
     public static LinkedHashMap<String, Integer> sortByValue(Map<String, Integer> map) {
         LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();

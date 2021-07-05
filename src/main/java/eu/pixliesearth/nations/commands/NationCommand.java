@@ -42,13 +42,12 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new allyNation());
         subCommands.add(new neutralNation());
         subCommands.add(new chatNation());
-        // subCommands.add(new bankNation());
+        subCommands.add(new bankNation());
         subCommands.add(new bannerNation());
         subCommands.add(new foreignPermission());
         subCommands.add(new accessNation());
         subCommands.add(new flagNation());
         subCommands.add(new xpNation());
-        subCommands.add(new wikiNation());
         subCommands.add(new mergeNation());
         subCommands.add(new capitalNation());
         subCommands.add(new promoteNation());
