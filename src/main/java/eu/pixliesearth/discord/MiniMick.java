@@ -22,10 +22,14 @@ import java.util.Map;
 
 public class MiniMick {
 
-    private static @Getter DiscordApi api;
-    private @Getter TextChannel chatChannel;
-    private static final @Getter Map<String, DiscordCommand> commands = new HashMap<>();
-    private static final @Getter Map<String, MiniMickServerConfig> configs = new HashMap<>();
+    private static @Getter
+    DiscordApi api;
+    private @Getter
+    TextChannel chatChannel;
+    private static final @Getter
+    Map<String, DiscordCommand> commands = new HashMap<>();
+    private static final @Getter
+    Map<String, MiniMickServerConfig> configs = new HashMap<>();
 
     public static String prefix = Main.getInstance().getConfig().getString("discord-prefix", "~");
 
@@ -71,23 +75,12 @@ public class MiniMick {
             }
         });
 
-        api.addReactionAddListener(event -> {
-            if (event.getMessage().isPresent()) {
-                Message message = event.getMessage().get();
-                if (message.getEmbeds().isEmpty()) return;
-                Embed embed = message.getEmbeds().get(0);
-                if (embed.getTitle().isPresent() && embed.getTitle().get().equalsIgnoreCase("Nation list")) {
-                    int multiplier = 0;
-                    if (event.getEmoji().equalsEmoji("⬅️")) {
-                        multiplier = -1;
-                    } else if (event.getEmoji().equalsEmoji("➡️")) {
-                        multiplier = 1;
-                    }
-                    if (multiplier == 0) return;
-                    int page = Integer.parseUnsignedInt(embed.getDescription().get().split(" ")[1].split("/")[0]) + multiplier;
-                    message.edit(DiscordNation.getListEmbed(page, event.getMessageAuthor().get()));
-                    message.removeReactionByEmoji(event.getUser().get(), event.getEmoji().getMentionTag().equalsIgnoreCase("arrow_left") ? "⬅️" : "➡️");
-                }
+        api.addMessageComponentCreateListener(event -> {
+            Message message = event.getMessageComponentInteraction().getMessage().get();
+            if (event.getMessageComponentInteraction().getCustomId().startsWith("page-")) {
+                int page = Integer.parseInt(event.getMessageComponentInteraction().getCustomId().split("-")[1]);
+                message.delete();
+                DiscordNation.getListEmbed(page, message.getAuthor()).send(message.getChannel());
             }
         });
 

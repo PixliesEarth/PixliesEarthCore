@@ -8,6 +8,9 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.javacord.api.entity.emoji.CustomEmojiBuilder;
 import org.javacord.api.entity.emoji.Emoji;
 import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.component.ActionRow;
+import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -77,7 +80,7 @@ public class DiscordNation extends DiscordCommand {
         }
     }
 
-    public static EmbedBuilder getListEmbed(int page, MessageAuthor author) {
+    public static MessageBuilder getListEmbed(int page, MessageAuthor author) {
         List<String> Nations = new ArrayList<>(NationManager.names.keySet());
         int height = 9;
         int pages = Nations.size() / height + 1;
@@ -96,7 +99,11 @@ public class DiscordNation extends DiscordCommand {
             builder.append("* ").append(nation).append("\n");
         }
         builder.append("```");
-        return new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + author.getDisplayName() + " (" + author.getDiscriminatedName() + ")", author.getAvatar()).setAuthor("Page: " + page + "/" + pages);
+        MessageBuilder mBuilder = new MessageBuilder();
+        if (page > 1) mBuilder.addComponents(ActionRow.of(Button.primary("page-" + (page - 1), "Previous Page")));
+        return mBuilder.setEmbed(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + author.getDisplayName() + " (" + author.getDiscriminatedName() + ")", author.getAvatar()).setAuthor("Page: " + page + "/" + pages)).addComponents(
+                ActionRow.of(Button.primary("page-" + (page + 1), "Next Page"))
+        );
     }
 
 }
