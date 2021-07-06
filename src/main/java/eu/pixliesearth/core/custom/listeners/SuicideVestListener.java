@@ -26,7 +26,7 @@ public class SuicideVestListener extends CustomListener {
             Bukkit.getScheduler().runTaskLater(instance, () -> {
                 player.sendTitle("§c§l1", "§7detonating in...", 5, 10, 5);
                 Bukkit.getScheduler().runTaskLater(instance, () -> {
-                    player.getWorld().createExplosion(player.getLocation(), 12F, true, false);
+                    player.getWorld().createExplosion(player.getLocation(), 12F, true, false, player);
                     player.setHealth(0);
                 }, 20);
             }, 20);
