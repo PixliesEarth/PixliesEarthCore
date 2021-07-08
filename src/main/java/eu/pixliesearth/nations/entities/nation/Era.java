@@ -30,7 +30,7 @@ public enum Era {
         for (Era era : values())
             if (era.name.equalsIgnoreCase(name))
                 return era;
-        return null;
+        return Era.TRIBAL;
     }
 
     public static Era getByNumber(int number) {
