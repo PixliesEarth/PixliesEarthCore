@@ -11,6 +11,7 @@ import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.utils.ItemBuilder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -38,8 +39,7 @@ public class settlementsCommand extends SubCommand implements Listener {
         returner.put("travel", 1);
         returner.put("remove", 1);
         returner.put("add", 1);
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (profile.isInNation()) {
                 for (String s : profile.getCurrentNation().getSettlements().keySet())
@@ -66,7 +66,7 @@ public class settlementsCommand extends SubCommand implements Listener {
         Nation nation = profile.getCurrentNation();
         switch (args.length) {
             case 0:
-                Inventory inventory = Bukkit.createInventory(null, 9 * 3, "§bSettlements");
+                Inventory inventory = Bukkit.createInventory(null, 9 * 3, Component.text("§bSettlements"));
                 for (String s : nation.getSettlements().values()) {
                     Settlement st = new Gson().fromJson(s, Settlement.class);
                     if (st.isCapital()) {

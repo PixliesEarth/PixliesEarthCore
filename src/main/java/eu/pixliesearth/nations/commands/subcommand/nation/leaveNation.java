@@ -35,11 +35,10 @@ public class leaveNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
             Lang.NOT_IN_A_NATION.send(player);

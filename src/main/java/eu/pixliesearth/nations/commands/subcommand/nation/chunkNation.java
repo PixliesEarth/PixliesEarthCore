@@ -50,12 +50,10 @@ public class chunkNation extends SubCommand {
         pane.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
 
         GuiItem chunkPermissions = new GuiItem(
-                new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/8ad943d063347f95ab9e9fa75792da84ec665ebd22b050bdba519ff7da61db"))
+                new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/8ad943d063347f95ab9e9fa75792da84ec665ebd22b050bdba519ff7da61db"))
                         .setDisplayName("§cManage Access §8(§cSoon§8)")
                         .build(),
-                e -> {
-                    e.setCancelled(true);
-                }
+                e -> e.setCancelled(true)
         );
 
         GuiItem chunkType = new GuiItem(
@@ -69,7 +67,7 @@ public class chunkNation extends SubCommand {
         );
 
         GuiItem unClaim = new GuiItem(
-                new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/e9cdb9af38cf41daa53bc8cda7665c509632d14e678f0f19f263f46e541d8a30"))
+                new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/e9cdb9af38cf41daa53bc8cda7665c509632d14e678f0f19f263f46e541d8a30"))
                         .setDisplayName("§c§lUnclaim this chunk")
                         .build(),
                 e -> {

@@ -4,7 +4,8 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.Methods;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +59,7 @@ public class listNation extends SubCommand {
         for (Nation nation : Nations.subList(start, end)) {
             if (nation.getNationId().equals("safezone") || nation.getNationId().equals("warzone"))
                 continue;
-            TextComponent comp = new TextComponent("§7* §b" + nation.getName() + " §8- §2§l$§a" + nation.getMoney() + " §8- §a☺ " + nation.getMembers().size());
+            TextComponent comp = Component.text("§7* §b" + nation.getName() + " §8- §2§l$§a" + nation.getMoney() + " §8- §a☺ " + nation.getMembers().size());
             lines.add(comp);
         }
 

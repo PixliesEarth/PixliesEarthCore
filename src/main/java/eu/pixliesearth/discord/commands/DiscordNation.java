@@ -101,9 +101,8 @@ public class DiscordNation extends DiscordCommand {
         builder.append("```");
         MessageBuilder mBuilder = new MessageBuilder();
         if (page > 1) mBuilder.addComponents(ActionRow.of(Button.primary("page-" + (page - 1), "Previous Page")));
-        return mBuilder.setEmbed(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + author.getDisplayName() + " (" + author.getDiscriminatedName() + ")", author.getAvatar()).setAuthor("Page: " + page + "/" + pages)).addComponents(
-                ActionRow.of(Button.primary("page-" + (page + 1), "Next Page"))
-        );
+        if (page < pages) mBuilder.addComponents(ActionRow.of(Button.primary("page-" + (page + 1), "Next Page")));
+        return mBuilder.setEmbed(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + author.getDisplayName() + " (" + author.getDiscriminatedName() + ")", author.getAvatar()).setAuthor("Page: " + page + "/" + pages));
     }
 
 }

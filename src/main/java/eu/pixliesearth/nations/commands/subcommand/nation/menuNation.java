@@ -15,7 +15,6 @@ import eu.pixliesearth.nations.managers.dynmap.area.Colours;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import eu.pixliesearth.utils.Timer;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -61,11 +60,10 @@ public class menuNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Player player = (Player) sender;
         open(player, MenuPage.HOME);
         return false;
     }
@@ -95,10 +93,8 @@ public class menuNation extends SubCommand {
         int x;
         int y;
         switch (page) {
-            case HOME:
-                menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).hideFlags().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
-                break;
-            case MEMBERS:
+            case HOME -> menu.addItem(new GuiItem(new ItemBuilder(nation.getFlag()).hideFlags().setDisplayName("§b" + nation.getName()).addLoreLine("§7Members: §b" + nation.getMembers().size()).addLoreLine("§7Era: §b" + Era.getByName(nation.getEra()).getName()).build(), event -> event.setCancelled(true)), 4, 2);
+            case MEMBERS -> {
                 x = 0;
                 y = 0;
                 for (String s : nation.getMembers()) {
@@ -114,8 +110,8 @@ public class menuNation extends SubCommand {
                     }), x, y);
                     x++;
                 }
-                break;
-            case PERMISSIONS:
+            }
+            case PERMISSIONS -> {
                 x = 0;
                 y = 0;
                 for (Map.Entry<String, Map<String, Object>> ranks : nation.getRanks().entrySet()) {
@@ -128,12 +124,13 @@ public class menuNation extends SubCommand {
                     }
                     menu.addItem(new GuiItem(new ItemBuilder(Material.WRITABLE_BOOK).setDisplayName("§b" + rank.getName()).addLoreLine("§7§oClick to edit").build(), event -> {
                         event.setCancelled(true);
-                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS)) showRankMenu(gui, menu, player, rank);
+                        if (Permission.hasNationPermission(profile, Permission.EDIT_RANKS))
+                            showRankMenu(gui, menu, player, rank);
                     }), x, y);
                     x++;
                 }
-                break;
-            case SETTINGS:
+            }
+            case SETTINGS -> {
                 // RELIGION
                 Religion religion = Religion.valueOf(nation.getReligion());
                 String religionName = WordUtils.capitalize(religion.name().toLowerCase().replace("_", " "));
@@ -145,7 +142,8 @@ public class menuNation extends SubCommand {
                     int j1 = 0;
                     for (MenuPage p : MenuPage.values()) {
                         ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
-                        if (p.title.equals(page.title)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
+                        if (p.title.equals(page.title))
+                            item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
                         religionHotbar.addItem(new GuiItem(item, event1 -> {
                             event1.setCancelled(true);
                             if (!p.equals(page)) open(player, MenuPage.getByDisplayName(p.title));
@@ -202,7 +200,8 @@ public class menuNation extends SubCommand {
                     int j1 = 0;
                     for (MenuPage p : MenuPage.values()) {
                         ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
-                        if (p.title.equals(page.title)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
+                        if (p.title.equals(page.title))
+                            item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
                         ideologyHotbar.addItem(new GuiItem(item, event1 -> {
                             event1.setCancelled(true);
                             if (!p.equals(page)) open(player, MenuPage.getByDisplayName(p.title));
@@ -260,7 +259,8 @@ public class menuNation extends SubCommand {
                     int j1 = 0;
                     for (MenuPage p : MenuPage.values()) {
                         ItemStack item = new ItemBuilder(p.icon).setDisplayName(p.title).build();
-                        if (p.title.equals(page.title)) item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
+                        if (p.title.equals(page.title))
+                            item = new ItemBuilder(item).addLoreLine("§a§oSelected").setGlow().build();
                         dmapHotbar.addItem(new GuiItem(item, event1 -> {
                             event1.setCancelled(true);
                             if (!p.equals(page)) open(player, MenuPage.getByDisplayName(p.title));
@@ -294,8 +294,8 @@ public class menuNation extends SubCommand {
                     dmapGui.addPane(pane);
                     dmapGui.show(player);
                 }), 2, 0);
-                break;
-            case RELATIONS:
+            }
+            case RELATIONS -> {
                 x = 0;
                 y = 0;
                 for (String s : nation.getAllies()) {
@@ -317,8 +317,8 @@ public class menuNation extends SubCommand {
                     }), x, y);
                     x++;
                 }
-                break;
-            case FLAGS:
+            }
+            case FLAGS -> {
                 x = 0;
                 y = 0;
                 for (NationFlag flag : NationFlag.values()) {
@@ -335,20 +335,22 @@ public class menuNation extends SubCommand {
                     }), x, y);
                     x++;
                 }
-                break;
-            case RESEARCH:
+            }
+            case RESEARCH -> {
                 menu.addItem(new GuiItem(new ItemBuilder(Material.LECTERN).setDisplayName("§aPolitical Power").addLoreLine("§3§l" + nation.getXpPoints()).build(), event -> event.setCancelled(true)), 0, 4);
                 if (!nation.getCurrentEra().equals(Era.HIGHEST)) {
-                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§6§lNext Era").addLoreLine("§b" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getName()).addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() +"§9PP").build(), event -> {
+                    menu.addItem(new GuiItem(new ItemBuilder(Material.TOTEM_OF_UNDYING).setDisplayName("§6§lNext Era").addLoreLine("§b" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getName()).addLoreLine("§3" + nation.getXpPoints() + "§8/§3" + Era.getByNumber(nation.getCurrentEra().getNumber() + 1).getCost() + "§9PP").build(), event -> {
                         event.setCancelled(true);
                         upgradeEra(player, nation);
                     }), 8, 4);
                 } else {
                     menu.addItem(new GuiItem(new ItemBuilder(Material.CHARCOAL).setDisplayName("§cAlready on highest Era").build(), event -> event.setCancelled(true)), 8, 4);
                 }
-
-                menu.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/9cdb8f43656c06c4e8683e2e6341b4479f157f48082fea4aff09b37ca3c6995b")).setDisplayName("§bUpgrades").setGlow().build(), event -> {event.setCancelled(true); showUpgradeGui(gui, player, menu);}), 4, 2);
-                break;
+                menu.addItem(new GuiItem(new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/9cdb8f43656c06c4e8683e2e6341b4479f157f48082fea4aff09b37ca3c6995b")).setDisplayName("§bUpgrades").setGlow().build(), event -> {
+                    event.setCancelled(true);
+                    showUpgradeGui(gui, player, menu);
+                }), 4, 2);
+            }
         }
         gui.addPane(menu);
         gui.show(player);

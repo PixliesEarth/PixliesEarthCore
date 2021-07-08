@@ -2,6 +2,7 @@ package eu.pixliesearth.nations.commands.subcommand.nation;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.google.gson.JsonObject;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
@@ -243,9 +244,10 @@ public class claimNation extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return "§7Claim the chunk you are in: §b/n claim §cone§8/§chere §8[§eNATION§8]\n" +
-                "§7Enable/Disable autoclaim: §b/n claim §cauto §8[§eNATION§8]\n" +
-                "§7Fill your claims: §b/n claim §cfill §8[§eNATION§8]";
+        return """
+                §7Claim the chunk you are in: §b/n claim §cone§8/§chere §8[§eNATION§8]
+                §7Enable/Disable autoclaim: §b/n claim §cauto §8[§eNATION§8]
+                §7Fill your claims: §b/n claim §cfill §8[§eNATION§8]""";
     }
 
     private void floodSearch(Player player, Nation nation, int x, int z, String world, Table<Integer, Integer, NationChunk> toClaim) {
@@ -264,7 +266,7 @@ public class claimNation extends SubCommand {
             return;
         }
 
-        toClaim.put(x, z, new NationChunk(nation.getNationId(), world, x, z, NationChunkType.NORMAL));
+        toClaim.put(x, z, new NationChunk(nation.getNationId(), world, x, z, NationChunkType.NORMAL, new JsonObject()));
 
         floodSearch(player, nation, x + 1, z, world, toClaim);
         floodSearch(player, nation, x - 1, z, world, toClaim);

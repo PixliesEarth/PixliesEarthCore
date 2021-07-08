@@ -34,16 +34,15 @@ public class bannerNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         Nation nation;
         ItemStack inHand;
         switch (args.length) {
-            case 0:
+            case 0 -> {
                 if (!profile.isInNation()) {
                     Lang.NOT_IN_A_NATION.send(player);
                     return false;
@@ -63,8 +62,8 @@ public class bannerNation extends SubCommand {
                     if (Bukkit.getPlayer(UUID.fromString(uuid)) == null) continue;
                     Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.getDisplayName());
                 }
-                break;
-            case 1:
+            }
+            case 1 -> {
                 nation = Nation.getByName(args[0]);
                 if (nation == null) {
                     Lang.NATION_DOESNT_EXIST.send(player);
@@ -82,10 +81,10 @@ public class bannerNation extends SubCommand {
                 nation.setFlag(inHand);
                 for (String uuid : nation.getMembers()) {
                     if (Bukkit.getPlayer(UUID.fromString(uuid)) == null) continue;
-                    Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.getDisplayName());
+                    Lang.PLAYER_CHANGED_FLAG.send(Bukkit.getPlayer(UUID.fromString(uuid)), "%PLAYER%;" + player.displayName());
                 }
                 Lang.PLAYER_CHANGED_FLAG.send(player, "%PLAYER%;" + player.getDisplayName());
-                break;
+            }
         }
         return false;
     }

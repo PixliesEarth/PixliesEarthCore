@@ -48,7 +48,7 @@ public class joinNation extends SubCommand {
             return false;
         }
         switch (args.length) {
-            case 1:
+            case 1 -> {
                 Player player = (Player) sender;
                 Profile profile = instance.getProfile(player.getUniqueId());
                 if (profile.isInNation()) {
@@ -68,16 +68,16 @@ public class joinNation extends SubCommand {
                         ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nation.getNationId()).getUpdatesChannel()).get();
                         channel.sendMessage(
                                 new EmbedBuilder()
-                                    .setTitle(player.getName() + " has joined your nation.")
-                                    .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
-                                    .setColor(Color.GREEN)
+                                        .setTitle(player.getName() + " has joined your nation.")
+                                        .setAuthor(player.getName(), "", "https://minotar.net/avatar/" + player.getUniqueId())
+                                        .setColor(Color.GREEN)
                         );
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 if (sender instanceof Player && !instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) {
                     sender.sendMessage(Lang.NO_PERMISSIONS.get(sender));
                     return false;
@@ -107,8 +107,8 @@ public class joinNation extends SubCommand {
                         e.printStackTrace();
                     }
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 if (nation.getRanks().get(args[2]) == null) {
                     Lang.RANK_DOESNT_EXIST.send(sender);
                     return false;
@@ -141,7 +141,7 @@ public class joinNation extends SubCommand {
                         e.printStackTrace();
                     }
                 }
-                break;
+            }
         }
 
         return false;

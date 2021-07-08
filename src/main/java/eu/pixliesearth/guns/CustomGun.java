@@ -90,23 +90,14 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
                     event.getPlayer().sendActionBar("§b§lReloading...");
                     event.getPlayer().getInventory().setItemInMainHand(null);
                     final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();
-                    String gunID = CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand());
                     Bukkit.getScheduler().scheduleSyncDelayedTask(CustomFeatureLoader.getLoader().getInstance(), () -> {
-                        if (slotToReloadIn != event.getPlayer().getInventory().getHeldItemSlot() && !CustomItemUtil.getUUIDFromItemStack(event.getPlayer().getInventory().getItemInMainHand()).equals(gunID) && NBTUtil.getTagsFromItem(event.getPlayer().getInventory().getItemInMainHand()).getString("cooldown").equals("reloading")) {
-                            event.getPlayer().sendActionBar("§c§lFailed to reload!");
-                            for (Entry<Integer, ItemStack> entry : event.getPlayer().getInventory().addItem(getAmmoType().getAmmo().getItem()).entrySet()) {
-                                if (entry == null || entry.getValue() == null) continue;
-                                event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), entry.getValue());
-                            }
-                            return;
-                        }
-                        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
+                        event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
                         ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
                         event.getPlayer().sendActionBar("§a§lReloaded!");
                         event.getPlayer().getInventory().setItemInMainHand(itemStack2);
                     }, 20L * getDelayToReload());
                 } else {
-                    event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
+                    event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);
                     event.getPlayer().sendActionBar("§c§lNO AMMO!");
                 }
             } else { // Shoot
@@ -115,7 +106,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
                 shootEvent.callEvent();
                 if (!shootEvent.isCancelled()) {
                     event.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(itemStack).setDisplayName(getName(ammo - 1)).addNBTTag("cooldown", Long.toString((System.currentTimeMillis() + getDelayPerShot())), NBTTagType.STRING).addNBTTag("ammo", Integer.toString(ammo - 1), NBTTagType.STRING).build());
-                    event.getPlayer().playSound(event.getPlayer().getLocation(), "gunshoot", SoundCategory.PLAYERS, 15, 1);
+                    event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "gunshoot", SoundCategory.PLAYERS, 15, 1);
                     event.getPlayer().getWorld().playEffect(event.getPlayer().getEyeLocation().add(1, -1, 1), Effect.SMOKE, 2);
 
                     LivingEntity result = null;
@@ -204,7 +195,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
         return 5;
     }
     public static String getUUID() {
-        return "Gun:AK-47";
+        return "AK-47";
     }
     public static int getMaxAmmo() {
         return 40;

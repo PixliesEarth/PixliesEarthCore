@@ -45,11 +45,10 @@ public class createNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
             return false;
         }
-        Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (profile.isInNation()) {
             player.sendMessage(Lang.ALREADY_IN_NATION.get(player));

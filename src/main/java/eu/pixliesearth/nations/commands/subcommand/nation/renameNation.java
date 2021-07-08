@@ -41,14 +41,13 @@ public class renameNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             Nation nation;
             Profile profile = instance.getProfile(player.getUniqueId());
             Map<String, String> placeholders;
             boolean rename;
             switch (args.length) {
-                case 1:
+                case 1 -> {
                     if (!profile.isInNation()) {
                         player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
                         return false;
@@ -98,8 +97,8 @@ public class renameNation extends SubCommand {
                             e.printStackTrace();
                         }
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     nation = Nation.getByName(args[1]);
                     if (!instance.getUtilLists().staffMode.contains(player.getUniqueId()) && !Permission.hasForeignPermission(profile, Permission.NAME, nation)) {
                         player.sendMessage(Lang.NO_PERMISSIONS.get(player));
@@ -145,7 +144,7 @@ public class renameNation extends SubCommand {
                             e.printStackTrace();
                         }
                     }
-                    break;
+                }
             }
         } else {
             Nation nation = Nation.getByName(args[1]);

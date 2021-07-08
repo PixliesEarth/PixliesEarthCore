@@ -171,9 +171,12 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private @Getter boolean testServer;
     private @Getter PixliesCalendar calendar;
     private @Getter Vendor vendor;
+    private @Getter long serverStartUp;
 
     @Override
     public void onEnable() {
+        serverStartUp = System.currentTimeMillis();
+
         Sentry.init(options -> options.setDsn("https://a52eb2ffd8b94548aab2dd7dc1c5d3c8@o518018.ingest.sentry.io/5626447"));
 
         instance = this;

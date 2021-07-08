@@ -73,7 +73,6 @@ public class unclaimNation extends SubCommand {
                 if (args[0].equalsIgnoreCase("one") || args[0].equalsIgnoreCase("here")) {
                     NationChunk.unclaim(player, c.getWorld().getName(), c.getX(), c.getZ(), TerritoryChangeEvent.ChangeType.UNCLAIM_ONE_SELF);
                 } else if (args[0].equalsIgnoreCase("fill")) {
-                    long start = System.currentTimeMillis();
                     instance.getUtilLists().unclaimFill.add(player.getUniqueId());
                     Table<Integer, Integer, NationChunk> toClaim = HashBasedTable.create();
                     floodSearch(player, profile.getCurrentNation(), c.getX(), c.getZ(), c.getWorld().getName(), toClaim);

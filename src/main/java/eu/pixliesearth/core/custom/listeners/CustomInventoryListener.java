@@ -20,19 +20,5 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 public class CustomInventoryListener extends CustomListener {
 	
 	public static @Getter String unclickableItemUUID = "Inventory:UnclickableGlass";
-	
-	@EventHandler
-    @SneakyThrows
-    public void InventoryClickEvent(InventoryClickEvent event) {
-		if (event.getCurrentItem()==null || event.getCurrentItem().getType().equals(Material.AIR)) return;
-		String id = CustomItemUtil.getUUIDFromItemStack(event.getCurrentItem());
-		if (id==null) return;
-		if (id.equalsIgnoreCase(getUnclickableItemUUID())) event.setCancelled(true);
-	}
-
-	@EventHandler
-	public void onSwap(InventoryMoveItemEvent event) {
-		if (CustomItemUtil.getUUIDFromItemStack(event.getItem()).equalsIgnoreCase("Pixlies:Backpack")) event.setCancelled(true);
-	}
 
 }

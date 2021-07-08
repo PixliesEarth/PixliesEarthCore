@@ -50,13 +50,11 @@ public abstract class DiscordCommand {
     private static java.util.List<DiscordCommand> commands() {
         return new ArrayList<>(){{
            add(new DiscordBal());
-           add(new DiscordBlockStats());
            add(new DiscordGiveMyData());
            add(new DiscordHistory());
            add(new DiscordLink());
            add(new DiscordNation());
            add(new DiscordPay());
-           add(new DiscordRecipe());
            add(new DiscordServer());
            add(new DiscordSetIgChat());
            add(new DiscordStats());

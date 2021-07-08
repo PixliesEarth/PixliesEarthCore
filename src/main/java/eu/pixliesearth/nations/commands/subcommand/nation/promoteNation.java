@@ -46,8 +46,7 @@ public class promoteNation extends SubCommand {
         }
         Nation nation = targetProfile.getCurrentNation();
         int max;
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (!profile.isStaff() && profile.getNationId().equals(targetProfile.getNationId()) && profile.getCurrentNationRank().getPriority() < targetProfile.getCurrentNationRank().getPriority()) {
                 Lang.NO_PERMISSIONS.send(sender);

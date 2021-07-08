@@ -27,7 +27,7 @@ public class DiscordServer extends DiscordCommand {
         System.gc();
         embed.addInlineField("Ram usage", (runtime.totalMemory() - runtime.freeMemory()) / 1048576L +  " MB / " + runtime.totalMemory() / 1048576L + " MB");
 
-        long millis = 0;
+        long millis = System.currentTimeMillis() - instance.getServerStartUp();
 
         String time = String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),
@@ -38,7 +38,7 @@ public class DiscordServer extends DiscordCommand {
 
         embed.addInlineField("Uptime", time);
         embed.setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar());
-        event.getChannel().sendMessage(embed);
+        event.getMessage().reply(embed);
     }
 
 }

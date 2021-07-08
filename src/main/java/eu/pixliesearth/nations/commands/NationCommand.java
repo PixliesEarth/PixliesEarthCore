@@ -4,7 +4,6 @@ import eu.pixliesearth.events.NationCommandExecuteEvent;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.commands.subcommand.nation.*;
 import eu.pixliesearth.utils.Methods;
-import io.sentry.Sentry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -19,7 +18,7 @@ import java.util.*;
 public class NationCommand implements CommandExecutor, TabExecutor {
 	
 	public NationCommand() {
-		subCommands = new HashSet<SubCommand>();
+		subCommands = new HashSet<>();
 		// register subCommands
         subCommands.add(new createNation());
         subCommands.add(new claimNation());
@@ -55,7 +54,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new demoteNation());
         subCommands.add(new chunkNation());
 
-		SubCommandAliases = new HashMap<String, SubCommand>();
+		SubCommandAliases = new HashMap<>();
 		for (SubCommand subCommand : subCommands)
 		    for (String s : subCommand.aliases())
 		        SubCommandAliases.put(s, subCommand);
@@ -122,7 +121,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
     public static void sendHelp(CommandSender sender, int page) {
         sender.sendMessage(Methods.getCenteredMessage("&7-= &b&lNATIONS &7=-"));
         switch (page) {
-            case 2:
+            case 2 -> {
                 sender.sendMessage("§b* §7/n rank §c<create/addpermission/remove/removepermission> <RANKNAME> §e[PREFIX/PERMISSIONNAME] §b[RANKPRIORITY]");
                 sender.sendMessage("§b* §7/n kick §c<player>");
                 sender.sendMessage("§b* §7/n map §c<chat/gui/scoreboard>");
@@ -132,17 +131,17 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n ally §c<NATION>");
                 sender.sendMessage("§b* §7/n neutral §c<NATION>");
                 sender.sendMessage("§b* §7/n menu");
-                break;
-            case 3:
+            }
+            case 3 -> {
                 sender.sendMessage("§b* §7/n chat §c<public/ally/nation>");
-                // sender.sendMessage("§b* §7/n bank §c<deposit/withdraw/balance> [AMOUNT/NATION] §e[NATION]");
+                sender.sendMessage("§b* §7/n bank §c<deposit/withdraw/balance> [AMOUNT/NATION] §e[NATION]");
                 sender.sendMessage("§b* §7/n top §c[PAGE]");
                 sender.sendMessage("§b* §7/n setbanner");
                 sender.sendMessage("§b* §7/n fp §cset/unset PERMISSION nation/player §eNATIONNAME/PLAYERNAME");
                 sender.sendMessage("§b* §7/n access §cplayer/nation PLAYERNAME/NATIONNAME §eset/unset");
                 sender.sendMessage("§b* §7/n flag <FLAG> [NATION]");
-                break;
-            default:
+            }
+            default -> {
                 sender.sendMessage("§b* §7/n create §c<NAME>");
                 sender.sendMessage("§b* §7/n disband §c[NAME]");
                 sender.sendMessage("§b* §7/n description §c<DESCRIPTION...>");
@@ -152,7 +151,7 @@ public class NationCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§b* §7/n claim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n unclaim §c<ONE/AUTO/FILL> [NATION]");
                 sender.sendMessage("§b* §7/n rename §c<NAME> [NATION]");
-                break;
+            }
         }
         sender.sendMessage(Methods.getCenteredMessage("§c<> = required &8| &c[] = Optional"));
         sender.sendMessage(Methods.getCenteredMessage("§7-= Page &b" + page + "&8/&b3 &7=-"));

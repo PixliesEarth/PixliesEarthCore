@@ -176,7 +176,6 @@ public class NationChunk {
         return center;
     }
 
-    @Deprecated
     public static boolean claim(Player player, String world, int x, int z, TerritoryChangeEvent.ChangeType changeType, String nationId) {
         return claim(player, world, x, z, changeType, nationId, NationChunkType.NORMAL);
     }

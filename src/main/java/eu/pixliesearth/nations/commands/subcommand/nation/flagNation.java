@@ -39,8 +39,7 @@ public class flagNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (args.length == 2) {
                 Nation nation = Nation.getByName(args[1]);

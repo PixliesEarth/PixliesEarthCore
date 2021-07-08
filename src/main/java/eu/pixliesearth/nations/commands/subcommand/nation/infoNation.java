@@ -16,8 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class infoNation extends SubCommand {
@@ -108,8 +106,8 @@ public class infoNation extends SubCommand {
             if (ally != null)
                 allyJoiner.add("§d" + ally.getName());
         }
-        sender.sendMessage("    §7Allies: " + allyJoiner.toString());
-        sender.sendMessage("    §7Population: " + memberJoiner.toString());
+        sender.sendMessage("    §7Allies: " + allyJoiner);
+        sender.sendMessage("    §7Population: " + memberJoiner);
         sender.sendMessage(" ");
     }
 

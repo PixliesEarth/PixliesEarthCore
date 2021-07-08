@@ -36,12 +36,11 @@ public class disbandNation extends SubCommand {
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
         switch (args.length) {
-            case 0:
-                if (!(sender instanceof Player)) {
+            case 0 -> {
+                if (!(sender instanceof Player player)) {
                     sender.sendMessage(Lang.ONLY_PLAYERS_EXEC.get(sender));
                     return false;
                 }
-                Player player = (Player) sender;
                 Profile user = instance.getProfile(player.getUniqueId());
                 if (!user.isInNation()) {
                     player.sendMessage(Lang.NOT_IN_A_NATION.get(player));
@@ -53,8 +52,8 @@ public class disbandNation extends SubCommand {
                 }
                 instance.getUtilLists().nationDisbander.put(player.getUniqueId(), user.getNationId());
                 player.sendMessage(Lang.NATION_DELETATION_CONFIRMATION.get(player));
-                break;
-            case 1:
+            }
+            case 1 -> {
                 Nation nation = Nation.getByName(args[0]);
                 if (nation == null) {
                     sender.sendMessage(Lang.NATION_DOESNT_EXIST.get(sender));
@@ -63,7 +62,8 @@ public class disbandNation extends SubCommand {
                 boolean allowed = false;
                 if (sender instanceof Player) {
                     if (instance.getUtilLists().staffMode.contains(((Player) sender).getUniqueId())) allowed = true;
-                    if (instance.getProfile(((Player) sender).getUniqueId()).getNationId().equals(nation.getNationId())) allowed = true;
+                    if (instance.getProfile(((Player) sender).getUniqueId()).getNationId().equals(nation.getNationId()))
+                        allowed = true;
                 } else {
                     allowed = true;
                 }
@@ -79,7 +79,7 @@ public class disbandNation extends SubCommand {
                     sender.sendMessage("§bNATION §8| §7You disbanded §b" + nation.getName());
                     Bukkit.broadcastMessage("§bNATION §8| §7The nation of §b" + nation.getName() + " §7was disbanded by §6" + sender.getName() + "§7.");
                 }
-                break;
+            }
         }
         return false;
     }

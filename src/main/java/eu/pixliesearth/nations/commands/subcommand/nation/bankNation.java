@@ -37,9 +37,10 @@ public class bankNation extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return "§7Show bank balance: §b/n bank §cbalance §8[§eNATION§8]\n" +
-                "§7Withdraw money from the bank: §b/n bank §cwithdraw §eAMOUNT §8[§6NATION§8]\n" +
-                "§7Deposit money into the bank: §b/n bank §cdeposit §eAMOUNT §8[§6NATION§8]";
+        return """
+                §7Show bank balance: §b/n bank §cbalance §8[§eNATION§8]
+                §7Withdraw money from the bank: §b/n bank §cwithdraw §eAMOUNT §8[§6NATION§8]
+                §7Deposit money into the bank: §b/n bank §cdeposit §eAMOUNT §8[§6NATION§8]""";
     }
 
     @Override
@@ -99,11 +100,10 @@ public class bankNation extends SubCommand {
                     nation.save();
                     Lang.DEPOSIT_MONEY_INTO_NATION.send(player, "%AMOUNT%;" + amount, "%NATION%;" + nation.getName());
                 } else if (args[0].equalsIgnoreCase("withdraw")) {
-                    if (!(sender instanceof Player)) {
+                    if (!(sender instanceof Player player)) {
                         Lang.ONLY_PLAYERS_EXEC.send(sender);
                         return false;
                     }
-                    Player player = (Player) sender;
                     Profile profile = instance.getProfile(player.getUniqueId());
                     if (!profile.isInNation()) {
                         Lang.NOT_IN_A_NATION.send(player);
@@ -135,8 +135,7 @@ public class bankNation extends SubCommand {
                         Lang.NATION_DOESNT_EXIST.send(sender);
                         return false;
                     }
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (!Permission.hasForeignPermission(profile, Permission.BANK_DEPOSIT, nation) && !profile.isStaff() && !profile.getNationId().equals(nation.getNationId())) {
                             Lang.NO_PERMISSIONS.send(sender);
@@ -172,8 +171,7 @@ public class bankNation extends SubCommand {
                         Lang.NATION_DOESNT_EXIST.send(sender);
                         return false;
                     }
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (!Permission.hasForeignPermission(profile, Permission.BANK_WITHDRAW, nation) && !profile.isStaff() && !profile.getNationId().equals(nation.getNationId())) {
                             Lang.NO_PERMISSIONS.send(sender);

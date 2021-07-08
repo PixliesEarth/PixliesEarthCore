@@ -42,7 +42,7 @@ public class DiscordStats extends DiscordCommand {
                 );
             }
         } catch (Exception e) {
-            System.out.println("BABY THERES A SHOOTING STAR");
+            e.printStackTrace();
             event.getChannel().sendMessage("There was a shooting star.");
         }
     }

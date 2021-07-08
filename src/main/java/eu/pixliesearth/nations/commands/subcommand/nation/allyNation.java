@@ -6,14 +6,15 @@ import eu.pixliesearth.nations.commands.subcommand.SubCommand;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.managers.NationManager;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,11 +27,14 @@ public class allyNation extends SubCommand {
 
     @Override
     public Map<String, Integer> autoCompletion(CommandSender sender, String[] args) {
-        return new HashMap<String, Integer>(){
+        return new HashMap<>() {
+            @Serial
             private static final long serialVersionUID = -1002643333466882536L;
+
             {
                 for (String s : NationManager.names.keySet()) put(s, 1);
-            }};
+            }
+        };
     }
 
     @Override
@@ -87,10 +91,10 @@ public class allyNation extends SubCommand {
         for (Player member : target.getOnlineMemberSet()) {
             if (Permission.hasNationPermission(instance.getProfile(member.getUniqueId()), Permission.MANAGE_RELATIONS)) {
                 Lang.RECEIVED_ALLY_REQUEST.send(member, "%NATION%;" + nation.getName());
-                TextComponent accept = new TextComponent(Lang.ACCEPT.get(member));
-                accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7§oClick to accept")));
-                accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/n ally " + nation.getName()));
-                member.spigot().sendMessage(accept);
+                TextComponent accept = Component.text(Lang.ACCEPT.get(member))
+                        .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("§7§oClick to accept")))
+                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/n ally " + nation.getName()));
+                member.sendMessage(accept);
             }
         }
         return false;

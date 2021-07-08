@@ -99,8 +99,6 @@ public class InventoryUtils {
 		for (ItemStack is : inv.getContents()) {
 			if (is==null || is.getType().equals(Material.AIR)) {
 				obj.put(Integer.toString(i), "A");
-			} else if (CustomItemUtil.getUUIDFromItemStack(is).equalsIgnoreCase(CustomInventoryListener.getUnclickableItemUUID())) {
-				obj.put(Integer.toString(i), serialize(is)); // Used to be 'B' however, this has since been changed to fix a bug with inventory loading
 			} else {
 				obj.put(Integer.toString(i), serialize(is));
 			}

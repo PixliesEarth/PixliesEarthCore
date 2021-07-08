@@ -9,11 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
-import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
@@ -83,7 +81,6 @@ public class MiniMick {
                 DiscordNation.getListEmbed(page, message.getAuthor()).send(message.getChannel());
             }
         });
-
     }
 
     static Color hexToColor(String value) {

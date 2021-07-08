@@ -45,8 +45,7 @@ public class demoteNation extends SubCommand {
             return false;
         }
         Nation nation = targetProfile.getCurrentNation();
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             Profile profile = instance.getProfile(player.getUniqueId());
             if (!profile.isStaff() && profile.getNationId().equals(targetProfile.getNationId()) && profile.getCurrentNationRank().getPriority() < targetProfile.getCurrentNationRank().getPriority()) {
                 Lang.NO_PERMISSIONS.send(sender);

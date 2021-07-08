@@ -42,8 +42,7 @@ public class rankNation extends SubCommand {
                     map.put("§6Rank Priority (0-665)", 4);
                     break;
                 case "remove":
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (profile.isInNation()) {
                             Nation nation = profile.getCurrentNation();
@@ -57,8 +56,7 @@ public class rankNation extends SubCommand {
                     break;
                 case "set":
                     Bukkit.getOnlinePlayers().forEach(p -> map.put(p.getName(), 2));
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (profile.isInNation()) {
                             Nation nation = profile.getCurrentNation();
@@ -72,8 +70,7 @@ public class rankNation extends SubCommand {
                     break;
                 case "removepermission":
                 case "addpermission":
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (profile.isInNation()) {
                             Nation nation = profile.getCurrentNation();
@@ -87,8 +84,7 @@ public class rankNation extends SubCommand {
                     }
                     break;
                 case "rename":
-                    if (sender instanceof Player) {
-                        Player player = (Player) sender;
+                    if (sender instanceof Player player) {
                         Profile profile = instance.getProfile(player.getUniqueId());
                         if (profile.isInNation()) {
                             Nation nation = profile.getCurrentNation();
@@ -113,12 +109,13 @@ public class rankNation extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return "§7Create a rank: §b/n rank create §eRANK-NAME §cRANK-PREFIX §6RANK-PRIORITY (Number between 0 and 665)\n" +
-                "§7Remove a rank: §b/n rank remove §eRANK-NAME\n" +
-                "§7Set a players rank: §b/n rank set §ePLAYER §cRANK-NAME\n" +
-                "§7Add a permission to a rank: §b/n rank addpermission §ePERMISSION §cRANK-NAME\n" +
-                "§7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME\n" +
-                "§7Rename a rank prefix: §b/n rank rename §eRANK §cPREFIX";
+        return """
+                §7Create a rank: §b/n rank create §eRANK-NAME §cRANK-PREFIX §6RANK-PRIORITY (Number between 0 and 665)
+                §7Remove a rank: §b/n rank remove §eRANK-NAME
+                §7Set a players rank: §b/n rank set §ePLAYER §cRANK-NAME
+                §7Add a permission to a rank: §b/n rank addpermission §ePERMISSION §cRANK-NAME
+                §7Remove a permission from a rank: §b/n rank removepermission §ePERMISSION §cRANK-NAME
+                §7Rename a rank prefix: §b/n rank rename §eRANK §cPREFIX""";
     }
 
     @Override
