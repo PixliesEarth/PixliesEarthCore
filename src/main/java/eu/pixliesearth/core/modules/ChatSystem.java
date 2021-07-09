@@ -11,6 +11,10 @@ import eu.pixliesearth.pixliemoji.PixlieMoji;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentBuilder;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -224,7 +228,7 @@ public class ChatSystem implements Listener, Module {
                     Bukkit.getScheduler().runTaskLater(instance, () -> {
                         profile.getTimers().remove("Chat");
                         profile.save();
-                        player.sendActionBar("§aYou may now chat again.");
+                        player.sendActionBar(Component.text("You may now chat again.").color(NamedTextColor.GREEN));
                     }, (long) config.getDouble("modules.chatsystem.cooldown") * 20);
                 }
             }

@@ -36,11 +36,10 @@ public class WarpSystem implements CommandExecutor, Module {
         switch (args.length) {
 
             case 0:
-                if (!(sender instanceof Player)) {
+                if (!(sender instanceof Player player)) {
                     sender.sendMessage("§aEARTH §8| §7This command is only accessible as a player.");
                     return false;
                 }
-                Player player = (Player) sender;
                 ChestGui warpGui = new ChestGui(4, "§cWhere do you wanna go?");
                 PaginatedPane warps = new PaginatedPane(0, 0, 9, 3);
                 StaticPane toolbar = new StaticPane(0, 3, 9, 1);

@@ -10,7 +10,6 @@ import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.Timer;
 import eu.pixliesearth.warsystem.War;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -189,15 +188,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
         }
         final String energy = new DecimalFormat("#.##").format(profile.getEnergy()) + "§8/§e10⚡";
         switch (scoreboardType.valueOf(profile.getBoardType())) {
-            case STANDARD:
+            case STANDARD -> {
                 final String timeIcon = instance.getCalendar().day() ? "§e☀" : "§9☽";
-
                 returnable.add(" " + instance.getCalendar().getSeason().getIcon() + " §7" + instance.getCalendar().formatDate() + " " + Methods.formatClock(instance.getCalendar().getWorld().getTime() + 6000L) + "§r " + timeIcon);
-
                 returnable.add(" ");
-
                 returnable.add("    " + profile.getBalanceFormatted() + "  §e" + energy);
-
                 if (profile.isInNation()) {
                     Nation nation = Nation.getById(profile.getNationId());
                     returnable.add("  ");
@@ -205,20 +200,18 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     returnable.add("  §7PP: " + c + nation.getXpPoints());
                     returnable.add("  §7Era: " + c + StringUtils.capitalize(nation.getEra().toLowerCase()));
                 }
-
                 if (instance.getUtilLists().boosts.size() > 0) {
                     returnable.add(" ");
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d§l" + boost.getName() + "§7" + boost.getTimer().getRemainingAsString());
                 }
-
                 if (profile.getTimers().size() > 0) {
                     returnable.add(" ");
                     for (Map.Entry<String, Map<String, String>> entry : profile.getTimers().entrySet())
                         returnable.add("  " + c + "§l" + entry.getKey() + " §7" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                 }
-                break;
-            case COMPACT:
+            }
+            case COMPACT -> {
                 if (instance.getUtilLists().boosts.size() > 0)
                     for (Boost boost : instance.getUtilLists().boosts.values())
                         returnable.add("§d" + boost.getName() + ": §7" + boost.getTimer().getRemainingAsString());
@@ -238,7 +231,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                         returnable.add("§3" + Methods.getTimeAsString(new Timer(entry.getValue()).getRemaining(), true));
                     }
                 }
-                break;
+            }
         }
         returnable.add(" ");
         returnable.add("      " + c + "pixlies.net  ");

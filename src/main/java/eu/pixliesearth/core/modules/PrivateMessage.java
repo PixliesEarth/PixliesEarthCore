@@ -53,8 +53,7 @@ public class PrivateMessage implements CommandExecutor, Module {
             messageBuilder.append(args[i]).append(" ");
 
         String receiverFormat;
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             receiverFormat = PlaceholderAPI.setPlaceholders(player, config.getString("modules.privatemessage.format-receiver-player")).replace("%message%", messageBuilder.toString());
         } else {
             receiverFormat = config.getString("modules.privatemessage.format-receiver-console").replace("%message%", messageBuilder.toString());

@@ -28,8 +28,7 @@ public class EconomySystem implements Module, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (args.length == 0) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
+            if (sender instanceof Player player) {
                 sendBalance(player);
                 return false;
             } else {
