@@ -57,6 +57,7 @@ public class ChestShopListener extends CustomListener {
 
     @EventHandler
     public void onSignPlace(SignChangeEvent event) {
+        if (event.getLine(0) == null) return;
         if (!event.getLine(0).equalsIgnoreCase("chestshop")) return;
         if (!Methods.getAttachedBlock(event.getBlock()).getType().equals(Material.CHEST)) return;
         event.setLine(0, "§bChestshop");

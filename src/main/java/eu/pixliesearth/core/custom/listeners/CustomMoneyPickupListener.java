@@ -16,7 +16,7 @@ public class CustomMoneyPickupListener extends CustomListener {
     public void onPickup(PlayerAttemptPickupItemEvent event) {
         Item item = event.getItem();
         ItemStack itemStack = item.getItemStack();
-        if (itemStack.hasDisplayName() && !itemStack.getDisplayName().equalsIgnoreCase("money form death")) return;
+        if (itemStack.hasDisplayName() && !itemStack.getDisplayName().equalsIgnoreCase("money from death")) return;
         NBTUtil.NBTTags nbt = NBTUtil.getTagsFromItem(itemStack);
         if (nbt == null) return;
         if (nbt.getString("money") == null || nbt.getString("money").isEmpty()) return;

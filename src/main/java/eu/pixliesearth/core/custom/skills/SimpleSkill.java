@@ -1,7 +1,10 @@
 package eu.pixliesearth.core.custom.skills;
 
+import java.io.Serial;
+
 public class SimpleSkill extends Skill {
 	
+	@Serial
 	private static final long serialVersionUID = -4881018984700621605L;
 	
 	private final String name;

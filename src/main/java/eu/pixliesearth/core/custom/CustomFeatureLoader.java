@@ -28,12 +28,12 @@ public class CustomFeatureLoader {
 	/**
 	 * Used for NMS
 	 */
-	private static @Getter String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-    private static @Getter String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+	private static @Getter final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static @Getter final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 	
     private static @Getter CustomFeatureLoader loader;
     
-	private @Getter JavaPlugin instance;
+	private @Getter final JavaPlugin instance;
 	private @Getter @Setter CustomFeatureHandler handler;
 	
 	/**
@@ -78,7 +78,7 @@ public class CustomFeatureLoader {
 	@SneakyThrows
 	public void loadPermissions(String path) {
 		for (Class<? extends CustomPermission> clazz : reflectBasedOnExtentionOf(path+".permissions", CustomPermission.class)) 
-			loadPermission(clazz.newInstance());
+			loadPermission(clazz.getDeclaredConstructor().newInstance());
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class CustomFeatureLoader {
 	public void loadListeners(String path) {
 		int i = 0;
 		for (Class<?> clazz : reflectBasedOnExtentionOf(path+".listeners", CustomListener.class)) {
-			loadListener((Listener) clazz.newInstance());
+			loadListener((Listener) clazz.getDeclaredConstructor().newInstance());
 			i++;
 		}
 		System.out.println("§7Loaded §b" + i + "§7 custom listeners.");
@@ -170,9 +170,9 @@ public class CustomFeatureLoader {
 	@Deprecated
 	public static <E> Set<Class<?>> reflectBasedOnImplementationOf(String pathtoclasses, Class<E> type) {
 		Reflections reflections = new Reflections(pathtoclasses);
-        Set<Class<? extends Object>> scannersSet = reflections.getSubTypesOf(Object.class); // will return all classes in package
-        Set<Class<?>> set = new HashSet<Class<?>>();
-        for (Class<? extends Object> clazz : scannersSet) {
+        Set<Class<?>> scannersSet = reflections.getSubTypesOf(Object.class); // will return all classes in package
+        Set<Class<?>> set = new HashSet<>();
+        for (Class<?> clazz : scannersSet) {
         	if (!clazz.isAssignableFrom(type)) continue;
         	set.add(clazz);
         }
