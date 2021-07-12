@@ -46,8 +46,7 @@ public class ChestShopListener extends CustomListener {
                 boolean withdraw = profile.withdrawMoney(price, material.name() + " purchase from " + seller.getName());
                 if (withdraw) {
                     Methods.removeRequiredAmount(new ItemStack(material), chest.getInventory());
-                    Map<Integer, ItemStack> overItems = player.getInventory().addItem(new ItemStack(material));
-                    for (ItemStack item : overItems.values())
+                    for (ItemStack item : player.getInventory().addItem(new ItemStack(material)).values())
                         player.getWorld().dropItemNaturally(sign.getLocation(), item);
                     sellerProfile.depositMoney(price, material.name() + " sold to " + player.getName());
                 }

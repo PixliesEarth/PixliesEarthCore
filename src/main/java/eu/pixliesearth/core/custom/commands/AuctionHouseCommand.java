@@ -2,6 +2,10 @@ package eu.pixliesearth.core.custom.commands;
 
 import eu.pixliesearth.core.auctionhouse.AuctionHouseInventory;
 import eu.pixliesearth.core.custom.CustomCommand;
+import eu.pixliesearth.core.custom.CustomSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.market.AddSubCommand;
+import eu.pixliesearth.core.custom.commands.subcommands.market.SearchSubCommand;
+import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,6 +27,11 @@ public class AuctionHouseCommand extends CustomCommand {
     @Override
     public String getCommandDescription() {
         return "Auction House";
+    }
+
+    @Override
+    public ITabable[] getParams() {
+        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new AddSubCommand(), new SearchSubCommand())};
     }
 
     @Override
