@@ -4,55 +4,45 @@ import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class Uzi extends CustomGun {
-    
-    @Override
-	public String getDefaultDisplayName() {
+
+	public static String getDefaultDisplayName() {
 		return "§c§lUzi";
 	}
 
-	@Override
-	public Integer getCustomModelData() {
+	public static Integer getCustomModelData() {
 		return 4;
 	}
 
-	@Override
-	public String getUUID() {
+	public static String getUUID() {
 		return "Gun:Uzi";
 	}
 
-	@Override
-	public int getMaxAmmo() {
+	public static int getMaxAmmo() {
 		return 32;
 	}
 
-	@Override
-	public int getRange() {
+	public static int getRange() {
 		return 40;
 	}
 
-	@Override
-	public double getAccuracy() {
+	public static double getAccuracy() {
 		return 0.04;
 	}
 
-	@Override
-	public String getOrigin() {
+	public static String getOrigin() {
 		return "Israel";
 	}
 
-	@Override
-	public AmmoType getAmmoType() {
+	public static AmmoType getAmmoType() {
 		return AmmoType.NINEMM;
 	}
 
-	@Override
-	public int getDelayToReload() {
+	public static int getDelayToReload() {
 		return 2;
 	}
-	
-	@Override
-	public long getDelayPerShot() {
-		return 200l;
+
+	public static long getDelayPerShot() {
+		return 200L;
 	}
 	
 

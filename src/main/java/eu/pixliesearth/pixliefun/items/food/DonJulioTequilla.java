@@ -1,6 +1,7 @@
 package eu.pixliesearth.pixliefun.items.food;
 
 import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import eu.pixliesearth.utils.ItemBuilder;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemConsumptionHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
@@ -15,13 +16,8 @@ import java.util.List;
 
 public class DonJulioTequilla extends SimpleSlimefunItem<ItemConsumptionHandler> {
 
-    public static final SlimefunItemStack item = new SlimefunItemStack("DON_JULIO_TEQUILA", new ItemBuilder(Material.HONEY_BOTTLE)
-            .setDisplayName("§6Don Julio Tequila")
-            .setCustomModelData(2)
-            .build());
-
     public DonJulioTequilla() {
-        super(PixlieFun.pixlieFunCategory, item, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.SUGAR_CANE), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.SWEET_BERRIES), null, null, null, null, null});
+        super(PixlieFun.pixlieFunCategory, PixlieFunItems.DONJULIO_TEQUILA, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.SUGAR_CANE), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.SWEET_BERRIES), null, null, null, null, null});
     }
 
     @Override

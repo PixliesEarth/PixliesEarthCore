@@ -31,7 +31,6 @@ import eu.pixliesearth.utils.NBTUtil;
 
 public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
 
-    //TODO RECIPE
     protected CustomGun() {
         super(PixlieFun.gunsCategory, new SlimefunItemStack(getUUID(), buildItem()), PixlieFun.GUN_WORKBENCH, getGunRecipe());
     }

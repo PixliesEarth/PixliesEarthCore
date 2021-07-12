@@ -7,58 +7,47 @@ import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class M16 extends CustomGun {
 
-    @Override
-    public Material getMaterial() {
+    public static Material getMaterial() {
     	return Material.WOODEN_AXE;
     }
 
-    @Override
-    public String getDefaultDisplayName() {
+    public static String getDefaultDisplayName() {
     	return "§c§lM-16";
     }
 
-    @Override
-	public Integer getCustomModelData() {
+	public static Integer getCustomModelData() {
 		return 6;
 	}
 
-	@Override
-	public String getUUID() {
+	public static String getUUID() {
 		return "Gun:M-16";
 	}
 
-	@Override
-	public int getMaxAmmo() {
+	public static int getMaxAmmo() {
 		return 30;
 	}
 
-	@Override
-	public int getRange() {
+	public static int getRange() {
 		return 60;
 	}
 
-	@Override
-	public double getAccuracy() {
+	public static double getAccuracy() {
 		return 0.1;
 	}
 
-	@Override
-	public int getDelayToReload() {
+	public static int getDelayToReload() {
 		return 2;
 	}
 
-	@Override
-	public AmmoType getAmmoType() {
+	public static AmmoType getAmmoType() {
 		return AmmoType.RIFLE_AMMO;
 	}
 
-	@Override
-	public String getOrigin() {
+	public static String getOrigin() {
 		return "USA";
 	}
-	
-	@Override
-	public long getDelayPerShot() {
+
+	public static long getDelayPerShot() {
 		return 150L;
 	}
 	

@@ -2,6 +2,8 @@ package eu.pixliesearth.guns.guns;
 
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
+import org.bukkit.inventory.ItemStack;
 
 public class AK47 extends CustomGun {
 
@@ -14,7 +16,7 @@ public class AK47 extends CustomGun {
 	}
 
 	public static String getUUID() {
-		return "Gun:AK-47";
+		return "AK-47";
 	}
 
 	public static int getMaxAmmo() {
@@ -44,4 +46,19 @@ public class AK47 extends CustomGun {
 	public static long getDelayPerShot() {
 		return 200L;
 	}
+
+	public static ItemStack[] getGunRecipe() {
+		return new ItemStack[]{
+				PixlieFunItems.RIFLE_BARREL,
+				PixlieFunItems.RIFLE_RECEIVER,
+				PixlieFunItems.RIFLE_STOCK,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+		};
+	}
+
 }

@@ -234,6 +234,12 @@ public class Profile {
         return true;
     }
 
+    public boolean transferMoney(double amount, String reason1, String reason2, Profile other) {
+        if (!withdrawMoney(amount, reason1)) return false;
+        other.depositMoney(amount, reason2);
+        return true;
+    }
+
     public void depositMoney(double amount, String reason) {
         if (amount == 0) return;
         this.balance = this.balance + amount;

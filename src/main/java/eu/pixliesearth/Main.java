@@ -15,6 +15,7 @@ import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
+import eu.pixliesearth.pixliefun.PixlieFun;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.sentry.Sentry;
 import org.bson.Document;
@@ -139,6 +140,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
+import org.jetbrains.annotations.NotNull;
 
 public final class Main extends JavaPlugin implements SlimefunAddon {
 
@@ -146,7 +148,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private static @Getter MongoCollection<Document> playerCollection;
     private static @Getter MongoCollection<Document> nationCollection;
     private static @Getter MongoCollection<Document> warCollection;
-    private static @Getter MongoCollection<Document> punishmentCollection;
+    private static @Getter MongoCollection<Document> auctionHouseCollection;
     private static @Getter VaultAPI economy;
     private static @Getter Assemble assemble = null;
     private static @Getter Scoreboard emptyScoreboard;
@@ -172,6 +174,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private @Getter PixliesCalendar calendar;
     private @Getter Vendor vendor;
     private @Getter long serverStartUp;
+    private @Getter PixlieFun pixlieFun;
 
     @Override
     public void onEnable() {
@@ -190,7 +193,6 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
     private void loadStuffThatDoesntLoadBecauseBradsReflectionIsShit() {
         loader.loadCommand(new SkillCommand());
-        loader.loadCommand(new GiveCustomItems());
         loader.loadCommand(new SusCommand());
         loader.loadCommand(new ReplyCommand());
         loader.loadListener(new CustomMoneyPickupListener());
@@ -200,6 +202,8 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
     @SuppressWarnings("resource")
 	private void init() {
+        pixlieFun = new PixlieFun().setup();
+
         gson = new Gson();
 
         utilLists = new UtilLists();
@@ -220,7 +224,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         playerCollection = mongoDatabase.getCollection(getConfig().getString("users-collection", "users"));
         nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
         warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
-        punishmentCollection = mongoDatabase.getCollection(getConfig().getString("punishment-collection", "punishments"));
+        auctionHouseCollection = mongoDatabase.getCollection(getConfig().getString("auction-house-collection", "auction_house"));
 
         for (Document doc : warCollection.find())
             utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
@@ -487,7 +491,6 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         getCommand("flyspeed").setExecutor(new FlySpeedCommand());
         getCommand("fly").setExecutor(new FlyCommand());
         getCommand("suicide").setExecutor(new SuicideCommand());
-        // getCommand("pay").setExecutor(new PayCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
         // getCommand("tpa").setExecutor(new TpaCommand());
@@ -496,16 +499,10 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         getCommand("walkspeed").setExecutor(new WalkSpeedCommand());
         getCommand("craft").setExecutor(new CraftCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
-        // getCommand("shop").setExecutor(new ShopSystem());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("boost").setExecutor(new BoostCommand());
-        // getCommand("marry").setExecutor(new MarryCommand());
-        // getCommand("divorce").setExecutor(new DivorceCommand());
         getCommand("sudo").setExecutor(new SudoCommand());
         getCommand("tphere").setExecutor(new TpHereCommand());
-        // getCommand("family").setExecutor(new FamilyCommand());
-        // getCommand("woohoo").setExecutor(new WoohooCommand());
-        // getCommand("adopt").setExecutor(new AdoptCommand());
         getCommand("block").setExecutor(new BlockCommand());
         getCommand("nick").setExecutor(new NickCommand());
         getCommand("realname").setExecutor(new RealNameCommand());
@@ -581,6 +578,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         return getProfile(((Player)sender).getUniqueId()).isStaff();
     }
 
+    @NotNull
     @Override
     public JavaPlugin getJavaPlugin() {
         return this;
