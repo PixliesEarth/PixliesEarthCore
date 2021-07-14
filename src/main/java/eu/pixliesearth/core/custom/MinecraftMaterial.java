@@ -383,7 +383,7 @@ public enum MinecraftMaterial {
 	ACACIA_STAIRS(Material.ACACIA_STAIRS, "Minecraft:acacia_stairs"),
 	DARK_OAK_STAIRS(Material.DARK_OAK_STAIRS, "Minecraft:dark_oak_stairs"),
 	SLIME_BLOCK(Material.SLIME_BLOCK, "Minecraft:slime_block"),
-	GRASS_PATH(Material.GRASS_PATH, "Minecraft:grass_path"),
+	DIRT_PATH(Material.DIRT_PATH, "Minecraft:dirt_path"),
 	SUNFLOWER(Material.SUNFLOWER, "Minecraft:sunflower"),
 	LILAC(Material.LILAC, "Minecraft:lilac"),
 	ROSE_BUSH(Material.ROSE_BUSH, "Minecraft:rose_bush"),

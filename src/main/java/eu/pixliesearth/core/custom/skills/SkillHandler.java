@@ -34,25 +34,25 @@ public final class SkillHandler implements Serializable {
 	/**
 	 * A map containing a players skill levels
 	 */
-	private final Map<UUID, Map<String, Integer>> skillMap = new ConcurrentHashMap<>();
+	public static final Map<UUID, Map<String, Integer>> skillMap = new ConcurrentHashMap<>();
 	/**
 	 * A set of all {@link Skill}'s
 	 */
-	private final Set<Skill> skills = new HashSet<>();
+	public static final Set<Skill> skills = new HashSet<>();
 	
 	public void createSkillsFor(UUID uuid) {
-		if (this.skillMap.containsKey(uuid)) return; // Don't override
+		if (skillMap.containsKey(uuid)) return; // Don't override
 		Map<String, Integer> map = this.skillMap.getOrDefault(uuid, new HashMap<>());
 		for (Skill skill : skills) {
 			if (!map.containsKey(skill.getSkillUUID())) {
 				map.put(skill.getSkillUUID(), 0);
 			}
 		}
-		this.skillMap.put(uuid, map);
+		skillMap.put(uuid, map);
 	}
 	
 	public Set<Skill> getSkills() {
-		return this.skills;
+		return skills;
 	}
 	
 	public void registerSkill(Skill skill) {
@@ -95,43 +95,10 @@ public final class SkillHandler implements Serializable {
 		return -1;
 	}
 	
-	protected Map<String, List<UUID>> leaderboardMap = new HashMap<>();
-	private long leaderboardRefreshTimer = 0;
+	public static Map<String, List<UUID>> leaderboardMap = new HashMap<>();
 	
 	public List<UUID> getLeaderboardOf(String skillUUID) {
-		if (System.currentTimeMillis()<leaderboardRefreshTimer) {
-			return leaderboardMap.get(skillUUID);
-		}
-		Map<String, List<UUID>> newMap = new HashMap<>();
-		for (Skill skill : skills) {
-			Map<UUID, Integer> map = new HashMap<>();
-			skillMap.entrySet().parallelStream().forEach((entry) -> map.put(entry.getKey(), entry.getValue().getOrDefault(skill.getSkillUUID(), 0)));
-			/*List<Entry<UUID, Integer>> list = new ArrayList<>(map.entrySet());
-	        list.sort(Entry.comparingByValue(Comparator.reverseOrder()));
-	        List<UUID> list2 = new ArrayList<>();
-	        for (Entry<UUID, Integer> entry : list) {
-	        	list2.add(entry.getKey()); // Invert list
-	        }
-	        newMap.put(skill.getSkillUUID(), list2);*/
-			List<UUID> list = new LinkedList<>();
-			entriesSortedByValues(map).stream().forEachOrdered((entry) -> list.add(0, entry.getKey()));
-			newMap.put(skill.getSkillUUID(), list);
-		}
-		leaderboardMap = newMap;
-        leaderboardRefreshTimer = System.currentTimeMillis() + 7500L;
-		return getLeaderboardOf(skillUUID);
-	}
-	
-	
-	private <K,V extends Comparable<? super V>>SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
-	    SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
-				(e1, e2) -> {
-					int res = e1.getValue().compareTo(e2.getValue());
-					return res != 0 ? res : 1;
-				}
-		);
-	    sortedEntries.addAll(map.entrySet());
-	    return sortedEntries;
+		return leaderboardMap.get(skillUUID);
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import eu.pixliesearth.api.REST;
+import eu.pixliesearth.api.RESTApi;
 import eu.pixliesearth.core.custom.commands.*;
 import eu.pixliesearth.core.custom.listeners.*;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
@@ -16,8 +16,11 @@ import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
 import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.utils.*;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.sentry.Sentry;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -103,14 +106,6 @@ import eu.pixliesearth.core.objects.boosts.DoubleExpBoost;
 import eu.pixliesearth.core.scoreboard.ScoreboardAdapter;
 import eu.pixliesearth.core.vendors.VendorItem;
 import eu.pixliesearth.discord.MiniMick;
-import eu.pixliesearth.guns.guns.AK47;
-import eu.pixliesearth.guns.guns.K98K;
-import eu.pixliesearth.guns.guns.M16;
-import eu.pixliesearth.guns.guns.M1911;
-import eu.pixliesearth.guns.guns.MP5;
-import eu.pixliesearth.guns.guns.RPG7;
-import eu.pixliesearth.guns.guns.Slingshot;
-import eu.pixliesearth.guns.guns.Uzi;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.Assemble;
 import eu.pixliesearth.lib.io.github.thatkawaiisam.assemble.AssembleStyle;
 import eu.pixliesearth.localization.Lang;
@@ -126,13 +121,6 @@ import eu.pixliesearth.nations.entities.nation.Religion;
 import eu.pixliesearth.nations.listener.MapClickListener;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.nations.managers.dynmap.DynmapEngine;
-import eu.pixliesearth.utils.FastConf;
-import eu.pixliesearth.utils.FileManager;
-import eu.pixliesearth.utils.InventoryUtils;
-import eu.pixliesearth.utils.Methods;
-import eu.pixliesearth.utils.Timer;
-import eu.pixliesearth.utils.UtilLists;
-import eu.pixliesearth.utils.UtilThread;
 import eu.pixliesearth.warsystem.War;
 import eu.pixliesearth.warsystem.WarThread;
 import lombok.Getter;
@@ -167,8 +155,9 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private @Getter @Setter War currentWar;
     private @Getter UtilThread utilThread;
     private @Getter BalTopThread baltopThread;
+    private @Getter SkillThread skillThread;
     private @Getter final boolean warEnabled = true;
-    private @Getter REST rest;
+    private @Getter RESTApi rest;
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
     private @Getter PixliesCalendar calendar;
@@ -302,7 +291,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
                     if (!profile.isInNation()) continue;
                     Nation nation = profile.getCurrentNation();
                     nation.setXpPoints(nation.getXpPoints() + 0.25);
-                    player.sendActionBar("§a+0.25 §7Political-Power");
+                    player.sendActionBar(Component.text("+0.25 §7Political-Power").color(NamedTextColor.GREEN));
                 }
             }
         }.runTaskTimerAsynchronously(this, Timer.DAY, Timer.DAY);
@@ -385,7 +374,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         dynmapKernel.onEnable();
 
         // nationsTop = new NTop();
-        if (!testServer) rest = new REST();
+        if (!testServer) rest = new RESTApi();
         // machineTask = new MachineTask();
 
         // MACHINES
@@ -440,6 +429,9 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
         baltopThread = new BalTopThread();
         baltopThread.start();
+
+        skillThread = new SkillThread();
+        skillThread.startThread();
     }
 
     @SneakyThrows

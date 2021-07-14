@@ -88,8 +88,6 @@ public class UtilLists {
 
     public List<UUID> cringers;
 
-    public Map<UUID, PixliesFunGUI> pixliesFunGUIMap;
-
     public UtilLists() {
         staffMode = new HashSet<>();
         profiles = new HashMap<>();
@@ -126,7 +124,6 @@ public class UtilLists {
         lastMessageSender = new HashMap<>();
         scoreboardFrames = new HashMap<>();
         cringers = new ArrayList<>();
-        pixliesFunGUIMap = new HashMap<>();
     }
 
 }

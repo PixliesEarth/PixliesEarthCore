@@ -1,5 +1,6 @@
 package eu.pixliesearth.guns.ammo;
 
+import eu.pixliesearth.guns.CustomGun;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
