@@ -8,6 +8,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.NationsEntity;
 import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.nations.entities.nation.NationFlag;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
@@ -22,10 +23,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.dynmap.web.Json;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Data
 @AllArgsConstructor
@@ -40,19 +40,23 @@ public class NationChunk {
     private NationChunkType type;
     private JsonObject data;
 
+    public void save(boolean claim) {
+        if (table.get(world).get(x, z) == null) {
+            Table<Integer, Integer, NationChunk> rst = table.get(world);
+            rst.put(x, z, this);
+            table.put(world, rst);
+            Nation nation = Nation.getById(nationId);
+            if (!nation.getChunks().contains(serialize())) {
+                nation.getChunks().add(serialize());
+                nation.save();
+            }
+            if (claim) System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
+        }
+    }
+
     public boolean claim() {
         try {
-            if (table.get(world).get(x, z) == null) {
-                Table<Integer, Integer, NationChunk> rst = table.get(world);
-                rst.put(x, z, this);
-                table.put(world, rst);
-                Nation nation = Nation.getById(nationId);
-                if (!nation.getChunks().contains(serialize())) {
-                    nation.getChunks().add(serialize());
-                    nation.save();
-                }
-                System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
-            }
+            save(true);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -219,6 +223,42 @@ public class NationChunk {
                 table.put(c.getWorld(), rst);
             }
         });
+    }
+
+    public void grantAccess(NationsEntity accessor) {
+        data.addProperty("ACCESS:" + accessor.id(), true);
+        save(false);
+    }
+
+    public void revokeAccess(NationsEntity accessor) {
+        data.remove("ACCESS:" + accessor.id());
+        save(false);
+    }
+
+    public boolean hasAccess(NationsEntity accessor) {
+        return data.has("ACCESS:" + accessor.id());
+    }
+
+    public List<NationsEntity> getAccessors() {
+        List<NationsEntity> returner = new ArrayList<>();
+
+        Main instance = Main.getInstance();
+
+        for (String key : data.keySet()) {
+            if (key.startsWith("ACCESS:")) {
+                Pattern p = Pattern.compile("/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/");
+                Matcher m = p.matcher(key.split(":")[1]);
+                if (m.find()) {
+                    returner.add(instance.getProfile(UUID.fromString(key.split(":")[1])));
+                } else {
+                    Nation nation = Nation.getById(key.split(":")[1]);
+                    if (nation == null) continue;
+                    returner.add(nation);
+                }
+            }
+        }
+
+        return returner;
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.vdurmont.emoji.EmojiParser;
+import eu.pixliesearth.nations.entities.NationsEntity;
 import org.apache.commons.lang.WordUtils;
 import org.bson.Document;
 import org.bukkit.*;
@@ -41,7 +42,7 @@ import net.luckperms.api.model.group.Group;
 
 @Data
 @AllArgsConstructor
-public class Profile {
+public class Profile implements NationsEntity {
 
     private static Main instance = Main.getInstance();
 
@@ -306,16 +307,6 @@ public class Profile {
         save();
     }
 
-    public void addChunkAccess(NationChunk chunk) {
-        extras.put("ACCESS:" + chunk.serialize(), true);
-        save();
-    }
-
-    public void removeChunkAccess(NationChunk chunk) {
-        extras.remove("ACCESS:" + chunk.serialize());
-        save();
-    }
-
     public boolean areRelated(UUID uuid) {
         if (marriagePartner.equals(uuid.toString()))
             return true;
@@ -526,6 +517,11 @@ public class Profile {
 
     public Rank getCurrentNationRank() {
         return Rank.get(getCurrentNation().getRanks().get(nationRank));
+    }
+
+    @Override
+    public String id() {
+        return this.uniqueId;
     }
 
 }

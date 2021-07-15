@@ -60,6 +60,7 @@ public class ProtectionManager implements Listener {
         if (profile.isInWar() && (instance.getCurrentWar().getMainDefender().equals(host.getNationId()) || instance.getCurrentWar().getMainAggressor().equals(host.getNationId()))) return true;
         if (Permission.hasForeignPermission(profile, Permission.BUILD, host)) return true;
         if (Permission.hasAccessHere(profile, nc)) return true;
+        if (nc.hasAccess(profile)) return true;
         if (!profile.isInNation()) return false;
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.BUILD)) return true;

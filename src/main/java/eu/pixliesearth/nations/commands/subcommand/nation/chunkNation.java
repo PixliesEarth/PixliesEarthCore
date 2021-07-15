@@ -4,17 +4,21 @@ import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.events.TerritoryChangeEvent;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.commands.subcommand.SubCommand;
+import eu.pixliesearth.nations.entities.NationsEntity;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.chunk.NationChunkType;
+import eu.pixliesearth.nations.entities.nation.Nation;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,11 +33,10 @@ public class chunkNation extends SubCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, String[] args) {
-        if (!checkIfPlayer(sender)) {
+        if (!(sender instanceof Player player)) {
             Lang.ONLY_PLAYERS_EXEC.send(sender);
             return false;
         }
-        Player player = (Player) sender;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInNation()) {
             Lang.NOT_IN_A_NATION.send(player);
@@ -51,9 +54,12 @@ public class chunkNation extends SubCommand {
 
         GuiItem chunkPermissions = new GuiItem(
                 new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/8ad943d063347f95ab9e9fa75792da84ec665ebd22b050bdba519ff7da61db"))
-                        .setDisplayName("§cManage Access §8(§cSoon§8)")
+                        .setDisplayName("§cManage Access")
                         .build(),
-                e -> e.setCancelled(true)
+                e -> {
+                    e.setCancelled(true);
+                    openAccessorsMenu(player, nc);
+                }
         );
 
         GuiItem chunkType = new GuiItem(
@@ -110,6 +116,45 @@ public class chunkNation extends SubCommand {
         }
         pane.populateWithGuiItems(fillers);
         gui.addPane(pane);
+
+        gui.show(player);
+    }
+
+    public void openAccessorsMenu(Player player, NationChunk chunk) {
+        ChestGui gui = new ChestGui(3, "§bManage Access");
+
+        PaginatedPane pane = new PaginatedPane(0, 0, 9, 2);
+
+        List<GuiItem> fillers = new ArrayList<>();
+        for (NationsEntity accessor : chunk.getAccessors()) {
+            ItemBuilder builder = new ItemBuilder(accessor instanceof Nation nation ? nation.getFlag() : new ItemStack(Material.PLAYER_HEAD));
+            if (accessor instanceof Profile profile)
+                builder.setSkullOwner(profile.getUUID());
+            fillers.add(new GuiItem(
+                    builder.build(),
+                    e -> e.setCancelled(true)
+            ));
+        }
+        pane.populateWithGuiItems(fillers);
+        gui.addPane(pane);
+
+        StaticPane hotbar = new StaticPane(0, 2, 9, 1);
+        hotbar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        hotbar.addItem(new GuiItem(Constants.backItem, event -> {
+            event.setCancelled(true);
+            try {
+                pane.setPage(pane.getPage() - 1);
+                gui.update();
+            } catch (Exception ignored) { }
+        }), 0, 0);
+        hotbar.addItem(new GuiItem(Constants.nextItem, event -> {
+            event.setCancelled(true);
+            try {
+                pane.setPage(pane.getPage() + 1);
+                gui.update();
+            } catch (Exception ignored) { }
+        }), 8, 0);
+        gui.addPane(hotbar);
 
         gui.show(player);
     }

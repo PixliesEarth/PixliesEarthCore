@@ -67,8 +67,8 @@ public enum Permission {
     }
 
     public static boolean hasAccessHere(Profile profile, NationChunk chunk) {
-        if (profile.isInNation() && profile.getCurrentNation().getExtras().containsKey("ACCESS:" + chunk.serialize())) return true;
-        return profile.getExtras().containsKey("ACCESS:" + chunk.serialize());
+        if (profile.isInNation()) return chunk.hasAccess(profile.getCurrentNation());
+        return chunk.hasAccess(profile);
     }
 
     public static boolean exists(String name) {

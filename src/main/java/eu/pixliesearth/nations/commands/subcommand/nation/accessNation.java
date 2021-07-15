@@ -90,10 +90,10 @@ public class accessNation extends SubCommand {
                 return false;
             }
             if (args[2].equalsIgnoreCase("set")) {
-                target.addChunkAccess(chunk);
+                chunk.grantAccess(target);
                 Lang.ADDED_CHUNK_ACCESS_TO_X.send(player, "%X%;§6" + target.getAsOfflinePlayer().getName());
             } else if (args[2].equalsIgnoreCase("unset")) {
-                target.removeChunkAccess(chunk);
+                chunk.revokeAccess(target);
                 Lang.REMOVED_CHUNK_ACCESS_FROM_X.send(player, "%X%;§6" + target.getAsOfflinePlayer().getName());
             }
         } else if (args[0].equalsIgnoreCase("nation")) {
@@ -107,10 +107,10 @@ public class accessNation extends SubCommand {
                 return false;
             }
             if (args[2].equalsIgnoreCase("set")) {
-                nation.addChunkAccess(chunk);
+                chunk.grantAccess(nation);
                 Lang.ADDED_CHUNK_ACCESS_TO_X.send(player, "%X%;§b" + nation.getName());
             } else if (args[2].equalsIgnoreCase("unset")) {
-                nation.removeChunkAccess(chunk);
+                chunk.revokeAccess(nation);
                 Lang.REMOVED_CHUNK_ACCESS_FROM_X.send(player, "%X%;§b" + nation.getName());
             }
         }

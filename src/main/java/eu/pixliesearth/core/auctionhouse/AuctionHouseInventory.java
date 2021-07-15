@@ -44,7 +44,7 @@ public record AuctionHouseInventory(Player player) {
             ItemStack item = (ItemStack) InventoryUtils.deserialize(document.getString("item"));
             if (item == null) continue;
             OfflinePlayer seller = Bukkit.getOfflinePlayer(UUID.fromString(document.getString("seller")));
-            itemsFS.add(new GuiItem(new ItemBuilder(item).clearLore().addLoreLine("§7Seller: §6" + seller.getName()).addLoreLine("§7Price: §2§l$§a" + document.getDouble("price")).addLoreLine("§7§oID: " + document.getObjectId("_id").toString()).build(), event -> {
+            itemsFS.add(new GuiItem(new ItemBuilder(item).clearLore().addLoreLine("§7Seller: §6" + seller.getName()).addLoreLine("§7Price: §2§l$§a" + document.getDouble("price")).addLoreLine("§7§oID: " + document.getObjectId("_id").toString()).addLoreLine(" ").addLoreLine("§f§lLEFT-CLICK §7to purchase").build(), event -> {
                 event.setCancelled(true);
                 buy(item, document.getDouble("price"), seller, document);
             }));
@@ -53,6 +53,7 @@ public record AuctionHouseInventory(Player player) {
         gui.addPane(itemsPane);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         hotBar.addItem(new GuiItem(Constants.backItem, event -> {
             event.setCancelled(true);
             try {
@@ -70,14 +71,18 @@ public record AuctionHouseInventory(Player player) {
         hotBar.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§cSearch").build(), event -> {
             event.setCancelled(true);
             sendSearchMessage();
-        }), 4, 0);
+        }), 3, 0);
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§bMy Items").build(), event -> {
+            event.setCancelled(true);
+            openManagementMenu();
+        }), 5, 0);
         gui.addPane(hotBar);
         gui.show(player);
         return this;
     }
 
     public AuctionHouseInventory openSearch(String query) {
-        ChestGui gui = new ChestGui(6, "§bAuction House");
+        ChestGui gui = new ChestGui(6, "§bAuction House §7- §3" + query);
 
         PaginatedPane itemsPane = new PaginatedPane(0, 0, 9, 5);
         List<GuiItem> itemsFS = new ArrayList<>();
@@ -86,7 +91,7 @@ public record AuctionHouseInventory(Player player) {
             ItemStack item = (ItemStack) InventoryUtils.deserialize(document.getString("item"));
             if (item == null) continue;
             OfflinePlayer seller = Bukkit.getOfflinePlayer(UUID.fromString(document.getString("seller")));
-            itemsFS.add(new GuiItem(new ItemBuilder(item).clearLore().addLoreLine("§7Seller: §6" + seller.getName()).addLoreLine("§7Price: §2§l$§a" + document.getDouble("price")).addLoreLine("§7§oID: " + document.getObjectId("_id").toString()).build(), event -> {
+            itemsFS.add(new GuiItem(new ItemBuilder(item).clearLore().addLoreLine("§7Seller: §6" + seller.getName()).addLoreLine("§7Price: §2§l$§a" + document.getDouble("price")).addLoreLine("§7§oID: " + document.getObjectId("_id").toString()).addLoreLine(" ").addLoreLine("§f§lLEFT-CLICK §7to purchase").build(), event -> {
                 event.setCancelled(true);
                 buy(item, document.getDouble("price"), seller, document);
             }));
@@ -95,6 +100,7 @@ public record AuctionHouseInventory(Player player) {
         gui.addPane(itemsPane);
 
         StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
         hotBar.addItem(new GuiItem(Constants.backItem, event -> {
             event.setCancelled(true);
             try {
@@ -109,10 +115,58 @@ public record AuctionHouseInventory(Player player) {
                 gui.update();
             } catch (Exception ignored) { }
         }), 8, 0);
-        hotBar.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§cSearch").addLoreLine("§7Query: §a" + query).build(), event -> {
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§cSearch").build(), event -> {
             event.setCancelled(true);
             sendSearchMessage();
-        }), 4, 0);
+        }), 3, 0);
+        hotBar.addItem(new GuiItem(new ItemBuilder(Material.COMPASS).setDisplayName("§bMy Items").build(), event -> {
+            event.setCancelled(true);
+            openManagementMenu();
+        }), 5, 0);
+        gui.addPane(hotBar);
+        gui.show(player);
+        return this;
+    }
+
+    public AuctionHouseInventory openManagementMenu() {
+        ChestGui gui = new ChestGui(6, "§bAuction House §7- §9Management");
+
+        PaginatedPane itemsPane = new PaginatedPane(0, 0, 9, 5);
+        List<GuiItem> itemsFS = new ArrayList<>();
+        for (Document document : auctionHouseCollection.find(new BasicDBObject("seller", player.getUniqueId().toString())).sort(new BasicDBObject("dateAdded", -1))) {
+            ItemStack item = (ItemStack) InventoryUtils.deserialize(document.getString("item"));
+            if (item == null) continue;
+            OfflinePlayer seller = Bukkit.getOfflinePlayer(UUID.fromString(document.getString("seller")));
+            ItemBuilder builder = new ItemBuilder(item).clearLore();
+            if ((document.getLong("dateAdded") + (Timer.DAY * 2)) < System.currentTimeMillis()) builder.addLoreLine("§cEXPIRED");
+            builder.addLoreLine("§7Price: §2§l$§a" + document.getDouble("price")).addLoreLine("§7§oID: " + document.getObjectId("_id").toString()).addLoreLine(" ").addLoreLine("§f§lLEFT-CLICK §7to §cremove");
+            itemsFS.add(new GuiItem(builder.build(), event -> {
+                event.setCancelled(true);
+                auctionHouseCollection.deleteOne(document);
+                for (ItemStack toDrop : player.getInventory().addItem(item).values())
+                    player.getWorld().dropItemNaturally(player.getLocation(), toDrop);
+                player.closeInventory();
+            }));
+        }
+        itemsPane.populateWithGuiItems(itemsFS);
+        gui.addPane(itemsPane);
+
+        StaticPane hotBar = new StaticPane(0, 5, 9, 1);
+        hotBar.fillWith(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setNoName().build(), e -> e.setCancelled(true));
+        hotBar.addItem(new GuiItem(Constants.backItem, event -> {
+            event.setCancelled(true);
+            try {
+                itemsPane.setPage(itemsPane.getPage() - 1);
+                gui.update();
+            } catch (Exception ignored) { }
+        }), 0, 0);
+        hotBar.addItem(new GuiItem(Constants.nextItem, event -> {
+            event.setCancelled(true);
+            try {
+                itemsPane.setPage(itemsPane.getPage() + 1);
+                gui.update();
+            } catch (Exception ignored) { }
+        }), 8, 0);
         gui.addPane(hotBar);
         gui.show(player);
         return this;

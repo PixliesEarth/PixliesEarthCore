@@ -9,7 +9,7 @@ public enum Era {
     MEDIEVAL("Medieval", 3, 75, 25),
     VICTORIAN("Victorian", 4, 125, 50),
     MODERN("Modern", 5, 150, 100),
-    FUTURE("Future", 6, 200, 300),
+    FUTURE("Future", 6, 200, 800),
     ;
 
     private @Getter final String name;

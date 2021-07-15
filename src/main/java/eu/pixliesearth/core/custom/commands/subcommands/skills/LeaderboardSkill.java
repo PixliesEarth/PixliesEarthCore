@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.custom.skills.Skill;
 import eu.pixliesearth.core.custom.skills.SkillHandler;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.HoverEvent.Action;
-import net.md_5.bungee.api.chat.hover.content.Text;
 
 public class LeaderboardSkill extends CustomSubCommand {
 	
@@ -60,8 +60,8 @@ public class LeaderboardSkill extends CustomSubCommand {
 			commandSender.sendMessage("§7[§c❌§7] §7The skill §e"+parameters[0]+" §7does not exist!");
 			return false;
 		} else {
-			TextComponent t = new TextComponent("§7+-------------+");
-			t.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new Text(ChatColor.GOLD+"Refreshes every 7.5 seconds!")));
+			TextComponent t = Component.text("§7+-------------+");
+			t.hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("Refreshes every 7.5 seconds!").color(NamedTextColor.GOLD)));
 			commandSender.sendMessage(t); // 15 long (13 -'s)
 			List<UUID> leaderboard = skillHandler.getLeaderboardOf(skill.getSkillUUID());
 			if (leaderboard==null) {
@@ -72,18 +72,18 @@ public class LeaderboardSkill extends CustomSubCommand {
 				leaderboard.remove(leaderboard.size()-1);
 			}
 			for (int i = 0; i < leaderboard.size(); i++) {
-				ChatColor co;
+				NamedTextColor co;
 				if (i+1 == 1) {
-					co = ChatColor.GOLD;
+					co = NamedTextColor.GOLD;
 				} else if (i+1 == 2) {
-					co = ChatColor.GRAY;
+					co = NamedTextColor.GRAY;
 				} else if (i+1 == 3) {
-					co = ChatColor.RED;
+					co = NamedTextColor.RED;
 				} else {
-					co = ChatColor.DARK_AQUA;
+					co = NamedTextColor.DARK_AQUA;
 				}
-				TextComponent t2 = new TextComponent(co + Integer.toString(i+1)+"# "+ChatColor.GRAY+Bukkit.getOfflinePlayer(leaderboard.get(i)).getName());
-				t2.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new Text(ChatColor.GOLD+"XP: "+ChatColor.GRAY+Integer.toString(skillHandler.getXPOf(leaderboard.get(i), skill.getSkillUUID()))), new Text("\n"+ChatColor.GOLD+"Level: "+ChatColor.GRAY+skillHandler.getLevelOf(leaderboard.get(i), skill.getSkillUUID())+"/"+skill.getMaxSkillLevel())));
+				TextComponent t2 = Component.text(co + Integer.toString(i+1)+"# "+ ChatColor.GRAY+Bukkit.getOfflinePlayer(leaderboard.get(i)).getName());
+				t2.hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(ChatColor.GOLD+"XP: " + ChatColor.GRAY + Integer.toString(skillHandler.getXPOf(leaderboard.get(i), skill.getSkillUUID())) + "\n" + ChatColor.GOLD+"Level: " + ChatColor.GRAY+skillHandler.getLevelOf(leaderboard.get(i), skill.getSkillUUID()) + "/" + skill.getMaxSkillLevel())));
 				commandSender.sendMessage(t2);
 			}
 			commandSender.sendMessage(t);

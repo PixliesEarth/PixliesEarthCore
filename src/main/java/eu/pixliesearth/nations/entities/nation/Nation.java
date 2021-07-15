@@ -5,6 +5,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.nations.entities.NationsEntity;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
@@ -24,7 +25,7 @@ import java.util.*;
 
 @Data
 @AllArgsConstructor
-public class Nation {
+public class Nation implements NationsEntity {
 
     private String nationId;
     private String name;
@@ -342,16 +343,6 @@ public class Nation {
         save();
     }
 
-    public void addChunkAccess(NationChunk chunk) {
-        extras.put("ACCESS:" + chunk.serialize(), true);
-        save();
-    }
-
-    public void removeChunkAccess(NationChunk chunk) {
-        extras.remove("ACCESS:" + chunk.serialize());
-        save();
-    }
-
     public int getPoints() {
         return (int) (members.size() * money);
     }
@@ -398,6 +389,11 @@ public class Nation {
             if (!nation.getLeaderName().equalsIgnoreCase("SERVER"))
                 nations.add(nation);
         return nations;
+    }
+
+    @Override
+    public String id() {
+        return nationId;
     }
 
     public enum NationRelation {

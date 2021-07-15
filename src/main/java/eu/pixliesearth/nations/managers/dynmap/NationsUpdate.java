@@ -1,10 +1,10 @@
 package eu.pixliesearth.nations.managers.dynmap;
 
-public class FactionsUpdate implements Runnable {
+public class NationsUpdate implements Runnable {
     private final DynmapEngine kernel;
     private boolean runOnce;
 
-    public FactionsUpdate(final DynmapEngine kernel) {
+    public NationsUpdate(final DynmapEngine kernel) {
         this.kernel = kernel;
     }
 

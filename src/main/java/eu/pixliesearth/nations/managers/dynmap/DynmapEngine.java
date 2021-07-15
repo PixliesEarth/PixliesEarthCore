@@ -14,7 +14,6 @@ import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlock;
 import eu.pixliesearth.nations.managers.dynmap.pojo.NationBlocks;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
@@ -74,16 +73,8 @@ public class DynmapEngine {
         return factions;
     }
 
-    public void setFactions(Main factions) {
-        this.factions = factions;
-    }
-
     public boolean isStop() {
         return this.stop;
-    }
-
-    public boolean isPlayersets() {
-        return playersets;
     }
 
     public long getUpdperiod() {
@@ -152,7 +143,7 @@ public class DynmapEngine {
     }
 
     public void requestUpdateFactions() {
-        final FactionsUpdate factionsUpdate = new FactionsUpdate(this);
+        final NationsUpdate factionsUpdate = new NationsUpdate(this);
         factionsUpdate.setRunOnce(true);
         scheduleSyncDelayedTask(factionsUpdate, 20);
     }
@@ -495,7 +486,7 @@ public class DynmapEngine {
         updperiod = (per * TICKRATE_RATIO);
         stop = false;
 
-        scheduleSyncDelayedTask(new FactionsUpdate(this), 40);   /* First time is 2 seconds */
+        scheduleSyncDelayedTask(new NationsUpdate(this), 40);   /* First time is 2 seconds */
         Main.getInstance().getServer().getPluginManager().registerEvents(new OurServerListener(this), Main.getInstance());
 
         // info("version " + this.getDescription().getVersion() + " is activated");
