@@ -14,8 +14,7 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
  * @author BradBot_1
  * 
  * <h3>Handles events for custom inventories</h3>
- * 
- * @apiNote TODO: notes
+ *
  */
 public class CustomInventoryListener extends CustomListener {
 	

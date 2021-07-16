@@ -147,7 +147,7 @@ public class ExplosionCalculator {
         } else {
             if (async) {
                 this.ready = false;
-                throw new RuntimeException("ExplosionUtil#ExplosionCalculator#update() cannot be called asynchronously when it has an explosion value");
+                throw new RuntimeException("ExplosionUtil$ExplosionCalculator#update() cannot be called asynchronously when it has an explosion value");
             } else {
                 int bx = this.center.getBlockX();
                 int by = this.center.getBlockY();

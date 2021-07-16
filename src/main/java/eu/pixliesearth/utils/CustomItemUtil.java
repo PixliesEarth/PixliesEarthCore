@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
  * 
  * <h3>Does basic things for CustomItems</h3>
  *
- * @apiNote TODO: notes
  *
  */
 public class CustomItemUtil {

@@ -21,7 +21,6 @@ import lombok.SneakyThrows;
  * 
  * <h3>A class to load custom features</h3>
  *
- * @apiNote TODO: notes
  * 
  */
 public class CustomFeatureLoader {

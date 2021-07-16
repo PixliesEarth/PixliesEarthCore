@@ -1,5 +1,6 @@
 package eu.pixliesearth.utils;
 
+import com.bb1.defaults.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -137,8 +138,7 @@ public class NBTUtil {
         }
 
         public boolean getBoolean(String key) {
-            if (getByte(key) == (byte) 1) return true;
-            else return false;
+            return getByte(key) == (byte) 1;
         }
 
         public Byte getByte(String key) {
@@ -169,17 +169,8 @@ public class NBTUtil {
         }
     }
 
-    private static String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-    private static String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-
-    @Deprecated // Not done TODO: This
-    public static HashMap<String, Object> getNBTFromItem(ItemStack i) {
-        if (i == null || i.getType().equals(Material.AIR))
-            throw new NullPointerException("ItemStack can't be null or air!");
-        HashMap<String, Object> a = new HashMap<String, Object>();
-        // TODO: Make a map of all nbt on an item
-        return a;
-    }
+    private static final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 
     public static ItemStack addTagsToItem(ItemStack i, NBTUtil.NBTTags tag) {
         if (i == null || i.getType().equals(Material.AIR))

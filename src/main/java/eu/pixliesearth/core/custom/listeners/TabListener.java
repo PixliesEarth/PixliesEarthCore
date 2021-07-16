@@ -15,7 +15,6 @@ import java.util.Map;
  * 
  * <h3>Handles events for custom TABLIST</h3>
  *
- * @apiNote TODO: notes
  */
 public class TabListener extends CustomListener {
 	

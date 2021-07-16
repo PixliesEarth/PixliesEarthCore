@@ -153,8 +153,7 @@ public class rankNation extends SubCommand {
             rank.setPrefix(prefix.replace("&", "§"));
             n.getRanks().put(rank.getName(), rank.toMap());
             n.save();
-            //TODO Proper message
-            sender.sendMessage(Lang.NATION + "§7Rank renamed.");
+            sender.sendMessage(Lang.NATION + "§7You successfully renamed the rank to §b" + rank.getName() + "§7.");
             return false;
         }
 

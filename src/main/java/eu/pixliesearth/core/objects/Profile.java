@@ -215,7 +215,13 @@ public class Profile implements NationsEntity {
         return nationRank.equalsIgnoreCase("leader");
     }
 
-    public boolean isInWar() { return instance.getUtilLists().playersInWar.containsKey(this.getUUID()); }
+    public boolean isInWar() {
+        return instance.getUtilLists().playersInWar.containsKey(this.getUUID());
+    }
+
+    public boolean isInCombat() {
+        return timers.containsKey("§c§lCombat");
+    }
 
     public void removeFromNation() {
         if (!inNation()) return;

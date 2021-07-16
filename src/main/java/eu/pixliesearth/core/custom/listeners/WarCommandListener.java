@@ -28,8 +28,7 @@ public class WarCommandListener extends CustomListener {
 
     @EventHandler
     public void onSubCommand(NationCommandExecuteEvent event) {
-        if (!(event.getSender() instanceof Player)) return;
-        Player player = (Player) event.getSender();
+        if (!(event.getSender() instanceof Player player)) return;
         Profile profile = instance.getProfile(player.getUniqueId());
         if (!profile.isInWar()) return;
         if (event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.settlementsCommand ||

@@ -3,6 +3,7 @@ package eu.pixliesearth.pixliefun;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.pixliefun.items.food.DonJulioTequilla;
+import eu.pixliesearth.pixliefun.items.guns.RifleAmmo;
 import eu.pixliesearth.pixliefun.items.guns.RifleBarrel;
 import eu.pixliesearth.pixliefun.items.guns.RifleReceiver;
 import eu.pixliesearth.pixliefun.items.guns.RifleStock;
@@ -38,6 +39,7 @@ public class PixlieFun {
         new RifleBarrel().register(instance);
         new RifleStock().register(instance);
         new RifleReceiver().register(instance);
+        new RifleAmmo().register(instance);
 
         // REGISTER CATEGORIES
         pixlieFunCategory.register(instance);

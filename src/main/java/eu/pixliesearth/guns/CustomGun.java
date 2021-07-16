@@ -56,7 +56,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
     public ItemUseHandler getItemHandler() {
         return (event) -> {
             final ItemStack itemStack = event.getItem();
-            // Check for action timer
+            // Check for action timers
             String timeString = NBTUtil.getTagsFromItem(itemStack).getString("cooldown");
             if (timeString != null && !timeString.equals("")) {
                 if (timeString != null && timeString.equals("reloading")) { // This line causes the reload bug lmao (bc the tag isnt removed)
