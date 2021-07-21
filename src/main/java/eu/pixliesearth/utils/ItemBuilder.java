@@ -176,6 +176,7 @@ public class ItemBuilder {
 
     public ItemBuilder addNBTTag(String key, Object value, NBTTagType type) {
 		NBTUtil.NBTTags tags = NBTUtil.getTagsFromItem(item);
+		if (tags == null) return this;
 		tags.addTag(key, value, type);
 		item = NBTUtil.addTagsToItem(item, tags);
         return this;

@@ -85,7 +85,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
             // Rest of method
             int ammo = Integer.parseInt(NBTUtil.getTagsFromItem(itemStack).getString("ammo"));
             if (ammo <= 0) { // Reload
-                if (Methods.removeRequiredAmount(getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
+                if (Methods.removeRequiredAmountBasedOnDisplayName(getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
                     event.getPlayer().sendActionBar("§b§lReloading...");
                     event.getPlayer().getInventory().setItemInMainHand(null);
                     final int slotToReloadIn = event.getPlayer().getInventory().getHeldItemSlot();

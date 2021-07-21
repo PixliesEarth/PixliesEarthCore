@@ -3,6 +3,7 @@ package eu.pixliesearth.nations.entities.chunk;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
@@ -87,7 +88,7 @@ public class NationChunk {
     }
 
     public String serialize() {
-        return nationId + ";" + world + ";" + x + ";" + z + ";" + type.name();
+        return nationId + ";" + world + ";" + x + ";" + z + ";" + type.name() + ";" + new Gson().toJson(data);
     }
 
     public Nation getCurrentNation() {
@@ -244,7 +245,8 @@ public class NationChunk {
 
         Main instance = Main.getInstance();
 
-        for (String key : data.keySet()) {
+        for (Map.Entry<String, JsonElement> data : data.entrySet()) {
+            String key = data.getKey();
             if (key.startsWith("ACCESS:")) {
                 Pattern p = Pattern.compile("/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/");
                 Matcher m = p.matcher(key.split(":")[1]);

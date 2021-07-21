@@ -1,12 +1,10 @@
 package eu.pixliesearth.utils;
 
-import com.bb1.defaults.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
 /**
  * @author BradBot_1
@@ -22,7 +20,7 @@ public class NBTUtil {
         public NBTTags(Object tag) {
             this.tag = tag;
             if (this.tag == null) try {
-                this.tag = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").newInstance();
+                this.tag = Class.forName("net.minecraft.nbt.NBTTagCompound").getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -36,7 +34,7 @@ public class NBTUtil {
             switch (tagtype) {
                 case STRING:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("setString", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("setString", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -46,7 +44,7 @@ public class NBTUtil {
                     break;
                 case INT:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("setInt", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("setInt", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -56,7 +54,7 @@ public class NBTUtil {
                     break;
                 case SHORT:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("setShort", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("setShort", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -66,7 +64,7 @@ public class NBTUtil {
                     break;
                 case BOOLEAN:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("set", String.class, NBTTagType.getClassByID(1));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("set", String.class, NBTTagType.getClassByID(1));
                         m.setAccessible(true);
                         if ((boolean) value) m.invoke(this.tag, key, (byte) 1);
                         else m.invoke(this.tag, key, (byte) 0); // Done with byte to make compatibility easier
@@ -78,7 +76,7 @@ public class NBTUtil {
                     break;
                 case DOUBLE:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("setDouble", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("setDouble", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -88,7 +86,7 @@ public class NBTUtil {
                     break;
                 case LONG:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("setLong", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("setLong", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -98,7 +96,7 @@ public class NBTUtil {
                     break;
                 default:
                     try {
-                        Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("set", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
+                        Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("set", String.class, NBTTagType.getClassByID(tagtype.getTagID()));
                         m.setAccessible(true);
                         m.invoke(this.tag, key, value);
                         m.setAccessible(false);
@@ -111,7 +109,7 @@ public class NBTUtil {
 
         public Long getLong(String key) {
             try {
-                Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("getLong", String.class);
+                Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("getLong", String.class);
                 m.setAccessible(true);
                 Object o = m.invoke(this.tag, key);
                 m.setAccessible(false);
@@ -125,7 +123,7 @@ public class NBTUtil {
 
         public String getString(String key) {
             try {
-                Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("getString", String.class);
+                Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("getString", String.class);
                 m.setAccessible(true);
                 Object o = m.invoke(this.tag, key);
                 m.setAccessible(false);
@@ -149,7 +147,7 @@ public class NBTUtil {
 
         public Object get(String key) {
             try {
-                Method m = Class.forName(NBTUtil.serverVersion + ".NBTTagCompound").getMethod("get", String.class);
+                Method m = Class.forName(NBTUtil.serverVersion + ".nbt.NBTTagCompound").getMethod("get", String.class);
                 m.setAccessible(true);
                 Object o = m.invoke(this.tag, key);
                 m.setAccessible(false);
@@ -169,7 +167,7 @@ public class NBTUtil {
         }
     }
 
-    private static final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static final String serverVersion = "net.minecraft";
     private static final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 
     public static ItemStack addTagsToItem(ItemStack i, NBTUtil.NBTTags tag) {
@@ -177,8 +175,8 @@ public class NBTUtil {
             throw new NullPointerException("ItemStack can't be null or air!");
         try {
             Method m = Class.forName(craftServerVersion + ".inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-            Method m2 = Class.forName(serverVersion + ".ItemStack").getMethod("setTag", Class.forName(serverVersion + ".NBTTagCompound"));
-            Method m3 = Class.forName(craftServerVersion + ".inventory.CraftItemStack").getMethod("asBukkitCopy", Class.forName(serverVersion + ".ItemStack"));
+            Method m2 = Class.forName(serverVersion + ".world.item.ItemStack").getMethod("setTag", Class.forName(serverVersion + ".nbt" + ".NBTTagCompound"));
+            Method m3 = Class.forName(craftServerVersion + ".inventory.CraftItemStack").getMethod("asBukkitCopy", Class.forName(serverVersion + ".world.item.ItemStack"));
 
             m.setAccessible(true);
             m2.setAccessible(true);
@@ -205,7 +203,7 @@ public class NBTUtil {
             throw new NullPointerException("ItemStack can't be null or air!");
         try {
             Method m = Class.forName(craftServerVersion + ".inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-            Method m2 = Class.forName(serverVersion + ".ItemStack").getMethod("getTag");
+            Method m2 = Class.forName(serverVersion + ".world.item.ItemStack").getMethod("getTag");
 
             m.setAccessible(true);
             m2.setAccessible(true);

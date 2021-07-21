@@ -24,7 +24,7 @@ public class ExplosionCalculator {
 
     // NMS
 
-    private static final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static final String serverVersion = "net.minecraft";
     private static final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     private static Class<?> craftBlockDataClass = null;
     private static Class<?> blockClass = null;
@@ -37,7 +37,7 @@ public class ExplosionCalculator {
                 craftBlockDataClass = Class.forName(craftServerVersion + ".block.data.CraftBlockData");
             }
             if (blockClass == null) {
-                blockClass = Class.forName(serverVersion + ".Block");
+                blockClass = Class.forName(serverVersion + ".world.level.block.Block");
             }
             if (getStateFromCraftBlockDataMethod == null) {
                 getStateFromCraftBlockDataMethod = craftBlockDataClass.getDeclaredMethod("getState", (Class[]) null);

@@ -5,6 +5,7 @@ api-version: 1.13
 depend:
   - Vault
   - Citizens
+  - Slimefun
 softdepend:
   - PlaceholderAPI
 authors: [MickMMars, Machmeinparaillegal, BradBot_1]

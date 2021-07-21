@@ -27,7 +27,6 @@ public class CustomFeatureLoader {
 	/**
 	 * Used for NMS
 	 */
-	private static @Getter final String serverVersion = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     private static @Getter final String craftServerVersion = "org.bukkit.craftbukkit." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 	
     private static @Getter CustomFeatureLoader loader;

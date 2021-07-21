@@ -18,10 +18,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -174,7 +171,7 @@ public record AuctionHouseInventory(Player player) {
 
     public void sendSearchMessage() {
         player.closeInventory();
-        player.sendMessage(Component.text("Click me to search...").color(NamedTextColor.GREEN).hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("click me...").color(NamedTextColor.GRAY))).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "market search ")));
+        player.sendMessage(Component.text("Click me to search...").color(NamedTextColor.GREEN).hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("click me...").color(NamedTextColor.GRAY))).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/market search ")));
     }
 
     public void buy(ItemStack item, double price, OfflinePlayer seller, Document document) {
@@ -197,7 +194,7 @@ public record AuctionHouseInventory(Player player) {
 
     public static void addItemToDatabase(ItemStack item, double price, Player seller) {
         Document document = new Document();
-        document.put("displayName", item.getDisplayName());
+        document.put("displayName", item.hasDisplayName() ? item.getDisplayName() : item.getI18NDisplayName());
         document.put("material", item.getType().name());
         document.put("price", price);
         document.put("item", InventoryUtils.serialize(item));

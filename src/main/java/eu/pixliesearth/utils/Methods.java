@@ -352,6 +352,23 @@ public class Methods {
         return returner;
     }
 
+    public static boolean removeRequiredAmountBasedOnDisplayName(ItemStack item, final Inventory inventory) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack value = inventory.getItem(i);
+            if (value == null) continue;
+            if (!value.getI18NDisplayName().equals(item.getI18NDisplayName())) continue;
+            if (value.getAmount() != 0) {
+                if (value.getAmount() == item.getAmount()) { inventory.clear(i);
+                } else {
+                    value.setAmount(value.getAmount() - item.getAmount());
+                    inventory.setItem(i, value);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean removeRequiredAmount(ItemStack item, final Inventory inventory) {
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack value = inventory.getItem(i);

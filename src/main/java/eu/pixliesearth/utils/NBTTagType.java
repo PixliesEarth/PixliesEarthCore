@@ -171,7 +171,7 @@ public enum NBTTagType {
      */
     private static Class<?> getCompoundClass() {
         try {
-            return Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3] + ".NBTTagCompound");
+            return Class.forName("net.minecraft.nbt.NBTTagCompound");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
