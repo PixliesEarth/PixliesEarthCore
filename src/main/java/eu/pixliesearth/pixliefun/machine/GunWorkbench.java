@@ -35,7 +35,7 @@ public class GunWorkbench extends MultiBlockMachine {
 
     @ParametersAreNonnullByDefault
     public GunWorkbench() {
-        super(PixlieFun.pixlieFunCategory, PixlieFunItems.GUN_WORKBENCH, new ItemStack[]{ null, new ItemStack(Material.ANVIL), null, null, new ItemStack(Material.NETHER_BRICK_FENCE), null, null, new CustomItem(Material.DISPENSER, "Dispenser (Facing up)"), null }, BlockFace.SELF);
+        super(PixlieFun.machinesCategory, PixlieFunItems.GUN_WORKBENCH, new ItemStack[]{ null, new ItemStack(Material.ANVIL), null, null, new ItemStack(Material.NETHER_BRICK_FENCE), null, null, new CustomItem(Material.DISPENSER, "Dispenser (Facing up)"), null }, BlockFace.SELF);
     }
 
     @Override

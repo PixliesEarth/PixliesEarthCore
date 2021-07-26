@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -31,8 +34,8 @@ import eu.pixliesearth.utils.NBTUtil;
 
 public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
 
-    protected CustomGun() {
-        super(PixlieFun.gunsCategory, new SlimefunItemStack(getUUID(), buildItem()), PixlieFun.GUN_WORKBENCH, getGunRecipe());
+    protected CustomGun(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(category, item, recipeType, recipe);
     }
 
     public static Material getMaterial() {
@@ -41,15 +44,8 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
 
     public static ItemStack[] getGunRecipe() { return new ItemStack[]{}; }
 
-    public static ItemStack buildItem() {
-        return new ItemBuilder(getMaterial()) {{
-            setDisplayName(getDefaultDisplayName());
-            if (getDefaultLore() != null)
-                addLoreAll(getDefaultLore());
-            if (getCustomModelData() != null)
-                setCustomModelData(getCustomModelData());
-            addNBTTag("ammo", Integer.toString(0), NBTTagType.STRING);
-        }}.build();
+    public static SlimefunItemStack buildItem() {
+        return null;
     }
 
     @Override

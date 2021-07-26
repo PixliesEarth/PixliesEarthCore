@@ -35,7 +35,7 @@ public class Distillery extends MultiBlockMachine {
 
     @ParametersAreNonnullByDefault
     public Distillery() {
-        super(PixlieFun.pixlieFunCategory, PixlieFunItems.DISTILLERY, new ItemStack[]{ null, new ItemStack(Material.BARREL), null, null, new ItemStack(Material.NETHER_BRICK_FENCE), null, null, new CustomItem(Material.DISPENSER, "Dispenser (Facing up)"), null }, BlockFace.SELF);
+        super(PixlieFun.machinesCategory, PixlieFunItems.DISTILLERY, new ItemStack[]{ null, new ItemStack(Material.BARREL), null, null, new ItemStack(Material.NETHER_BRICK_FENCE), null, null, new CustomItem(Material.DISPENSER, "Dispenser (Facing up)"), null }, BlockFace.SELF);
     }
 
     @Override

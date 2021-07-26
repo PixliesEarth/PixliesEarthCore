@@ -2,10 +2,20 @@ package eu.pixliesearth.guns.guns;
 
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
+import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class AK47 extends CustomGun {
+
+	public AK47() {
+		super(PixlieFun.gunsCategory, buildItem(), PixlieFun.GUN_WORKBENCH, getGunRecipe());
+	}
+
+	public static SlimefunItemStack buildItem() {
+		return PixlieFunItems.AK47;
+	}
 
 	public static String getDefaultDisplayName() {
 		return "§c§lAK-47";

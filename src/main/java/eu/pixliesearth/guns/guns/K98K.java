@@ -2,8 +2,19 @@ package eu.pixliesearth.guns.guns;
 
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
+import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 
 public class K98K extends CustomGun {
+
+	public K98K() {
+		super(PixlieFun.gunsCategory, buildItem(), PixlieFun.GUN_WORKBENCH, getGunRecipe());
+	}
+
+	public static SlimefunItemStack buildItem() {
+		return PixlieFunItems.AK47;
+	}
 
     public static String getDefaultDisplayName() {
     	return "§c§lKarabiner98k";

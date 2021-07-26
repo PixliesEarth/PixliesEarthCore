@@ -1,7 +1,10 @@
 package eu.pixliesearth.guns.guns;
 
 import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,6 +24,14 @@ import eu.pixliesearth.utils.NBTTagType;
 import eu.pixliesearth.utils.NBTUtil;
 
 public class RPG7 extends CustomGun {
+
+	public RPG7() {
+		super(PixlieFun.gunsCategory, buildItem(), PixlieFun.GUN_WORKBENCH, getGunRecipe());
+	}
+
+	public static SlimefunItemStack buildItem() {
+		return PixlieFunItems.AK47;
+	}
 
 	@Override
 	public ItemUseHandler getItemHandler() {

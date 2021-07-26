@@ -15,7 +15,7 @@ public class Cocaine  extends SimpleSlimefunItem<ItemConsumptionHandler> {
 
     //TODO CHANGE RECIPE
     public Cocaine() {
-        super(PixlieFun.pixlieFunCategory, PixlieFunItems.COCAINE, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.SUGAR_CANE), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.SWEET_BERRIES), null, null, null, null, null});
+        super(PixlieFun.foodAndDrinks, PixlieFunItems.COCAINE, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.SUGAR_CANE), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.GOLD_NUGGET), new ItemStack(Material.SWEET_BERRIES), null, null, null, null, null});
     }
 
     @Override

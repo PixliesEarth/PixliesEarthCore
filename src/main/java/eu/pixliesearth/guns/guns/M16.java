@@ -1,11 +1,22 @@
 package eu.pixliesearth.guns.guns;
 
 import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.pixliefun.PixlieFun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 
 public class M16 extends CustomGun {
+
+	public M16() {
+		super(PixlieFun.gunsCategory, buildItem(), PixlieFun.GUN_WORKBENCH, getGunRecipe());
+	}
+
+	public static SlimefunItemStack buildItem() {
+		return PixlieFunItems.AK47;
+	}
 
     public static Material getMaterial() {
     	return Material.WOODEN_AXE;
