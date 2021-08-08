@@ -1,6 +1,7 @@
 package eu.pixliesearth.guns.ammo;
 
 import eu.pixliesearth.guns.CustomGun;
+import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import eu.pixliesearth.utils.CustomItemUtil;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,7 @@ public class NineMMAmmo extends PixliesAmmo {
 
     @Override
     public ItemStack getItem() {
-        return CustomItemUtil.getItemStackFromUUID("Ammo:9mm");
+        return PixlieFunItems.NINEMM;
     }
 
 }

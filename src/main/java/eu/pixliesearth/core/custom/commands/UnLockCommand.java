@@ -11,16 +11,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class LockCommand extends CustomCommand {
+public class UnLockCommand extends CustomCommand {
 
     @Override
     public String getCommandName() {
-        return "lock";
+        return "unlock";
     }
 
     @Override
     public String getCommandDescription() {
-        return "Lock chests";
+        return "Unlock chests";
     }
 
     @Override
@@ -39,15 +39,15 @@ public class LockCommand extends CustomCommand {
 
         NamespacedKey key = new NamespacedKey(instance, "private-chests");
 
-        if (container.has(key, PersistentDataType.STRING)) {
-            player.sendMessage(Lang.EARTH + "§7This chest is already locked.");
+        if (!container.getOrDefault(key, PersistentDataType.STRING, "EMPTY").equals(player.getUniqueId().toString()) && !instance.isStaff(player)) {
+            player.sendMessage(Lang.EARTH + "§7This is not your chest.");
             return false;
         }
 
-        container.set(key, PersistentDataType.STRING, player.getUniqueId().toString());
+        container.remove(key);
         state.update();
 
-        player.sendMessage(Lang.EARTH + "§7You §asuccessfully §7locked your chest.");
+        player.sendMessage(Lang.EARTH + "§7You §asuccessfully §7unlocked your chest.");
         return true;
     }
 

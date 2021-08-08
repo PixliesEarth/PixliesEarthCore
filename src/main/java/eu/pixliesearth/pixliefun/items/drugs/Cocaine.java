@@ -25,7 +25,7 @@ public class Cocaine  extends SimpleSlimefunItem<ItemConsumptionHandler> {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15 * 20, 5));
             }, 15 * 20);
-            p.sendMessage("§7§oAaaah yes, what I need rightnow...");
+            p.sendMessage("§7§oAaaah yes, what I need right now...");
         };
     }
 

@@ -5,6 +5,7 @@ import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.inventory.ItemStack;
 
 public class M1911 extends CustomGun {
 
@@ -13,7 +14,7 @@ public class M1911 extends CustomGun {
 	}
 
 	public static SlimefunItemStack buildItem() {
-		return PixlieFunItems.AK47;
+		return PixlieFunItems.M1911;
 	}
 
 	public static String getDefaultDisplayName() {
@@ -55,6 +56,13 @@ public class M1911 extends CustomGun {
 	public static long getDelayPerShot() {
 		return 200L;
 	}
-	
+
+	public static ItemStack[] getGunRecipe() {
+		return new ItemStack[]{
+				PixlieFunItems.PISTOL_BARREL, PixlieFunItems.PISTOL_RECEIVER, PixlieFunItems.RIFLE_STOCK,
+				null, null, null,
+				null, null, null
+		};
+	}
 
 }

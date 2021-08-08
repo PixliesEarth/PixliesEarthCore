@@ -187,6 +187,8 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         loader.loadListener(new CustomMoneyPickupListener());
         loader.loadListener(new SuicideVestListener());
         loader.loadListener(new PoliticalPowerListener());
+        loader.loadListener(new PrivateChestListener());
+        loader.loadListener(new SafeZoneListener());
     }
 
     @SuppressWarnings("resource")

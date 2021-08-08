@@ -2,6 +2,7 @@ package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.CustomListener;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -58,9 +59,16 @@ public class ChestShopListener extends CustomListener {
     public void onSignPlace(SignChangeEvent event) {
         if (event.getLine(0) == null) return;
         if (!event.getLine(0).equalsIgnoreCase("chestshop")) return;
-        if (!Methods.getAttachedBlock(event.getBlock()).getType().equals(Material.CHEST)) return;
+        if (!(Methods.getAttachedBlock(event.getBlock()).getState() instanceof Chest chest)) return;
         event.setLine(0, "§bChestshop");
+        if (chest.getInventory().getItem(0) == null) {
+            event.getPlayer().sendMessage(Lang.EARTH + "§7You have to put an item into the chest.");
+            return;
+        }
+        Material selling = chest.getInventory().getItem(0).getType();
+        event.setLine(1, selling.name());
         event.setLine(2, "§2§l$§a" + event.getLine(2));
+        event.setLine(3, event.getPlayer().getName());
     }
 
 }

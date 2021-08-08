@@ -1,5 +1,6 @@
 package eu.pixliesearth.pixliefun.items;
 
+import eu.pixliesearth.guns.guns.M1911;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
@@ -24,7 +25,12 @@ public class PixlieFunItems {
     public static final SlimefunItemStack RIFLE_STOCK = new SlimefunItemStack("RIFLE_STOCK", new ItemBuilder(Material.BRICK).setDisplayName("§6Rifle Stock").setCustomModelData(10).build());
     public static final SlimefunItemStack RIFLE_AMMO = new SlimefunItemStack("RIFLE_AMMO", new ItemBuilder(Material.STICK).setDisplayName("§aRifle Ammo").setCustomModelData(5).build());
 
+    public static final SlimefunItemStack PISTOL_BARREL = new SlimefunItemStack("PISTOL_BARREL", Material.BRICK, "§aPistol Barrel");
+    public static final SlimefunItemStack PISTOL_RECEIVER = new SlimefunItemStack("PISTOL_RECEIVER", Material.BRICK, "§cPistol Receiver");
+    public static final SlimefunItemStack NINEMM = new SlimefunItemStack("9MM", Material.STICK, "§39mm Ammo");
+
     public static final SlimefunItemStack AK47 = new SlimefunItemStack("AK-47", Material.CARROT_ON_A_STICK, "§c§lAK-47", "§7Ammo: §3" + eu.pixliesearth.guns.guns.AK47.getAmmoType().name(), "§7Origin: §3" + eu.pixliesearth.guns.guns.AK47.getOrigin(), "§7Range: §3" + eu.pixliesearth.guns.guns.AK47.getRange(), "§7Accuracy: §3" + eu.pixliesearth.guns.guns.AK47.getAccuracy());
+    public static final SlimefunItemStack M1911 = new SlimefunItemStack("M1911", Material.CARROT_ON_A_STICK, "§c§lM1911", "§7Ammo: §3" + eu.pixliesearth.guns.guns.M1911.getAmmoType().name(), "§7Origin: §3" + eu.pixliesearth.guns.guns.M1911.getOrigin(), "§7Range: §3" + eu.pixliesearth.guns.guns.M1911.getRange(), "§7Accuracy: §3" + eu.pixliesearth.guns.guns.M1911.getAccuracy());
 
     public static final SlimefunItemStack COCAINE = new SlimefunItemStack("COCAINE", new ItemBuilder(Material.SUGAR).setDisplayName("§f§lCocaine").build());
 

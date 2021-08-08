@@ -53,8 +53,7 @@ public class DiscordNation extends DiscordCommand {
                 }
                 builder.append("```");
                 event.getChannel().sendMessage(new EmbedBuilder().setTitle("**Nation list**").setDescription(builder.toString()).setFooter("Requested by " + event.getMessageAuthor().getDisplayName() + " (" + event.getMessageAuthor().getDiscriminatedName() + ")", event.getMessageAuthor().getAvatar()).setAuthor("Page: " + page + "/" + pages)).thenAccept(message -> {
-                    message.addReaction("⬅️");
-                    message.addReaction("➡️");
+
                 });
                 return;
             }
