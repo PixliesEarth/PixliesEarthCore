@@ -18,9 +18,7 @@ import java.util.UUID;
 
 public class accessNation extends SubCommand {
 	
-	public accessNation() {
-		
-	}
+	public accessNation() { }
 
     @Override
     public String[] aliases() {

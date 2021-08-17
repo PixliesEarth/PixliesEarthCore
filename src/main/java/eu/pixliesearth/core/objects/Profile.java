@@ -530,4 +530,7 @@ public class Profile implements NationsEntity {
         return this.uniqueId;
     }
 
+    @Override
+    public String name() { return getAsOfflinePlayer().getName(); }
+
 }

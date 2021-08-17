@@ -396,6 +396,9 @@ public class Nation implements NationsEntity {
         return nationId;
     }
 
+    @Override
+    public String name() { return name; }
+
     public enum NationRelation {
 
         ALLY('d'),

@@ -10,4 +10,6 @@ public interface NationsEntity {
 
     String id();
 
+    String name();
+
 }

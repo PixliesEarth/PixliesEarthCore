@@ -465,6 +465,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         miniMickConfigs.saveJsonToFile();
     }
 
+    @SuppressWarnings("resource")
     private void registerCommands() {
         getCommand("modules").setExecutor(new ModulesCommand());
         getCommand("chat").setExecutor(new ChatCommand());

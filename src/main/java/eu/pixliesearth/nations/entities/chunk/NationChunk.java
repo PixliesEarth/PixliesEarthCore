@@ -42,17 +42,15 @@ public class NationChunk {
     private JsonObject data;
 
     public void save(boolean claim) {
-        if (table.get(world).get(x, z) == null) {
-            Table<Integer, Integer, NationChunk> rst = table.get(world);
-            rst.put(x, z, this);
-            table.put(world, rst);
-            Nation nation = Nation.getById(nationId);
-            if (!nation.getChunks().contains(serialize())) {
-                nation.getChunks().add(serialize());
-                nation.save();
-            }
-            if (claim) System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
+        Table<Integer, Integer, NationChunk> rst = table.get(world);
+        rst.put(x, z, this);
+        table.put(world, rst);
+        Nation nation = Nation.getById(nationId);
+        if (!nation.getChunks().contains(serialize())) {
+            nation.getChunks().add(serialize());
+            nation.save();
         }
+        if (claim) System.out.println("§b" + type.name() + "-Chunk claimed at §e" + x + "§8, §e" + z + " §bfor §e" + nation.getName());
     }
 
     public boolean claim() {
@@ -227,11 +225,17 @@ public class NationChunk {
     }
 
     public void grantAccess(NationsEntity accessor) {
+        Nation nation = Nation.getById(nationId);
+        nation.getChunks().remove(serialize());
+        nation.save();
         data.addProperty("ACCESS:" + accessor.id(), true);
         save(false);
     }
 
     public void revokeAccess(NationsEntity accessor) {
+        Nation nation = Nation.getById(nationId);
+        nation.getChunks().remove(serialize());
+        nation.save();
         data.remove("ACCESS:" + accessor.id());
         save(false);
     }
@@ -248,13 +252,14 @@ public class NationChunk {
         for (Map.Entry<String, JsonElement> data : data.entrySet()) {
             String key = data.getKey();
             if (key.startsWith("ACCESS:")) {
-                Pattern p = Pattern.compile("/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/");
-                Matcher m = p.matcher(key.split(":")[1]);
-                if (m.find()) {
+                if (key.split(":")[1].matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}")) {
                     returner.add(instance.getProfile(UUID.fromString(key.split(":")[1])));
                 } else {
                     Nation nation = Nation.getById(key.split(":")[1]);
-                    if (nation == null) continue;
+                    if (nation == null) {
+                        this.data.remove(key);
+                        continue;
+                    }
                     returner.add(nation);
                 }
             }

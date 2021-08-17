@@ -128,8 +128,12 @@ public class chunkNation extends SubCommand {
         List<GuiItem> fillers = new ArrayList<>();
         for (NationsEntity accessor : chunk.getAccessors()) {
             ItemBuilder builder = new ItemBuilder(accessor instanceof Nation nation ? nation.getFlag() : new ItemStack(Material.PLAYER_HEAD));
-            if (accessor instanceof Profile profile)
+            if (accessor instanceof Profile profile) {
                 builder.setSkullOwner(profile.getUUID());
+                builder.setDisplayName("§6" + accessor.name());
+            } else {
+                builder.setDisplayName("§b" + accessor.name());
+            }
             fillers.add(new GuiItem(
                     builder.build(),
                     e -> e.setCancelled(true)
