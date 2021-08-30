@@ -27,7 +27,7 @@ public class RESTApi {
         });
 
         get("/nation/name/:name", (request, response) -> {
-            Nation nation = Nation.getById(request.params("name"));
+            Nation nation = Nation.getByName(request.params("name"));
             response.type("application/json");
             return gson.toJsonTree(nation);
         });

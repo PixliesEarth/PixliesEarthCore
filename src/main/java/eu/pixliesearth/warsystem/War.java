@@ -45,7 +45,7 @@ public class War {
         this.mainAggressor = mainAggressor;
         this.mainDefender = mainDefender;
         this.players = new HashMap<>();
-        left = new HashMap<>();
+        this.left = new HashMap<>();
         this.declareAble = false;
         this.running = false;
         this.declared = false;
