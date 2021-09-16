@@ -3,15 +3,11 @@ package eu.pixliesearth.guns;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map.Entry;
-
-import eu.pixliesearth.pixliefun.PixlieFun;
-import eu.pixliesearth.pixliefun.items.PixlieFunItems;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -26,7 +22,6 @@ import org.bukkit.util.Vector;
 
 import eu.pixliesearth.core.custom.CustomFeatureLoader;
 import eu.pixliesearth.guns.events.PixliesGunShootEvent;
-import eu.pixliesearth.utils.CustomItemUtil;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Methods;
 import eu.pixliesearth.utils.NBTTagType;
@@ -34,7 +29,7 @@ import eu.pixliesearth.utils.NBTUtil;
 
 public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
 
-    protected CustomGun(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    protected CustomGun(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 

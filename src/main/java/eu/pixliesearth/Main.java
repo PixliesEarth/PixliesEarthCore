@@ -15,6 +15,7 @@ import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
+import eu.pixliesearth.nations.entities.nation.tax.TaxCollector;
 import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.utils.*;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -132,6 +133,8 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Main extends JavaPlugin implements SlimefunAddon {
 
+    public static final boolean WAR_ENABLED = false;
+
     private static @Getter Main instance;
     private static @Getter MongoCollection<Document> playerCollection;
     private static @Getter MongoCollection<Document> nationCollection;
@@ -156,7 +159,6 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private @Getter UtilThread utilThread;
     private @Getter BalTopThread baltopThread;
     private @Getter SkillThread skillThread;
-    private @Getter final boolean warEnabled = true;
     private @Getter RESTApi rest;
     private @Getter final SkillHandler skillHandler = SkillHandler.getSkillHandler();
     private @Getter boolean testServer;
@@ -174,7 +176,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         instance = this;
         testServer = getConfig().getBoolean("test-server", false);
         loader = new CustomFeatureLoader(this, "eu.pixliesearth.core.custom");
-        if (warEnabled) loader.loadCommand(new WarCommand());
+        if (WAR_ENABLED) loader.loadCommand(new WarCommand());
         loadStuffThatDoesntLoadBecauseBradsReflectionIsShit();
         fastConf = new FastConf(getConfig().getInt("max-claim-size", 5200), getConfig().getLocation("spawn-location"));
         init();
@@ -370,7 +372,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
         utilThread = new UtilThread();
         utilThread.start();
-        if (warEnabled) new WarThread().start();
+        if (WAR_ENABLED) new WarThread().start();
 
         dynmapKernel = new DynmapEngine();
         dynmapKernel.onEnable();
@@ -391,7 +393,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.TRIBE.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("safezone", "SafeZone", "You are safe here", Era.FUTURE.getName(), Ideology.TRIBE.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE", "#34eb71", "#28ad54", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
         if (!NationManager.nations.containsKey("warzone")) {
@@ -399,7 +401,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
             BannerMeta meta = (BannerMeta) flag.getItemMeta();
             meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.GLOBE));
             flag.setItemMeta(meta);
-            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.TRIBE.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
+            new Nation("warzone", "WarZone", "Everyone can attack you here!", Era.FUTURE.getName(), Ideology.TRIBE.name(), Religion.ATHEISM.name(), InventoryUtils.serialize(flag), 2020, 2020.0, "NONE","#e64135", "#78221c", System.currentTimeMillis()+"", "NONE", new HashMap<>(), NationFlag.defaultServerNations(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>()).create();
         }
 
     	Bukkit.getPluginManager().registerEvents(new VendorListener(), this);
@@ -426,7 +428,11 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
                 new ItemStack(Material.WHITE_CONCRETE),
                 new ItemStack(Material.GRAY_CONCRETE),
                 new ItemStack(Material.YELLOW_CONCRETE),
-                new ItemStack(Material.DIAMOND)
+                new ItemStack(Material.DIAMOND),
+                new ItemStack(Material.COBBLED_DEEPSLATE),
+                new ItemStack(Material.SPORE_BLOSSOM),
+                new ItemStack(Material.GLOW_BERRIES),
+                new ItemStack(Material.MOSS_BLOCK)
                 );
 
         baltopThread = new BalTopThread();
@@ -434,6 +440,8 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
         skillThread = new SkillThread();
         skillThread.startThread();
+
+        new TaxCollector().startThread();
     }
 
     @SneakyThrows

@@ -13,10 +13,9 @@ import eu.pixliesearth.pixliefun.machine.Distillery;
 import eu.pixliesearth.pixliefun.machine.GunWorkbench;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
-import io.github.thebusybiscuit.slimefun4.core.categories.MultiCategory;
-import io.github.thebusybiscuit.slimefun4.core.categories.SubCategory;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
+import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,26 +23,26 @@ public class PixlieFun {
 
     private static final Main instance = Main.getInstance();
 
-    public static final RecipeType DISTILLERY = new RecipeType(new NamespacedKey(instance, "distillery"),PixlieFunItems.DISTILLERY);
+    public static final RecipeType DISTILLERY = new RecipeType(new NamespacedKey(instance, "distillery"), PixlieFunItems.DISTILLERY);
     public static final RecipeType GUN_WORKBENCH = new RecipeType(new NamespacedKey(instance, "gun_workbench"), PixlieFunItems.GUN_WORKBENCH);
 
-    public static MultiCategory pixlieFunCategory;
-    public static SubCategory foodAndDrinks;
-    public static SubCategory gunsCategory;
-    public static SubCategory machinesCategory;
+    public static NestedItemGroup pixlieFunCategory;
+    public static SubItemGroup foodAndDrinks;
+    public static SubItemGroup gunsCategory;
+    public static SubItemGroup machinesCategory;
 
     public PixlieFun setup() {
         ItemStack pfcIcon = new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/19c769083163e9aebd8ed5d66bebcb9df21cabae63baaaa0d3abe1420a4ab58f")).setDisplayName("§e§lPixlieFun").addLoreLine("§7§oCustom Pixlies stuff").build();
-        pixlieFunCategory = new MultiCategory(new NamespacedKey(instance, "pixliefun_category"), pfcIcon);
+        pixlieFunCategory = new NestedItemGroup(new NamespacedKey(instance, "pixliefun_category"), pfcIcon);
 
         ItemStack foodAndDrinksIcon = new ItemBuilder(PixlieFunItems.DONJULIO_TEQUILA).clearLore().setDisplayName("§dFood and Drinks").build();
-        foodAndDrinks = new SubCategory(new NamespacedKey(instance, "pixliefun_food_and_drinks"), pixlieFunCategory, foodAndDrinksIcon);
+        foodAndDrinks = new SubItemGroup(new NamespacedKey(instance, "pixliefun_food_and_drinks"), pixlieFunCategory, foodAndDrinksIcon);
 
         ItemStack gunsIcon = new ItemBuilder(AK47.buildItem()).setDisplayName("§c§lGuns").clearLore().addLoreLine("§7§oExplore our variety of long range weapons!").build();
-        gunsCategory = new SubCategory(new NamespacedKey(instance, "guns_category"), pixlieFunCategory, gunsIcon);
+        gunsCategory = new SubItemGroup(new NamespacedKey(instance, "guns_category"), pixlieFunCategory, gunsIcon);
 
         ItemStack machinesIcon = new ItemBuilder(PixlieFunItems.GUN_WORKBENCH).clearLore().setDisplayName("§cMachines").build();
-        machinesCategory = new SubCategory(new NamespacedKey(instance, "pixliefun_machines"), pixlieFunCategory, machinesIcon);
+        machinesCategory = new SubItemGroup(new NamespacedKey(instance, "pixliefun_machines"), pixlieFunCategory, machinesIcon);
 
         // REGISTER CATEGORIES
         pixlieFunCategory.register(instance);

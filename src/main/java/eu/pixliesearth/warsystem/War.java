@@ -90,7 +90,7 @@ public class War {
     }
 
     public static long getJustTime(Nation aggressor, Nation defender) {
-        long time = Timer.DAY + 3;
+/*        long time = Timer.DAY + 3;
         switch (Ideology.valueOf(aggressor.getIdeology())) {
             case FASCISM:
                 time = time / 2;
@@ -100,7 +100,9 @@ public class War {
             case SOCIAL_DEMOCRACY:
                 time = time * 5;
         }
-        return time;
+        return time;*/
+
+        return 0;
     }
 
     @SneakyThrows

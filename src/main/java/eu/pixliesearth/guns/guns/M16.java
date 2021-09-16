@@ -3,7 +3,7 @@ package eu.pixliesearth.guns.guns;
 import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.Material;
 
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;

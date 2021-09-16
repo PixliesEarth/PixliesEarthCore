@@ -4,7 +4,7 @@ import eu.pixliesearth.guns.CustomGun;
 import eu.pixliesearth.guns.PixliesAmmo.AmmoType;
 import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class AK47 extends CustomGun {

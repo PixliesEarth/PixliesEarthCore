@@ -9,6 +9,7 @@ import eu.pixliesearth.nations.entities.NationsEntity;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
 import eu.pixliesearth.nations.entities.nation.ranks.Permission;
 import eu.pixliesearth.nations.entities.nation.ranks.Rank;
+import eu.pixliesearth.nations.entities.nation.tax.TaxSystem;
 import eu.pixliesearth.nations.entities.settlements.Settlement;
 import eu.pixliesearth.nations.managers.NationManager;
 import eu.pixliesearth.utils.InventoryUtils;
@@ -49,6 +50,7 @@ public class Nation implements NationsEntity {
     private List<String> allies;
     private List<String> pacts;
     private List<String> upgrades;
+    private Map<String, Object> taxSystem;
     private Map<String, String> elections;
     private Map<String, String> settlements;
     private Map<String, Object> extras;
@@ -89,6 +91,7 @@ public class Nation implements NationsEntity {
         nation.append("allies", allies);
         nation.append("pacts", pacts);
         nation.append("upgrades", upgrades);
+        nation.append("taxSystem", taxSystem);
         nation.append("elections", elections);
         nation.append("settlements", settlements);
         nation.append("extras", extras);
@@ -352,6 +355,18 @@ public class Nation implements NationsEntity {
     public boolean hasPoliticalPower(double amount) {
         return xpPoints - amount > 0;
     }
+
+    public TaxSystem getTaxSystem() {
+        if (taxSystem == null) taxSystem = new HashMap<>(){{
+            put("enabled", false);
+            put("percentage", 0.0);
+        }};
+        return new TaxSystem(taxSystem);
+    }
+
+    public void setTaxationEnabled(boolean value) { taxSystem.put("enabled", value); }
+
+    public void setTaxationPercentage(double percentage) { taxSystem.put("percentage", percentage); }
 
     public static NationRelation getRelation(String n1, String n2) {
         if (n1.equals(n2))
