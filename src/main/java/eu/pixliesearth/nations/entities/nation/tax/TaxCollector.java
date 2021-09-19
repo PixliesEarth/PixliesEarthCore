@@ -25,7 +25,7 @@ public class TaxCollector extends Thread {
     }
 
     public long lastTimeCollected() {
-        return INSTANCE.getConfig().getLong("tax.lastTimeCollected");
+        return INSTANCE.getConfig().getLong("tax.lastTimeCollected", System.currentTimeMillis());
     }
 
     public void run() {

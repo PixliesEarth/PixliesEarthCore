@@ -1,0 +1,1 @@
+scp target/PixliesEarthCore.jar root@95.217.107.159:/home/minecraft/earth/plugins/PixliesEarthCore.jar

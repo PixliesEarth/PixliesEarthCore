@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.core.objects.SimpleLocation;
+import eu.pixliesearth.discord.MiniMick;
 import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.nations.entities.NationsEntity;
 import eu.pixliesearth.nations.entities.chunk.NationChunk;
@@ -21,8 +22,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -344,6 +349,22 @@ public class Nation implements NationsEntity {
         host.getExtras().remove("FOREIGN-PM:NATION:" + nationId + ":" + permission.name());
         host.save();
         save();
+    }
+
+    public void broadcastDiscord(String title, String author, String authorImage, Color color) {
+        if (MiniMick.getConfigs().containsKey(nationId)) {
+            try {
+                ServerTextChannel channel = MiniMick.getApi().getServerTextChannelById(MiniMick.getConfigs().get(nationId).getUpdatesChannel()).get();
+                channel.sendMessage(
+                        new EmbedBuilder()
+                                .setTitle(title)
+                                .setAuthor(author, "", authorImage)
+                                .setColor(color)
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int getPoints() {

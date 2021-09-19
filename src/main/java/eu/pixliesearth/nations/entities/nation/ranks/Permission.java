@@ -34,6 +34,7 @@ public enum Permission {
     CHANGE_CAPITAL,
     CHUNK_MENU,
     MANAGE_ELECTIONS,
+    MANAGE_TAX
     ;
 
     public boolean hasPermission(CommandSender sender) {
