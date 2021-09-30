@@ -16,7 +16,7 @@ public class PlayerCombatListener implements Listener {
 
     private static final Main instance = Main.getInstance();
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority=EventPriority.MONITOR)
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!(event.getEntity() instanceof Player)) return;
