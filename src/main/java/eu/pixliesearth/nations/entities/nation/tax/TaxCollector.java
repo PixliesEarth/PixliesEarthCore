@@ -9,6 +9,7 @@ import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class TaxCollector extends Thread {
 
@@ -20,18 +21,23 @@ public class TaxCollector extends Thread {
     }
 
     public void startThread() {
-        running = true;
-        start();
+        this.running = true;
+        this.start();
     }
 
     public long lastTimeCollected() {
-        return INSTANCE.getConfig().getLong("tax.lastTimeCollected", System.currentTimeMillis());
+        if (!INSTANCE.getConfig().contains("tax.lastTimeCollected")) {
+            INSTANCE.getConfig().set("tax.lastTimeCollected", System.currentTimeMillis());
+            INSTANCE.saveConfig();
+        }
+        return INSTANCE.getConfig().getLong("tax.lastTimeCollected");
     }
 
     public void run() {
         while (running) {
             try {
                 tick();
+                TimeUnit.MINUTES.sleep(1);
             } catch (Exception e) {
                 e.printStackTrace();
             }

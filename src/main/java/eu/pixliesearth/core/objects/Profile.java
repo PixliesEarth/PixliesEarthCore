@@ -249,6 +249,11 @@ public class Profile implements NationsEntity {
 
     public void depositMoney(double amount, String reason) {
         if (amount == 0) return;
+        if (isInNation() && getCurrentNation().getTaxSystem().isEnabled()) {
+            double tax = (balance / 100) * getCurrentNation().getTaxSystem().getPercentage();
+            amount += tax;
+            reason += " | -$" + tax + " to " + getCurrentNation().getName();
+        }
         this.balance = this.balance + amount;
         String receipt = Receipt.create(amount, false, reason);
         if (this.receipts == null)

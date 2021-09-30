@@ -140,6 +140,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private static @Getter MongoCollection<Document> nationCollection;
     private static @Getter MongoCollection<Document> warCollection;
     private static @Getter MongoCollection<Document> auctionHouseCollection;
+    private static @Getter MongoCollection<Document> cbCollection;
     private static @Getter VaultAPI economy;
     private static @Getter Assemble assemble = null;
     private static @Getter Scoreboard emptyScoreboard;
@@ -218,6 +219,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         nationCollection = mongoDatabase.getCollection(getConfig().getString("nations-collection", "nations"));
         warCollection = mongoDatabase.getCollection(getConfig().getString("wars-collection", "wars"));
         auctionHouseCollection = mongoDatabase.getCollection(getConfig().getString("auction-house-collection", "auction_house"));
+        cbCollection = mongoDatabase.getCollection(getConfig().getString("cb-collection", "cbs"));
 
         for (Document doc : warCollection.find())
             utilLists.wars.put(doc.getString("id"), gson.fromJson(doc.getString("json"), War.class));
@@ -441,7 +443,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         skillThread = new SkillThread();
         skillThread.startThread();
 
-        new TaxCollector().startThread();
+        // new TaxCollector().startThread();
     }
 
     @SneakyThrows

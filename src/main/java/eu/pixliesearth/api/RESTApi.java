@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.nations.entities.nation.Nation;
+import eu.pixliesearth.warsystem.CB;
 
 import java.util.UUID;
 
@@ -54,6 +55,12 @@ public class RESTApi {
             response.status(200);
             return new Gson().toJson(profile);
         });
+
+        get ("/cb/:id", (request, response) -> {
+            CB cb = CB.cbList.get(request.params("id"));
+            return new Gson().toJson(cb);
+        });
+
     }
 
 }
