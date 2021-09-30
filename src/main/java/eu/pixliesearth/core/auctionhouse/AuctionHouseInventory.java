@@ -10,6 +10,7 @@ import com.mongodb.client.model.Filters;
 import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.interfaces.Constants;
 import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
 import eu.pixliesearth.utils.InventoryUtils;
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.Timer;
@@ -186,6 +187,11 @@ public record AuctionHouseInventory(Player player) {
         if (!transfer) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
             return;
+        }
+        if (sellerProfile.isOnline()) {
+            Player sellerPlayer = seller.getPlayer();
+            sellerPlayer.sendMessage(Lang.EARTH + "§6" + profile.getAsPlayer() + " §7just bought §bx" + item.getAmount() + " " + document.getString("displayName") + " §7from you.");
+            sellerPlayer.playSound(sellerPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
         for (ItemStack toDrop : player.getInventory().addItem(item).values())
             player.getWorld().dropItemNaturally(player.getLocation(), toDrop);
