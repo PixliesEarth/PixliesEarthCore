@@ -67,7 +67,7 @@ public class MiniMick {
                             if (StringUtils.containsIgnoreCase(event.getReadableMessageContent(), s1))
                                 return;
                         String message = event.getReadableMessageContent();
-                        Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + message);
+                        Bukkit.broadcastMessage("§9D §8| §b" + ChatColor.translateAlternateColorCodes('&', Methods.translateToHex(roleColour)) + event.getMessageAuthor().getDisplayName() + " §8» §7" + ChatColor.stripColor(message));
                     }
                 }
             }
