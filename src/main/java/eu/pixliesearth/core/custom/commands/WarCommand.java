@@ -4,6 +4,7 @@ import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.war.*;
@@ -51,6 +52,7 @@ public class WarCommand extends CustomCommand implements Constants {
     public boolean onExecuted(CommandSender commandSender, String aliasUsed, String[] parameters, boolean ranByPlayer) {
         Player player = (Player) commandSender;
         Profile profile = instance.getProfile(player.getUniqueId());
+        if (!Main.WAR_ENABLED) return false;
         if (!profile.isInNation()) {
             Lang.NOT_IN_A_NATION.send(player);
             return false;
