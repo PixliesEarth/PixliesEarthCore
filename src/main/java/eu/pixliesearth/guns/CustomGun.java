@@ -74,7 +74,8 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
                 }
             }
             // Rest of method
-            int ammo = Integer.parseInt(NBTUtil.getTagsFromItem(itemStack).getString("ammo"));
+            String ammoString = NBTUtil.getTagsFromItem(itemStack).getString("ammo");
+            int ammo = ammoString.isEmpty() ? 0 : Integer.parseInt(ammoString);
             if (ammo <= 0) { // Reload
                 if (Methods.removeRequiredAmountBasedOnDisplayName(getAmmoType().getAmmo().getItem(), event.getPlayer().getInventory())) {
                     event.getPlayer().sendActionBar("§b§lReloading...");
