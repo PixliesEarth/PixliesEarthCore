@@ -356,7 +356,9 @@ public class Methods {
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack value = inventory.getItem(i);
             if (value == null) continue;
-            if (!value.getI18NDisplayName().equals(item.getI18NDisplayName())) continue;
+            if (!value.hasItemMeta()) continue;
+            if (!value.getItemMeta().hasDisplayName()) continue;
+            if (!value.getDisplayName().equals(item.getDisplayName())) continue;
             if (value.getAmount() != 0) {
                 if (value.getAmount() == item.getAmount()) { inventory.clear(i);
                 } else {

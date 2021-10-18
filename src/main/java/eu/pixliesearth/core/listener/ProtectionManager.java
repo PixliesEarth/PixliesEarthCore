@@ -170,6 +170,7 @@ public class ProtectionManager implements Listener {
         Nation guest = profile.getCurrentNation();
         if (host.getNationId().equals(guest.getNationId()) && Permission.hasNationPermission(profile, Permission.INTERACT)) return true;
         if (Permission.hasForeignPermission(guest, Permission.INTERACT, host)) return true;
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LAVA_BUCKET) || event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.WATER_BUCKET)) return false;
         return false;
     }
 

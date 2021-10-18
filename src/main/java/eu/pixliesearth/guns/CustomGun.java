@@ -16,6 +16,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -48,6 +49,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
         return (event) -> {
             final ItemStack itemStack = event.getItem();
             // Check for action timers
+            if (event.getHand().equals(EquipmentSlot.OFF_HAND)) return;
             String timeString = NBTUtil.getTagsFromItem(itemStack).getString("cooldown");
             if (timeString != null && !timeString.equals("")) {
                 if (timeString != null && timeString.equals("reloading")) { // This line causes the reload bug lmao (bc the tag isnt removed)
@@ -85,7 +87,7 @@ public abstract class CustomGun extends SimpleSlimefunItem<ItemUseHandler> {
                         event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_PISTON_EXTEND, 1, 1);
                         ItemStack itemStack2 = new ItemBuilder(itemStack).setDisplayName(getName(getMaxAmmo())).addNBTTag("ammo", Integer.toString(getMaxAmmo()), NBTTagType.STRING).build();
                         event.getPlayer().sendActionBar("§a§lReloaded!");
-                        event.getPlayer().getInventory().setItemInMainHand(itemStack2);
+                        event.getPlayer().getInventory().setItem(slotToReloadIn, itemStack2);
                     }, 20L * getDelayToReload());
                 } else {
                     event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 1);

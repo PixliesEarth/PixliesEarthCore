@@ -24,7 +24,7 @@ public class EconomyAddCommand extends CustomSubCommand {
 
     @Override
     public ITabable[] getParams() {
-        return new ITabable[]{new CustomCommand.TabablePlayer(), new CustomCommand.TabableString("§cAmount")};
+        return new ITabable[]{new CustomCommand.TabablePlayer(), new CustomCommand.TabableString("Amount")};
     }
 
     @Override

@@ -36,7 +36,7 @@ public class EcoCommand extends CustomCommand {
 
     @Override
     public ITabable[] getParams() {
-        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyAddCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand(), new EconomyTopCommand())};
+        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand(), new EconomyTopCommand(), new EconomyAddCommand())};
     }
 
     @Override
