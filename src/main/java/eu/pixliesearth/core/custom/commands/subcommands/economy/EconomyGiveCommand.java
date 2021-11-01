@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-public class EconomyAddCommand extends CustomSubCommand {
+public class EconomyGiveCommand extends CustomSubCommand {
 
     @Override
     public String getCommandName() {
@@ -24,7 +24,7 @@ public class EconomyAddCommand extends CustomSubCommand {
 
     @Override
     public ITabable[] getParams() {
-        return new ITabable[]{new CustomCommand.TabablePlayer(), new CustomCommand.TabableString("Amount")};
+        return new ITabable[]{new CustomCommand.TabablePlayer(), new CustomCommand.TabableString("§cAmount")};
     }
 
     @Override

@@ -1,6 +1,5 @@
 package eu.pixliesearth.core.custom.commands;
 
-import eu.pixliesearth.Main;
 import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.CustomSubCommand;
 import eu.pixliesearth.core.custom.commands.subcommands.economy.*;
@@ -36,7 +35,7 @@ public class EcoCommand extends CustomCommand {
 
     @Override
     public ITabable[] getParams() {
-        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand(), new EconomyTopCommand(), new EconomyAddCommand())};
+        return new ITabable[]{new CustomSubCommand.TabableSubCommand(new EconomySetCommand(), new EconomyTakeCommand(), new EconomyBalanceCommand(), new EconomyTopCommand(), new EconomyGiveCommand())};
     }
 
     @Override
