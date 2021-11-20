@@ -35,7 +35,7 @@ public final class ListFile extends FileBase {
 	/**
 	 * Returns the file as a List
 	 * 
-	 * @return
+	 * @return List of Strings with the file content
 	 * @throws IOException 
 	 */
 	public List<String> loadList() throws IOException {

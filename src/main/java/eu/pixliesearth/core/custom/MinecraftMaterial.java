@@ -1088,6 +1088,10 @@ public enum MinecraftMaterial {
 	POTTED_WARPED_FUNGUS(Material.POTTED_WARPED_FUNGUS, "Minecraft:potted_warped_fungus"),
 	POTTED_CRIMSON_ROOTS(Material.POTTED_CRIMSON_ROOTS, "Minecraft:potted_crimson_roots"),
 	POTTED_WARPED_ROOTS(Material.POTTED_WARPED_ROOTS, "Minecraft:potted_warped_roots"),
+	MOSS_BLOCK(Material.MOSS_BLOCK, "Minecraft:moss_block"),
+	COBBLED_DEEPSLATE(Material.COBBLED_DEEPSLATE, "Minecraft:cobbled_deepslate"),
+	SPORE_BLOSSOM(Material.SPORE_BLOSSOM, "Minecraft:spore_blossom"),
+	GLOW_BERRIES(Material.GLOW_BERRIES, "Minecraft:glow_berries")
 	;
 	
 	private @Getter Material material;
