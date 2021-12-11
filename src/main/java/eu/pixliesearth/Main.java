@@ -39,6 +39,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
+import org.dynmap.DynmapCommonAPIListener;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import com.google.gson.Gson;
@@ -377,7 +378,7 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
         if (WAR_ENABLED) new WarThread().start();
 
         dynmapKernel = new DynmapEngine();
-        dynmapKernel.onEnable();
+        DynmapCommonAPIListener.register(new DynmapAPIListener());
 
         // nationsTop = new NTop();
         if (!testServer) rest = new RESTApi();
@@ -431,6 +432,8 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
                 new ItemStack(Material.GRAY_CONCRETE),
                 new ItemStack(Material.YELLOW_CONCRETE),
                 new ItemStack(Material.DIAMOND),
+                new ItemStack(Material.IRON_INGOT),
+                new ItemStack(Material.GOLD_INGOT),
                 new ItemStack(Material.COBBLED_DEEPSLATE),
                 new ItemStack(Material.SPORE_BLOSSOM),
                 new ItemStack(Material.GLOW_BERRIES),

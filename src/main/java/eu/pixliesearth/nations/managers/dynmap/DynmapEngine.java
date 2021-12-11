@@ -17,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
+import org.dynmap.DynmapCommonAPI;
 import org.dynmap.markers.*;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class DynmapEngine {
     private boolean reload = false;
     private Plugin dynmap;
     private Main factions;
-    private DynmapAPI dynmapAPI;
+    private DynmapCommonAPI dynmapAPI;
     private boolean displayWarps;
 
     // Status of the plugin.
@@ -85,7 +86,7 @@ public class DynmapEngine {
         return markerAPI;
     }
 
-    public void onEnable() {
+    public void onEnable(DynmapCommonAPI dynmapAPIGiven) {
         log = Main.getInstance().getLogger();
         info("initializing");
 
@@ -97,7 +98,8 @@ public class DynmapEngine {
         }
 
         // Get Dynmap API
-        dynmapAPI = (DynmapAPI) dynmap; /* Get API */
+        dynmapAPI = dynmapAPIGiven; /* Get API */
+
 
         // Get Factions
         factions = Main.getInstance();
