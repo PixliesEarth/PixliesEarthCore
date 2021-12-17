@@ -1,6 +1,7 @@
 package eu.pixliesearth.core.custom.listeners;
 
 import eu.pixliesearth.core.custom.CustomListener;
+import eu.pixliesearth.core.listener.ProtectionManager;
 import eu.pixliesearth.localization.Lang;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -27,6 +28,8 @@ public class PrivateChestListener extends CustomListener {
         if (!event.hasBlock())
             return;
         if (!(event.getClickedBlock().getState() instanceof Chest))
+            return;
+        if (!ProtectionManager.canInteract(event))
             return;
 
         TileState state = (TileState) event.getClickedBlock().getState();

@@ -21,8 +21,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: us.dynmap:dynmap-api:3.2-beta-1" level="project" />
-    <orderEntry type="library" name="Maven: us.dynmap:DynmapCoreAPI:all:3.2-beta-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: us.dynmap:dynmap-api:3.2-beta-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: us.dynmap:DynmapCoreAPI:all:3.2-beta-1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.slimefun:Slimefun4:RC-27" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.pl3x.purpur:purpur-api:1.17.1-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
@@ -71,6 +71,7 @@
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.19.0-GA" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.MilkBowl:VaultAPI:1.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.bukkit:bukkit:1.13.1-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.github.kevinsawicki:http-request:6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />

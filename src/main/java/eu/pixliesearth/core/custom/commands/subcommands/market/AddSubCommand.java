@@ -37,8 +37,16 @@ public class AddSubCommand extends CustomSubCommand {
             sender.sendMessage(Lang.EARTH + "§7Nobody is going to buy air from you.");
             return false;
         }
+        if (parameters[0].startsWith("-")) {
+            sender.sendMessage(Lang.EARTH + "§7You can't sell with negative prices.");
+            return false;
+        }
         try {
             double price = Double.parseDouble(parameters[0]);
+            if (price > Double.MAX_VALUE) {
+                sender.sendMessage(Lang.EARTH + "§7You can't sell with negative prices.");
+                return false;
+            }
             final ItemStack item = player.getInventory().getItemInMainHand();
             player.getInventory().setItemInMainHand(null);
             AuctionHouseInventory.addItemToDatabase(item, price, player);

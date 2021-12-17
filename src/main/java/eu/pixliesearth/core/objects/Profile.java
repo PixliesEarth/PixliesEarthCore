@@ -230,6 +230,10 @@ public class Profile implements NationsEntity {
     }
 
     public boolean withdrawMoney(double amount, String reason) {
+        if (extras.containsKey("accountLocked")) {
+            if (isOnline()) getAsPlayer().sendMessage(Lang.EARTH + "§cYour bank account is currently locked.");
+            return false;
+        }
         if (balance - amount < 0)
             return false;
         this.balance = this.balance - amount;
@@ -249,11 +253,11 @@ public class Profile implements NationsEntity {
 
     public void depositMoney(double amount, String reason) {
         if (amount == 0) return;
-        if (isInNation() && getCurrentNation().getTaxSystem() != null && getCurrentNation().getTaxSystem().isEnabled()) {
+/*        if (isInNation() && getCurrentNation().getTaxSystem() != null && getCurrentNation().getTaxSystem().isEnabled()) {
             double tax = (amount / 100) * getCurrentNation().getTaxSystem().getPercentage();
             getCurrentNation().deposit(tax);
             reason += " | -$" + tax + " to " + getCurrentNation().getName();
-        }
+        }*/
         this.balance = this.balance + amount;
         String receipt = Receipt.create(amount, false, reason);
         if (this.receipts == null)
