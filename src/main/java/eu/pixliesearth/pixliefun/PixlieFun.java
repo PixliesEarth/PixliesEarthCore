@@ -30,6 +30,7 @@ public class PixlieFun {
     public static SubItemGroup foodAndDrinks;
     public static SubItemGroup gunsCategory;
     public static SubItemGroup machinesCategory;
+    public static SubItemGroup trafficCategory;
 
     public PixlieFun setup() {
         ItemStack pfcIcon = new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/19c769083163e9aebd8ed5d66bebcb9df21cabae63baaaa0d3abe1420a4ab58f")).setDisplayName("§e§lPixlieFun").addLoreLine("§7§oCustom Pixlies stuff").build();

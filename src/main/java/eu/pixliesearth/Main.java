@@ -134,7 +134,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class Main extends JavaPlugin implements SlimefunAddon {
 
-    public static final boolean WAR_ENABLED = false;
+    public static final boolean WAR_ENABLED = true;
 
     private static @Getter Main instance;
     private static @Getter MongoCollection<Document> playerCollection;
