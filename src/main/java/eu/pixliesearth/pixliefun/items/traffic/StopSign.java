@@ -11,7 +11,7 @@ public class StopSign extends SlimefunItem {
 
     public StopSign() {
         super(PixlieFun.trafficCategory, PixlieFunItems.STOP_SIGN, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_NUGGET, 6), null,
+                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.REDSTONE), null,
                 null, null, null,
                 null, null, null
         });

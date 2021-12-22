@@ -11,7 +11,7 @@ public class ParkingSign extends SlimefunItem {
 
     public ParkingSign() {
         super(PixlieFun.trafficCategory, PixlieFunItems.PARKING_SIGN, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_NUGGET, 7), null,
+                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.LAPIS_LAZULI), null,
                 null, null, null,
                 null, null, null
         });

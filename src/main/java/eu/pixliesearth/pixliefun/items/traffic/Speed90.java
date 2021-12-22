@@ -11,7 +11,7 @@ public class Speed90 extends SlimefunItem {
 
     public Speed90() {
         super(PixlieFun.trafficCategory, PixlieFunItems.SPEED_90, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_NUGGET, 3), null,
+                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.BRICK), null,
                 null, null, null,
                 null, null, null
         });

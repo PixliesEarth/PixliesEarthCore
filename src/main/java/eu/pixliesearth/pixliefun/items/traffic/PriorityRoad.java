@@ -11,7 +11,7 @@ public class PriorityRoad extends SlimefunItem {
 
     public PriorityRoad() {
         super(PixlieFun.trafficCategory, PixlieFunItems.PRIORITY_ROAD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_NUGGET, 4), null,
+                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_INGOT), null,
                 null, null, null,
                 null, null, null
         });

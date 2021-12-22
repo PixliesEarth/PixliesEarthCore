@@ -11,7 +11,7 @@ public class Yield extends SlimefunItem {
 
     public Yield() {
         super(PixlieFun.trafficCategory, PixlieFunItems.YIELD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
-                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.GOLD_NUGGET, 5), null,
+                new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.IRON_INGOT), null,
                 null, null, null,
                 null, null, null
         });
