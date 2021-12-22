@@ -19,7 +19,7 @@ public class Wine extends SimpleSlimefunItem<ItemConsumptionHandler> {
     public ItemConsumptionHandler getItemHandler() {
         return (e, p, item) -> {
             p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15 * 20, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 15 * 20, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 15 * 20, 0));
             p.sendMessage("§7§oAw man I feel dizzy...");
         };
     }

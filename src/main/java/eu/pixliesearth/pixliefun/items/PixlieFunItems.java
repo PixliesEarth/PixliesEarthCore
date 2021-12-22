@@ -10,10 +10,15 @@ public class PixlieFunItems {
     // CANT INSTANTIATE THIS CLASS
     private PixlieFunItems() { }
 
-    public static final SlimefunItemStack DONJULIO_TEQUILA = new SlimefunItemStack("DON_JULIO_TEQUILA", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§6Don Julio Tequila").setCustomModelData(2).build());
-    public static final SlimefunItemStack BEER = new SlimefunItemStack("BEER", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§6Beer").setCustomModelData(5).build());
-    public static final SlimefunItemStack WINE = new SlimefunItemStack("WINE_PIXLIES", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§cWine").setCustomModelData(4).build());
-    public static final SlimefunItemStack RUM = new SlimefunItemStack("RUM", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§dRum").setCustomModelData(3).build());
+    public static final SlimefunItemStack DONJULIO_TEQUILA = new SlimefunItemStack("DON_JULIO_TEQUILA", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§6Don Julio Tequila").addLoreLine("§7§oMakes you jump higher and run faster!").setCustomModelData(2).build());
+    public static final SlimefunItemStack BEER = new SlimefunItemStack("BEER", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§6Beer").addLoreLine("§7§oBecome stronger!").setCustomModelData(5).build());
+    public static final SlimefunItemStack WINE = new SlimefunItemStack("WINE_PIXLIES", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§cWine").addLoreLine("§7§oRegenerate with god's power").setCustomModelData(4).build());
+    public static final SlimefunItemStack RUM = new SlimefunItemStack("RUM", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§dRum").addLoreLine("§7§oGain speed from the spices!").setCustomModelData(3).build());
+    public static final SlimefunItemStack VODKA = new SlimefunItemStack("VODKA", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§9Vodka").addLoreLine("§7§oBecome stronger for a longer time!").setCustomModelData(6).build());
+    public static final SlimefunItemStack IRISHCOFFEE = new SlimefunItemStack("IRISHCOFFEE", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§eIrish Coffee").addLoreLine("§7§oThe coffeein will make you dig faster!").setCustomModelData(7).build());
+    public static final SlimefunItemStack EVERCLEAR = new SlimefunItemStack("EVERCLEAR", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§bEverclear").addLoreLine("§7§oYou'll be slow and confused as hell,").addLoreLine("§7§oBut REALLY strong!").setCustomModelData(8).build());
+    public static final SlimefunItemStack EGGNOG = new SlimefunItemStack("EGGNOG", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§2Eggnog").addLoreLine("§7§oThe protein will make you").addLoreLine("§7§ofast!").setCustomModelData(9).build());
+    public static final SlimefunItemStack FOURLOKO = new SlimefunItemStack("FOURLOKO", new ItemBuilder(Material.HONEY_BOTTLE).setDisplayName("§3FourLoko").addLoreLine("§7§oBe fast, but be cautious").addLoreLine("§7§oyou can blackout for a sec!").setCustomModelData(10).build());
 
     public static final SlimefunItemStack RIFLE_BARREL = new SlimefunItemStack("RIFLE_BARREL", new ItemBuilder(Material.BRICK).setDisplayName("§6Rifle Barrel").setCustomModelData(11).build());
     public static final SlimefunItemStack RIFLE_RECEIVER = new SlimefunItemStack("RIFLE_RECEIVER", new ItemBuilder(Material.BRICK).setDisplayName("§6Rifle Receiver").setCustomModelData(8).build());

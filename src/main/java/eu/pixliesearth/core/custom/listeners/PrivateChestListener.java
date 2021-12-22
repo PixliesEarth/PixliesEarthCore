@@ -70,6 +70,7 @@ public class PrivateChestListener extends CustomListener {
         for(BlockFace face : BlockFace.values()) {
             Block block = event.getBlock().getRelative(face);
             if(block.getType() == Material.CHEST) {
+                if (!(event.getBlock().getState() instanceof TileState)) continue;
                 TileState state = (TileState) event.getBlock().getState();
                 PersistentDataContainer container = state.getPersistentDataContainer();
 

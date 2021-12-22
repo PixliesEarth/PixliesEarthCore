@@ -9,17 +9,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Rum extends SimpleSlimefunItem<ItemConsumptionHandler> {
+public class IrishCoffee extends SimpleSlimefunItem<ItemConsumptionHandler> {
 
-    public Rum() {
-        super(PixlieFun.foodAndDrinks, PixlieFunItems.RUM, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.WHEAT), new ItemStack(Material.WHEAT_SEEDS, 2), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.SUGAR), null, null, null, null, null});
+    public IrishCoffee() {
+        super(PixlieFun.foodAndDrinks, PixlieFunItems.IRISHCOFFEE, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.COCOA_BEANS, 2), new ItemStack(Material.WHEAT), null, null, null, null, null, null});
     }
 
     @Override
     public ItemConsumptionHandler getItemHandler() {
         return (e, p, item) -> {
             p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15 * 20, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 20, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 15 * 20, 0));
             p.sendMessage("§7§oAw man I feel dizzy...");
         };
     }

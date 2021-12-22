@@ -9,17 +9,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Rum extends SimpleSlimefunItem<ItemConsumptionHandler> {
+public class Vodka extends SimpleSlimefunItem<ItemConsumptionHandler> {
 
-    public Rum() {
-        super(PixlieFun.foodAndDrinks, PixlieFunItems.RUM, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.WHEAT), new ItemStack(Material.WHEAT_SEEDS, 2), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.SUGAR), null, null, null, null, null});
+    public Vodka() {
+        super(PixlieFun.foodAndDrinks, PixlieFunItems.VODKA, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.POTATO), new ItemStack(Material.WHEAT_SEEDS), new ItemStack(Material.POTATO), null, null, null, null, null, null});
     }
 
     @Override
     public ItemConsumptionHandler getItemHandler() {
         return (e, p, item) -> {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 15 * 20, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 20, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 40 * 20, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40 * 20, 0));
             p.sendMessage("§7§oAw man I feel dizzy...");
         };
     }

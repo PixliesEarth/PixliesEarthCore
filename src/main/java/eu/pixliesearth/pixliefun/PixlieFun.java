@@ -4,10 +4,7 @@ import eu.pixliesearth.Main;
 import eu.pixliesearth.guns.guns.AK47;
 import eu.pixliesearth.guns.guns.M1911;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
-import eu.pixliesearth.pixliefun.items.food.Beer;
-import eu.pixliesearth.pixliefun.items.food.DonJulioTequilla;
-import eu.pixliesearth.pixliefun.items.food.Rum;
-import eu.pixliesearth.pixliefun.items.food.Wine;
+import eu.pixliesearth.pixliefun.items.food.*;
 import eu.pixliesearth.pixliefun.items.guns.*;
 import eu.pixliesearth.pixliefun.machine.Distillery;
 import eu.pixliesearth.pixliefun.machine.GunWorkbench;
@@ -56,6 +53,12 @@ public class PixlieFun {
         new Beer().register(instance);
         new Wine().register(instance);
         new Rum().register(instance);
+        // Alcohol Update
+        new Eggnog().register(instance);
+        new Everclear().register(instance);
+        new FourLoko().register(instance);
+        new IrishCoffee().register(instance);
+        new Vodka().register(instance);
 
         new AK47().register(instance);
         new M1911().register(instance);

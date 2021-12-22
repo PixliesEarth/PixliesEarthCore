@@ -9,10 +9,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Rum extends SimpleSlimefunItem<ItemConsumptionHandler> {
+public class Eggnog extends SimpleSlimefunItem<ItemConsumptionHandler> {
 
-    public Rum() {
-        super(PixlieFun.foodAndDrinks, PixlieFunItems.RUM, PixlieFun.DISTILLERY, new ItemStack[] {new ItemStack(Material.WHEAT), new ItemStack(Material.WHEAT_SEEDS, 2), new ItemStack(Material.GLASS_BOTTLE), new ItemStack(Material.SUGAR), null, null, null, null, null});
+    public Eggnog() {
+        super(PixlieFun.foodAndDrinks, PixlieFunItems.EGGNOG, PixlieFun.DISTILLERY, new ItemStack[] {
+                new ItemStack(Material.EGG), new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.WHEAT),
+                null, null, null,
+                null, null, null
+        });
     }
 
     @Override
@@ -25,3 +29,4 @@ public class Rum extends SimpleSlimefunItem<ItemConsumptionHandler> {
     }
 
 }
+
