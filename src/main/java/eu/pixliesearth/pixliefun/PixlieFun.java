@@ -6,6 +6,7 @@ import eu.pixliesearth.guns.guns.M1911;
 import eu.pixliesearth.pixliefun.items.PixlieFunItems;
 import eu.pixliesearth.pixliefun.items.food.*;
 import eu.pixliesearth.pixliefun.items.guns.*;
+import eu.pixliesearth.pixliefun.items.traffic.*;
 import eu.pixliesearth.pixliefun.machine.Distillery;
 import eu.pixliesearth.pixliefun.machine.GunWorkbench;
 import eu.pixliesearth.utils.ItemBuilder;
@@ -42,11 +43,15 @@ public class PixlieFun {
         ItemStack machinesIcon = new ItemBuilder(PixlieFunItems.GUN_WORKBENCH).clearLore().setDisplayName("§cMachines").build();
         machinesCategory = new SubItemGroup(new NamespacedKey(instance, "pixliefun_machines"), pixlieFunCategory, machinesIcon);
 
+        ItemStack trafficIcon = new ItemBuilder(PixlieFunItems.SPEED_30).clearLore().setDisplayName("§cTraffic Signs").build();
+        trafficCategory = new SubItemGroup(new NamespacedKey(instance, "pixliefun_traffic"), pixlieFunCategory, trafficIcon);
+
         // REGISTER CATEGORIES
         pixlieFunCategory.register(instance);
         foodAndDrinks.register(instance);
         gunsCategory.register(instance);
         machinesCategory.register(instance);
+        trafficCategory.register(instance);
 
         // REGISTER ITEMS
         new DonJulioTequilla().register(instance);
@@ -72,6 +77,14 @@ public class PixlieFun {
 
         new Distillery().register(instance);
         new GunWorkbench().register(instance);
+
+        new Speed30().register(instance);
+        new Speed50().register(instance);
+        new Speed90().register(instance);
+        new PriorityRoad().register(instance);
+        new Yield().register(instance);
+        new StopSign().register(instance);
+        new ParkingSign().register(instance);
 
         return this;
     }

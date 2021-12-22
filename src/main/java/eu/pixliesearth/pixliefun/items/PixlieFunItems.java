@@ -2,6 +2,7 @@ package eu.pixliesearth.pixliefun.items;
 
 import eu.pixliesearth.utils.ItemBuilder;
 import eu.pixliesearth.utils.SkullCreator;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.Material;
 
@@ -36,5 +37,14 @@ public class PixlieFunItems {
 
     public static final SlimefunItemStack DISTILLERY =  new SlimefunItemStack("DISTILLERY", new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/48437fee749cbd68f3443bb06e45058a687c0fca96436cadb538cad59b5216c6")).setDisplayName("§eDistillery").build());
     public static final SlimefunItemStack GUN_WORKBENCH = new SlimefunItemStack("GUN_WORKBENCH", new ItemBuilder(SkullCreator.itemFromUrl("https://textures.minecraft.net/texture/80a4334f6a61e40c0c63deb665fa7b581e6eb259f7a3207ced7a1ff8bdc8a9f9")).setDisplayName("§7Gun Workbench").build());
+
+    public static final SlimefunItemStack SPEED_30 = new SlimefunItemStack("SPEED_30", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/8af913804baaf637fddc0477add41d64ad863320ae81f7d241eb76e984594d1b")).setDisplayName("§bSpeed Limit 30").build());
+    public static final SlimefunItemStack SPEED_50 = new SlimefunItemStack("SPEED_50", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/a20ff01acba835897ce5fcf5f6ba0be63b25abf385704ce641158fabcb6150c2")).setDisplayName("§bSpeed Limit 50").build());
+    public static final SlimefunItemStack SPEED_90 = new SlimefunItemStack("SPEED_90", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/dd7d9f26f16fbdf29cedddc55e2e0a267bc849ff88d8d53072f5939e7bf93382")).setDisplayName("§bSpeed Limit 90").build());
+    public static final SlimefunItemStack PRIORITY_ROAD = new SlimefunItemStack("PRIORITY_ROAD", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/f44ecc3a571bc668d5930853de71eae392ce7a64d9091e0be6f8e899e8049df3")).setDisplayName("§ePriority Road").build());
+    public static final SlimefunItemStack YIELD = new SlimefunItemStack("YIELD", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/41506f8499d4de86b701b1bbc89d9654f82c38460c41c4f25a379481f7cbf7e8")).setDisplayName("§cYield").build());
+    public static final SlimefunItemStack STOP_SIGN = new SlimefunItemStack("STOP_SIGN", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/87d616aea28e1c0ed2210c58ad2db2aefd0366a5cc3413f2273ec423bcc27606")).setDisplayName("§cStop Sign").build());
+    public static final SlimefunItemStack PARKING_SIGN = new SlimefunItemStack("PARKING_SIGN", new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/f7bbbf5b468b1ceedaac64c63fefa6785f0c2131ba75ac12a3cd2e6d69682")).setDisplayName("§9Parking Sign").build());
+
 
 }
