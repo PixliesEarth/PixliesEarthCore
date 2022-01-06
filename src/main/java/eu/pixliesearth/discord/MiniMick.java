@@ -10,13 +10,17 @@ import org.bukkit.ChatColor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
+import org.javacord.api.entity.channel.AutoArchiveDuration;
+import org.javacord.api.entity.channel.ServerChannel;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class MiniMick {
 
@@ -24,6 +28,8 @@ public class MiniMick {
     DiscordApi api;
     private @Getter
     TextChannel chatChannel;
+    private @Getter
+    TextChannel suggestionChannel;
     private static final @Getter
     Map<String, DiscordCommand> commands = new HashMap<>();
     private static final @Getter
@@ -43,6 +49,7 @@ public class MiniMick {
         api.updateActivity(ActivityType.PLAYING, "on pixlies.net");
 
         chatChannel = api.getTextChannelById(Main.getInstance().getConfig().getString("chatchannel")).get();
+        suggestionChannel = api.getTextChannelById(Main.getInstance().getConfig().getString("suggestionchannel", "928490237599023124")).get();
 
         DiscordCommand.loadAll();
 
@@ -73,8 +80,27 @@ public class MiniMick {
             }
         });
 
+        api.addMessageCreateListener(event -> {
+           if (event.getChannel().getIdAsString().equals(suggestionChannel.getIdAsString())) {
+               if (event.getMessageAuthor().isYourself()) return;
+               event.deleteMessage();
+               try {
+                   Message message = new MessageBuilder().addEmbed(
+                           new EmbedBuilder()
+                                   .setDescription(event.getReadableMessageContent())
+                                   .setAuthor(event.getMessageAuthor())
+                   ).send(event.getChannel()).get();
+                   message.addReaction("\uD83D\uDC4D");
+                   message.addReaction("\uD83D\uDC4E");
+                   message.createThread("Thoughts?", AutoArchiveDuration.ONE_DAY).get().addThreadMember(event.getMessageAuthor().asUser().get());
+               } catch (InterruptedException | ExecutionException e) {
+                   e.printStackTrace();
+               }
+           }
+        });
+
         api.addMessageComponentCreateListener(event -> {
-            Message message = event.getMessageComponentInteraction().getMessage().get();
+            Message message = event.getMessageComponentInteraction().getMessage();
             if (event.getMessageComponentInteraction().getCustomId().startsWith("page-")) {
                 int page = Integer.parseInt(event.getMessageComponentInteraction().getCustomId().split("-")[1]);
                 message.delete();
