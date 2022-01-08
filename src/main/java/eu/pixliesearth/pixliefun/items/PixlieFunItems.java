@@ -28,6 +28,8 @@ public class PixlieFunItems {
 
     public static final SlimefunItemStack PISTOL_BARREL = new SlimefunItemStack("PISTOL_BARREL", Material.BRICK, "§aPistol Barrel");
     public static final SlimefunItemStack PISTOL_RECEIVER = new SlimefunItemStack("PISTOL_RECEIVER", Material.BRICK, "§cPistol Receiver");
+    public static final SlimefunItemStack PISTOL_AMMO = new SlimefunItemStack("PISTOL_AMMO", Material.STICK, "§3Pistol Ammo");
+
     public static final SlimefunItemStack NINEMM = new SlimefunItemStack("9MM", Material.STICK, "§39mm Ammo");
 
     public static final SlimefunItemStack AK47 = new SlimefunItemStack("AK-47", Material.CARROT_ON_A_STICK, "§c§lAK-47", "§7Ammo: §3" + eu.pixliesearth.guns.guns.AK47.getAmmoType().name(), "§7Origin: §3" + eu.pixliesearth.guns.guns.AK47.getOrigin(), "§7Range: §3" + eu.pixliesearth.guns.guns.AK47.getRange(), "§7Accuracy: §3" + eu.pixliesearth.guns.guns.AK47.getAccuracy());

@@ -46,7 +46,7 @@ public class M1911 extends CustomGun {
 	}
 
 	public static AmmoType getAmmoType() {
-		return AmmoType.NINEMM;
+		return AmmoType.PISTOL_AMMO;
 	}
 
 	public static int getDelayToReload() {

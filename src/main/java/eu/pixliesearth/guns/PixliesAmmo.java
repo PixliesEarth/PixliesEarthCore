@@ -73,6 +73,7 @@ public class PixliesAmmo implements Constants {
         NATO762x51(new Ammo762x51mm(null, null)),
         COBBLESTONE(new CobbleStoneAmmo(null, null)),
         ROCKET(new RocketAmmo(null, null)),
+        PISTOL_AMMO(new PistolAmmo(null, null)),
         ;
 
         private final PixliesAmmo ammo;
