@@ -28,7 +28,7 @@ public class PixlieFunItems {
 
     public static final SlimefunItemStack PISTOL_BARREL = new SlimefunItemStack("PISTOL_BARREL", Material.BRICK, "§aPistol Barrel");
     public static final SlimefunItemStack PISTOL_RECEIVER = new SlimefunItemStack("PISTOL_RECEIVER", Material.BRICK, "§cPistol Receiver");
-    public static final SlimefunItemStack PISTOL_AMMO = new SlimefunItemStack("PISTOL_AMMO", Material.STICK, "§3Pistol Ammo");
+    public static final SlimefunItemStack PISTOL_AMMO = new SlimefunItemStack("PISTOL_AMMO", new ItemBuilder(Material.STICK).setDisplayName("§aPistol Ammo").setCustomModelData(15).build());
 
     public static final SlimefunItemStack NINEMM = new SlimefunItemStack("9MM", Material.STICK, "§39mm Ammo");
 

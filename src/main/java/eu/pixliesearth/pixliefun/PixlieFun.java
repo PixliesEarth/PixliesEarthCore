@@ -74,6 +74,7 @@ public class PixlieFun {
         new RifleAmmo().register(instance);
         new PistolBarrel().register(instance);
         new PistolReceiver().register(instance);
+        new PistolAmmo().register(instance);
 
         new Distillery().register(instance);
         new GunWorkbench().register(instance);
