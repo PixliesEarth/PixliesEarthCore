@@ -277,12 +277,14 @@ public class War {
     }
 
     public void addPlayer(Profile profile, WarParticipant participant) {
+        if (players.containsKey(profile.getUUID())) return;
         players.put(profile.getUUID(), participant);
         instance.getUtilLists().playersInWar.put(profile.getUUID(), this);
         left.put(participant.getSide(), left.get(participant.getSide()) + 1);
     }
 
     public void addPlayer(Player player, WarParticipant participant) {
+        if (players.containsKey(player.getUniqueId())) return;
         players.put(player.getUniqueId(), participant);
         instance.getUtilLists().playersInWar.put(player.getUniqueId(), this);
         left.put(participant.getSide(), left.get(participant.getSide()) + 1);
