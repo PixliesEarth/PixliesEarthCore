@@ -4,6 +4,7 @@ import eu.pixliesearth.core.custom.CustomCommand;
 import eu.pixliesearth.core.custom.interfaces.ITabable;
 import eu.pixliesearth.core.objects.Profile;
 import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -56,6 +57,8 @@ public class PayCommand extends CustomCommand {
             sender.sendMessage(Lang.NOT_ENOUGH_MONEY.get(sender));
             return false;
         }
+
+        double amount = Methods.round(Double.parseDouble(args[1]), 2);
 
         player.sendMessage(Lang.PAID_PLAYER_MONEY.get(sender).replace("%AMOUNT%", args[1]).replace("%TARGET%", args[0]));
         target = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));

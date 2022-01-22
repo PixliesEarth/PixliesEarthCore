@@ -83,8 +83,6 @@ commands:
     description: suicide
     aliases:
       - kms
-  pay:
-    description: pay
   broadcast:
     description: broadcast
     aliases:
