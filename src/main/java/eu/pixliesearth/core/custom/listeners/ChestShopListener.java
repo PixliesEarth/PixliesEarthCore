@@ -40,14 +40,14 @@ public class ChestShopListener extends CustomListener {
                 Profile sellerProfile = instance.getProfile(seller.getUniqueId());
                 Player player = event.getPlayer();
                 Profile profile = instance.getProfile(player.getUniqueId());
-                if (!chest.getInventory().containsAtLeast(new ItemStack(material), 1)) {
+                if (!chest.getInventory().contains(new ItemStack(material, 1))) {
                     player.sendMessage("§c§lUH OH §cit looks like the seller needs to refill this shop :(");
                     return;
                 }
                 boolean withdraw = profile.withdrawMoney(price, material.name() + " purchase from " + seller.getName());
                 if (withdraw) {
-                    Methods.removeRequiredAmount(new ItemStack(material), chest.getInventory());
-                    for (ItemStack item : player.getInventory().addItem(new ItemStack(material)).values())
+                    Methods.removeRequiredAmount(chest.getInventory().getItem(chest.getInventory().first(material)).asOne(), chest.getInventory());
+                    for (ItemStack item : player.getInventory().addItem(chest.getInventory().getItem(chest.getInventory().first(material)).asOne()).values())
                         player.getWorld().dropItemNaturally(sign.getLocation(), item);
                     sellerProfile.depositMoney(price, material.name() + " sold to " + player.getName());
                 }
