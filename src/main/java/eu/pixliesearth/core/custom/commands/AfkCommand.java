@@ -14,7 +14,7 @@ public class AfkCommand extends CustomCommand {
 
     @Override
     public String getCommandDescription() {
-        return "Set yourself AFK";
+        return "Toggles your AFK status.";
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AfkCommand extends CustomCommand {
             Lang.NO_PERMISSIONS.send(sender);
             return false;
         }
-        player.setAfk(true);
+        player.setAfk(!player.isAfk());
         return true;
     }
 
