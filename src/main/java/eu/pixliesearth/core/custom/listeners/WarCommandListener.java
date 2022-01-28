@@ -21,7 +21,7 @@ public class WarCommandListener extends CustomListener {
                 || split[0].equalsIgnoreCase("/enderchest")
                 || split[0].equalsIgnoreCase("/echest")
                 || split[0].equalsIgnoreCase("/home"))) {
-            player.sendMessage(Lang.WAR + "§7You cant use nation commands in war.");
+            player.sendMessage(Lang.WAR + "§7You can't use nation commands in war.");
             event.setCancelled(true);
         }
     }
@@ -37,7 +37,7 @@ public class WarCommandListener extends CustomListener {
         event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.infoNation ||
         event.getCommand() instanceof eu.pixliesearth.nations.commands.subcommand.nation.mapNation) return;
         event.setCancelled(true);
-        player.sendMessage(Lang.WAR + "§7You cant use nation commands in war.");
+        player.sendMessage(Lang.WAR + "§7You can't use nation commands in war.");
     }
 
 }
