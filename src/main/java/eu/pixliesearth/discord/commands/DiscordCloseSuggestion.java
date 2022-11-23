@@ -15,7 +15,7 @@ public class DiscordCloseSuggestion extends DiscordCommand {
     public void run(MessageCreateEvent event) {
         if (event.getServerThreadChannel().isPresent()) {
             ServerThreadChannel thread = event.getServerThreadChannel().get();
-            final ServerTextChannel channel = thread.getParent();
+            final ServerTextChannel channel = thread.getParent().asServerTextChannel().get();
             if (thread.getParent().getId() == instance.getMiniMick().getSuggestionChannel().getId()) {
                 if (event.getMessageAuthor().isServerAdmin()) {
                     thread.delete();

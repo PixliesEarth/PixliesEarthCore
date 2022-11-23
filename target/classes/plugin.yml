@@ -1,0 +1,266 @@
+name: PixliesEarthCore
+version: 1.0
+main: eu.pixliesearth.Main
+api-version: 1.13
+depend:
+  - Vault
+  - Citizens
+  - Slimefun
+softdepend:
+  - PlaceholderAPI
+authors: [MickMMars, Machmeinparaillegal, BradBot_1]
+description: PixliesEarth core
+commands:
+  modules:
+    description: Modules command
+  chat:
+    description: Chat Command
+  seen:
+    description: Seen Command
+    aliases:
+      - lastseen
+  message:
+    description: PM command
+    aliases:
+      - msg
+      - pm
+      - privatemessage
+      - dm
+      - tell
+  profile:
+    description: profile to string
+    aliases:
+      - settings
+  link:
+    description: Discord link command
+  nation:
+    description: nation command
+    aliases:
+      - n
+      - nations
+  warp:
+    description: warps
+    aliases:
+      - warps
+  backup:
+    description: backup
+  heal:
+    description: heal
+    aliases:
+      - hl
+  feed:
+    description: feed
+    aliases:
+      - fd
+  gmc:
+    description: gmc
+    aliases:
+      - gm1
+  gms:
+    description: gms
+    aliases:
+      - gm0
+  gmsp:
+    description: gmsp
+    aliases:
+      - gm2
+  gma:
+    description: gma
+    aliases:
+      - gm3
+  staff:
+    description: staff
+    aliases:
+      - admin
+      - override
+  flyspeed:
+    description: flyspeed
+    aliases:
+      - fs
+  fly:
+    description: fly
+  suicide:
+    description: suicide
+    aliases:
+      - kms
+  broadcast:
+    description: broadcast
+    aliases:
+      - bc
+      - announce
+  vanish:
+    description: vanish
+    aliases:
+      - v
+  enderchest:
+    description: Enderchest
+    aliases:
+      - ec
+      - echest
+  craft:
+    description: craft
+    aliases:
+      - crafter
+      - workbench
+  skull:
+    description: skull
+  walkspeed:
+    description: walkspeed
+  gungive:
+    description: gungive
+    aliases:
+      - givegun
+  lobby:
+    description: send to lobby
+    aliases:
+      - hub
+  boost:
+    description: boosts
+    aliases:
+      - boosts
+      - serverboost
+  marry:
+    description: marriage command
+    aliases:
+      - propose
+  divorce:
+    description: divorce command
+    aliases:
+      - breakup
+  sudo:
+    description: sudo command
+  tphere:
+    description: tphere command
+  family:
+    description: show family info
+  woohoo:
+    description: Have sex
+  adopt:
+    description: Adopt command
+  block:
+    description: Block player
+    aliases:
+      - ignore
+  nick:
+    description: nick
+    aliases:
+      - nickname
+      - disguise
+  realname:
+    description: realname
+  skipgulag:
+    description: skipgulag
+    aliases:
+      - gulagskip
+  smite:
+    description: smite
+  premium:
+    description: Premium command
+    aliases:
+      - snow
+      - ultimate
+  gulagsetspawn:
+    description: Set gulag spawn
+  stats:
+    description: stats
+  home:
+    description: homecommand
+  invsee:
+    description: insvee
+  cringe:
+    description: cringe!
+
+permissions:
+  # GENERAL
+  earth.admin:
+    default: op
+  earth.machines.admin:
+    default: op
+  earth.seen:
+    default: op
+  earth.heal:
+    default: op
+  earth.feed:
+    default: op
+  earth.flyspeed:
+    default: op
+  earth.fly:
+    default: op
+  earth.vanish:
+    default: op
+  earth.seevanished:
+    default: op
+  earth.craft:
+    default: op
+  earth.enderchest:
+    default: op
+  earth.skull:
+    default: op
+  earth.walkspeed:
+    default: op
+  earth.sudo:
+    default: op
+  earth.tphere:
+    default: op
+  earth.nick:
+    default: op
+  earth.nick.colours:
+    default: op
+  earth.nick.others:
+    default: op
+  earth.realname:
+    default: op
+  earth.chat.hex:
+    default: op
+  earth.bypass.fullkick:
+    default: op
+  earth.bypass.whitelist:
+    default: op
+  earth.smite:
+    default: op
+  earth.premium:
+    default: op
+    children:
+      ultimate:
+        default: op
+      snow:
+        default: op
+  earth.invsee:
+    default: op
+
+  # CHAT
+  earth.chat.colours:
+    default: op
+  earth.chat.bypasscooldown:
+    default: op
+  earth.chat.bypassmute:
+    default: op
+  earth.chat.bypassblacklist:
+    default: op
+  earth.chat.broadcast:
+    default: op
+  # PRIVATEMESSAGE
+  earth.pm.bypassblacklist:
+    default: op
+  earth.warps.edit:
+    default: op
+  # ECONOMY
+  earth.economy.balance.others:
+    default: op
+  earth.economy.admin:
+     default: op
+  # GUNS
+  earth.gun.give:
+     default: op
+   #CUSTOM ITEMS
+  earth.ci.give:
+     default: op
+   #GULAG
+  gulag.command.skip:
+     default: op
+  gulag.commandblock.bypass:
+     default: op
+  gulag.bypass.ban:
+     default: op
+  gulag.command.setspawn:
+     default: op
