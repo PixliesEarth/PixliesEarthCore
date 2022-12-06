@@ -2,7 +2,6 @@ package eu.pixliesearth.core.listener;
 
 import java.util.UUID;
 
-import eu.pixliesearth.pixliefun.PixlieFunGuide;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -43,8 +42,6 @@ public class JoinListener implements Listener {
                 op.sendMessage(Lang.PLAYER_JOINED_FIRST_TIME.get(op).replace("%PLAYER%", player.getDisplayName()).replace("%COUNT%", Main.getPlayerCollection().countDocuments() + ""));
             profile.openLangGui();
             profile.addTimer("Free TP", new Timer(Timer.DAY));
-            player.getInventory().addItem(new ItemBuilder(Material.BREAD, 16).setDisplayName("\uD83C\uDF5E§bBot_1").build());
-            PixlieFunGuide.giveBooks(player);
         }
 
         if (!instance.getUtilLists().vanishList.isEmpty()) {

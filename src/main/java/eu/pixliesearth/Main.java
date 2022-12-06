@@ -15,10 +15,7 @@ import eu.pixliesearth.core.economy.BalTopThread;
 import eu.pixliesearth.core.objects.PixliesCalendar;
 import eu.pixliesearth.core.vendors.Vendor;
 import eu.pixliesearth.discord.MiniMickServerConfig;
-import eu.pixliesearth.nations.entities.nation.tax.TaxCollector;
-import eu.pixliesearth.pixliefun.PixlieFun;
 import eu.pixliesearth.utils.*;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -132,7 +129,7 @@ import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.economy.Economy;
 import org.jetbrains.annotations.NotNull;
 
-public final class Main extends JavaPlugin implements SlimefunAddon {
+public final class Main extends JavaPlugin {
 
     public static final boolean WAR_ENABLED = true;
 
@@ -167,7 +164,6 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     private @Getter PixliesCalendar calendar;
     private @Getter Vendor vendor;
     private @Getter long serverStartUp;
-    private @Getter PixlieFun pixlieFun;
 
     @Override
     public void onEnable() {
@@ -198,8 +194,6 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
 
     @SuppressWarnings("resource")
 	private void init() {
-        pixlieFun = new PixlieFun().setup();
-
         gson = new Gson();
 
         utilLists = new UtilLists();
@@ -588,12 +582,10 @@ public final class Main extends JavaPlugin implements SlimefunAddon {
     }
 
     @NotNull
-    @Override
     public JavaPlugin getJavaPlugin() {
         return this;
     }
 
-    @Override
     public String getBugTrackerURL() {
         return "https://github.com/PixliesEarth/pixliesNet/issues";
     }
