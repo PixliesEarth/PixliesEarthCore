@@ -37,24 +37,29 @@
       <option name="url" value="https://repo.mikeprimm.com/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Maven Central repository" />
-      <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="placeholderapi" />
       <option name="name" value="placeholderapi" />
       <option name="url" value="https://repo.extendedclip.com/content/repositories/placeholderapi/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="dynmap" />
-      <option name="name" value="dynmap" />
-      <option name="url" value="http://repo.mikeprimm.com/" />
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="purpur" />
+      <option name="name" value="purpur" />
+      <option name="url" value="https://repo.purpurmc.org/snapshots" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="purpur" />
       <option name="name" value="purpur" />
       <option name="url" value="https://repo.pl3x.net/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dynmap" />
+      <option name="name" value="dynmap" />
+      <option name="url" value="http://repo.mikeprimm.com/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="BB1NBT" />
