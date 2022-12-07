@@ -13,6 +13,7 @@ import org.bukkit.map.MapView;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 public class MapRenderingUtils {
 	
@@ -38,7 +39,7 @@ public class MapRenderingUtils {
 		}
 
 		@Override
-		public void render(MapView view, MapCanvas canv, Player p) {
+		public void render(@NotNull MapView view, MapCanvas canv, @NotNull Player p) {
 			if (!this.shouldRerender && this.rendered) return;
 			this.rendered = true;
 			if (this.image.get()==null) setUnknownImage();

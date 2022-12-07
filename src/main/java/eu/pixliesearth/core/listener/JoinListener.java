@@ -1,20 +1,16 @@
 package eu.pixliesearth.core.listener;
 
-import java.util.UUID;
-
-import net.kyori.adventure.text.TextComponent;
+import eu.pixliesearth.Main;
+import eu.pixliesearth.core.objects.Profile;
+import eu.pixliesearth.localization.Lang;
+import eu.pixliesearth.utils.Timer;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import eu.pixliesearth.Main;
-import eu.pixliesearth.core.objects.Profile;
-import eu.pixliesearth.localization.Lang;
-import eu.pixliesearth.utils.ItemBuilder;
-import eu.pixliesearth.utils.Timer;
+import java.util.UUID;
 
 public class JoinListener implements Listener {
 
