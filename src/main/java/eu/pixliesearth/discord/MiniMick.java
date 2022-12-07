@@ -57,7 +57,7 @@ public class MiniMick {
             String[] split = event.getMessageContent().split(" ");
             if (split[0].startsWith(prefix) && commands.containsKey(split[0].replace(prefix, ""))) {
                 DiscordCommand command = commands.get(split[0].replace(prefix, ""));
-                if (command.onlyPixlies() && !event.getServer().get().getIdAsString().equals("589958750866112512")) {
+                if (command.onlyPixlies() && !event.getServer().get().getIdAsString().equals("988579999806279700")) {
                     event.getMessage().reply(new EmbedBuilder().setTitle("This command is only executable on the official PixliesNet server.").setUrl("https://discord.gg/cKJkFTG").setDescription("Click above to join").setColor(Color.RED));
                     return;
                 }

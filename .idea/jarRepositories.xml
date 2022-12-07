@@ -27,6 +27,11 @@
       <option name="url" value="https://repo.codemc.io/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="citizens" />
+      <option name="name" value="citizens" />
+      <option name="url" value="https://repo.citizensnpcs.co/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="dynmap-repo" />
       <option name="name" value="dynmap-repo" />
       <option name="url" value="https://repo.mikeprimm.com/" />
